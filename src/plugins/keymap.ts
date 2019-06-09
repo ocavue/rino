@@ -22,6 +22,9 @@ function buildBlockEnterKeymapBindings(
     return {
         'Enter': (state, dispatch) => {
             // Some code is copy from ./node_modules/prosemirror-inputrules/src/inputrules.js
+            if (!dispatch) {
+                return false
+            }
             if (!(state.selection instanceof TextSelection)) {
                 return false;
             }
@@ -30,8 +33,8 @@ function buildBlockEnterKeymapBindings(
                 return false;
             }
             const cursor = state.selection.$cursor
-            const match = nodeBefore.text.match(regex);
-            if (match) {
+            const match = (nodeBefore.text || '').match(regex);
+            if (match && cursor) {
                 const [start, end] = [cursor.pos - match[0].length, cursor.pos]
                 // copy from `textblockTypeInputRule`
                 const $start = state.doc.resolve(start);
@@ -54,8 +57,9 @@ function buildBlockEnterKeymapBindings(
 function buildKeymapBindings(): { [key: string]: Command } {
     const mac = typeof navigator != "undefined" ? /Mac/.test(navigator.platform) : false
 
-    let keys = {}, type
-    function bind(key, cmd): void {
+    let keys: Record<string, Command> = {}
+    let type
+    function bind(key: string, cmd: Command): void {
         keys[key] = cmd
     }
 
@@ -84,7 +88,7 @@ function buildKeymapBindings(): { [key: string]: Command } {
         bind("Ctrl->", wrapIn(type))
     if (type = schema.nodes.rinoHardBreak) {
         let br = type, cmd = chainCommands(exitCode, (state, dispatch) => {
-            dispatch(state.tr.replaceSelectionWith(br.create()).scrollIntoView())
+            if (dispatch) dispatch(state.tr.replaceSelectionWith(br.create()).scrollIntoView())
             return true
         })
         bind("Mod-Enter", cmd)
@@ -105,7 +109,7 @@ function buildKeymapBindings(): { [key: string]: Command } {
     if (type = schema.nodes.rinoHorizontalRule) {
         let hr = type
         bind("Mod-_", (state, dispatch) => {
-            dispatch(state.tr.replaceSelectionWith(hr.create()).scrollIntoView())
+            if (dispatch) dispatch(state.tr.replaceSelectionWith(hr.create()).scrollIntoView())
             return true
         })
     }

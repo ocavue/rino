@@ -57,7 +57,7 @@ class MarkdownParseState {
     private mergeTextNode(a: Node, b: Node): Node | undefined {
         if (a.isText && b.isText && Mark.sameSet(a.marks, b.marks)) {
             let text: string = a.text || '' + b.text || ''
-            return a.copy(text)  // TODO: https://github.com/ProseMirror/prosemirror-markdown/issues/33
+            return (a.type.schema as Schema).text(text, a.marks)
         }
     }
 

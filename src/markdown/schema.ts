@@ -60,14 +60,17 @@ const nodes: { [name: string]: NodeSpec } = {
         defining: true,
         attrs: { language: { default: "" } },
         parseDOM: [{
-            tag: "pre", preserveWhitespace: true, getAttrs: (dom: HTMLElement) => (
+            tag: "pre",
+            preserveWhitespace: true,
+            getAttrs: (dom: HTMLElement) => (
                 { language: dom.getAttribute("data-language") || "" }
             )
         }],
         toDOM(node) {
+            let empty: { [attr: string]: string } = {}
             return [
                 "pre",
-                node.attrs.language ? { "data-language": node.attrs.language } : {},
+                node.attrs.language ? { "data-language": node.attrs.language } : empty,
                 ["code", 0],
             ]
         }
@@ -89,10 +92,14 @@ const nodes: { [name: string]: NodeSpec } = {
             }
         }],
         toDOM(node) {
-            return ["ol", {
-                start: node.attrs.order == 1 ? null : node.attrs.order,
-                "data-tight": node.attrs.tight ? "true" : null
-            }, 0]
+            return [
+                "ol",
+                {
+                    "start": node.attrs.order == 1 ? "" : node.attrs.order,
+                    "data-tight": node.attrs.tight ? "true" : ""
+                },
+                0,
+            ]
         }
     },
 
@@ -100,8 +107,18 @@ const nodes: { [name: string]: NodeSpec } = {
         content: "rinoListItem+",
         group: "block",
         attrs: { tight: { default: false } },
-        parseDOM: [{ tag: "ul", getAttrs: (dom: HTMLElement) => ({ tight: dom.hasAttribute("data-tight") }) }],
-        toDOM(node) { return ["ul", { "data-tight": node.attrs.tight ? "true" : null }, 0] }
+        parseDOM: [{
+            tag: "ul",
+            getAttrs: (dom: HTMLElement) => ({ tight: dom.hasAttribute("data-tight") })
+        }
+        ],
+        toDOM(node) {
+            return [
+                "ul",
+                { "data-tight": node.attrs.tight ? "true" : "" },
+                0,
+            ]
+        }
     },
 
     rinoListItem: {
