@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Demo</title>
+    <script src="./index.ts" defer></script>
+    <link rel="stylesheet" href="../../node_modules/github-markdown-css/github-markdown.css">
+    <style>
+        body {
+            font-family: "Fira Mono", "DejaVu Sans Mono", "Menlo", "Consolas", "Liberation Mono", "Monaco", "Lucida Console", monospace;
+            padding: 0;
+            margin: 0;
+        }
+
+        header {
+            display: flex;
+            align-items: center;
+            height: 32px;
+            padding-left: 16px;
+            padding-right: 16px;
+            background-color: darkmagenta;
+            color: rgba(255,255,255,0.8);
+        }
+
+        div[contenteditable=true] {
+            /* border: 2px solid lightskyblue; */
+            width: 100%;
+            min-height: 400px;
+            padding: 40px;
+            box-sizing: border-box;
+        }
+
+        textarea {
+            width: 100%;
+            min-height: calc(100vh - 40px);
+            min-width: 400px;
+            padding: 40px;
+            box-sizing: border-box;
+            font-size: 0.8em;
+        }
+
+        .markdown-body pre {
+            position: relative;
+        }
+
+        .markdown-body pre[data-language]:after {
+            content: attr(data-language);
+            position: absolute;
+            z-index: 3;
+            top: 0.8em;
+            right: 1em;
+            font-size: 0.8em;
+            color: lightcoral;
+        }
+
+        .markdown-body a {
+            cursor: pointer;
+        }
+
+        .decoration_em_text {
+            color: purple;
+        }
+
+        .decoration_text {
+            color: gray;
+        }
+
+        .decoration_em_open,
+        .decoration_code_open {
+            color: red;
+        }
+
+        .decoration_em_close,
+        .decoration_code_close {
+            color: blue;
+        }
+
+        .decoration_code_text {
+            background: black;
+            color: white;
+        }
+    </style>
+
+</head>
+
+<body>
+    <header>
+        Rino (Early Access Version)
+        <span style="flex: 1;"></span>
+        <input id="checkbox" type="checkbox">Source Code Mode</input>
+    </header>
+    <div id="content"></div>
+</body>
+
+</html>
