@@ -16,6 +16,14 @@ const inlineRules: [string, RegExp, Evaluator][] = [
             { class: "decoration_em_close", length: 1 },
         ]
     ], [
+        'strong',
+        /^\*{2}([\s\S]+?)\*{2}(?!\*)/, // **Strong**
+        (match: string[]) => [
+            { class: "decoration_strong_open", length: 2 },
+            { class: "decoration_strong_text", length: match[1].length },
+            { class: "decoration_strong_close", length: 2 },
+        ]
+    ], [
         'code',
         /^(`+)(\s*)([\s\S]*?[^`])(\s*)\1(?!`)/, // `Code`
         (match: string[]) => [
