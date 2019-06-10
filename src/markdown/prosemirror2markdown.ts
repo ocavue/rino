@@ -55,7 +55,7 @@ export class MarkdownSerializerState {
     // content of the block.
     public wrapBlock(newDelimiter: string, firstDelim: string | null, node: Node, f: () => void) {
         let oldDelimiter = this.delimiter
-        this.write()
+        this.write(firstDelim || newDelimiter)
         this.delimiter = this.delimiter + newDelimiter
         f()
         this.delimiter = oldDelimiter
