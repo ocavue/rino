@@ -5,7 +5,7 @@
   "private": true,
   "scripts": {
     "dev": "parcel src/web-app/index.html",
-    "build": "parcel build src/web-app/index.html",
+    "build": "parcel build src/web-app/index.html --public-url ./",
     "test": "mocha --require ts-node/register test/**/*.ts"
   },
   "devDependencies": {

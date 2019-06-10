@@ -1,0 +1,32 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/node:10
+    working_directory: ~/rino
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "yarn.lock" }}
+      - run: yarn install
+      - save_cache:
+          paths:
+            - node_modules
+          key: v1-dependencies-{{ checksum "yarn.lock" }}
+      - run: |
+          yarn run test
+          yarn run build
+      - run: |
+          git config --global user.email "ci@circleci.com"
+          git config --global user.name "circleci"
+      - run: |
+          if [ "${CIRCLE_BRANCH}" == "master" ]; then
+            git clone https://github.com/ocavue/rino-website.git ~/website
+            cd ~/website/
+            git reset --hard 90fefeaa084d088233fcb23dfaf503f38210919b
+            cp ~/rino/dist/* ~/website/
+            git add --all
+            git commit -m update
+            git push -q https://${GITHUB_USER_TOKEN}@github.com/ocavue/rino-website.git -f master
+          fi
