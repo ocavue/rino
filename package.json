@@ -6,7 +6,21 @@
   "scripts": {
     "dev": "parcel src/web-app/index.html",
     "build": "parcel build src/web-app/index.html --public-url ./",
-    "test": "mocha --require ts-node/register test/**/*.ts"
+    "test": "nyc mocha --require ts-node/register --require source-map-support/register --full-trace --bail ./test/**/*.ts ",
+    "coverage": "nyc report --reporter=text-lcov | COVERALLS_REPO_TOKEN=$COVERALLS_REPO_TOKEN coveralls"
+  },
+  "nyc": {
+    "extension": [
+      ".ts"
+    ],
+    "include": [
+      "src/**/*"
+    ],
+    "reporter": [
+      "text",
+      "lcov"
+    ],
+    "all": true
   },
   "devDependencies": {
     "@types/chai": "^4.1.7",
@@ -26,8 +40,10 @@
     "@typescript-eslint/eslint-plugin": "^1.9.0",
     "@typescript-eslint/parser": "^1.9.0",
     "chai": "^4.2.0",
+    "coveralls": "^3.0.4",
     "eslint": "^5.16.0",
     "mocha": "^6.1.4",
+    "nyc": "^14.1.1",
     "parcel-bundler": "^1.12.3",
     "ts-node": "^8.2.0",
     "typescript": "^3.5.1"
