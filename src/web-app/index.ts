@@ -1,8 +1,8 @@
 import { EditorState } from "prosemirror-state"
 import { EditorView } from "prosemirror-view"
 
-import { defaultMarkdownParser, defaultMarkdownSerializer } from "../markdown/index"
-import { proseMirrorPlugins } from '../plugins/index'
+import { defaultMarkdownParser, defaultMarkdownSerializer } from "../markdown"
+import { proseMirrorPlugins } from '../plugins'
 
 let content: string
 content = `
