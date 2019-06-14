@@ -1,4 +1,17 @@
-export interface Token { length: number; classes: string[] }
+export interface Token {
+    // Length of token.
+    length: number;
+
+    // An array of class names to added to the target node.
+    classes: string[];
+
+    // The target node is wrapped in a DOM element of this type.
+    nodeName?: string;
+
+    // Specify additional attrs that will be mapped directly to the
+    // target node's DOM attributes.
+    nodeAttrs?: { [key: string]: string };
+}
 
 function isEqual(a: string[], b: string[]): boolean {
     if (a.length !== b.length) return false
