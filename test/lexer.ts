@@ -138,4 +138,27 @@ describe('InlineLexer', function () {
             )
         })
     })
+    describe('link', function () {
+        it('normal', function () {
+            assertTokenEqual(
+                lexer.scan("[GitHub](https://github.com)"),
+                [
+                    { length: 1, classes: ["decoration_mark"] },
+                    { length: 6, classes: ["decoration_link_text"] },
+                    { length: 2, classes: ["decoration_mark"] },
+                    {
+                        length: 18,
+                        classes: ["decoration_link_url"],
+                        nodeName: "a",
+                        nodeAttrs: {
+                            href: "https://github.com",
+                            onClick: 'window.open("https://github.com")'
+                        },
+                    },
+                    { length: 1, classes: ["decoration_mark"] },
+                ],
+            )
+        })
+
+    })
 })
