@@ -138,6 +138,38 @@ describe('InlineLexer', function () {
             )
         })
     })
+    describe('delete', function () {
+        it('normal', function () {
+            assertTokenEqual(
+                lexer.scan("~~1234~~"),
+                [
+                    { length: 2, classes: ["decoration_mark"] },
+                    { length: 4, classes: ["decoration_delete"] },
+                    { length: 2, classes: ["decoration_mark"] },
+                ],
+            )
+        })
+        it('with inside tilde', function () {
+            assertTokenEqual(
+                lexer.scan("~~12~34~~"),
+                [
+                    { length: 2, classes: ["decoration_mark"] },
+                    { length: 5, classes: ["decoration_delete"] },
+                    { length: 2, classes: ["decoration_mark"] },
+                ],
+            )
+        })
+        it('with space', function () {
+            assertTokenEqual(
+                lexer.scan("~~ 1234 ~~"),
+                [
+                    { length: 2, classes: ["decoration_mark"] },
+                    { length: 6, classes: ["decoration_delete"] },
+                    { length: 2, classes: ["decoration_mark"] },
+                ],
+            )
+        })
+    })
     describe('link', function () {
         it('normal', function () {
             assertTokenEqual(
@@ -159,6 +191,5 @@ describe('InlineLexer', function () {
                 ],
             )
         })
-
     })
 })

@@ -28,6 +28,14 @@ class InlineLexer {
                     { length: 1, classes: ["decoration_mark"] },
                 ]
             ],
+            delete: [
+                /^~~(.+?)~~/, // ~~Delete~~
+                (match) => [
+                    {length: 2, classes: ['decoration_mark']},
+                    {length: match[1].length, classes: ['decoration_delete']},
+                    {length: 2, classes: ['decoration_mark']},
+                ],
+            ],
             code: [
                 /^(`+)(\s*)(.*?[^`])(\s*)\1(?!`)/, // `Code`
                 (match) => [
