@@ -17,8 +17,11 @@
 
         header {
             display: flex;
+            flex-flow: wrap;
+            justify-content: space-between;
             align-items: center;
-            height: 32px;
+            height: 3em;
+            line-height: 1em;
             padding-left: 16px;
             padding-right: 16px;
             background-color: darkmagenta;
@@ -92,8 +95,7 @@
 <body>
     <header>
         Rino (Early Access Version)
-        <span style="flex: 1;"></span>
-        <input id="checkbox" type="checkbox">Source Code Mode</input>
+        <span><input id="checkbox" type="checkbox">Source Code Mode</input></span>
     </header>
     <div id="content"></div>
 </body>
