@@ -12,7 +12,7 @@ function parseText(node: Node, startIndex: number): Decoration[] {
         let deco = Decoration.inline(
             startIndex,
             startIndex + token.length,
-            { class: token.class },
+            { class: token.classes ? token.classes.join(' ') : null },
             { inclusiveStart: false, inclusiveEnd: true },
         )
         startIndex += token.length

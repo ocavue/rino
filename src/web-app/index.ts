@@ -15,6 +15,8 @@ content = `
 
 \`inlinc code\` *em* **strong** ~~delete~~ text
 
+text *1 1 **3 3** 1 1*, **2 2 *3 3* 2 2**
+
 [link](https://github.com)
 
 ![Image](https://via.placeholder.com/150)

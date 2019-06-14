@@ -2,60 +2,58 @@
 Inspired by https://github.com/lepture/mistune/
 */
 
-interface Token { length: number; class: string }
+import { Token, mergeTokens, pushClass } from './token'
 
-type Evaluator = (match: string[]) => Token[]
-
-const inlineRules: [string, RegExp, Evaluator][] = [
-    [
-        'em',
-        /^\*((?:\*\*|[^\*])+?)\*(?!\*)/, // *Word*
-        (match: string[]) => [
-            { class: "decoration_em_open", length: 1 },
-            { class: "decoration_em_text", length: match[1].length },
-            { class: "decoration_em_close", length: 1 },
-        ]
-    ], [
-        'strong',
-        /^\*{2}([\s\S]+?)\*{2}(?!\*)/, // **Strong**
-        (match: string[]) => [
-            { class: "decoration_strong_open", length: 2 },
-            { class: "decoration_strong_text", length: match[1].length },
-            { class: "decoration_strong_close", length: 2 },
-        ]
-    ], [
-        'code',
-        /^(`+)(\s*)([\s\S]*?[^`])(\s*)\1(?!`)/, // `Code`
-        (match: string[]) => [
-            { length: match[1].length, class: "decoration_code_open" },
-            { length: match[2].length, class: "decoration_code_space" },
-            { length: match[3].length, class: "decoration_code_text" },
-            { length: match[4].length, class: "decoration_code_space" },
-            { length: match[1].length, class: "decoration_code_close" },
-        ]
-    ], [
-        'text',
-        /^[\s\S]+?(?=[\\<!\[_*`~]|https?:\/\/| {2,}\n|$)/,
-        (match: string[]) => [
-            { length: match[0].length, class: "decoration_text" }
-        ]
-    ],
-]
+type Render = (match: string[]) => Token[]
+type Rule = [RegExp, Render]
 
 class InlineLexer {
-    private rules: [string, RegExp, Evaluator][]
+    private rules: Record<string, Rule>
 
     public constructor() {
-        this.rules = inlineRules
+        this.rules = {
+            doubleEmphases: [
+                /^\*{2}(.+?)\*{2}(?!\*)/,
+                (match) => [
+                    { length: 2, classes: ["decoration_mark"] },
+                    ...this.scan(match[1]).map(token => pushClass(token, 'decoration_emphasis_double_text')),
+                    { length: 2, classes: ["decoration_mark"] },
+                ]
+            ],
+            singleEmphasis: [
+                /^\*((?:\*\*|[^\*])+?)\*(?!\*)/,
+                (match) => [
+                    { length: 1, classes: ["decoration_mark"] },
+                    ...this.scan(match[1]).map(token => pushClass(token, 'decoration_emphasis_single_text')),
+                    { length: 1, classes: ["decoration_mark"] },
+                ]
+            ],
+            code: [
+                /^(`+)(\s*)(.*?[^`])(\s*)\1(?!`)/, // `Code`
+                (match) => [
+                    { length: match[1].length, classes: ["decoration_mark"] },
+                    { length: match[2].length, classes: ["decoration_code_space"] },
+                    { length: match[3].length, classes: ["decoration_code_text"] },
+                    { length: match[4].length, classes: ["decoration_code_space"] },
+                    { length: match[1].length, classes: ["decoration_mark"] },
+                ]
+            ],
+            text: [
+                /^[\s\S]+?(?=[\\<!\[_*`~]|https?:\/\/| {2,}\n|$)/,
+                (match) => [
+                    { length: match[0].length, classes: [] },
+                ]
+            ]
+        }
     }
 
     private manipulate(text: string): [Token[], number] {
-        for (const [name, pattern, render] of this.rules) {
+        for (const [name, [pattern, render]] of Object.entries(this.rules)) {
             let match = text.match(pattern)
             if (!match) {
                 continue
             }
-            let tokens: Token[] = render(match).filter(token => token.length > 0)
+            let tokens: Token[] = mergeTokens(render(match))
             let length = tokens.map(token => token.length).reduce((a, b) => a + b)
             if (length !== match[0].length) {
                 throw new Error(
