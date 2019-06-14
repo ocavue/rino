@@ -57,7 +57,7 @@ class InlineLexer {
             let length = tokens.map(token => token.length).reduce((a, b) => a + b)
             if (length !== match[0].length) {
                 throw new Error(
-                    `Tokenization get wrong length when using inline render '${name}'. Before render: ${length}; After remder: ${match[0].length}`
+                    `Tokenization get wrong length when using inline render '${name}'. Before rendering: ${length}; After rendering: ${match[0].length}`
                 )
             }
             return [tokens, length]
