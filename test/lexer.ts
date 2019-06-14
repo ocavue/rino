@@ -170,6 +170,46 @@ describe('InlineLexer', function () {
             )
         })
     })
+    describe('autolink', function () {
+        it('normal', function () {
+            assertTokenEqual(
+                lexer.scan("<https://github.com>"),
+                [
+                    { length: 1, classes: ["decoration_mark"] },
+                    {
+                        length: 18,
+                        classes: ["decoration_link_url"],
+                        nodeName: "a",
+                        nodeAttrs: {
+                            href: "https://github.com",
+                            onClick: 'window.open("https://github.com")'
+                        },
+                    },
+                    { length: 1, classes: ["decoration_mark"] },
+                ],
+            )
+        })
+        it('wrap by text', function () {
+            assertTokenEqual(
+                lexer.scan("text<https://github.com>text"),
+                [
+                    { length: 4, classes: [] },
+                    { length: 1, classes: ["decoration_mark"] },
+                    {
+                        length: 18,
+                        classes: ["decoration_link_url"],
+                        nodeName: "a",
+                        nodeAttrs: {
+                            href: "https://github.com",
+                            onClick: 'window.open("https://github.com")'
+                        },
+                    },
+                    { length: 1, classes: ["decoration_mark"] },
+                    { length: 4, classes: [] },
+                ],
+            )
+        })
+    })
     describe('link', function () {
         it('normal', function () {
             assertTokenEqual(

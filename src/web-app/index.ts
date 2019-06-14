@@ -17,7 +17,7 @@ content = `
 
 text *1 1 **3 3** 1 1*, **2 2 *3 3* 2 2**
 
-[link](https://github.com)
+[link](https://github.com) text <https://github.com> text
 
 ![Image](https://via.placeholder.com/150)
 

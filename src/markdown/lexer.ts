@@ -31,9 +31,9 @@ class InlineLexer {
             delete: [
                 /^~~(.+?)~~/, // ~~Delete~~
                 (match) => [
-                    {length: 2, classes: ['decoration_mark']},
-                    {length: match[1].length, classes: ['decoration_delete']},
-                    {length: 2, classes: ['decoration_mark']},
+                    { length: 2, classes: ['decoration_mark'] },
+                    { length: match[1].length, classes: ['decoration_delete'] },
+                    { length: 2, classes: ['decoration_mark'] },
                 ],
             ],
             code: [
@@ -52,16 +52,15 @@ class InlineLexer {
                     { length: 1, classes: ["decoration_mark"] },
                     ...this.scan(match[1]).map(token => pushClass(token, 'decoration_link_text')),
                     { length: 2, classes: ["decoration_mark"] },
-                    {
-                        length: match[2].length,
-                        classes: ['decoration_link_url'],
-                        nodeName: 'a',
-                        nodeAttrs: {
-                            href: match[2],
-                            onClick: `window.open("${match[2]}")`
-                            // This <a> element is `contenteditable`, so it's not clickable by default.
-                        }
-                    },
+                    this.processLink(match[2]),
+                    { length: 1, classes: ["decoration_mark"] },
+                ]
+            ],
+            autolink: [
+                /^<([^ >]+(@|:)[^ >]+)>/,  // <https://url>
+                (match) => [
+                    { length: 1, classes: ["decoration_mark"] },
+                    this.processLink(match[1]),
                     { length: 1, classes: ["decoration_mark"] },
                 ]
             ],
@@ -101,6 +100,19 @@ class InlineLexer {
             output.push(...tokens)
         }
         return output
+    }
+
+    private processLink(url: string): Token {
+        return {
+            length: url.length,
+            classes: ['decoration_link_url'],
+            nodeName: 'a',
+            nodeAttrs: {
+                href: url,
+                onClick: `window.open("${url}")`
+                // This <a> element is `contenteditable`, so it's not clickable by default.
+            }
+        }
     }
 }
 
