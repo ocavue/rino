@@ -1,6 +1,7 @@
 import { assert } from 'chai';
 import 'mocha';
 
+
 import { InlineLexer } from '../src/markdown/lexer'
 import { Token } from '../src/markdown/token'
 
