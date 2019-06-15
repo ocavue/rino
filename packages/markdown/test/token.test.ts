@@ -4,7 +4,7 @@ import 'mocha';
 import {
     mergeTokens,
     pushClass,
-} from '../src/markdown/token'
+} from '../src/token'
 
 
 describe('Token', function () {

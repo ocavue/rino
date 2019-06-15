@@ -3,10 +3,10 @@ import { history } from "prosemirror-history"
 import { gapCursor } from "prosemirror-gapcursor"
 import { dropCursor } from "prosemirror-dropcursor"
 
-import { buildKeymaps } from './keymap'
-import { buildMdInputRules } from './input-rule'
-import { addGitHubMarkdownCssClass } from './class'
-import { decorationPlugin } from './decoration'
+import { buildKeymaps } from './src/keymap'
+import { buildMdInputRules } from './src/input-rule'
+import { addGitHubMarkdownCssClass } from './src/class'
+import { decorationPlugin } from './src/decoration'
 
 export const proseMirrorPlugins: Plugin[] = [
     history(),
