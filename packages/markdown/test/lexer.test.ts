@@ -1,8 +1,8 @@
 import { assert } from 'chai';
 import 'mocha';
 
-import { InlineLexer } from '../src/markdown/lexer'
-import { Token } from '../src/markdown/token'
+import { InlineLexer } from '../src/lexer'
+import { Token } from '../src/token'
 
 describe('InlineLexer', function () {
     let lexer = new InlineLexer()

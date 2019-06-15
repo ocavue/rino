@@ -7,7 +7,7 @@ import { undo, redo } from "prosemirror-history"
 import { undoInputRule } from "prosemirror-inputrules"
 import { Plugin, EditorState, Transaction, TextSelection } from "prosemirror-state"
 
-import { schema } from '../markdown'
+import { schema } from '../../markdown'
 
 type Command = (state: EditorState, dispatch?: (tr: Transaction) => void) => boolean | null
 
