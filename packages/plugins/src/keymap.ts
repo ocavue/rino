@@ -9,7 +9,7 @@ import { Plugin, EditorState, Transaction, TextSelection } from "prosemirror-sta
 
 import { schema } from '../../markdown'
 
-type Command = (state: EditorState, dispatch?: (tr: Transaction) => void) => boolean | null
+type Command = (state: EditorState, dispatch?: (tr: Transaction) => void) => boolean
 
 function buildBlockEnterKeymapBindings(
     regex: RegExp,
@@ -22,9 +22,6 @@ function buildBlockEnterKeymapBindings(
     return {
         'Enter': (state, dispatch) => {
             // Some code is copy from ./node_modules/prosemirror-inputrules/src/inputrules.js
-            if (!dispatch) {
-                return false
-            }
             if (!(state.selection instanceof TextSelection)) {
                 return false;
             }
@@ -39,14 +36,21 @@ function buildBlockEnterKeymapBindings(
                 // copy from `textblockTypeInputRule`
                 const $start = state.doc.resolve(start);
                 if (!$start.node(-1).canReplaceWith($start.index(-1), $start.indexAfter(-1), nodeType)) {
-                    return null
+                    return false
                 }
 
                 let tr: Transaction = state.tr.delete(start, end).setBlockType(start, start, nodeType, getAttrs(match))
                 if (transact) {
                     tr = transact(match, tr)
                 }
-                dispatch(tr)
+                if (dispatch) {
+                    // To be able to query whether a command is applicable for a given state, without
+                    // actually executing it, the `dispatch` argument is optional—commands should
+                    // simply return true without doing anything when they are applicable but no
+                    // `dispatch` argument is given
+                    // https://prosemirror.net/docs/guide/#commands
+                    dispatch(tr)
+                }
                 return true;
             }
             return false;
