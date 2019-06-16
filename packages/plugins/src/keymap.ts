@@ -104,7 +104,7 @@ function buildKeymapBindings(): { [key: string]: Command } {
         bind("Shift-Ctrl-0", setBlockType(type))
     if (type = schema.nodes.rinoCodeBlock)
         bind("Shift-Ctrl-\\", setBlockType(type))
-    if (type = schema.nodes.heading)
+    if (type = schema.nodes.rinoHeading)
         for (let i = 1; i <= 6; i++) bind("Shift-Ctrl-" + i, setBlockType(type, { level: i }))
     if (type = schema.nodes.rinoHorizontalRule) {
         let hr = type

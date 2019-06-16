@@ -10,7 +10,7 @@ function buildMdInputRules(): Plugin {
             // heading
             textblockTypeInputRule(
                 /^(#{1,6})\s$/,
-                schema.nodes.heading,
+                schema.nodes.rinoHeading,
                 (match: string[]) => ({ level: match[1].length })
             ),
 

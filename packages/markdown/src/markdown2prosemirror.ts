@@ -258,7 +258,7 @@ export const defaultMarkdownParser = new MarkdownParser(
             getAttrs: tok => ({ order: +(tok.attrGet("order") || 1) })
         },
         'heading': {
-            block: "heading",
+            block: "rinoHeading",
             hasOpenClose: true,
             getAttrs: tok => ({ level: +tok.tag.slice(1) })
         },

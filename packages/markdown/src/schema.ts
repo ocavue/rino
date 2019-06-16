@@ -37,7 +37,7 @@ const nodes: { [name: string]: NodeSpec } = {
         toDOM() { return ["div", ["hr"]] }
     },
 
-    heading: {
+    rinoHeading: {
         attrs: { level: { default: 1 } },
         content: "inline*",
         group: "block",
