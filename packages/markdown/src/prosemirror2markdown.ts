@@ -207,7 +207,7 @@ export const defaultMarkdownSerializer = new MarkdownSerializer({
         state.write("```")
         state.closeBlock(node)
     },
-    heading(state, node, parent, index) {
+    rinoHeading(state, node, parent, index) {
         state.write(state.repeat("#", node.attrs.level) + " ")
         state.renderInline(node)
         state.closeBlock(node)
