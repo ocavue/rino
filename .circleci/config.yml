@@ -23,11 +23,11 @@ jobs:
           git config --global user.name "circleci"
       - run: |
           if [ "${CIRCLE_BRANCH}" == "master" ]; then
-            git clone https://github.com/ocavue/rino-website.git ~/website
-            cd ~/website/
-            git reset --hard 90fefeaa084d088233fcb23dfaf503f38210919b
-            cp ~/rino/dist/* ~/website/
+            git clone https://github.com/ocavue/projects.git ~/projects
+            cd ~/projects/rino
+            rm -rf ./*
+            cp ~/rino/dist/* ~/projects/rino
             git add --all
             git commit -m update
-            git push -q https://${GITHUB_USER_TOKEN}@github.com/ocavue/rino-website.git -f master
+            git push -q https://${GITHUB_USER_TOKEN}@github.com/ocavue/projects.git master
           fi
