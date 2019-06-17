@@ -6,10 +6,45 @@ import { wrapInList, splitListItem, liftListItem, sinkListItem } from "prosemirr
 import { undo, redo } from "prosemirror-history"
 import { undoInputRule } from "prosemirror-inputrules"
 import { Plugin, EditorState, Transaction, TextSelection } from "prosemirror-state"
+import { EditorView } from "prosemirror-view";
 
 import { schema } from '../../markdown'
 
 type Command = (state: EditorState, dispatch?: (tr: Transaction) => void) => boolean
+
+const resetBlockTypeBindings: Record<string, Command> = {
+    // TODO: Test "Del" key in Windows OS
+    'Backspace': (state, dispatch, view?: EditorView) => {
+        if (!(state.selection instanceof TextSelection)) {
+            return false;
+        }
+
+        // Check if the selection is empty
+        if (!(state.selection.empty)) {
+            return false
+        }
+
+        // Check if the selection at the start of a textblock
+        let { $cursor } = state.selection
+        if (!$cursor) {
+            return false
+        }
+        if (view ? !view.endOfTextblock("backward", state) : $cursor.parentOffset > 0) {
+            return false
+        }
+
+        // Check if the selection at a heading block or a code block
+        if ($cursor.parent.type.name !== 'rinoHeading' && $cursor.parent.type.name !== 'rinoCodeBlock') {
+            return false
+        }
+
+        let tr: Transaction = state.tr.setBlockType($cursor.pos, $cursor.pos, schema.nodes.paragraph)
+        if (dispatch) {
+            dispatch(tr)
+        }
+        return true
+    }
+}
 
 function buildBlockEnterKeymapBindings(
     regex: RegExp,
@@ -123,6 +158,7 @@ function buildKeymapBindings(): { [key: string]: Command } {
 
 export function buildKeymaps(): Plugin[] {
     return [
+        keymap(resetBlockTypeBindings),
         keymap(buildBlockEnterKeymapBindings(
             /^```([a-zA-Z]*)?$/,
             schema.nodes.rinoCodeBlock,
