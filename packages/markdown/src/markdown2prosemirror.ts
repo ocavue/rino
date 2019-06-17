@@ -1,4 +1,4 @@
-import MarkdownIt from "markdown-it"
+import * as MarkdownIt from 'markdown-it'
 import Token from "markdown-it/lib/token"
 import { schema } from "./schema"
 import { Mark, Node, Schema, NodeType } from "prosemirror-model"
