@@ -6,6 +6,7 @@ import 'mocha';
 
 const types = {
     p: { nodeType: "paragraph" },
+    a: { markType: "link", href: "foo" },
     h1: { nodeType: "rinoHeading", level: 1 },
     h2: { nodeType: "rinoHeading", level: 2 },
     h3: { nodeType: "rinoHeading", level: 3 },
@@ -16,9 +17,8 @@ const types = {
     li: { nodeType: "rinoListItem" },
     ol: { nodeType: "rinoOrderedList" },
     ul: { nodeType: "rinoBulletList" },
-    pre: { nodeType: "rinoCodeBlock" },
     br: { nodeType: "rinoHardBreak" },
-    a: { markType: "link", href: "foo" },
+    pre: { nodeType: "rinoCodeBlock" },
     img: { nodeType: "image", src: "img.png", alt: "x" }
 }
 
