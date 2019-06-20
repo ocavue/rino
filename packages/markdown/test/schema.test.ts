@@ -18,7 +18,7 @@ const def = {
     br: { nodeType: "rinoHardBreak" },
     img: { nodeType: "image", src: "img.png", alt: "x" },
     pre: { nodeType: "rinoCodeBlock" },
-    preJS: { nodeType: "rinoCodeBlock", "data-language": 'javascript' },
+    preJS: { nodeType: "rinoCodeBlock", "language": 'javascript' },
 }
 
 const nodes = builders(schema, def)

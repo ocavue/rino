@@ -54,11 +54,8 @@ describe("markdown parser", () => {
         checkEq(
             defaultMarkdownParser.parse('```javascript\n1\n```'),
             doc(
-                schema.nodes.rinoCodeBlock.createAndFill(
-                    { 'language': 'javascript' },
-                    [schema.text("1")],
-                ) as TaggedProsemirrorNode // TODO: use builder's output so that this 'a' can be removed
-            ) ,
+                preJS('1'),
+            ),
         )
     })
 })
