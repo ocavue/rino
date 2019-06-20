@@ -15,20 +15,22 @@ describe("markdown parser", () => {
         assert.isTrue(isEqual)
     }
 
+    // TODO: add comments
     const { doc, p, h1, ol, li, pre, preJS } = nodes
 
     it("paragraph", () => {
         checkEq(
             defaultMarkdownParser.parse('hello'),
             doc(
-                p('hello')),
+                p('hello'),
+            ),
         )
     })
     it("heading", () => {
         checkEq(
             defaultMarkdownParser.parse('# hello'),
             doc(
-                h1('hello')
+                h1('hello'),
             ),
         )
     })
