@@ -1,17 +1,21 @@
-import { eq } from "prosemirror-test-builder"
+import { eq, TaggedProsemirrorNode } from "prosemirror-test-builder"
 import { assert } from 'chai';
 import 'mocha';
 import { defaultMarkdownParser } from "../src/markdown2prosemirror";
+import { defaultMarkdownSerializer } from "../src/prosemirror2markdown";
 import { nodes } from "./schema.test"
 
 describe("markdown parser", () => {
-    function checkEq(a: any, b: any) {
-        let isEqual = eq(a, b)
+    function checkEq(markdown: string, pmNode: TaggedProsemirrorNode) {
+        let mdNode = defaultMarkdownParser.parse(markdown);
+        let isEqual = eq(mdNode, pmNode)
         if (!isEqual) {
-            console.dir(a['content']['content'], { depth: 3 })
-            console.dir(b['content']['content'], { depth: 3 })
+            console.dir(mdNode['content']['content'], { depth: 3 })
+            console.dir(pmNode['content']['content'], { depth: 3 })
         }
         assert.isTrue(isEqual)
+
+        assert.equal(markdown, defaultMarkdownSerializer.serialize(pmNode))
     }
 
     // TODO: add comments
@@ -19,7 +23,7 @@ describe("markdown parser", () => {
 
     it("paragraph", () => {
         checkEq(
-            defaultMarkdownParser.parse('hello'),
+            'hello',
             doc(
                 p('hello'),
             ),
@@ -27,7 +31,7 @@ describe("markdown parser", () => {
     })
     it("heading", () => {
         checkEq(
-            defaultMarkdownParser.parse('# hello'),
+            '# hello',
             doc(
                 h1('hello'),
             ),
@@ -35,7 +39,7 @@ describe("markdown parser", () => {
     })
     it("ordered list", () => {
         checkEq(
-            defaultMarkdownParser.parse('1. aaa\n2. bbb\n3. ccc'),
+            '1. aaa\n\n\n2. bbb\n\n\n3. ccc',
             doc(
                 ol(
                     li(p('aaa')),
@@ -47,13 +51,13 @@ describe("markdown parser", () => {
     })
     it("code block", () => {
         checkEq(
-            defaultMarkdownParser.parse('```\n1\n```'),
+            '```\n1\n```',
             doc(
                 pre('1'),
             ),
         )
         checkEq(
-            defaultMarkdownParser.parse('```javascript\n1\n```'),
+            '```javascript\n1\n```',
             doc(
                 preJS('1'),
             ),
