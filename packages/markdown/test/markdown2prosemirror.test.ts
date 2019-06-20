@@ -20,30 +20,44 @@ describe("markdown parser", () => {
     it("paragraph", () => {
         checkEq(
             defaultMarkdownParser.parse('hello'),
-            doc(p('hello')),
+            doc(
+                p('hello')),
         )
     })
     it("heading", () => {
         checkEq(
             defaultMarkdownParser.parse('# hello'),
-            doc(h1('hello')),
+            doc(
+                h1('hello')
+            ),
         )
     })
     it("ordered list", () => {
         checkEq(
             defaultMarkdownParser.parse('1. aaa\n2. bbb\n3. ccc'),
-            doc(ol(li(p('aaa')), li(p('bbb')), li(p('ccc')))),
+            doc(
+                ol(
+                    li(p('aaa')),
+                    li(p('bbb')),
+                    li(p('ccc')),
+                )
+            ),
         )
     })
-    it("inline code", () => {
+    it("code block", () => {
+        checkEq(
+            defaultMarkdownParser.parse('```\n1\n```'),
+            doc(
+                pre('1'),
+            ),
+        )
         checkEq(
             defaultMarkdownParser.parse('```javascript\n1\n```'),
             doc(
-                schema.node(
-                    "rinoCodeBlock",
+                schema.nodes.rinoCodeBlock.createAndFill(
                     { 'language': 'javascript' },
                     [schema.text("1")],
-                ) as TaggedProsemirrorNode
+                ) as TaggedProsemirrorNode // TODO: use builder's output so that this 'a' can be removed
             ) ,
         )
     })
