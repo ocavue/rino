@@ -3,10 +3,8 @@ import { schema } from "../index"
 import { assert } from 'chai';
 import 'mocha';
 
-
-const types = {
+const def = {
     p: { nodeType: "paragraph" },
-    a: { markType: "link", href: "foo" },
     h1: { nodeType: "rinoHeading", level: 1 },
     h2: { nodeType: "rinoHeading", level: 2 },
     h3: { nodeType: "rinoHeading", level: 3 },
@@ -18,18 +16,21 @@ const types = {
     ol: { nodeType: "rinoOrderedList" },
     ul: { nodeType: "rinoBulletList" },
     br: { nodeType: "rinoHardBreak" },
+    img: { nodeType: "image", src: "img.png", alt: "x" },
     pre: { nodeType: "rinoCodeBlock" },
-    img: { nodeType: "image", src: "img.png", alt: "x" }
+    preJS: { nodeType: "rinoCodeBlock", "data-language": 'javascript' },
 }
 
-const builded = builders(schema, types)
+const nodes = builders(schema, def)
 
 describe('schema', function () {
     describe('types', function () {
-        for (let key of Object.keys(types)) {
+        for (let key of Object.keys(def)) {
             it(`key: ${key}`, function () {
-                assert.equal(typeof builded[key], 'function')
+                assert.equal(typeof nodes[key], 'function')
             })
         }
     })
 })
+
+export { nodes }

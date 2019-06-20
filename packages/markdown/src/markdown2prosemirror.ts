@@ -1,7 +1,9 @@
-import * as MarkdownIt from 'markdown-it'
-import Token from "markdown-it/lib/token"
 import { schema } from "./schema"
 import { Mark, Node, Schema, NodeType } from "prosemirror-model"
+import Token from "markdown-it/lib/token"
+
+// markdown-it doesn't support ES6 import. Ewwwwwww...
+const MarkdownIt = require('markdown-it')  // eslint-disable-line @typescript-eslint/no-var-requires
 
 interface StackItem {
     type: NodeType;
@@ -16,7 +18,7 @@ interface TokenSpec {
     ignore?: boolean;
     attrs?: Record<string, any>;
 }
-type TokenSpecs = Record<string, TokenSpec>
+interface TokenSpecs { [markdownItTokenName: string]: TokenSpec }
 type TokenHandler = (state: MarkdownParseState, tok: any) => void
 type TokenHandlers = Record<string, TokenHandler>
 
@@ -201,10 +203,10 @@ export class MarkdownParser {
     // **`ignore`**`: ?bool`
     //   : When true, ignore content for the matched token.
     private schema: Schema
-    private tokenizer: MarkdownIt
+    private tokenizer: any  // tokenizer is a MarkdownIt object
     private tokenHandlers: TokenHandlers
 
-    public constructor(schema: Schema, tokenizer: MarkdownIt, tokenSpecs: TokenSpecs) {
+    public constructor(schema: Schema, tokenizer: any, tokenSpecs: TokenSpecs) {
         // :: Object The value of the `tokens` object used to construct
         // this parser. Can be useful to copy and modify to base other
         // parsers on.
