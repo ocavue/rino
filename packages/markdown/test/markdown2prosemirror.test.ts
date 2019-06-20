@@ -1,9 +1,8 @@
-import { eq, TaggedProsemirrorNode } from "prosemirror-test-builder"
+import { eq } from "prosemirror-test-builder"
 import { assert } from 'chai';
 import 'mocha';
 import { defaultMarkdownParser } from "../src/markdown2prosemirror";
 import { nodes } from "./schema.test"
-import { schema } from "../src/schema";
 
 describe("markdown parser", () => {
     function checkEq(a: any, b: any) {
