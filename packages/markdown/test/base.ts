@@ -1,7 +1,7 @@
 import { TaggedProsemirrorNode } from "prosemirror-test-builder"
 import { nodes } from "./schema.test"
 
-const { doc, p, h1, h6, ol, ul, li, pre, preJS, blockquote, hr } = nodes
+const { doc, p, h1, h6, ol, ul, li, pre, preJS, blockquote, hr, br } = nodes
 
 export const testcases: Record<string, [string, TaggedProsemirrorNode]> = {
     paragraph: [
@@ -26,8 +26,9 @@ export const testcases: Record<string, [string, TaggedProsemirrorNode]> = {
             )
         ),
     ],
+    // TODO: add tests for bullet list startswith '*' and '-'
     bulletList: [
-        '- aaa\n\n\n- bbb\n\n\n- ccc',
+        '* aaa\n\n\n* bbb\n\n\n* ccc',
         doc(
             ul(
                 li(p('aaa')),
@@ -62,4 +63,11 @@ export const testcases: Record<string, [string, TaggedProsemirrorNode]> = {
             hr()
         )
     ],
+    // TODO: add test for hard break
+    // br: [
+    //     'text\rtext',
+    //     doc(
+    //         p('text',  br(), 'text')
+    //     )
+    // ],
 }
