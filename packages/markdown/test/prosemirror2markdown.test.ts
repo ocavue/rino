@@ -12,9 +12,11 @@ describe("markdown parser", () => {
         )
     }
 
-    for (let [caseName, [markdown, node]] of Object.entries(testcases)) {
-        it(caseName, function () {
-            assertEqual(markdown, node)
-        })
-    }
+    describe('base test cases', function () {
+        for (let [caseName, [markdown, node]] of Object.entries(testcases)) {
+            it(caseName, function () {
+                assertEqual(markdown, node)
+            })
+        }
+    })
 })
