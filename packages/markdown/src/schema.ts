@@ -1,5 +1,11 @@
 import { Schema, NodeSpec } from "prosemirror-model"
 
+type getAttrs = null | ((p: Node | string) => { [key: string]: any } | false | null | undefined)
+
+function buildGetAttrs(func: (dom: HTMLElement) => { [key: string]: any }): getAttrs {
+    // A function to lie to typescript
+    return func as getAttrs
+}
 
 const nodes: { [name: string]: NodeSpec } = {
     /*
@@ -62,8 +68,10 @@ const nodes: { [name: string]: NodeSpec } = {
         parseDOM: [{
             tag: "pre",
             preserveWhitespace: true,
-            getAttrs: (dom: HTMLElement) => (
-                { language: dom.getAttribute("data-language") || "" }
+            getAttrs: buildGetAttrs(
+                dom => (
+                    { language: dom.getAttribute("data-language") || "" }
+                )
             )
         }],
         toDOM(node) {
@@ -84,12 +92,13 @@ const nodes: { [name: string]: NodeSpec } = {
             tight: { default: false }
         },
         parseDOM: [{
-            tag: "ol", getAttrs(dom: HTMLElement) {
-                return {
-                    order: dom.hasAttribute("start") ? +dom.getAttribute("start") : 1,
+            tag: "ol",
+            getAttrs: buildGetAttrs(
+                dom => ({
+                    order: dom.hasAttribute("start") ? (dom.getAttribute("start") || 1) : 1,
                     tight: dom.hasAttribute("data-tight")
-                }
-            }
+                })
+            )
         }],
         toDOM(node) {
             return [
@@ -109,7 +118,9 @@ const nodes: { [name: string]: NodeSpec } = {
         attrs: { tight: { default: false } },
         parseDOM: [{
             tag: "ul",
-            getAttrs: (dom: HTMLElement) => ({ tight: dom.hasAttribute("data-tight") })
+            getAttrs: buildGetAttrs(
+                dom => ({ tight: dom.hasAttribute("data-tight") })
+            )
         }
         ],
         toDOM(node) {
