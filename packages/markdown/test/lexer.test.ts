@@ -210,6 +210,26 @@ describe('InlineLexer', function () {
             )
         })
     })
+    describe('image', function () {
+        it('normal', function () {
+            assertTokenEqual(
+                lexer.scan("![Image](https://via.placeholder.com/150)"),
+                [
+                    { length: 2, classes: ["decoration_mark"] }, // ![
+                    { length: 5, classes: ["decoration_image_text"] },
+                    { length: 2, classes: ["decoration_mark"] }, // ](
+                    {
+                        length: 31,
+                        classes: ["decoration_image_url"],
+                        nodeAttrs: {
+                            style: '--css-variables-rino-image-url: url("https://via.placeholder.com/150");',
+                        },
+                    },
+                    { length: 1, classes: ["decoration_mark"] },  // )
+                ],
+            )
+        })
+    })
     describe('link', function () {
         it('normal', function () {
             assertTokenEqual(

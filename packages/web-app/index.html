@@ -67,9 +67,22 @@
             color: darkmagenta;
         }
 
+        .decoration_image_text {
+            color: green;
+        }
+
+        .decoration_image_url {
+            color: dodgerblue;
+        }
+
+        .decoration_image_url::after {
+            content: var(--css-variables-rino-image-url);
+        }
+
         .decoration_emphasis_single_text {
             font-style: italic;
         }
+
         .decoration_emphasis_double_text {
             font-weight: 700;
         }
@@ -77,6 +90,7 @@
         .decoration_link_text {
             color: cadetblue;
         }
+
         .decoration_link_url {
             color: dodgerblue;
         }
@@ -93,7 +107,6 @@
             color: #24292e;
             padding: .2em .4em;
         }
-
     </style>
 
 </head>
