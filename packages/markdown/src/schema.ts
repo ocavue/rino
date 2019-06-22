@@ -149,13 +149,14 @@ const nodes: { [name: string]: NodeSpec } = {
         group: "inline",
         draggable: true,
         parseDOM: [{
-            tag: "img[src]", getAttrs(dom: HTMLElement) {
-                return {
+            tag: "img[src]",
+            getAttrs: buildGetAttrs(
+                (dom: HTMLElement) => ({
                     src: dom.getAttribute("src"),
                     title: dom.getAttribute("title"),
                     alt: dom.getAttribute("alt")
-                }
-            }
+                })
+            )
         }],
         toDOM(node) { return ["img", node.attrs] }
     },
