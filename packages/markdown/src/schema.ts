@@ -139,6 +139,7 @@ const nodes: { [name: string]: NodeSpec } = {
         toDOM() { return ["li", 0] }
     },
 
+    /*
     image: {
         inline: true,
         attrs: {
@@ -160,6 +161,7 @@ const nodes: { [name: string]: NodeSpec } = {
         }],
         toDOM(node) { return ["img", node.attrs] }
     },
+    */
 
     rinoHardBreak: {
         inline: true,

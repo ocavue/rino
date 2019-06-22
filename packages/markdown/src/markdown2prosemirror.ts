@@ -265,13 +265,8 @@ export const defaultMarkdownParser = new MarkdownParser(
             hasOpenClose: false,
         },
         'image': {
-            node: "image",
+            block: "paragraph",
             hasOpenClose: false,
-            getAttrs: tok => ({
-                src: tok.attrGet("src"),
-                title: tok.attrGet("title") || null,
-                alt: tok.children[0] && tok.children[0].content || null
-            })
         },
         'hardbreak': {
             node: "rinoHardBreak",

@@ -16,7 +16,6 @@ const def = {
     ol: { nodeType: "rinoOrderedList" },
     ul: { nodeType: "rinoBulletList" },
     br: { nodeType: "rinoHardBreak" },
-    img: { nodeType: "image", src: "img.png", alt: "x" },
     pre: { nodeType: "rinoCodeBlock" },
     preJS: { nodeType: "rinoCodeBlock", "language": 'javascript' },
     blockquote: { nodeType: "rinoBlockquote" },

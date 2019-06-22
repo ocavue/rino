@@ -46,6 +46,23 @@ class InlineLexer {
                     { length: match[1].length, classes: ["decoration_mark"] },
                 ]
             ],
+            image: [
+                /^\!\[([^\[\]]+)\]\((.+?)\)/,
+                (match) => [
+                    { length: 2, classes: ["decoration_mark"] },
+                    { length: match[1].length, classes: ["decoration_image_text"] },
+                    { length: 2, classes: ["decoration_mark"] },
+                    {
+                        length: match[2].length,
+                        classes: ["decoration_image_url"],
+                        nodeAttrs: {
+                            style: `--css-variables-rino-image-url: url("${match[2]}");`
+                            // https://stackoverflow.com/a/46572990
+                        },
+                    },
+                    { length: 1, classes: ["decoration_mark"] },
+                ],
+            ],
             link: [
                 /^\[([^\[\]]+)\]\((.+?)\)/,  // [link](https://url)
                 (match) => [
