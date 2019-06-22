@@ -1,4 +1,4 @@
-import { Schema, NodeSpec, MarkSpec } from "prosemirror-model"
+import { Schema, NodeSpec } from "prosemirror-model"
 
 
 const nodes: { [name: string]: NodeSpec } = {
@@ -159,6 +159,7 @@ const nodes: { [name: string]: NodeSpec } = {
 
 }
 
+/*
 const marks: { [name: string]: MarkSpec } = {
     em: {
         parseDOM: [
@@ -201,6 +202,7 @@ const marks: { [name: string]: MarkSpec } = {
         toDOM() { return ["code"] }
     }
 }
+*/
 
 // ::Schema Document schema for the data model used by CommonMark.
-export const schema = new Schema({ nodes: nodes, marks: marks })
+export const schema = new Schema({ nodes: nodes, marks: {} })
