@@ -1,7 +1,7 @@
 import { TaggedProsemirrorNode } from "prosemirror-test-builder"
 import { nodes } from "./schema.test"
 
-const { doc, p, h1, ol, li, pre, preJS } = nodes
+const { doc, p, h1, ol, li, pre, preJS, blockquote } = nodes
 
 export const testcases: Record<string, [string, TaggedProsemirrorNode]> = {
     paragraph: [
@@ -32,6 +32,14 @@ export const testcases: Record<string, [string, TaggedProsemirrorNode]> = {
         '```javascript\n1+1\n```',
         doc(
             preJS('1+1'),
+        ),
+    ],
+    quote: [
+        '> text\n> text',
+        doc(
+            blockquote(
+                p('text\ntext'),
+            ),
         ),
     ],
 }

@@ -19,6 +19,7 @@ const def = {
     img: { nodeType: "image", src: "img.png", alt: "x" },
     pre: { nodeType: "rinoCodeBlock" },
     preJS: { nodeType: "rinoCodeBlock", "language": 'javascript' },
+    blockquote: { nodeType: "rinoBlockquote" },
 }
 
 const nodes = builders(schema, def)
