@@ -51,15 +51,15 @@ describe("markdown parser", () => {
     })
     it("code block", () => {
         checkEq(
-            '```\n1\n```',
+            '```\n1+1\n```',
             doc(
-                pre('1'),
+                pre('1+1'),
             ),
         )
         checkEq(
-            '```javascript\n1\n```',
+            '```javascript\n1+1\n```',
             doc(
-                preJS('1'),
+                preJS('1+1'),
             ),
         )
     })
