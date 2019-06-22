@@ -3,6 +3,7 @@ import { assert } from 'chai';
 import 'mocha';
 import { defaultMarkdownParser } from "../src/markdown2prosemirror";
 import { testcases } from './base'
+import { nodes } from "./schema.test";
 
 describe("markdown parser", () => {
     function assertEqual(markdown: string, node: TaggedProsemirrorNode) {
@@ -15,10 +16,19 @@ describe("markdown parser", () => {
         assert.isTrue(isEqual)
     }
 
-
     for (let [caseName, [markdown, node]] of Object.entries(testcases)) {
         it(caseName, function () {
             assertEqual(markdown, node)
         })
     }
+
+    const { doc, hr } = nodes
+
+    it('hr with different length', function () {
+        assertEqual('---', doc(hr()))
+        assertEqual('----', doc(hr()))
+        assertEqual('-----', doc(hr()))
+        assertEqual('------', doc(hr()))
+        assertEqual('-------', doc(hr()))
+    })
 })
