@@ -1,16 +1,20 @@
 import { TaggedProsemirrorNode } from "prosemirror-test-builder"
 import { nodes } from "./schema.test"
 
-const { doc, p, h1, ol, li, pre, preJS, blockquote, hr } = nodes
+const { doc, p, h1, h6, ol, li, pre, preJS, blockquote, hr } = nodes
 
 export const testcases: Record<string, [string, TaggedProsemirrorNode]> = {
     paragraph: [
         'hello',
         doc(p('hello'))
     ],
-    heading: [
+    h1: [
         '# hello',
         doc(h1('hello'))
+    ],
+    h6: [
+        '###### hello',
+        doc(h6('hello'))
     ],
     orderedList: [
         '1. aaa\n\n\n2. bbb\n\n\n3. ccc',
