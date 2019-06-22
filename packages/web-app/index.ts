@@ -13,7 +13,7 @@ content = `
 ##### h5
 ###### h6
 
-\`inlinc code\` *em* **strong** ~~delete~~ text
+\`inline code\` *em* **strong** ~~delete~~ text
 
 text *1 1 **3 3** 1 1*, **2 2 *3 3* 2 2**
 
