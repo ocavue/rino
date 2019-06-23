@@ -235,11 +235,12 @@ export const defaultMarkdownSerializer = new MarkdownSerializer({
         state.renderInline(node)
         state.closeBlock(node)
     },
-
+    /*
     image(state, node, parent, index) {
         state.write("![" + state.esc(node.attrs.alt || "") + "](" + state.esc(node.attrs.src) +
             (node.attrs.title ? " " + state.quote(node.attrs.title) : "") + ")")
     },
+    */
     rinoHardBreak(state, node, parent, index) {
         for (let i = index + 1; i < parent.childCount; i++)
             if (parent.child(i).type != node.type) {
