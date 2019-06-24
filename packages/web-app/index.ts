@@ -1,3 +1,12 @@
+import "babel-polyfill"
 import { main } from '../editor/index'
 
-main()
+async function init() {
+    console.log()
+}
+
+console.log('before init')
+init()
+console.log('after init')
+
+main
