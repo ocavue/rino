@@ -1,14 +1,6 @@
-// import "babel-polyfill"
-// import { main } from '../editor/index'
-
-async function init() {
+async function loadEditor() {
     const editor = await import('../editor/index')
     editor.main()
-    console.log()
 }
 
-console.log('before init')
-init()
-console.log('after init')
-
-// main()
+loadEditor()
