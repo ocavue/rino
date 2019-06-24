@@ -1,0 +1,98 @@
+body {
+    font-family: "Fira Mono", "DejaVu Sans Mono", "Menlo", "Consolas", "Liberation Mono", "Monaco", "Lucida Console", monospace;
+    padding: 0;
+    margin: 0;
+}
+
+header {
+    display: flex;
+    flex-flow: wrap;
+    justify-content: space-between;
+    align-items: center;
+    height: 3em;
+    line-height: 1em;
+    padding-left: 16px;
+    padding-right: 16px;
+    background-color: darkmagenta;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+div[contenteditable=true] {
+    /* border: 2px solid lightskyblue; */
+    width: 100%;
+    min-height: 400px;
+    padding: 40px;
+    box-sizing: border-box;
+}
+
+textarea {
+    width: 100%;
+    min-height: calc(100vh - 40px);
+    min-width: 400px;
+    padding: 40px;
+    box-sizing: border-box;
+    font-size: 0.8em;
+}
+
+.markdown-body pre {
+    position: relative;
+}
+
+.markdown-body pre[data-language]:after {
+    content: attr(data-language);
+    position: absolute;
+    z-index: 3;
+    top: 0.8em;
+    right: 1em;
+    font-size: 0.8em;
+    color: lightcoral;
+}
+
+.markdown-body a {
+    cursor: pointer;
+}
+
+.decoration_mark {
+    color: darkmagenta;
+}
+
+.decoration_image_text {
+    color: green;
+}
+
+.decoration_image_url {
+    color: dodgerblue;
+}
+
+.decoration_image_url::after {
+    content: var(--css-variables-rino-image-url);
+}
+
+.decoration_emphasis_single_text {
+    font-style: italic;
+}
+
+.decoration_emphasis_double_text {
+    font-weight: 700;
+}
+
+.decoration_link_text {
+    color: cadetblue;
+}
+
+.decoration_link_url {
+    color: dodgerblue;
+}
+
+.decoration_delete {
+    color: gray;
+    text-decoration-line: line-through;
+    text-decoration-color: black;
+}
+
+.decoration_code_text {
+    background-color: rgba(27, 31, 35, .05);
+    border-radius: 3px;
+    color: #24292e;
+    padding: .2em .4em;
+}
