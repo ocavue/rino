@@ -4,8 +4,8 @@
   "license": "GPLv3",
   "private": true,
   "scripts": {
-    "dev": "parcel packages/web-app/index.html",
-    "build": "parcel build packages/web-app/index.html --public-url ./",
+    "dev": "parcel packages/app/index.html",
+    "build": "parcel build packages/app/index.html --public-url ./",
     "test": "nyc mocha --require ts-node/register --require source-map-support/register --full-trace ./packages/**/*.test.ts ",
     "coverage": "nyc report --reporter=text-lcov | COVERALLS_REPO_TOKEN=$COVERALLS_REPO_TOKEN coveralls"
   },
