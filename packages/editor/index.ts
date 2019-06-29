@@ -94,7 +94,7 @@ class ProseMirrorView extends BaseView {
 }
 
 
-function main() {
+function init() {
     let place = document.body
     let view: BaseView = new ProseMirrorView(place, content)
 
@@ -111,4 +111,4 @@ function main() {
     })
 }
 
-main()
+export { init }
