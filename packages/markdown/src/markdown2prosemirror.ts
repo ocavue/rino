@@ -3,21 +3,23 @@ import { Mark, Node, Schema, NodeType } from "prosemirror-model"
 import Token from "markdown-it/lib/token"
 
 // markdown-it doesn't support ES6 import. Ewwwwwww...
-const MarkdownIt = require('markdown-it')  // eslint-disable-line @typescript-eslint/no-var-requires
+const MarkdownIt = require("markdown-it") // eslint-disable-line @typescript-eslint/no-var-requires
 
 interface StackItem {
-    type: NodeType;
-    attrs?: Record<string, any>;
-    content: Node[];
+    type: NodeType
+    attrs?: Record<string, any>
+    content: Node[]
 }
 interface TokenSpec {
-    hasOpenClose: boolean;
-    block?: string;
-    node?: string;
-    getAttrs?: (token: Token) => Record<string, any>;
-    attrs?: Record<string, any>;
+    hasOpenClose: boolean
+    block?: string
+    node?: string
+    getAttrs?: (token: Token) => Record<string, any>
+    attrs?: Record<string, any>
 }
-interface TokenSpecs { [markdownItTokenName: string]: TokenSpec }
+interface TokenSpecs {
+    [markdownItTokenName: string]: TokenSpec
+}
 type TokenHandler = (state: MarkdownParseState, tok: any) => void
 type TokenHandlers = Record<string, TokenHandler>
 
@@ -57,7 +59,7 @@ class MarkdownParseState {
 
     private mergeTextNode(a: Node, b: Node): Node | undefined {
         if (a.isText && b.isText && Mark.sameSet(a.marks, b.marks)) {
-            let text: string = a.text || '' + b.text || ''
+            let text: string = a.text || "" + b.text || ""
             return (a.type.schema as Schema).text(text, a.marks)
         }
     }
@@ -77,7 +79,7 @@ class MarkdownParseState {
             let handler = this.tokenHandlers[tok.type]
             if (!handler)
                 throw new Error(
-                    `MarkdownIt token type '${tok.type}' not supported by Rino Markdown parser`
+                    `MarkdownIt token type '${tok.type}' not supported by Rino Markdown parser`,
                 )
             handler(this, tok)
         }
@@ -118,7 +120,6 @@ function buildTokenHandlers(schema: Schema, tokens: TokenSpecs): TokenHandlers {
         text: (state, tok) => state.addText(tok.content),
         inline: (state, tok) => state.addText(tok.content), // decorationPlugin will handle the parsing of inline token
         softbreak: state => state.addText("\n"),
-
     }
     for (let [type, spec] of Object.entries(tokens)) {
         if (spec.block) {
@@ -127,8 +128,10 @@ function buildTokenHandlers(schema: Schema, tokens: TokenSpecs): TokenHandlers {
                 throw new RangeError(`Can't find node type '${spec.node}'`)
             }
             if (spec.hasOpenClose) {
-                handlers[type + "_open"] = (state: MarkdownParseState, tok: Token) => state.openNode(nodeType, getAttrs(spec, tok))
-                handlers[type + "_close"] = (state: MarkdownParseState, tok: Token) => state.closeNode()
+                handlers[type + "_open"] = (state: MarkdownParseState, tok: Token) =>
+                    state.openNode(nodeType, getAttrs(spec, tok))
+                handlers[type + "_close"] = (state: MarkdownParseState, tok: Token) =>
+                    state.closeNode()
             } else {
                 handlers[type] = (state: MarkdownParseState, tok: Token) => {
                     state.openNode(nodeType, getAttrs(spec, tok))
@@ -141,7 +144,8 @@ function buildTokenHandlers(schema: Schema, tokens: TokenSpecs): TokenHandlers {
             if (nodeType === undefined) {
                 throw new RangeError(`Can't find node type '${spec.node}'`)
             }
-            handlers[type] = (state: MarkdownParseState, tok: Token) => state.addNode(nodeType, getAttrs(spec, tok))
+            handlers[type] = (state: MarkdownParseState, tok: Token) =>
+                state.addNode(nodeType, getAttrs(spec, tok))
         } else {
             throw new RangeError("Unrecognized parsing spec " + JSON.stringify(spec))
         }
@@ -190,7 +194,7 @@ export class MarkdownParser {
     //     token](https://markdown-it.github.io/markdown-it/#Token) and
     //     returns an attribute object.
     private schema: Schema
-    private tokenizer: any  // tokenizer is a MarkdownIt object
+    private tokenizer: any // tokenizer is a MarkdownIt object
     private tokenHandlers: TokenHandlers
 
     public constructor(schema: Schema, tokenizer: any, tokenSpecs: TokenSpecs) {
@@ -206,9 +210,12 @@ export class MarkdownParser {
     // and create a ProseMirror document as prescribed by this parser's
     // rules.
     public parse(text: string): Node {
-        let state = new MarkdownParseState(this.schema, this.tokenHandlers), doc
+        let state = new MarkdownParseState(this.schema, this.tokenHandlers),
+            doc
         state.parseTokens(this.tokenizer.parse(text, {}))
-        do { doc = state.closeNode() } while (state.stack.length)
+        do {
+            doc = state.closeNode()
+        } while (state.stack.length)
         return doc
     }
 }
@@ -219,58 +226,62 @@ export class MarkdownParser {
 export const defaultMarkdownParser = new MarkdownParser(
     schema,
     MarkdownIt("commonmark", { html: false }).disable([
-        'emphasis',
-        'autolink',
-        'backticks',
-        'entity',
+        "emphasis",
+        "autolink",
+        "backticks",
+        "entity",
     ]),
     {
-        'blockquote': {
+        blockquote: {
             block: "rinoBlockquote",
             hasOpenClose: true,
         },
-        'paragraph': {
+        paragraph: {
             block: "paragraph",
             hasOpenClose: true,
         },
-        'list_item': {
+        // eslint-disable-next-line prettier/prettier
+        "list_item": {
             block: "rinoListItem",
             hasOpenClose: true,
         },
-        'bullet_list': {
+        // eslint-disable-next-line prettier/prettier
+        "bullet_list": {
             block: "rinoBulletList",
             hasOpenClose: true,
         },
-        'ordered_list': {
+        // eslint-disable-next-line prettier/prettier
+        "ordered_list": {
             block: "rinoOrderedList",
             hasOpenClose: true,
-            getAttrs: tok => ({ order: +(tok.attrGet("order") || 1) })
+            getAttrs: tok => ({ order: +(tok.attrGet("order") || 1) }),
         },
-        'heading': {
+        heading: {
             block: "rinoHeading",
             hasOpenClose: true,
-            getAttrs: tok => ({ level: +tok.tag.slice(1) })
+            getAttrs: tok => ({ level: +tok.tag.slice(1) }),
         },
-        'code_block': {
+        // eslint-disable-next-line prettier/prettier
+        "code_block": {
             block: "rinoCodeBlock",
             hasOpenClose: false,
         },
-        'fence': {
+        fence: {
             block: "rinoCodeBlock",
             hasOpenClose: false,
-            getAttrs: tok => ({ language: tok.info || "" })
+            getAttrs: tok => ({ language: tok.info || "" }),
         }, // TODO what does fence do?
-        'hr': {
+        hr: {
             node: "rinoHorizontalRule",
             hasOpenClose: false,
         },
-        'image': {
+        image: {
             block: "paragraph",
             hasOpenClose: false,
         },
-        'hardbreak': {
+        hardbreak: {
             node: "rinoHardBreak",
             hasOpenClose: false,
         },
-    }
+    },
 )

@@ -1,16 +1,16 @@
 export interface Token {
     // Length of token.
-    length: number;
+    length: number
 
     // An array of class names to added to the target node.
-    classes: string[];
+    classes: string[]
 
     // The target node is wrapped in a DOM element of this type.
-    nodeName?: string;
+    nodeName?: string
 
     // Specify additional attrs that will be mapped directly to the
     // target node's DOM attributes.
-    nodeAttrs?: { [key: string]: string };
+    nodeAttrs?: { [key: string]: string }
 }
 
 function isEqual(a: string[], b: string[]): boolean {
@@ -36,7 +36,7 @@ export function mergeTokens(tokens: Token[]): Token[] {
 export function pushClass(token: Token, className: string): Token {
     if (
         token.classes.indexOf(className) === -1 &&
-        token.classes.indexOf("decoration_mark") === -1  // Token with "decoration_mark" will not accept other classes.
+        token.classes.indexOf("decoration_mark") === -1 // Token with "decoration_mark" will not accept other classes.
     ) {
         token.classes.push(className)
     }

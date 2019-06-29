@@ -18,6 +18,7 @@ jobs:
           yarn run test
           yarn run build
           yarn run coverage
+          yarn run lint
       - run: |
           git config --global user.email "ci@circleci.com"
           git config --global user.name "circleci"
