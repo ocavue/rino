@@ -1,7 +1,7 @@
 import { DecorationSet, Decoration } from "prosemirror-view"
-import { EditorState, Plugin, Transaction, } from "prosemirror-state"
-import { Node } from 'prosemirror-model';
-import { InlineLexer } from "../../markdown";
+import { EditorState, Plugin, Transaction } from "prosemirror-state"
+import { Node } from "prosemirror-model"
+import { InlineLexer } from "../../markdown"
 
 function parseText(node: Node, startIndex: number): Decoration[] {
     if (!node.text) {
@@ -13,7 +13,7 @@ function parseText(node: Node, startIndex: number): Decoration[] {
             startIndex,
             startIndex + token.length,
             {
-                class: token.classes ? token.classes.join(' ') : null,
+                class: token.classes ? token.classes.join(" ") : null,
                 nodeName: token.nodeName || null,
                 ...token.nodeAttrs,
             },
@@ -39,12 +39,15 @@ function parseTextBlock(node: Node, startIndex: number): Decoration[] {
 }
 
 function buildDecorationSet(doc: Node): DecorationSet {
-    console.log('building decorations. doc:', doc)
+    console.log("building decorations. doc:", doc)
     let decos: Decoration[] = parseTextBlock(doc, 0)
     return DecorationSet.create(doc, decos)
 }
 
-interface DecorationPluginState { set: DecorationSet; times: number }
+interface DecorationPluginState {
+    set: DecorationSet
+    times: number
+}
 
 const decorationPlugin = new Plugin({
     state: {
@@ -66,7 +69,7 @@ const decorationPlugin = new Plugin({
                     times: state.times + 1,
                 }
             }
-        }
+        },
     },
     props: {
         decorations(state: EditorState): DecorationSet {

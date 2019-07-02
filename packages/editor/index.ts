@@ -2,7 +2,7 @@ import { EditorState } from "prosemirror-state"
 import { EditorView } from "prosemirror-view"
 
 import { defaultMarkdownParser, defaultMarkdownSerializer } from "../markdown"
-import { proseMirrorPlugins } from '../plugins'
+import { proseMirrorPlugins } from "../plugins"
 
 let content: string
 content = `
@@ -51,7 +51,7 @@ console.log("Hello World!")
 `
 
 abstract class BaseView {
-    public constructor() { }
+    public constructor() {}
     abstract get content(): string
     abstract focus(): void
     abstract destroy(): void
@@ -69,8 +69,12 @@ class MarkdownView extends BaseView {
     public get content() {
         return this.textarea.value
     }
-    public focus() { this.textarea.focus() }
-    public destroy() { this.textarea.remove() }
+    public focus() {
+        this.textarea.focus()
+    }
+    public destroy() {
+        this.textarea.remove()
+    }
 }
 
 class ProseMirrorView extends BaseView {
@@ -82,23 +86,26 @@ class ProseMirrorView extends BaseView {
             state: EditorState.create({
                 doc: defaultMarkdownParser.parse(content),
                 plugins: proseMirrorPlugins,
-            })
+            }),
         })
     }
 
     public get content() {
         return defaultMarkdownSerializer.serialize(this.view.state.doc)
     }
-    public focus() { this.view.focus() }
-    public destroy() { this.view.destroy() }
+    public focus() {
+        this.view.focus()
+    }
+    public destroy() {
+        this.view.destroy()
+    }
 }
 
-
 function init() {
-    let place = document.body
+    let place = document.getElementById("editor") as HTMLElement
     let view: BaseView = new ProseMirrorView(place, content)
 
-    let checkbox = document.getElementById('checkbox')
+    let checkbox = document.getElementById("checkbox")
     if (!checkbox) throw new Error("Can't find checkbox")
     checkbox.addEventListener("change", () => {
         let isSourceMode = (checkbox as HTMLInputElement).checked

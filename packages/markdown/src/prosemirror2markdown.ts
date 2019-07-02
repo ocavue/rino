@@ -1,9 +1,8 @@
-import { Node, Mark } from "prosemirror-model";
-import * as _ from "lodash";
+import { Node, Mark } from "prosemirror-model"
+import * as _ from "lodash"
 
 type NodeSpec = (state: MarkdownSerializerState, node: Node, parent: Node, index: number) => void
 type NodeSpecs = Record<string, NodeSpec>
-
 
 // ::- This is an object used to track state and expose
 // methods related to markdown serialization. Instances are passed to
@@ -31,8 +30,7 @@ export class MarkdownSerializerState {
         //   on a node level by specifying a tight attribute on the node.
         //   Defaults to false.
         this.options = options || {}
-        if (typeof this.options.tightLists == "undefined")
-            this.options.tightLists = false
+        if (typeof this.options.tightLists == "undefined") this.options.tightLists = false
     }
 
     public flushClose(size?: number) {
@@ -77,8 +75,7 @@ export class MarkdownSerializerState {
     // (unescaped) to the output.
     public write(content?: string) {
         this.flushClose()
-        if (this.delimiter && this.atBlank())
-            this.out += this.delimiter
+        if (this.delimiter && this.atBlank()) this.out += this.delimiter
         if (content) this.out += content
     }
 
@@ -112,10 +109,8 @@ export class MarkdownSerializerState {
     // Render the contents of `parent` as inline content.
     public renderInline(parent: Node) {
         parent.forEach((node, offset, index) => {
-            if (node.isText)
-                this.text(node.text || '', false)
-            else
-                this.render(node, parent, index)
+            if (node.isText) this.text(node.text || "", false)
+            else this.render(node, parent, index)
         })
     }
 
@@ -124,12 +119,11 @@ export class MarkdownSerializerState {
     // `firstDelim` is a function going from an item index to a
     // delimiter for the first line of the item.
     public renderList(node: Node, delim: string, firstDelim: (n: number) => string): void {
-        if (this.closed instanceof Node && this.closed.type == node.type)
-            this.flushClose(3)
-        else if (this.inTightList)
-            this.flushClose(1)
+        if (this.closed instanceof Node && this.closed.type == node.type) this.flushClose(3)
+        else if (this.inTightList) this.flushClose(1)
 
-        let isTight = typeof node.attrs.tight != "undefined" ? node.attrs.tight : this.options.tightLists
+        let isTight =
+            typeof node.attrs.tight != "undefined" ? node.attrs.tight : this.options.tightLists
         let prevTight = this.inTightList
         this.inTightList = isTight
         node.forEach((child, _, i) => {
@@ -174,11 +168,10 @@ export class MarkdownSerializerState {
     public getEnclosingWhitespace(text: string) {
         return {
             leading: (text.match(/^(\s+)/) || [])[0],
-            trailing: (text.match(/(\s+)$/) || [])[0]
+            trailing: (text.match(/(\s+)$/) || [])[0],
         }
     }
 }
-
 
 export class MarkdownSerializer {
     private nodes: NodeSpecs
@@ -249,6 +242,6 @@ export const defaultMarkdownSerializer = new MarkdownSerializer({
             }
     },
     text(state, node, parent, index) {
-        state.text(node.text || '')
-    }
+        state.text(node.text || "")
+    },
 })

@@ -1,44 +1,22 @@
-import { assert } from 'chai';
-import 'mocha';
+import { assert } from "chai"
+import "mocha"
 
-import {
-    mergeTokens,
-    pushClass,
-} from '../src/token'
+import { mergeTokens, pushClass } from "../src/token"
 
-
-describe('Token', function () {
-    it('cleanTokens', function () {
+describe("Token", function() {
+    it("cleanTokens", function() {
+        assert.deepEqual(mergeTokens([{ classes: ["A"], length: 0 }]), [])
         assert.deepEqual(
-            mergeTokens([
-                { classes: ["A"], length: 0 },
-            ]),
-            []
+            mergeTokens([{ classes: ["A"], length: 0 }, { classes: ["A"], length: 0 }]),
+            [],
         )
         assert.deepEqual(
-            mergeTokens([
-                { classes: ["A"], length: 0 },
-                { classes: ["A"], length: 0 },
-            ]),
-            []
+            mergeTokens([{ classes: ["A"], length: 1 }, { classes: ["A"], length: 0 }]),
+            [{ classes: ["A"], length: 1 }],
         )
         assert.deepEqual(
-            mergeTokens([
-                { classes: ["A"], length: 1 },
-                { classes: ["A"], length: 0 },
-            ]),
-            [
-                { classes: ["A"], length: 1 },
-            ]
-        )
-        assert.deepEqual(
-            mergeTokens([
-                { classes: ["A"], length: 1 },
-                { classes: ["A"], length: 1 },
-            ]),
-            [
-                { classes: ["A"], length: 2 },
-            ]
+            mergeTokens([{ classes: ["A"], length: 1 }, { classes: ["A"], length: 1 }]),
+            [{ classes: ["A"], length: 2 }],
         )
         assert.deepEqual(
             mergeTokens([
@@ -48,9 +26,7 @@ describe('Token', function () {
                 { classes: ["A"], length: 1 },
                 { classes: ["A"], length: 1 },
             ]),
-            [
-                { classes: ["A"], length: 5 }
-            ]
+            [{ classes: ["A"], length: 5 }],
         )
         assert.deepEqual(
             mergeTokens([
@@ -62,23 +38,21 @@ describe('Token', function () {
                 { classes: ["A"], length: 1 },
                 { classes: ["B"], length: 1 },
                 { classes: ["C"], length: 1 },
-            ]
+            ],
         )
     })
-    it('pushClass', function () {
-        assert.deepEqual(
-            pushClass({ classes: ["B"], length: 0 }, "A"),
-            { classes: ["A", "B"], length: 0 }
-        )
-        assert.deepEqual(
-            pushClass({ classes: ["B"], length: 0 }, "B"),
-            { classes: ["B"], length: 0 }
-        )
-        assert.deepEqual(
-            pushClass({ classes: ["decoration_mark"], length: 0 }, "B"),
-            { classes: ["decoration_mark"], length: 0 }
-        )
+    it("pushClass", function() {
+        assert.deepEqual(pushClass({ classes: ["B"], length: 0 }, "A"), {
+            classes: ["A", "B"],
+            length: 0,
+        })
+        assert.deepEqual(pushClass({ classes: ["B"], length: 0 }, "B"), {
+            classes: ["B"],
+            length: 0,
+        })
+        assert.deepEqual(pushClass({ classes: ["decoration_mark"], length: 0 }, "B"), {
+            classes: ["decoration_mark"],
+            length: 0,
+        })
     })
 })
-
-

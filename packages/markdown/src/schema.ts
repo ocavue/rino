@@ -14,33 +14,41 @@ const nodes: { [name: string]: NodeSpec } = {
     */
 
     doc: {
-        content: "block+"
+        content: "block+",
     },
 
     text: {
         inline: true, // text is inline by default
         group: "inline",
-        toDOM(node) { return node.text || '' }
+        toDOM(node) {
+            return node.text || ""
+        },
     },
 
     paragraph: {
         content: "inline*",
         group: "block",
         parseDOM: [{ tag: "p" }],
-        toDOM() { return ["p", 0] }
+        toDOM() {
+            return ["p", 0]
+        },
     },
 
     rinoBlockquote: {
         content: "block+",
         group: "block",
         parseDOM: [{ tag: "blockquote" }],
-        toDOM() { return ["blockquote", 0] }
+        toDOM() {
+            return ["blockquote", 0]
+        },
     },
 
     rinoHorizontalRule: {
         group: "block",
         parseDOM: [{ tag: "hr" }],
-        toDOM() { return ["div", ["hr"]] }
+        toDOM() {
+            return ["div", ["hr"]]
+        },
     },
 
     rinoHeading: {
@@ -54,9 +62,11 @@ const nodes: { [name: string]: NodeSpec } = {
             { tag: "h3", attrs: { level: 3 } },
             { tag: "h4", attrs: { level: 4 } },
             { tag: "h5", attrs: { level: 5 } },
-            { tag: "h6", attrs: { level: 6 } }
+            { tag: "h6", attrs: { level: 6 } },
         ],
-        toDOM(node) { return ["h" + node.attrs.level, 0] }
+        toDOM(node) {
+            return ["h" + node.attrs.level, 0]
+        },
     },
 
     rinoCodeBlock: {
@@ -65,15 +75,15 @@ const nodes: { [name: string]: NodeSpec } = {
         code: true,
         defining: true,
         attrs: { language: { default: "" } },
-        parseDOM: [{
-            tag: "pre",
-            preserveWhitespace: true,
-            getAttrs: buildGetAttrs(
-                dom => (
-                    { language: dom.getAttribute("data-language") || "" }
-                )
-            )
-        }],
+        parseDOM: [
+            {
+                tag: "pre",
+                preserveWhitespace: true,
+                getAttrs: buildGetAttrs(dom => ({
+                    language: dom.getAttribute("data-language") || "",
+                })),
+            },
+        ],
         toDOM(node) {
             let empty: { [attr: string]: string } = {}
             return [
@@ -81,7 +91,7 @@ const nodes: { [name: string]: NodeSpec } = {
                 node.attrs.language ? { "data-language": node.attrs.language } : empty,
                 ["code", 0],
             ]
-        }
+        },
     },
 
     rinoOrderedList: {
@@ -89,54 +99,51 @@ const nodes: { [name: string]: NodeSpec } = {
         group: "block",
         attrs: {
             order: { default: 1 },
-            tight: { default: false }
+            tight: { default: false },
         },
-        parseDOM: [{
-            tag: "ol",
-            getAttrs: buildGetAttrs(
-                dom => ({
-                    order: dom.hasAttribute("start") ? (dom.getAttribute("start") || 1) : 1,
-                    tight: dom.hasAttribute("data-tight")
-                })
-            )
-        }],
+        parseDOM: [
+            {
+                tag: "ol",
+                getAttrs: buildGetAttrs(dom => ({
+                    order: dom.hasAttribute("start") ? dom.getAttribute("start") || 1 : 1,
+                    tight: dom.hasAttribute("data-tight"),
+                })),
+            },
+        ],
         toDOM(node) {
             return [
                 "ol",
                 {
-                    "start": node.attrs.order == 1 ? "" : node.attrs.order,
-                    "data-tight": node.attrs.tight ? "true" : ""
+                    start: node.attrs.order == 1 ? "" : node.attrs.order,
+                    "data-tight": node.attrs.tight ? "true" : "",
                 },
                 0,
             ]
-        }
+        },
     },
 
     rinoBulletList: {
         content: "rinoListItem+",
         group: "block",
         attrs: { tight: { default: false } },
-        parseDOM: [{
-            tag: "ul",
-            getAttrs: buildGetAttrs(
-                dom => ({ tight: dom.hasAttribute("data-tight") })
-            )
-        }
+        parseDOM: [
+            {
+                tag: "ul",
+                getAttrs: buildGetAttrs(dom => ({ tight: dom.hasAttribute("data-tight") })),
+            },
         ],
         toDOM(node) {
-            return [
-                "ul",
-                { "data-tight": node.attrs.tight ? "true" : "" },
-                0,
-            ]
-        }
+            return ["ul", { "data-tight": node.attrs.tight ? "true" : "" }, 0]
+        },
     },
 
     rinoListItem: {
         content: "paragraph block*", // Means 'first a paragraph, then one or more blocks'.
         defining: true,
         parseDOM: [{ tag: "li" }],
-        toDOM() { return ["li", 0] }
+        toDOM() {
+            return ["li", 0]
+        },
     },
 
     /*
@@ -168,9 +175,10 @@ const nodes: { [name: string]: NodeSpec } = {
         group: "inline",
         selectable: false,
         parseDOM: [{ tag: "br" }],
-        toDOM() { return ["br"] }
-    }
-
+        toDOM() {
+            return ["br"]
+        },
+    },
 }
 
 /*

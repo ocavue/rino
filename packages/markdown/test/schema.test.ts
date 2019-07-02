@@ -1,7 +1,7 @@
 import { builders } from "prosemirror-test-builder"
 import { schema } from "../index"
-import { assert } from 'chai';
-import 'mocha';
+import { assert } from "chai"
+import "mocha"
 
 const def = {
     p: { nodeType: "paragraph" },
@@ -17,17 +17,17 @@ const def = {
     ul: { nodeType: "rinoBulletList" },
     br: { nodeType: "rinoHardBreak" },
     pre: { nodeType: "rinoCodeBlock" },
-    preJS: { nodeType: "rinoCodeBlock", "language": 'javascript' },
+    preJS: { nodeType: "rinoCodeBlock", language: "javascript" },
     blockquote: { nodeType: "rinoBlockquote" },
 }
 
 const nodes = builders(schema, def)
 
-describe('schema', function () {
-    describe('types', function () {
+describe("schema", function() {
+    describe("types", function() {
         for (let key of Object.keys(def)) {
-            it(`key: ${key}`, function () {
-                assert.equal(typeof nodes[key], 'function')
+            it(`key: ${key}`, function() {
+                assert.equal(typeof nodes[key], "function")
             })
         }
     })

@@ -2,17 +2,15 @@ import { inputRules, wrappingInputRule, textblockTypeInputRule } from "prosemirr
 import { Node } from "prosemirror-model"
 import { Plugin } from "prosemirror-state"
 
-import { schema } from '../../markdown'
+import { schema } from "../../markdown"
 
 function buildMdInputRules(): Plugin {
     return inputRules({
         rules: [
             // heading
-            textblockTypeInputRule(
-                /^(#{1,6})\s$/,
-                schema.nodes.rinoHeading,
-                (match: string[]) => ({ level: match[1].length })
-            ),
+            textblockTypeInputRule(/^(#{1,6})\s$/, schema.nodes.rinoHeading, (match: string[]) => ({
+                level: match[1].length,
+            })),
 
             // ordered list
             wrappingInputRule(
@@ -23,17 +21,11 @@ function buildMdInputRules(): Plugin {
             ),
 
             // bullet list
-            wrappingInputRule(
-                /^\s*([-+*])\s$/,
-                schema.nodes.rinoBulletList,
-            ),
+            wrappingInputRule(/^\s*([-+*])\s$/, schema.nodes.rinoBulletList),
 
             // block quote
-            wrappingInputRule(
-                /^\s*>\s$/,
-                schema.nodes.rinoBlockquote,
-            ),
-        ]
+            wrappingInputRule(/^\s*>\s$/, schema.nodes.rinoBlockquote),
+        ],
     })
 }
 

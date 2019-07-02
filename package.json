@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "parcel packages/app/index.html",
     "build": "parcel build packages/app/index.html --public-url ./",
+    "lint": "eslint --ext .js,.ts,.vue ./packages",
     "test": "nyc mocha --require ts-node/register --require source-map-support/register --full-trace ./packages/**/*.test.ts ",
     "coverage": "nyc report --reporter=text-lcov | COVERALLS_REPO_TOKEN=$COVERALLS_REPO_TOKEN coveralls"
   },
@@ -44,18 +45,25 @@
     "@types/prosemirror-view": "^1.3.2",
     "@typescript-eslint/eslint-plugin": "^1.9.0",
     "@typescript-eslint/parser": "^1.9.0",
+    "@vue/component-compiler-utils": "^3.0.0",
     "babel-core": "^6.26.3",
     "babel-preset-env": "^1.7.0",
     "chai": "^4.2.0",
     "coveralls": "^3.0.4",
     "eslint": "^5.16.0",
+    "eslint-config-prettier": "^6.0.0",
+    "eslint-plugin-prettier": "^3.1.0",
+    "eslint-plugin-vue": "^5.2.3",
     "mocha": "^6.1.4",
     "nyc": "^14.1.1",
     "parcel-bundler": "^1.12.3",
+    "prettier": "1.18.2",
     "prosemirror-test-builder": "^1.0.1",
     "sass": "^1.22.1",
     "ts-node": "^8.2.0",
-    "typescript": "^3.5.1"
+    "typescript": "^3.5.1",
+    "vue-hot-reload-api": "^2.3.3",
+    "vue-template-compiler": "^2.6.10"
   },
   "dependencies": {
     "github-markdown-css": "^3.0.1",
@@ -70,6 +78,7 @@
     "prosemirror-model": "^1.7.1",
     "prosemirror-schema-list": "^1.0.3",
     "prosemirror-state": "^1.2.3",
-    "prosemirror-view": "^1.9.8"
+    "prosemirror-view": "^1.9.8",
+    "vue": "^2.6.10"
   }
 }
