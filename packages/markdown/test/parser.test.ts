@@ -1,7 +1,7 @@
 import { eq, TaggedProsemirrorNode } from "prosemirror-test-builder"
 import { assert } from "chai"
 import "mocha"
-import { defaultMarkdownParser } from "../src/markdown2prosemirror"
+import { defaultMarkdownParser } from "../src/parser"
 import { testcases } from "./base"
 import { nodes } from "./schema.test"
 

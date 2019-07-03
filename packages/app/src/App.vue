@@ -13,7 +13,7 @@
 
 <script lang="ts">
 import Vue from "vue"
-import Editor from "../../editor/src/Editor.vue"
+import Editor from "./Editor.vue"
 
 export default Vue.extend({
     components: { Editor },

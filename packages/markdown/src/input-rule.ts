@@ -2,7 +2,7 @@ import { inputRules, wrappingInputRule, textblockTypeInputRule } from "prosemirr
 import { Node } from "prosemirror-model"
 import { Plugin } from "prosemirror-state"
 
-import { schema } from "../../markdown"
+import { schema } from "./schema"
 
 function buildMdInputRules(): Plugin {
     return inputRules({

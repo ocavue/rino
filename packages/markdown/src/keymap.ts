@@ -18,7 +18,7 @@ import { undoInputRule } from "prosemirror-inputrules"
 import { Plugin, EditorState, Transaction, TextSelection } from "prosemirror-state"
 import { EditorView } from "prosemirror-view"
 
-import { schema } from "../../markdown"
+import { schema } from "./schema"
 
 type Command = (state: EditorState, dispatch?: (tr: Transaction) => void) => boolean
 
@@ -73,7 +73,7 @@ function buildBlockEnterKeymapBindings(
     // https://discuss.prosemirror.net/t/trigger-inputrule-on-enter/1118/4
     return {
         Enter: (state, dispatch) => {
-            // Some code is copy from ./node_modules/prosemirror-inputrules/src/inputrules.js
+            // Some code is copy from prosemirror-inputrules/src/inputrules.js
             if (!(state.selection instanceof TextSelection)) {
                 return false
             }

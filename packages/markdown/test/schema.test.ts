@@ -1,5 +1,5 @@
 import { builders } from "prosemirror-test-builder"
-import { schema } from "../index"
+import { schema } from "../src/schema"
 import { assert } from "chai"
 import "mocha"
 
