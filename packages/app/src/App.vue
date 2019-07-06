@@ -1,13 +1,6 @@
 <template>
     <div>
-        <header>
-            Rino (Early Access Version)
-            <span style="flex: 1;"></span>
-            <input v-model="sourceCodeMode" type="checkbox" />
-            Source Code Mode
-        </header>
-        <Editor :source-code-mode="sourceCodeMode" />
-        <footer>vue footer</footer>
+        <Editor />
     </div>
 </template>
 
@@ -18,9 +11,7 @@ import Editor from "./Editor.vue"
 export default Vue.extend({
     components: { Editor },
     data() {
-        return {
-            sourceCodeMode: false,
-        }
+        return {}
     },
 })
 </script>
