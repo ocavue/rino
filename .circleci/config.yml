@@ -16,7 +16,7 @@ jobs:
           key: v1-dependencies-{{ checksum "yarn.lock" }}
       - run: |
           yarn run test
-          yarn run build
+          yarn run build --no-source-maps
           yarn run coverage
           yarn run lint
       - run: |
