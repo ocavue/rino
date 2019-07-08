@@ -24,13 +24,13 @@ jobs:
           git config --global user.name "circleci"
       - run: |
           if [ "${CIRCLE_BRANCH}" == "master" ]; then
-            git clone https://github.com/ocavue/projects.git ~/projects
-            cd ~/projects/rino
+            git clone -q ${DEPLOY_REPO_URL} ~/deploy
+            cd ~/deploy
             rm -rf ./*
-            cp -r ~/rino/public/* ~/projects/rino
-            cp -r ~/rino/dist/* ~/projects/rino
-            echo "<!-- $(date '+%Y-%m-%d %H:%M:%S %z') -->" >> ~/projects/rino/index.html
+            cp -r ~/rino/public/* ~/deploy
+            cp -r ~/rino/dist/* ~/deploy
+            echo "<!-- $(date '+%Y-%m-%d %H:%M:%S %z') -->" >> ~/deploy/index.html
             git add --all
             git commit -m update
-            git push -q https://${GITHUB_USER_TOKEN}@github.com/ocavue/projects.git master
+            git push -q
           fi
