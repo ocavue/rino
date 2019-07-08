@@ -1,13 +1,18 @@
 <template>
-    <div ref="container" class="editor-container markdown-body" @keydown="handleKeydown"></div>
+    <div ref="editor" class="markdown-body" @keydown="handleKeydown"></div>
 </template>
 
 <script lang="ts">
 import Vue from "vue"
-import { BaseView, ProseMirrorView, MarkdownView } from "../../markdown/src/views"
-import { defaultContent } from "./welcome"
+import { BaseView, ProseMirrorView, MarkdownView } from "../../../markdown/src/views"
 
 export default Vue.extend({
+    props: {
+        content: {
+            type: String,
+            required: true,
+        },
+    },
     data(): {
         view?: BaseView
         sourceCodeMode: boolean
@@ -18,8 +23,9 @@ export default Vue.extend({
         }
     },
     mounted: function() {
-        let place = this.$refs.container as HTMLElement
-        this.view = new ProseMirrorView(place, defaultContent)
+        if (this.view) this.view.destroy()
+        let place = this.$refs.editor as HTMLElement
+        this.view = new ProseMirrorView(place, this.content)
     },
     beforeDestroy: function() {
         if (this.view) this.view.destroy()
@@ -31,7 +37,7 @@ export default Vue.extend({
             let View = this.sourceCodeMode ? MarkdownView : ProseMirrorView
             let content = this.view.content
             this.view.destroy()
-            this.view = new View(this.$refs.container as HTMLElement, content)
+            this.view = new View(this.$refs.editor as HTMLElement, content)
             this.view.focus()
         },
         handleKeydown: function(event: KeyboardEvent) {
@@ -40,11 +46,15 @@ export default Vue.extend({
                 this.switchEditor()
             }
         },
+        getContent: function(): string {
+            // This method will be called by parent component.
+            return this.view ? this.view.content : ""
+        },
     },
 })
 </script>
 
 <style lang="sass" scoped>
-@import url("../../../node_modules/github-markdown-css/github-markdown.css")
-@import url("../style/editor.sass")
+@import url("../../../../node_modules/github-markdown-css/github-markdown.css")
+@import url("../../style/editor.sass")
 </style>

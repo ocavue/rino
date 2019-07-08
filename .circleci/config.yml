@@ -15,6 +15,7 @@ jobs:
             - node_modules
           key: v1-dependencies-{{ checksum "yarn.lock" }}
       - run: |
+          echo ${DEPLOY_CONFIG_FIREBASE} > ./config/firebase.json
           yarn run test
           yarn run build --no-source-maps
           yarn run coverage
