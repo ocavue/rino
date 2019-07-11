@@ -6,8 +6,10 @@
   "scripts": {
     "dev": "parcel packages/app/index.html",
     "build": "parcel build packages/app/index.html --public-url ./",
-    "lint": "eslint --ext .js,.ts,.vue ./packages",
+    "lint": "eslint --ext .js,.ts,.vue ./packages ./cypress",
     "test": "nyc mocha --require ts-node/register --require source-map-support/register --full-trace ./packages/**/*.test.ts ",
+    "cypress:open": "cypress open",
+    "cypress:run": "cypress run",
     "coverage": "nyc report --reporter=text-lcov | COVERALLS_REPO_TOKEN=$COVERALLS_REPO_TOKEN coveralls"
   },
   "nyc": {
@@ -50,6 +52,7 @@
     "babel-preset-env": "^1.7.0",
     "chai": "^4.2.0",
     "coveralls": "^3.0.4",
+    "cypress": "^3.4.0",
     "eslint": "^5.16.0",
     "eslint-config-prettier": "^6.0.0",
     "eslint-plugin-prettier": "^3.1.0",

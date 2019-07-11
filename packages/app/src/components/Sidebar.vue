@@ -1,7 +1,7 @@
 <template>
     <div class="sidebar">
-        <div v-if="loading">Loading...</div>
-        <div v-for="note in notes" :key="note.id">
+        <div v-if="loading" class="sidebar__loading">Loading...</div>
+        <div v-for="note in notes" :key="note.id" class="sidebar__item">
             <router-link :to="`/e/${note.id}`">
                 {{ note.id }}
             </router-link>
