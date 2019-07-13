@@ -1,36 +1,77 @@
-version: 2
-jobs:
-  build:
+version: 2.1
+
+workflows:
+  version: 2
+  main_workflows:
+    jobs:
+      - test
+      - build
+      - deploy:
+          requires:
+            - test
+            - build
+
+executors:
+  node-executor:
     docker:
-      - image: circleci/node:10
-    working_directory: ~/rino
+      # Cypress never overwrite the existing Docker images to prevent accidental changes. So it is better to use full version of the image.
+      - image: cypress/base:10.16.0
+
+commands:
+  install:
     steps:
       - checkout
       - restore_cache:
           keys:
-            - v1-dependencies-{{ checksum "yarn.lock" }}
-      - run: yarn install
+            - v3-dependencies-{{ checksum "yarn.lock" }}
+      - run: yarn install --frozen-lockfile
       - save_cache:
           paths:
             - node_modules
-          key: v1-dependencies-{{ checksum "yarn.lock" }}
+            - /root/.cache/Cypress/
+          key: v3-dependencies-{{ checksum "yarn.lock" }}
+
+jobs:
+  test:
+    executor: node-executor
+    steps:
+      - install
+      - run: echo ${DEPLOY_CONFIG_FIREBASE} > ./config/firebase.json
+      - run: yarn run test
+      - run: yarn run coverage
+      - run: yarn run lint
       - run: |
-          echo ${DEPLOY_CONFIG_FIREBASE} > ./config/firebase.json
-          yarn run test
-          yarn run build --no-source-maps
-          yarn run coverage
-          yarn run lint
+          yarn run dev &
+          ./scripts/wait-server.sh http://localhost:1234
+          yarn run cypress:run
+  build:
+    executor: node-executor
+    steps:
+      - install
+      - run: echo ${DEPLOY_CONFIG_FIREBASE} > ./config/firebase.json
+      - run: yarn run build --no-source-maps
       - run: |
-          git config --global user.email "ci@circleci.com"
-          git config --global user.name "circleci"
+          mkdir -p /tmp/deploy
+          cp -r ./public/* /tmp/deploy
+          cp -r ./dist/* /tmp/deploy
+          echo "<!-- $(date '+%Y-%m-%d %H:%M:%S %z') -->" >> /tmp/deploy/index.html
+      - persist_to_workspace:
+          root: /tmp/deploy
+          paths:
+            - .
+  deploy:
+    executor: node-executor
+    steps:
+      - attach_workspace:
+          at: /tmp/deploy
       - run: |
           if [ "${CIRCLE_BRANCH}" == "master" ]; then
+            git config --global user.email "ci@circleci.com"
+            git config --global user.name "circleci"
             git clone -q ${DEPLOY_REPO_URL} ~/deploy
             cd ~/deploy
             rm -rf ./*
-            cp -r ~/rino/public/* ~/deploy
-            cp -r ~/rino/dist/* ~/deploy
-            echo "<!-- $(date '+%Y-%m-%d %H:%M:%S %z') -->" >> ~/deploy/index.html
+            cp -r /tmp/deploy/* ~/deploy
             git add --all
             git commit -m update
             git push -q
