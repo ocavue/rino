@@ -56,13 +56,17 @@ class InlineLexer {
                     { length: 2, classes: ["decoration_mark"] },
                     { length: match[1].length, classes: ["decoration_image_text"] },
                     { length: 2, classes: ["decoration_mark"] },
+                    { length: match[2].length, classes: ["decoration_image_url"] },
                     {
-                        length: match[2].length,
-                        classes: ["decoration_image_url"],
-                        nodeAttrs: {
-                            style: `--css-variables-rino-image-url: url("${match[2]}");`,
-                            // https://stackoverflow.com/a/46572990
-                        },
+                        isWidget: true,
+                        length: 0,
+                        classes: [],
+                        key: match[2],
+                        dom: (() => {
+                            let img = new Image()
+                            img.src = match[2]
+                            return img
+                        })(),
                     },
                     { length: 1, classes: ["decoration_mark"] },
                 ],

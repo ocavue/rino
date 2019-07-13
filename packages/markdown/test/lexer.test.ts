@@ -172,21 +172,61 @@ describe("InlineLexer", function() {
         })
     })
     describe("image", function() {
-        it("normal", function() {
-            assertTokenEqual(lexer.scan("![Image](https://via.placeholder.com/150)"), [
-                { length: 2, classes: ["decoration_mark"] }, // ![
+        // Mocha environment has not global variable "Image", so I have to mock one.
+        const ImageMock = class {
+            public src: string
+            public constructor() {
+                this.src = ""
+            }
+        }
+        ;(global as any).Image = ImageMock
+
+        it("Solid image", function() {
+            let image = new ImageMock()
+            image.src = "https://via.placeholder.com/42"
+
+            let actualTokens: Token[] = lexer.scan("![Image](https://via.placeholder.com/42)")
+            let expectedTokens: Token[] = [
+                { length: 2, classes: ["decoration_mark"] },
                 { length: 5, classes: ["decoration_image_text"] },
-                { length: 2, classes: ["decoration_mark"] }, // ](
+                { length: 2, classes: ["decoration_mark"] },
+                { length: 30, classes: ["decoration_image_url"] },
                 {
-                    length: 31,
-                    classes: ["decoration_image_url"],
-                    nodeAttrs: {
-                        style:
-                            '--css-variables-rino-image-url: url("https://via.placeholder.com/150");',
-                    },
+                    isWidget: true,
+                    length: 0,
+                    classes: [],
+                    key: "https://via.placeholder.com/42",
+                    dom: (image as any) as HTMLElement,
                 },
-                { length: 1, classes: ["decoration_mark"] }, // )
-            ])
+                { length: 1, classes: ["decoration_mark"] },
+            ]
+            assertTokenEqual(actualTokens, expectedTokens)
+        })
+
+        it("Image with text around", function() {
+            let image = new ImageMock()
+            image.src = "https://via.placeholder.com/42"
+
+            let actualTokens: Token[] = lexer.scan(
+                "text![Image](https://via.placeholder.com/42)text",
+            )
+            let expectedTokens: Token[] = [
+                { length: 4, classes: [] },
+                { length: 2, classes: ["decoration_mark"] },
+                { length: 5, classes: ["decoration_image_text"] },
+                { length: 2, classes: ["decoration_mark"] },
+                { length: 30, classes: ["decoration_image_url"] },
+                {
+                    isWidget: true,
+                    length: 0,
+                    classes: [],
+                    key: "https://via.placeholder.com/42",
+                    dom: (image as any) as HTMLElement,
+                },
+                { length: 1, classes: ["decoration_mark"] },
+                { length: 4, classes: [] },
+            ]
+            assertTokenEqual(actualTokens, expectedTokens)
         })
     })
     describe("link", function() {

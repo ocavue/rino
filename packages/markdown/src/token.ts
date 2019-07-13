@@ -1,4 +1,6 @@
-export interface Token {
+interface InlineToken {
+    isWidget?: false
+
     // Length of token.
     length: number
 
@@ -13,7 +15,23 @@ export interface Token {
     nodeAttrs?: { [key: string]: string }
 }
 
-function isEqual(a: string[], b: string[]): boolean {
+interface WidgetToken {
+    isWidget: true
+
+    // Length of token.
+    length: 0
+
+    // An array of class names to added to the target node.
+    classes: string[]
+
+    key: string
+
+    dom: HTMLElement
+}
+
+export type Token = InlineToken | WidgetToken
+
+function isStringsEqual(a: string[], b: string[]): boolean {
     if (a.length !== b.length) return false
     for (let i = 0; i < a.length; i++) {
         if (a[i] !== b[i]) return false
@@ -25,12 +43,16 @@ function isEqual(a: string[], b: string[]): boolean {
 export function mergeTokens(tokens: Token[]): Token[] {
     for (let i = 0; i <= tokens.length - 2; i++) {
         let [self, next] = tokens.slice(i, i + 2)
-        if (isEqual(self.classes, next.classes)) {
+
+        // WidgetTokens are unmergeable
+        if (self.isWidget || next.isWidget) continue
+
+        if (isStringsEqual(self.classes, next.classes)) {
             next.length += self.length
             self.length = 0
         }
     }
-    return tokens.filter(token => token.length > 0)
+    return tokens.filter(token => token.isWidget || token.length > 0)
 }
 
 export function pushClass(token: Token, className: string): Token {

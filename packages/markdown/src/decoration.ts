@@ -9,16 +9,21 @@ function parseText(node: Node, startIndex: number): Decoration[] {
     }
     let tokens = new InlineLexer().scan(node.text)
     return tokens.map(token => {
-        let deco = Decoration.inline(
-            startIndex,
-            startIndex + token.length,
-            {
-                class: token.classes ? token.classes.join(" ") : null,
-                nodeName: token.nodeName || null,
-                ...token.nodeAttrs,
-            },
-            { inclusiveStart: false, inclusiveEnd: true },
-        )
+        let deco: Decoration
+        if (token.isWidget) {
+            deco = Decoration.widget(startIndex, () => token.dom, { key: token.key })
+        } else {
+            deco = Decoration.inline(
+                startIndex,
+                startIndex + token.length,
+                {
+                    class: token.classes ? token.classes.join(" ") : null,
+                    nodeName: token.nodeName || null,
+                    ...token.nodeAttrs,
+                },
+                { inclusiveStart: false, inclusiveEnd: true },
+            )
+        }
         startIndex += token.length
         return deco
     })
