@@ -172,8 +172,8 @@ describe("InlineLexer", function() {
         })
     })
     describe("image", function() {
-        // mocha environment has not global variable "Image"
-        class ImageMock {
+        // Mocha environment has not global variable "Image", so I have to mock one.
+        const ImageMock = class {
             public src: string
             public constructor() {
                 this.src = ""
