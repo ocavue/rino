@@ -1,5 +1,5 @@
-interface InlineToken  {
-    isWidget?: false;
+interface InlineToken {
+    isWidget?: false
 
     // Length of token.
     length: number
@@ -16,17 +16,17 @@ interface InlineToken  {
 }
 
 interface WidgetToken {
-    isWidget: true;
+    isWidget: true
 
     // Length of token.
-    length: 0;
+    length: 0
 
     // An array of class names to added to the target node.
-    classes: string[];
+    classes: string[]
 
-    key: string;
+    key: string
 
-    dom: HTMLElement;
+    dom: HTMLElement
 }
 
 export type Token = InlineToken | WidgetToken
@@ -52,7 +52,7 @@ export function mergeTokens(tokens: Token[]): Token[] {
             self.length = 0
         }
     }
-    return tokens.filter(token => (token.isWidget || token.length > 0))
+    return tokens.filter(token => token.isWidget || token.length > 0)
 }
 
 export function pushClass(token: Token, className: string): Token {
