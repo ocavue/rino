@@ -12,14 +12,17 @@ const router = new VueRouter({
     mode: "history",
     routes: [
         {
+            name: "index",
             path: "/",
             component: Welcome,
         },
         {
+            name: "edit",
             path: "/e/:id", // 'e' for 'edit'
             component: EditorContainer,
         },
         {
+            name: "not found",
             path: "*",
             component: NotFound,
         },
