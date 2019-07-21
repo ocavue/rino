@@ -7,13 +7,13 @@
             :key="note.id"
             :class="{
                 'sidebar-item': true,
-                'sidebar-item--active': currentNoteId === note.id,
+                'sidebar-item--active': currentNote === note,
             }"
         >
-            <router-link :to="`/e/${note.id}`" class="sidebar-item__link">
+            <a class="sidebar-item__link" @click="() => switchNote(note)">
                 {{ note.id }}
-            </router-link>
-            <button @click="remove(note.id)">Delete</button>
+            </a>
+            <button @click="() => deleteNote(note)">Delete</button>
         </div>
     </div>
 </template>
@@ -23,36 +23,30 @@ import Vue from "vue"
 import { Note } from "../controller"
 
 export default Vue.extend({
-    data: (): {
-        notes: { id: string }[]
-        loading: boolean
-        unsubscribe: () => void
-    } => ({
-        notes: [],
-        loading: true,
-        unsubscribe: () => {},
-    }),
-    computed: {
-        currentNoteId: function(): string {
-            return this.$route.name === "edit" ? this.$route.params.id : ""
+    props: {
+        notes: {
+            type: Array as () => Note[],
+            required: true,
         },
-    },
-    created: async function() {
-        this.notes = await Note.list()
-        this.loading = false
-        this.unsubscribe = Note.listen(notes => (this.notes = notes))
-    },
-    beforeDestroy: function() {
-        this.unsubscribe()
+        currentNote: {
+            type: Note,
+            required: false,
+            default: undefined,
+        },
+        loading: {
+            type: Boolean,
+            required: true,
+        },
     },
     methods: {
-        remove: async function(id: string) {
-            await Note.remove(id)
+        createNote: function() {
+            this.$emit("create-note")
         },
-        createNote: async function() {
-            let doc = await Note.create()
-            await Note.update(doc.id, "# default content")
-            this.$router.push({ path: `/e/${doc.id}` })
+        switchNote: function(note: Note) {
+            this.$emit("switch-note", note)
+        },
+        deleteNote: function(note: Note) {
+            this.$emit("delete-note", note)
         },
     },
 })

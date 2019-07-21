@@ -29,4 +29,7 @@ if (firebase.apps.length === 0) {
         })
 }
 
-export default firebase
+export { firebase }
+export type DocumentReference = firebase.firestore.DocumentReference
+export type DocumentSnapshot = firebase.firestore.DocumentSnapshot
+export type Timestamp = firebase.firestore.Timestamp

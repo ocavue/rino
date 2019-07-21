@@ -1,25 +1,48 @@
 <template>
     <div id="app">
-        <Sidebar></Sidebar>
-        <router-view id="main"></router-view>
+        <Sidebar
+            :notes="notes"
+            :current-note="note"
+            :loading="loadingNotes"
+            @create-note="createNote"
+            @switch-note="switchNote"
+            @delete-note="deleteNote"
+        >
+        </Sidebar>
+        <main id="main">
+            <Editor v-if="note" :key="note.id" :note="note"></Editor>
+            <Welcome v-else />
+        </main>
     </div>
 </template>
 
 <script lang="ts">
 import Vue from "vue"
 
-import { firebase } from "./controller"
+import { sortBy } from "lodash"
 
+import { firebase, Note } from "./controller"
 import Sidebar from "./components/Sidebar.vue"
+import Editor from "./components/Editor.vue"
+import Welcome from "./components/Welcome.vue"
 
 export default Vue.extend({
-    components: { Sidebar },
-    data(): {
+    components: { Sidebar, Editor, Welcome },
+    data: (): {
         user?: firebase.User
-    } {
-        return {
-            user: undefined,
-        }
+        notes: Note[]
+        note?: Note // Current note
+        loadingNotes: boolean
+    } => ({
+        user: undefined,
+        notes: [],
+        note: undefined,
+        loadingNotes: true,
+    }),
+    created: async function() {
+        const notes = await Note.list()
+        this.loadingNotes = false
+        this.notes = sortBy(notes, note => [note.createTime, note.id])
     },
     mounted: function() {
         this.initAuth()
@@ -45,6 +68,20 @@ export default Vue.extend({
                 .auth()
                 .signInAnonymously()
                 .catch(error => console.error(`Failed to sign in: ${error}`))
+        },
+        createNote: function() {
+            const note = new Note()
+            this.notes.push(note)
+            this.note = note
+        },
+        switchNote: function(note: Note) {
+            this.note = note
+        },
+        deleteNote: function(note: Note) {
+            note.remove()
+            if (this.note === note) this.note = undefined
+            const index = this.notes.indexOf(note)
+            if (index > -1) this.notes.splice(index, 1)
         },
     },
 })
