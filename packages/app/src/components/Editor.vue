@@ -5,11 +5,12 @@
 <script lang="ts">
 import Vue from "vue"
 import { BaseView, ProseMirrorView, MarkdownView } from "../../../markdown/src/views"
+import { Note } from "../controller"
 
 export default Vue.extend({
     props: {
-        content: {
-            type: String,
+        note: {
+            type: Note,
             required: true,
         },
     },
@@ -25,10 +26,13 @@ export default Vue.extend({
     mounted: function() {
         if (this.view) this.view.destroy()
         let place = this.$refs.editor as HTMLElement
-        this.view = new ProseMirrorView(place, this.content)
+        this.view = new ProseMirrorView(place, this.note.content)
     },
     beforeDestroy: function() {
-        if (this.view) this.view.destroy()
+        if (this.view) {
+            this.note.updateContent(this.view.content)
+            this.view.destroy()
+        }
     },
     methods: {
         switchEditor: function() {
@@ -45,10 +49,6 @@ export default Vue.extend({
                 console.debug("meta + / has been pressed")
                 this.switchEditor()
             }
-        },
-        getContent: function(): string {
-            // This method will be called by parent component.
-            return this.view ? this.view.content : ""
         },
     },
 })
