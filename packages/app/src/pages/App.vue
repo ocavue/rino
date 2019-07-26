@@ -21,10 +21,10 @@ import Vue from "vue"
 
 import { sortBy } from "lodash"
 
-import { firebase, Note } from "./controller"
-import Sidebar from "./components/Sidebar.vue"
-import Editor from "./components/Editor.vue"
-import Welcome from "./components/Welcome.vue"
+import { firebase, Note } from "../controller"
+import Sidebar from "../components/Sidebar.vue"
+import Editor from "../components/Editor.vue"
+import Welcome from "../components/Welcome.vue"
 
 export default Vue.extend({
     components: { Sidebar, Editor, Welcome },
@@ -87,14 +87,7 @@ export default Vue.extend({
 })
 </script>
 
-<style lang="scss">
-body {
-    font-family: "Fira Mono", "DejaVu Sans Mono", "Menlo", "Consolas", "Liberation Mono", "Monaco",
-        "Lucida Console", monospace;
-    padding: 0;
-    margin: 0;
-}
-
+<style lang="scss" scoped>
 #app {
     display: flex;
     min-height: 100vh;

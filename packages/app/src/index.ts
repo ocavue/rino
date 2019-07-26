@@ -1,8 +1,9 @@
 import Vue from "vue"
 import VueRouter from "vue-router"
 
-import App from "./src/App.vue"
-import NotFound from "./src/components/NotFound.vue"
+import Layout from "./Layout.vue"
+import App from "./pages/App.vue"
+import NotFound from "./pages/NotFound.vue"
 
 Vue.use(VueRouter)
 
@@ -10,8 +11,13 @@ const router = new VueRouter({
     mode: "history",
     routes: [
         {
-            name: "index",
             path: "/",
+            redirect: "/e/",
+        },
+        {
+            name: "index",
+            path: "/e/",
+            component: App,
         },
         {
             name: "not found",
@@ -22,6 +28,6 @@ const router = new VueRouter({
 })
 
 new Vue({
-    render: h => h(App),
+    render: h => h(Layout),
     router,
 }).$mount("#app")
