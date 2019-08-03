@@ -1,7 +1,5 @@
 import { builders } from "prosemirror-test-builder"
 import { schema } from "../src/schema"
-import { assert } from "chai"
-import "mocha"
 
 const def = {
     p: { nodeType: "paragraph" },
@@ -27,7 +25,7 @@ describe("schema", function() {
     describe("types", function() {
         for (let key of Object.keys(def)) {
             it(`key: ${key}`, function() {
-                assert.equal(typeof nodes[key], "function")
+                expect(typeof nodes[key]).toBe("function")
             })
         }
     })

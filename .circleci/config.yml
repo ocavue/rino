@@ -14,8 +14,7 @@ workflows:
 executors:
   node-executor:
     docker:
-      # Cypress never overwrite the existing Docker images to prevent accidental changes. So it is better to use full version of the image.
-      - image: cypress/base:10.16.0
+      - image: circleci/node:10-stretch-browsers
 
 commands:
   install:
@@ -23,13 +22,12 @@ commands:
       - checkout
       - restore_cache:
           keys:
-            - v3-dependencies-{{ checksum "yarn.lock" }}
+            - v6-dependencies-{{ checksum "yarn.lock" }}
       - run: yarn install --frozen-lockfile
       - save_cache:
           paths:
             - node_modules
-            - /root/.cache/Cypress/
-          key: v3-dependencies-{{ checksum "yarn.lock" }}
+          key: v6-dependencies-{{ checksum "yarn.lock" }}
 
 jobs:
   test:
@@ -37,13 +35,12 @@ jobs:
     steps:
       - install
       - run: echo ${DEPLOY_CONFIG_FIREBASE} > ./config/firebase.json
-      - run: yarn run test
-      - run: yarn run coverage
       - run: yarn run lint
       - run: |
           yarn run dev &
           ./scripts/wait-server.sh http://localhost:1234
-          yarn run cypress:run
+          yarn run test --coverage
+          yarn run coverage
   build:
     executor: node-executor
     steps:

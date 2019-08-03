@@ -1,24 +1,25 @@
-import { assert } from "chai"
-import "mocha"
-
 import { mergeTokens, pushClass } from "../src/token"
+
+function assertDeepEqual(a: any, b: any) {
+    expect(a).toStrictEqual(b)
+}
 
 describe("Token", function() {
     it("cleanTokens", function() {
-        assert.deepEqual(mergeTokens([{ classes: ["A"], length: 0 }]), [])
-        assert.deepEqual(
+        assertDeepEqual(mergeTokens([{ classes: ["A"], length: 0 }]), [])
+        assertDeepEqual(
             mergeTokens([{ classes: ["A"], length: 0 }, { classes: ["A"], length: 0 }]),
             [],
         )
-        assert.deepEqual(
+        assertDeepEqual(
             mergeTokens([{ classes: ["A"], length: 1 }, { classes: ["A"], length: 0 }]),
             [{ classes: ["A"], length: 1 }],
         )
-        assert.deepEqual(
+        assertDeepEqual(
             mergeTokens([{ classes: ["A"], length: 1 }, { classes: ["A"], length: 1 }]),
             [{ classes: ["A"], length: 2 }],
         )
-        assert.deepEqual(
+        assertDeepEqual(
             mergeTokens([
                 { classes: ["A"], length: 1 },
                 { classes: ["A"], length: 1 },
@@ -28,7 +29,7 @@ describe("Token", function() {
             ]),
             [{ classes: ["A"], length: 5 }],
         )
-        assert.deepEqual(
+        assertDeepEqual(
             mergeTokens([
                 { classes: ["A"], length: 1 },
                 { classes: ["B"], length: 1 },
@@ -42,15 +43,15 @@ describe("Token", function() {
         )
     })
     it("pushClass", function() {
-        assert.deepEqual(pushClass({ classes: ["B"], length: 0 }, "A"), {
+        assertDeepEqual(pushClass({ classes: ["B"], length: 0 }, "A"), {
             classes: ["A", "B"],
             length: 0,
         })
-        assert.deepEqual(pushClass({ classes: ["B"], length: 0 }, "B"), {
+        assertDeepEqual(pushClass({ classes: ["B"], length: 0 }, "B"), {
             classes: ["B"],
             length: 0,
         })
-        assert.deepEqual(pushClass({ classes: ["decoration_mark"], length: 0 }, "B"), {
+        assertDeepEqual(pushClass({ classes: ["decoration_mark"], length: 0 }, "B"), {
             classes: ["decoration_mark"],
             length: 0,
         })
