@@ -39,14 +39,8 @@ export default Vue.extend({
         note: undefined,
         loadingNotes: true,
     }),
-    created: async function() {
-        const notes = await Note.list()
-        this.loadingNotes = false
-        this.notes = sortBy(notes, note => [note.createTime, note.id])
-    },
     mounted: function() {
         this.initAuth()
-        this.signIn()
     },
     methods: {
         initAuth: function() {
@@ -57,20 +51,25 @@ export default Vue.extend({
                     this.user = user
                     console.log("user.isAnonymous:", user.isAnonymous)
                     console.log("user.uid:", user.uid)
+                    console.log("user.email:", user.email)
+                    this.fetchNotes()
                 } else {
                     // User is signed out.
                     this.user = undefined
+                    this.notes = []
+                    this.note = undefined
                 }
             })
         },
-        signIn: function() {
-            firebase
-                .auth()
-                .signInAnonymously()
-                .catch(error => console.error(`Failed to sign in: ${error}`))
+        fetchNotes: async function() {
+            if (!this.user) throw new Error("Not login")
+            const notes = await Note.list(this.user.uid)
+            this.loadingNotes = false
+            this.notes = sortBy(notes, note => [note.createTime, note.id])
         },
         createNote: function() {
-            const note = new Note()
+            if (!this.user) throw new Error("Not login")
+            const note = new Note(this.user.uid)
             this.notes.push(note)
             this.note = note
         },

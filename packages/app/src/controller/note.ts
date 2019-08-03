@@ -1,9 +1,11 @@
 import { firebase, DocumentReference, DocumentSnapshot, Timestamp } from "./firebase"
+import { generateRandomId } from "../utils"
 
 type Listener = (notes: { id: string }[]) => void
 type Unsubscribe = () => void
 
 interface NoteData {
+    uid: string
     content: string
     createTime: Timestamp
     updateTime: Timestamp
@@ -18,13 +20,6 @@ async function createNote(
     return snapshot
 }
 
-function generateRandomId(): string {
-    // https://stackoverflow.com/a/13403498
-    return Math.random()
-        .toString(36)
-        .substring(2, 15)
-}
-
 export class Note {
     private static collection = firebase.firestore().collection("notes")
 
@@ -33,9 +28,10 @@ export class Note {
     private _id: string
     private data: NoteData
 
-    public constructor(snapshot?: DocumentSnapshot) {
+    public constructor(uid: string, snapshot?: DocumentSnapshot) {
         if (snapshot) {
             this.data = {
+                uid: uid,
                 content: snapshot.get("content"),
                 createTime: snapshot.get("createTime"),
                 updateTime: snapshot.get("updateTime"),
@@ -45,6 +41,7 @@ export class Note {
             this._id = snapshot.ref.id
         } else {
             this.data = {
+                uid: uid,
                 content: "default new note content",
                 createTime: firebase.firestore.Timestamp.now(),
                 updateTime: firebase.firestore.Timestamp.now(),
@@ -85,9 +82,9 @@ export class Note {
         await ref.update({ content, updateTime })
     }
 
-    public static async list(): Promise<Note[]> {
-        let query = await this.collection.get()
-        return query.docs.map(snapshot => new Note(snapshot))
+    public static async list(uid: string): Promise<Note[]> {
+        let query = await this.collection.where("uid", "==", uid).get()
+        return query.docs.map(snapshot => new Note(uid, snapshot))
     }
 
     public static listen(listener: Listener, type?: "added" | "modified" | "removed"): Unsubscribe {
@@ -107,10 +104,10 @@ export class Note {
         }
     }
 
-    public static async get(id: string): Promise<Note> {
+    public static async get(id: string, uid: string): Promise<Note> {
         let snapshot = await this.collection.doc(id).get()
         if (!snapshot.exists) throw new Error(`Can't find note with id = ${id}`)
-        return new Note(snapshot)
+        return new Note(uid, snapshot)
     }
 
     public async remove() {
