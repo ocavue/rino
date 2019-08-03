@@ -21,13 +21,12 @@ commands:
     steps:
       - checkout
       - restore_cache:
-          keys:
-            - v6-dependencies-{{ checksum "yarn.lock" }}
+          key: &cache_key v7-dependencies-{{ checksum "yarn.lock" }}
       - run: yarn install --frozen-lockfile
       - save_cache:
           paths:
             - node_modules
-          key: v6-dependencies-{{ checksum "yarn.lock" }}
+          key: *cache_key
 
 jobs:
   test:
