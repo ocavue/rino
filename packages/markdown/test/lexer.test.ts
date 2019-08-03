@@ -1,6 +1,3 @@
-import { assert } from "chai"
-import "mocha"
-
 import { InlineLexer } from "../src/lexer"
 import { Token } from "../src/token"
 
@@ -10,7 +7,7 @@ describe("InlineLexer", function() {
     function assertTokenEqual(a: Token[], b: Token[]) {
         a.forEach(token => token.classes.sort())
         b.forEach(token => token.classes.sort())
-        return assert.deepEqual(a, b)
+        return expect(a).toEqual(b)
     }
 
     describe("code", function() {
