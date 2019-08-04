@@ -1,7 +1,17 @@
 <template>
     <div class="sidebar">
-        <center class="sidebar__email">{{ email || "Not login" }}</center>
-        <button class="sidebar__create-button" @click="createNote">Create note</button>
+        <center class="sidebar__email">
+            {{ email || (loading ? "Loading..." : "Not login") }}
+            <button v-if="email" class="sidebar__signout-button" @click="signOut">
+                Sign Out
+            </button>
+        </center>
+        <button v-if="!email && !loading" class="sidebar__create-button" @click="signIn">
+            Sign In
+        </button>
+        <button v-else class="sidebar__create-button" @click="createNote">
+            Create note
+        </button>
         <div v-if="loading" class="sidebar__loading">Loading...</div>
         <div
             v-for="note in notes"
@@ -53,6 +63,12 @@ export default Vue.extend({
         },
         deleteNote: function(note: Note) {
             this.$emit("delete-note", note)
+        },
+        signIn: function() {
+            this.$router.push({ path: "/login" })
+        },
+        signOut: function() {
+            this.$emit("sign-out")
         },
     },
 })

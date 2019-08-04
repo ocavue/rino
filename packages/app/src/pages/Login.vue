@@ -29,7 +29,10 @@ export default Vue.extend({
         if (env.TESTING) {
             console.log(`Sign in with ${env.TEST_USERNAME} ${env.TEST_PASSWORD}`)
             signInWithEmailAndPassword(env.TEST_USERNAME, env.TEST_PASSWORD)
-                .then(() => (this.sented = true))
+                .then(() => {
+                    this.sented = true
+                    this.$router.push("/")
+                })
                 .catch(error => console.error(error))
         }
     },
