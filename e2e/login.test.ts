@@ -10,7 +10,7 @@ export async function login() {
 async function expectSidebarUserText(expected: string) {
     await page.waitForSelector(".sidebar__user-text")
     const actual = await page.$eval(".sidebar__user-text", e => e.innerHTML)
-    return actual.includes(expected)
+    return actual.trim() === expected.trim()
 }
 
 describe("Login", function() {
