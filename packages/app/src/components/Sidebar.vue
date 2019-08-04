@@ -1,7 +1,9 @@
 <template>
     <div class="sidebar">
         <center class="sidebar__user">
-            {{ email || (loading ? "Loading..." : "Not login") }}
+            <span class="sidebar__user-text">
+                {{ email || (loading ? "Loading..." : "Not login") }}
+            </span>
             <button v-if="email" class="sidebar__signout-button" @click="signOut">
                 Sign Out
             </button>

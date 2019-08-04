@@ -31,7 +31,6 @@ export default Vue.extend({
             signInWithEmailAndPassword(env.TEST_USERNAME, env.TEST_PASSWORD)
                 .then(() => {
                     this.sented = true
-                    this.$router.push("/")
                 })
                 .catch(error => console.error(error))
         }
