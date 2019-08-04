@@ -1,6 +1,6 @@
 <template>
     <div class="sidebar">
-        <center class="sidebar__email">
+        <center class="sidebar__user">
             {{ email || (loading ? "Loading..." : "Not login") }}
             <button v-if="email" class="sidebar__signout-button" @click="signOut">
                 Sign Out
@@ -97,7 +97,7 @@ export default Vue.extend({
         align-self: center;
     }
 
-    &__email {
+    &__user {
         margin-top: 16px;
     }
 }
