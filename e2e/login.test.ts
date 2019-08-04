@@ -21,8 +21,6 @@ describe("Login", function() {
         await waitForAsyncFunction(async () => {
             return await expectSidebarUserText("Not login")
         })
-
-        await login()
     })
 
     test("Auto Login", async () => {
