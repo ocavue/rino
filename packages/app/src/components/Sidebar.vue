@@ -1,5 +1,6 @@
 <template>
     <div class="sidebar">
+        <center class="sidebar__email">{{ email || "Not login" }}</center>
         <button class="sidebar__create-button" @click="createNote">Create note</button>
         <div v-if="loading" class="sidebar__loading">Loading...</div>
         <div
@@ -37,6 +38,11 @@ export default Vue.extend({
             type: Boolean,
             required: true,
         },
+        email: {
+            type: String,
+            required: false,
+            default: undefined,
+        },
     },
     methods: {
         createNote: function() {
@@ -73,6 +79,10 @@ export default Vue.extend({
     &__loading {
         padding-top: 48px;
         align-self: center;
+    }
+
+    &__email {
+        margin-top: 16px;
     }
 }
 .sidebar-item {

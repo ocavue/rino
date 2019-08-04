@@ -4,6 +4,7 @@
             :notes="notes"
             :current-note="note"
             :loading="loadingNotes"
+            :email="user ? user.email : null"
             @create-note="createNote"
             @switch-note="switchNote"
             @delete-note="deleteNote"
