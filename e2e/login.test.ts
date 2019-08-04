@@ -16,8 +16,6 @@ async function expectSidebarUserText(expected: string) {
 describe("Login", function() {
     test("Not login", async () => {
         await page.goto("http://localhost:1234/")
-        expect(await expectSidebarUserText("Loading...")).toBe(true)
-
         await waitForAsyncFunction(async () => {
             return await expectSidebarUserText("Not login")
         })
