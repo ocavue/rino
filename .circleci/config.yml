@@ -33,7 +33,8 @@ jobs:
     executor: node-executor
     steps:
       - install
-      - run: echo ${DEPLOY_CONFIG_FIREBASE} > ./config/firebase.json
+      - run: echo ${DEV_CONFIG_FIREBASE} > ./config/firebase.json
+      - run: echo ${DEV_CONFIG_ENV} > ./config/env.json
       - run: yarn run lint
       - run: |
           yarn run dev &
@@ -44,7 +45,8 @@ jobs:
     executor: node-executor
     steps:
       - install
-      - run: echo ${DEPLOY_CONFIG_FIREBASE} > ./config/firebase.json
+      - run: echo ${PROD_CONFIG_FIREBASE} > ./config/firebase.json
+      - run: echo ${PROD_CONFIG_ENV} > ./config/env.json
       - run: yarn run build --no-source-maps
       - run: |
           mkdir -p /tmp/deploy

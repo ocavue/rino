@@ -1,6 +1,7 @@
-import { Note } from "./note"
-import { firebase, DocumentReference, DocumentSnapshot } from "./firebase"
+export { Note } from "./note"
+export { sendSignInLink, signInWithEmailAndPassword } from "./auth"
+export { firebase } from "./firebase"
 
-export { Note, firebase }
+import { DocumentReference, DocumentSnapshot } from "./firebase"
 export type DocumentReference = DocumentReference
 export type DocumentSnapshot = DocumentSnapshot

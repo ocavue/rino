@@ -1,6 +1,19 @@
 <template>
     <div class="sidebar">
-        <button class="sidebar__create-button" @click="createNote">Create note</button>
+        <center class="sidebar__user">
+            <span class="sidebar__user-text">
+                {{ email || (loading ? "Loading..." : "Not login") }}
+            </span>
+            <button v-if="email" class="sidebar__signout-button" @click="signOut">
+                Sign Out
+            </button>
+        </center>
+        <button v-if="!email && !loading" class="sidebar__main-button" @click="signIn">
+            Sign In
+        </button>
+        <button v-else class="sidebar__main-button" @click="createNote">
+            Create note
+        </button>
         <div v-if="loading" class="sidebar__loading">Loading...</div>
         <div
             v-for="note in notes"
@@ -37,6 +50,11 @@ export default Vue.extend({
             type: Boolean,
             required: true,
         },
+        email: {
+            type: String,
+            required: false,
+            default: undefined,
+        },
     },
     methods: {
         createNote: function() {
@@ -47,6 +65,12 @@ export default Vue.extend({
         },
         deleteNote: function(note: Note) {
             this.$emit("delete-note", note)
+        },
+        signIn: function() {
+            this.$router.push({ path: "/login" })
+        },
+        signOut: function() {
+            this.$emit("sign-out")
         },
     },
 })
@@ -64,7 +88,7 @@ export default Vue.extend({
     height: 100vh;
     width: 320px;
 
-    &__create-button {
+    &__main-button {
         min-height: 48px; // TODO: not working when window is too short
         height: 48px;
         margin: 16px;
@@ -73,6 +97,10 @@ export default Vue.extend({
     &__loading {
         padding-top: 48px;
         align-self: center;
+    }
+
+    &__user {
+        margin-top: 16px;
     }
 }
 .sidebar-item {

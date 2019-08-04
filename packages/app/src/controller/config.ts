@@ -1,4 +1,5 @@
 import * as firebaseJson from "../../../../config/firebase.json"
+import * as envJson from "../../../../config/env.json"
 
 let firebaseConfig: {
     apiKey: string
@@ -10,4 +11,16 @@ let firebaseConfig: {
     appId: string
 } = firebaseJson
 
-export { firebaseConfig }
+interface DevEnv {
+    TESTING: true
+    TEST_USERNAME: string
+    TEST_PASSWORD: string
+}
+
+interface ProdEnv {
+    TESTING: false
+}
+
+let env: DevEnv | ProdEnv = envJson
+
+export { firebaseConfig, env }
