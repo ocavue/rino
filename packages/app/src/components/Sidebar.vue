@@ -8,10 +8,10 @@
                 Sign Out
             </button>
         </center>
-        <button v-if="!email && !loading" class="sidebar__create-button" @click="signIn">
+        <button v-if="!email && !loading" class="sidebar__main-button" @click="signIn">
             Sign In
         </button>
-        <button v-else class="sidebar__create-button" @click="createNote">
+        <button v-else class="sidebar__main-button" @click="createNote">
             Create note
         </button>
         <div v-if="loading" class="sidebar__loading">Loading...</div>
@@ -88,7 +88,7 @@ export default Vue.extend({
     height: 100vh;
     width: 320px;
 
-    &__create-button {
+    &__main-button {
         min-height: 48px; // TODO: not working when window is too short
         height: 48px;
         margin: 16px;
