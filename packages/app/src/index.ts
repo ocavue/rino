@@ -2,10 +2,10 @@ import Vue from "vue"
 import VueRouter from "vue-router"
 
 import Layout from "./Layout.vue"
-import App from "./pages/App.vue"
-import NotFound from "./pages/NotFound.vue"
-import Login from "./pages/Login.vue"
-import FinishSignUp from "./pages/FinishSignUp.vue"
+import App from "./views/App.vue"
+import NotFound from "./views/NotFound.vue"
+import Login from "./views/Login.vue"
+import FinishSignUp from "./views/FinishSignUp.vue"
 
 Vue.use(VueRouter)
 
