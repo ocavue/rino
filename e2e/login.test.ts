@@ -7,6 +7,8 @@ export async function login() {
 }
 
 describe("Login", function() {
+    jest.setTimeout(20000)
+
     test("Not login", async () => {
         await page.goto("http://localhost:1234/")
         await waitForTestId(page, "sidebar-btn-sign-in")
