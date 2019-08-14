@@ -39,7 +39,7 @@ jobs:
       - run: |
           yarn run dev &
           ./scripts/wait-server.sh http://localhost:1234
-          yarn run test --coverage --maxWorkers 1
+          yarn run test --coverage --maxWorkers 1 # To avoid 'not enough memory' error
           yarn run coverage
   build:
     executor: node-executor
