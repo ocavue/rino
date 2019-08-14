@@ -42,7 +42,6 @@
                     :key="`item${note.id}`"
                     :input-value="currentNote === note"
                     color="primary"
-                    style=" z-index:1; "
                     @click="() => switchNote(note)"
                 >
                     <v-list-item-content>
