@@ -86,7 +86,6 @@ export default Vue.extend({
     },
     methods: {
         createNote: function() {
-            console.log("aaaa")
             this.$emit("create-note")
         },
         switchNote: function(note: Note) {
