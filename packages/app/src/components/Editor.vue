@@ -1,5 +1,5 @@
 <template>
-    <div ref="editor" class="markdown-body" @keydown="handleKeydown"></div>
+    <v-flex ref="editor" class="markdown-body" @keydown="handleKeydown"></v-flex>
 </template>
 
 <script lang="ts">
@@ -54,7 +54,15 @@ export default Vue.extend({
 })
 </script>
 
-<style lang="sass" scoped>
-@import url("../../../../node_modules/github-markdown-css/github-markdown.css")
-@import url("../../style/editor.sass")
+<style lang="scss" scoped>
+@import url("../../../../node_modules/github-markdown-css/github-markdown.css");
+@import url("../../style/editor.sass");
+
+.markdown-body {
+    height: 100vh;
+
+    margin: 16px;
+    width: 1000px;
+    max-width: 100%;
+}
 </style>

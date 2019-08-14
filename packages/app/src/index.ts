@@ -1,6 +1,8 @@
 import Vue from "vue"
 import VueRouter from "vue-router"
 
+import vuetify from "./plugins/vuetify"
+
 import Layout from "./Layout.vue"
 import App from "./views/App.vue"
 import NotFound from "./views/NotFound.vue"
@@ -42,4 +44,5 @@ const router = new VueRouter({
 new Vue({
     render: h => h(Layout),
     router,
+    vuetify,
 }).$mount("#app")

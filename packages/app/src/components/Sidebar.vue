@@ -1,34 +1,57 @@
 <template>
-    <div class="sidebar">
-        <center class="sidebar__user">
-            <span class="sidebar__user-text">
-                {{ email || (loading ? "Loading..." : "Not login") }}
-            </span>
-            <button v-if="email" class="sidebar__signout-button" @click="signOut">
-                Sign Out
-            </button>
-        </center>
-        <button v-if="!email && !loading" class="sidebar__main-button" @click="signIn">
-            Sign In
-        </button>
-        <button v-else class="sidebar__main-button" @click="createNote">
-            Create note
-        </button>
-        <div v-if="loading" class="sidebar__loading">Loading...</div>
-        <div
-            v-for="note in notes"
-            :key="note.id"
-            :class="{
-                'sidebar-item': true,
-                'sidebar-item--active': currentNote === note,
-            }"
-        >
-            <a class="sidebar-item__link" @click="() => switchNote(note)">
-                {{ note.id }}
-            </a>
-            <button @click="() => deleteNote(note)">Delete</button>
+    <v-navigation-drawer :value="openDrawer" app left class="sidebar">
+        <div class="sidebar-btn-container">
+            <v-btn
+                v-if="!loading && email"
+                rounded
+                block
+                outlined
+                color="primary"
+                data-testid="sidebar-btn-create-note"
+                @click="createNote"
+            >
+                Create note
+            </v-btn>
+            <v-btn
+                v-else-if="!loading && !email"
+                rounded
+                block
+                outlined
+                color="primary"
+                data-testid="sidebar-btn-sign-in"
+                @click="signIn"
+            >
+                Sign In
+            </v-btn>
+            <v-btn v-else rounded block outlined color="primary"></v-btn>
         </div>
-    </div>
+        <v-divider></v-divider>
+        <v-list class="sidebar-list">
+            <v-list-item v-if="loading" class="mt-8">
+                <v-list-item-content>
+                    <v-progress-circular
+                        color="#757575"
+                        :indeterminate="true"
+                        width="2"
+                    ></v-progress-circular>
+                </v-list-item-content>
+            </v-list-item>
+
+            <template v-for="note in notes">
+                <v-list-item
+                    :key="`item${note.id}`"
+                    :input-value="currentNote === note"
+                    color="primary"
+                    @click="() => switchNote(note)"
+                >
+                    <v-list-item-content>
+                        {{ note.id }}
+                    </v-list-item-content>
+                </v-list-item>
+                <v-divider :key="`divider${note.id}`"></v-divider>
+            </template>
+        </v-list>
+    </v-navigation-drawer>
 </template>
 
 <script lang="ts">
@@ -55,6 +78,10 @@ export default Vue.extend({
             required: false,
             default: undefined,
         },
+        openDrawer: {
+            type: Boolean,
+            required: true,
+        },
     },
     methods: {
         createNote: function() {
@@ -63,68 +90,38 @@ export default Vue.extend({
         switchNote: function(note: Note) {
             this.$emit("switch-note", note)
         },
-        deleteNote: function(note: Note) {
-            this.$emit("delete-note", note)
-        },
         signIn: function() {
             this.$router.push({ path: "/login" })
-        },
-        signOut: function() {
-            this.$emit("sign-out")
         },
     },
 })
 </script>
 
-<style lang="scss" scoped>
-.sidebar {
+<style lang="scss">
+.v-navigation-drawer__content {
+    overflow: hidden;
+    height: 100vh;
+
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    align-items: stretch;
-
-    background-color: #e2e2e2;
-    overflow-y: scroll;
-    height: 100vh;
-    width: 320px;
-
-    &__main-button {
-        min-height: 48px; // TODO: not working when window is too short
-        height: 48px;
-        margin: 16px;
-    }
-
-    &__loading {
-        padding-top: 48px;
-        align-self: center;
-    }
-
-    &__user {
-        margin-top: 16px;
-    }
+    justify-items: stretch;
 }
-.sidebar-item {
-    min-height: 48px;
-    border-bottom: 1px solid #b3b3b3;
+</style>
+
+<style lang="scss" scoped>
+.sidebar-btn-container {
+    padding: 24px;
+
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
+    justify-content: start;
     align-items: center;
-    padding-left: 8px;
-    padding-right: 8px;
+}
 
-    &__link {
-        height: 100%;
-        flex: 1;
-        text-decoration: none;
-
-        display: flex;
-        align-items: center;
-        color: inherit;
-    }
-
-    &--active {
-        background: #d31473;
-        color: white;
-    }
+.sidebar-list {
+    padding-top: 0;
+    padding-bottom: 0;
+    overflow-y: auto;
 }
 </style>
