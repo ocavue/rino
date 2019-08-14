@@ -8,7 +8,6 @@
             :open-drawer="openDrawer"
             @create-note="createNote"
             @switch-note="switchNote"
-            @delete-note="deleteNote"
         >
         </Sidebar>
         <v-content>
