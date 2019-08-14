@@ -21,7 +21,7 @@ commands:
     steps:
       - checkout
       - restore_cache:
-          key: &cache_key v7-dependencies-{{ checksum "yarn.lock" }}
+          key: &cache_key v8-dependencies-{{ checksum "yarn.lock" }}
       - run: yarn install --frozen-lockfile
       - save_cache:
           paths:
@@ -39,7 +39,7 @@ jobs:
       - run: |
           yarn run dev &
           ./scripts/wait-server.sh http://localhost:1234
-          yarn run test --coverage
+          yarn run test --coverage --maxWorkers 1
           yarn run coverage
   build:
     executor: node-executor
