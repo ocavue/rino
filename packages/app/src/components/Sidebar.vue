@@ -23,7 +23,7 @@
             >
                 Sign In
             </v-btn>
-            <v-btn v-else rounded block outlined color="primary" @click="signIn"></v-btn>
+            <v-btn v-else rounded block outlined color="primary"></v-btn>
         </div>
         <v-divider></v-divider>
         <v-list class="sidebar-list">
