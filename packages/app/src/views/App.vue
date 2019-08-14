@@ -1,21 +1,30 @@
 <template>
-    <div id="app">
+    <v-app>
         <Sidebar
             :notes="notes"
             :current-note="note"
             :loading="loading"
-            :email="user ? user.email : null"
+            :email="email"
+            :open-drawer="openDrawer"
             @create-note="createNote"
             @switch-note="switchNote"
             @delete-note="deleteNote"
-            @sign-out="signOut"
         >
         </Sidebar>
-        <main id="main">
-            <Editor v-if="note" :key="note.id" :note="note"></Editor>
-            <Welcome v-else />
-        </main>
-    </div>
+        <v-content>
+            <Appbar
+                :note="note"
+                :email="email"
+                @delete-note="deleteNote"
+                @sign-out="signOut"
+                @toggle-drawer="toggleDrawer"
+            ></Appbar>
+            <v-layout class="main" align-center justify-start column>
+                <Editor v-if="note" :key="note.id" :note="note"></Editor>
+                <Welcome v-else />
+            </v-layout>
+        </v-content>
+    </v-app>
 </template>
 
 <script lang="ts">
@@ -24,24 +33,32 @@ import Vue from "vue"
 import { sortBy } from "lodash"
 
 import { firebase, Note } from "../controller"
+import Appbar from "../components/Appbar.vue"
 import Sidebar from "../components/Sidebar.vue"
 import Editor from "../components/Editor.vue"
 import Welcome from "../components/Welcome.vue"
 
 export default Vue.extend({
     name: "App",
-    components: { Sidebar, Editor, Welcome },
+    components: { Appbar, Sidebar, Editor, Welcome },
     data: (): {
         user?: firebase.User
         notes: Note[]
         note?: Note // Current note
         loading: boolean
+        openDrawer: boolean
     } => ({
         user: undefined,
         notes: [],
         note: undefined,
         loading: true,
+        openDrawer: true,
     }),
+    computed: {
+        email: function() {
+            return this.user ? this.user.email : null
+        },
+    },
     mounted: function() {
         this.initAuth()
     },
@@ -92,17 +109,15 @@ export default Vue.extend({
                 .then(() => {})
                 .catch(error => console.error(error))
         },
+        toggleDrawer: function() {
+            this.openDrawer = !this.openDrawer
+        },
     },
 })
 </script>
 
 <style lang="scss" scoped>
-#app {
-    display: flex;
-    min-height: 100vh;
-}
-
-#main {
-    flex: 1;
+.main {
+    padding-top: 80px;
 }
 </style>
