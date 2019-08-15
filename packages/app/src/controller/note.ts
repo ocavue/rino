@@ -85,7 +85,8 @@ export class Note {
         this.thumbnail = lines.join("\n")
     }
 
-    public async updateContent(content: string) {
+    public async updateContent(content: string): Promise<void> {
+        if (this.data.content === content) return Promise.resolve()
         const updateTime = firebase.firestore.Timestamp.now()
         this.data.content = content
         this.data.updateTime = updateTime

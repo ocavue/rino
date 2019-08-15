@@ -6,6 +6,7 @@
 import Vue from "vue"
 import { BaseView, ProseMirrorView, MarkdownView } from "../../../markdown/src/views"
 import { Note } from "../controller"
+import { debounce } from "lodash"
 
 export default Vue.extend({
     props: {
@@ -17,16 +18,24 @@ export default Vue.extend({
     data(): {
         view?: BaseView
         sourceCodeMode: boolean
+        update: () => void
     } {
         return {
             view: undefined,
             sourceCodeMode: false,
+            update: () => {},
         }
     },
     mounted: function() {
         if (this.view) this.view.destroy()
         let place = this.$refs.editor as HTMLElement
         this.view = new ProseMirrorView(place, this.note.content)
+        this.update = debounce(() => {
+            console.log("Updating")
+            if (this.view) {
+                this.note.updateContent(this.view.content)
+            }
+        }, 1000)
     },
     beforeDestroy: function() {
         if (this.view) {
@@ -48,6 +57,8 @@ export default Vue.extend({
             if (event.metaKey && event.code === "Slash") {
                 console.debug("meta + / has been pressed")
                 this.switchEditor()
+            } else {
+                this.update()
             }
         },
     },
