@@ -1,31 +1,34 @@
 <template>
     <v-navigation-drawer :value="openDrawer" app left class="sidebar">
-        <div class="sidebar-btn-container">
-            <v-btn
-                v-if="!loading && email"
-                rounded
-                block
-                outlined
-                color="primary"
-                data-testid="sidebar-btn-create-note"
-                @click="createNote"
-            >
-                Create note
-            </v-btn>
-            <v-btn
-                v-else-if="!loading && !email"
-                rounded
-                block
-                outlined
-                color="primary"
-                data-testid="sidebar-btn-sign-in"
-                @click="signIn"
-            >
-                Sign In
-            </v-btn>
-            <v-btn v-else rounded block outlined color="primary"></v-btn>
-        </div>
-        <v-divider></v-divider>
+        <template v-slot:prepend>
+            <div class="sidebar-btn-container">
+                <v-btn
+                    v-if="!loading && email"
+                    rounded
+                    block
+                    outlined
+                    color="primary"
+                    data-testid="sidebar-btn-create-note"
+                    @click="createNote"
+                >
+                    Create note
+                </v-btn>
+                <v-btn
+                    v-else-if="!loading && !email"
+                    rounded
+                    block
+                    outlined
+                    color="primary"
+                    data-testid="sidebar-btn-sign-in"
+                    @click="signIn"
+                >
+                    Sign In
+                </v-btn>
+                <v-btn v-else rounded block outlined color="primary"></v-btn>
+            </div>
+            <v-divider></v-divider>
+        </template>
+
         <v-list class="sidebar-list">
             <v-list-item v-if="loading" class="mt-8">
                 <v-list-item-content>
@@ -97,18 +100,6 @@ export default Vue.extend({
 })
 </script>
 
-<style lang="scss">
-.v-navigation-drawer__content {
-    overflow: hidden;
-    height: 100vh;
-
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    justify-items: stretch;
-}
-</style>
-
 <style lang="scss" scoped>
 .sidebar-btn-container {
     padding: 24px;
@@ -122,6 +113,5 @@ export default Vue.extend({
 .sidebar-list {
     padding-top: 0;
     padding-bottom: 0;
-    overflow-y: auto;
 }
 </style>
