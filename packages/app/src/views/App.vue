@@ -5,7 +5,7 @@
             :current-note="note"
             :loading="loading"
             :email="email"
-            :open-drawer="openDrawer"
+            :active.sync="openDrawer"
             @create-note="createNote"
             @switch-note="switchNote"
         >

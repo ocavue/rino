@@ -1,5 +1,5 @@
 <template>
-    <v-navigation-drawer :value="openDrawer" app left class="sidebar">
+    <v-navigation-drawer v-model="isActive" app left class="sidebar">
         <template v-slot:prepend>
             <div class="sidebar-btn-container">
                 <v-btn
@@ -81,10 +81,24 @@ export default Vue.extend({
             required: false,
             default: undefined,
         },
-        openDrawer: {
+        active: {
             type: Boolean,
             required: true,
         },
+    },
+    data: () => ({
+        isActive: false,
+    }),
+    watch: {
+        active(val) {
+            if (val !== this.isActive) this.isActive = val
+        },
+        isActive: function(val) {
+            this.$emit("update:active", val)
+        },
+    },
+    created: function() {
+        this.isActive = this.active
     },
     methods: {
         createNote: function() {
