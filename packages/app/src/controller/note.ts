@@ -27,6 +27,7 @@ export class Note {
 
     private _id: string
     private data: NoteData
+    public thumbnail: string = ""
 
     public constructor(uid: string, snapshot?: DocumentSnapshot) {
         if (snapshot) {
@@ -53,6 +54,7 @@ export class Note {
             this._id = generateRandomId()
             this.snapshotPromise.then(snapshot => (this._id = snapshot.ref.id))
         }
+        this.setThumbnail()
     }
 
     private get refPromise(): Promise<DocumentReference> {
@@ -74,10 +76,20 @@ export class Note {
         return this.data.createTime
     }
 
+    private setThumbnail(): void {
+        const lines = []
+        for (let line of this.content.split("\n")) {
+            if (line.trim()) lines.push(line.slice(0, 50))
+            if (lines.length >= 3) break
+        }
+        this.thumbnail = lines.join("\n")
+    }
+
     public async updateContent(content: string) {
         const updateTime = firebase.firestore.Timestamp.now()
         this.data.content = content
         this.data.updateTime = updateTime
+        this.setThumbnail()
         const ref = await this.refPromise
         await ref.update({ content, updateTime })
     }

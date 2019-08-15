@@ -47,9 +47,9 @@
                     color="primary"
                     @click="() => switchNote(note)"
                 >
-                    <v-list-item-content>
-                        {{ note.id }}
-                    </v-list-item-content>
+                    <v-list-item-content class="sidebar-list__thumbnail">{{
+                        note.thumbnail
+                    }}</v-list-item-content>
                 </v-list-item>
                 <v-divider :key="`divider${note.id}`"></v-divider>
             </template>
@@ -127,5 +127,17 @@ export default Vue.extend({
 .sidebar-list {
     padding-top: 0;
     padding-bottom: 0;
+
+    &__thumbnail {
+        white-space: pre-line; // Line break with `\n`
+        height: 72px;
+        overflow: hidden;
+        padding: 0;
+        margin-top: 12px;
+        margin-bottom: 12px;
+
+        display: inline-flex;
+        align-items: flex-start;
+    }
 }
 </style>
