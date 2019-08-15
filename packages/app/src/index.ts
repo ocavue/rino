@@ -34,6 +34,10 @@ const router = new VueRouter({
             component: FinishSignUp,
         },
         {
+            path: "/index.html",
+            redirect: "/",
+        },
+        {
             name: "not found",
             path: "*",
             component: NotFound,
