@@ -4,10 +4,10 @@ import VueRouter from "vue-router"
 import vuetify from "./plugins/vuetify"
 
 import Layout from "./Layout.vue"
-import App from "./views/App.vue"
-import NotFound from "./views/NotFound.vue"
-import Login from "./views/Login.vue"
-import FinishSignUp from "./views/FinishSignUp.vue"
+const App = () => import("./views/App.vue")
+const NotFound = () => import("./views/NotFound.vue")
+const Login = () => import("./views/Login.vue")
+const FinishSignUp = () => import("./views/FinishSignUp.vue")
 
 Vue.use(VueRouter)
 
