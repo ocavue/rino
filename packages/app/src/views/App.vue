@@ -18,7 +18,7 @@
                 @sign-out="signOut"
                 @toggle-drawer="toggleDrawer"
             ></Appbar>
-            <v-layout class="main" align-center justify-start column>
+            <v-layout class="main" align-center justify-start column fill-height>
                 <Editor v-if="note" :key="note.id" :note="note"></Editor>
                 <Welcome v-else />
             </v-layout>
@@ -115,8 +115,4 @@ export default Vue.extend({
 })
 </script>
 
-<style lang="scss" scoped>
-.main {
-    padding-top: 80px;
-}
-</style>
+<style lang="scss" scoped></style>

@@ -1,5 +1,7 @@
 <template>
-    <v-flex ref="editor" class="markdown-body" @keydown="handleKeydown"></v-flex>
+    <v-container fill-height justify-center fluid>
+        <v-flex ref="editor" class="editor markdown-body" @keydown="handleKeydown"></v-flex>
+    </v-container>
 </template>
 
 <script lang="ts">
@@ -69,11 +71,27 @@ export default Vue.extend({
 @import url("../../../../node_modules/github-markdown-css/github-markdown.css");
 @import url("../../style/editor.sass");
 
-.markdown-body {
-    height: 100vh;
+.editor {
+    height: 100%;
+    width: 100%;
 
-    margin: 16px;
-    width: 1000px;
-    max-width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
+}
+</style>
+
+<style lang="scss">
+.markdown-body > .ProseMirror {
+    padding-left: calc(50% - 512px);
+    padding-right: calc(50% - 512px);
+
+    padding-top: 80px;
+    flex: 1;
+
+    border: none;
+    outline: none;
+    box-shadow: none;
 }
 </style>
