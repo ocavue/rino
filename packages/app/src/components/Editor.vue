@@ -1,5 +1,5 @@
 <template>
-    <v-container fill-height justify-center>
+    <v-container fill-height justify-center fluid>
         <v-flex ref="editor" class="editor markdown-body" @keydown="handleKeydown"></v-flex>
     </v-container>
 </template>
@@ -74,7 +74,6 @@ export default Vue.extend({
 .editor {
     height: 100%;
     width: 100%;
-    max-width: 1024px;
 
     display: flex;
     flex-direction: column;
@@ -85,6 +84,10 @@ export default Vue.extend({
 
 <style lang="scss">
 .markdown-body > .ProseMirror {
+    padding-left: calc(50% - 512px);
+    padding-right: calc(50% - 512px);
+
+    padding-top: 80px;
     flex: 1;
 
     border: none;

@@ -115,8 +115,4 @@ export default Vue.extend({
 })
 </script>
 
-<style lang="scss" scoped>
-.main {
-    padding-top: 80px;
-}
-</style>
+<style lang="scss" scoped></style>
