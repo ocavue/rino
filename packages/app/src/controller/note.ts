@@ -43,7 +43,7 @@ export class Note {
         } else {
             this.data = {
                 uid: uid,
-                content: "default new note content",
+                content: "# \n\n",
                 createTime: firebase.firestore.Timestamp.now(),
                 updateTime: firebase.firestore.Timestamp.now(),
             }
