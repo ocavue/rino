@@ -64,7 +64,6 @@ jobs:
       - attach_workspace:
           at: /tmp/deploy
       - run: |
-          commit_message="$(git log --format=%B -n 1)"
           if [ "${CIRCLE_BRANCH}" == "master" ]; then
             git config --global user.email "ci@circleci.com"
             git config --global user.name "circleci"
@@ -73,6 +72,6 @@ jobs:
             rm -rf ./*
             cp -r /tmp/deploy/* ~/deploy
             git add --all
-            git commit -m $commit_message
+            git commit -m update
             git push -q
           fi
