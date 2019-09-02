@@ -83,6 +83,18 @@ export default Vue.extend({
 </style>
 
 <style lang="scss">
+// For source code mode
+.markdown-body > textarea {
+    padding-top: 80px;
+    height: 100%;
+    overflow: visible;
+
+    border: none;
+    outline: none;
+    box-shadow: none;
+}
+
+// For WYSIWYG mode
 .markdown-body > .ProseMirror {
     padding-left: calc(50% - 512px);
     padding-right: calc(50% - 512px);
