@@ -106,4 +106,18 @@ export default Vue.extend({
     outline: none;
     box-shadow: none;
 }
+
+// Override vuetify's styles
+.v-application {
+    code {
+        color: inherit;
+        box-shadow: none;
+    }
+    code::before {
+        content: "";
+    }
+    code::after {
+        content: "";
+    }
+}
 </style>
