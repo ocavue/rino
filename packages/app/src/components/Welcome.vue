@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="welcome">
         Welcome to Rino
     </div>
 </template>
@@ -11,3 +11,10 @@ export default Vue.extend({
     name: "Welcome",
 })
 </script>
+
+<style>
+.welcome {
+    top: 38vh;
+    position: absolute;
+}
+</style>
