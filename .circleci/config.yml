@@ -29,18 +29,22 @@ commands:
           key: *cache_key
 
 jobs:
+  lint:
+    executor: node-executor
+    steps:
+      - install
+      - run: yarn run lint
   test:
     executor: node-executor
     steps:
       - install
       - run: echo ${DEV_CONFIG_FIREBASE} > ./config/firebase.json
       - run: echo ${DEV_CONFIG_ENV} > ./config/env.json
-      - run: yarn run lint
       - run: |
           yarn run dev &
           ./scripts/wait-server.sh http://localhost:1234
           yarn run test --coverage --maxWorkers 1 # To avoid 'not enough memory' error
-          yarn run coverage
+      - run: yarn run coverage
   build:
     executor: node-executor
     steps:
