@@ -6,10 +6,12 @@ workflows:
     jobs:
       - test
       - build
+      - lint
       - deploy:
           requires:
             - test
             - build
+            - lint
 
 executors:
   node-executor:
