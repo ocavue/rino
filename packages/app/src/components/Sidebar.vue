@@ -43,6 +43,7 @@
             <template v-for="note in notes">
                 <v-list-item
                     :key="`item${note.id}`"
+                    :ripple="false"
                     :input-value="currentNote === note"
                     color="primary"
                     @click="() => switchNote(note)"
