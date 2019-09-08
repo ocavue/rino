@@ -1,14 +1,14 @@
 <template>
     <div>
         <div class="appbar" :style="`left: ${computedLeft}px;`">
-            <v-btn icon @click="toggleDrawer">
+            <v-btn icon :ripple="false" @click="toggleDrawer">
                 <v-icon>{{ icons.mdiMenu }}</v-icon>
             </v-btn>
         </div>
         <div v-if="items" class="appbar" style="right: 14px;">
             <v-menu bottom left>
                 <template v-slot:activator="{ on }">
-                    <v-btn icon v-on="on">
+                    <v-btn icon :ripple="false" v-on="on">
                         <v-icon>{{ icons.mdiDotsVertical }}</v-icon>
                     </v-btn>
                 </template>
