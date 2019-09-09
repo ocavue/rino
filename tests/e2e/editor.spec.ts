@@ -1,5 +1,5 @@
 import { login, cleanNotes, createNote } from "./actions"
-import { sleep, pressKey, getTextAreaValue, type as typeByTestid } from "./utils"
+import { sleep, pressKey, getSourceCodeModeText, type as typeByTestid } from "./utils"
 import { readFileSync } from "fs"
 
 function readText(filename: string) {
@@ -7,14 +7,10 @@ function readText(filename: string) {
 }
 
 describe("Write in WYSIWYG mode", () => {
-    jest.setTimeout(180_000)
+    jest.setTimeout(190_000)
 
     async function type(text: string) {
         await typeByTestid("wysiwyg-mode-textarea", text)
-    }
-
-    async function getSourceCodeModeText() {
-        return await getTextAreaValue("source-code-mode-textarea")
     }
 
     async function switchMode() {
@@ -88,8 +84,13 @@ describe("Write in WYSIWYG mode", () => {
         await type("And that's all")
     })
 
+    test("Table", async () => {
+        await type("| a | b | c |")
+    })
+
     test("Check result", async () => {
-        await switchMode()
+        await switchMode() // Switch to the source code mode
         expect(await getSourceCodeModeText()).toBe(readText("0.txt"))
+        await switchMode() // Switch back to the WYSIWYG mode
     })
 })

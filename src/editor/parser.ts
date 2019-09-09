@@ -1,26 +1,64 @@
 import { schema } from "./schema"
 import { Mark, Node, Schema, NodeType } from "prosemirror-model"
 import Token from "markdown-it/lib/token"
-
-// markdown-it doesn't support ES6 import. Ewwwwwww...
-const MarkdownIt = require("markdown-it") // eslint-disable-line @typescript-eslint/no-var-requires
+import MarkdownIt from "markdown-it"
 
 interface StackItem {
     type: NodeType
     attrs?: Record<string, any>
     content: Node[]
 }
+// :: (Schema, MarkdownIt, Object)
+// Create a parser with the given configuration. You can configure
+// the markdown-it parser to parse the dialect you want, and provide
+// a description of the ProseMirror entities those tokens map to in
+// the `tokens` object, which maps token names to descriptions of
+// what to do with them. Such a description is an object, and may
+// have the following properties:
+//
+// **`node`**`: ?string`
+//   :
+//
+// **`block`**`: ?string`
+
+// **`attrs`**`: ?Object`
+
+//
+
 interface TokenSpec {
-    hasOpenClose: boolean
-    block?: string
+    /**
+     * This token maps to a single node, whose type can be looked up
+     * in the schema under the given name. Exactly one of `node`,
+     * `block`, or `mark` must be set.
+     */
     node?: string
-    getAttrs?: (token: Token) => Record<string, any>
+    /**
+     * This token comes in `_open` and `_close` variants (which are
+     * appended to the base token name provides a the object
+     * property), and wraps a block of content. The block should be
+     * wrapped in a node of the type named to by the property's
+     * value.
+     * block?: string
+     */
+    block?: string
+    hasOpenClose: boolean
+    /**
+     * Attributes for the node or mark. When `getAttrs` is provided,
+     * it takes precedence.
+     */
     attrs?: Record<string, any>
+    /**
+     *A function used to compute the attributes for the node or mark
+     *that takes a [markdown-it
+     *token](https://markdown-it.github.io/markdown-it/#Token) and
+     *returns an attribute object.
+     */
+    getAttrs?: (token: Token) => Record<string, any>
 }
 interface TokenSpecs {
     [markdownItTokenName: string]: TokenSpec
 }
-type TokenHandler = (state: MarkdownParseState, tok: any) => void
+type TokenHandler = (state: MarkdownParseState, tok: Token) => void
 type TokenHandlers = Record<string, TokenHandler>
 
 // Object used to track the context of a running parse.
@@ -106,7 +144,7 @@ class MarkdownParseState {
     }
 }
 
-function getAttrs(spec: TokenSpec, token: Token) {
+function getAttrs(spec: TokenSpec, token: Token): Record<string, any> | undefined {
     if (spec.getAttrs) return spec.getAttrs(token)
     else return spec.attrs
 }
@@ -159,45 +197,11 @@ function buildTokenHandlers(schema: Schema, tokens: TokenSpecs): TokenHandlers {
 // tokenize a file, and then runs the custom rules it is given over
 // the tokens to create a ProseMirror document tree.
 export class MarkdownParser {
-    // :: (Schema, MarkdownIt, Object)
-    // Create a parser with the given configuration. You can configure
-    // the markdown-it parser to parse the dialect you want, and provide
-    // a description of the ProseMirror entities those tokens map to in
-    // the `tokens` object, which maps token names to descriptions of
-    // what to do with them. Such a description is an object, and may
-    // have the following properties:
-    //
-    // **`node`**`: ?string`
-    //   : This token maps to a single node, whose type can be looked up
-    //     in the schema under the given name. Exactly one of `node`,
-    //     `block`, or `mark` must be set.
-    //
-    // **`block`**`: ?string`
-    //   : This token comes in `_open` and `_close` variants (which are
-    //     appended to the base token name provides a the object
-    //     property), and wraps a block of content. The block should be
-    //     wrapped in a node of the type named to by the property's
-    //     value.
-    //
-    // **`mark`**`: ?string`
-    //   : This token also comes in `_open` and `_close` variants, but
-    //     should add a mark (named by the value) to its content, rather
-    //     than wrapping it in a node.
-    //
-    // **`attrs`**`: ?Object`
-    //   : Attributes for the node or mark. When `getAttrs` is provided,
-    //     it takes precedence.
-    //
-    // **`getAttrs`**`: ?(MarkdownToken) → Object`
-    //   : A function used to compute the attributes for the node or mark
-    //     that takes a [markdown-it
-    //     token](https://markdown-it.github.io/markdown-it/#Token) and
-    //     returns an attribute object.
     private schema: Schema
-    private tokenizer: any // tokenizer is a MarkdownIt object
+    private tokenizer: MarkdownIt
     private tokenHandlers: TokenHandlers
 
-    public constructor(schema: Schema, tokenizer: any, tokenSpecs: TokenSpecs) {
+    public constructor(schema: Schema, tokenizer: MarkdownIt, tokenSpecs: TokenSpecs) {
         // :: Object The value of the `tokens` object used to construct
         // this parser. Can be useful to copy and modify to base other
         // parsers on.
@@ -210,12 +214,24 @@ export class MarkdownParser {
     // and create a ProseMirror document as prescribed by this parser's
     // rules.
     public parse(text: string): Node {
-        let state = new MarkdownParseState(this.schema, this.tokenHandlers),
-            doc
-        state.parseTokens(this.tokenizer.parse(text, {}))
+        let state = new MarkdownParseState(this.schema, this.tokenHandlers)
+        let doc: Node
+        let mdTokens: Token[] = this.tokenizer.parse(text, {})
+        // console.log("parsed:", JSON.stringify(mdTokens))
+
+        mdTokens = mdTokens.filter(
+            token =>
+                token.type !== "thead_open" &&
+                token.type !== "thead_close" &&
+                token.type !== "tbody_open" &&
+                token.type !== "tbody_close",
+        )
+
+        state.parseTokens(mdTokens)
         do {
             doc = state.closeNode()
         } while (state.stack.length)
+        // console.log("doc:", doc)
         return doc
     }
 }
@@ -225,12 +241,9 @@ export class MarkdownParser {
 // without inline HTML, and producing a document in the basic schema.
 export const defaultMarkdownParser = new MarkdownParser(
     schema,
-    MarkdownIt("commonmark", { html: false }).disable([
-        "emphasis",
-        "autolink",
-        "backticks",
-        "entity",
-    ]),
+    MarkdownIt("commonmark", { html: true })
+        .disable(["emphasis", "autolink", "backticks", "entity"])
+        .enable(["table"]),
     {
         blockquote: {
             block: "rinoBlockquote",
@@ -282,6 +295,22 @@ export const defaultMarkdownParser = new MarkdownParser(
         hardbreak: {
             node: "rinoHardBreak",
             hasOpenClose: false,
+        },
+        table: {
+            block: "rinoTable",
+            hasOpenClose: true,
+        },
+        tr: {
+            block: "rinoTableRow",
+            hasOpenClose: true,
+        },
+        th: {
+            block: "rinoTableCell",
+            hasOpenClose: true,
+        },
+        td: {
+            block: "rinoTableCell",
+            hasOpenClose: true,
         },
     },
 )

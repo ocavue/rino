@@ -117,5 +117,6 @@ export default Vue.extend({
     transition: 0.2s map-get($transition, "fast-out-slow-in") left;
     position: fixed;
     top: 14px;
+    z-index: 1;
 }
 </style>

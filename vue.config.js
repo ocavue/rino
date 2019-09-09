@@ -11,4 +11,9 @@ module.exports = {
         themeColor: "#ededed",
         assetsVersion: "1",
     },
+    css: {
+        // Ignore mini-css-extract-plugin's "Conflicting order between:" error.
+        // https://github.com/webpack-contrib/mini-css-extract-plugin/issues/250
+        extract: { ignoreOrder: true },
+    },
 }

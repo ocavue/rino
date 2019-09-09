@@ -17,6 +17,9 @@ const def = {
     pre: { nodeType: "rinoCodeBlock" },
     preJS: { nodeType: "rinoCodeBlock", language: "javascript" },
     blockquote: { nodeType: "rinoBlockquote" },
+    table: { nodeType: "rinoTable" },
+    tableRow: { nodeType: "rinoTableRow" },
+    tableCell: { nodeType: "rinoTableCell" },
 }
 
 const nodes = builders(schema, def)

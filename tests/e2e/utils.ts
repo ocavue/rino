@@ -63,3 +63,10 @@ export async function getTextAreaValue(testid: string) {
     let value: string = await page.evaluate(t => t.value, textareaHandle)
     return value
 }
+
+export const wysiwygEditorSelector =
+    testidSelector("editor") + " > " + testidSelector("wysiwyg-mode-textarea")
+
+export async function getSourceCodeModeText() {
+    return await getTextAreaValue("source-code-mode-textarea")
+}

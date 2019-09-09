@@ -66,8 +66,10 @@ const resetBlockTypeBindings: Record<string, Command> = {
 function buildBlockEnterKeymapBindings(
     regex: RegExp,
     nodeType: NodeType,
-    getAttrs: (match: string[]) => { [name: string]: string },
-    transact?: (match: string[], tr: Transaction) => Transaction,
+    kwargs: {
+        getAttrs?: (match: string[]) => { [name: string]: string }
+        transact?: (match: string[], tr: Transaction, start: number, end: number) => Transaction
+    },
 ): { [key: string]: Command } {
     // https://github.com/ProseMirror/prosemirror/issues/374#issuecomment-224514332
     // https://discuss.prosemirror.net/t/trigger-inputrule-on-enter/1118/4
@@ -95,11 +97,15 @@ function buildBlockEnterKeymapBindings(
                     return false
                 }
 
+                console.log(`DEBUG nodeType.name = ${nodeType.name}, match = ${match}`)
                 let tr: Transaction = state.tr
-                    .delete(start, end)
-                    .setBlockType(start, start, nodeType, getAttrs(match))
-                if (transact) {
-                    tr = transact(match, tr)
+                if (kwargs.getAttrs) {
+                    tr = tr
+                        .delete(start, end)
+                        .setBlockType(start, start, nodeType, kwargs.getAttrs(match))
+                }
+                if (kwargs.transact) {
+                    tr = kwargs.transact(match, tr, start, end)
                 }
                 if (dispatch) {
                     // To be able to query whether a command is applicable for a given state, without
@@ -176,11 +182,28 @@ export function buildKeymaps(): Plugin[] {
     return [
         keymap(resetBlockTypeBindings),
         keymap(
-            buildBlockEnterKeymapBindings(
-                /^```([a-zA-Z]*)?$/,
-                schema.nodes.rinoCodeBlock,
-                match => ({ language: match[1] }),
-            ),
+            buildBlockEnterKeymapBindings(/^```([a-zA-Z]*)?$/, schema.nodes.rinoCodeBlock, {
+                getAttrs: match => ({ language: match[1] }),
+            }),
+        ),
+        keymap(
+            buildBlockEnterKeymapBindings(/^\|((?:[^\|]+\|){2,})\s*$/, schema.nodes.rinoTable, {
+                transact: (match: string[], tr: Transaction, start: number, end: number) => {
+                    let texts = match[1]
+                        .split("|")
+                        .slice(0, -1) // Remove the empty string at the end
+                        .map(text => {
+                            text = text.trim()
+                            if (!text) text = " " // Prosemirror text doesn't allow empty text
+                            return schema.text(text)
+                        })
+                    let cells = texts.map(text => schema.nodes.rinoTableCell.create(null, text))
+                    let row = schema.nodes.rinoTableRow.create(null, cells)
+                    let table = schema.nodes.rinoTable.create(null, row)
+                    tr = tr.delete(start, end).insert(start, table)
+                    return tr
+                },
+            }),
         ),
         keymap(buildKeymapBindings()),
         keymap(baseKeymapBindings),

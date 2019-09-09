@@ -1,8 +1,15 @@
-import { Node, Mark } from "prosemirror-model"
+import { Node, Mark, Fragment } from "prosemirror-model"
 import * as _ from "lodash"
 
 type NodeSpec = (state: MarkdownSerializerState, node: Node, parent: Node, index: number) => void
 type NodeSpecs = Record<string, NodeSpec>
+
+enum TABLE_ALIGEN {
+    DEFAULT = 1,
+    CENTER = 2,
+    RIGHT = 3,
+    LEFT = 4,
+}
 
 // ::- This is an object used to track state and expose
 // methods related to markdown serialization. Instances are passed to
@@ -84,14 +91,14 @@ export class MarkdownSerializerState {
         this.closed = node
     }
 
-    // Add the given text to the document. When escape is not `false`,
+    // Add the given text to the document. When escape is true,
     // it will be escaped.
-    public text(text: string, escape?: boolean) {
+    public text(text: string, escape: boolean = true) {
         let lines = text.split("\n")
         for (let i = 0; i < lines.length; i++) {
             var startOfLine = this.atBlank() || this.closed
             this.write()
-            this.out += escape !== false ? this.esc(lines[i], Boolean(startOfLine)) : lines[i]
+            this.out += escape ? this.esc(lines[i], Boolean(startOfLine)) : lines[i]
             if (i != lines.length - 1) this.out += "\n"
         }
     }
@@ -243,5 +250,71 @@ export const defaultMarkdownSerializer = new MarkdownSerializer({
     },
     text(state, node, parent, index) {
         state.text(node.text || "")
+    },
+    rinoTable(state, node, parent, index) {
+        // TODO Use function `render` to handle each cell text.
+
+        let table: string[][] = []
+        let colAligns: TABLE_ALIGEN[] = []
+        node.forEach((rowNode, _, rowIndex) => {
+            let row: string[] = []
+            rowNode.forEach((cellNode, _, colIndex) => {
+                let fragment: Fragment = cellNode.content
+                let textNode = fragment.firstChild
+                let text = textNode ? (textNode.text || "").trim() : ""
+                row.push(text)
+                if (rowIndex === 0) {
+                    colAligns[colIndex] = TABLE_ALIGEN.DEFAULT // TODO
+                }
+            })
+            table.push(row)
+        })
+
+        let colWidths: number[] = new Array(colAligns.length)
+        table.forEach((row, rowIndex) => {
+            row.forEach((cell, colIndex) => {
+                if (!colWidths[colIndex]) colWidths[colIndex] = 4
+                colWidths[colIndex] = Math.max(cell.length, colWidths[colIndex])
+            })
+        })
+
+        let spliter: string[] = new Array(colAligns.length)
+        colWidths.forEach((width, colIndex) => {
+            switch (colAligns[colIndex]) {
+                case TABLE_ALIGEN.LEFT:
+                    spliter[colIndex] = ":" + "-".repeat(width - 1)
+                    break
+                case TABLE_ALIGEN.RIGHT:
+                    spliter[colIndex] = "-".repeat(width - 1) + ":"
+                    break
+                case TABLE_ALIGEN.CENTER:
+                    spliter[colIndex] = ":" + "-".repeat(width - 2) + ":"
+                    break
+                default:
+                    spliter[colIndex] = "-".repeat(width)
+                    break
+            }
+        })
+        table.splice(1, 0, spliter)
+
+        let text = "\n"
+        table.forEach(row => {
+            row.forEach((cell, col) => {
+                text += "| "
+                let width = colWidths[col]
+                if (colAligns[col] === TABLE_ALIGEN.CENTER) {
+                    let pad = " ".repeat(Math.round((width - cell.length) / 2))
+                    text += (pad + cell + pad).padEnd(width)
+                } else if (colAligns[col] === TABLE_ALIGEN.RIGHT) {
+                    text += cell.padStart(width)
+                } else {
+                    text += cell.padEnd(width)
+                }
+                text += " "
+            })
+            text += "|\n"
+        })
+
+        state.text(text, false)
     },
 })

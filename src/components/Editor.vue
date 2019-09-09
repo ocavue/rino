@@ -95,6 +95,7 @@ export default Vue.extend({
     padding-top: 80px;
     height: 100%;
     overflow: visible;
+    font-family: monospace; // Make tables align
 
     border: none;
     outline: none;

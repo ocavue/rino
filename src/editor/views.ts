@@ -3,25 +3,32 @@ import { EditorView } from "prosemirror-view"
 
 import { Plugin } from "prosemirror-state"
 import { history } from "prosemirror-history"
-import { gapCursor } from "prosemirror-gapcursor"
 import { dropCursor } from "prosemirror-dropcursor"
+import { tableEditing } from "prosemirror-tables"
 
 import { buildKeymaps } from "./keymap"
 import { decorationPlugin } from "./decoration"
 import { buildMdInputRules } from "./input-rule"
 import { testidPlugin } from "./testid"
-
+import { tableMenuPlugin, tableHeigthlightPlugin, getFixTablePlugin } from "./table"
 import { defaultMarkdownParser } from "./parser"
 import { defaultMarkdownSerializer } from "./serializer"
+
+import "../../node_modules/prosemirror-tables/style/tables.css"
+import "../../node_modules/prosemirror-view/style/prosemirror.css"
+import "../style/table.sass"
 
 const proseMirrorPlugins: Plugin[] = [
     history(),
     dropCursor(),
-    gapCursor(), // TODO You'll probably want to load style/gapcursor.css, which contains basic styling for the simulated cursor (as a short, blinking horizontal stripe).
     ...buildKeymaps(),
     buildMdInputRules(),
     testidPlugin,
     decorationPlugin,
+    tableMenuPlugin,
+    tableHeigthlightPlugin,
+    tableEditing(),
+    getFixTablePlugin(),
 ]
 
 abstract class BaseView {
@@ -64,6 +71,12 @@ class ProseMirrorView extends BaseView {
                 plugins: proseMirrorPlugins,
             }),
         })
+        if (process.env.NODE_ENV === "development") {
+            // Webpack will remove this block in production mode
+            // eslint-disable-next-line @typescript-eslint/no-var-requires
+            const prosemirrorDevTools = require("prosemirror-dev-tools")
+            prosemirrorDevTools.applyDevTools(this.view)
+        }
     }
 
     public get content() {
