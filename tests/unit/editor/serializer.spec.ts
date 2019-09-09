@@ -1,5 +1,5 @@
 import { TaggedProsemirrorNode } from "prosemirror-test-builder"
-import { defaultMarkdownSerializer } from "../../../src/editor/serializer"
+import { defaultMarkdownSerializer } from "@/editor/serializer"
 import { testcases } from "./base"
 
 describe("markdown parser", () => {

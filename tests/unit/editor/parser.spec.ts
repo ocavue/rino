@@ -1,5 +1,5 @@
 import { eq, TaggedProsemirrorNode } from "prosemirror-test-builder"
-import { defaultMarkdownParser } from "../../../src/editor/parser"
+import { defaultMarkdownParser } from "@/editor/parser"
 import { testcases } from "./base"
 import { nodes } from "./schema.spec"
 
