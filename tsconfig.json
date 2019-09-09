@@ -1,16 +1,30 @@
 {
-    "esmoduleinterop": true,
     "compilerOptions": {
-        "types": [
-            "jest",
-            "jest-environment-puppeteer",
-            "vuetify"
-        ],
-        "module": "commonjs",
-        "target": "es2018",
+        "target": "es5",
+        "module": "esnext",
+        "strict": true,
+        "importHelpers": true,
         "moduleResolution": "node",
+        "esModuleInterop": true,
         "allowSyntheticDefaultImports": true,
         "resolveJsonModule": true,
-        "strict": true
+        "baseUrl": ".",
+        "types": [
+            "webpack-env",
+            "vuetify",
+            "jest-environment-puppeteer",
+            "jest"
+        ],
+        "paths": {
+            "@/*": [
+                "src/*"
+            ]
+        },
+        "lib": [
+            "esnext",
+            "dom",
+            "dom.iterable",
+            "scripthost"
+        ]
     }
 }

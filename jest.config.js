@@ -21,7 +21,7 @@ module.exports = {
     collectCoverage: false,
 
     // An array of glob patterns indicating a set of files for which coverage information should be collected
-    collectCoverageFrom: ["./packages/**/*"],
+    collectCoverageFrom: ["src/**/*"],
 
     // The directory where Jest should output its coverage files
     coverageDirectory: "coverage",
@@ -62,7 +62,9 @@ module.exports = {
     moduleFileExtensions: ["js", "json", "jsx", "ts", "tsx", "node", "vue"],
 
     // A map from regular expressions to module names that allow to stub out resources with a single module
-    // moduleNameMapper: {},
+    moduleNameMapper: {
+        "^@/(.*)$": "<rootDir>/src/$1",
+    },
 
     // An array of regexp pattern strings, matched against all module paths before considered 'visible' to the module loader
     // modulePathIgnorePatterns: [],
@@ -124,10 +126,10 @@ module.exports = {
     // testLocationInResults: false,
 
     // The glob patterns Jest uses to detect test files
-    // testMatch: [
-    //   "**/__tests__/**/*.[jt]s?(x)",
-    //   "**/?(*.)+(spec|test).[tj]s?(x)"
-    // ],
+    testMatch: [
+        "**/tests/**/*.spec.(js|ts)",
+        //   "**/__tests__/**/*.[jt]s?(x)",
+    ],
 
     // An array of regexp pattern strings that are matched against all test paths, matched tests are skipped
     // testPathIgnorePatterns: [
@@ -153,14 +155,12 @@ module.exports = {
     transform: {
         // process `*.vue` files with `vue-jest`
         ".*\\.vue$": "vue-jest",
-        ".*\\.ts$": "babel-jest",
-        ".*\\.js$": "babel-jest",
+        ".*\\.ts$": "ts-jest",
+        ".*\\.(css|styl|less|sass|scss|svg|png|jpg|ttf|woff|woff2)$": "jest-transform-stub",
     },
 
     // An array of regexp pattern strings that are matched against all source file paths, matched files will skip transformation
-    // transformIgnorePatterns: [
-    //   "/node_modules/"
-    // ],
+    transformIgnorePatterns: ["/node_modules/"],
 
     // An array of regexp pattern strings that are matched against all modules before the module loader will automatically return a mock for them
     // unmockedModulePathPatterns: undefined,

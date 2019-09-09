@@ -40,11 +40,13 @@ jobs:
     executor: node-executor
     steps:
       - install
-      - run: echo ${DEV_CONFIG_FIREBASE} > ./config/firebase.json
-      - run: echo ${DEV_CONFIG_ENV} > ./config/env.json
       - run: |
-          yarn run dev &
-          ./scripts/wait-server.sh http://localhost:1234
+          echo ${DEV_CONFIG_FIREBASE} > ./config/firebase.json
+          echo "VUE_APP_TEST_USERNAME=${VUE_APP_TEST_USERNAME}" >> ./.env
+          echo "VUE_APP_TEST_PASSWORD=${VUE_APP_TEST_PASSWORD}" >> ./.env
+      - run: |
+          yarn serve &
+          ./scripts/wait-server.sh http://localhost:8080
           yarn run test --coverage --maxWorkers 1 # To avoid 'not enough memory' error
       - run: yarn run coverage
   build:
@@ -52,11 +54,9 @@ jobs:
     steps:
       - install
       - run: echo ${PROD_CONFIG_FIREBASE} > ./config/firebase.json
-      - run: echo ${PROD_CONFIG_ENV} > ./config/env.json
       - run: yarn run build --no-source-maps
       - run: |
           mkdir -p /tmp/deploy
-          cp -r ./public/* /tmp/deploy
           cp -r ./dist/* /tmp/deploy
           echo "<!-- $(date '+%Y-%m-%d %H:%M:%S %z') -->" >> /tmp/deploy/index.html
           cp /tmp/deploy/index.html /tmp/deploy/404.html
