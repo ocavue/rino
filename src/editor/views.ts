@@ -9,6 +9,7 @@ import { dropCursor } from "prosemirror-dropcursor"
 import { buildKeymaps } from "./keymap"
 import { decorationPlugin } from "./decoration"
 import { buildMdInputRules } from "./input-rule"
+import { testidPlugin } from "./testid"
 
 import { defaultMarkdownParser } from "./parser"
 import { defaultMarkdownSerializer } from "./serializer"
@@ -19,6 +20,7 @@ const proseMirrorPlugins: Plugin[] = [
     gapCursor(), // TODO You'll probably want to load style/gapcursor.css, which contains basic styling for the simulated cursor (as a short, blinking horizontal stripe).
     ...buildKeymaps(),
     buildMdInputRules(),
+    testidPlugin,
     decorationPlugin,
 ]
 
@@ -34,7 +36,9 @@ class MarkdownView extends BaseView {
 
     public constructor(place: HTMLElement, content: string) {
         super()
-        this.textarea = place.appendChild(document.createElement("textarea"))
+        const textarea = document.createElement("textarea")
+        textarea.setAttribute("data-testid", "source-code-mode-textarea")
+        this.textarea = place.appendChild(textarea)
         this.textarea.value = content
     }
 

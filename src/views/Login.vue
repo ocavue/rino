@@ -7,7 +7,7 @@
             </label>
             <button @click="login">Next</button>
         </p>
-        <p v-else class="login__message">
+        <p v-else class="login__message" data-testid="login-message">
             A sign-in email with additional instructions was sent to <strong>{{ email }}</strong
             >. Check your email to complete sign-in.
         </p>
@@ -31,7 +31,7 @@ export default Vue.extend({
             signInWithEmailAndPassword(testUser.username, testUser.password)
                 .then(() => {
                     this.sented = true
-                    setTimeout(() => this.$router.push("/"), 2000)
+                    this.$router.push("/")
                 })
                 .catch(error => console.error(error))
         }

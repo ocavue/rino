@@ -1,19 +1,49 @@
-import { Page } from "puppeteer"
+import { WaitForSelectorOptions, ClickOptions, DirectNavigationOptions } from "puppeteer"
 
-function sleep(milliseconds: number) {
-    return new Promise(resolve => setTimeout(resolve, milliseconds))
+const testidSelector = (testid: string) => `[data-testid="${testid}"]`
+
+export async function goto(url: string, options?: DirectNavigationOptions) {
+    url = url.startsWith("/") ? "http://localhost:8080" + url : url
+    return page.goto(url, options)
 }
 
-export async function waitForAsyncFunction(func: () => Promise<boolean>): Promise<void> {
-    let result = await func()
-    if (result) {
-        return
-    } else {
-        await sleep(50)
-        await waitForAsyncFunction(func)
+export async function wait(testid: string, options?: WaitForSelectorOptions) {
+    return page.waitForSelector(testidSelector(testid), options)
+}
+
+export async function force(testid: string) {
+    await wait(testid)
+    return page.focus(testidSelector(testid))
+}
+
+export async function pressKey(...keys: string[]) {
+    for (let key of keys) {
+        await page.keyboard.down(key)
+    }
+    for (let key of keys.reverse()) {
+        await page.keyboard.up(key)
     }
 }
 
-export async function waitForTestId(page: Page, testId: string) {
-    return page.waitForSelector(`[data-testid="${testId}"]`)
+export async function click(testid: string, options?: ClickOptions) {
+    await wait(testid)
+    return page.click(testidSelector(testid), options)
+}
+
+export async function sleep(ms: number) {
+    return page.waitFor(ms)
+}
+
+export async function type(testid: string, text: string) {
+    await wait(testid)
+    await page.type(testidSelector(testid), text, { delay: 5 })
+    await pressKey("Enter")
+}
+
+export async function getOne(testid: string) {
+    return await page.$(testidSelector(testid))
+}
+
+export async function getAll(testid: string) {
+    return await page.$$(testidSelector(testid))
 }

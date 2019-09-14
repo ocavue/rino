@@ -1,20 +1,25 @@
 <template>
-    <div>
+    <div data-testid="appbar">
         <div class="appbar" :style="`left: ${computedLeft}px;`">
-            <v-btn icon :ripple="false" @click="toggleDrawer">
+            <v-btn icon :ripple="false" data-testid="appbar-btn-menu" @click="toggleDrawer">
                 <v-icon>{{ icons.mdiMenu }}</v-icon>
             </v-btn>
         </div>
-        <div v-if="items" class="appbar" style="right: 14px;">
+        <div v-if="options.length > 0" class="appbar" style="right: 14px;">
             <v-menu bottom left>
                 <template v-slot:activator="{ on }">
-                    <v-btn icon :ripple="false" v-on="on">
+                    <v-btn icon :ripple="false" data-testid="appbar-btn-dots" v-on="on">
                         <v-icon>{{ icons.mdiDotsVertical }}</v-icon>
                     </v-btn>
                 </template>
                 <v-list>
-                    <v-list-item v-for="(operation, name) in items" :key="name" @click="operation">
-                        <v-list-item-title>{{ name }}</v-list-item-title>
+                    <v-list-item
+                        v-for="(option, index) in options"
+                        :key="index"
+                        :data-testid="`appbar-menu-item-${option.testid}`"
+                        @click="option.action"
+                    >
+                        <v-list-item-title>{{ option.name }}</v-list-item-title>
                     </v-list-item>
                 </v-list>
             </v-menu>
@@ -27,6 +32,12 @@ import Vue, { PropType } from "vue"
 
 import { mdiMenu, mdiDotsVertical } from "@mdi/js"
 import { Note } from "../controller"
+
+interface MenuOption {
+    name: string
+    testid: string
+    action: () => void
+}
 
 export default Vue.extend({
     name: "Appbar",
@@ -53,17 +64,28 @@ export default Vue.extend({
         computedLeft: function(): number {
             return this.$vuetify.application.left + 14
         },
-        items: function(): Record<string, () => void> | null {
+        options: function(): MenuOption[] {
+            const options: MenuOption[] = []
             if (this.email) {
-                const items: Record<string, () => void> = {}
                 if (this.note) {
-                    items["Share"] = () => window.alert("TODO")
-                    items["Delete"] = () => this.$emit("delete-note", this.note)
+                    options.push({
+                        name: "Share",
+                        testid: "share",
+                        action: () => window.alert("TODO"),
+                    })
+                    options.push({
+                        name: "Delete",
+                        testid: "delete",
+                        action: () => this.$emit("delete-note", this.note),
+                    })
                 }
-                items["Sign Out"] = () => this.$emit("sign-out")
-                return items
+                options.push({
+                    name: "Sign Out",
+                    testid: "signout",
+                    action: () => this.$emit("sign-out"),
+                })
             }
-            return null
+            return options
         },
     },
     methods: {

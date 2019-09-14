@@ -1,5 +1,5 @@
 <template>
-    <v-navigation-drawer v-model="isActive" app left class="sidebar">
+    <v-navigation-drawer v-model="isActive" app left class="sidebar" data-testid="sidebar">
         <template v-slot:prepend>
             <div class="sidebar-btn-container">
                 <v-btn
@@ -46,6 +46,7 @@
                     :ripple="false"
                     :input-value="currentNote === note"
                     color="primary"
+                    data-testid="sidebar-list-item"
                     @click="() => switchNote(note)"
                 >
                     <v-list-item-content class="sidebar-list__thumbnail">{{
