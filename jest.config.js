@@ -30,7 +30,7 @@ module.exports = {
     coveragePathIgnorePatterns: ["/node_modules/"],
 
     // A list of reporter names that Jest uses when writing coverage reports
-    coverageReporters: ["text", "lcov"],
+    coverageReporters: ["text", "lcov", "json"],
 
     // An object that configures minimum threshold enforcement for coverage results
     // coverageThreshold: null,
@@ -82,7 +82,7 @@ module.exports = {
     // projects: null,
 
     // Use this configuration option to add custom reporters to Jest
-    // reporters: undefined,
+    reporters: ["default", "jest-puppeteer-istanbul/lib/reporter"],
 
     // Automatically reset mock state between every test
     // resetMocks: false,
@@ -111,7 +111,7 @@ module.exports = {
     // setupFiles: [],
 
     // A list of paths to modules that run some code to configure or set up the testing framework before each test
-    // setupFilesAfterEnv: [],
+    setupFilesAfterEnv: ["jest-puppeteer-istanbul/lib/setup"],
 
     // A list of paths to snapshot serializer modules Jest should use for snapshot testing
     // snapshotSerializers: [],
