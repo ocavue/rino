@@ -70,9 +70,6 @@ export default Vue.extend({
 </script>
 
 <style lang="scss" scoped>
-@import "../../node_modules/github-markdown-css/github-markdown.css";
-@import "../style/editor.sass";
-
 .editor {
     height: 100%;
     width: 100%;
@@ -85,6 +82,9 @@ export default Vue.extend({
 </style>
 
 <style lang="scss">
+@import "../../node_modules/github-markdown-css/github-markdown.css";
+@import "../style/editor.sass";
+
 // For source code mode
 .markdown-body > textarea {
     padding-top: 80px;
