@@ -27,6 +27,7 @@ export class Note {
 
     private _id: string
     private data: NoteData
+    private deleting: boolean = false
     public thumbnail: string = ""
 
     public constructor(uid: string, snapshot?: DocumentSnapshot) {
@@ -86,6 +87,7 @@ export class Note {
     }
 
     public async updateContent(content: string): Promise<void> {
+        if (this.deleting) return Promise.resolve()
         if (this.data.content === content) return Promise.resolve()
         const updateTime = firebase.firestore.Timestamp.now()
         this.data.content = content
@@ -124,6 +126,7 @@ export class Note {
     }
 
     public async remove() {
+        this.deleting = true
         const ref = await this.refPromise
         await ref.delete()
     }

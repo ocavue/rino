@@ -54,7 +54,7 @@
     "@vue/cli-plugin-eslint": "^3.11.0",
     "@vue/cli-plugin-pwa": "^3.11.0",
     "@vue/cli-plugin-typescript": "^3.11.0",
-    "@vue/cli-plugin-unit-jest": "^4.0.0-rc.2",
+    "@vue/cli-plugin-unit-jest": "^4.0.0-rc.3",
     "@vue/cli-service": "^3.11.0",
     "@vue/eslint-config-prettier": "^5.0.0",
     "@vue/eslint-config-typescript": "^4.0.0",
@@ -64,13 +64,13 @@
     "eslint-plugin-prettier": "^3.1.0",
     "eslint-plugin-vue": "^5.0.0",
     "jest-puppeteer": "^4.3.0",
-    "jest-puppeteer-istanbul": "^0.1.4",
+    "jest-puppeteer-istanbul": "^0.2.0",
     "prettier": "^1.18.2",
     "prosemirror-test-builder": "^1.0.1",
     "puppeteer": "^1.19.0",
     "sass": "^1.17.4",
     "sass-loader": "^7.1.0",
-    "ts-jest": "^23.0.0",
+    "ts-jest": "^24.0.0",
     "typescript": "^3.5.0",
     "vue-cli-plugin-vuetify": "^0.6.3",
     "vue-template-compiler": "^2.6.10",
@@ -80,6 +80,9 @@
     "> 1%",
     "last 2 versions"
   ],
+  "engines": {
+    "node": ">= 12"
+  },
   "//": [
     "babel-core@^7.0.0-bridge.0 is for vue-jest@3.0.5. See this PR for detail: vue-jest/pull/173.",
     "jest-puppeteer: Requires Jest v22+ TypeScript users should additionally install `@types/puppeteer`, `@types/jest-environment-puppeteer` and `@types/expect-puppeteer`"

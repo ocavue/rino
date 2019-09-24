@@ -1,6 +1,11 @@
 <template>
     <v-container fill-height justify-center fluid>
-        <v-flex ref="editor" class="editor markdown-body" @keydown="handleKeydown"></v-flex>
+        <v-flex
+            ref="editor"
+            class="editor markdown-body"
+            data-testid="editor"
+            @keydown="handleKeydown"
+        ></v-flex>
     </v-container>
 </template>
 
