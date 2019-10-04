@@ -1,5 +1,5 @@
 <template>
-    <div>{{ message }}</div>
+    <div class="message">{{ message }}</div>
 </template>
 
 <script>
@@ -48,4 +48,8 @@ export default Vue.extend({
 })
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.message {
+    padding: 16px;
+}
+</style>
