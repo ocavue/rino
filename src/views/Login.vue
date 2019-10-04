@@ -54,7 +54,6 @@ export default Vue.extend({
             this.senting = true
             sendSignInLink(this.email)
                 .then(() => {
-                    this.senting = false
                     this.sented = true
                     // The link was successfully sent. Inform the user.
                     // Save the email locally so you don't need to ask the user for it again
@@ -62,9 +61,11 @@ export default Vue.extend({
                     window.localStorage.setItem("emailForSignIn", this.email)
                 })
                 .catch(error => {
-                    this.senting = false
                     this.error = error
                     console.error(error)
+                })
+                .finally(() => {
+                    this.senting = false
                 })
         },
     },
