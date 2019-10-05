@@ -5,8 +5,7 @@ export async function expectSignedIn() {
 }
 
 export async function login() {
-    await goto("/login")
-    await wait("login-message") // Auto login in test environment
+    await goto("/dev/login") // Auto login in test environment
     await expectSignedIn()
 }
 

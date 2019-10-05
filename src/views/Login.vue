@@ -26,8 +26,7 @@
 
 <script lang="ts">
 import Vue from "vue"
-import { sendSignInLink, signInWithEmailAndPassword } from "@/controller"
-import { testUser } from "@/controller/config"
+import { sendSignInLink } from "@/controller"
 
 export default Vue.extend({
     name: "Login",
@@ -37,17 +36,6 @@ export default Vue.extend({
         senting: false,
         sented: false,
     }),
-    mounted: function() {
-        if (process.env.NODE_ENV === "test" || process.env.NODE_ENV === "development") {
-            console.log(`Sign in with ${testUser.username} ${testUser.password}`)
-            signInWithEmailAndPassword(testUser.username, testUser.password)
-                .then(() => {
-                    this.sented = true
-                    this.$router.push("/")
-                })
-                .catch(error => console.error(error))
-        }
-    },
     methods: {
         login: function() {
             this.error = ""
