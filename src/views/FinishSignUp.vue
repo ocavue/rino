@@ -2,12 +2,12 @@
     <div class="message" data-testid="finish-sign-up">{{ message }}</div>
 </template>
 
-<script>
+<script lang="ts">
 import Vue from "vue"
 import { firebase } from "@/controller"
 
 export default Vue.extend({
-    name: "Login",
+    name: "FinishSignUp",
     data: () => ({ message: "Loading..." }),
     mounted: function() {
         // Confirm the link is a sign-in with email link.
