@@ -19,7 +19,7 @@
                                     label="Email"
                                     data-testid="login-text-field"
                                 ></v-text-field>
-                                <p v-if="error" class="login__error" data-testid="login-error">
+                                <p v-if="error" class="red--text" data-testid="login-error">
                                     {{ error }}
                                 </p>
                             </v-card-text>
@@ -122,10 +122,6 @@ export default Vue.extend({
 </script>
 
 <style lang="scss" scoped>
-.login__error {
-    color: red;
-}
-
 .login-container {
     width: 512px;
 }
