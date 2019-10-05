@@ -18,7 +18,7 @@
                         <v-btn
                             :loading="senting"
                             color="primary"
-                            data-testid="login-btn"
+                            data-testid="login-next-btn"
                             @click="login"
                         >
                             Next
@@ -69,6 +69,7 @@ export default Vue.extend({
                     this.senting = false
                 })
         },
+        cancel: function() {},
     },
 })
 </script>

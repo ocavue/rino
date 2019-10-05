@@ -12,7 +12,7 @@ describe("Sign-in for production", function() {
         await goto("/login")
         await wait("login-error", { hidden: true })
         await type("login-text-field", "INVAILD_EMAIL@@test.rino.app")
-        await click("login-btn")
+        await click("login-next-btn")
         expect(await getInnerText("login-error")).toEqual(
             "Error: The email address is badly formatted",
         )
@@ -22,7 +22,7 @@ describe("Sign-in for production", function() {
         await goto("/login")
         await wait("login-error", { hidden: true })
         await type("login-text-field", "VAILD_EMAIL@test.rino.app")
-        await click("login-btn")
+        await click("login-next-btn")
         expect(await getInnerText("login-message")).toEqual(
             "A sign-in email with additional instructions was sent to VAILD_EMAIL@test.rino.app. Check your email to complete sign-in.",
         )
