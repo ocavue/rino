@@ -60,7 +60,7 @@ describe("Sign-in for production", function() {
 })
 
 describe("Finish sign up", function() {
-    test.only("Direction", async () => {
+    test("Direction", async () => {
         await goto("/finish-sign-up/abcefg")
         await wait("finish-sign-up")
     })
