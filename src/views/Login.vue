@@ -65,11 +65,11 @@
                             </v-card-actions>
                         </v-card>
                         <!-- TODO: Privacy and Terms -->
-                        <v-row class="login-footer">
+                        <!-- <v-row class="login-footer">
                             <v-spacer />
                             <v-btn text small color="grey--lighten-1">Privacy</v-btn>
                             <v-btn text small color="grey--lighten-1">Terms</v-btn>
-                        </v-row>
+                        </v-row> -->
                     </v-col>
                 </v-row>
             </v-container>
