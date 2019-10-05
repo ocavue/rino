@@ -48,13 +48,13 @@ describe("Sign-in for production", function() {
         await login(vaildEmail)
         await expectResultCard()
         await click("login-back-btn")
-        await expectLoginCard()
+        await expectLoginCard() // Go back to login form
         expect(await getTextAreaValue("login-text-field")).toEqual(vaildEmail)
     })
 
     test("Cancel", async () => {
         await goto("/login")
         await click("login-cancel-btn")
-        // TODO expect url is a '/e/'
+        await wait("sidebar-btn-sign-in") // Go back to main page
     })
 })
