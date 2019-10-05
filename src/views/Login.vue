@@ -5,11 +5,24 @@
                 <v-card v-if="!sented">
                     <v-card-title>Sign in with email</v-card-title>
                     <v-card-text>
-                        <v-text-field v-model="email" label="Email"></v-text-field>
-                        <p v-if="error" class="login__error">{{ error }}</p>
+                        <v-text-field
+                            v-model="email"
+                            label="Email"
+                            data-testid="login-text-field"
+                        ></v-text-field>
+                        <p v-if="error" class="login__error" data-testid="login-error">
+                            {{ error }}
+                        </p>
                     </v-card-text>
                     <v-card-actions>
-                        <v-btn :loading="senting" color="primary" @click="login">Next</v-btn>
+                        <v-btn
+                            :loading="senting"
+                            color="primary"
+                            data-testid="login-btn"
+                            @click="login"
+                        >
+                            Next
+                        </v-btn>
                     </v-card-actions>
                 </v-card>
                 <v-card v-else>
