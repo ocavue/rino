@@ -1,5 +1,5 @@
 import { login } from "./actions"
-import { goto, type, click, wait, getInnerText, getTextAreaValue, sleep } from "./utils"
+import { goto, type, click, wait, getInnerText, getTextAreaValue } from "./utils"
 
 describe("Sign-in for development", function() {
     test("Automatically sign in", async () => {
