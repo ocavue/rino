@@ -14,7 +14,7 @@ describe("Write in WYSIWYG mode", () => {
     }
 
     async function getSourceCodeModeText() {
-        await getTextAreaValue("source-code-mode-textarea")
+        return await getTextAreaValue("source-code-mode-textarea")
     }
 
     async function switchMode() {
