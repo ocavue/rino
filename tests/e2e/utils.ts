@@ -50,16 +50,16 @@ export async function getAll(testid: string) {
 
 export async function getInnerText(testid: string) {
     await wait(testid)
-    let elemenmHander = await getOne(testid)
-    expect(elemenmHander).toBeTruthy()
-    let innerText: string = await page.evaluate(e => e.innerText, elemenmHander)
+    let elementHandle = await getOne(testid)
+    expect(elementHandle).toBeTruthy()
+    let innerText: string = await page.evaluate(e => e.innerText, elementHandle)
     return innerText
 }
 
 export async function getTextAreaValue(testid: string) {
     await wait(testid)
-    let textarea = await getOne(testid)
-    expect(textarea).toBeTruthy()
-    let text: string = await page.evaluate(textarea => textarea.value, textarea)
-    return text
+    let textareaHandle = await getOne(testid)
+    expect(textareaHandle).toBeTruthy()
+    let value: string = await page.evaluate(t => t.value, textareaHandle)
+    return value
 }
