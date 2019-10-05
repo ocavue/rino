@@ -8,7 +8,7 @@ import { firebase } from "@/controller"
 
 export default Vue.extend({
     name: "Login",
-    data: () => ({ message: "Loading." }),
+    data: () => ({ message: "Loading..." }),
     mounted: function() {
         // Confirm the link is a sign-in with email link.
         if (firebase.auth().isSignInWithEmailLink(window.location.href)) {
