@@ -66,7 +66,9 @@
                         </v-card>
                         <v-row class="login-footer">
                             <v-spacer />
+                            <!-- TODO -->
                             <v-btn text small color="grey">Privacy</v-btn>
+                            <!-- TODO -->
                             <v-btn text small color="grey">Terms</v-btn>
                         </v-row>
                     </v-col>
