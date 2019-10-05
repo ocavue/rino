@@ -6,8 +6,8 @@ export async function sendSignInLink(email: string): Promise<void> {
         process.env.NODE_ENV === "production" ? "https://rino.app" : "http://localhost:8080"
     const url = `${host}/finish-sign-up/${generateRandomId()}`
 
-    // Attention: `firebase.auth` use Closure library's Promise implementation, so that I can only
-    // use `catch` instead of `trycatch` to avoid uncaught error.
+    // `firebase.auth` use Closure library's Promise implementation, so that I can only
+    // use `.catch()` instead of `try...catch` to avoid uncaught error.
     // See also https://github.com/firebase/firebase-js-sdk/issues/1881#issuecomment-501886866
     let error: any = undefined
     await firebase
