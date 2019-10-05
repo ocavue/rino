@@ -2,7 +2,7 @@
     <v-app>
         <v-content class="login-container">
             <v-container fluid>
-                <v-card v-if="!sented" class="login-card">
+                <v-card v-if="!sented" class="login-card" :loading="senting">
                     <v-card-title class="login-card__title">Sign in with email</v-card-title>
                     <v-card-text class="login-card__text">
                         <v-text-field
@@ -16,13 +16,7 @@
                     </v-card-text>
                     <v-card-actions class="login-card__actions">
                         <v-spacer />
-                        <v-btn
-                            :min-width="88"
-                            :loading="senting"
-                            text
-                            data-testid="login-cancel-btn"
-                            @click="cancel"
-                        >
+                        <v-btn :min-width="88" text data-testid="login-cancel-btn" @click="cancel">
                             CANCEL
                         </v-btn>
                         <v-btn
@@ -42,7 +36,7 @@
                         >. Check your email to complete sign-in.
                     </v-card-text>
                 </v-card>
-                <v-row class="login-footer">
+                <v-row v-if="!sented" class="login-footer">
                     <v-spacer />
                     <v-btn text small color="grey">Privacy</v-btn>
                     <v-btn text small color="grey">Terms</v-btn>
@@ -99,17 +93,21 @@ export default Vue.extend({
 }
 
 .login-card {
-    padding: 32px;
-
     &__title,
     &__text,
     &__actions {
-        padding-right: 0;
-        padding-left: 0;
+        padding-left: 32px;
+        padding-right: 32px;
     }
 
+    &__title {
+        padding-top: 48px;
+    }
     &__text {
         padding-top: 32px;
+    }
+    &__actions {
+        padding-bottom: 32px;
     }
 }
 
