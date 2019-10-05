@@ -4,7 +4,12 @@
             <v-container fluid class="login-container fill-height">
                 <v-row align="center" justify="center">
                     <v-col>
-                        <v-card v-if="!sented" class="login-card" :loading="senting">
+                        <v-card
+                            v-if="!sented"
+                            class="login-card"
+                            :loading="senting"
+                            data-testid="login-form-card"
+                        >
                             <v-card-title class="login-card__title">
                                 Sign in with email
                             </v-card-title>
@@ -38,7 +43,7 @@
                                 </v-btn>
                             </v-card-actions>
                         </v-card>
-                        <v-card v-else class="login-card">
+                        <v-card v-else class="login-card" data-testid="login-result-card">
                             <v-card-title class="login-card__title">
                                 Sign-in email sent
                             </v-card-title>

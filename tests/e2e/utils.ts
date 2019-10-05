@@ -55,3 +55,11 @@ export async function getInnerText(testid: string) {
     let innerText: string = await page.evaluate(e => e.innerText, elemenmHander)
     return innerText
 }
+
+export async function getTextAreaValue(testid: string) {
+    await wait(testid)
+    let textarea = await getOne(testid)
+    expect(textarea).toBeTruthy()
+    let text: string = await page.evaluate(textarea => textarea.value, textarea)
+    return text
+}

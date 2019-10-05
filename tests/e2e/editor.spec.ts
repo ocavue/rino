@@ -1,6 +1,5 @@
 import { login, cleanNotes, createNote } from "./actions"
-import { sleep, pressKey, type as typeByTestid, getOne } from "./utils"
-import { ElementHandle } from "puppeteer"
+import { sleep, pressKey, getTextAreaValue, type as typeByTestid } from "./utils"
 import { readFileSync } from "fs"
 
 function readText(filename: string) {
@@ -15,10 +14,7 @@ describe("Write in WYSIWYG mode", () => {
     }
 
     async function getSourceCodeModeText() {
-        let textarea = (await getOne("source-code-mode-textarea")) as ElementHandle
-        expect(textarea).not.toBeNull()
-        let text: string = await page.evaluate(textarea => textarea.value, textarea)
-        return text
+        await getTextAreaValue("source-code-mode-textarea")
     }
 
     async function switchMode() {
