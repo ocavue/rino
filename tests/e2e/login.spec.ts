@@ -40,7 +40,7 @@ describe("Sign-in for production", function() {
         await login(vaildEmail)
         await expectResultCard()
         expect(await getInnerText("login-message")).toEqual(
-            "A sign-in email with additional instructions was sent to VAILD_EMAIL@test.rino.app. Check your email to complete sign-in.",
+            `A sign-in email with additional instructions was sent to ${vaildEmail}. Check your email to complete sign-in.`,
         )
     })
 
