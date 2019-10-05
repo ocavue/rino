@@ -47,3 +47,11 @@ export async function getOne(testid: string) {
 export async function getAll(testid: string) {
     return await page.$$(testidSelector(testid))
 }
+
+export async function getInnerText(testid: string) {
+    await wait(testid)
+    let elemenmHander = await getOne(testid)
+    expect(elemenmHander).toBeTruthy()
+    let innerText: string = await page.evaluate(e => e.innerText, elemenmHander)
+    return innerText
+}
