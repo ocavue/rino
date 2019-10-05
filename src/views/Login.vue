@@ -64,12 +64,11 @@
                                 </v-btn>
                             </v-card-actions>
                         </v-card>
+                        <!-- TODO: Privacy and Terms -->
                         <v-row class="login-footer">
                             <v-spacer />
-                            <!-- TODO -->
-                            <v-btn text small color="grey">Privacy</v-btn>
-                            <!-- TODO -->
-                            <v-btn text small color="grey">Terms</v-btn>
+                            <v-btn text small color="grey--lighten-1">Privacy</v-btn>
+                            <v-btn text small color="grey--lighten-1">Terms</v-btn>
                         </v-row>
                     </v-col>
                 </v-row>
@@ -146,7 +145,7 @@ export default Vue.extend({
         padding-top: 32px;
     }
     &__actions {
-        padding-bottom: 32px;
+        padding-bottom: 40px;
     }
 }
 
