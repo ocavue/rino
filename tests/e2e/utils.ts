@@ -47,3 +47,19 @@ export async function getOne(testid: string) {
 export async function getAll(testid: string) {
     return await page.$$(testidSelector(testid))
 }
+
+export async function getInnerText(testid: string) {
+    await wait(testid)
+    let elementHandle = await getOne(testid)
+    expect(elementHandle).toBeTruthy()
+    let innerText: string = await page.evaluate(e => e.innerText, elementHandle)
+    return innerText
+}
+
+export async function getTextAreaValue(testid: string) {
+    await wait(testid)
+    let textareaHandle = await getOne(testid)
+    expect(textareaHandle).toBeTruthy()
+    let value: string = await page.evaluate(t => t.value, textareaHandle)
+    return value
+}

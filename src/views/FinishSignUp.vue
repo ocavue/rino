@@ -1,14 +1,14 @@
 <template>
-    <div>{{ message }}</div>
+    <div class="message" data-testid="finish-sign-up">{{ message }}</div>
 </template>
 
-<script>
+<script lang="ts">
 import Vue from "vue"
 import { firebase } from "@/controller"
 
 export default Vue.extend({
-    name: "Login",
-    data: () => ({ message: "Loading." }),
+    name: "FinishSignUp",
+    data: () => ({ message: "Loading..." }),
     mounted: function() {
         // Confirm the link is a sign-in with email link.
         if (firebase.auth().isSignInWithEmailLink(window.location.href)) {
@@ -43,9 +43,15 @@ export default Vue.extend({
                     console.error("Failed to sign in:", error)
                     this.message = "Failed to sign in."
                 })
+        } else {
+            this.message = "Failed to login"
         }
     },
 })
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.message {
+    padding: 16px;
+}
+</style>

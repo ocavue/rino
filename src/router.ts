@@ -6,6 +6,8 @@ const NotFound = () => import("./views/NotFound.vue")
 const Login = () => import("./views/Login.vue")
 const FinishSignUp = () => import("./views/FinishSignUp.vue")
 
+const DevAutoLogin = () => import("./views/dev/AutoLogin.vue")
+
 Vue.use(Router)
 
 export default new Router({
@@ -34,6 +36,11 @@ export default new Router({
         {
             path: "/index.html",
             redirect: "/",
+        },
+        {
+            name: "dev auto login",
+            path: "/dev/login",
+            component: DevAutoLogin,
         },
         {
             name: "not found",
