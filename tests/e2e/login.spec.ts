@@ -1,5 +1,5 @@
 import { login } from "./actions"
-import { goto, type, click, wait, getInnerText, getTextAreaValue } from "./utils"
+import { goto, type, click, wait, getInnerText, getTextAreaValue, sleep } from "./utils"
 
 describe("Sign-in for development", function() {
     test("Automatically sign in", async () => {
@@ -56,5 +56,12 @@ describe("Sign-in for production", function() {
         await goto("/login")
         await click("login-cancel-btn")
         await wait("sidebar") // Go back to main page
+    })
+})
+
+describe("Finish sign ip", function() {
+    test.only("Direction", async () => {
+        await goto("/finish-sign-up/abcefg")
+        await wait("finish-sign-up")
     })
 })

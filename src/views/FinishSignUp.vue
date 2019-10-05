@@ -1,5 +1,5 @@
 <template>
-    <div class="message">{{ message }}</div>
+    <div class="message" data-testid="finish-sign-up">{{ message }}</div>
 </template>
 
 <script>
@@ -43,6 +43,8 @@ export default Vue.extend({
                     console.error("Failed to sign in:", error)
                     this.message = "Failed to sign in."
                 })
+        } else {
+            this.message = "Failed to login"
         }
     },
 })
