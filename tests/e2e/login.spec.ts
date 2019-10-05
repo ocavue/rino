@@ -57,10 +57,8 @@ describe("Sign-in for production", function() {
         await click("login-cancel-btn")
         await wait("sidebar") // Go back to main page
     })
-})
 
-describe("Finish sign up", function() {
-    test("Direction", async () => {
+    test("Finish sign up", async () => {
         await goto("/finish-sign-up/abcefg")
         await wait("finish-sign-up")
     })
