@@ -1,10 +1,10 @@
 <template>
     <v-app>
-        <v-content id="login">
+        <v-content class="login-container">
             <v-container fluid>
-                <v-card v-if="!sented">
-                    <v-card-title>Sign in with email</v-card-title>
-                    <v-card-text>
+                <v-card v-if="!sented" class="login-card">
+                    <v-card-title class="login-card__title">Sign in with email</v-card-title>
+                    <v-card-text class="login-card__text">
                         <v-text-field
                             v-model="email"
                             label="Email"
@@ -14,9 +14,19 @@
                             {{ error }}
                         </p>
                     </v-card-text>
-                    <v-card-actions>
+                    <v-card-actions class="login-card__actions">
+                        <v-spacer />
                         <v-btn
+                            :min-width="88"
                             :loading="senting"
+                            text
+                            data-testid="login-cancel-btn"
+                            @click="cancel"
+                        >
+                            CANCEL
+                        </v-btn>
+                        <v-btn
+                            :min-width="88"
                             color="primary"
                             data-testid="login-next-btn"
                             @click="login"
@@ -32,6 +42,11 @@
                         >. Check your email to complete sign-in.
                     </v-card-text>
                 </v-card>
+                <v-row class="login-footer">
+                    <v-spacer />
+                    <v-btn text small color="grey">Privacy</v-btn>
+                    <v-btn text small color="grey">Terms</v-btn>
+                </v-row>
             </v-container>
         </v-content>
     </v-app>
@@ -77,5 +92,28 @@ export default Vue.extend({
 <style lang="scss" scoped>
 .login__error {
     color: red;
+}
+
+.login-container {
+    width: 512px;
+}
+
+.login-card {
+    padding: 32px;
+
+    &__title,
+    &__text,
+    &__actions {
+        padding-right: 0;
+        padding-left: 0;
+    }
+
+    &__text {
+        padding-top: 32px;
+    }
+}
+
+.login-footer {
+    padding-top: 16px;
 }
 </style>
