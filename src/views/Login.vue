@@ -103,8 +103,14 @@ export default Vue.extend({
                     this.senting = false
                 })
         },
-        cancel: function() {},
-        back: function() {},
+        cancel: function() {
+            this.$router.push({ path: "/" })
+        },
+        back: function() {
+            this.error = ""
+            this.senting = false
+            this.sented = false
+        },
     },
 })
 </script>
