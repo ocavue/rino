@@ -71,8 +71,10 @@ def main():
     in_path = get_input_path("favicon.png")
     out_path = path.join(ROOT_PATH, "public", "favicon.ico")
     img = Image.open(in_path)
-    assert img.size == (640, 640)
-    # Pillow will save multiple resolutions with different sizes into .ico file by default.
+    assert img.size >= (256, 256)
+    # Pillow will save multiple resolutions with different sizes into .ico file by default,
+    # from 16*16 to 256*256.
+    # See also https://pillow.readthedocs.io/en/stable/handbook/image-file-formats.html#ico
     img.save(out_path)
 
 
