@@ -23,7 +23,7 @@ describe("About", function() {
         expect(received).toEqual(expected)
     })
 
-    test("Open the dialog", async () => {
+    test("Close the dialog", async () => {
         await page.mouse.click(5, 5)
         await wait("about-dialog", { hidden: true })
     })
