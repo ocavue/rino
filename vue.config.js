@@ -9,5 +9,6 @@ module.exports = {
     pwa: {
         name: "Rino",
         themeColor: "#ededed",
+        assetsVersion: "1",
     },
 }
