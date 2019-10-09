@@ -77,6 +77,11 @@ def main():
     # See also https://pillow.readthedocs.io/en/stable/handbook/image-file-formats.html#ico
     img.save(out_path)
 
+    # Build src/assets/logo.png
+    in_path = get_input_path('Circle.png')
+    out_path = path.join(ROOT_PATH, "src", "assets", "logo.png")
+    resize_image(in_path, out_path, 256)
+
 
 if __name__ == "__main__":
     main()

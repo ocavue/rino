@@ -15,4 +15,6 @@ let testUser = {
     password: process.env.VUE_APP_TEST_PASSWORD || "",
 }
 
-export { firebaseConfig, testUser }
+const version = `${process.env.VUE_APP_VERSION} (${process.env.VUE_APP_COMMIT})`
+
+export { firebaseConfig, testUser, version }

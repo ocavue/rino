@@ -24,12 +24,14 @@
                 </v-list>
             </v-menu>
         </div>
+        <AboutDialog v-model="dialog" />
     </div>
 </template>
 
 <script lang="ts">
 import Vue, { PropType } from "vue"
 
+import AboutDialog from "./AboutDialog.vue"
 import { mdiMenu, mdiDotsVertical } from "@mdi/js"
 import { Note } from "../controller"
 
@@ -41,6 +43,7 @@ interface MenuOption {
 
 export default Vue.extend({
     name: "Appbar",
+    components: { AboutDialog },
     props: {
         note: {
             // Add PropType because of this issue:
@@ -57,8 +60,10 @@ export default Vue.extend({
     },
     data: (): {
         icons: Record<string, string>
+        dialog: boolean
     } => ({
         icons: { mdiMenu, mdiDotsVertical },
+        dialog: false,
     }),
     computed: {
         computedLeft: function(): number {
@@ -85,12 +90,20 @@ export default Vue.extend({
                     action: () => this.$emit("sign-out"),
                 })
             }
+            options.push({
+                name: "About",
+                testid: "about",
+                action: () => this.showDialog(),
+            })
             return options
         },
     },
     methods: {
         toggleDrawer: function() {
             this.$emit("toggle-drawer")
+        },
+        showDialog: function() {
+            this.dialog = true
         },
     },
 })
