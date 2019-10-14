@@ -22,3 +22,12 @@ export async function sendSignInLink(email: string): Promise<void> {
 export async function signInWithEmailAndPassword(email: string, password: string) {
     return await firebase.auth().signInWithEmailAndPassword(email, password)
 }
+
+export function getCurrentUserEmail(): string | null {
+    const user = firebase.auth().currentUser
+    if (user) {
+        return user.email
+    } else {
+        return null
+    }
+}
