@@ -10,7 +10,7 @@ import { buildKeymaps } from "./keymap"
 import { decorationPlugin } from "./decoration"
 import { buildMdInputRules } from "./input-rule"
 import { testidPlugin } from "./testid"
-import { tableMenuPlugin, tableHeigthlightPlugin, getFixTablePlugin } from "./table"
+import { tableMenuPlugin, tableHeigthlightPlugin } from "./table"
 import { defaultMarkdownParser } from "./parser"
 import { defaultMarkdownSerializer } from "./serializer"
 
@@ -28,7 +28,6 @@ const proseMirrorPlugins: Plugin[] = [
     tableMenuPlugin,
     tableHeigthlightPlugin,
     tableEditing(),
-    getFixTablePlugin(),
 ]
 
 abstract class BaseView {

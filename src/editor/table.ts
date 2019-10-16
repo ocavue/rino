@@ -1,6 +1,6 @@
 import { DecorationSet, Decoration, EditorView } from "prosemirror-view"
 import { EditorState, Plugin, PluginSpec, Transaction } from "prosemirror-state"
-import { Node /*, ResolvedPos*/ } from "prosemirror-model"
+import { Node } from "prosemirror-model"
 import {
     addColumnAfter,
     addColumnBefore,
@@ -8,8 +8,8 @@ import {
     addRowBefore,
     deleteColumn,
     deleteRow,
-    // deleteTable, // TODO: use deleteTable
     selectionCell,
+    // deleteTable, // TODO: use deleteTable
 } from "prosemirror-tables"
 
 import { findParentNode } from "./utils"
@@ -21,14 +21,7 @@ import addRowAfterSvg from "../assets/add_row_after.svg"
 import deleteColumnSvg from "../assets/delete_column.svg"
 import deleteRowSvg from "../assets/delete_row.svg"
 
-// TODO: Remove this after https://github.com/ProseMirror/prosemirror-tables/pull/89/files being merged
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const fixTables: (
-    state: EditorState,
-    oldState?: EditorState,
-) => null | Transaction = require("prosemirror-tables").fixTables
-
-const MENU_ID = "rino-table-menu-z3wzkup95w"
+const MENU_ID = "rino-table-menu"
 type Command = (state: EditorState, dispatch: (tr: Transaction) => void) => boolean
 
 function isSelectingTableCell(state: EditorState): Node | null {
@@ -39,7 +32,6 @@ function isSelectingTableCell(state: EditorState): Node | null {
         let fromCell: Node = state.selection.$from.parent
         let toCell: Node = state.selection.$to.parent
         if (fromCell === toCell) {
-            // let cell: Node = state.selection.$from.parent
             return fromCell
         }
     }
@@ -52,11 +44,8 @@ class TableMenuPluginSpec implements PluginSpec {
     private buildMenuOption(id: string, svg: string, command: Command): HTMLButtonElement {
         let button = document.createElement("button")
         button.onclick = () => {
-            console.log("button been clicked")
-            console.log(
-                "command result:",
-                this.editorView ? command(this.editorView.state, this.editorView.dispatch) : null,
-            )
+            console.debug(`Table menu button '${id}' been clicked`)
+            if (this.editorView) command(this.editorView.state, this.editorView.dispatch)
         }
         button.id = id
         button.setAttribute("data-testid", id)
@@ -104,14 +93,12 @@ class TableMenuPluginSpec implements PluginSpec {
             let tableDom = view.domAtPos(tablePos + 1).node as HTMLElement
             let box = tableDom.getBoundingClientRect()
             menu.style.top = `${box.top - 72}px`
-            console.log("decorations is called", tableDom)
             let deco = Decoration.widget(tablePos, menu)
             return DecorationSet.create(state.doc, [deco])
         },
     }
 
     public view(view: EditorView) {
-        // return new TableMenu(view)
         this.editorView = view
         return {
             update: () => {},
@@ -135,7 +122,6 @@ export const tableHeigthlightPlugin = new Plugin({
             }
             let nodeStart: number = $cell.pos
             let nodeEnd: number = nodeStart + cell.nodeSize
-            console.log("nodeStart:", nodeStart, nodeEnd)
             return DecorationSet.create(state.doc, [
                 Decoration.node(nodeStart, nodeEnd, {
                     // class: "selectedCell", // `selectedCell` will make text color lighter, which will reduce user's visual concentration.
@@ -145,22 +131,3 @@ export const tableHeigthlightPlugin = new Plugin({
         },
     },
 })
-
-export const getFixTablePlugin = () => {
-    return new Plugin({
-        view: () => {
-            return {
-                update: (view: EditorView, prevState: EditorState) => {
-                    const fix = fixTables(view.state)
-                    const selection = view.state.selection
-                    console.log("selection:", selection.head, selection.$head)
-                    // console.log("fixing")
-                    if (fix) {
-                        // console.log("fixed")
-                        view.updateState(view.state.apply(fix.setMeta("addToHistory", false)))
-                    }
-                },
-            }
-        },
-    })
-}

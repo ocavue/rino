@@ -66,7 +66,7 @@ const resetBlockTypeBindings: Record<string, Command> = {
 function buildBlockEnterKeymapBindings(
     regex: RegExp,
     nodeType: NodeType,
-    kwargs: {
+    options: {
         getAttrs?: (match: string[]) => { [name: string]: string }
         transact?: (match: string[], tr: Transaction, start: number, end: number) => Transaction
     },
@@ -97,15 +97,14 @@ function buildBlockEnterKeymapBindings(
                     return false
                 }
 
-                console.log(`DEBUG nodeType.name = ${nodeType.name}, match = ${match}`)
                 let tr: Transaction = state.tr
-                if (kwargs.getAttrs) {
+                if (options.getAttrs) {
                     tr = tr
                         .delete(start, end)
-                        .setBlockType(start, start, nodeType, kwargs.getAttrs(match))
+                        .setBlockType(start, start, nodeType, options.getAttrs(match))
                 }
-                if (kwargs.transact) {
-                    tr = kwargs.transact(match, tr, start, end)
+                if (options.transact) {
+                    tr = options.transact(match, tr, start, end)
                 }
                 if (dispatch) {
                     // To be able to query whether a command is applicable for a given state, without

@@ -217,7 +217,6 @@ export class MarkdownParser {
         let state = new MarkdownParseState(this.schema, this.tokenHandlers)
         let doc: Node
         let mdTokens: Token[] = this.tokenizer.parse(text, {})
-        // console.log("parsed:", JSON.stringify(mdTokens))
 
         mdTokens = mdTokens.filter(
             token =>
@@ -231,7 +230,6 @@ export class MarkdownParser {
         do {
             doc = state.closeNode()
         } while (state.stack.length)
-        // console.log("doc:", doc)
         return doc
     }
 }

@@ -7,7 +7,7 @@ function readText(filename: string) {
 }
 
 describe("Write in WYSIWYG mode", () => {
-    jest.setTimeout(190_000)
+    jest.setTimeout(180_000)
 
     async function type(text: string) {
         await typeByTestid("wysiwyg-mode-textarea", text)
