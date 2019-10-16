@@ -179,6 +179,47 @@ const nodes: { [name: string]: NodeSpec } = {
             return ["br"]
         },
     },
+
+    rinoTable: {
+        content: "rinoTableRow+",
+        tableRole: "table",
+        isolating: true,
+        group: "block",
+        parseDOM: [{ tag: "table" }],
+        toDOM() {
+            return ["table", 0]
+        },
+    },
+
+    rinoTableRow: {
+        content: "rinoTableCell+",
+        tableRole: "row",
+        parseDOM: [{ tag: "tr" }],
+        toDOM() {
+            return ["tr", 0]
+        },
+    },
+
+    rinoTableCell: {
+        content: "inline*",
+        attrs: {
+            colspan: {
+                default: 1,
+            },
+            rowspan: {
+                default: 1,
+            },
+            colwidth: {
+                default: null,
+            },
+        },
+        tableRole: "cell",
+        isolating: true,
+        parseDOM: [{ tag: "td" }, { tag: "th" }],
+        toDOM() {
+            return ["td", 0]
+        },
+    },
 }
 
 /*

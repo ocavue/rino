@@ -1,7 +1,8 @@
 import { TaggedProsemirrorNode } from "prosemirror-test-builder"
 import { nodes } from "./schema.spec"
+import { dedent } from "@/editor/utils"
 
-const { doc, p, h1, h6, ol, ul, li, pre, preJS, blockquote, hr } = nodes
+const { doc, p, h1, h6, ol, ul, li, pre, preJS, blockquote, hr, table, tableRow, tableCell } = nodes
 
 export const testcases: Record<string, [string, TaggedProsemirrorNode]> = {
     paragraph: ["hello", doc(p("hello"))],
@@ -17,6 +18,21 @@ export const testcases: Record<string, [string, TaggedProsemirrorNode]> = {
     codeBlockWithLanguage: ["```javascript\n1+1\n```", doc(preJS("1+1"))],
     quote: ["> text\n> text", doc(blockquote(p("text\ntext")))],
     hr: ["---", doc(hr())],
+    table: [
+        dedent(`
+            | header | header |
+            | ------ | ------ |
+            | cell01 | cell02 |
+            | cell03 | cell04 |
+            `),
+        doc(
+            table(
+                tableRow(tableCell("header"), tableCell("header")),
+                tableRow(tableCell("cell01"), tableCell("cell02")),
+                tableRow(tableCell("cell03"), tableCell("cell04")),
+            ),
+        ),
+    ],
     // TODO: add test for hard break
     // br: [
     //     'text\rtext',

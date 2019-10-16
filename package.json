@@ -18,13 +18,13 @@
     "markdown-it": "^8.4.2",
     "prosemirror-commands": "^1.0.8",
     "prosemirror-dropcursor": "^1.1.1",
-    "prosemirror-gapcursor": "^1.0.3",
     "prosemirror-history": "^1.0.4",
     "prosemirror-inputrules": "^1.0.4",
     "prosemirror-keymap": "^1.0.1",
     "prosemirror-model": "^1.7.1",
     "prosemirror-schema-list": "^1.0.3",
     "prosemirror-state": "^1.2.3",
+    "prosemirror-tables": "^0.9.5",
     "prosemirror-view": "^1.9.8",
     "register-service-worker": "^1.6.2",
     "vue": "^2.6.10",
@@ -40,7 +40,6 @@
     "@types/markdown-it": "^0.0.7",
     "@types/prosemirror-commands": "^1.0.1",
     "@types/prosemirror-dropcursor": "^1.0.0",
-    "@types/prosemirror-gapcursor": "^1.0.1",
     "@types/prosemirror-history": "^1.0.1",
     "@types/prosemirror-inputrules": "^1.0.2",
     "@types/prosemirror-keymap": "^1.0.1",
@@ -66,8 +65,11 @@
     "jest-puppeteer": "^4.3.0",
     "jest-puppeteer-istanbul": "^0.3.1",
     "prettier": "^1.18.2",
+    "prosemirror-dev-tools": "^2.1.1",
     "prosemirror-test-builder": "^1.0.1",
     "puppeteer": "^1.19.0",
+    "react": "^16.0.0",
+    "react-dom": "^16.0.0",
     "sass": "^1.17.4",
     "sass-loader": "^7.1.0",
     "ts-jest": "^24.0.0",
@@ -84,6 +86,7 @@
     "node": ">= 12"
   },
   "//": [
+    "react and react-dom are required by prosemirror-dev-tools",
     "babel-core@^7.0.0-bridge.0 is for vue-jest@3.0.5. See this PR for detail: vue-jest/pull/173.",
     "jest-puppeteer: Requires Jest v22+ TypeScript users should additionally install `@types/puppeteer`, `@types/jest-environment-puppeteer` and `@types/expect-puppeteer`"
   ]
