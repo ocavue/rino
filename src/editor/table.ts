@@ -78,12 +78,12 @@ class TableMenuPluginSpec implements PluginSpec {
                 menu.id = MENU_ID
 
                 const options: [string, string, Command][] = [
-                    ["add-column-before", addColumnBeforeSvg, addColumnBefore],
-                    ["add-column-after", addColumnAfterSvg, addColumnAfter],
                     ["add-row-before", addRowBeforeSvg, addRowBefore],
                     ["add-row-after", addRowAfterSvg, addRowAfter],
-                    ["delete-column", deleteColumnSvg, deleteColumn],
+                    ["add-column-before", addColumnBeforeSvg, addColumnBefore],
+                    ["add-column-after", addColumnAfterSvg, addColumnAfter],
                     ["delete-row", deleteRowSvg, deleteRow],
+                    ["delete-column", deleteColumnSvg, deleteColumn],
                 ]
                 for (const [svg, command, id] of options) {
                     menu.appendChild(this.buildMenuOption(svg, command, id))
