@@ -93,3 +93,21 @@ describe("Write in WYSIWYG mode", () => {
         await switchMode() // Switch back to the WYSIWYG mode
     })
 })
+
+describe("Firebase operation", () => {
+    // App should not throw any error when doing firebase operation
+
+    beforeAll(async () => {
+        await login()
+    })
+
+    test("Create note", async () => {
+        await createNote()
+        await sleep(5000)
+    })
+
+    test("Editor note", async () => {
+        await typeByTestid("wysiwyg-mode-textarea", "Something")
+        await sleep(5000)
+    })
+})
