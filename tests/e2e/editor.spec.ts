@@ -114,7 +114,7 @@ describe("HTML", () => {
             await type("![Image](https://via.placeholder.com/100/)")
         })
 
-        test("Check html", async () => {
+        test("Check", async () => {
             await page.waitFor(imageSelector)
         })
     })
