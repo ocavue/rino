@@ -28,7 +28,6 @@ describe("Write in WYSIWYG mode", () => {
 
     test("Create a note", async () => {
         await createNote()
-        await sleep(5000) // TODO: Remove this delay
         await type("E2E test")
     })
 
@@ -92,5 +91,25 @@ describe("Write in WYSIWYG mode", () => {
         await switchMode() // Switch to the source code mode
         expect(await getSourceCodeModeText()).toBe(readText("0.txt"))
         await switchMode() // Switch back to the WYSIWYG mode
+    })
+})
+
+describe("Firebase operation", () => {
+    // App should not throw any error when doing firebase operations
+
+    const microseconds = 5000 // Should be enough for firebase operations
+
+    beforeAll(async () => {
+        await login()
+    })
+
+    test("Create note", async () => {
+        await createNote()
+        await sleep(microseconds)
+    })
+
+    test("Editor note", async () => {
+        await typeByTestid("wysiwyg-mode-textarea", "Something")
+        await sleep(microseconds)
     })
 })

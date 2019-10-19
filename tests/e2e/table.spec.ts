@@ -15,7 +15,6 @@ async function prepare() {
     await goto("/")
     await login()
     await createNote()
-    await sleep(1000)
 }
 
 async function type(content: string) {

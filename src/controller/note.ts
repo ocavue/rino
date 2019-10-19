@@ -25,12 +25,14 @@ export class Note {
 
     private snapshotPromise: Promise<DocumentSnapshot>
 
-    private _id: string
+    private firebaseId: string = ""
+    public readonly key: string // An unique constant.
     private data: NoteData
     private deleting: boolean = false
     public thumbnail: string = ""
 
     public constructor(uid: string, snapshot?: DocumentSnapshot) {
+        this.key = generateRandomId()
         if (snapshot) {
             this.data = {
                 uid: uid,
@@ -40,7 +42,7 @@ export class Note {
             }
 
             this.snapshotPromise = Promise.resolve(snapshot)
-            this._id = snapshot.ref.id
+            this.firebaseId = snapshot.ref.id
         } else {
             this.data = {
                 uid: uid,
@@ -51,9 +53,7 @@ export class Note {
 
             // Insert a new Note document in firebase
             this.snapshotPromise = createNote(Note.collection, this.data)
-
-            this._id = generateRandomId()
-            this.snapshotPromise.then(snapshot => (this._id = snapshot.ref.id))
+            this.snapshotPromise.then(snapshot => (this.firebaseId = snapshot.ref.id))
         }
         this.setThumbnail()
     }
@@ -63,8 +63,8 @@ export class Note {
     }
 
     public get id(): string {
-        // This value MAY change
-        return this._id
+        // id is an empty string if this note is not saved into firebase
+        return this.firebaseId
     }
 
     public get content(): string {

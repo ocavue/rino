@@ -42,7 +42,7 @@
 
             <template v-for="note in notes">
                 <v-list-item
-                    :key="`item${note.id}`"
+                    :key="`item${note.key}`"
                     :ripple="false"
                     :input-value="currentNote === note"
                     color="primary"
@@ -53,7 +53,7 @@
                         note.thumbnail
                     }}</v-list-item-content>
                 </v-list-item>
-                <v-divider :key="`divider${note.id}`"></v-divider>
+                <v-divider :key="`divider${note.key}`"></v-divider>
             </template>
         </v-list>
     </v-navigation-drawer>

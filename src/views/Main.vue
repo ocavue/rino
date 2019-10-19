@@ -19,7 +19,7 @@
                 @toggle-drawer="toggleDrawer"
             ></Appbar>
             <v-layout class="main" align-center justify-start column fill-height>
-                <Editor v-if="note" :key="note.id" :note="note"></Editor>
+                <Editor v-if="note" :key="note.key" :note="note"></Editor>
                 <Welcome v-else />
             </v-layout>
         </v-content>
