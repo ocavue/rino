@@ -1,30 +1,36 @@
 import { login, cleanNotes, createNote } from "./actions"
-import { sleep, pressKey, getSourceCodeModeText, type as typeByTestid } from "./utils"
+import {
+    sleep,
+    pressKey,
+    getSourceCodeModeText,
+    type as typeByTestid,
+    wysiwygEditorSelector,
+} from "./utils"
 import { readFileSync } from "fs"
 
 function readText(filename: string) {
     return readFileSync(`${__dirname}/text/${filename}`, "utf-8")
 }
 
+beforeAll(async () => {
+    await login()
+})
+
+afterAll(async () => {
+    await cleanNotes()
+})
+
+async function type(text: string) {
+    await typeByTestid("wysiwyg-mode-textarea", text)
+}
+
 describe("Write in WYSIWYG mode", () => {
     jest.setTimeout(180_000)
-
-    async function type(text: string) {
-        await typeByTestid("wysiwyg-mode-textarea", text)
-    }
 
     async function switchMode() {
         await pressKey("Meta", "Slash")
         await sleep(500)
     }
-
-    beforeAll(async () => {
-        await login()
-    })
-
-    afterAll(async () => {
-        await cleanNotes()
-    })
 
     test("Create a note", async () => {
         await createNote()
@@ -83,10 +89,6 @@ describe("Write in WYSIWYG mode", () => {
         await type("And that's all")
     })
 
-    test("Image", async () => {
-        await type("![Image](https://via.placeholder.com/100/)")
-    })
-
     test("Table", async () => {
         await type("| a | b | c |")
     })
@@ -113,7 +115,14 @@ describe("Firebase operation", () => {
     })
 
     test("Editor note", async () => {
-        await typeByTestid("wysiwyg-mode-textarea", "Something")
+        await type("Something")
         await sleep(microseconds)
+    })
+})
+
+describe.only("Image", () => {
+    test("Show Image", async () => {
+        await type("![Image](https://via.placeholder.com/100/)")
+        await page.waitFor(`${wysiwygEditorSelector} > img`)
     })
 })
