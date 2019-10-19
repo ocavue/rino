@@ -11,7 +11,7 @@ export async function wait(testid: string, options?: WaitForSelectorOptions) {
     return page.waitForSelector(testidSelector(testid), options)
 }
 
-export async function force(testid: string) {
+export async function focus(testid: string) {
     await wait(testid)
     return page.focus(testidSelector(testid))
 }
