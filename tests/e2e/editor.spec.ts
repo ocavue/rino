@@ -28,7 +28,6 @@ describe("Write in WYSIWYG mode", () => {
 
     test("Create a note", async () => {
         await createNote()
-        await sleep(5000) // TODO: Remove this delay
         await type("E2E test")
     })
 
