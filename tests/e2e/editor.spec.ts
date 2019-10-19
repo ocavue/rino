@@ -116,7 +116,7 @@ describe("Firebase operation", () => {
     })
 })
 
-describe.only("Image", () => {
+describe("Image", () => {
     const imageSelector = `${wysiwygEditorSelector} img`
 
     test("Before writing image ", async () => {
