@@ -25,8 +25,8 @@ export class Note {
 
     private snapshotPromise: Promise<DocumentSnapshot>
 
-    public readonly key: string // An unique constant
     private firebaseId: string = ""
+    public readonly key: string // An unique constant.
     private data: NoteData
     private deleting: boolean = false
     public thumbnail: string = ""
