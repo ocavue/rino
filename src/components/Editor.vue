@@ -1,6 +1,5 @@
 <template>
     <v-container fill-height justify-center fluid>
-        <div class="debug">sourceCodeMode: {{ sourceCodeMode }}; times: {{ times }}</div>
         <v-flex
             ref="editor"
             class="editor markdown-body"
@@ -29,13 +28,11 @@ export default Vue.extend({
         view?: BaseView
         sourceCodeMode: boolean
         update: () => void
-        times: 0
     } {
         return {
             view: undefined,
             sourceCodeMode: false,
             update: () => {},
-            times: 0,
         }
     },
     mounted: function() {
@@ -58,7 +55,6 @@ export default Vue.extend({
     methods: {
         switchEditor: function() {
             if (!this.view) return
-            this.times += 1
             this.sourceCodeMode = !this.sourceCodeMode
             let View = this.sourceCodeMode ? MarkdownView : ProseMirrorView
             let content = this.view.content
@@ -131,8 +127,5 @@ export default Vue.extend({
     code::after {
         content: "";
     }
-}
-.debug {
-    position: fixed;
 }
 </style>
