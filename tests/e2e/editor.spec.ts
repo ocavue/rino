@@ -119,17 +119,17 @@ describe("Firebase operation", () => {
 describe("Image", () => {
     const imageSelector = `${wysiwygEditorSelector} img`
 
-    test("Before writing image ", async () => {
+    test("Prepare ", async () => {
         await createNote()
         await page.waitFor(imageSelector, { hidden: true })
     })
 
-    test("Type an image", async () => {
+    test("Input", async () => {
         await type("h1")
         await type("![Image](https://via.placeholder.com/100/)")
     })
 
-    test("Show Image", async () => {
+    test("Check html", async () => {
         await page.waitFor(imageSelector)
     })
 })
