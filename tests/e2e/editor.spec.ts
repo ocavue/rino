@@ -95,7 +95,9 @@ describe("Write in WYSIWYG mode", () => {
 })
 
 describe("Firebase operation", () => {
-    // App should not throw any error when doing firebase operation
+    // App should not throw any error when doing firebase operations
+
+    const microseconds = 5000 // Should be enough for firebase operations
 
     beforeAll(async () => {
         await login()
@@ -103,11 +105,11 @@ describe("Firebase operation", () => {
 
     test("Create note", async () => {
         await createNote()
-        await sleep(5000)
+        await sleep(microseconds)
     })
 
     test("Editor note", async () => {
         await typeByTestid("wysiwyg-mode-textarea", "Something")
-        await sleep(5000)
+        await sleep(microseconds)
     })
 })
