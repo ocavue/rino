@@ -83,6 +83,10 @@ describe("Write in WYSIWYG mode", () => {
         await type("And that's all")
     })
 
+    test("Image", async () => {
+        await type("![Image](https://via.placeholder.com/100/)")
+    })
+
     test("Table", async () => {
         await type("| a | b | c |")
     })
