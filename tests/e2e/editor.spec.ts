@@ -1,30 +1,36 @@
 import { login, cleanNotes, createNote } from "./actions"
-import { sleep, pressKey, getSourceCodeModeText, type as typeByTestid } from "./utils"
+import {
+    sleep,
+    pressKey,
+    getSourceCodeModeText,
+    type as typeByTestid,
+    wysiwygEditorSelector,
+} from "./utils"
 import { readFileSync } from "fs"
 
 function readText(filename: string) {
     return readFileSync(`${__dirname}/text/${filename}`, "utf-8")
 }
 
-describe("Write in WYSIWYG mode", () => {
-    jest.setTimeout(180_000)
+beforeAll(async () => {
+    await login()
+})
 
-    async function type(text: string) {
-        await typeByTestid("wysiwyg-mode-textarea", text)
-    }
+afterAll(async () => {
+    await cleanNotes()
+})
+
+async function type(text: string) {
+    await typeByTestid("wysiwyg-mode-textarea", text)
+}
+
+describe("Source code text", () => {
+    jest.setTimeout(180_000)
 
     async function switchMode() {
         await pressKey("Meta", "Slash")
         await sleep(500)
     }
-
-    beforeAll(async () => {
-        await login()
-    })
-
-    afterAll(async () => {
-        await cleanNotes()
-    })
 
     test("Create a note", async () => {
         await createNote()
@@ -94,14 +100,30 @@ describe("Write in WYSIWYG mode", () => {
     })
 })
 
+describe("HTML", () => {
+    describe("Image", () => {
+        const imageSelector = `${wysiwygEditorSelector} img`
+
+        test("Prepare ", async () => {
+            await createNote()
+            await page.waitFor(imageSelector, { hidden: true })
+        })
+
+        test("Input", async () => {
+            await type("h1")
+            await type("![Image](https://via.placeholder.com/100/)")
+        })
+
+        test("Check", async () => {
+            await page.waitFor(imageSelector)
+        })
+    })
+})
+
 describe("Firebase operation", () => {
     // App should not throw any error when doing firebase operations
 
     const microseconds = 5000 // Should be enough for firebase operations
-
-    beforeAll(async () => {
-        await login()
-    })
 
     test("Create note", async () => {
         await createNote()
@@ -109,7 +131,12 @@ describe("Firebase operation", () => {
     })
 
     test("Editor note", async () => {
-        await typeByTestid("wysiwyg-mode-textarea", "Something")
+        await type("Something")
+        await sleep(microseconds)
+    })
+
+    test("Switch editor", async () => {
+        await pressKey("Meta", "Slash")
         await sleep(microseconds)
     })
 })

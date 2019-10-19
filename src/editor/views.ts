@@ -70,7 +70,7 @@ class ProseMirrorView extends BaseView {
                 plugins: proseMirrorPlugins,
             }),
         })
-        if (process.env.NODE_ENV === "development") {
+        if (process.env.NODE_ENV === "debug") {
             // Webpack will remove this block in production mode
             // eslint-disable-next-line @typescript-eslint/no-var-requires
             const prosemirrorDevTools = require("prosemirror-dev-tools")

@@ -51,7 +51,6 @@ function buildDecorationSet(doc: Node): DecorationSet {
 
 interface DecorationPluginState {
     set: DecorationSet
-    times: number
 }
 
 const decorationPlugin = new Plugin({
@@ -59,20 +58,11 @@ const decorationPlugin = new Plugin({
         init(_, { doc }): DecorationPluginState {
             return {
                 set: buildDecorationSet(doc),
-                times: 0,
             }
         },
         apply(tr: Transaction, state: DecorationPluginState): DecorationPluginState {
-            if (state.times >= 0) {
-                return {
-                    set: buildDecorationSet(tr.doc),
-                    times: 0,
-                }
-            } else {
-                return {
-                    set: state.set.map(tr.mapping, tr.doc),
-                    times: state.times + 1,
-                }
+            return {
+                set: buildDecorationSet(tr.doc),
             }
         },
     },
