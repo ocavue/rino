@@ -100,22 +100,6 @@ describe("Write in WYSIWYG mode", () => {
     })
 })
 
-describe("Firebase operation", () => {
-    // App should not throw any error when doing firebase operations
-
-    const microseconds = 5000 // Should be enough for firebase operations
-
-    test("Create note", async () => {
-        await createNote()
-        await sleep(microseconds)
-    })
-
-    test("Editor note", async () => {
-        await type("Something")
-        await sleep(microseconds)
-    })
-})
-
 describe("Image", () => {
     const imageSelector = `${wysiwygEditorSelector} img`
 
@@ -131,5 +115,26 @@ describe("Image", () => {
 
     test("Check html", async () => {
         await page.waitFor(imageSelector)
+    })
+})
+
+describe("Firebase operation", () => {
+    // App should not throw any error when doing firebase operations
+
+    const microseconds = 5000 // Should be enough for firebase operations
+
+    test("Create note", async () => {
+        await createNote()
+        await sleep(microseconds)
+    })
+
+    test("Editor note", async () => {
+        await type("Something")
+        await sleep(microseconds)
+    })
+
+    test("Switch editor", async () => {
+        await pressKey("Meta", "Slash")
+        await sleep(microseconds)
     })
 })
