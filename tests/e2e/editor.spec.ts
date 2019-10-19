@@ -24,7 +24,7 @@ async function type(text: string) {
     await typeByTestid("wysiwyg-mode-textarea", text)
 }
 
-describe("Write in WYSIWYG mode", () => {
+describe("Source code text", () => {
     jest.setTimeout(180_000)
 
     async function switchMode() {
@@ -100,21 +100,23 @@ describe("Write in WYSIWYG mode", () => {
     })
 })
 
-describe("Image", () => {
-    const imageSelector = `${wysiwygEditorSelector} img`
+describe("HTML", () => {
+    describe("Image", () => {
+        const imageSelector = `${wysiwygEditorSelector} img`
 
-    test("Prepare ", async () => {
-        await createNote()
-        await page.waitFor(imageSelector, { hidden: true })
-    })
+        test("Prepare ", async () => {
+            await createNote()
+            await page.waitFor(imageSelector, { hidden: true })
+        })
 
-    test("Input", async () => {
-        await type("h1")
-        await type("![Image](https://via.placeholder.com/100/)")
-    })
+        test("Input", async () => {
+            await type("h1")
+            await type("![Image](https://via.placeholder.com/100/)")
+        })
 
-    test("Check html", async () => {
-        await page.waitFor(imageSelector)
+        test("Check html", async () => {
+            await page.waitFor(imageSelector)
+        })
     })
 })
 
