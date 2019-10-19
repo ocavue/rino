@@ -105,10 +105,6 @@ describe("Firebase operation", () => {
 
     const microseconds = 5000 // Should be enough for firebase operations
 
-    beforeAll(async () => {
-        await login()
-    })
-
     test("Create note", async () => {
         await createNote()
         await sleep(microseconds)
@@ -121,8 +117,19 @@ describe("Firebase operation", () => {
 })
 
 describe.only("Image", () => {
-    test("Show Image", async () => {
+    const imageSelector = `${wysiwygEditorSelector} img`
+
+    test("Before writing image ", async () => {
+        await createNote()
+        await page.waitFor(imageSelector, { hidden: true })
+    })
+
+    test("Type an image", async () => {
+        await type("h1")
         await type("![Image](https://via.placeholder.com/100/)")
-        await page.waitFor(`${wysiwygEditorSelector} > img`)
+    })
+
+    test("Show Image", async () => {
+        await page.waitFor(imageSelector)
     })
 })
