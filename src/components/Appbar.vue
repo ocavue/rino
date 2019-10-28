@@ -61,9 +61,11 @@ export default Vue.extend({
     data: (): {
         icons: Record<string, string>
         dialog: boolean
+        deletingNote: boolean
     } => ({
         icons: { mdiMenu, mdiDotsVertical },
         dialog: false,
+        deletingNote: false,
     }),
     computed: {
         computedLeft: function(): number {
@@ -72,7 +74,7 @@ export default Vue.extend({
         options: function(): MenuOption[] {
             const options: MenuOption[] = []
             if (this.email) {
-                if (this.note) {
+                if (this.note || this.deletingNote) {
                     options.push({
                         name: "Share",
                         testid: "share",
@@ -81,7 +83,7 @@ export default Vue.extend({
                     options.push({
                         name: "Delete",
                         testid: "delete",
-                        action: () => this.$emit("delete-note", this.note),
+                        action: this.deleteNote,
                     })
                 }
                 options.push({
@@ -104,6 +106,14 @@ export default Vue.extend({
         },
         showDialog: function() {
             this.dialog = true
+        },
+        deleteNote: function() {
+            if (this.note) {
+                this.deletingNote = true
+                this.$emit("delete-note", this.note)
+            }
+            // Don't change menu options until the menu‘s closing animation is finish
+            setTimeout(() => (this.deletingNote = false), 200)
         },
     },
 })
