@@ -20,9 +20,6 @@ const nodes: { [name: string]: NodeSpec } = {
     text: {
         inline: true, // text is inline by default
         group: "inline",
-        toDOM(node) {
-            return node.text || ""
-        },
     },
 
     paragraph: {
@@ -78,7 +75,7 @@ const nodes: { [name: string]: NodeSpec } = {
         parseDOM: [
             {
                 tag: "pre",
-                preserveWhitespace: true,
+                preserveWhitespace: "full",
                 getAttrs: buildGetAttrs(dom => ({
                     language: dom.getAttribute("data-language") || "",
                 })),
