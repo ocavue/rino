@@ -1,6 +1,10 @@
 #!/usr/bin/env node
-
 /* eslint-disable @typescript-eslint/no-var-requires */
+
+/**
+ * Start a simple static http server.
+ **/
+
 const fs = require("fs")
 const http = require("http")
 const path = require("path")
@@ -26,7 +30,7 @@ console.log("Serving HTTP on http://localhost:8080/")
 http.createServer(function(req, res) {
     let filePath = resolveFileAbsPath(req.url)
     if (!fs.existsSync(filePath)) {
-        filePath = resolveFileAbsPath("index.html")
+        filePath = resolveFileAbsPath("/index.html")
     }
     try {
         let content = fs.readFileSync(filePath, "utf-8")
