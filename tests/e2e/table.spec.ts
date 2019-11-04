@@ -7,6 +7,7 @@ import {
     wait,
     getSourceCodeModeText,
     pressKey,
+    focus,
 } from "./utils"
 import { login, createNote } from "./actions"
 import { dedent } from "@/editor/utils"
@@ -107,6 +108,41 @@ describe("Table with inline style", () => {
                 | ------- | -------------------- | ------ |
                 `).trimLeft(),
         )
+    })
+})
+
+describe("Table without other elements in WYSIWYG mode", () => {
+    test("Prepare", prepare)
+
+    test("Input", async () => {
+        await focus("wysiwyg-mode-textarea")
+        for (let i = 0; i < 5; i++) await pressKey("Backspace")
+        await type("| aaaa | aaaa | aaaa |")
+    })
+
+    test("Check", async () => {
+        await expectTableShape(1, 1, 3)
+    })
+})
+
+describe("Table without other elements in Source Code mode", () => {
+    test("Prepare", prepare)
+
+    test("Input", async () => {
+        await focus("wysiwyg-mode-textarea")
+        await pressKey("Meta", "Slash")
+        for (let i = 0; i < 9; i++) await pressKey("Backspace")
+        await typeByTestId("source-code-mode-textarea", "| aaaa | aaaa | aaaa |")
+        await typeByTestId("source-code-mode-textarea", "| :--- | :--- | :--- |")
+        await typeByTestId("source-code-mode-textarea", "| bbbb | bbbb | bbbb |")
+    })
+
+    test("Switch to WYSIWYG mode", async () => {
+        await pressKey("Meta", "Slash")
+    })
+
+    test("Check", async () => {
+        await expectTableShape(1, 2, 6)
     })
 })
 
