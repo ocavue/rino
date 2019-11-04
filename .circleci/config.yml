@@ -44,9 +44,9 @@ jobs:
           echo ${DEV_CONFIG_FIREBASE} > ./config/firebase.json
           echo "VUE_APP_TEST_USERNAME=${VUE_APP_TEST_USERNAME}" >> ./.env
           echo "VUE_APP_TEST_PASSWORD=${VUE_APP_TEST_PASSWORD}" >> ./.env
+      - run: yarn build --mode development
       - run: |
-          yarn serve &
-          ./scripts/wait-server.sh http://localhost:8080
+          ./scripts/http-server.js &
           yarn run test --coverage
       - run: yarn run coverage
   build:
