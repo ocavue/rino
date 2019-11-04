@@ -44,10 +44,12 @@ jobs:
           echo ${DEV_CONFIG_FIREBASE} > ./config/firebase.json
           echo "VUE_APP_TEST_USERNAME=${VUE_APP_TEST_USERNAME}" >> ./.env
           echo "VUE_APP_TEST_PASSWORD=${VUE_APP_TEST_PASSWORD}" >> ./.env
+      - run: date
       - run: |
           yarn serve &
           ./scripts/wait-server.sh http://localhost:8080
           yarn run test --coverage
+      - run: date
       - run: yarn run coverage
   build:
     executor: node-executor
