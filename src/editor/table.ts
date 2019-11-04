@@ -89,10 +89,7 @@ class TableMenuPluginSpec implements PluginSpec {
                     menu.appendChild(this.buildMenuOption(svg, command, id))
                 }
             }
-
-            let tableDom = view.domAtPos(tablePos + 1).node as HTMLElement
-            let box = tableDom.getBoundingClientRect()
-            menu.style.top = `${box.top - 72}px`
+            menu.style.bottom = `0px`
             let deco = Decoration.widget(tablePos, menu)
             return DecorationSet.create(state.doc, [deco])
         },
