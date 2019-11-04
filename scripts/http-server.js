@@ -1,9 +1,8 @@
 #!/usr/bin/env node
+
 /* eslint-disable @typescript-eslint/no-var-requires */
 
-/**
- * Start a simple static http server.
- **/
+// A simple static http server
 
 const fs = require("fs")
 const http = require("http")
