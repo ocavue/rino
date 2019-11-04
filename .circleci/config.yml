@@ -45,9 +45,9 @@ jobs:
           echo "VUE_APP_TEST_USERNAME=${VUE_APP_TEST_USERNAME}" >> ./.env
           echo "VUE_APP_TEST_PASSWORD=${VUE_APP_TEST_PASSWORD}" >> ./.env
       - run: date
+      - run: yarn build --mode development
       - run: |
-          yarn serve &
-          ./scripts/wait-server.sh http://localhost:8080
+          ./scripts/http-server.js &
           yarn run test --coverage
       - run: date
       - run: yarn run coverage
