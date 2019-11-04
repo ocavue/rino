@@ -4,9 +4,9 @@ async function adjustVueCoverage() {
     // This function adjust it into a normal file path, so that `jest-puppeteer-istanbul` can handler it correctly.
     await page.evaluate(() => {
         for (let [file, coverage] of Object.entries(window.__coverage__ || {})) {
-            coverage["path"] = file
-            coverage["inputSourceMap"]["file"] = file
-            coverage["inputSourceMap"]["sources"] = file
+            coverage.path = file
+            coverage.inputSourceMap.file = file
+            coverage.inputSourceMap.sources = file
         }
     })
     // console.log(await page.evaluate(() => window.__coverage__))
