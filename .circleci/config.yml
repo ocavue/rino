@@ -46,7 +46,7 @@ jobs:
           echo "VUE_APP_TEST_PASSWORD=${VUE_APP_TEST_PASSWORD}" >> ./.env
       - run: yarn build --mode development
       - run: |
-          ./scripts/http-server.js &
+          ./scripts/http-server.js > /dev/null &
           yarn run test --coverage
       - run: yarn run coverage
   build:
