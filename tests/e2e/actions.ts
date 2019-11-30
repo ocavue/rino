@@ -1,4 +1,5 @@
-import { wait, goto, click, getOne, sleep } from "./utils"
+import { range } from "lodash"
+import { wait, goto, click, getOne, sleep, pressKey, focus } from "./utils"
 
 export async function expectSignedIn() {
     return await wait("sidebar-btn-create-note")
@@ -11,6 +12,12 @@ export async function login() {
 
 export async function createNote() {
     await click("sidebar-btn-create-note")
+}
+
+export async function createEmptyNote() {
+    await click("sidebar-btn-create-note")
+    await focus("wysiwyg-mode-textarea")
+    range(5).map(async () => await pressKey("Backspace"))
 }
 
 export async function deleteNote() {

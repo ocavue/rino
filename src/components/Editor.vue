@@ -1,11 +1,6 @@
 <template>
     <v-container fill-height justify-center fluid>
-        <v-flex
-            ref="editor"
-            class="editor markdown-body"
-            data-testid="editor"
-            @keydown="handleKeydown"
-        ></v-flex>
+        <v-flex ref="editor" class="editor markdown-body" data-testid="editor"></v-flex>
     </v-container>
 </template>
 
@@ -36,31 +31,37 @@ export default Vue.extend({
         }
     },
     mounted: function() {
-        if (this.view) this.view.destroy()
-        let place = this.$refs.editor as HTMLElement
-        this.view = new ProseMirrorView(place, this.note.content)
+        this.initEditor()
         this.update = debounce(() => {
             console.log("Updating")
             if (this.view) {
                 this.note.updateContent(this.view.content)
             }
         }, 1000)
+        window.addEventListener("keydown", this.handleKeydown)
     },
     beforeDestroy: function() {
+        window.removeEventListener("keydown", this.handleKeydown)
         if (this.view) {
             this.note.updateContent(this.view.content)
             this.view.destroy()
         }
     },
     methods: {
-        switchEditor: function() {
-            if (!this.view) return
-            this.sourceCodeMode = !this.sourceCodeMode
+        initEditor: function() {
             let View = this.sourceCodeMode ? MarkdownView : ProseMirrorView
-            let content = this.view.content
-            this.view.destroy()
-            this.view = new View(this.$refs.editor as HTMLElement, content)
-            this.view.focus()
+            let content = this.view ? this.view.content : this.note.content
+            if (this.view) this.view.destroy()
+            try {
+                this.view = new View(this.$refs.editor as HTMLElement, content)
+            } catch (error) {
+                setTimeout(() => alert(`Failed to load markown content:\n${error}`), 0)
+            }
+            if (this.view) this.view.focus()
+        },
+        switchEditor: function() {
+            this.sourceCodeMode = !this.sourceCodeMode
+            this.initEditor()
         },
         handleKeydown: function(event: KeyboardEvent) {
             if (event.metaKey && event.code === "Slash") {
