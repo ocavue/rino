@@ -64,6 +64,11 @@ class ProseMirrorView extends BaseView {
 
     public constructor(place: HTMLElement, content: string) {
         super()
+        if (process.env.NODE_ENV === "development") {
+            if (content.trim() === "HOOK:FAILED_TO_INIT_PROSEMIRROR_VIEW") {
+                throw new Error("Found error hook for testing")
+            }
+        }
         this.view = new EditorView(place, {
             state: EditorState.create({
                 doc: defaultMarkdownParser.parse(content),

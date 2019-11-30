@@ -13,7 +13,9 @@ export default Vue.extend({
         console.log(`Sign in with ${testUser.username} ${testUser.password}`)
         signInWithEmailAndPassword(testUser.username, testUser.password)
             .then(() => this.$router.push("/"))
-            .catch(error => console.error(error))
+            .catch(error => {
+                throw error
+            })
     },
 })
 </script>
