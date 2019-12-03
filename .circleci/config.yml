@@ -2,7 +2,7 @@ version: 2.1
 
 workflows:
   version: 2
-  main_workflows:
+  main_workflow:
     jobs:
       - test
       - build
@@ -12,6 +12,15 @@ workflows:
             - test
             - build
             - lint
+          filters:
+            branches:
+              only:
+                - master
+      - regenerate_yarn_lock:
+          filters:
+            branches:
+              only:
+                - yarn_upgrade
 
 executors:
   node-executor:
@@ -71,14 +80,23 @@ jobs:
       - attach_workspace:
           at: /tmp/deploy
       - run: |
-          if [ "${CIRCLE_BRANCH}" == "master" ]; then
-            git config --global user.email "ci@circleci.com"
-            git config --global user.name "circleci"
-            git clone -q ${DEPLOY_REPO_URL} ~/deploy
-            cd ~/deploy
-            rm -rf ./*
-            cp -r /tmp/deploy/* ~/deploy
-            git add --all
-            git commit -m "[$(date '+%Y-%m-%d %H:%M:%S %z')] $(cat /tmp/deploy/git_commit_sha)"
-            git push -q
-          fi
+          git config --global user.email "ci@circleci.com"
+          git config --global user.name "circleci"
+          git clone -q ${DEPLOY_REPO_URL} ~/deploy
+          cd ~/deploy
+          rm -rf ./*
+          cp -r /tmp/deploy/* ~/deploy
+          git add --all
+          git commit -m "[$(date '+%Y-%m-%d %H:%M:%S %z')] $(cat /tmp/deploy/git_commit_sha)"
+          git push -q
+  regenerate_yarn_lock:
+    executor: node-executor
+    steps:
+      - checkout
+      - run: |
+          touch yarn.lock && rm yarn.lock
+          mkdir -p node_modules && rm -rf node_modules
+          yarn install
+          zip yarn.lock.zip yarn.lock
+      - store_artifacts:
+          path: ./yarn.lock.zip
