@@ -1,11 +1,11 @@
 <template>
     <div data-testid="appbar">
-        <div class="appbar" :style="`left: ${computedLeft}px;`">
+        <div class="appbar" :style="`left: ${left}px;`">
             <v-btn icon :ripple="false" data-testid="appbar-btn-menu" @click="toggleDrawer">
                 <v-icon>{{ icons.mdiMenu }}</v-icon>
             </v-btn>
         </div>
-        <div v-if="options.length > 0" class="appbar" style="right: 14px;">
+        <div v-if="options.length > 0" class="appbar" :style="`right: ${right}px;`">
             <v-menu bottom left>
                 <template v-slot:activator="{ on }">
                     <v-btn icon :ripple="false" data-testid="appbar-btn-dots" v-on="on">
@@ -29,11 +29,13 @@
 </template>
 
 <script lang="ts">
-import Vue, { PropType } from "vue"
+import Vue from "vue"
+import * as refs from "@/store"
 
 import AboutDialog from "./AboutDialog.vue"
 import { mdiMenu, mdiDotsVertical } from "@mdi/js"
-import { Note } from "../controller"
+import { Note } from "@/controller"
+import { signOut } from "@/controller/auth"
 
 interface MenuOption {
     name: string
@@ -41,35 +43,31 @@ interface MenuOption {
     action: () => void
 }
 
+const horizontalPadding = 16
+
 export default Vue.extend({
     name: "Appbar",
     components: { AboutDialog },
-    props: {
-        note: {
-            // Add PropType because of this issue:
-            // https://github.com/vuejs/vue/issues/8679#issuecomment-473946487
-            type: Note as PropType<Note>,
-            required: false,
-            default: null,
-        },
-        email: {
-            type: String,
-            required: false,
-            default: null,
-        },
-    },
     data: (): {
         icons: Record<string, string>
         dialog: boolean
         deletingNote: boolean
+        right: number
     } => ({
         icons: { mdiMenu, mdiDotsVertical },
         dialog: false,
         deletingNote: false,
+        right: horizontalPadding,
     }),
     computed: {
-        computedLeft: function(): number {
-            return this.$vuetify.application.left + 14
+        note: function(): Note | null {
+            return refs.note.value
+        },
+        email: function(): string | null {
+            return refs.email.value
+        },
+        left: function(): number {
+            return this.$vuetify.application.left + horizontalPadding
         },
         options: function(): MenuOption[] {
             const options: MenuOption[] = []
@@ -89,7 +87,7 @@ export default Vue.extend({
                 options.push({
                     name: "Sign Out",
                     testid: "signout",
-                    action: () => this.$emit("sign-out"),
+                    action: this.signOut,
                 })
             }
             options.push({
@@ -102,18 +100,25 @@ export default Vue.extend({
     },
     methods: {
         toggleDrawer: function() {
-            this.$emit("toggle-drawer")
+            refs.isSidebarActive.value = !refs.isSidebarActive.value
         },
         showDialog: function() {
             this.dialog = true
         },
         deleteNote: function() {
-            if (this.note) {
-                this.deletingNote = true
-                this.$emit("delete-note", this.note)
-            }
+            if (!this.note) return
+            this.deletingNote = true
+            this.note.remove()
+            // Update refs.notes
+            const index = refs.notes.value.indexOf(this.note)
+            if (index > -1) refs.notes.value.splice(index, 1)
+            // Update refs.note (and this.note)
+            if (refs.note.value === this.note) refs.note.value = null
             // Don't change menu options until the menu‘s closing animation is finish
             setTimeout(() => (this.deletingNote = false), 200)
+        },
+        signOut: function() {
+            signOut()
         },
     },
 })
@@ -121,12 +126,13 @@ export default Vue.extend({
 
 <style lang="scss">
 @import "~vuetify/src/styles/styles.sass";
+@import "@/style/constants.sass";
 
 // `transition` is copy from node_modules/vuetify/src/components/VToolbar/_variables.scss
 .appbar {
     transition: 0.2s map-get($transition, "fast-out-slow-in") left;
     position: fixed;
-    top: 14px;
+    top: $app-bar-padding;
     z-index: 1;
 }
 </style>

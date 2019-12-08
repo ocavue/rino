@@ -1,3 +1,5 @@
+import { sortBy } from "lodash"
+
 import { firebase, DocumentReference, DocumentSnapshot, Timestamp } from "./firebase"
 import { generateRandomId } from "@/utils"
 
@@ -99,7 +101,8 @@ export class Note {
 
     public static async list(uid: string): Promise<Note[]> {
         let query = await this.collection.where("uid", "==", uid).get()
-        return query.docs.map(snapshot => new Note(uid, snapshot))
+        const notes = query.docs.map(snapshot => new Note(uid, snapshot))
+        return sortBy(notes, note => [note.createTime, note.id])
     }
 
     public static listen(listener: Listener, type?: "added" | "modified" | "removed"): Unsubscribe {

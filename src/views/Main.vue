@@ -1,23 +1,8 @@
 <template>
     <v-app>
-        <Sidebar
-            :notes="notes"
-            :current-note="note"
-            :loading="loading"
-            :email="email"
-            :active.sync="openDrawer"
-            @create-note="createNote"
-            @switch-note="switchNote"
-        >
-        </Sidebar>
+        <Sidebar />
         <v-content>
-            <Appbar
-                :note="note"
-                :email="email"
-                @delete-note="deleteNote"
-                @sign-out="signOut"
-                @toggle-drawer="toggleDrawer"
-            ></Appbar>
+            <Appbar />
             <v-layout class="main" align-center justify-start column fill-height>
                 <Editor v-if="note" :key="note.key" :note="note"></Editor>
                 <Welcome v-else />
@@ -27,90 +12,43 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue"
-
-import { sortBy } from "lodash"
+import { createComponent, onMounted } from "@vue/composition-api"
 
 import { firebase, Note } from "@/controller"
+import * as refs from "@/store"
 import Appbar from "@/components/Appbar.vue"
-import Sidebar from "@/components/Sidebar.vue"
+import Sidebar from "@/components/Sidebar"
 import Editor from "@/components/Editor.vue"
 import Welcome from "@/components/Welcome.vue"
 
-export default Vue.extend({
+async function fetchNotes() {
+    if (!refs.user.value) throw new Error("Not login")
+    refs.notes.value = await Note.list(refs.user.value.uid)
+}
+
+function initAuth() {
+    // Watch sign in and sign out
+    firebase.auth().onAuthStateChanged(async u => {
+        if (u) {
+            // User is signed in.
+            console.log("user.isAnonymous:", u.isAnonymous)
+            console.log("user.uid:", u.uid)
+            console.log("user.email:", u.email)
+            refs.user.value = u
+            await fetchNotes()
+        } else {
+            // User is signed out.
+            refs.user.value = null
+        }
+    })
+}
+
+export default createComponent({
     name: "Main",
     components: { Appbar, Sidebar, Editor, Welcome },
-    data: (): {
-        user?: firebase.User
-        notes: Note[]
-        note?: Note // Current note
-        loading: boolean
-        openDrawer: boolean
-    } => ({
-        user: undefined,
-        notes: [],
-        note: undefined,
-        loading: true,
-        openDrawer: true,
-    }),
-    computed: {
-        email: function() {
-            return this.user ? this.user.email : null
-        },
-    },
-    mounted: function() {
-        this.initAuth()
-    },
-    methods: {
-        initAuth: function() {
-            // Watch sign in and sign out
-            firebase.auth().onAuthStateChanged(async user => {
-                if (user) {
-                    // User is signed in.
-                    this.user = user
-                    console.log("user.isAnonymous:", user.isAnonymous)
-                    console.log("user.uid:", user.uid)
-                    console.log("user.email:", user.email)
-                    await this.fetchNotes()
-                } else {
-                    // User is signed out.
-                    this.user = undefined
-                    this.notes = []
-                    this.note = undefined
-                }
-                this.loading = false
-            })
-        },
-        fetchNotes: async function() {
-            if (!this.user) throw new Error("Not login")
-            const notes = await Note.list(this.user.uid)
-            this.notes = sortBy(notes, note => [note.createTime, note.id])
-        },
-        createNote: function() {
-            if (!this.user) throw new Error("Not login")
-            const note = new Note(this.user.uid)
-            this.notes.push(note)
-            this.note = note
-        },
-        switchNote: function(note: Note) {
-            this.note = note
-        },
-        deleteNote: function(note: Note) {
-            note.remove()
-            if (this.note === note) this.note = undefined
-            const index = this.notes.indexOf(note)
-            if (index > -1) this.notes.splice(index, 1)
-        },
-        signOut: function() {
-            firebase
-                .auth()
-                .signOut()
-                .then(() => {})
-                .catch(error => console.error(error))
-        },
-        toggleDrawer: function() {
-            this.openDrawer = !this.openDrawer
-        },
+    setup() {
+        onMounted(initAuth)
+        return { note: refs.note }
     },
 })
 </script>

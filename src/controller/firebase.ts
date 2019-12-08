@@ -3,6 +3,7 @@ import * as firebase from "firebase/app"
 // Add the Firebase products that you want to use
 import "firebase/auth"
 import "firebase/firestore"
+import "firebase/database"
 
 import { firebaseConfig } from "./config"
 
@@ -33,3 +34,4 @@ export { firebase }
 export type DocumentReference = firebase.firestore.DocumentReference
 export type DocumentSnapshot = firebase.firestore.DocumentSnapshot
 export type Timestamp = firebase.firestore.Timestamp
+export type User = firebase.User

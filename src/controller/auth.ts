@@ -1,5 +1,6 @@
 import { firebase } from "./firebase"
 import { generateRandomId } from "@/utils"
+import { ref, Ref } from "@vue/composition-api"
 
 export async function sendSignInLink(email: string): Promise<void> {
     const host =
@@ -21,4 +22,14 @@ export async function sendSignInLink(email: string): Promise<void> {
 
 export async function signInWithEmailAndPassword(email: string, password: string) {
     return await firebase.auth().signInWithEmailAndPassword(email, password)
+}
+
+export const user: Ref<firebase.User | null> = ref(null)
+
+export function signOut() {
+    firebase
+        .auth()
+        .signOut()
+        .then(() => {})
+        .catch(error => console.error(error))
 }
