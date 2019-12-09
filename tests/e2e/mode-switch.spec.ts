@@ -1,11 +1,11 @@
-import { login, createNote, cleanNotes } from "./actions"
+import { login, createNote, cleanNotes, clickSidebarNoteListItem } from "./actions"
 import { wait, click, pressKey } from "./utils"
 
 describe("Mode switch", function() {
     beforeAll(async () => {
         await login()
         await createNote()
-        await click("sidebar-list-item")
+        await clickSidebarNoteListItem()
         await click("editor")
     })
 

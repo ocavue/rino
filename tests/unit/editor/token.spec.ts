@@ -8,15 +8,24 @@ describe("Token", function() {
     it("cleanTokens", function() {
         assertDeepEqual(mergeTokens([{ classes: ["A"], length: 0 }]), [])
         assertDeepEqual(
-            mergeTokens([{ classes: ["A"], length: 0 }, { classes: ["A"], length: 0 }]),
+            mergeTokens([
+                { classes: ["A"], length: 0 },
+                { classes: ["A"], length: 0 },
+            ]),
             [],
         )
         assertDeepEqual(
-            mergeTokens([{ classes: ["A"], length: 1 }, { classes: ["A"], length: 0 }]),
+            mergeTokens([
+                { classes: ["A"], length: 1 },
+                { classes: ["A"], length: 0 },
+            ]),
             [{ classes: ["A"], length: 1 }],
         )
         assertDeepEqual(
-            mergeTokens([{ classes: ["A"], length: 1 }, { classes: ["A"], length: 1 }]),
+            mergeTokens([
+                { classes: ["A"], length: 1 },
+                { classes: ["A"], length: 1 },
+            ]),
             [{ classes: ["A"], length: 2 }],
         )
         assertDeepEqual(
