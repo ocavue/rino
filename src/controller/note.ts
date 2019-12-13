@@ -102,7 +102,7 @@ export class Note {
     public static async list(uid: string): Promise<Note[]> {
         let query = await this.collection.where("uid", "==", uid).get()
         const notes = query.docs.map(snapshot => new Note(uid, snapshot))
-        return sortBy(notes, note => [note.createTime, note.id])
+        return sortBy(notes, note => [note.createTime, note.id]).reverse()
     }
 
     public static listen(listener: Listener, type?: "added" | "modified" | "removed"): Unsubscribe {
