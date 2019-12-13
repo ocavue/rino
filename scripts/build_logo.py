@@ -46,14 +46,8 @@ def main():
     for in_filename, out_filename, size in [
         ["Circle.png", "android-chrome-192x192.png", 192],
         ["Circle.png", "android-chrome-512x512.png", 512],
-        ["Square.png", "apple-touch-icon-120x120.png", 120],
         ["Square.png", "apple-touch-icon-152x152.png", 152],
-        ["Square.png", "apple-touch-icon-180x180.png", 180],
-        ["Square.png", "apple-touch-icon-60x60.png", 60],
-        ["Square.png", "apple-touch-icon-76x76.png", 76],
-        ["Square.png", "apple-touch-icon.png", 180],
         ["Circle.png", "msapplication-icon-144x144.png", 144],
-        ["Circle.png", "mstile-150x150.png", 150],
         ["favicon.png", "favicon-16x16.png", 16],
         ["favicon.png", "favicon-32x32.png", 32],
     ]:

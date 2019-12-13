@@ -64,10 +64,15 @@ jobs:
       - install
       - run: echo ${PROD_CONFIG_FIREBASE} > ./config/firebase.json
       - run: yarn run build --no-source-maps
+      # Create CNAME file AFTER `yarn build`, so that workbox woundn't add `CNAME`
+      # into `dist/precache-manifest.xx.js`.
+      # The server-worker won't be able to install successfully otherwise because
+      # GitHub will return 404 when requesting `rino.app/CNAME`.
       - run: |
           mkdir -p /tmp/deploy
           cp -r ./dist/* /tmp/deploy
           echo "<!-- $(date '+%Y-%m-%d %H:%M:%S %z') -->" >> /tmp/deploy/index.html
+          echo "rino.app" >  /tmp/deploy/CNAME
           cp /tmp/deploy/index.html /tmp/deploy/404.html
           echo "$(git rev-parse --short HEAD)" > /tmp/deploy/git_commit_sha
       - persist_to_workspace:
