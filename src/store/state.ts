@@ -1,15 +1,9 @@
 import { ref } from "@vue/composition-api"
-import { firebase } from "@/controller"
+import { registerConnectionEvent } from "@/controller"
 
 function useConnected() {
     const connected = ref(true)
-    firebase
-        .database()
-        .ref(".info/connected")
-        .on("value", function(snap) {
-            connected.value = snap.val() === true
-            console.log(`Firebase is ${connected.value ? "online" : "offline"}`)
-        })
+    registerConnectionEvent(value => (connected.value = value))
     return connected
 }
 
