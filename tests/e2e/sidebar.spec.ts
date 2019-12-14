@@ -87,11 +87,9 @@ describe("Sidebar settings sign in / sign out buttons", () => {
 
     test("Sign in", async () => {
         await expectSignedOut()
-        await sleep(500)
+        await sleep(1000)
         await clickSettingsMenuButton(signInBtn)
-        await sleep(500)
-        const url = page.url()
-        expect(url).toMatch(/^http(s)?\:\/\/.*\/login$/)
+        await wait("login-form-card")
     })
 
     test("Before sign out", async () => {
