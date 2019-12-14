@@ -4,8 +4,11 @@
         :close-on-content-click="true"
         :nudge-width="160"
         :offset-y="true"
+        :nudge-left="4"
+        :nudge-top="2"
         data-testid="sidebar-settings-menu"
     >
+        <!-- Use `nudge` to make the menu "float" over the button -->
         <template v-slot:activator="slotProps">
             <SidebarButton
                 :icon="icons.settings"

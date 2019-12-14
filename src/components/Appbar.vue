@@ -6,7 +6,7 @@
             </v-btn>
         </div>
         <div v-if="options.length > 0" class="appbar" :style="`right: ${right}px;`">
-            <v-menu bottom left :nudge-width="128" :offset-y="true">
+            <v-menu bottom left :nudge-width="128" :offset-y="true" :nudge-right="2" :nudge-top="4">
                 <template v-slot:activator="{ on }">
                     <v-btn icon :ripple="false" data-testid="appbar-btn-dots" v-on="on">
                         <v-icon>{{ icons.mdiDotsVertical }}</v-icon>
