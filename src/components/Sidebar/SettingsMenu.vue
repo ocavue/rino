@@ -2,8 +2,8 @@
     <v-menu
         v-model="menu"
         :close-on-content-click="true"
-        :nudge-width="200"
-        :offset-y="true"
+        :nudge-width="160"
+        :offset-y="false"
         data-testid="sidebar-settings-menu"
     >
         <template v-slot:activator="slotProps">
