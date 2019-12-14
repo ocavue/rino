@@ -1,5 +1,5 @@
 import { goto, click, wait, sleep, getInnerText } from "./utils"
-import { login, createNote } from "./actions"
+import { login, signOut, createNote } from "./actions"
 
 const settingsBtn = "sidebar-btn-settings"
 const settingsMenu = "sidebar-settings-menu"
@@ -12,6 +12,7 @@ describe("Open/close Sidebar", () => {
 
     test("Before sign in", async () => {
         await goto("/")
+        await signOut()
 
         await expectSidebarOpened()
         await click("appbar-btn-menu")
@@ -55,7 +56,7 @@ describe("Sidebar settings menu", () => {
 })
 
 describe("Sidebar settings sign in / sign out buttons", () => {
-    const expectSignIn = async () => {
+    const expectSignedIn = async () => {
         await goto("/")
         await openSettingsMenu()
         await wait(signOutBtn)
@@ -63,7 +64,7 @@ describe("Sidebar settings sign in / sign out buttons", () => {
         await click(settingsBtn)
         await closeSettingsMenu()
     }
-    const expectSignOut = async () => {
+    const expectSignedOut = async () => {
         await goto("/")
         await openSettingsMenu()
         await wait(signInBtn)
@@ -79,33 +80,33 @@ describe("Sidebar settings sign in / sign out buttons", () => {
     }
 
     test("Sign in", async () => {
-        await expectSignOut()
+        await signOut()
+        await expectSignedOut()
         await clickSettingsMenuButton(signInBtn)
-        const url = await page.url()
+        const url = page.url()
         expect(url).toMatch(/^http(s)?\:\/\/.*\/login$/)
         await login()
-        await goto("/")
-        await expectSignIn()
+        await expectSignedIn()
     })
 
     test("Sign out", async () => {
         await login()
         await goto("/")
-        await expectSignIn()
+        await expectSignedIn()
         await clickSettingsMenuButton(signOutBtn)
-        await expectSignOut()
+        await expectSignedOut()
     })
 
     test("Clean notes after sign out", async () => {
         // Create a note
         await login()
-        await expectSignIn()
+        await expectSignedIn()
         await createNote()
         await wait("sidebar-notes-list-item")
 
         // Sign out
         await clickSettingsMenuButton(signOutBtn)
-        await expectSignOut()
+        await expectSignedOut()
 
         // Expect that there is not note
         await wait("sidebar-notes-list-item", { hidden: true, visible: false })

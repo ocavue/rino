@@ -5,9 +5,17 @@ export async function expectSignedIn() {
     return await wait("sidebar-notes-btn-create-note")
 }
 
+export async function expectSignedOut() {
+    return await wait("sidebar-notes-btn-create-note-disabled")
+}
+
 export async function login() {
     await goto("/dev/login") // Auto login in test environment
     await expectSignedIn()
+}
+export async function signOut() {
+    await goto("/dev/signout")
+    await expectSignedOut()
 }
 
 export async function createNote() {

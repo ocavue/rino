@@ -7,6 +7,7 @@ const Login = () => import("./views/Login.vue")
 const FinishSignUp = () => import("./views/FinishSignUp.vue")
 
 const DevAutoLogin = () => import("./views/dev/AutoLogin.vue")
+const DevEnsureSignOut = () => import("./views/dev/EnsureSignOut.vue")
 
 Vue.use(Router)
 
@@ -41,6 +42,11 @@ export default new Router({
             name: "dev auto login",
             path: "/dev/login",
             component: DevAutoLogin,
+        },
+        {
+            name: "dev ensure sign out",
+            path: "/dev/signout",
+            component: DevEnsureSignOut,
         },
         {
             name: "not found",
