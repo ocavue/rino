@@ -71,21 +71,4 @@ export default createComponent({
 })
 </script>
 
-<style lang="scss" scoped>
-.sidebar-row {
-    height: 100%;
-    overflow: hidden;
-    display: flex;
-    flex-direction: row;
-    justify-content: stretch;
-    align-items: stretch;
-    padding: 0;
-}
-.sidebar-column {
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    justify-items: flex-start;
-    align-items: stretch;
-}
-</style>
+<style lang="scss" scoped></style>
