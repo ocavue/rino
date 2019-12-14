@@ -8,7 +8,7 @@ function useConnected() {
         .ref(".info/connected")
         .on("value", function(snap) {
             connected.value = snap.val() === true
-            console.log(`Firebase is ${connected.value ? "on" : "off"}line`)
+            console.log(`Firebase is ${connected.value ? "online" : "offline"}`)
         })
     return connected
 }
