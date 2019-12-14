@@ -2,7 +2,7 @@
     <div class="sidebar-activity">
         <SidebarColumnHeader>
             <v-spacer />
-            <SidebarButton :tbd="true" :icon="icons.cloud" />
+            <SidebarButton :tbd="true" :icon="icons.state" />
             <SettingsMenu />
         </SidebarColumnHeader>
         <v-divider></v-divider>
@@ -43,7 +43,7 @@ export default createComponent({
     setup() {
         const icons = computed(() => ({
             settings: mdiSettingsOutline,
-            cloud: connected.value ? mdiCloudOutline : mdiCloudOffOutline,
+            state: connected.value ? mdiCloudOutline : mdiCloudOffOutline,
         }))
         return { icons, isAboutDialogActive }
     },
