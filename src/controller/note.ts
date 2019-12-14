@@ -129,6 +129,7 @@ export class Note {
     }
 
     public async remove() {
+        if (this.deleting) return
         this.deleting = true
         const ref = await this.refPromise
         await ref.delete()
