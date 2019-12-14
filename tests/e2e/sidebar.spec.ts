@@ -38,7 +38,7 @@ const openSettingsMenu = async () => {
     await wait(settingsMenu)
 }
 const closeSettingsMenu = async () => {
-    await click(settingsBtn)
+    await page.mouse.click(2, 2)
     await sleep(200)
     await wait(settingsMenu, { hidden: true })
 }
