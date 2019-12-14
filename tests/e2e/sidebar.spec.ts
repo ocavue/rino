@@ -78,21 +78,27 @@ describe("Sidebar settings sign in / sign out buttons", () => {
         await wait(settingsMenu, { hidden: true })
     }
 
-    test("Sign in", async () => {
+    test("Before sign in", async () => {
         await signOut()
-        await sleep(500)
+        await sleep(1000)
+        await expectSignedOut()
+    })
+
+    test("Sign in", async () => {
         await expectSignedOut()
         await clickSettingsMenuButton(signInBtn)
         await sleep(2000)
         const url = page.url()
         expect(url).toMatch(/^http(s)?\:\/\/.*\/login$/)
+    })
+
+    test("Before sign out", async () => {
         await login()
+        await sleep(1000)
         await expectSignedIn()
     })
 
     test("Sign out", async () => {
-        await login()
-        await goto("/")
         await expectSignedIn()
         await clickSettingsMenuButton(signOutBtn)
         await expectSignedOut()
@@ -138,7 +144,8 @@ describe("About", function() {
     })
 
     test("Close the dialog", async () => {
-        await page.mouse.click(5, 5)
+        await sleep(500)
+        await page.mouse.click(2, 2)
         await wait("about-dialog", { hidden: true })
     })
 })
