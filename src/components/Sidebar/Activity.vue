@@ -21,10 +21,12 @@
 import Vue from "vue"
 import { mdiSettingsOutline, mdiCloudOffOutline, mdiCloudOutline } from "@mdi/js"
 
-import { connected } from "@/store"
+import { state } from "@/store"
 import SidebarColumnHeader from "./SidebarColumnHeader.vue"
 import SidebarColumnBody from "./SidebarColumnBody.vue"
 import SidebarButton from "./SidebarButton.vue"
+
+const { connected } = state
 
 export default Vue.extend({
     components: { SidebarColumnHeader, SidebarColumnBody, SidebarButton },

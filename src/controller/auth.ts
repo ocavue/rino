@@ -33,3 +33,14 @@ export function signOut() {
         .then(() => {})
         .catch(error => console.error(error))
 }
+
+export function registerConnectionEvent(listenner: (connected: boolean) => void) {
+    firebase
+        .database()
+        .ref(".info/connected")
+        .on("value", function(snap) {
+            const connected = snap.val() === true
+            console.log(`Firebase is ${connected ? "online" : "offline"}`)
+            listenner(connected)
+        })
+}
