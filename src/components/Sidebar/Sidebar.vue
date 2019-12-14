@@ -16,7 +16,7 @@
 
 <script lang="ts">
 import { createComponent } from "@vue/composition-api"
-import { isSidebarActive } from "@/store"
+import { state } from "@/store"
 import Notes from "./Notes.vue"
 import Activity from "./Activity.vue"
 
@@ -24,7 +24,7 @@ export default createComponent({
     components: { Notes, Activity },
     setup() {
         return {
-            isSidebarActive,
+            isSidebarActive: state.isSidebarActive,
         }
     },
 })

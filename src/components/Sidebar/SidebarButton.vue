@@ -1,12 +1,13 @@
 <template>
-    <v-btn :disabled="disabled" :ripple="false" icon @click="clickIcon">
+    <v-btn :disabled="disabled" :ripple="false" icon v-on="myListeners">
         <v-icon>{{ icon }}</v-icon>
     </v-btn>
 </template>
 
 <script lang="ts">
-import Vue from "vue"
-export default Vue.extend({
+import { createComponent, computed } from "@vue/composition-api"
+export default createComponent({
+    name: "SidebarButton",
     props: {
         disabled: {
             type: Boolean,
@@ -23,14 +24,16 @@ export default Vue.extend({
             default: false,
         },
     },
-    methods: {
-        clickIcon(e: MouseEvent | KeyboardEvent) {
-            if (this.tbd) {
+    setup(props, ctx) {
+        function clickIcon(e: MouseEvent | KeyboardEvent) {
+            if (props.tbd) {
                 alert("TBD")
             } else {
-                this.$emit("click", e)
+                ctx.emit("click", e)
             }
-        },
+        }
+        const myListeners = computed(() => ({ ...ctx.listeners, click: clickIcon }))
+        return { myListeners }
     },
 })
 </script>

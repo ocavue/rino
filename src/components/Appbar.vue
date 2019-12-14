@@ -30,7 +30,7 @@
 
 <script lang="ts">
 import Vue from "vue"
-import * as refs from "@/store"
+import { auth, edit, state } from "@/store"
 
 import AboutDialog from "./AboutDialog.vue"
 import { mdiMenu, mdiDotsVertical } from "@mdi/js"
@@ -61,10 +61,10 @@ export default Vue.extend({
     }),
     computed: {
         note: function(): Note | null {
-            return refs.note.value
+            return edit.note.value
         },
         email: function(): string | null {
-            return refs.email.value
+            return auth.email.value
         },
         left: function(): number {
             return this.$vuetify.application.left + horizontalPadding
@@ -100,7 +100,7 @@ export default Vue.extend({
     },
     methods: {
         toggleDrawer: function() {
-            refs.isSidebarActive.value = !refs.isSidebarActive.value
+            state.isSidebarActive.value = !state.isSidebarActive.value
         },
         showDialog: function() {
             this.dialog = true
@@ -109,11 +109,11 @@ export default Vue.extend({
             if (!this.note) return
             this.deletingNote = true
             this.note.remove()
-            // Update refs.notes
-            const index = refs.notes.value.indexOf(this.note)
-            if (index > -1) refs.notes.value.splice(index, 1)
-            // Update refs.note (and this.note)
-            if (refs.note.value === this.note) refs.note.value = null
+            // Update edit.notes
+            const index = edit.notes.value.indexOf(this.note)
+            if (index > -1) edit.notes.value.splice(index, 1)
+            // Update edit.note (and this.note)
+            if (edit.note.value === this.note) edit.note.value = null
             // Don't change menu options until the menu‘s closing animation is finish
             setTimeout(() => (this.deletingNote = false), 200)
         },

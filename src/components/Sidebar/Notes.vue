@@ -55,7 +55,10 @@ import { Note } from "@/controller"
 import SidebarColumnHeader from "./SidebarColumnHeader.vue"
 import SidebarColumnBody from "./SidebarColumnBody.vue"
 import SidebarButton from "./SidebarButton.vue"
-import { email, user, notes, note } from "@/store"
+import * as store from "@/store"
+
+const { notes, note } = store.edit
+const { user, email } = store.auth
 
 export default createComponent({
     components: { SidebarColumnHeader, SidebarColumnBody, SidebarButton },

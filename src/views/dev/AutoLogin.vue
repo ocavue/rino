@@ -3,19 +3,22 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue"
+import { createComponent, onMounted } from "@vue/composition-api"
+import router from "@/router"
 import { signInWithEmailAndPassword } from "@/controller"
 import { testUser } from "@/controller/config"
 
-export default Vue.extend({
+export default createComponent({
     name: "AutoLogin",
-    mounted: function() {
-        console.log(`Sign in with ${testUser.username} ${testUser.password}`)
-        signInWithEmailAndPassword(testUser.username, testUser.password)
-            .then(() => this.$router.push("/"))
-            .catch(error => {
-                throw error
-            })
+    setup() {
+        onMounted(() => {
+            console.log(`Sign in with ${testUser.username} ${testUser.password}`)
+            signInWithEmailAndPassword(testUser.username, testUser.password)
+                .then(() => router.push("/"))
+                .catch(error => {
+                    throw error
+                })
+        })
     },
 })
 </script>
