@@ -12,12 +12,15 @@ export default createComponent({
     name: "AutoLogin",
     setup() {
         onMounted(() => {
-            if (!auth.user.value) return
-            signOut()
-                .then(() => router.push("/"))
-                .catch(error => {
-                    throw error
-                })
+            if (auth.user.value) {
+                signOut()
+                    .then(() => router.push("/"))
+                    .catch(error => {
+                        throw error
+                    })
+            } else {
+                router.push("/")
+            }
         })
     },
 })
