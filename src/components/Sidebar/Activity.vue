@@ -21,7 +21,7 @@
 
 <script lang="ts">
 import { createComponent, computed } from "@vue/composition-api"
-import { mdiSettingsOutline, mdiCloudOffOutline, mdiCloudOutline } from "@mdi/js"
+import { mdiCloudOffOutline, mdiCloudOutline } from "@mdi/js"
 
 import { state } from "@/store"
 import SidebarColumnHeader from "./SidebarColumnHeader.vue"
