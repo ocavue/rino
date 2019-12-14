@@ -6,10 +6,10 @@ const settingsMenu = "sidebar-settings-menu"
 const signOutBtn = "sidebar-settings-menu-item-sign-out"
 const signInBtn = "sidebar-settings-menu-item-sign-in"
 
-describe("Open/close Sidebar", () => {
-    const expectSidebarOpened = async () => wait("sidebar", { visible: true })
-    const expectSidebarClosed = async () => wait("sidebar", { visible: false })
+const expectSidebarOpened = async () => await page.waitForSelector(".v-navigation-drawer--open")
+const expectSidebarClosed = async () => await page.waitForSelector(".v-navigation-drawer--close")
 
+describe("Open/close Sidebar", () => {
     test("Before sign in", async () => {
         await goto("/")
         await signOut()
@@ -24,7 +24,6 @@ describe("Open/close Sidebar", () => {
     test("After sign in", async () => {
         await goto("/")
         await login()
-
         await expectSidebarOpened()
         await click("appbar-btn-menu")
         await expectSidebarClosed()
@@ -81,8 +80,10 @@ describe("Sidebar settings sign in / sign out buttons", () => {
 
     test("Sign in", async () => {
         await signOut()
+        await sleep(500)
         await expectSignedOut()
         await clickSettingsMenuButton(signInBtn)
+        await sleep(2000)
         const url = page.url()
         expect(url).toMatch(/^http(s)?\:\/\/.*\/login$/)
         await login()

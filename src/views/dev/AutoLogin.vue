@@ -9,7 +9,6 @@ import { signInWithEmailAndPassword } from "@/controller"
 import { testUser } from "@/controller/config"
 
 export default createComponent({
-    name: "AutoLogin",
     setup() {
         onMounted(() => {
             console.log(`Sign in with ${testUser.username} ${testUser.password}`)

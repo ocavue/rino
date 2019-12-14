@@ -3,13 +3,13 @@
         <SidebarColumnHeader>
             <v-spacer />
             <SidebarButton
-                :data-testid="'sidebar-notes-btn-search' + (loading && '-disabled')"
+                :data-testid="'sidebar-notes-btn-search' + (loading ? '-disabled' : '')"
                 :disabled="loading"
                 :icon="icons.mdiMagnify"
                 :tbd="true"
             />
             <SidebarButton
-                :data-testid="'sidebar-notes-btn-create-note' + (loading && '-disabled')"
+                :data-testid="'sidebar-notes-btn-create-note' + (loading ? '-disabled' : '')"
                 :disabled="loading"
                 :icon="icons.mdiPlus"
                 @click="createNote"
