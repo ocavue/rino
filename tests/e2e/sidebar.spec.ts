@@ -84,7 +84,7 @@ describe("Sidebar settings sign in / sign out buttons", () => {
         await clickSettingsMenuButton(signOutBtn)
         await expectSignOut()
 
-        // Expect that this is not note
+        // Expect that there is not note
         await wait("sidebar-notes-list-item", { hidden: true, visible: false })
     })
 })
