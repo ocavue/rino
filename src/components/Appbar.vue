@@ -33,7 +33,6 @@ import { auth, edit, state } from "@/store"
 
 import { mdiMenu, mdiDotsVertical } from "@mdi/js"
 import { Note } from "@/controller"
-import { signOut } from "@/controller/auth"
 
 interface MenuOption {
     name: string
@@ -79,11 +78,6 @@ export default Vue.extend({
                         action: this.deleteNote,
                     })
                 }
-                options.push({
-                    name: "Sign Out",
-                    testid: "signout",
-                    action: this.signOut,
-                })
             }
             return options
         },
@@ -103,9 +97,6 @@ export default Vue.extend({
             if (edit.note.value === this.note) edit.note.value = null
             // Don't change menu options until the menu‘s closing animation is finish
             setTimeout(() => (this.deletingNote = false), 200)
-        },
-        signOut: function() {
-            signOut()
         },
     },
 })

@@ -1,5 +1,11 @@
 <template>
-    <v-menu v-model="menu" :close-on-content-click="false" :nudge-width="200" :offset-y="true">
+    <v-menu
+        v-model="menu"
+        :close-on-content-click="true"
+        :nudge-width="200"
+        :offset-y="true"
+        data-testid="sidebar-settings-menu"
+    >
         <template v-slot:activator="slotProps">
             <SidebarButton
                 :icon="icons.settings"
@@ -9,13 +15,20 @@
         </template>
         <v-card>
             <v-list>
-                <v-list-item>
+                <v-list-item
+                    v-if="user"
+                    data-testid="sidebar-settings-menu-item-sign-out"
+                    @click="signOut"
+                >
                     <v-list-item-content>
-                        <v-list-item-title>John Leider</v-list-item-title>
-                        <!-- <v-list-item-subtitle>Founder of Vuetify.js</v-list-item-subtitle> -->
+                        Sign out
                     </v-list-item-content>
                 </v-list-item>
-                <v-list-item @click="signIn">
+                <v-list-item
+                    v-else
+                    data-testid="sidebar-settings-menu-item-sign-in"
+                    @click="signIn"
+                >
                     <v-list-item-content>
                         Sign in / Sign up
                     </v-list-item-content>
@@ -39,7 +52,8 @@ import SidebarButton from "./SidebarButton.vue"
 import { mdiSettingsOutline } from "@mdi/js"
 import Notes from "./Notes.vue"
 import router from "@/router"
-import { state } from "@/store"
+import { state, auth } from "@/store"
+import { signOut } from "@/controller/auth"
 
 export default createComponent({
     name: "SettingsMenu",
@@ -49,7 +63,7 @@ export default createComponent({
         const menu = ref(false)
         const showAboutDialog = () => (state.isAboutDialogActive.value = true)
         const signIn = () => router.push({ name: "login" })
-        return { icons, menu, showAboutDialog, signIn }
+        return { icons, menu, showAboutDialog, signIn, signOut, user: auth.user }
     },
 })
 </script>
