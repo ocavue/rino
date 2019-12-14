@@ -10,6 +10,8 @@ const expectSidebarOpened = async () => await page.waitForSelector(".v-navigatio
 const expectSidebarClosed = async () => await page.waitForSelector(".v-navigation-drawer--close")
 
 describe("Open/close Sidebar", () => {
+    beforeAll(async () => await jestPuppeteer.resetBrowser())
+
     test("Before sign in", async () => {
         await goto("/")
         await signOut()
@@ -44,6 +46,8 @@ const closeSettingsMenu = async () => {
 }
 
 describe("Sidebar settings menu", () => {
+    beforeAll(async () => await jestPuppeteer.resetBrowser())
+
     test("Except button exist", async () => {
         await goto("/")
         await wait(settingsBtn)
@@ -56,6 +60,8 @@ describe("Sidebar settings menu", () => {
 })
 
 describe("Sidebar settings sign in / sign out buttons", () => {
+    beforeAll(async () => await jestPuppeteer.resetBrowser())
+
     const expectSignedIn = async () => {
         await goto("/")
         await openSettingsMenu()
@@ -121,6 +127,8 @@ describe("Sidebar settings sign in / sign out buttons", () => {
 })
 
 describe("About", function() {
+    beforeAll(async () => await jestPuppeteer.resetBrowser())
+
     test("Open the dialog", async () => {
         await goto("/")
         await click("sidebar-btn-settings")
