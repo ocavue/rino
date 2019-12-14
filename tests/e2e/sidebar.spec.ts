@@ -1,10 +1,36 @@
-import { goto, click, wait, sleep } from "./utils"
+import { goto, click, wait, sleep, getInnerText } from "./utils"
 import { login, createNote } from "./actions"
 
 const settingsBtn = "sidebar-btn-settings"
 const settingsMenu = "sidebar-settings-menu"
 const signOutBtn = "sidebar-settings-menu-item-sign-out"
 const signInBtn = "sidebar-settings-menu-item-sign-in"
+
+describe("Open/close Sidebar", () => {
+    const expectSidebarOpened = async () => wait("sidebar", { visible: true })
+    const expectSidebarClosed = async () => wait("sidebar", { visible: false })
+
+    test("Before sign in", async () => {
+        await goto("/")
+
+        await expectSidebarOpened()
+        await click("appbar-btn-menu")
+        await expectSidebarClosed()
+        await click("appbar-btn-menu")
+        await expectSidebarOpened()
+    })
+
+    test("After sign in", async () => {
+        await goto("/")
+        await login()
+
+        await expectSidebarOpened()
+        await click("appbar-btn-menu")
+        await expectSidebarClosed()
+        await click("appbar-btn-menu")
+        await expectSidebarOpened()
+    })
+})
 
 const openSettingsMenu = async () => {
     await click(settingsBtn)
@@ -89,28 +115,31 @@ describe("Sidebar settings sign in / sign out buttons", () => {
     })
 })
 
-describe("Open/close Sidebar", () => {
-    const expectSidebarOpened = async () => wait("sidebar", { visible: true })
-    const expectSidebarClosed = async () => wait("sidebar", { visible: false })
-
-    test("Before sign in", async () => {
+describe("About", function() {
+    test("Open the dialog", async () => {
         await goto("/")
-
-        await expectSidebarOpened()
-        await click("appbar-btn-menu")
-        await expectSidebarClosed()
-        await click("appbar-btn-menu")
-        await expectSidebarOpened()
+        await click("sidebar-btn-settings")
+        await sleep(200)
+        await click("sidebar-settings-menu-item-about")
+        await wait("about-dialog")
     })
 
-    test("After sign in", async () => {
-        await goto("/")
-        await login()
+    test("Check version format", async () => {
+        // Should be something like 'Version 0.23.4 (2fd4e1c)'
+        const received = await getInnerText("about-dialog-version")
+        const expected = expect.stringMatching(/^Version \d+\.\d+.\d+ \([0-9a-z]{7}\)$/)
+        expect(received).toEqual(expected)
+    })
 
-        await expectSidebarOpened()
-        await click("appbar-btn-menu")
-        await expectSidebarClosed()
-        await click("appbar-btn-menu")
-        await expectSidebarOpened()
+    test("Check copyright format", async () => {
+        const year = new Date().getFullYear()
+        const received = await getInnerText("about-dialog-copyright")
+        const expected = `Copyright © ${year} Ocavue. All rights reserved.`
+        expect(received).toEqual(expected)
+    })
+
+    test("Close the dialog", async () => {
+        await page.mouse.click(5, 5)
+        await wait("about-dialog", { hidden: true })
     })
 })
