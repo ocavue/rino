@@ -38,7 +38,8 @@ const openSettingsMenu = async () => {
     await wait(settingsMenu)
 }
 const closeSettingsMenu = async () => {
-    await page.mouse.click(1, 1)
+    await click(settingsBtn)
+    await sleep(200)
     await wait(settingsMenu, { hidden: true })
 }
 
@@ -60,7 +61,6 @@ describe("Sidebar settings sign in / sign out buttons", () => {
         await openSettingsMenu()
         await wait(signOutBtn)
         await wait(signInBtn, { hidden: true })
-        await click(settingsBtn)
         await closeSettingsMenu()
     }
     const expectSignedOut = async () => {
@@ -68,7 +68,6 @@ describe("Sidebar settings sign in / sign out buttons", () => {
         await openSettingsMenu()
         await wait(signInBtn)
         await wait(signOutBtn, { hidden: true })
-        await click(settingsBtn)
         await closeSettingsMenu()
     }
     const clickSettingsMenuButton = async (btnTestId: string) => {
@@ -82,12 +81,15 @@ describe("Sidebar settings sign in / sign out buttons", () => {
         await signOut()
         await sleep(1000)
         await expectSignedOut()
+        await sleep(1000)
+        await expectSignedOut()
     })
 
     test("Sign in", async () => {
         await expectSignedOut()
+        await sleep(500)
         await clickSettingsMenuButton(signInBtn)
-        await sleep(2000)
+        await sleep(500)
         const url = page.url()
         expect(url).toMatch(/^http(s)?\:\/\/.*\/login$/)
     })
