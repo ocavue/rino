@@ -21,9 +21,14 @@ import Sidebar from "@/components/Sidebar"
 import Editor from "@/components/Editor.vue"
 import Welcome from "@/components/Welcome.vue"
 
+const {
+    auth: { user },
+    edit: { note, notes },
+} = store
+
 async function fetchNotes() {
-    if (!store.auth.user.value) throw new Error("Not login")
-    store.edit.notes.value = await Note.list(store.auth.user.value.uid)
+    if (!user.value) throw new Error("Not login")
+    notes.value = await Note.list(user.value.uid)
 }
 
 function initAuth() {
@@ -34,11 +39,11 @@ function initAuth() {
             console.log("user.isAnonymous:", u.isAnonymous)
             console.log("user.uid:", u.uid)
             console.log("user.email:", u.email)
-            store.auth.user.value = u
+            user.value = u
             await fetchNotes()
         } else {
             // User is signed out.
-            store.auth.user.value = null
+            user.value = null
         }
     })
 }
@@ -48,7 +53,7 @@ export default createComponent({
     components: { Appbar, Sidebar, Editor, Welcome },
     setup() {
         onMounted(initAuth)
-        return { note: store.edit.note }
+        return { note: note }
     },
 })
 </script>
