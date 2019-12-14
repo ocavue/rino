@@ -3,9 +3,9 @@ import { goto, wait, click, getInnerText, sleep } from "./utils"
 describe("About", function() {
     test("Open the dialog", async () => {
         await goto("/")
-        await click("appbar-btn-dots")
+        await click("sidebar-btn-settings")
         await sleep(200)
-        await click("appbar-menu-item-about")
+        await click("sidebar-settings-menu-item-about")
         await wait("about-dialog")
     })
 

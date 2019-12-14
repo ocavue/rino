@@ -24,7 +24,6 @@
                 </v-list>
             </v-menu>
         </div>
-        <AboutDialog v-model="dialog" />
     </div>
 </template>
 
@@ -32,7 +31,6 @@
 import Vue from "vue"
 import { auth, edit, state } from "@/store"
 
-import AboutDialog from "./AboutDialog.vue"
 import { mdiMenu, mdiDotsVertical } from "@mdi/js"
 import { Note } from "@/controller"
 import { signOut } from "@/controller/auth"
@@ -47,15 +45,12 @@ const horizontalPadding = 16
 
 export default Vue.extend({
     name: "Appbar",
-    components: { AboutDialog },
     data: (): {
         icons: Record<string, string>
-        dialog: boolean
         deletingNote: boolean
         right: number
     } => ({
         icons: { mdiMenu, mdiDotsVertical },
-        dialog: false,
         deletingNote: false,
         right: horizontalPadding,
     }),
@@ -90,20 +85,12 @@ export default Vue.extend({
                     action: this.signOut,
                 })
             }
-            options.push({
-                name: "About",
-                testid: "about",
-                action: () => this.showDialog(),
-            })
             return options
         },
     },
     methods: {
         toggleDrawer: function() {
             state.isSidebarActive.value = !state.isSidebarActive.value
-        },
-        showDialog: function() {
-            this.dialog = true
         },
         deleteNote: function() {
             if (!this.note) return

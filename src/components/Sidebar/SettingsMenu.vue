@@ -1,7 +1,11 @@
 <template>
     <v-menu v-model="menu" :close-on-content-click="false" :nudge-width="200" :offset-y="true">
         <template v-slot:activator="slotProps">
-            <SidebarButton :icon="icons.settings" v-on="slotProps.on" />
+            <SidebarButton
+                :icon="icons.settings"
+                data-testid="sidebar-btn-settings"
+                v-on="slotProps.on"
+            />
         </template>
         <v-card>
             <v-list>
@@ -16,7 +20,10 @@
                         Sign in / Sign up
                     </v-list-item-content>
                 </v-list-item>
-                <v-list-item @click="showAboutDialog">
+                <v-list-item
+                    data-testid="sidebar-settings-menu-item-about"
+                    @click="showAboutDialog"
+                >
                     <v-list-item-content>
                         About Rino
                     </v-list-item-content>
