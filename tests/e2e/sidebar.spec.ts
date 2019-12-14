@@ -80,10 +80,7 @@ describe("Sidebar settings sign in / sign out buttons", () => {
 
     test("Sign in", async () => {
         await expectSignOut()
-        await Promise.all([
-            page.waitForNavigation({ waitUntil: "networkidle2" }),
-            clickSettingsMenuButton(signInBtn),
-        ])
+        await clickSettingsMenuButton(signInBtn)
         const url = await page.url()
         expect(url).toMatch(/^http(s)?\:\/\/.*\/login$/)
         await login()
