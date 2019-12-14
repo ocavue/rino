@@ -3,7 +3,7 @@
         v-model="menu"
         :close-on-content-click="true"
         :nudge-width="160"
-        :offset-y="false"
+        :offset-y="true"
         data-testid="sidebar-settings-menu"
     >
         <template v-slot:activator="slotProps">
