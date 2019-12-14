@@ -42,7 +42,6 @@ export default createComponent({
     },
     setup() {
         const icons = computed(() => ({
-            settings: mdiSettingsOutline,
             state: connected.value ? mdiCloudOutline : mdiCloudOffOutline,
         }))
         return { icons, isAboutDialogActive }
