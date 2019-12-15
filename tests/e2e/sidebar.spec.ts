@@ -160,7 +160,7 @@ describe("About", function() {
     })
 })
 
-describe("Click sidebar in small screen", function() {
+describe("Click sidebar note item in different screen sizes", function() {
     beforeAll(async () => {
         await jestPuppeteer.resetBrowser()
         await login()
