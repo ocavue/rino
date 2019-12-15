@@ -1,5 +1,7 @@
-import { goto, click, wait, sleep, getInnerText } from "./utils"
-import { login, signOut, createNote } from "./actions"
+import { goto, click, wait, sleep, getInnerText, waitAnimation } from "./utils"
+import { login, signOut, createNote, cleanNotes, clickSidebarNoteListItem } from "./actions"
+
+import { mobileBreakPoint, sidebarWidth } from "@/constants"
 
 const settingsBtn = "sidebar-btn-settings"
 const settingsMenu = "sidebar-settings-menu"
@@ -156,4 +158,57 @@ describe("About", function() {
         await page.mouse.click(2, 2)
         await wait("about-dialog", { hidden: true })
     })
+})
+
+describe("Click sidebar note item in different screen sizes", function() {
+    beforeAll(async () => {
+        await jestPuppeteer.resetBrowser()
+        await login()
+        await createNote()
+    })
+    afterAll(async () => await cleanNotes())
+
+    const height = 800
+    const testSmallScreen = async (width: number) => {
+        await waitAnimation(page.setViewport({ width, height }))
+        await expectSidebarClosed()
+        await waitAnimation(click("appbar-btn-menu"))
+        await expectSidebarOpened()
+        await waitAnimation(clickSidebarNoteListItem())
+        await expectSidebarClosed()
+    }
+    const testLargeScreen = async (width: number) => {
+        await waitAnimation(page.setViewport({ width, height }))
+        await expectSidebarOpened()
+        await waitAnimation(clickSidebarNoteListItem())
+        await expectSidebarOpened()
+    }
+
+    for (let width of [
+        sidebarWidth - 10,
+        sidebarWidth,
+        sidebarWidth + 10,
+        mobileBreakPoint - 200,
+        mobileBreakPoint - 3,
+        mobileBreakPoint - 2,
+        mobileBreakPoint - 1,
+    ]) {
+        test(`Small screen ${width}px`, async () => {
+            expect(width).toBeLessThan(mobileBreakPoint)
+            await testSmallScreen(width)
+        })
+    }
+
+    for (let width of [
+        mobileBreakPoint + 0,
+        mobileBreakPoint + 1,
+        mobileBreakPoint + 2,
+        mobileBreakPoint + 200,
+        mobileBreakPoint * 2,
+    ]) {
+        test(`Large screen ${width}px`, async () => {
+            expect(width).toBeGreaterThanOrEqual(mobileBreakPoint)
+            await testLargeScreen(width)
+        })
+    }
 })
