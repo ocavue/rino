@@ -77,7 +77,7 @@ export async function waitAnimation<T>(promise: Promise<T>, ms: number = 500): P
     return T
 }
 
-export async function retry<T>(fn: () => Promise<boolean>, timeout = 5000): Promise<boolean> {
+export async function retry(fn: () => Promise<boolean>, timeout = 5000): Promise<boolean> {
     const maxTime = Date.now() + timeout
     while (Date.now() < maxTime) {
         const result = await fn()
