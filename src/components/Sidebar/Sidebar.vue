@@ -19,6 +19,7 @@
 import { createComponent, computed } from "@vue/composition-api"
 import { state } from "@/store"
 import { $vuetify } from "@/plugins/vuetify"
+import { mobileBreakPoint, sidebarWidth } from "@/constants"
 
 import Notes from "./Notes.vue"
 import Activity from "./Activity.vue"
@@ -26,13 +27,13 @@ import Activity from "./Activity.vue"
 export default createComponent({
     components: { Notes, Activity },
     setup() {
-        const width = 400
-        const mobileBreakPoint = 1024
+        // Use same logic as `v-navigation-drawer`
         const isMobile = computed(() => $vuetify.breakpoint.width < mobileBreakPoint)
+
         return {
-            width,
             isMobile,
             mobileBreakPoint,
+            width: sidebarWidth,
             isSidebarActive: state.isSidebarActive,
         }
     },
