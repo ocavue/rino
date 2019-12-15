@@ -27,7 +27,7 @@ export async function signInWithEmailAndPassword(email: string, password: string
 export const user: Ref<firebase.User | null> = ref(null)
 
 export function signOut() {
-    firebase
+    return firebase
         .auth()
         .signOut()
         .then(() => {})

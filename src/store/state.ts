@@ -11,4 +11,6 @@ const connected = useConnected()
 
 const isSidebarActive = ref(true)
 
-export { connected, isSidebarActive }
+const isAboutDialogActive = ref(false)
+
+export { connected, isSidebarActive, isAboutDialogActive }

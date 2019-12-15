@@ -6,7 +6,7 @@
             </v-btn>
         </div>
         <div v-if="options.length > 0" class="appbar" :style="`right: ${right}px;`">
-            <v-menu bottom left>
+            <v-menu bottom left :nudge-width="128" :offset-y="true" :nudge-right="2" :nudge-top="4">
                 <template v-slot:activator="{ on }">
                     <v-btn icon :ripple="false" data-testid="appbar-btn-dots" v-on="on">
                         <v-icon>{{ icons.mdiDotsVertical }}</v-icon>
@@ -24,7 +24,6 @@
                 </v-list>
             </v-menu>
         </div>
-        <AboutDialog v-model="dialog" />
     </div>
 </template>
 
@@ -32,10 +31,8 @@
 import Vue from "vue"
 import { auth, edit, state } from "@/store"
 
-import AboutDialog from "./AboutDialog.vue"
 import { mdiMenu, mdiDotsVertical } from "@mdi/js"
 import { Note } from "@/controller"
-import { signOut } from "@/controller/auth"
 
 interface MenuOption {
     name: string
@@ -47,15 +44,12 @@ const horizontalPadding = 16
 
 export default Vue.extend({
     name: "Appbar",
-    components: { AboutDialog },
     data: (): {
         icons: Record<string, string>
-        dialog: boolean
         deletingNote: boolean
         right: number
     } => ({
         icons: { mdiMenu, mdiDotsVertical },
-        dialog: false,
         deletingNote: false,
         right: horizontalPadding,
     }),
@@ -84,26 +78,13 @@ export default Vue.extend({
                         action: this.deleteNote,
                     })
                 }
-                options.push({
-                    name: "Sign Out",
-                    testid: "signout",
-                    action: this.signOut,
-                })
             }
-            options.push({
-                name: "About",
-                testid: "about",
-                action: () => this.showDialog(),
-            })
             return options
         },
     },
     methods: {
         toggleDrawer: function() {
             state.isSidebarActive.value = !state.isSidebarActive.value
-        },
-        showDialog: function() {
-            this.dialog = true
         },
         deleteNote: function() {
             if (!this.note) return
@@ -116,9 +97,6 @@ export default Vue.extend({
             if (edit.note.value === this.note) edit.note.value = null
             // Don't change menu options until the menu‘s closing animation is finish
             setTimeout(() => (this.deletingNote = false), 200)
-        },
-        signOut: function() {
-            signOut()
         },
     },
 })

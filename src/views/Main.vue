@@ -44,6 +44,7 @@ function initAuth() {
         } else {
             // User is signed out.
             user.value = null
+            notes.value = []
         }
     })
 }
