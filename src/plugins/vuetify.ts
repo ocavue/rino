@@ -11,7 +11,6 @@ const vuetify = new Vuetify({
     },
 })
 
-vuetify.framework
 export default vuetify
 
 // `$vuetify` is same as `this.$vuetify` in Vue v2.
