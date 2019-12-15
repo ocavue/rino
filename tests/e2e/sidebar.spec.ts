@@ -160,7 +160,7 @@ describe("About", function() {
     })
 })
 
-describe.only("Click sidebar in small screen", function() {
+describe("Click sidebar in small screen", function() {
     beforeAll(async () => {
         await jestPuppeteer.resetBrowser()
         await login()
