@@ -58,7 +58,7 @@ import SidebarButton from "./SidebarButton.vue"
 import * as store from "@/store"
 
 const {
-    edit: { notes, note },
+    edit: { notes, note, fetchingNotes },
     auth: { user, email },
     state: { isSidebarActive },
 } = store
@@ -70,7 +70,7 @@ export default createComponent({
     },
     setup(props) {
         const icons = { mdiPlus, mdiMagnify }
-        const loading = computed(() => user.value === null)
+        const loading = computed(() => user.value === null || fetchingNotes.value)
 
         function closeSidebarIfMobile() {
             if (props.isMobile) {
