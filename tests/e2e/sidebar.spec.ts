@@ -170,7 +170,6 @@ describe("Click sidebar note item in different screen sizes", function() {
 
     const height = 800
     const testSmallScreen = async (width: number) => {
-        // await jestPuppeteer.resetPage()
         await waitAnimation(page.setViewport({ width, height }))
         await expectSidebarClosed()
         await waitAnimation(click("appbar-btn-menu"))
@@ -179,7 +178,6 @@ describe("Click sidebar note item in different screen sizes", function() {
         await expectSidebarClosed()
     }
     const testLargeScreen = async (width: number) => {
-        // await jestPuppeteer.resetPage()
         await waitAnimation(page.setViewport({ width, height }))
         await expectSidebarOpened()
         await waitAnimation(clickSidebarNoteListItem())
