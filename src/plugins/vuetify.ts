@@ -1,6 +1,5 @@
 import Vue from "vue"
 import Vuetify from "vuetify/lib"
-// import { Framework } from "vuetify/lib"
 import { Framework as VuetifyFramework } from "vuetify"
 
 Vue.use(Vuetify)
