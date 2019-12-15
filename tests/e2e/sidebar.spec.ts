@@ -7,6 +7,7 @@ const settingsBtn = "sidebar-btn-settings"
 const settingsMenu = "sidebar-settings-menu"
 const signOutBtn = "sidebar-settings-menu-item-sign-out"
 const signInBtn = "sidebar-settings-menu-item-sign-in"
+const aboutBtn = "sidebar-settings-menu-item-about"
 
 const expectSidebarOpened = async () => await page.waitForSelector(".v-navigation-drawer--open")
 const expectSidebarClosed = async () => await page.waitForSelector(".v-navigation-drawer--close")
@@ -15,35 +16,35 @@ describe("Open/close Sidebar", () => {
     beforeAll(async () => await jestPuppeteer.resetBrowser())
 
     test("Before sign in", async () => {
-        await goto("/")
-        await signOut()
-
+        await waitAnimation(signOut())
         await expectSidebarOpened()
-        await click("appbar-btn-menu")
+        await waitAnimation(click("appbar-btn-menu"))
         await expectSidebarClosed()
-        await click("appbar-btn-menu")
+        await waitAnimation(click("appbar-btn-menu"))
         await expectSidebarOpened()
     })
 
     test("After sign in", async () => {
-        await goto("/")
-        await login()
+        await waitAnimation(login())
         await expectSidebarOpened()
-        await click("appbar-btn-menu")
+        await waitAnimation(click("appbar-btn-menu"))
         await expectSidebarClosed()
-        await click("appbar-btn-menu")
+        await waitAnimation(click("appbar-btn-menu"))
         await expectSidebarOpened()
     })
 })
 
 const openSettingsMenu = async () => {
-    await click(settingsBtn)
-    await sleep(500)
+    await waitAnimation(click(settingsBtn))
     await wait(settingsMenu)
 }
 const closeSettingsMenu = async () => {
-    await page.mouse.click(2, 2)
-    await sleep(200)
+    await waitAnimation(page.mouse.click(2, 2))
+    await wait(settingsMenu, { hidden: true })
+}
+const clickSettingsMenuButton = async (btnTestId: string) => {
+    await waitAnimation(click(settingsBtn))
+    await waitAnimation(click(btnTestId))
     await wait(settingsMenu, { hidden: true })
 }
 
@@ -78,16 +79,9 @@ describe("Sidebar settings sign in / sign out buttons", () => {
         await wait(signOutBtn, { hidden: true })
         await closeSettingsMenu()
     }
-    const clickSettingsMenuButton = async (btnTestId: string) => {
-        await click(settingsBtn)
-        await sleep(500)
-        await click(btnTestId)
-        await wait(settingsMenu, { hidden: true })
-    }
 
     test("Before sign in", async () => {
-        await signOut()
-        await sleep(1000)
+        await waitAnimation(signOut())
         await expectSignedOut()
         await sleep(1000)
         await expectSignedOut()
@@ -101,7 +95,8 @@ describe("Sidebar settings sign in / sign out buttons", () => {
     })
 
     test("Before sign out", async () => {
-        await login()
+        await waitAnimation(login())
+        await expectSignedIn()
         await sleep(1000)
         await expectSignedIn()
     })
@@ -133,9 +128,7 @@ describe("About", function() {
 
     test("Open the dialog", async () => {
         await goto("/")
-        await click("sidebar-btn-settings")
-        await sleep(200)
-        await click("sidebar-settings-menu-item-about")
+        await clickSettingsMenuButton(aboutBtn)
         await wait("about-dialog")
     })
 
