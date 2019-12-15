@@ -57,15 +57,26 @@ import SidebarColumnBody from "./SidebarColumnBody.vue"
 import SidebarButton from "./SidebarButton.vue"
 import * as store from "@/store"
 
-const { notes, note } = store.edit
-const { user, email } = store.auth
+const {
+    edit: { notes, note },
+    auth: { user, email },
+    state: { isSidebarActive },
+} = store
 
 export default createComponent({
     components: { SidebarColumnHeader, SidebarColumnBody, SidebarButton },
-    setup() {
+    props: {
+        isMobile: { type: Boolean, required: true },
+    },
+    setup(props) {
         const icons = { mdiPlus, mdiMagnify }
         const loading = computed(() => user.value === null)
 
+        function closeSidebarIfMobile() {
+            if (props.isMobile) {
+                isSidebarActive.value = false
+            }
+        }
         function createNote() {
             if (!user.value) throw new Error("Not login")
             const noteObj = new Note(user.value.uid)
@@ -74,6 +85,7 @@ export default createComponent({
         }
         function switchNote(noteObj: Note) {
             note.value = noteObj
+            closeSidebarIfMobile()
         }
 
         return {
