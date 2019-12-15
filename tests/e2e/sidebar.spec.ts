@@ -1,5 +1,13 @@
-import { goto, click, wait, sleep, getInnerText, waitAnimation } from "./utils"
-import { login, signOut, createNote, cleanNotes, clickSidebarNoteListItem } from "./actions"
+import { goto, click, wait, sleep, getInnerText, waitAnimation, retry } from "./utils"
+import {
+    login,
+    signOut,
+    createNote,
+    cleanNotes,
+    clickSidebarNoteListItem,
+    expectSignedIn,
+    expectSignedOut,
+} from "./actions"
 
 import { mobileBreakPoint, sidebarWidth } from "@/constants"
 
@@ -63,47 +71,40 @@ describe("Settings", () => {
         })
     })
 
-    describe("Sidebar settings sign in / sign out buttons", () => {
-        beforeAll(async () => await jestPuppeteer.resetBrowser())
+    describe("Sidebar settings sign in/out buttons", () => {
+        beforeAll(async () => {
+            await jestPuppeteer.resetBrowser()
 
-        test("Before sign in", async () => {
-            await waitAnimation(signOut(), 1000)
-            await openSettingsMenu()
-        })
-
-        test("Sign in", async () => {
-            await expectSignedOut()
-            await sleep(1000)
-            await clickSettingsMenuButton(signInBtn)
-            await wait("login-form-card")
-        })
-
-        test("Before sign out", async () => {
-            await waitAnimation(login())
-            await expectSignedIn()
-            await sleep(1000)
-            await expectSignedIn()
-        })
-
-        test("Sign out", async () => {
-            await expectSignedIn()
-            await clickSettingsMenuButton(signOutBtn)
-            await expectSignedOut()
-        })
-
-        test("Clean notes after sign out", async () => {
-            // Create a note
+            // Parpare for the "clean" test case below
             await login()
-            await expectSignedIn()
             await createNote()
             await wait("sidebar-notes-list-item")
+        })
 
-            // Sign out
-            await clickSettingsMenuButton(signOutBtn)
+        test("Signed in", async () => {
+            await openSettingsMenu()
+            await expectSignedIn()
+            await wait(signOutBtn)
+        })
+        test("Click sign out button", async () => {
+            await click(signOutBtn)
             await expectSignedOut()
-
-            // Expect that there is not note
+        })
+        test("Clean notes in the sidebar after signing out", async () => {
             await wait("sidebar-notes-list-item", { hidden: true, visible: false })
+        })
+        test("Signed out", async () => {
+            await waitAnimation(signOut(), 1000)
+            await openSettingsMenu()
+            await expectSignedOut()
+            await wait(signInBtn)
+        })
+        test("Click sign in button", async () => {
+            const url = new URL(await page.url())
+            const signInUrl = url.origin + "/login"
+            await click(signInBtn)
+            const checkCallback = async () => signInUrl === (await page.url())
+            expect(await retry(checkCallback)).toBe(true)
         })
     })
 

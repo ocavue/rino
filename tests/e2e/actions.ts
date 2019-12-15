@@ -1,5 +1,5 @@
 import { range } from "lodash"
-import { goto, click, getOne, sleep, pressKey, focus } from "./utils"
+import { goto, click, getOne, sleep, pressKey, focus, retry } from "./utils"
 
 async function isSignedIn(): Promise<boolean> {
     const state = await page.evaluate(() => localStorage.getItem("__rino_dev_auth_state"))
@@ -7,11 +7,15 @@ async function isSignedIn(): Promise<boolean> {
 }
 
 export async function expectSignedIn() {
-    expect(await isSignedIn()).toEqual(true)
+    const chekcIsExpected = async () => (await isSignedIn()) === true
+    const isExpectedAfterRetry = await retry(chekcIsExpected)
+    expect(isExpectedAfterRetry).toBe(true)
 }
 
 export async function expectSignedOut() {
-    expect(await isSignedIn()).toEqual(false)
+    const chekcIsExpected = async () => (await isSignedIn()) === false
+    const isExpectedAfterRetry = await retry(chekcIsExpected)
+    expect(isExpectedAfterRetry).toBe(true)
 }
 
 export async function login() {

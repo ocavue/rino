@@ -76,3 +76,13 @@ export async function waitAnimation<T>(promise: Promise<T>, ms: number = 500): P
     await sleep(ms)
     return T
 }
+
+export async function retry<T>(fn: () => Promise<boolean>, timeout = 5000): Promise<boolean> {
+    const maxTime = Date.now() + timeout
+    while (Date.now() < maxTime) {
+        const result = await fn()
+        if (result) return true
+        else await sleep(100)
+    }
+    return false
+}
