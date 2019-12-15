@@ -23,12 +23,14 @@ import Welcome from "@/components/Welcome.vue"
 
 const {
     auth: { user },
-    edit: { note, notes },
+    edit: { note, notes, fetchingNotes },
 } = store
 
 async function fetchNotes() {
+    fetchingNotes.value = true
     if (!user.value) throw new Error("Not login")
     notes.value = await Note.list(user.value.uid)
+    fetchingNotes.value = false
 }
 
 function initAuth() {
