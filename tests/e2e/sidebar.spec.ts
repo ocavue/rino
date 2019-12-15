@@ -1,4 +1,4 @@
-import { goto, click, wait, sleep, getInnerText } from "./utils"
+import { goto, click, wait, sleep, getInnerText, waitAnimation } from "./utils"
 import { login, signOut, createNote, cleanNotes, clickSidebarNoteListItem } from "./actions"
 
 import { mobileBreakPoint, sidebarWidth } from "@/constants"
@@ -160,7 +160,7 @@ describe("About", function() {
     })
 })
 
-describe("Click sidebar in small screen", function() {
+describe.only("Click sidebar in small screen", function() {
     beforeAll(async () => {
         await jestPuppeteer.resetBrowser()
         await login()
@@ -171,23 +171,18 @@ describe("Click sidebar in small screen", function() {
     const height = 800
     const testSmallScreen = async (width: number) => {
         // await jestPuppeteer.resetPage()
-        page.setViewport({ width, height })
-        await sleep(500)
+        await waitAnimation(page.setViewport({ width, height }))
         await expectSidebarClosed()
-        await click("appbar-btn-menu")
-        await sleep(500)
+        await waitAnimation(click("appbar-btn-menu"))
         await expectSidebarOpened()
-        await clickSidebarNoteListItem()
-        await sleep(500)
+        await waitAnimation(clickSidebarNoteListItem())
         await expectSidebarClosed()
     }
     const testLargeScreen = async (width: number) => {
         // await jestPuppeteer.resetPage()
-        page.setViewport({ width, height })
-        await sleep(500)
+        await waitAnimation(page.setViewport({ width, height }))
         await expectSidebarOpened()
-        await clickSidebarNoteListItem()
-        await sleep(500)
+        await waitAnimation(clickSidebarNoteListItem())
         await expectSidebarOpened()
     }
 

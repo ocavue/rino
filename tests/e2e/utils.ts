@@ -70,3 +70,9 @@ export const wysiwygEditorSelector =
 export async function getSourceCodeModeText() {
     return await getTextAreaValue("source-code-mode-textarea")
 }
+
+export async function waitAnimation<T>(promise: Promise<T>, ms: number = 500): Promise<T> {
+    const T = await promise
+    await sleep(ms)
+    return T
+}
