@@ -34,122 +34,107 @@ describe("Open/close Sidebar", () => {
     })
 })
 
-const openSettingsMenu = async () => {
-    await waitAnimation(click(settingsBtn))
-    await wait(settingsMenu)
-}
-const closeSettingsMenu = async () => {
-    await waitAnimation(page.mouse.click(2, 2))
-    await wait(settingsMenu, { hidden: true })
-}
-const clickSettingsMenuButton = async (btnTestId: string) => {
-    await waitAnimation(click(settingsBtn))
-    await waitAnimation(click(btnTestId))
-    await wait(settingsMenu, { hidden: true })
-}
-
-describe("Sidebar settings menu", () => {
-    beforeAll(async () => await jestPuppeteer.resetBrowser())
-
-    test("Except button exist", async () => {
-        await goto("/")
-        await wait(settingsBtn)
-    })
-    test("Click settings button", async () => {
-        await goto("/")
-        await openSettingsMenu()
-        await closeSettingsMenu()
-    })
-})
-
-describe("Sidebar settings sign in / sign out buttons", () => {
-    beforeAll(async () => await jestPuppeteer.resetBrowser())
-
-    const expectSignedIn = async () => {
-        await goto("/")
-        await openSettingsMenu()
-        await wait(signOutBtn)
-        await wait(signInBtn, { hidden: true })
-        await closeSettingsMenu()
+describe("Settings", () => {
+    const openSettingsMenu = async () => {
+        await waitAnimation(click(settingsBtn))
+        await wait(settingsMenu)
     }
-    const expectSignedOut = async () => {
-        await goto("/")
-        await openSettingsMenu()
-        await wait(signInBtn)
-        await wait(signOutBtn, { hidden: true })
-        await closeSettingsMenu()
+    const closeSettingsMenu = async () => {
+        await waitAnimation(page.mouse.click(2, 2))
+        await wait(settingsMenu, { hidden: true })
+    }
+    const clickSettingsMenuButton = async (btnTestId: string) => {
+        await waitAnimation(click(settingsBtn))
+        await waitAnimation(click(btnTestId))
+        await wait(settingsMenu, { hidden: true })
     }
 
-    test("Before sign in", async () => {
-        await waitAnimation(signOut())
-        await expectSignedOut()
-        await sleep(1000)
-        await expectSignedOut()
+    describe("Open/close settings menu", () => {
+        beforeAll(async () => await jestPuppeteer.resetBrowser())
+
+        test("Except button exist", async () => {
+            await goto("/")
+            await wait(settingsBtn)
+        })
+        test("Click settings button", async () => {
+            await goto("/")
+            await openSettingsMenu()
+            await closeSettingsMenu()
+        })
     })
 
-    test("Sign in", async () => {
-        await expectSignedOut()
-        await sleep(1000)
-        await clickSettingsMenuButton(signInBtn)
-        await wait("login-form-card")
+    describe("Sidebar settings sign in / sign out buttons", () => {
+        beforeAll(async () => await jestPuppeteer.resetBrowser())
+
+        test("Before sign in", async () => {
+            await waitAnimation(signOut(), 1000)
+            await openSettingsMenu()
+        })
+
+        test("Sign in", async () => {
+            await expectSignedOut()
+            await sleep(1000)
+            await clickSettingsMenuButton(signInBtn)
+            await wait("login-form-card")
+        })
+
+        test("Before sign out", async () => {
+            await waitAnimation(login())
+            await expectSignedIn()
+            await sleep(1000)
+            await expectSignedIn()
+        })
+
+        test("Sign out", async () => {
+            await expectSignedIn()
+            await clickSettingsMenuButton(signOutBtn)
+            await expectSignedOut()
+        })
+
+        test("Clean notes after sign out", async () => {
+            // Create a note
+            await login()
+            await expectSignedIn()
+            await createNote()
+            await wait("sidebar-notes-list-item")
+
+            // Sign out
+            await clickSettingsMenuButton(signOutBtn)
+            await expectSignedOut()
+
+            // Expect that there is not note
+            await wait("sidebar-notes-list-item", { hidden: true, visible: false })
+        })
     })
 
-    test("Before sign out", async () => {
-        await waitAnimation(login())
-        await expectSignedIn()
-        await sleep(1000)
-        await expectSignedIn()
-    })
+    describe("About", function() {
+        beforeAll(async () => await jestPuppeteer.resetBrowser())
 
-    test("Sign out", async () => {
-        await expectSignedIn()
-        await clickSettingsMenuButton(signOutBtn)
-        await expectSignedOut()
-    })
+        test("Open the dialog", async () => {
+            await goto("/")
+            await clickSettingsMenuButton(aboutBtn)
+            await wait("about-dialog")
+        })
 
-    test("Clean notes after sign out", async () => {
-        // Create a note
-        await login()
-        await expectSignedIn()
-        await createNote()
-        await wait("sidebar-notes-list-item")
+        test("Check version format", async () => {
+            // Should be something like 'Version 0.23.4 (2fd4e1c)'
+            const received = await getInnerText("about-dialog-version")
+            const expected = expect.stringMatching(/^Version \d+\.\d+.\d+ \([0-9a-z]{7}\)$/)
+            expect(received).toEqual(expected)
+        })
 
-        // Sign out
-        await clickSettingsMenuButton(signOutBtn)
-        await expectSignedOut()
+        test("Check copyright format", async () => {
+            const year = new Date().getFullYear()
+            const received = await getInnerText("about-dialog-copyright")
+            const expected = `Copyright © ${year} Ocavue. All rights reserved.`
+            expect(received).toEqual(expected)
+        })
 
-        // Expect that there is not note
-        await wait("sidebar-notes-list-item", { hidden: true, visible: false })
-    })
-})
-
-describe("About", function() {
-    beforeAll(async () => await jestPuppeteer.resetBrowser())
-
-    test("Open the dialog", async () => {
-        await goto("/")
-        await clickSettingsMenuButton(aboutBtn)
-        await wait("about-dialog")
-    })
-
-    test("Check version format", async () => {
-        // Should be something like 'Version 0.23.4 (2fd4e1c)'
-        const received = await getInnerText("about-dialog-version")
-        const expected = expect.stringMatching(/^Version \d+\.\d+.\d+ \([0-9a-z]{7}\)$/)
-        expect(received).toEqual(expected)
-    })
-
-    test("Check copyright format", async () => {
-        const year = new Date().getFullYear()
-        const received = await getInnerText("about-dialog-copyright")
-        const expected = `Copyright © ${year} Ocavue. All rights reserved.`
-        expect(received).toEqual(expected)
-    })
-
-    test("Close the dialog", async () => {
-        await sleep(500)
-        await page.mouse.click(2, 2)
-        await wait("about-dialog", { hidden: true })
+        test("Close the dialog", async () => {
+            await sleep(500)
+            await page.mouse.click(2, 2)
+            await wait("about-dialog", { hidden: true })
+        })
     })
 })
 

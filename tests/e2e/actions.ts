@@ -1,12 +1,17 @@
 import { range } from "lodash"
-import { wait, goto, click, getOne, sleep, pressKey, focus } from "./utils"
+import { goto, click, getOne, sleep, pressKey, focus } from "./utils"
+
+async function isSignedIn(): Promise<boolean> {
+    const state = await page.evaluate(() => localStorage.getItem("__rino_dev_auth_state"))
+    return state === "yes"
+}
 
 export async function expectSignedIn() {
-    return await wait("sidebar-notes-btn-create-note")
+    expect(await isSignedIn()).toEqual(true)
 }
 
 export async function expectSignedOut() {
-    return await wait("sidebar-notes-btn-create-note-disabled")
+    expect(await isSignedIn()).toEqual(false)
 }
 
 export async function login() {
