@@ -26,7 +26,7 @@
                         About Rino
                     </v-list-item-content>
                 </v-list-item>
-                <v-divider :inset="false"></v-divider>
+                <v-divider></v-divider>
                 <v-list-item
                     v-if="user"
                     data-testid="sidebar-settings-menu-item-sign-out"
