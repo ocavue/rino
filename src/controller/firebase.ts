@@ -35,3 +35,14 @@ export type DocumentReference = firebase.firestore.DocumentReference
 export type DocumentSnapshot = firebase.firestore.DocumentSnapshot
 export type Timestamp = firebase.firestore.Timestamp
 export type User = firebase.User
+
+export function registerConnectionEvent(listenner: (connected: boolean) => void) {
+    firebase
+        .database()
+        .ref(".info/connected")
+        .on("value", function(snap) {
+            const connected = snap.val() === true
+            console.log(`Firebase is ${connected ? "online" : "offline"}`)
+            listenner(connected)
+        })
+}
