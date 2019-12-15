@@ -2,7 +2,7 @@
     <v-menu
         v-model="menu"
         :close-on-content-click="true"
-        :nudge-width="160"
+        :nudge-width="200"
         :offset-y="true"
         :nudge-left="4"
         :nudge-top="2"
@@ -19,12 +19,22 @@
         <v-card>
             <v-list>
                 <v-list-item
+                    data-testid="sidebar-settings-menu-item-about"
+                    @click="showAboutDialog"
+                >
+                    <v-list-item-content>
+                        About Rino
+                    </v-list-item-content>
+                </v-list-item>
+                <v-divider></v-divider>
+                <v-list-item
                     v-if="user"
                     data-testid="sidebar-settings-menu-item-sign-out"
                     @click="signOut"
                 >
                     <v-list-item-content>
                         Sign out
+                        <v-list-item-subtitle>{{ email }}</v-list-item-subtitle>
                     </v-list-item-content>
                 </v-list-item>
                 <v-list-item
@@ -34,14 +44,6 @@
                 >
                     <v-list-item-content>
                         Sign in / Sign up
-                    </v-list-item-content>
-                </v-list-item>
-                <v-list-item
-                    data-testid="sidebar-settings-menu-item-about"
-                    @click="showAboutDialog"
-                >
-                    <v-list-item-content>
-                        About Rino
                     </v-list-item-content>
                 </v-list-item>
             </v-list>
@@ -66,7 +68,7 @@ export default createComponent({
         const menu = ref(false)
         const showAboutDialog = () => (state.isAboutDialogActive.value = true)
         const signIn = () => router.push({ name: "login" })
-        return { icons, menu, showAboutDialog, signIn, signOut, user: auth.user }
+        return { icons, menu, showAboutDialog, signIn, signOut, user: auth.user, email: auth.email }
     },
 })
 </script>
