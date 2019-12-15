@@ -137,6 +137,16 @@ describe("Settings", () => {
             await wait("about-dialog", { hidden: true })
         })
     })
+
+    describe("Email", function() {
+        beforeAll(async () => await jestPuppeteer.resetBrowser())
+
+        test("Email", async () => {
+            await login()
+            await waitAnimation(click(settingsBtn))
+            expect(await getInnerText(signOutBtn)).toContain(process.env.VUE_APP_TEST_USERNAME)
+        })
+    })
 })
 
 describe("Click sidebar note item in different screen sizes", function() {
