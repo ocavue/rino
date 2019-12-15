@@ -7,14 +7,14 @@ async function isSignedIn(): Promise<boolean> {
 }
 
 export async function expectSignedIn() {
-    const chekcIsExpected = async () => (await isSignedIn()) === true
-    const isExpectedAfterRetry = await retry(chekcIsExpected)
+    const isExpected = async () => (await isSignedIn()) === true
+    const isExpectedAfterRetry = await retry(isExpected)
     expect(isExpectedAfterRetry).toBe(true)
 }
 
 export async function expectSignedOut() {
-    const chekcIsExpected = async () => (await isSignedIn()) === false
-    const isExpectedAfterRetry = await retry(chekcIsExpected)
+    const isExpected = async () => (await isSignedIn()) === false
+    const isExpectedAfterRetry = await retry(isExpected)
     expect(isExpectedAfterRetry).toBe(true)
 }
 
