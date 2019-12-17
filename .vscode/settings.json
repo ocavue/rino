@@ -1,18 +1,13 @@
 {
-    // eslint
     "eslint.packageManager": "yarn",
-    "eslint.autoFixOnSave": true,
     "eslint.validate": [
         "javascript",
-        {
-            "language": "typescript",
-            "autoFix": true
-        },
-        {
-            "language": "vue",
-            "autoFix": true
-        },
+        "typescript",
+        "vue"
     ],
+    "editor.codeActionsOnSave": {
+        "source.fixAll.eslint": true
+    },
     "typescript.tsdk": "node_modules/typescript/lib",
-    "python.pythonPath": ".venv/bin/python"
+    "python.pythonPath": ".venv/bin/python",
 }
