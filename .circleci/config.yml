@@ -4,18 +4,25 @@ workflows:
   version: 2
   main_workflow:
     jobs:
-      - test
-      - build
-      - lint
+      - test:
+          # `filters` is required since `deploy` has tag filters AND requires `test`
+          filters: &run_for_all_branches_and_all_tags
+            tags:
+              only: /.*/
+      - build:
+          filters: *run_for_all_branches_and_all_tags
+      - lint:
+          filters: *run_for_all_branches_and_all_tags
       - deploy:
           requires:
             - test
             - build
             - lint
           filters:
+            tags:
+              only: /^v\d+\.\d+\.\d+.*/
             branches:
-              only:
-                - master
+              ignore: /.*/
       - regenerate_yarn_lock:
           filters:
             branches:
@@ -80,8 +87,12 @@ jobs:
           paths:
             - .
   deploy:
-    executor: node-executor
+    docker:
+      - image: python:3.7-stretch
     steps:
+      - checkout
+      - run: |
+          ./scripts/verify-version.py
       - attach_workspace:
           at: /tmp/deploy
       - run: |
