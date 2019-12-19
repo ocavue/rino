@@ -5,7 +5,7 @@ workflows:
   main_workflow:
     jobs:
       - test:
-          # `filters` is required since `deploy` has tag filters AND requires `build`
+          # `filters` is required since `deploy` has tag filters AND requires `test`
           filters: &run_for_all_branches_and_all_tags
             tags:
               only: /.*/
