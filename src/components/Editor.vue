@@ -6,10 +6,13 @@
 
 <script lang="ts">
 import Vue, { PropType } from "vue"
+import { debounce } from "lodash"
 
 import { BaseView, ProseMirrorView, MarkdownView } from "@/editor"
 import { Note } from "@/controller"
-import { debounce } from "lodash"
+import { isMac } from "@/utils"
+
+const metaKey = isMac() ? "metaKey" : "ctrlKey"
 
 export default Vue.extend({
     name: "Editor",
@@ -64,7 +67,7 @@ export default Vue.extend({
             this.initEditor()
         },
         handleKeydown: function(event: KeyboardEvent) {
-            if (event.metaKey && event.code === "Slash") {
+            if (event[metaKey] && event.code === "Slash") {
                 console.debug("meta + / has been pressed")
                 this.switchEditor()
             } else {

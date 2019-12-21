@@ -2,6 +2,7 @@ import { schema } from "./schema"
 import { Mark, Node, Schema, NodeType } from "prosemirror-model"
 import Token from "markdown-it/lib/token"
 import MarkdownIt from "markdown-it"
+import markdownItListCheckbox from "./markdown-it-list-checkbox"
 
 interface StackItem {
     type: NodeType
@@ -25,22 +26,7 @@ interface StackItem {
 
 //
 
-interface TokenSpec {
-    /**
-     * This token maps to a single node, whose type can be looked up
-     * in the schema under the given name. Exactly one of `node`,
-     * `block`, or `mark` must be set.
-     */
-    node?: string
-    /**
-     * This token comes in `_open` and `_close` variants (which are
-     * appended to the base token name provides a the object
-     * property), and wraps a block of content. The block should be
-     * wrapped in a node of the type named to by the property's
-     * value.
-     * block?: string
-     */
-    block?: string
+interface CommonTokenSpec {
     hasOpenClose: boolean
     /**
      * Attributes for the node or mark. When `getAttrs` is provided,
@@ -55,6 +41,30 @@ interface TokenSpec {
      */
     getAttrs?: (token: Token) => Record<string, any>
 }
+interface NodeTokenSpec extends CommonTokenSpec {
+    /**
+     * This token maps to a single node, whose type can be looked up
+     * in the schema under the given name. Exactly one of `node`,
+     * `block`, or `mark` must be set.
+     */
+    node: string
+}
+interface BlockTokenSpec extends CommonTokenSpec {
+    /**
+     * This token comes in `_open` and `_close` variants (which are
+     * appended to the base token name provides a the object
+     * property), and wraps a block of content. The block should be
+     * wrapped in a node of the type named to by the property's
+     * value.
+     * block?: string
+     */
+    block: string
+}
+function isBlockTokenSpec(spec: TokenSpec): spec is BlockTokenSpec {
+    return (spec as any).block !== undefined
+}
+type TokenSpec = NodeTokenSpec | BlockTokenSpec
+
 interface TokenSpecs {
     [markdownItTokenName: string]: TokenSpec
 }
@@ -87,18 +97,20 @@ class MarkdownParseState {
     // using the current marks as styling.
     public addText(text: string): void {
         if (!text) return
-        const nodes = this.top().content
-        const last = nodes[nodes.length - 1]
+
+        const top = this.top()
+        const nodes = top.content
+        const last: Node | undefined = nodes[nodes.length - 1]
         const node = this.schema.text(text, this.marks)
         let merged: Node | undefined
         if (last && (merged = this.mergeTextNode(last, node))) nodes[nodes.length - 1] = merged
         else nodes.push(node)
     }
 
-    private mergeTextNode(a: Node, b: Node): Node | undefined {
+    private mergeTextNode(a: Node<Schema>, b: Node<Schema>): Node<Schema> | undefined {
         if (a.isText && b.isText && Mark.sameSet(a.marks, b.marks)) {
             const text: string = a.text || "" + b.text || ""
-            return (a.type.schema as Schema).text(text, a.marks)
+            return a.type.schema.text(text, a.marks)
         }
     }
 
@@ -153,6 +165,37 @@ function withoutTrailingNewline(str: string): string {
     return str.endsWith("\n") ? str.slice(0, str.length - 1) : str
 }
 
+function buildBlockTokenHandler(type: string, spec: BlockTokenSpec, handlers: TokenHandlers): void {
+    const nodeType: NodeType = schema.nodes[spec.block]
+    if (nodeType === undefined) {
+        throw new RangeError(`Can't find block type '${spec.block}'`)
+    }
+    if (spec.hasOpenClose) {
+        handlers[type + "_open"] = (state: MarkdownParseState, tok: Token) => {
+            state.openNode(nodeType, getAttrs(spec, tok))
+        }
+        handlers[type + "_close"] = (state: MarkdownParseState, tok: Token) => {
+            state.closeNode()
+        }
+    } else {
+        handlers[type] = (state: MarkdownParseState, tok: Token) => {
+            state.openNode(nodeType, getAttrs(spec, tok))
+            state.addText(withoutTrailingNewline(tok.content))
+            state.closeNode()
+        }
+    }
+}
+
+function buildNodeTokenHandler(type: string, spec: NodeTokenSpec, handlers: TokenHandlers): void {
+    const nodeType: NodeType = schema.nodes[spec.node]
+    if (nodeType === undefined) {
+        throw new RangeError(`Can't find node type '${spec.node}'`)
+    }
+    handlers[type] = (state: MarkdownParseState, tok: Token) => {
+        state.addNode(nodeType, getAttrs(spec, tok))
+    }
+}
+
 function buildTokenHandlers(schema: Schema, tokens: TokenSpecs): TokenHandlers {
     const handlers: TokenHandlers = {
         text: (state, tok) => state.addText(tok.content),
@@ -160,35 +203,12 @@ function buildTokenHandlers(schema: Schema, tokens: TokenSpecs): TokenHandlers {
         softbreak: state => state.addText("\n"),
     }
     for (const [type, spec] of Object.entries(tokens)) {
-        if (spec.block) {
-            const nodeType: NodeType = schema.nodes[spec.block]
-            if (nodeType === undefined) {
-                throw new RangeError(`Can't find node type '${spec.node}'`)
-            }
-            if (spec.hasOpenClose) {
-                handlers[type + "_open"] = (state: MarkdownParseState, tok: Token) =>
-                    state.openNode(nodeType, getAttrs(spec, tok))
-                handlers[type + "_close"] = (state: MarkdownParseState, tok: Token) =>
-                    state.closeNode()
-            } else {
-                handlers[type] = (state: MarkdownParseState, tok: Token) => {
-                    state.openNode(nodeType, getAttrs(spec, tok))
-                    state.addText(withoutTrailingNewline(tok.content))
-                    state.closeNode()
-                }
-            }
-        } else if (spec.node) {
-            const nodeType: NodeType = schema.nodes[spec.node]
-            if (nodeType === undefined) {
-                throw new RangeError(`Can't find node type '${spec.node}'`)
-            }
-            handlers[type] = (state: MarkdownParseState, tok: Token) =>
-                state.addNode(nodeType, getAttrs(spec, tok))
+        if (isBlockTokenSpec(spec)) {
+            buildBlockTokenHandler(type, spec, handlers)
         } else {
-            throw new RangeError("Unrecognized parsing spec " + JSON.stringify(spec))
+            buildNodeTokenHandler(type, spec, handlers)
         }
     }
-
     return handlers
 }
 
@@ -217,7 +237,6 @@ export class MarkdownParser {
         const state = new MarkdownParseState(this.schema, this.tokenHandlers)
         let doc: Node
         let mdTokens: Token[] = this.tokenizer.parse(text, {})
-
         mdTokens = mdTokens.filter(
             token =>
                 token.type !== "thead_open" &&
@@ -241,7 +260,8 @@ export const defaultMarkdownParser = new MarkdownParser(
     schema,
     MarkdownIt("commonmark", { html: true })
         .disable(["emphasis", "autolink", "backticks", "entity"])
-        .enable(["table"]),
+        .enable(["table"])
+        .use(markdownItListCheckbox),
     {
         blockquote: {
             block: "rinoBlockquote",
@@ -255,6 +275,12 @@ export const defaultMarkdownParser = new MarkdownParser(
         "list_item": {
             block: "rinoListItem",
             hasOpenClose: true,
+        },
+        // eslint-disable-next-line prettier/prettier
+        "list_checkbox": {
+            block: "rinoCheckbox",
+            hasOpenClose: false,
+            getAttrs: tok => ({ checked: tok.attrGet("checked") === "" }),
         },
         // eslint-disable-next-line prettier/prettier
         "bullet_list": {

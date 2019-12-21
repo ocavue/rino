@@ -12,13 +12,15 @@ import {
     lift,
     selectParentNode,
 } from "prosemirror-commands"
-import { wrapInList, splitListItem, liftListItem, sinkListItem } from "prosemirror-schema-list"
+import { wrapInList, liftListItem, sinkListItem } from "prosemirror-schema-list"
 import { undo, redo } from "prosemirror-history"
 import { undoInputRule } from "prosemirror-inputrules"
 import { Plugin, EditorState, Transaction, TextSelection } from "prosemirror-state"
 import { EditorView } from "prosemirror-view"
 
 import { schema } from "./schema"
+import { splitListItem } from "./list"
+import { isMac } from "@/utils"
 
 type Command = (state: EditorState, dispatch?: (tr: Transaction) => void) => boolean
 
@@ -122,7 +124,7 @@ function buildBlockEnterKeymapBindings(
 }
 
 function buildKeymapBindings(): { [key: string]: Command } {
-    const mac = typeof navigator != "undefined" ? navigator.platform.includes("Mac") : false
+    const mac: boolean = isMac()
 
     const keys: Record<string, Command> = {}
     let type
@@ -140,6 +142,7 @@ function buildKeymapBindings(): { [key: string]: Command } {
     bind("Mod-BracketLeft", lift)
     bind("Escape", selectParentNode)
 
+    // TODO: I don't need these if statements in this app.
     if ((type = schema.marks.strong)) bind("Mod-b", toggleMark(type))
     if ((type = schema.marks.em)) bind("Mod-i", toggleMark(type))
     if ((type = schema.marks.code)) bind("Mod-`", toggleMark(type))
@@ -157,8 +160,8 @@ function buildKeymapBindings(): { [key: string]: Command } {
         bind("Shift-Enter", cmd)
         if (mac) bind("Ctrl-Enter", cmd)
     }
+    bind("Enter", splitListItem())
     if ((type = schema.nodes.rinoListItem)) {
-        bind("Enter", splitListItem(type))
         bind("Mod-[", liftListItem(type))
         bind("Mod-]", sinkListItem(type))
     }

@@ -9,25 +9,25 @@ workflows:
           filters: &run_for_all_branches_and_all_tags
             tags:
               only: /.*/
-      - build:
-          filters: *run_for_all_branches_and_all_tags
-      - lint:
-          filters: *run_for_all_branches_and_all_tags
-      - deploy:
-          requires:
-            - test
-            - build
-            - lint
-          filters:
-            tags:
-              only: /^v\d+\.\d+\.\d+.*/
-            branches:
-              ignore: /.*/
-      - regenerate_yarn_lock:
-          filters:
-            branches:
-              only:
-                - yarn_upgrade
+      # - build:
+      #     filters: *run_for_all_branches_and_all_tags
+      # - lint:
+      #     filters: *run_for_all_branches_and_all_tags
+      # - deploy:
+      #     requires:
+      #       - test
+      #       - build
+      #       - lint
+      #     filters:
+      #       tags:
+      #         only: /^v\d+\.\d+\.\d+.*/
+      #       branches:
+      #         ignore: /.*/
+      # - regenerate_yarn_lock:
+      #     filters:
+      #       branches:
+      #         only:
+      #           - yarn_upgrade
 
 executors:
   node-executor:
@@ -60,11 +60,13 @@ jobs:
           echo ${DEV_CONFIG_FIREBASE} > ./config/firebase.json
           echo "VUE_APP_TEST_USERNAME=${VUE_APP_TEST_USERNAME}" >> ./.env
           echo "VUE_APP_TEST_PASSWORD=${VUE_APP_TEST_PASSWORD}" >> ./.env
-      - run: yarn build --mode development
+      - run: |
+          yarn build --mode development
       - run: |
           ./scripts/http-server.js > /dev/null &
           yarn run test --coverage
-      - run: yarn run coverage
+      - run: |
+          yarn run coverage
   build:
     executor: node-executor
     steps:

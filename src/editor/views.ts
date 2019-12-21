@@ -13,6 +13,7 @@ import { testidPlugin } from "./testid"
 import { tableMenuPlugin, tableHeigthlightPlugin } from "./table"
 import { defaultMarkdownParser } from "./parser"
 import { defaultMarkdownSerializer } from "./serializer"
+import { checkboxPlugin } from "./checkbox"
 
 import "../../node_modules/prosemirror-tables/style/tables.css"
 import "../../node_modules/prosemirror-view/style/prosemirror.css"
@@ -24,6 +25,7 @@ const proseMirrorPlugins: Plugin[] = [
     ...buildKeymaps(),
     buildMdInputRules(),
     testidPlugin,
+    checkboxPlugin,
     decorationPlugin,
     tableMenuPlugin,
     tableHeigthlightPlugin,
@@ -75,7 +77,7 @@ class ProseMirrorView extends BaseView {
                 plugins: proseMirrorPlugins,
             }),
         })
-        if (process.env.NODE_ENV === "debug") {
+        if (process.env.VUE_APP_PROSEMIRROR_DEV_TOOLS) {
             // Webpack will remove this block in production mode
             // eslint-disable-next-line @typescript-eslint/no-var-requires
             const prosemirrorDevTools = require("prosemirror-dev-tools")

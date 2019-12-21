@@ -4,13 +4,13 @@ import { dedent } from "@/editor/utils"
 import { testcases } from "./base"
 import { nodes } from "./schema.spec"
 
-const { doc, table, tableRow, tableCell } = nodes
+const { doc, p, table, tableRow, tableCell, li, ul, uncheckedCheckbox, checkedCheckbox } = nodes
 
-describe("markdown parser", () => {
-    function assertEqual(markdown: string, node: TaggedProsemirrorNode) {
-        expect(markdown).toBe(defaultMarkdownSerializer.serialize(node))
-    }
+function assertEqual(markdown: string, node: TaggedProsemirrorNode) {
+    expect(markdown).toBe(defaultMarkdownSerializer.serialize(node))
+}
 
+describe("base markdown serializer", () => {
     describe("base test cases", function() {
         for (const [caseName, [markdown, node]] of Object.entries(testcases)) {
             test(caseName, function() {
@@ -153,6 +153,99 @@ describe("markdown parser", () => {
                         tableRow(tableCell("h"), tableCell(" ")),
                         tableRow(tableCell(" "), tableCell("c")),
                         tableRow(tableCell("c"), tableCell(" ")),
+                    ),
+                ),
+            )
+        })
+    })
+})
+
+describe("list markdown serializer", () => {
+    describe("selectable list", function() {
+        it("checked list", function() {
+            assertEqual(
+                dedent(
+                    `
+                    * [x] list item 1
+                    * [x] list item 2
+                    * [x] list item 3
+                    `,
+                ).trim(),
+                doc(
+                    ul(
+                        li(checkedCheckbox(), p("list item 1")),
+                        li(checkedCheckbox(), p("list item 2")),
+                        li(checkedCheckbox(), p("list item 3")),
+                    ),
+                ),
+            )
+        })
+        it("unchecked list", function() {
+            assertEqual(
+                dedent(
+                    `
+                    * [ ] list item 1
+                    * [ ] list item 2
+                    * [ ] list item 3
+                    `,
+                ).trim(),
+                doc(
+                    ul(
+                        li(uncheckedCheckbox(), p("list item 1")),
+                        li(uncheckedCheckbox(), p("list item 2")),
+                        li(uncheckedCheckbox(), p("list item 3")),
+                    ),
+                ),
+            )
+        })
+        it("mixed list", function() {
+            assertEqual(
+                dedent(
+                    `
+                    * [ ] list item 1
+                    * [x] list item 2
+                    * [ ] list item 3
+                    `,
+                ).trim(),
+                doc(
+                    ul(
+                        li(uncheckedCheckbox(), p("list item 1")),
+                        li(checkedCheckbox(), p("list item 2")),
+                        li(uncheckedCheckbox(), p("list item 3")),
+                    ),
+                ),
+            )
+        })
+        it("selectable list item and bullet list item", function() {
+            assertEqual(
+                dedent(
+                    `
+                    * [ ] list item 1
+                    * [x] list item 2
+                    * list item 3
+                    `,
+                ).trim(),
+                doc(
+                    ul(
+                        li(uncheckedCheckbox(), p("list item 1")),
+                        li(checkedCheckbox(), p("list item 2")),
+                        li(p("list item 3")),
+                    ),
+                ),
+            )
+            assertEqual(
+                dedent(
+                    `
+                    * list item 0
+                    * [ ] list item 1
+                    * [x] list item 2
+                    `,
+                ).trim(),
+                doc(
+                    ul(
+                        li(p("list item 0")),
+                        li(uncheckedCheckbox(), p("list item 1")),
+                        li(checkedCheckbox(), p("list item 2")),
                     ),
                 ),
             )

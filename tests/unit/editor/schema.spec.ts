@@ -11,6 +11,8 @@ const def = {
     h6: { nodeType: "rinoHeading", level: 6 },
     hr: { nodeType: "rinoHorizontalRule" },
     li: { nodeType: "rinoListItem" },
+    checkedCheckbox: { nodeType: "rinoCheckbox", checked: true },
+    uncheckedCheckbox: { nodeType: "rinoCheckbox", checked: false },
     ol: { nodeType: "rinoOrderedList" },
     ul: { nodeType: "rinoBulletList" },
     br: { nodeType: "rinoHardBreak" },

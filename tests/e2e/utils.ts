@@ -1,6 +1,8 @@
+import os from "os"
 import { WaitForSelectorOptions, ClickOptions, DirectNavigationOptions } from "puppeteer"
 
-const testidSelector = (testid: string) => `[data-testid="${testid}"]`
+const testidSelector = (testid: string) =>
+    /^[a-zA-Z0-9]+$/.exec(testid) ? `[data-testid=${testid}]` : `[data-testid="${testid}"]`
 
 export async function goto(url: string, options?: DirectNavigationOptions) {
     url = url.startsWith("/") ? "http://localhost:8080" + url : url
@@ -16,11 +18,26 @@ export async function focus(testid: string) {
     return page.focus(testidSelector(testid))
 }
 
+const metaKey = (() => {
+    switch (os.platform()) {
+        case "darwin":
+            return "Meta"
+        case "win32":
+            return "Control"
+        case "linux":
+            return "Control"
+        default:
+            throw new Error(`Unsupport OS: ${os.platform()}`)
+    }
+})()
+
 export async function pressKey(...keys: string[]) {
-    for (const key of keys) {
+    for (let key of keys) {
+        if (key === "Meta") key = metaKey
         await page.keyboard.down(key)
     }
-    for (const key of keys.reverse()) {
+    for (let key of keys.reverse()) {
+        if (key === "Meta") key = metaKey
         await page.keyboard.up(key)
     }
 }
@@ -34,10 +51,10 @@ export async function sleep(ms: number) {
     return page.waitFor(ms)
 }
 
-export async function type(testid: string, text: string) {
+export async function type(testid: string, text: string, pressEnter = true) {
     await wait(testid)
     await page.type(testidSelector(testid), text, { delay: 5 })
-    await pressKey("Enter")
+    if (pressEnter) await pressKey("Enter")
 }
 
 export async function getOne(testid: string) {
@@ -89,4 +106,52 @@ export async function retry(
         else await sleep(100)
     }
     return false
+}
+
+type Shape = string | { [selector: string]: Shape[] }
+export async function expectWysiwygHtml(shapes: Shape[]) {
+    type Selectors = Record<
+        string,
+        { exists: boolean; childrenNumber: number | null; childrenTags?: string[] }
+    >
+
+    function buildExpectedSelectors(selector: string, shapes: Shape[]) {
+        const selectors: Selectors = {}
+        selectors[selector] = { childrenNumber: shapes.length, exists: true }
+        shapes.forEach((shape: Shape, index) => {
+            if (typeof shape === "string") {
+                const childSelector = `${selector} > ${shape}:nth-child(${index + 1})`
+                selectors[childSelector] = { childrenNumber: null, exists: true }
+            } else {
+                expect(Object.keys(shape)).toHaveLength(1)
+                const key = Object.keys(shape)[0]
+                const childSelector = `${selector} > ${key}:nth-child(${index + 1})`
+                Object.assign(selectors, buildExpectedSelectors(childSelector, shape[key]))
+            }
+        })
+        return selectors
+    }
+    const expectedSelectors: Selectors = buildExpectedSelectors(`${wysiwygEditorSelector}`, shapes)
+
+    const receivedSelectors = await page.evaluate((selectorsJson: string) => {
+        const selectors: Selectors = JSON.parse(selectorsJson)
+        for (const [selector, info] of Object.entries(selectors)) {
+            const element = document.querySelector(selector)
+            if (!element) {
+                info.exists = false
+            } else if (
+                info.childrenNumber !== null &&
+                info.childrenNumber !== element.children.length
+            ) {
+                info.childrenNumber = element.children.length
+                info.childrenTags = Array(element.children.length)
+                    .fill(0)
+                    .map((_, i) => element.children.item(i) as Element)
+                    .map(e => e.tagName)
+            }
+        }
+        return selectors
+    }, JSON.stringify(expectedSelectors))
+
+    expect(receivedSelectors).toEqual(expectedSelectors)
 }

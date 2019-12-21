@@ -20,6 +20,10 @@ const aboutBtn = "sidebar-settings-menu-item-about"
 const expectSidebarOpened = async () => await page.waitForSelector(".v-navigation-drawer--open")
 const expectSidebarClosed = async () => await page.waitForSelector(".v-navigation-drawer--close")
 
+beforeAll(async () => {
+    await jestPuppeteer.resetBrowser()
+})
+
 describe("Open/close Sidebar", () => {
     beforeAll(async () => await jestPuppeteer.resetBrowser())
 

@@ -13,6 +13,7 @@ function readText(filename: string) {
 }
 
 beforeAll(async () => {
+    await jestPuppeteer.resetBrowser()
     await login()
 })
 
@@ -20,8 +21,8 @@ afterAll(async () => {
     await cleanNotes()
 })
 
-async function type(text: string) {
-    await typeByTestid("wysiwyg-mode-textarea", text)
+async function type(text: string, pressEnter = true) {
+    await typeByTestid("wysiwyg-mode-textarea", text, pressEnter)
 }
 
 describe("Source code text", () => {
@@ -104,7 +105,7 @@ describe("HTML", () => {
     describe("Image", () => {
         const imageSelector = `${wysiwygEditorSelector} img`
 
-        test("Prepare ", async () => {
+        beforeAll(async () => {
             await createNote()
             await page.waitFor(imageSelector, { hidden: true })
         })
