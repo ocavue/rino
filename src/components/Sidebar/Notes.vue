@@ -82,6 +82,7 @@ export default createComponent({
             const noteObj = new Note(user.value.uid)
             notes.value.unshift(noteObj)
             note.value = noteObj
+            closeSidebarIfMobile()
         }
         function switchNote(noteObj: Note) {
             note.value = noteObj
