@@ -11,10 +11,9 @@ export default Vue.extend({
 </script>
 
 <style lang="scss">
+@import "~vuetify/src/styles/styles.sass";
+
 body {
-    font-family: "Fira Mono", "DejaVu Sans Mono", "Menlo", "Consolas", "Liberation Mono", "Monaco",
-        "Lucida Console", monospace;
-    padding: 0;
-    margin: 0;
+    background-color: map-get($material-light, "background");
 }
 </style>

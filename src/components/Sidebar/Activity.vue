@@ -52,8 +52,5 @@ export default createComponent({
 <style lang="scss" scoped>
 .sidebar-activity {
     flex: 2;
-    border-right-color: rgba(0, 0, 0, 0.12);
-    border-right-style: solid;
-    border-right-width: 1px;
 }
 </style>
