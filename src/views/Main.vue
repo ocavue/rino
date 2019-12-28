@@ -12,9 +12,8 @@
 </template>
 
 <script lang="ts">
-import { createComponent, onMounted } from "@vue/composition-api"
+import { createComponent, onMounted, onUnmounted, watch } from "@vue/composition-api"
 
-import { firebase, Note } from "@/controller"
 import * as store from "@/store"
 import Appbar from "@/components/Appbar.vue"
 import Sidebar from "@/components/Sidebar"
@@ -23,39 +22,25 @@ import Welcome from "@/components/Welcome.vue"
 
 const {
     auth: { user },
-    edit: { note, notes, fetchingNotes },
+    edit: { note, notes, fetchNotes },
 } = store
-
-async function fetchNotes() {
-    fetchingNotes.value = true
-    if (!user.value) throw new Error("Not login")
-    notes.value = await Note.list(user.value.uid)
-    fetchingNotes.value = false
-}
-
-function initAuth() {
-    // Watch sign in and sign out
-    firebase.auth().onAuthStateChanged(async u => {
-        if (u) {
-            // User is signed in.
-            console.log("user.isAnonymous:", u.isAnonymous)
-            console.log("user.uid:", u.uid)
-            console.log("user.email:", u.email)
-            user.value = u
-            await fetchNotes()
-        } else {
-            // User is signed out.
-            user.value = null
-            notes.value = []
-        }
-    })
-}
 
 export default createComponent({
     name: "Main",
     components: { Appbar, Sidebar, Editor, Welcome },
     setup() {
-        onMounted(initAuth)
+        let stopWatching: () => void = () => {}
+        onMounted(() => {
+            stopWatching = watch(
+                user,
+                userValue => {
+                    if (userValue) fetchNotes(userValue.uid)
+                    else notes.value = []
+                },
+                { lazy: true },
+            )
+        })
+        onUnmounted(() => stopWatching())
         return { note: note }
     },
 })

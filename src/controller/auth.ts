@@ -28,3 +28,13 @@ export async function signInWithEmailAndPassword(email: string, password: string
 export async function signOut() {
     await closurePromiseWrapper(firebase.auth().signOut())
 }
+
+export function onAuthStateChanged(next: (user: firebase.User | null) => void) {
+    firebase.auth().onAuthStateChanged(function(user) {
+        next(user)
+    })
+}
+
+export function getCurrentUser() {
+    return firebase.auth().currentUser
+}
