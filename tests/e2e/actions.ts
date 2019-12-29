@@ -1,5 +1,5 @@
 import { range } from "lodash"
-import { goto, click, getOne, sleep, pressKey, focus, retry } from "./utils"
+import { goto, click, sleep, pressKey, focus, retry } from "./utils"
 
 async function isSignedIn(): Promise<boolean> {
     const state = await page.evaluate(() => localStorage.getItem("__rino_dev_auth_state"))
@@ -48,10 +48,5 @@ export async function clickSidebarNoteListItem() {
 }
 
 export async function cleanNotes() {
-    while (await getOne("sidebar-notes-list-item")) {
-        await clickSidebarNoteListItem()
-        await sleep(50)
-        await deleteNote()
-        await sleep(50)
-    }
+    await goto("/dev/clean-notes")
 }
