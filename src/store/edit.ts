@@ -1,16 +1,19 @@
 import { ref, Ref } from "@vue/composition-api"
 import { Note } from "@/controller"
-import { user } from "./auth"
 
 const note: Ref<Note | null> = ref(null)
-const notes: Ref<Note[]> = ref([])
-const fetchingNotes = ref(false)
+
+/**
+ * All notes that the signed in user has. `notes` is `null` if not user is
+ * signed in or is fetching notes.
+ */
+const notes: Ref<Note[] | null> = ref(null)
 
 async function fetchNotes(uid: string) {
-    fetchingNotes.value = true
-    if (!user.value) throw new Error("Not login")
     notes.value = await Note.list(uid)
-    fetchingNotes.value = false
+}
+function isNotesFetched(notes: Ref<Note[] | null>): notes is Ref<Note[]> {
+    return notes.value !== null
 }
 
-export { note, notes, fetchingNotes, fetchNotes }
+export { note, notes, isNotesFetched, fetchNotes }

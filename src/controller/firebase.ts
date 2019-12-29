@@ -12,6 +12,11 @@ if (firebase.apps.length === 0) {
     // Initialize app
     firebase.initializeApp(firebaseConfig)
 
+    // Configure cache size (The default size is 40 MB)
+    firebase.firestore().settings({
+        cacheSizeBytes: firebase.firestore.CACHE_SIZE_UNLIMITED,
+    })
+
     // Enable offline firestore
     firebase
         .firestore()

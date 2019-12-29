@@ -35,7 +35,7 @@ export default createComponent({
                 user,
                 userValue => {
                     if (userValue) fetchNotes(userValue.uid)
-                    else notes.value = []
+                    else notes.value = null
                 },
                 { lazy: true },
             )
