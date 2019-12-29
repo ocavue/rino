@@ -162,6 +162,7 @@ const base = {
 
 module.exports = {
     ...base,
+    testSequencer: require("path").join(__dirname, "tests", "jest-sequencer.js"),
     projects: [
         {
             ...base,
