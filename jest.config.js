@@ -1,12 +1,12 @@
 // For a detailed explanation regarding each configuration property, visit:
 // https://jestjs.io/docs/en/configuration.html
 
-module.exports = {
+const base = {
     // All imported modules in your tests should be mocked automatically
     // automock: false,
 
     // Stop running tests after `n` failures
-    // bail: 0,
+    bail: 1,
 
     // Respect "browser" field in package.json when resolving modules
     // browser: false,
@@ -75,12 +75,6 @@ module.exports = {
     // An enum that specifies notification mode. Requires { notify: true }
     // notifyMode: "failure-change",
 
-    // A preset that is used as a base for Jest's configuration
-    preset: "jest-puppeteer",
-
-    // Run tests from one or more projects
-    // projects: null,
-
     // Use this configuration option to add custom reporters to Jest
     reporters: ["default", "jest-puppeteer-istanbul/lib/reporter"],
 
@@ -110,9 +104,6 @@ module.exports = {
     // The paths to modules that run some code to configure or set up the testing environment before each test
     // setupFiles: [],
 
-    // A list of paths to modules that run some code to configure or set up the testing framework before each test
-    setupFilesAfterEnv: ["jest-puppeteer-istanbul/lib/setup", "<rootDir>/tests/setup.js"],
-
     // A list of paths to snapshot serializer modules Jest should use for snapshot testing
     // snapshotSerializers: [],
 
@@ -124,12 +115,6 @@ module.exports = {
 
     // Adds a location field to test results
     // testLocationInResults: false,
-
-    // The glob patterns Jest uses to detect test files
-    testMatch: [
-        "**/tests/**/*.spec.(js|ts)",
-        //   "**/__tests__/**/*.[jt]s?(x)",
-    ],
 
     // An array of regexp pattern strings that are matched against all test paths, matched tests are skipped
     // testPathIgnorePatterns: [
@@ -173,4 +158,30 @@ module.exports = {
 
     // Whether to use watchman for file crawling
     // watchman: true,
+}
+
+module.exports = {
+    ...base,
+    projects: [
+        {
+            ...base,
+            displayName: { name: "E2E", color: "magenta" },
+
+            // The glob patterns Jest uses to detect test files
+            testMatch: ["<rootDir>/tests/e2e/**/*.spec.(js|ts)"],
+
+            // A preset that is used as a base for Jest's configuration
+            preset: "jest-puppeteer",
+
+            // A list of paths to modules that run some code to configure or set up the testing framework before each test
+            setupFilesAfterEnv: ["jest-puppeteer-istanbul/lib/setup", "<rootDir>/tests/setup.js"],
+        },
+        {
+            ...base,
+            displayName: { name: "UNIT", color: "cyan" },
+
+            // The glob patterns Jest uses to detect test files
+            testMatch: ["<rootDir>/tests/unit/**/*.spec.(js|ts)"],
+        },
+    ],
 }
