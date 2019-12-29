@@ -33,6 +33,7 @@ import { auth, edit, state } from "@/store"
 
 import { mdiMenu, mdiDotsVertical } from "@mdi/js"
 import { Note } from "@/controller"
+import { isNotesFetched } from "../store/edit"
 
 interface MenuOption {
     name: string
@@ -87,16 +88,18 @@ export default Vue.extend({
             state.isSidebarActive.value = !state.isSidebarActive.value
         },
         deleteNote: function() {
-            if (!this.note) return
-            this.deletingNote = true
-            this.note.remove()
-            // Update edit.notes
-            const index = edit.notes.value.indexOf(this.note)
-            if (index > -1) edit.notes.value.splice(index, 1)
-            // Update edit.note (and this.note)
-            if (edit.note.value === this.note) edit.note.value = null
-            // Don't change menu options until the menu‘s closing animation is finish
-            setTimeout(() => (this.deletingNote = false), 200)
+            const notes = edit.notes
+            if (this.note && isNotesFetched(notes)) {
+                this.deletingNote = true
+                this.note.remove()
+                // Update edit.notes
+                const index = notes.value.indexOf(this.note)
+                if (index > -1) notes.value.splice(index, 1)
+                // Update edit.note (and this.note)
+                if (edit.note.value === this.note) edit.note.value = null
+                // Don't change menu options until the menu‘s closing animation is finish
+                setTimeout(() => (this.deletingNote = false), 200)
+            }
         },
     },
 })

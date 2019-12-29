@@ -1,8 +1,12 @@
 import { ref, Ref, computed, watch } from "@vue/composition-api"
-import { User } from "@/controller"
+import { User, getCurrentUser, onAuthStateChanged } from "@/controller"
 
-const user: Ref<User | null> = ref(null)
+const user: Ref<User | null> = ref(getCurrentUser())
 const email = computed(() => (user.value ? user.value.email : null))
+
+onAuthStateChanged(firebaseUser => {
+    user.value = firebaseUser
+})
 
 if (process.env.NODE_ENV !== "production") {
     watch(() => {
