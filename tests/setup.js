@@ -1,9 +1,10 @@
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
+/* eslint-disable no-unused-vars */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 async function debug() {
     console.log(
         await page.evaluate(() => {
-            let result = {}
-            for (let [file, coverage] of Object.entries(window.__coverage__ || {})) {
+            const result = {}
+            for (const [file, coverage] of Object.entries(window.__coverage__ || {})) {
                 result[file] = {
                     path: coverage.path,
                     inputSourceMap: {
@@ -24,7 +25,7 @@ async function adjustVueCoverage() {
 
     // await debug()
     await page.evaluate(() => {
-        for (let [file, coverage] of Object.entries(window.__coverage__ || {})) {
+        for (const [file, coverage] of Object.entries(window.__coverage__ || {})) {
             coverage.path = file
             coverage.inputSourceMap.file = file
             coverage.inputSourceMap.sources = [file]

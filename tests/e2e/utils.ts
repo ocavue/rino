@@ -17,10 +17,10 @@ export async function focus(testid: string) {
 }
 
 export async function pressKey(...keys: string[]) {
-    for (let key of keys) {
+    for (const key of keys) {
         await page.keyboard.down(key)
     }
-    for (let key of keys.reverse()) {
+    for (const key of keys.reverse()) {
         await page.keyboard.up(key)
     }
 }
@@ -50,17 +50,17 @@ export async function getAll(testid: string) {
 
 export async function getInnerText(testid: string) {
     await wait(testid)
-    let elementHandle = await getOne(testid)
+    const elementHandle = await getOne(testid)
     expect(elementHandle).toBeTruthy()
-    let innerText: string = await page.evaluate(e => e.innerText, elementHandle)
+    const innerText: string = await page.evaluate(e => e.innerText, elementHandle)
     return innerText
 }
 
 export async function getTextAreaValue(testid: string) {
     await wait(testid)
-    let textareaHandle = await getOne(testid)
+    const textareaHandle = await getOne(testid)
     expect(textareaHandle).toBeTruthy()
-    let value: string = await page.evaluate(t => t.value, textareaHandle)
+    const value: string = await page.evaluate(t => t.value, textareaHandle)
     return value
 }
 
@@ -71,16 +71,20 @@ export async function getSourceCodeModeText() {
     return await getTextAreaValue("source-code-mode-textarea")
 }
 
-export async function waitAnimation<T>(promise: Promise<T>, ms: number = 500): Promise<T> {
+export async function waitAnimation<T>(promise: Promise<T>, ms = 500): Promise<T> {
     const T = await promise
     await sleep(ms)
     return T
 }
 
-export async function retry(fn: () => Promise<boolean>, timeout = 5000): Promise<boolean> {
+export async function retry(
+    fn: () => Promise<boolean> | boolean,
+    timeout = 5000,
+): Promise<boolean> {
     const maxTime = Date.now() + timeout
     while (Date.now() <= maxTime) {
-        const result = await fn()
+        const promiseOrBoolean = fn()
+        const result: boolean = await Promise.resolve(promiseOrBoolean)
         if (result) return true
         else await sleep(100)
     }

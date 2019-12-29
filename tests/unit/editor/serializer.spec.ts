@@ -12,7 +12,7 @@ describe("markdown parser", () => {
     }
 
     describe("base test cases", function() {
-        for (let [caseName, [markdown, node]] of Object.entries(testcases)) {
+        for (const [caseName, [markdown, node]] of Object.entries(testcases)) {
             test(caseName, function() {
                 assertEqual(markdown, node)
             })

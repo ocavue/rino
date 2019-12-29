@@ -100,10 +100,10 @@ describe("Settings", () => {
             await wait(signInBtn)
         })
         test("Click sign in button", async () => {
-            const url = new URL(await page.url())
+            const url = new URL(page.url())
             const signInUrl = url.origin + "/login"
             await click(signInBtn)
-            const checkCallback = async () => signInUrl === (await page.url())
+            const checkCallback = () => signInUrl === page.url()
             expect(await retry(checkCallback)).toBe(true)
         })
     })
@@ -173,7 +173,7 @@ describe("Click sidebar note item in different screen sizes", function() {
         await expectSidebarOpened()
     }
 
-    for (let width of [
+    for (const width of [
         sidebarWidth - 10,
         sidebarWidth,
         sidebarWidth + 10,
@@ -188,7 +188,7 @@ describe("Click sidebar note item in different screen sizes", function() {
         })
     }
 
-    for (let width of [
+    for (const width of [
         mobileBreakPoint + 0,
         mobileBreakPoint + 1,
         mobileBreakPoint + 2,

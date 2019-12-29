@@ -3,24 +3,31 @@ parser: vue-eslint-parser
 parserOptions:
     parser: "@typescript-eslint/parser"
     ecmaVersion: 2018 # Allows for the parsing of modern ECMAScript features
-plugins:
-    - "@typescript-eslint"
-    - "prettier"
+    project: "./tsconfig.json"
 extends:
-    - "plugin:@typescript-eslint/recommended"
     - "plugin:vue/recommended"
-    - "plugin:prettier/recommended"
-    # Uses "eslint-config-prettier" to disable ESLint rules from "@typescript-eslint/eslint-plugin" and "eslint-plugin-vue" that would conflict with prettier
-    - "prettier/@typescript-eslint"
-    - "@vue/prettier"
-    - "@vue/typescript"
+    - "plugin:@typescript-eslint/recommended-requiring-type-checking"
+    - "@vue/typescript/recommended"
+    - "@vue/prettier/recommended"
+    - "@vue/prettier/@typescript-eslint"
 env:
     browser: true
     node: true
-    jest: true
 rules:
     "no-console": "off"
+    "no-unused-vars": [error, { args: "none" }]
     "no-useless-escape": "off"
     "@typescript-eslint/explicit-function-return-type": "off"
     "@typescript-eslint/no-explicit-any": "off"
     "@typescript-eslint/no-unused-vars": [error, { args: "none" }]
+    "@typescript-eslint/no-empty-function": "off"
+
+overrides:
+    - files: "tests/**/*.[t|j]s"
+      env:
+          jest: true
+      globals:
+          page: "readonly"
+          browser: "readonly"
+          context: "readonly"
+          jestPuppeteer: "readonly"

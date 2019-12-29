@@ -42,7 +42,7 @@ function isStringsEqual(a: string[], b: string[]): boolean {
 // Merge adjacent tokens with same class and remove token with 0 length
 export function mergeTokens(tokens: Token[]): Token[] {
     for (let i = 0; i <= tokens.length - 2; i++) {
-        let [self, next] = tokens.slice(i, i + 2)
+        const [self, next] = tokens.slice(i, i + 2)
 
         // WidgetTokens are unmergeable
         if (self.isWidget || next.isWidget) continue
@@ -57,8 +57,8 @@ export function mergeTokens(tokens: Token[]): Token[] {
 
 export function pushClass(token: Token, className: string): Token {
     if (
-        token.classes.indexOf(className) === -1 &&
-        token.classes.indexOf("decoration_mark") === -1 // Token with "decoration_mark" will not accept other classes.
+        !token.classes.includes(className) &&
+        !token.classes.includes("decoration_mark") // Token with "decoration_mark" will not accept other classes.
     ) {
         token.classes.push(className)
     }

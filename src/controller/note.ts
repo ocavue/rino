@@ -27,11 +27,11 @@ export class Note {
 
     private snapshotPromise: Promise<DocumentSnapshot>
 
-    private firebaseId: string = ""
+    private firebaseId = ""
     public readonly key: string // An unique constant.
     private data: NoteData
-    private deleting: boolean = false
-    public thumbnail: string = ""
+    private deleting = false
+    public thumbnail = ""
 
     public constructor(uid: string, snapshot?: DocumentSnapshot) {
         this.key = generateRandomId()
@@ -81,7 +81,7 @@ export class Note {
 
     private setThumbnail(): void {
         const lines = []
-        for (let line of this.content.split("\n")) {
+        for (const line of this.content.split("\n")) {
             if (line.trim()) lines.push(line.slice(0, 50))
             if (lines.length >= 3) break
         }
@@ -100,7 +100,7 @@ export class Note {
     }
 
     public static async list(uid: string): Promise<Note[]> {
-        let query = await this.collection.where("uid", "==", uid).get()
+        const query = await this.collection.where("uid", "==", uid).get()
         const notes = query.docs.map(snapshot => new Note(uid, snapshot))
         return sortBy(notes, note => [note.createTime, note.id]).reverse()
     }
@@ -108,7 +108,7 @@ export class Note {
     public static listen(listener: Listener, type?: "added" | "modified" | "removed"): Unsubscribe {
         if (type) {
             return this.collection.onSnapshot(querySnapshot => {
-                let notes = querySnapshot
+                const notes = querySnapshot
                     .docChanges()
                     .filter(change => change.type === type)
                     .map(change => ({ id: change.doc.id }))
@@ -116,14 +116,14 @@ export class Note {
             })
         } else {
             return this.collection.onSnapshot(querySnapshot => {
-                let notes = querySnapshot.docs.map(doc => ({ id: doc.id }))
+                const notes = querySnapshot.docs.map(doc => ({ id: doc.id }))
                 listener(notes)
             })
         }
     }
 
     public static async get(id: string, uid: string): Promise<Note> {
-        let snapshot = await this.collection.doc(id).get()
+        const snapshot = await this.collection.doc(id).get()
         if (!snapshot.exists) throw new Error(`Can't find note with id = ${id}`)
         return new Note(uid, snapshot)
     }

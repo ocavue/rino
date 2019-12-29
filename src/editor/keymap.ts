@@ -35,7 +35,7 @@ const resetBlockTypeBindings: Record<string, Command> = {
         }
 
         // Check if the selection at the start of a textblock
-        let { $cursor } = state.selection
+        const { $cursor } = state.selection
         if (!$cursor) {
             return false
         }
@@ -51,7 +51,7 @@ const resetBlockTypeBindings: Record<string, Command> = {
             return false
         }
 
-        let tr: Transaction = state.tr.setBlockType(
+        const tr: Transaction = state.tr.setBlockType(
             $cursor.pos,
             $cursor.pos,
             schema.nodes.paragraph,
@@ -84,7 +84,7 @@ function buildBlockEnterKeymapBindings(
                 return false
             }
             const cursor = state.selection.$cursor
-            const match = (nodeBefore.text || "").match(regex)
+            const match = regex.exec(nodeBefore.text || "")
             if (match && cursor) {
                 const [start, end] = [cursor.pos - match[0].length, cursor.pos]
                 // copy from `textblockTypeInputRule`
@@ -122,9 +122,9 @@ function buildBlockEnterKeymapBindings(
 }
 
 function buildKeymapBindings(): { [key: string]: Command } {
-    const mac = typeof navigator != "undefined" ? /Mac/.test(navigator.platform) : false
+    const mac = typeof navigator != "undefined" ? navigator.platform.includes("Mac") : false
 
-    let keys: Record<string, Command> = {}
+    const keys: Record<string, Command> = {}
     let type
     function bind(key: string, cmd: Command): void {
         keys[key] = cmd
@@ -148,7 +148,7 @@ function buildKeymapBindings(): { [key: string]: Command } {
     if ((type = schema.nodes.rinoOrderedList)) bind("Shift-Ctrl-9", wrapInList(type))
     if ((type = schema.nodes.rinoBlockquote)) bind("Ctrl->", wrapIn(type))
     if ((type = schema.nodes.rinoHardBreak)) {
-        let br = type,
+        const br = type,
             cmd = chainCommands(exitCode, (state, dispatch) => {
                 if (dispatch) dispatch(state.tr.replaceSelectionWith(br.create()).scrollIntoView())
                 return true
@@ -167,7 +167,7 @@ function buildKeymapBindings(): { [key: string]: Command } {
     if ((type = schema.nodes.rinoHeading))
         for (let i = 1; i <= 6; i++) bind("Shift-Ctrl-" + i, setBlockType(type, { level: i }))
     if ((type = schema.nodes.rinoHorizontalRule)) {
-        let hr = type
+        const hr = type
         bind("Mod-_", (state, dispatch) => {
             if (dispatch) dispatch(state.tr.replaceSelectionWith(hr.create()).scrollIntoView())
             return true
@@ -188,7 +188,7 @@ export function buildKeymaps(): Plugin[] {
         keymap(
             buildBlockEnterKeymapBindings(/^\|((?:[^\|]+\|){2,})\s*$/, schema.nodes.rinoTable, {
                 transact: (match: string[], tr: Transaction, start: number, end: number) => {
-                    let texts = match[1]
+                    const texts = match[1]
                         .split("|")
                         .slice(0, -1) // Remove the empty string at the end
                         .map(text => {
@@ -196,9 +196,9 @@ export function buildKeymaps(): Plugin[] {
                             if (!text) text = " " // Prosemirror text doesn't allow empty text
                             return schema.text(text)
                         })
-                    let cells = texts.map(text => schema.nodes.rinoTableCell.create(null, text))
-                    let row = schema.nodes.rinoTableRow.create(null, cells)
-                    let table = schema.nodes.rinoTable.create(null, row)
+                    const cells = texts.map(text => schema.nodes.rinoTableCell.create(null, text))
+                    const row = schema.nodes.rinoTableRow.create(null, cells)
+                    const table = schema.nodes.rinoTable.create(null, row)
                     tr = tr.delete(start, end).insert(start, table)
                     return tr
                 },

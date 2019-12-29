@@ -26,10 +26,10 @@ export function findParentNode(
  */
 export function dedent(text: string) {
     let minWhitespace = -1
-    let lines = text.split("\n")
-    for (let line of lines) {
+    const lines = text.split("\n")
+    for (const line of lines) {
         if (line.length > 0) {
-            let match = line.match(/^(\s*).*$/)
+            const match = /^(\s*).*$/.exec(line)
             if (match) {
                 minWhitespace =
                     minWhitespace === -1

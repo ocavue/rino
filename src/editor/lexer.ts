@@ -63,7 +63,7 @@ class InlineLexer {
                         classes: [],
                         key: match[2],
                         dom: (() => {
-                            let img = new Image()
+                            const img = new Image()
                             img.src = match[2]
                             return img
                         })(),
@@ -98,12 +98,12 @@ class InlineLexer {
 
     private manipulate(text: string): [Token[], number] {
         for (const [name, [pattern, render]] of Object.entries(this.rules)) {
-            let match = text.match(pattern)
+            const match = pattern.exec(text)
             if (!match) {
                 continue
             }
-            let tokens: Token[] = mergeTokens(render(match))
-            let length = tokens.map(token => token.length).reduce((a, b) => a + b)
+            const tokens: Token[] = mergeTokens(render(match))
+            const length = tokens.map(token => token.length).reduce((a, b) => a + b)
             if (length !== match[0].length) {
                 console.error(tokens)
                 throw new Error(
@@ -116,9 +116,9 @@ class InlineLexer {
     }
 
     public scan(text: string): Token[] {
-        let output: Token[] = []
+        const output: Token[] = []
         while (text) {
-            let [tokens, length] = this.manipulate(text)
+            const [tokens, length] = this.manipulate(text)
             text = text.slice(length)
             output.push(...tokens)
         }

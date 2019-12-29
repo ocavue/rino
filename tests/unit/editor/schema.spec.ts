@@ -26,7 +26,7 @@ const nodes = builders(schema, def)
 
 describe("schema", function() {
     describe("types", function() {
-        for (let key of Object.keys(def)) {
+        for (const key of Object.keys(def)) {
             it(`key: ${key}`, function() {
                 expect(typeof nodes[key]).toBe("function")
             })

@@ -49,8 +49,8 @@ export default Vue.extend({
     },
     methods: {
         initEditor: function() {
-            let View = this.sourceCodeMode ? MarkdownView : ProseMirrorView
-            let content = this.view ? this.view.content : this.note.content
+            const View = this.sourceCodeMode ? MarkdownView : ProseMirrorView
+            const content = this.view ? this.view.content : this.note.content
             if (this.view) this.view.destroy()
             try {
                 this.view = new View(this.$refs.editor as HTMLElement, content)

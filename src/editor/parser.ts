@@ -87,9 +87,9 @@ class MarkdownParseState {
     // using the current marks as styling.
     public addText(text: string): void {
         if (!text) return
-        let nodes = this.top().content
-        let last = nodes[nodes.length - 1]
-        let node = this.schema.text(text, this.marks)
+        const nodes = this.top().content
+        const last = nodes[nodes.length - 1]
+        const node = this.schema.text(text, this.marks)
         let merged: Node | undefined
         if (last && (merged = this.mergeTextNode(last, node))) nodes[nodes.length - 1] = merged
         else nodes.push(node)
@@ -97,7 +97,7 @@ class MarkdownParseState {
 
     private mergeTextNode(a: Node, b: Node): Node | undefined {
         if (a.isText && b.isText && Mark.sameSet(a.marks, b.marks)) {
-            let text: string = a.text || "" + b.text || ""
+            const text: string = a.text || "" + b.text || ""
             return (a.type.schema as Schema).text(text, a.marks)
         }
     }
@@ -113,8 +113,8 @@ class MarkdownParseState {
     }
 
     public parseTokens(toks: Token[]): void {
-        for (let tok of toks) {
-            let handler = this.tokenHandlers[tok.type]
+        for (const tok of toks) {
+            const handler = this.tokenHandlers[tok.type]
             if (!handler)
                 throw new Error(
                     `MarkdownIt token type '${tok.type}' not supported by Rino Markdown parser`,
@@ -125,7 +125,7 @@ class MarkdownParseState {
 
     // Add a node at the current position.
     public addNode(type: NodeType, attrs?: Record<string, any>, content?: Node[]): Node | null {
-        let node = type.createAndFill(attrs, content, this.marks)
+        const node = type.createAndFill(attrs, content, this.marks)
         if (!node) return null
         this.push(node)
         return node
@@ -139,7 +139,7 @@ class MarkdownParseState {
     // Close and return the node that is currently on top of the stack.
     public closeNode(): Node {
         if (this.marks.length) this.marks = Mark.none
-        let info = this.stack.pop() as StackItem
+        const info = this.stack.pop() as StackItem
         return this.addNode(info.type, info.attrs, info.content) as Node
     }
 }
@@ -150,18 +150,18 @@ function getAttrs(spec: TokenSpec, token: Token): Record<string, any> | undefine
 }
 
 function withoutTrailingNewline(str: string): string {
-    return str[str.length - 1] == "\n" ? str.slice(0, str.length - 1) : str
+    return str.endsWith("\n") ? str.slice(0, str.length - 1) : str
 }
 
 function buildTokenHandlers(schema: Schema, tokens: TokenSpecs): TokenHandlers {
-    let handlers: TokenHandlers = {
+    const handlers: TokenHandlers = {
         text: (state, tok) => state.addText(tok.content),
         inline: (state, tok) => state.addText(tok.content), // decorationPlugin will handle the parsing of inline token
         softbreak: state => state.addText("\n"),
     }
-    for (let [type, spec] of Object.entries(tokens)) {
+    for (const [type, spec] of Object.entries(tokens)) {
         if (spec.block) {
-            let nodeType: NodeType = schema.nodes[spec.block]
+            const nodeType: NodeType = schema.nodes[spec.block]
             if (nodeType === undefined) {
                 throw new RangeError(`Can't find node type '${spec.node}'`)
             }
@@ -178,7 +178,7 @@ function buildTokenHandlers(schema: Schema, tokens: TokenSpecs): TokenHandlers {
                 }
             }
         } else if (spec.node) {
-            let nodeType: NodeType = schema.nodes[spec.node]
+            const nodeType: NodeType = schema.nodes[spec.node]
             if (nodeType === undefined) {
                 throw new RangeError(`Can't find node type '${spec.node}'`)
             }
@@ -214,7 +214,7 @@ export class MarkdownParser {
     // and create a ProseMirror document as prescribed by this parser's
     // rules.
     public parse(text: string): Node {
-        let state = new MarkdownParseState(this.schema, this.tokenHandlers)
+        const state = new MarkdownParseState(this.schema, this.tokenHandlers)
         let doc: Node
         let mdTokens: Token[] = this.tokenizer.parse(text, {})
 
