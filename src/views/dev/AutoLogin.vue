@@ -10,13 +10,10 @@ import { testUser } from "@/controller/config"
 
 export default createComponent({
     setup() {
-        onMounted(() => {
+        onMounted(async () => {
             console.log(`Sign in with ${testUser.username} ${testUser.password}`)
-            signInWithEmailAndPassword(testUser.username, testUser.password)
-                .then(() => router.push("/"))
-                .catch(error => {
-                    throw error
-                })
+            await signInWithEmailAndPassword(testUser.username, testUser.password)
+            router.push("/")
         })
     },
 })
