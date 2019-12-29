@@ -8,6 +8,7 @@ const FinishSignUp = () => import("./views/FinishSignUp.vue")
 
 const DevAutoLogin = () => import("./views/dev/AutoLogin.vue")
 const DevEnsureSignOut = () => import("./views/dev/EnsureSignOut.vue")
+const DevCleanNotes = () => import("./views/dev/CleanNotes.vue")
 
 Vue.use(Router)
 
@@ -47,6 +48,11 @@ export default new Router({
             name: "dev ensure sign out",
             path: "/dev/signout",
             component: DevEnsureSignOut,
+        },
+        {
+            name: "dev clean notes",
+            path: "/dev/clean-notes",
+            component: DevCleanNotes,
         },
         {
             name: "not found",
