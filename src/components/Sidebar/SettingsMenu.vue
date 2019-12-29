@@ -27,6 +27,12 @@
                     </v-list-item-content>
                 </v-list-item>
                 <v-divider></v-divider>
+                <v-list-item data-testid="sidebar-settings-menu-item-dark-mode">
+                    <span>Dark mode</span>
+                    <v-spacer />
+                    <v-switch v-model="dark" :dense="true" />
+                </v-list-item>
+                <v-divider></v-divider>
                 <v-list-item
                     v-if="user"
                     data-testid="sidebar-settings-menu-item-sign-out"
@@ -68,7 +74,16 @@ export default createComponent({
         const menu = ref(false)
         const showAboutDialog = () => (state.isAboutDialogActive.value = true)
         const signIn = () => router.push({ name: "login" })
-        return { icons, menu, showAboutDialog, signIn, signOut, user: auth.user, email: auth.email }
+        return {
+            dark: state.dark,
+            icons,
+            menu,
+            showAboutDialog,
+            signIn,
+            signOut,
+            user: auth.user,
+            email: auth.email,
+        }
     },
 })
 </script>

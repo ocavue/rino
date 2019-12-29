@@ -5,6 +5,7 @@
         left
         class="sidebar"
         data-testid="sidebar"
+        :dark="dark"
         :width="width"
         :mobile-break-point="mobileBreakPoint"
     >
@@ -20,6 +21,7 @@ import { createComponent, computed } from "@vue/composition-api"
 import { state } from "@/store"
 import { $vuetify } from "@/plugins/vuetify"
 import { mobileBreakPoint, sidebarWidth } from "@/constants"
+import { dark } from "@/store/state"
 
 import Notes from "./Notes.vue"
 import Activity from "./Activity.vue"
@@ -31,6 +33,7 @@ export default createComponent({
         const isMobile = computed(() => $vuetify.breakpoint.width < mobileBreakPoint)
 
         return {
+            dark,
             isMobile,
             mobileBreakPoint,
             width: sidebarWidth,
