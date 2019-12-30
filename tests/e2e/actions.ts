@@ -1,5 +1,5 @@
 import { range } from "lodash"
-import { goto, click, sleep, pressKey, focus, retry } from "./utils"
+import { wait, goto, click, sleep, pressKey, focus, retry } from "./utils"
 
 async function isSignedIn(): Promise<boolean> {
     const state = await page.evaluate(() => localStorage.getItem("__rino_dev_auth_state"))
@@ -8,7 +8,7 @@ async function isSignedIn(): Promise<boolean> {
 
 export async function expectSignedIn() {
     const isExpected = async () => (await isSignedIn()) === true
-    const isExpectedAfterRetry = await retry(isExpected)
+    const isExpectedAfterRetry = await retry(isExpected, 15000)
     expect(isExpectedAfterRetry).toBe(true)
 }
 
@@ -49,4 +49,5 @@ export async function clickSidebarNoteListItem() {
 
 export async function cleanNotes() {
     await goto("/dev/clean-notes")
+    await wait("main") // Return home page
 }
