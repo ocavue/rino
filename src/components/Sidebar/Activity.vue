@@ -10,7 +10,8 @@
         <SidebarColumnBody>
             <v-list-item class="mt-8">
                 <v-list-item-content>
-                    -
+                    <!-- TODO -->
+                    <br />
                 </v-list-item-content>
             </v-list-item>
         </SidebarColumnBody>

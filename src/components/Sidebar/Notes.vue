@@ -18,7 +18,23 @@
         <v-divider></v-divider>
 
         <SidebarColumnBody class="sidebar-notes-list">
-            <v-list-item v-if="loading" class="mt-8">
+            <v-list-item v-if="signedIn === false" class="mt-4">
+                <v-list-item-content>
+                    <v-btn
+                        :min-width="64"
+                        data-testid="login-cancel-btn"
+                        color="primary"
+                        rounded
+                        large
+                        outlined
+                        @click="signIn"
+                    >
+                        Sign in / Sign up
+                    </v-btn>
+                </v-list-item-content>
+            </v-list-item>
+
+            <v-list-item v-else-if="loading" class="mt-8">
                 <v-list-item-content>
                     <v-progress-circular
                         color="#757575"
@@ -48,7 +64,7 @@
 </template>
 
 <script lang="ts">
-import { createComponent, computed } from "@vue/composition-api"
+import { createComponent, computed, Ref, ref } from "@vue/composition-api"
 
 import { mdiPlus, mdiMagnify } from "@mdi/js"
 import { Note } from "@/controller"
@@ -56,6 +72,7 @@ import SidebarColumnHeader from "./SidebarColumnHeader.vue"
 import SidebarColumnBody from "./SidebarColumnBody.vue"
 import SidebarButton from "./SidebarButton.vue"
 import * as store from "@/store"
+import router from "@/router"
 
 const {
     edit: { notes, note, isNotesFetched },
@@ -71,7 +88,9 @@ export default createComponent({
     setup(props) {
         const icons = { mdiPlus, mdiMagnify }
         const loading = computed(() => !isNotesFetched(notes))
+        const signedIn: Ref<boolean | null> = ref(null)
 
+        const signIn = () => router.push({ name: "login" })
         function closeSidebarIfMobile() {
             if (props.isMobile) {
                 isSidebarActive.value = false
@@ -90,10 +109,16 @@ export default createComponent({
             note.value = noteObj
             closeSidebarIfMobile()
         }
+        setTimeout(() => {
+            if (user.value) signedIn.value = true
+            else signedIn.value = false
+        }, 2000)
 
         return {
             icons,
             loading,
+            signedIn,
+            signIn,
             email,
             notes,
             currentNote: note,
