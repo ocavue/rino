@@ -237,6 +237,7 @@ export class MarkdownParser {
         const state = new MarkdownParseState(this.schema, this.tokenHandlers)
         let doc: Node
         let mdTokens: Token[] = this.tokenizer.parse(text, {})
+
         mdTokens = mdTokens.filter(
             token =>
                 token.type !== "thead_open" &&
