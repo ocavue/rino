@@ -29,8 +29,8 @@ function isSelectingTableCell(state: EditorState): Node | null {
         state.selection.$from.parent.type.name === "rinoTableCell" &&
         state.selection.$to.parent.type.name === "rinoTableCell"
     ) {
-        let fromCell: Node = state.selection.$from.parent
-        let toCell: Node = state.selection.$to.parent
+        const fromCell: Node = state.selection.$from.parent
+        const toCell: Node = state.selection.$to.parent
         if (fromCell === toCell) {
             return fromCell
         }
@@ -42,14 +42,19 @@ class TableMenuPluginSpec implements PluginSpec {
     private editorView?: EditorView
 
     private buildMenuOption(id: string, svg: string, command: Command): HTMLButtonElement {
-        let button = document.createElement("button")
+        const button = document.createElement("button")
         button.onclick = () => {
             console.debug(`Table menu button '${id}' been clicked`)
-            if (this.editorView) command(this.editorView.state, this.editorView.dispatch)
+            if (this.editorView) {
+                // Use `.bind()` to avoid ESLint `(@typescript-eslint/unbound-method)` error
+                // https://github.com/typescript-eslint/typescript-eslint/blob/v2.12.0/packages/eslint-plugin/docs/rules/unbound-method.md
+                const dispatch = this.editorView.dispatch.bind(this.editorView)
+                command(this.editorView.state, dispatch)
+            }
         }
         button.id = id
         button.setAttribute("data-testid", id)
-        let icon = document.createElement("img")
+        const icon = document.createElement("img")
         icon.src = svg
         button.appendChild(icon)
         return button
@@ -59,16 +64,16 @@ class TableMenuPluginSpec implements PluginSpec {
         decorations: (state: EditorState) => {
             if (!isSelectingTableCell(state)) return null
 
-            let parent = findParentNode(
+            const parent = findParentNode(
                 state.selection.$from,
                 node => node.type.name === "rinoTable",
             )
             if (!parent) return null
 
-            let view = this.editorView
+            const view = this.editorView
             if (!view) return null
 
-            let { pos: tablePos } = parent
+            const { pos: tablePos } = parent
 
             let menu = document.getElementById(MENU_ID)
 
@@ -90,7 +95,7 @@ class TableMenuPluginSpec implements PluginSpec {
                 }
             }
             menu.style.bottom = `0px`
-            let deco = Decoration.widget(tablePos, menu)
+            const deco = Decoration.widget(tablePos, menu)
             return DecorationSet.create(state.doc, [deco])
         },
     }
@@ -108,17 +113,17 @@ export const tableMenuPlugin = new Plugin(new TableMenuPluginSpec())
 export const tableHeigthlightPlugin = new Plugin({
     props: {
         decorations: (state: EditorState) => {
-            let cell = isSelectingTableCell(state)
+            const cell = isSelectingTableCell(state)
             if (!cell) {
                 return null
             }
 
-            let $cell = selectionCell(state)
+            const $cell = selectionCell(state)
             if (!$cell) {
                 return null
             }
-            let nodeStart: number = $cell.pos
-            let nodeEnd: number = nodeStart + cell.nodeSize
+            const nodeStart: number = $cell.pos
+            const nodeEnd: number = nodeStart + cell.nodeSize
             return DecorationSet.create(state.doc, [
                 Decoration.node(nodeStart, nodeEnd, {
                     // class: "selectedCell", // `selectedCell` will make text color lighter, which will reduce user's visual concentration.

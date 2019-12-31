@@ -82,7 +82,7 @@ const nodes: { [name: string]: NodeSpec } = {
             },
         ],
         toDOM(node) {
-            let empty: { [attr: string]: string } = {}
+            const empty: { [attr: string]: string } = {}
             return [
                 "pre",
                 node.attrs.language ? { "data-language": node.attrs.language } : empty,

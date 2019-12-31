@@ -2,7 +2,7 @@ import { InlineLexer } from "@/editor/lexer"
 import { Token } from "@/editor/token"
 
 describe("InlineLexer", function() {
-    let lexer = new InlineLexer()
+    const lexer = new InlineLexer()
 
     function assertTokenEqual(a: Token[], b: Token[]) {
         a.forEach(token => token.classes.sort())
@@ -179,11 +179,11 @@ describe("InlineLexer", function() {
         ;(global as any).Image = ImageMock
 
         it("Solid image", function() {
-            let image = new ImageMock()
+            const image = new ImageMock()
             image.src = "https://via.placeholder.com/42"
 
-            let actualTokens: Token[] = lexer.scan("![Image](https://via.placeholder.com/42)")
-            let expectedTokens: Token[] = [
+            const actualTokens: Token[] = lexer.scan("![Image](https://via.placeholder.com/42)")
+            const expectedTokens: Token[] = [
                 { length: 2, classes: ["decoration_mark"] },
                 { length: 5, classes: ["decoration_image_text"] },
                 { length: 2, classes: ["decoration_mark"] },
@@ -201,13 +201,13 @@ describe("InlineLexer", function() {
         })
 
         it("Image with text around", function() {
-            let image = new ImageMock()
+            const image = new ImageMock()
             image.src = "https://via.placeholder.com/42"
 
-            let actualTokens: Token[] = lexer.scan(
+            const actualTokens: Token[] = lexer.scan(
                 "text![Image](https://via.placeholder.com/42)text",
             )
-            let expectedTokens: Token[] = [
+            const expectedTokens: Token[] = [
                 { length: 4, classes: [] },
                 { length: 2, classes: ["decoration_mark"] },
                 { length: 5, classes: ["decoration_image_text"] },

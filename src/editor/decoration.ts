@@ -7,7 +7,7 @@ function parseText(node: Node, startIndex: number): Decoration[] {
     if (!node.text) {
         return []
     }
-    let tokens = new InlineLexer().scan(node.text)
+    const tokens = new InlineLexer().scan(node.text)
     return tokens.map(token => {
         let deco: Decoration
         if (token.isWidget) {
@@ -30,7 +30,7 @@ function parseText(node: Node, startIndex: number): Decoration[] {
 }
 
 function parseTextBlock(node: Node, startIndex: number): Decoration[] {
-    let decos: Decoration[] = []
+    const decos: Decoration[] = []
     if (node.isTextblock) {
         node.forEach((child: Node, offset: number, index: number) => {
             decos.push(...parseText(child, startIndex + offset))
@@ -45,7 +45,7 @@ function parseTextBlock(node: Node, startIndex: number): Decoration[] {
 
 function buildDecorationSet(doc: Node): DecorationSet {
     console.log("building decorations. doc:", doc)
-    let decos: Decoration[] = parseTextBlock(doc, 0)
+    const decos: Decoration[] = parseTextBlock(doc, 0)
     return DecorationSet.create(doc, decos)
 }
 

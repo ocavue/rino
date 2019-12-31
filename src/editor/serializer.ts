@@ -45,7 +45,7 @@ export class MarkdownSerializerState {
             if (!this.atBlank()) this.out += "\n"
             if (size == null) size = 2
             if (size > 1) {
-                let delimMin = _.trimEnd(this.delimiter)
+                const delimMin = _.trimEnd(this.delimiter)
                 _.range(size).forEach(() => {
                     this.out += delimMin + "\n"
                 })
@@ -59,7 +59,7 @@ export class MarkdownSerializerState {
     // the end of the block, and `f` is a function that renders the
     // content of the block.
     public wrapBlock(newDelimiter: string, firstDelim: string | null, node: Node, f: () => void) {
-        let oldDelimiter = this.delimiter
+        const oldDelimiter = this.delimiter
         this.write(firstDelim || newDelimiter)
         this.delimiter = this.delimiter + newDelimiter
         f()
@@ -93,10 +93,10 @@ export class MarkdownSerializerState {
 
     // Add the given text to the document. When escape is true,
     // it will be escaped.
-    public text(text: string, escape: boolean = true) {
-        let lines = text.split("\n")
+    public text(text: string, escape = true) {
+        const lines = text.split("\n")
         for (let i = 0; i < lines.length; i++) {
-            var startOfLine = this.atBlank() || this.closed
+            const startOfLine = this.atBlank() || this.closed
             this.write()
             this.out += escape ? this.esc(lines[i], Boolean(startOfLine)) : lines[i]
             if (i != lines.length - 1) this.out += "\n"
@@ -129,9 +129,9 @@ export class MarkdownSerializerState {
         if (this.closed instanceof Node && this.closed.type == node.type) this.flushClose(3)
         else if (this.inTightList) this.flushClose(1)
 
-        let isTight =
+        const isTight =
             typeof node.attrs.tight != "undefined" ? node.attrs.tight : this.options.tightLists
-        let prevTight = this.inTightList
+        const prevTight = this.inTightList
         this.inTightList = isTight
         node.forEach((child, _, i) => {
             if (i && isTight) this.flushClose(1)
@@ -150,7 +150,7 @@ export class MarkdownSerializerState {
     }
 
     public quote(str: string): string {
-        var wrap = str.indexOf('"') == -1 ? '""' : str.indexOf("'") == -1 ? "''" : "()"
+        const wrap = !str.includes(`"`) ? `""` : !str.includes(`'`) ? `''` : `()`
         return wrap[0] + str + wrap[1]
     }
 
@@ -163,8 +163,8 @@ export class MarkdownSerializerState {
 
     // Get the markdown string for a given opening or closing mark.
     public markString(mark: Mark, open: boolean, parent: Node, index: number): string {
-        let info = this.marks[mark.type.name]
-        let value = open ? info.open : info.close
+        const info = this.marks[mark.type.name]
+        const value = open ? info.open : info.close
         return typeof value == "string" ? value : value(this, mark, parent, index)
     }
 
@@ -174,8 +174,8 @@ export class MarkdownSerializerState {
     // if there is no match.
     public getEnclosingWhitespace(text: string) {
         return {
-            leading: (text.match(/^(\s+)/) || [])[0],
-            trailing: (text.match(/(\s+)$/) || [])[0],
+            leading: (/^(\s+)/.exec(text) || [])[0],
+            trailing: (/(\s+)$/.exec(text) || [])[0],
         }
     }
 }
@@ -190,7 +190,7 @@ export class MarkdownSerializer {
     // Serialize the content of the given node to
     // [CommonMark](http://commonmark.org/).
     public serialize(content: Node) {
-        let state = new MarkdownSerializerState(this.nodes)
+        const state = new MarkdownSerializerState(this.nodes)
         state.renderContent(content)
         return state.out
     }
@@ -220,11 +220,11 @@ export const defaultMarkdownSerializer = new MarkdownSerializer({
         state.renderList(node, "  ", () => (node.attrs.bullet || "*") + " ")
     },
     rinoOrderedList(state, node, parent, index) {
-        let start = node.attrs.order || 1
-        let maxW = String(start + node.childCount - 1).length
-        let space = state.repeat(" ", maxW + 2)
+        const start = node.attrs.order || 1
+        const maxW = String(start + node.childCount - 1).length
+        const space = state.repeat(" ", maxW + 2)
         state.renderList(node, space, i => {
-            let nStr = String(start + i)
+            const nStr = String(start + i)
             return state.repeat(" ", maxW - nStr.length) + nStr + ". "
         })
     },
@@ -254,14 +254,14 @@ export const defaultMarkdownSerializer = new MarkdownSerializer({
     rinoTable(state, node, parent, index) {
         // TODO Use function `render` to handle each cell text.
 
-        let table: string[][] = []
-        let colAligns: TABLE_ALIGEN[] = []
+        const table: string[][] = []
+        const colAligns: TABLE_ALIGEN[] = []
         node.forEach((rowNode, _, rowIndex) => {
-            let row: string[] = []
+            const row: string[] = []
             rowNode.forEach((cellNode, _, colIndex) => {
-                let fragment: Fragment = cellNode.content
-                let textNode = fragment.firstChild
-                let text = textNode ? (textNode.text || "").trim() : ""
+                const fragment: Fragment = cellNode.content
+                const textNode = fragment.firstChild
+                const text = textNode ? (textNode.text || "").trim() : ""
                 row.push(text)
                 if (rowIndex === 0) {
                     colAligns[colIndex] = TABLE_ALIGEN.DEFAULT // TODO
@@ -270,7 +270,7 @@ export const defaultMarkdownSerializer = new MarkdownSerializer({
             table.push(row)
         })
 
-        let colWidths: number[] = new Array(colAligns.length)
+        const colWidths: number[] = new Array(colAligns.length)
         table.forEach((row, rowIndex) => {
             row.forEach((cell, colIndex) => {
                 if (!colWidths[colIndex]) colWidths[colIndex] = 4
@@ -278,7 +278,7 @@ export const defaultMarkdownSerializer = new MarkdownSerializer({
             })
         })
 
-        let spliter: string[] = new Array(colAligns.length)
+        const spliter: string[] = new Array(colAligns.length)
         colWidths.forEach((width, colIndex) => {
             switch (colAligns[colIndex]) {
                 case TABLE_ALIGEN.LEFT:
@@ -301,9 +301,9 @@ export const defaultMarkdownSerializer = new MarkdownSerializer({
         table.forEach(row => {
             row.forEach((cell, col) => {
                 text += "| "
-                let width = colWidths[col]
+                const width = colWidths[col]
                 if (colAligns[col] === TABLE_ALIGEN.CENTER) {
-                    let pad = " ".repeat(Math.round((width - cell.length) / 2))
+                    const pad = " ".repeat(Math.round((width - cell.length) / 2))
                     text += (pad + cell + pad).padEnd(width)
                 } else if (colAligns[col] === TABLE_ALIGEN.RIGHT) {
                     text += cell.padStart(width)

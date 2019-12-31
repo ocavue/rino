@@ -24,7 +24,7 @@ function getDialog(callback: () => Promise<void>, timeout = 1000): Promise<Dialo
         )
     })
 }
-async function expectDialog(dialog: Dialog | null, options: { message: string; type: string }) {
+function expectDialog(dialog: Dialog | null, options: { message: string; type: string }) {
     if (!dialog) {
         expect(dialog).toBeTruthy()
     } else {
@@ -45,7 +45,7 @@ describe("ProsemirrorView constructor error", () => {
             await pressKey("Meta", "Slash") // Switch to source code mode
             await pressKey("Meta", "Slash") // Switch back to wysiwyg code mode
         })
-        await expectDialog(dialog, {
+        expectDialog(dialog, {
             message: "Failed to load markown content:\nError: Found error hook for testing",
             type: "alert",
         })

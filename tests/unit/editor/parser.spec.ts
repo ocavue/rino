@@ -5,8 +5,8 @@ import { nodes } from "./schema.spec"
 
 describe("markdown parser", () => {
     function assertEqual(markdown: string, node: TaggedProsemirrorNode) {
-        let parsed = defaultMarkdownParser.parse(markdown)
-        let isEqual = eq(parsed, node)
+        const parsed = defaultMarkdownParser.parse(markdown)
+        const isEqual = eq(parsed, node)
         // if (!isEqual) {
         //     console.dir(mdNode['content']['content'], { depth: 3 })
         //     console.dir(pmNode['content']['content'], { depth: 3 })
@@ -15,7 +15,7 @@ describe("markdown parser", () => {
     }
 
     describe("base test cases", function() {
-        for (let [caseName, [markdown, node]] of Object.entries(testcases)) {
+        for (const [caseName, [markdown, node]] of Object.entries(testcases)) {
             it(caseName, function() {
                 assertEqual(markdown, node)
             })
