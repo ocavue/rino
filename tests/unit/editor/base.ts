@@ -2,18 +2,36 @@ import { TaggedProsemirrorNode } from "prosemirror-test-builder"
 import { nodes } from "./schema.spec"
 import { dedent } from "@/editor/utils"
 
-const { doc, p, h1, h6, ol, ul, li, pre, preJS, blockquote, hr, table, tableRow, tableCell } = nodes
+const {
+    doc,
+    p,
+    h1,
+    h6,
+    ol,
+    ul,
+    li,
+    checkedCheckbox,
+    uncheckedCheckbox,
+    pre,
+    preJS,
+    blockquote,
+    hr,
+    table,
+    tableRow,
+    tableCell,
+} = nodes
 
 export const testcases: Record<string, [string, TaggedProsemirrorNode]> = {
     paragraph: ["hello", doc(p("hello"))],
     h1: ["# hello", doc(h1("hello"))],
     h6: ["###### hello", doc(h6("hello"))],
-    orderedList: [
-        "1. aaa\n\n\n2. bbb\n\n\n3. ccc",
-        doc(ol(li(p("aaa")), li(p("bbb")), li(p("ccc")))),
-    ],
+    orderedList: ["1. aaa\n2. bbb\n3. ccc", doc(ol(li(p("aaa")), li(p("bbb")), li(p("ccc"))))],
     // TODO: add tests for bullet list startswith '*' and '-'
-    bulletList: ["* aaa\n\n\n* bbb\n\n\n* ccc", doc(ul(li(p("aaa")), li(p("bbb")), li(p("ccc"))))],
+    bulletList: ["* aaa\n* bbb\n* ccc", doc(ul(li(p("aaa")), li(p("bbb")), li(p("ccc"))))],
+    checkboxListItem: [
+        "* [ ] aaa\n* [x] bbb",
+        doc(ul(li(uncheckedCheckbox(), p("aaa")), li(checkedCheckbox(), p("bbb")))),
+    ],
     codeBlock: ["```\n1+1\n```", doc(pre("1+1"))],
     codeBlockWithLanguage: ["```javascript\n1+1\n```", doc(preJS("1+1"))],
     quote: ["> text\n> text", doc(blockquote(p("text\ntext")))],

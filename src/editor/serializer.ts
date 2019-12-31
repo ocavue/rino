@@ -231,6 +231,9 @@ export const defaultMarkdownSerializer = new MarkdownSerializer({
     rinoListItem(state, node, parent, index) {
         state.renderContent(node)
     },
+    rinoCheckbox(state, node, parent, index) {
+        state.text(node.attrs.checked ? "[x] " : "[ ] ", false)
+    },
     paragraph(state, node, parent, index) {
         state.renderInline(node)
         state.closeBlock(node)

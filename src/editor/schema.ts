@@ -96,7 +96,7 @@ const nodes: { [name: string]: NodeSpec } = {
         group: "block",
         attrs: {
             order: { default: 1 },
-            tight: { default: false },
+            tight: { default: true },
         },
         parseDOM: [
             {
@@ -122,7 +122,7 @@ const nodes: { [name: string]: NodeSpec } = {
     rinoBulletList: {
         content: "rinoListItem+",
         group: "block",
-        attrs: { tight: { default: false } },
+        attrs: { tight: { default: true } },
         parseDOM: [
             {
                 tag: "ul",
@@ -135,11 +135,33 @@ const nodes: { [name: string]: NodeSpec } = {
     },
 
     rinoListItem: {
-        content: "paragraph block*", // Means 'first a paragraph, then one or more blocks'.
+        content: "rinoCheckbox? paragraph block*",
         defining: true,
         parseDOM: [{ tag: "li" }],
-        toDOM() {
+        attrs: {},
+        toDOM(node) {
             return ["li", 0]
+        },
+    },
+
+    rinoCheckbox: {
+        defining: true,
+        selectable: false,
+        attrs: {
+            checked: { default: false },
+        },
+        parseDOM: [
+            {
+                tag: "input[type=checkbox]",
+                getAttrs: buildGetAttrs(dom => ({
+                    checked: dom.hasAttribute("checked"),
+                })),
+            },
+        ],
+        toDOM(node) {
+            const attrs: Record<string, string> = { type: "checkbox" }
+            if (node.attrs.checked) attrs.checked = ""
+            return ["input", attrs]
         },
     },
 
