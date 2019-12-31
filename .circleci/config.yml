@@ -101,11 +101,12 @@ jobs:
           git config --global user.email "ci@circleci.com"
           git config --global user.name "circleci"
           git clone -q ${DEPLOY_REPO_URL} ~/deploy
+      - run: |
           cd ~/deploy
           rm -rf ./*
           cp -r /tmp/deploy/* ~/deploy
           git add --all
-          git commit -m "[$(date '+%Y-%m-%d %H:%M:%S %z')] $(cat /tmp/deploy/git_commit_sha)"
+          git commit -m "[$(date '+%Y-%m-%d %H:%M:%S %z')] $CIRCLE_TAG $(cat /tmp/deploy/git_commit_sha)"
           git push -q
   regenerate_yarn_lock:
     executor: node-executor
