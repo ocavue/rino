@@ -18,11 +18,12 @@ workflows:
             - test
             - build
             - lint
-          filters:
-            tags:
-              only: /^v\d+\.\d+\.\d+.*/
-            branches:
-              ignore: /.*/
+          filters: *run_for_all_branches_and_all_tags
+          # filters:
+          #   tags:
+          #     only: /^v\d+\.\d+\.\d+.*/
+          #   branches:
+          #     ignore: /.*/
       - regenerate_yarn_lock:
           filters:
             branches:
@@ -110,7 +111,7 @@ jobs:
           cp -r /tmp/deploy/* ~/deploy
           git add --all
           git commit -m "$msg"
-          git push -q
+          echo "$msg"
   regenerate_yarn_lock:
     executor: node-executor
     steps:
