@@ -101,11 +101,15 @@ jobs:
           git config --global user.email "ci@circleci.com"
           git config --global user.name "circleci"
           git clone -q ${DEPLOY_REPO_URL} ~/deploy
+      - run: |
+          ver=$(python3 -c 'import json; print(json.loads(open("package.json").read())["version"], end="")')
+          sha=$(cat /tmp/deploy/git_commit_sha)
+          msg="[$(date '+%Y-%m-%d %H:%M:%S %z')] $ver $sha"
           cd ~/deploy
           rm -rf ./*
           cp -r /tmp/deploy/* ~/deploy
           git add --all
-          git commit -m "[$(date '+%Y-%m-%d %H:%M:%S %z')] $(cat /tmp/deploy/git_commit_sha)"
+          git commit -m "$msg"
           git push -q
   regenerate_yarn_lock:
     executor: node-executor
