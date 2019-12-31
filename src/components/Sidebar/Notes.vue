@@ -67,7 +67,7 @@
 import { createComponent, computed, Ref, ref } from "@vue/composition-api"
 
 import { mdiPlus, mdiMagnify } from "@mdi/js"
-import { Note } from "@/controller"
+import { Note, getCurrentUser } from "@/controller"
 import SidebarColumnHeader from "./SidebarColumnHeader.vue"
 import SidebarColumnBody from "./SidebarColumnBody.vue"
 import SidebarButton from "./SidebarButton.vue"
@@ -110,7 +110,7 @@ export default createComponent({
             closeSidebarIfMobile()
         }
         setTimeout(() => {
-            if (user.value) signedIn.value = true
+            if (!getCurrentUser()) signedIn.value = true
             else signedIn.value = false
         }, 2000)
 
