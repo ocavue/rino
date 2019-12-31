@@ -1,14 +1,26 @@
 <template>
     <div data-testid="appbar">
         <div class="appbar" :style="`left: ${left}px;`">
-            <v-btn icon :ripple="false" data-testid="appbar-btn-menu" @click="toggleDrawer">
+            <v-btn
+                icon
+                :ripple="false"
+                class="appbar__btn"
+                data-testid="appbar-btn-menu"
+                @click="toggleDrawer"
+            >
                 <v-icon>{{ icons.mdiMenu }}</v-icon>
             </v-btn>
         </div>
         <div v-if="options.length > 0" class="appbar" :style="`right: ${right}px;`">
-            <v-menu bottom left :nudge-width="128" :offset-y="true" :nudge-right="2" :nudge-top="4">
+            <v-menu bottom left :nudge-width="128" :offset-y="true" :nudge-top="4">
                 <template v-slot:activator="{ on }">
-                    <v-btn icon :ripple="false" data-testid="appbar-btn-dots" v-on="on">
+                    <v-btn
+                        icon
+                        :ripple="false"
+                        class="appbar__btn"
+                        data-testid="appbar-btn-dots"
+                        v-on="on"
+                    >
                         <v-icon>{{ icons.mdiDotsVertical }}</v-icon>
                     </v-btn>
                 </template>
@@ -115,5 +127,17 @@ export default Vue.extend({
     position: fixed;
     top: $app-bar-padding;
     z-index: 1;
+}
+
+.theme--light .appbar__btn {
+    background-color: rgba(map-get($material-light, "background"), 0.7);
+}
+.theme--dark .appbar__btn {
+    background-color: rgba(map-get($material-dark, "background"), 0.7);
+}
+@supports (backdrop-filter: blur(4px)) {
+    .appbar__btn {
+        backdrop-filter: blur(4px);
+    }
 }
 </style>

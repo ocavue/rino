@@ -42,4 +42,8 @@ export default createComponent({
 })
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.main {
+    padding: 12px;
+}
+</style>

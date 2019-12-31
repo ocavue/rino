@@ -10,6 +10,7 @@
     >
         <div class="sidebar-row">
             <Activity class="sidebar-column" />
+            <v-divider vertical />
             <Notes :is-mobile="isMobile" class="sidebar-column" />
         </div>
     </v-navigation-drawer>
