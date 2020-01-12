@@ -1,5 +1,5 @@
+import { click, focus, goto, pressKey, retry, sleep, wait } from "./utils"
 import { range } from "lodash"
-import { wait, goto, click, sleep, pressKey, focus, retry } from "./utils"
 
 async function isSignedIn(): Promise<boolean> {
     const state = await page.evaluate(() => localStorage.getItem("__rino_dev_auth_state"))
@@ -7,23 +7,25 @@ async function isSignedIn(): Promise<boolean> {
 }
 
 export async function expectSignedIn() {
-    const isExpected = async () => (await isSignedIn()) === true
+    const isExpected = async () => !!(await isSignedIn())
     const isExpectedAfterRetry = await retry(isExpected, 15000)
     expect(isExpectedAfterRetry).toBe(true)
 }
 
 export async function expectSignedOut() {
-    const isExpected = async () => (await isSignedIn()) === false
+    const isExpected = async () => !(await isSignedIn())
     const isExpectedAfterRetry = await retry(isExpected)
     expect(isExpectedAfterRetry).toBe(true)
 }
 
 export async function login() {
-    await goto("/dev/login") // Auto login in test environment
+    await goto("/dev/sign-in") // Auto login in test environment
+    await wait("main") // Return home page
     await expectSignedIn()
 }
 export async function signOut() {
-    await goto("/dev/signout")
+    await goto("/dev/sign-out")
+    await wait("main") // Return home page
     await expectSignedOut()
 }
 
@@ -50,4 +52,12 @@ export async function clickSidebarNoteListItem() {
 export async function cleanNotes() {
     await goto("/dev/clean-notes")
     await wait("main") // Return home page
+}
+
+export async function expectSidebarOpened() {
+    return await page.waitForSelector(".drawer--open")
+}
+
+export async function expectSidebarClosed() {
+    return await page.waitForSelector(".drawer--close")
 }

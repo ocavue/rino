@@ -1,5 +1,5 @@
-import { Node, Mark, Fragment } from "prosemirror-model"
 import * as _ from "lodash"
+import { Fragment, Mark, Node } from "prosemirror-model"
 
 type NodeSpec = (state: MarkdownSerializerState, node: Node, parent: Node, index: number) => void
 type NodeSpecs = Record<string, NodeSpec>

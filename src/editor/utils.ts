@@ -1,5 +1,5 @@
-import { ResolvedPos } from "prosemirror-model"
 import { Node } from "prosemirror-model"
+import { ResolvedPos } from "prosemirror-model"
 
 export function findParentNode(
     $pos: ResolvedPos,

@@ -1,16 +1,15 @@
+import { ClickOptions, DirectNavigationOptions, WaitForSelectorOptions } from "puppeteer"
 import os from "os"
-import { WaitForSelectorOptions, ClickOptions, DirectNavigationOptions } from "puppeteer"
 
-const testidSelector = (testid: string) =>
-    /^[a-zA-Z0-9]+$/.exec(testid) ? `[data-testid=${testid}]` : `[data-testid="${testid}"]`
+const testidSelector = (testid: string) => `[data-testid="${testid}"]`
 
 export async function goto(url: string, options?: DirectNavigationOptions) {
-    url = url.startsWith("/") ? "http://localhost:8080" + url : url
-    return page.goto(url, options)
+    url = url.startsWith("/") ? "http://localhost:3000" + url : url
+    return await page.goto(url, options)
 }
 
 export async function wait(testid: string, options?: WaitForSelectorOptions) {
-    return page.waitForSelector(testidSelector(testid), options)
+    return await page.waitForSelector(testidSelector(testid), options)
 }
 
 export async function focus(testid: string) {
@@ -48,7 +47,7 @@ export async function click(testid: string, options?: ClickOptions) {
 }
 
 export async function sleep(ms: number) {
-    return page.waitFor(ms)
+    return await page.waitFor(ms)
 }
 
 export async function type(testid: string, text: string, pressEnter = true) {
@@ -89,9 +88,9 @@ export async function getSourceCodeModeText() {
 }
 
 export async function waitAnimation<T>(promise: Promise<T>, ms = 500): Promise<T> {
-    const T = await promise
+    const result = await promise
     await sleep(ms)
-    return T
+    return result
 }
 
 export async function retry(

@@ -1,6 +1,6 @@
 import { TaggedProsemirrorNode } from "prosemirror-test-builder"
+import { dedent } from "src/editor/utils"
 import { nodes } from "./schema.spec"
-import { dedent } from "@/editor/utils"
 
 const {
     doc,

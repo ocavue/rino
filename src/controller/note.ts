@@ -1,7 +1,7 @@
 import { sortBy } from "lodash"
 
-import { firebase, DocumentReference, DocumentSnapshot, Timestamp } from "./firebase"
-import { generateRandomId } from "@/utils"
+import { DocumentReference, DocumentSnapshot, Timestamp, firebase } from "./firebase"
+import { generateRandomId } from "src/utils"
 
 type Listener = (notes: { id: string }[]) => void
 type Unsubscribe = () => void
@@ -103,6 +103,13 @@ export class Note {
         const query = await this.collection.where("uid", "==", uid).get()
         const notes = query.docs.map(snapshot => new Note(uid, snapshot))
         return sortBy(notes, note => [note.createTime, note.id]).reverse()
+    }
+
+    public static async clean(uid: string): Promise<void> {
+        const query = await this.collection.where("uid", "==", uid).get()
+        query.forEach(doc => {
+            doc.ref.delete()
+        })
     }
 
     public static listen(listener: Listener, type?: "added" | "modified" | "removed"): Unsubscribe {

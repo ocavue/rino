@@ -6,26 +6,29 @@
         "importHelpers": true,
         "moduleResolution": "node",
         "esModuleInterop": true,
-        "allowSyntheticDefaultImports": true,
         "resolveJsonModule": true,
         "baseUrl": ".",
-        "types": [
-            "webpack-env",
-            "vuetify",
-            "jest-environment-puppeteer",
-            "jest"
-        ],
-        "paths": {
-            "@/*": [
-                "src/*"
-            ]
-        },
+        "allowSyntheticDefaultImports": true,
         "lib": [
             "esnext",
             "dom",
-            "dom.iterable",
-            "scripthost"
+            "dom.iterable"
         ],
-        "sourceMap": true // Required by Istanbul
-    }
+        "allowJs": true,
+        "skipLibCheck": true,
+        "isolatedModules": true,
+        "noEmit": true,
+        "jsx": "preserve",
+        "forceConsistentCasingInFileNames": true
+    },
+    "include": [
+        "next-env.d.ts",
+        "src/**/*",
+        "./**/*.js",
+        "./**/*.ts",
+        "./**/*.tsx"
+    ],
+    "exclude": [
+        "node_modules"
+    ]
 }

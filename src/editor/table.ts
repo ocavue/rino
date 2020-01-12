@@ -1,4 +1,4 @@
-import { DecorationSet, Decoration, EditorView } from "prosemirror-view"
+import { Decoration, DecorationSet, EditorView } from "prosemirror-view"
 import { EditorState, Plugin, PluginSpec, Transaction } from "prosemirror-state"
 import { Node } from "prosemirror-model"
 import {
@@ -11,13 +11,12 @@ import {
     selectionCell,
     // deleteTable, // TODO: use deleteTable
 } from "prosemirror-tables"
-
 import { findParentNode } from "./utils"
 
-import addColumnBeforeSvg from "../assets/add_column_before.svg"
 import addColumnAfterSvg from "../assets/add_column_after.svg"
-import addRowBeforeSvg from "../assets/add_row_before.svg"
+import addColumnBeforeSvg from "../assets/add_column_before.svg"
 import addRowAfterSvg from "../assets/add_row_after.svg"
+import addRowBeforeSvg from "../assets/add_row_before.svg"
 import deleteColumnSvg from "../assets/delete_column.svg"
 import deleteRowSvg from "../assets/delete_row.svg"
 

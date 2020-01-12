@@ -59,11 +59,11 @@ const base = {
     // ],
 
     // An array of file extensions your modules use
-    moduleFileExtensions: ["js", "json", "jsx", "ts", "tsx", "node", "vue"],
+    moduleFileExtensions: ["js", "jsx", "ts", "tsx", "node", "vue"],
 
     // A map from regular expressions to module names that allow to stub out resources with a single module
     moduleNameMapper: {
-        "^@/(.*)$": "<rootDir>/src/$1",
+        "^src/(.*)$": "<rootDir>/src/$1",
     },
 
     // An array of regexp pattern strings, matched against all module paths before considered 'visible' to the module loader
@@ -138,9 +138,7 @@ const base = {
 
     // A map from regular expressions to paths to transformers
     transform: {
-        // process `*.vue` files with `vue-jest`
-        ".*\\.vue$": "vue-jest",
-        ".*\\.ts$": "ts-jest",
+        ".*\\.ts(x)?$": "ts-jest",
         ".*\\.(css|styl|less|sass|scss|svg|png|jpg|ttf|woff|woff2)$": "jest-transform-stub",
     },
 
@@ -175,7 +173,7 @@ module.exports = {
             preset: "jest-puppeteer",
 
             // A list of paths to modules that run some code to configure or set up the testing framework before each test
-            setupFilesAfterEnv: ["jest-puppeteer-istanbul/lib/setup", "<rootDir>/tests/setup.js"],
+            setupFilesAfterEnv: ["jest-extended", "jest-puppeteer-istanbul/lib/setup", "<rootDir>/tests/setup.js"],
         },
         {
             ...base,
@@ -183,6 +181,9 @@ module.exports = {
 
             // The glob patterns Jest uses to detect test files
             testMatch: ["<rootDir>/tests/unit/**/*.spec.(js|ts)"],
+
+            // A list of paths to modules that run some code to configure or set up the testing framework before each test
+            setupFilesAfterEnv: ["jest-extended" ],
         },
     ],
 }

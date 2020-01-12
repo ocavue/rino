@@ -1,5 +1,5 @@
 import { builders } from "prosemirror-test-builder"
-import { schema } from "@/editor/schema"
+import { schema } from "src/editor/schema"
 
 const def = {
     p: { nodeType: "paragraph" },
