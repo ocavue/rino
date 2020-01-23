@@ -93,6 +93,17 @@ export async function waitAnimation<T>(promise: Promise<T>, ms = 500): Promise<T
     return result
 }
 
+export async function getDimensions(testid: string) {
+    // https://developer.mozilla.org/en-US/docs/Web/API/CSS_Object_Model/Determining_the_dimensions_of_elements
+    await wait(testid)
+    const element = await getOne(testid)
+    expect(element).toBeTruthy()
+    return await page.evaluate(e => {
+        const { x, y, width, height, top, right, bottom, left } = e.getBoundingClientRect()
+        return { x, y, width, height, top, right, bottom, left }
+    }, element)
+}
+
 export async function retry(
     fn: () => Promise<boolean> | boolean,
     timeout = 5000,

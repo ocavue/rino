@@ -4,7 +4,7 @@ import { ActivityHeader } from "./ActivityHeader"
 import { NoteBody } from "./NoteBody"
 import { NoteHeader } from "./NoteHeader"
 import { StoreContainer } from "src/store"
-import { drawerWidth } from "src/constants"
+import { maxDrawerWidth } from "src/constants"
 import { useIsMobile } from "src/hooks"
 import React from "react"
 import clsx from "clsx"
@@ -29,7 +29,8 @@ const useStyles = m.makeStyles((theme: m.Theme) => {
             flex: 2,
         },
         drawerPaper: {
-            width: drawerWidth,
+            maxWidth: maxDrawerWidth,
+            width: `calc(100vw - 48px)`,
         },
     })
 })
@@ -69,7 +70,6 @@ export const Drawer: React.FC = () => {
 
     return (
         <nav
-            data-testid="sidebar"
             className={clsx(
                 { "drawer--open": drawerActivity },
                 { "drawer--close": !drawerActivity },

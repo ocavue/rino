@@ -2,7 +2,7 @@ import { Editor } from "./Editor"
 import { StoreContainer } from "src/store"
 import { Theme, createStyles, makeStyles } from "@material-ui/core"
 import { Welcome } from "./Welcome"
-import { drawerWidth } from "src/constants"
+import { maxDrawerWidth } from "src/constants"
 import React from "react"
 import clsx from "clsx"
 const useStyles = makeStyles((theme: Theme) => {
@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme: Theme) => {
                     easing: theme.transitions.easing.easeOut,
                     duration: theme.transitions.duration.enteringScreen,
                 }),
-                marginLeft: drawerWidth,
+                marginLeft: maxDrawerWidth,
             },
         },
     })
