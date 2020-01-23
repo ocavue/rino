@@ -2,7 +2,7 @@ import * as icons from "@material-ui/icons"
 import { AppBar, Menu, MenuItem, Theme, createStyles, makeStyles } from "@material-ui/core"
 import { AppbarIconButton } from "src/components/AppbarIconButton"
 import { StoreContainer } from "src/store"
-import { appbarIconMargin, appbarIconSize, drawerWidth } from "src/constants"
+import { appbarIconButtonSize, appbarIconMargin, drawerWidth } from "src/constants"
 import { fade } from "@material-ui/core/styles/colorManipulator"
 import React from "react"
 import clsx from "clsx"
@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme: Theme) => {
             flexDirection: "row",
             justifyContent: "space-between",
             alignItems: "flex-end",
-            height: appbarIconMargin + appbarIconSize,
+            height: appbarIconMargin + appbarIconButtonSize,
             transition: theme.transitions.create(["margin", "width"], {
                 easing: theme.transitions.easing.sharp,
                 duration: theme.transitions.duration.leavingScreen,

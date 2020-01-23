@@ -1,4 +1,3 @@
-// import App from "../views/App"
 import React from "react"
 
 // Import Global CSS
@@ -9,10 +8,6 @@ import "../components/Editor/editor.sass"
 import "../components/Editor/markdown.sass"
 import "../style/table.sass"
 import { noSsrPage } from "src/utils"
-
-// const DynamicApp = dynamic(() => import("../views/AppProps"), { ssr: false })
-
-// import { UiContainer } from "src/store"
 
 const App = noSsrPage(() => import("../views/App"))
 

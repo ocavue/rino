@@ -1,5 +1,6 @@
 export const mobileBreakPoint = 960
 export const drawerWidth = 400
-export const appbarIconSize = 40
+export const iconSize = 24
+export const appbarIconButtonSize = 40
 export const appbarIconMargin = 13
-export const appbarHeight = appbarIconSize + appbarIconMargin * 2
+export const appbarHeight = appbarIconButtonSize + appbarIconMargin * 2
