@@ -73,11 +73,14 @@ class ProseMirrorView extends BaseView {
                 plugins: proseMirrorPlugins,
             }),
         })
-        if (process.env.REACT_APP_PROSEMIRROR_DEV_TOOLS) {
-            // Webpack will remove this block in production mode
-            // eslint-disable-next-line @typescript-eslint/no-var-requires
-            const prosemirrorDevTools = require("prosemirror-dev-tools")
-            prosemirrorDevTools.applyDevTools(this.view)
+        if (process.env.NODE_ENV === "development") {
+            if (process.env.REACT_APP_PROSEMIRROR_DEV_TOOLS) {
+                console.log("LOADING_PROSEMIRROR_DEV_TOOLS")
+                // Webpack will remove this block in production mode
+                // eslint-disable-next-line @typescript-eslint/no-var-requires
+                const prosemirrorDevTools = require("prosemirror-dev-tools")
+                prosemirrorDevTools.applyDevTools(this.view)
+            }
         }
     }
 
