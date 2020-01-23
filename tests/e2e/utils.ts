@@ -135,7 +135,7 @@ export async function expectWysiwygHtml(shapes: Shape[]) {
     const receivedSelectors = await page.evaluate((selectorsJson: string) => {
         const selectors: Selectors = JSON.parse(selectorsJson)
 
-        // `for ... of Object.entries(selectors)` seems have some babel issue, so I use ancient JS syntex here
+        // `for ... of Object.entries(selectors)` seems have some babel issues, so I use ancient JS syntex here
         for (const selector in selectors) {
             if (!selectors.hasOwnProperty(selector)) {
                 continue
