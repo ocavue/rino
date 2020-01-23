@@ -1,5 +1,5 @@
-import { InlineLexer } from "@/editor/lexer"
-import { Token } from "@/editor/token"
+import { InlineLexer } from "src/editor/lexer"
+import { Token } from "src/editor/token"
 
 describe("InlineLexer", function() {
     const lexer = new InlineLexer()

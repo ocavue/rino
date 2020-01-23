@@ -1,7 +1,7 @@
-import { DecorationSet, Decoration } from "prosemirror-view"
+import { Decoration, DecorationSet } from "prosemirror-view"
 import { EditorState, Plugin, Transaction } from "prosemirror-state"
-import { Node } from "prosemirror-model"
 import { InlineLexer } from "./lexer"
+import { Node } from "prosemirror-model"
 
 function parseText(node: Node, startIndex: number): Decoration[] {
     if (!node.text) {

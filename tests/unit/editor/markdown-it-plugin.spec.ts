@@ -1,6 +1,6 @@
+import { dedent } from "src/editor/utils"
 import MarkdownIt from "markdown-it"
-import { dedent } from "@/editor/utils"
-import markdownItListCheckbox from "@/editor/markdown-it-list-checkbox"
+import markdownItListCheckbox from "src/editor/markdown-it-list-checkbox"
 
 describe("markdown-it plugin `markdown-it-list-checkbox`", () => {
     const mdWithoutPlugin = MarkdownIt("commonmark", { html: true })

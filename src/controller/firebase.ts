@@ -2,8 +2,8 @@
 import * as firebase from "firebase/app"
 // Add the Firebase products that you want to use
 import "firebase/auth"
-import "firebase/firestore"
 import "firebase/database"
+import "firebase/firestore"
 
 import { firebaseConfig } from "./config"
 
@@ -23,11 +23,11 @@ if (firebase.apps.length === 0) {
         .enablePersistence({ synchronizeTabs: true })
         .catch(error => {
             console.error(error)
-            if (error.code == "failed-precondition") {
+            if (error.code === "failed-precondition") {
                 // Multiple tabs open, persistence can only be enabled
                 // in one tab at a a time.
                 // ...
-            } else if (error.code == "unimplemented") {
+            } else if (error.code === "unimplemented") {
                 // The current browser does not support all of the
                 // features required to enable persistence
                 // ...
@@ -42,12 +42,13 @@ export type Timestamp = firebase.firestore.Timestamp
 export type User = firebase.User
 
 export function registerConnectionEvent(listenner: (connected: boolean) => void) {
-    firebase
-        .database()
-        .ref(".info/connected")
-        .on("value", function(snap) {
-            const connected = snap.val() === true
-            console.log(`Firebase is ${connected ? "online" : "offline"}`)
-            listenner(connected)
-        })
+    const onConnectedChanged = (snap: firebase.database.DataSnapshot) => {
+        const connected = snap.val() === true
+        console.log(`Firebase is ${connected ? "online" : "offline"}`)
+        listenner(connected)
+    }
+    const ref = firebase.database().ref(".info/connected")
+    ref.on("value", onConnectedChanged)
+    const unsubscribe = () => ref.off("value")
+    return unsubscribe
 }

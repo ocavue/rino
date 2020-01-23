@@ -1,11 +1,11 @@
+import { EditorState, Plugin } from "prosemirror-state"
 import {
-    inputRules,
     InputRule,
-    wrappingInputRule,
+    inputRules,
     textblockTypeInputRule,
+    wrappingInputRule,
 } from "prosemirror-inputrules"
 import { Node } from "prosemirror-model"
-import { Plugin, EditorState } from "prosemirror-state"
 
 import { schema } from "./schema"
 

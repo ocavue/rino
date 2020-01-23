@@ -1,11 +1,11 @@
-import { Fragment, Slice, Node } from "prosemirror-model"
-import { EditorState, Transaction, NodeSelection, Selection } from "prosemirror-state"
+import { EditorState, NodeSelection, Selection, Transaction } from "prosemirror-state"
+import { Fragment, Node, Slice } from "prosemirror-model"
 import { canSplit } from "prosemirror-transform"
 
 import { range } from "lodash"
 
-import { schema } from "./schema"
 import { all } from "./utils"
+import { schema } from "./schema"
 
 const paragraphType = schema.nodes.paragraph
 const rinoListItemType = schema.nodes.rinoListItem

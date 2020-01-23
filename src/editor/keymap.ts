@@ -1,26 +1,26 @@
-import { keymap } from "prosemirror-keymap"
-import { baseKeymap as baseKeymapBindings } from "prosemirror-commands"
+import { EditorState, Plugin, TextSelection, Transaction } from "prosemirror-state"
+import { EditorView } from "prosemirror-view"
 import { NodeType } from "prosemirror-model"
+import { baseKeymap as baseKeymapBindings } from "prosemirror-commands"
 import {
-    wrapIn,
-    setBlockType,
     chainCommands,
-    toggleMark,
     exitCode,
-    joinUp,
     joinDown,
+    joinUp,
     lift,
     selectParentNode,
+    setBlockType,
+    toggleMark,
+    wrapIn,
 } from "prosemirror-commands"
-import { wrapInList, liftListItem, sinkListItem } from "prosemirror-schema-list"
-import { undo, redo } from "prosemirror-history"
+import { keymap } from "prosemirror-keymap"
+import { liftListItem, sinkListItem, wrapInList } from "prosemirror-schema-list"
+import { redo, undo } from "prosemirror-history"
 import { undoInputRule } from "prosemirror-inputrules"
-import { Plugin, EditorState, Transaction, TextSelection } from "prosemirror-state"
-import { EditorView } from "prosemirror-view"
 
+import { isMac } from "src/utils"
 import { schema } from "./schema"
 import { splitListItem } from "./list"
-import { isMac } from "@/utils"
 
 type Command = (state: EditorState, dispatch?: (tr: Transaction) => void) => boolean
 

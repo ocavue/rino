@@ -34,5 +34,5 @@ async function adjustVueCoverage() {
 }
 
 afterEach(async () => {
-    await adjustVueCoverage()
+    // await adjustVueCoverage()
 })

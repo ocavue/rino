@@ -9,23 +9,22 @@
         "allowSyntheticDefaultImports": true,
         "resolveJsonModule": true,
         "baseUrl": ".",
-        "types": [
-            "webpack-env",
-            "vuetify",
-            "jest-environment-puppeteer",
-            "jest"
-        ],
-        "paths": {
-            "@/*": [
-                "src/*"
-            ]
-        },
         "lib": [
             "esnext",
             "dom",
-            "dom.iterable",
-            "scripthost"
+            "dom.iterable"
         ],
-        "sourceMap": true // Required by Istanbul
-    }
+        "allowJs": true,
+        "isolatedModules": true,
+        "noEmit": true,
+        "jsx": "preserve",
+        "forceConsistentCasingInFileNames": true
+    },
+    "include": [
+        "next-env.d.ts",
+        "./**/*",
+    ],
+    "exclude": [
+        "node_modules"
+    ]
 }

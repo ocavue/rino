@@ -1,8 +1,8 @@
 import { TaggedProsemirrorNode } from "prosemirror-test-builder"
-import { defaultMarkdownSerializer } from "@/editor/serializer"
-import { dedent } from "@/editor/utils"
-import { testcases } from "./base"
+import { dedent } from "src/editor/utils"
+import { defaultMarkdownSerializer } from "src/editor/serializer"
 import { nodes } from "./schema.spec"
+import { testcases } from "./base"
 
 const { doc, p, table, tableRow, tableCell, li, ul, uncheckedCheckbox, checkedCheckbox } = nodes
 

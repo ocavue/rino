@@ -58,12 +58,10 @@ jobs:
       - install
       - run: |
           echo ${DEV_CONFIG_FIREBASE} > ./config/firebase.json
-          echo "VUE_APP_TEST_USERNAME=${VUE_APP_TEST_USERNAME}" >> ./.env
-          echo "VUE_APP_TEST_PASSWORD=${VUE_APP_TEST_PASSWORD}" >> ./.env
+          echo "REACT_APP_TEST_USERNAME=${REACT_APP_TEST_USERNAME}" >> ./.env
+          echo "REACT_APP_TEST_PASSWORD=${REACT_APP_TEST_PASSWORD}" >> ./.env
       - run: |
-          yarn build --mode development
-      - run: |
-          ./scripts/http-server.js > /dev/null &
+          yarn dev &
           yarn run test --coverage
       - run: |
           yarn run coverage
@@ -72,7 +70,8 @@ jobs:
     steps:
       - install
       - run: echo ${PROD_CONFIG_FIREBASE} > ./config/firebase.json
-      - run: yarn run build --no-source-maps
+      - run: yarn run build
+      - run: yarn run export
       # Create CNAME file AFTER `yarn build`, so that workbox woundn't add `CNAME`
       # into `dist/precache-manifest.xx.js`.
       # The server-worker won't be able to install successfully otherwise because

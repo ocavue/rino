@@ -1,4 +1,4 @@
-import firebaseJson from "../../config/firebase.json"
+import firebaseJson from "config/firebase.json"
 
 const firebaseConfig: {
     apiKey: string
@@ -11,10 +11,10 @@ const firebaseConfig: {
 } = firebaseJson
 
 const testUser = {
-    username: process.env.VUE_APP_TEST_USERNAME || "",
-    password: process.env.VUE_APP_TEST_PASSWORD || "",
+    username: process.env.REACT_APP_TEST_USERNAME || "",
+    password: process.env.REACT_APP_TEST_PASSWORD || "",
 }
 
-const version = `${process.env.VUE_APP_VERSION} (${process.env.VUE_APP_COMMIT})`
+const version = `${process.env.REACT_APP_VERSION} (${process.env.REACT_APP_COMMIT})`
 
 export { firebaseConfig, testUser, version }

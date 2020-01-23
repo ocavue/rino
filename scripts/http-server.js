@@ -24,12 +24,14 @@ function logRes(url, filePath, statusCode) {
     console.log(`[${date.toISOString()}] ${statusCode} ${url} -> ${filePath}`)
 }
 
-console.log("Serving HTTP on http://localhost:8080/")
+console.log("Serving HTTP on http://localhost:3000/")
 
 http.createServer(function(req, res) {
     let filePath = resolveFileAbsPath(req.url)
     if (!fs.existsSync(filePath)) {
-        filePath = resolveFileAbsPath("/index.html")
+        filePath = resolveFileAbsPath("/404.html")
+    } else if (fs.lstatSync(filePath).isDirectory()) {
+        filePath = path.join(filePath, 'index.html')
     }
     try {
         let content = fs.readFileSync(filePath, "utf-8")
@@ -41,4 +43,4 @@ http.createServer(function(req, res) {
         res.end(JSON.stringify(err))
         logRes(req.url, filePath, 500)
     }
-}).listen(8080)
+}).listen(3000)

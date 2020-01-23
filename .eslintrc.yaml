@@ -1,15 +1,25 @@
 root: true
-parser: vue-eslint-parser
+parser: "@typescript-eslint/parser"
 parserOptions:
     parser: "@typescript-eslint/parser"
     ecmaVersion: 2018 # Allows for the parsing of modern ECMAScript features
     project: "./tsconfig.json"
+    ecmaFeatures:
+        jsx: true
 extends:
-    - "plugin:vue/recommended"
+    - "plugin:react/recommended"
+    - "plugin:@typescript-eslint/recommended"
     - "plugin:@typescript-eslint/recommended-requiring-type-checking"
-    - "@vue/typescript/recommended"
-    - "@vue/prettier/recommended"
-    - "@vue/prettier/@typescript-eslint"
+    - "prettier"
+    - "prettier/@typescript-eslint"
+    - "prettier/react"
+    - "plugin:prettier/recommended"
+plugins:
+    - react-hooks
+    - sort-imports-es6-autofix
+settings:
+    react:
+        version: "detect" # Tells eslint-plugin-react to automatically detect the version of React to use
 env:
     browser: true
     node: true
@@ -17,11 +27,16 @@ rules:
     "no-console": "off"
     "no-unused-vars": [error, { args: "none" }]
     "no-useless-escape": "off"
+    "sort-imports": "off"
+    "sort-imports-es6-autofix/sort-imports-es6": [2]
+    "react/prop-types": [1, { skipUndeclared: true }]
     "@typescript-eslint/explicit-function-return-type": "off"
     "@typescript-eslint/no-explicit-any": "off"
     "@typescript-eslint/no-unused-vars": [error, { args: "none" }]
     "@typescript-eslint/no-empty-function": "off"
-
+    "react-hooks/rules-of-hooks": "error"
+    "react-hooks/exhaustive-deps": "warn"
+    "react/no-unescaped-entities": "off"
 overrides:
     - files: "tests/**/*.[t|j]s"
       env:
@@ -31,3 +46,6 @@ overrides:
           browser: "readonly"
           context: "readonly"
           jestPuppeteer: "readonly"
+ignorePatterns:
+    - scripts/*
+    - jest*.js

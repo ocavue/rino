@@ -1,7 +1,7 @@
+import { Mark, Node, NodeType, Schema } from "prosemirror-model"
 import { schema } from "./schema"
-import { Mark, Node, Schema, NodeType } from "prosemirror-model"
-import Token from "markdown-it/lib/token"
 import MarkdownIt from "markdown-it"
+import Token from "markdown-it/lib/token"
 import markdownItListCheckbox from "./markdown-it-list-checkbox"
 
 interface StackItem {

@@ -3,11 +3,15 @@
     "eslint.validate": [
         "javascript",
         "typescript",
-        "vue"
+        "typescriptreact",
     ],
     "editor.codeActionsOnSave": {
         "source.fixAll.eslint": true
     },
+    "editor.codeActionsOnSaveTimeout": 5000,
     "typescript.tsdk": "node_modules/typescript/lib",
     "python.pythonPath": ".venv/bin/python",
+    "eslint.enable": true,
+    "eslint.codeActionsOnSave.mode": "problems",
+    "eslint.format.enable": true,
 }

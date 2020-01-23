@@ -1,10 +1,10 @@
-import { TaggedProsemirrorNode } from "prosemirror-test-builder"
 import { Node } from "prosemirror-model"
-import { defaultMarkdownParser } from "@/editor/parser"
-import { testcases } from "./base"
+import { TaggedProsemirrorNode } from "prosemirror-test-builder"
+import { dedent } from "src/editor/utils"
+import { defaultMarkdownParser } from "src/editor/parser"
 import { nodes } from "./schema.spec"
-import { dedent } from "@/editor/utils"
 import { range } from "lodash"
+import { testcases } from "./base"
 
 const { doc, hr, ol, ul, li, p, checkedCheckbox, uncheckedCheckbox } = nodes
 

@@ -2,22 +2,18 @@ import { EditorState } from "prosemirror-state"
 import { EditorView } from "prosemirror-view"
 
 import { Plugin } from "prosemirror-state"
-import { history } from "prosemirror-history"
 import { dropCursor } from "prosemirror-dropcursor"
+import { history } from "prosemirror-history"
 import { tableEditing } from "prosemirror-tables"
 
 import { buildKeymaps } from "./keymap"
-import { decorationPlugin } from "./decoration"
 import { buildMdInputRules } from "./input-rule"
-import { testidPlugin } from "./testid"
-import { tableMenuPlugin, tableHeigthlightPlugin } from "./table"
+import { checkboxPlugin } from "./checkbox"
+import { decorationPlugin } from "./decoration"
 import { defaultMarkdownParser } from "./parser"
 import { defaultMarkdownSerializer } from "./serializer"
-import { checkboxPlugin } from "./checkbox"
-
-import "../../node_modules/prosemirror-tables/style/tables.css"
-import "../../node_modules/prosemirror-view/style/prosemirror.css"
-import "../style/table.sass"
+import { tableHeigthlightPlugin, tableMenuPlugin } from "./table"
+import { testidPlugin } from "./testid"
 
 const proseMirrorPlugins: Plugin[] = [
     history(),
@@ -77,7 +73,7 @@ class ProseMirrorView extends BaseView {
                 plugins: proseMirrorPlugins,
             }),
         })
-        if (process.env.VUE_APP_PROSEMIRROR_DEV_TOOLS) {
+        if (process.env.REACT_APP_PROSEMIRROR_DEV_TOOLS) {
             // Webpack will remove this block in production mode
             // eslint-disable-next-line @typescript-eslint/no-var-requires
             const prosemirrorDevTools = require("prosemirror-dev-tools")

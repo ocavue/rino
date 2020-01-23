@@ -1,4 +1,4 @@
-import { Schema, NodeSpec } from "prosemirror-model"
+import { NodeSpec, Schema } from "prosemirror-model"
 
 type getAttrs = null | ((p: Node | string) => { [key: string]: any } | false | null | undefined)
 
