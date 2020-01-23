@@ -81,7 +81,7 @@ jobs:
           cp -r ./dist/* /tmp/deploy
           echo "<!-- $(date '+%Y-%m-%d %H:%M:%S %z') -->" >> /tmp/deploy/index.html
           echo "rino.app" >  /tmp/deploy/CNAME
-          cp /tmp/deploy/index.html /tmp/deploy/404.html
+          touch /tmp/deploy/.nojekyll # Prevent GitHub Pages return 404 for URL with `/_next/`
           echo "$(git rev-parse --short HEAD)" > /tmp/deploy/git_commit_sha
       - persist_to_workspace:
           root: /tmp/deploy
@@ -103,7 +103,7 @@ jobs:
       - run: |
           cd ~/deploy
           rm -rf ./*
-          cp -r /tmp/deploy/* ~/deploy
+          cp -r /tmp/deploy/ ~/deploy/
           git add --all
           git commit -m "[$(date '+%Y-%m-%d %H:%M:%S %z')] $CIRCLE_TAG $(cat /tmp/deploy/git_commit_sha)"
           git push -q
