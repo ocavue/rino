@@ -1,4 +1,4 @@
-import { goto, retry, wait } from "./utils"
+import { goto, wait } from "./utils"
 
 beforeAll(async () => {
     await goto("/")
@@ -18,11 +18,7 @@ describe("Check main components", function() {
 
 describe("Check HTML header", function() {
     test("title", async () => {
-        const match = await retry(async () => {
-            return (await page.title()) === "Rino"
-        })
-        if (!match) {
-            expect(await page.title()).toEqual("Rino")
-        }
+        await wait("main") // Wait the page
+        expect(await page.title()).toEqual("Rino")
     })
 })
