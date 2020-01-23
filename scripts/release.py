@@ -58,6 +58,7 @@ def push_git_tag(version):
     run("git add --all")
     run(f"git commit -m 'chore: Release {tag}'")
     run(f"git tag {tag}")
+    run(f"git push")
     run(f"git push {remote} {tag}")
 
 
