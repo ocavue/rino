@@ -138,7 +138,7 @@ const base = {
 
     // A map from regular expressions to paths to transformers
     transform: {
-        ".*\\.ts(x)?$": "ts-jest",
+        ".*\\.ts(x)?$": "babel-jest",
         ".*\\.(css|styl|less|sass|scss|svg|png|jpg|ttf|woff|woff2)$": "jest-transform-stub",
     },
 
