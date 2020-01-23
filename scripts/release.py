@@ -39,7 +39,7 @@ def input_version():
     old_ver = json.loads(pkg_text)["version"]
     print("Current version:", old_ver)
     new_ver = input("New version: ")
-    regex = r"\d+\.\d+\.\d+"
+    regex = r"^\d+\.\d+\.\d+$"
     if not re.match(regex, new_ver):
         print("Version does not match " + regex)
         exit(1)
