@@ -1,11 +1,10 @@
-import { goto, wait } from "./utils"
+import { goto, retry, wait } from "./utils"
 
-// TODO: run this test before others
-describe("Smoke test", function() {
-    beforeAll(async () => {
-        await goto("/")
-    })
+beforeAll(async () => {
+    await goto("/")
+})
 
+describe("Check main components", function() {
     test("Drawer", async () => {
         await wait("sidebar")
     })
@@ -14,5 +13,16 @@ describe("Smoke test", function() {
     })
     test("Main", async () => {
         await wait("main")
+    })
+})
+
+describe("Check HTML header", function() {
+    test("title", async () => {
+        const match = await retry(async () => {
+            return (await page.title()) === "Rino"
+        })
+        if (!match) {
+            expect(await page.title()).toEqual("Rino")
+        }
     })
 })
