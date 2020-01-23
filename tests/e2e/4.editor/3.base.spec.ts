@@ -26,7 +26,7 @@ async function type(text: string, pressEnter = true) {
 }
 
 describe("Source code text", () => {
-    jest.setTimeout(180_000)
+    jest.setTimeout(180000)
 
     async function switchMode() {
         await pressKey("Meta", "Slash")
