@@ -103,7 +103,15 @@ jobs:
       - run: |
           cd ~/deploy
           rm -rf ./*
-          cp -r /tmp/deploy/ ~/deploy/
+          cp -r /tmp/deploy/. ~/deploy/
+      # Make sure that some important files exist
+      - run: |
+          cd ~/deploy
+          cat index.html > /dev/null
+          cat 404.html > /dev/null
+          cat .nojekyll > /dev/null
+      - run: |
+          cd ~/deploy
           git add --all
           git commit -m "[$(date '+%Y-%m-%d %H:%M:%S %z')] $CIRCLE_TAG $(cat /tmp/deploy/git_commit_sha)"
           git push -q
