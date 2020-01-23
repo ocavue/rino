@@ -3,10 +3,6 @@ const TsconfigPathsPlugin = require("tsconfig-paths-webpack-plugin")
 const fs = require("fs")
 const execSync = require("child_process").execSync
 const dotenv = require("dotenv")
-const envConfig = (() => {
-    if (fs.existsSync(".env")) return { ...dotenv.parse(fs.readFileSync(".env")) }
-    else return {}
-})()
 
 const withImages = require("next-images")
 const withSass = require("@zeit/next-sass")
@@ -14,6 +10,19 @@ const withCSS = require("@zeit/next-css")
 const withBundleAnalyzer = require("@next/bundle-analyzer")({
     enabled: process.env.ANALYZE === "true",
 })
+
+const allEnvVars = {
+    ...process.env,
+    ...(fs.existsSync(".env") ? dotenv.parse(fs.readFileSync(".env")) : {}),
+    REACT_APP_VERSION: JSON.parse(fs.readFileSync("./package.json")).version,
+    REACT_APP_COMMIT: `${execSync("git rev-parse --short HEAD")}`.trim(),
+}
+const envVars = Object.keys(allEnvVars)
+    .filter(key => key.startsWith("REACT_APP"))
+    .reduce((obj, key) => {
+        obj[key] = allEnvVars[key]
+        return obj
+    }, {})
 
 const nextConfig = {
     exportTrailingSlash: true,
@@ -27,11 +36,7 @@ const nextConfig = {
 
         return config
     },
-    env: {
-        REACT_APP_VERSION: JSON.parse(fs.readFileSync("./package.json")).version,
-        REACT_APP_COMMIT: `${execSync("git rev-parse --short HEAD")}`.trim(),
-        ...envConfig,
-    },
+    env: envVars,
 }
 
 const nextImageConfig = {

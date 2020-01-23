@@ -62,7 +62,7 @@ class ProseMirrorView extends BaseView {
 
     public constructor(place: HTMLElement, content: string) {
         super()
-        if (process.env.NODE_ENV === "development") {
+        if (process.env.NODE_ENV === "development" || process.env.REACT_APP_TESTING) {
             if (content.trim() === "HOOK:FAILED_TO_INIT_PROSEMIRROR_VIEW") {
                 throw new Error("Found error hook for testing")
             }

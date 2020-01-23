@@ -60,10 +60,12 @@ jobs:
       - install
       - run: |
           echo ${DEV_CONFIG_FIREBASE} > ./config/firebase.json
-          echo "REACT_APP_TEST_USERNAME=${REACT_APP_TEST_USERNAME}" >> ./.env
-          echo "REACT_APP_TEST_PASSWORD=${REACT_APP_TEST_PASSWORD}" >> ./.env
       - run: |
-          yarn dev &
+          export REACT_APP_TESTING=1
+          yarn build
+          yarn export
+      - run: |
+          ./scripts/http-server.js > /dev/null &
           yarn run test --coverage
       - run: |
           yarn run coverage
