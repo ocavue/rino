@@ -8,7 +8,7 @@ import {
 } from "../actions"
 import { click, getDimensions, goto, waitAnimation } from "../utils"
 
-import { mobileBreakPoint, maxDrawerWidth as sidebarWidth } from "src/constants"
+import { maxDrawerWidth, mobileBreakPoint } from "src/constants"
 
 const height = 800
 
@@ -38,9 +38,9 @@ describe("Drawer type (persistent / temporary)", function() {
     }
 
     for (const width of [
-        sidebarWidth - 10,
-        sidebarWidth,
-        sidebarWidth + 10,
+        maxDrawerWidth - 10,
+        maxDrawerWidth,
+        maxDrawerWidth + 10,
         mobileBreakPoint - 200,
         mobileBreakPoint - 3,
         mobileBreakPoint - 2,
@@ -72,7 +72,7 @@ describe.only("Drawer width", function() {
     })
 
     test("Small screen", async () => {
-        const clientWidth = sidebarWidth - 100
+        const clientWidth = maxDrawerWidth - 100
         await waitAnimation(page.setViewport({ width: clientWidth, height }))
         await waitAnimation(page.reload())
         await expectSidebarClosed()
@@ -88,13 +88,13 @@ describe.only("Drawer width", function() {
         await waitAnimation(click("appbar-btn-menu"))
         await expectSidebarOpened()
         const dimensions = await getDimensions("sidebar")
-        expect(dimensions.width).toBeWithin(sidebarWidth - 1, sidebarWidth + 1)
+        expect(dimensions.width).toBeWithin(maxDrawerWidth - 1, maxDrawerWidth + 1)
     })
     test("middle screen", async () => {
         await waitAnimation(page.setViewport({ width: mobileBreakPoint + 10, height }))
         await waitAnimation(page.reload())
         await expectSidebarOpened()
         const dimensions = await getDimensions("sidebar")
-        expect(dimensions.width).toBeWithin(sidebarWidth - 1, sidebarWidth + 1)
+        expect(dimensions.width).toBeWithin(maxDrawerWidth - 1, maxDrawerWidth + 1)
     })
 })
