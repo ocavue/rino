@@ -6,17 +6,15 @@
         "importHelpers": true,
         "moduleResolution": "node",
         "esModuleInterop": true,
+        "allowSyntheticDefaultImports": true,
         "resolveJsonModule": true,
         "baseUrl": ".",
-        "allowSyntheticDefaultImports": true,
         "lib": [
             "esnext",
             "dom",
             "dom.iterable"
         ],
-        // "sourceMap": true, // Required by Istanbul
         "allowJs": true,
-        "skipLibCheck": true,
         "isolatedModules": true,
         "noEmit": true,
         "jsx": "preserve",
@@ -25,9 +23,7 @@
     "include": [
         "next-env.d.ts",
         "src/**/*",
-        "./**/*.js",
-        "./**/*.ts",
-        "./**/*.tsx"
+        "tests/**/*",
     ],
     "exclude": [
         "node_modules"
