@@ -134,7 +134,13 @@ export async function expectWysiwygHtml(shapes: Shape[]) {
 
     const receivedSelectors = await page.evaluate((selectorsJson: string) => {
         const selectors: Selectors = JSON.parse(selectorsJson)
-        for (const [selector, info] of Object.entries(selectors)) {
+
+        // `for ... of Object.entries(selectors)` seems have some babel issue, so I use ancient JS syntex here
+        for (const selector in selectors) {
+            if (!selectors.hasOwnProperty(selector)) {
+                continue
+            }
+            const info = selectors[selector]
             const element = document.querySelector(selector)
             if (!element) {
                 info.exists = false
