@@ -1,6 +1,5 @@
-import { signOut } from "src/controller"
-// import { useAsyncEffect } from "src/hooks"
 import { StoreContainer } from "src/store"
+import { signOut } from "src/controller"
 import { useRouter } from "next/router"
 import React from "react"
 
