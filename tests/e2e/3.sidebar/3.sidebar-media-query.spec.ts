@@ -6,11 +6,13 @@ import {
     expectSidebarOpened,
     login,
 } from "../actions"
-import { click, waitAnimation } from "../utils"
+import { click, getDimensions, goto, waitAnimation } from "../utils"
 
-import { mobileBreakPoint, drawerWidth as sidebarWidth } from "src/constants"
+import { mobileBreakPoint, maxDrawerWidth as sidebarWidth } from "src/constants"
 
-describe("Click sidebar note item in different screen sizes", function() {
+const height = 800
+
+describe("Drawer type (persistent / temporary)", function() {
     beforeAll(async () => {
         await jestPuppeteer.resetBrowser()
         await login()
@@ -18,8 +20,8 @@ describe("Click sidebar note item in different screen sizes", function() {
     })
     afterAll(async () => await cleanNotes())
 
-    const height = 800
     const testSmallScreen = async (width: number) => {
+        // Exepect the drawer is persistent
         await waitAnimation(page.setViewport({ width, height }))
         await expectSidebarClosed()
         await waitAnimation(click("appbar-btn-menu"))
@@ -28,6 +30,7 @@ describe("Click sidebar note item in different screen sizes", function() {
         await expectSidebarClosed()
     }
     const testLargeScreen = async (width: number) => {
+        // Exepect the drawer is temporary
         await waitAnimation(page.setViewport({ width, height }))
         await expectSidebarOpened()
         await waitAnimation(clickSidebarNoteListItem())
@@ -61,4 +64,37 @@ describe("Click sidebar note item in different screen sizes", function() {
             await testLargeScreen(width)
         })
     }
+})
+
+describe.only("Drawer width", function() {
+    beforeAll(async () => {
+        await goto("/")
+    })
+
+    test("Small screen", async () => {
+        const clientWidth = sidebarWidth - 100
+        await waitAnimation(page.setViewport({ width: clientWidth, height }))
+        await waitAnimation(page.reload())
+        await expectSidebarClosed()
+        await waitAnimation(click("appbar-btn-menu"))
+        await expectSidebarOpened()
+        const dimensions = await getDimensions("sidebar")
+        expect(dimensions.width).toBeWithin(clientWidth - 49, clientWidth - 47)
+    })
+    test("middle screen", async () => {
+        await waitAnimation(page.setViewport({ width: mobileBreakPoint - 10, height }))
+        await waitAnimation(page.reload())
+        await expectSidebarClosed()
+        await waitAnimation(click("appbar-btn-menu"))
+        await expectSidebarOpened()
+        const dimensions = await getDimensions("sidebar")
+        expect(dimensions.width).toBeWithin(sidebarWidth - 1, sidebarWidth + 1)
+    })
+    test("middle screen", async () => {
+        await waitAnimation(page.setViewport({ width: mobileBreakPoint + 10, height }))
+        await waitAnimation(page.reload())
+        await expectSidebarOpened()
+        const dimensions = await getDimensions("sidebar")
+        expect(dimensions.width).toBeWithin(sidebarWidth - 1, sidebarWidth + 1)
+    })
 })
