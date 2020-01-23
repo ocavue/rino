@@ -18,11 +18,12 @@
         "isolatedModules": true,
         "noEmit": true,
         "jsx": "preserve",
-        "forceConsistentCasingInFileNames": true
+        "forceConsistentCasingInFileNames": true,
+        "skipLibCheck": true
     },
     "include": [
         "next-env.d.ts",
-        "./**/*",
+        "./**/*"
     ],
     "exclude": [
         "node_modules"
