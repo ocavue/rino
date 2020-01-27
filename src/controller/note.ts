@@ -15,6 +15,18 @@ async function createNote(data: NoteData): Promise<DocumentSnapshot> {
     return snapshot
 }
 
+interface NoteInterface {
+    key: string
+    id: string
+    content: string
+    thumbnail: string
+    createTime: Timestamp
+    updateTime: Timestamp
+    deleting: boolean
+    upload: () => Promise<void>
+    delete: () => Promise<void>
+}
+
 abstract class BaseNote {
     readonly key: string // An unique constant.
     protected thumbnailContent: string | null = null
@@ -23,13 +35,7 @@ abstract class BaseNote {
         this.key = generateRandomId()
     }
 
-    abstract deleting: boolean
-    abstract id: string
-    abstract content: string
-    abstract createTime: Timestamp
-    abstract updateTime: Timestamp
-    abstract upload(): Promise<void>
-    abstract delete(): Promise<void>
+    abstract get content(): string
 
     get thumbnail() {
         if (this.thumbnailContent === null) {
@@ -44,7 +50,7 @@ abstract class BaseNote {
     }
 }
 
-class FirebaseNote extends BaseNote {
+class FirebaseNote extends BaseNote implements NoteInterface {
     private firebaseId = ""
     private data: NoteData
     private snapshotPromise: Promise<DocumentSnapshot>
@@ -151,7 +157,7 @@ class ImmutableNoteWrapper {
         return new ImmutableNoteWrapper(note)
     }
 
-    private constructor(private note: BaseNote) {
+    private constructor(private note: NoteInterface) {
         this.note = note
     }
     get key() {
