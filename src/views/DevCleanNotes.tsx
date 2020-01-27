@@ -7,7 +7,7 @@ export default function DevCleanNotes() {
     const { removeAllNotes } = EditContainer.useContainer()
 
     React.useEffect(() => {
-        setTimeout(() => {
+        const timeout = setTimeout(() => {
             const user = getCurrentUser()
             if (user) {
                 removeAllNotes(user.uid)
@@ -16,7 +16,8 @@ export default function DevCleanNotes() {
                 const query = new URLSearchParams({ redirect: window.location.pathname }).toString()
                 router.push(`/dev/sign-in?${query}`)
             }
-        }, 500)
+        }, 2000)
+        return () => clearTimeout(timeout)
     }, [removeAllNotes, router])
 
     return <div>dev clean notes</div>
