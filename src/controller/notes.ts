@@ -94,12 +94,19 @@ function useRemoveNote(noteKey: NoteKey, setNoteKey: SetNoteKey, notes: Notes, s
     )
 }
 
-function useResetNotes(setNotes: SetNotes) {
+function usePremadeNotes() {
+    return useMemo((): Notes => {
+        const notes: Notes = []
+        return notes
+    }, [])
+}
+
+function useResetNotes(setNotes: SetNotes, premadeNotes: Notes) {
     return useCallback(
         function resetNote() {
-            setNotes([])
+            setNotes(premadeNotes)
         },
-        [setNotes],
+        [premadeNotes, setNotes],
     )
 }
 
@@ -123,11 +130,12 @@ function useEdit() {
     const [noteKey, setNoteKey] = useNoteKey()
     const note = useMemo(() => notes.find(n => n.key === noteKey), [noteKey, notes])
 
-    const fetchNotes = useFetchNotes(setNotes)
+    const premadeNotes = usePremadeNotes()
     const setNoteContent = useSetNoteContent(noteKey, setNotes)
     const removeAllNotes = useRemoveAllNotes(setNotes)
+    const fetchNotes = useFetchNotes(setNotes)
     const removeNote = useRemoveNote(noteKey, setNoteKey, notes, setNotes)
-    const resetNotes = useResetNotes(setNotes)
+    const resetNotes = useResetNotes(setNotes, premadeNotes)
     const createNote = useCreateNote(setNotes, setNoteKey)
 
     return {
@@ -135,9 +143,9 @@ function useEdit() {
         notes,
         noteKey,
         setNoteKey,
-        fetchNotes,
         setNoteContent,
         removeAllNotes,
+        fetchNotes,
         removeNote,
         resetNotes,
         createNote,
