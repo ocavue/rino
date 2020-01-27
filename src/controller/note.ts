@@ -83,6 +83,7 @@ class NoteCore {
         return this.data.createTime
     }
     async upload() {
+        if (this.deleting) return
         console.debug(`Uploading note ${this.id}`)
         const ref = await this.referencePromise
         await ref.update({
@@ -92,6 +93,7 @@ class NoteCore {
     }
     async delete() {
         if (this.deleting) return
+        console.debug(`Deleting note ${this.id}`)
         this.deleting = true
         const ref = await this.referencePromise
         ref.delete()
