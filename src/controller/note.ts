@@ -20,7 +20,7 @@ class NoteCore {
     private data: NoteData
     private snapshotPromise: Promise<DocumentSnapshot>
     private referencePromise: Promise<DocumentReference>
-    private deleting = false
+    public deleting = false
     private thumbnailContent: string | null = null
 
     readonly key: string // An unique constant.
@@ -125,6 +125,9 @@ class ImmutableNoteWrapper {
     }
     get updateTime() {
         return this.note.createTime
+    }
+    get deleting() {
+        return this.note.deleting
     }
     async upload() {
         return await this.note.upload()

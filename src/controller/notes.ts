@@ -3,7 +3,7 @@ import { Note } from "./note"
 import { createContainer } from "unstated-next"
 import { notesCollection } from "./collection"
 import { sortBy } from "lodash"
-import { useCallback, useMemo, useState } from "react"
+import { useCallback, useMemo, useRef, useState } from "react"
 
 export type Notes = Note[]
 
@@ -29,19 +29,31 @@ function useFetchNotes(setNotes: SetNotes) {
     )
 }
 
-function useSetNoteContent(note: Note | undefined, notes: Notes, setNotes: SetNotes) {
+function useSetNoteContent(noteKey: NoteKey, setNotes: SetNotes) {
+    const noteRef = useRef<Note | null | undefined>(null)
     return useCallback(
         async function setNoteContent(content: string) {
-            if (!note) return
-            const index = notes.findIndex(n => n.key === note.key)
-            if (index < 0) return
-            const newNotes = produce(notes, (notesDraft: Draft<Notes>) => {
-                notesDraft[index] = note.setContent(content)
+            setNotes(notes => {
+                let noteRefIndex = -1
+                const newNotes = produce(notes, (draft: Draft<Notes>) => {
+                    if (noteKey) {
+                        const index = draft.findIndex(note => note.key === noteKey)
+                        if (index >= 0) {
+                            const note = draft[index]
+                            if (!note.deleting) {
+                                noteRefIndex = index
+                                draft[index] = note.setContent(content)
+                            }
+                        }
+                    }
+                })
+                noteRef.current = newNotes[noteRefIndex]
+                return newNotes
             })
-            setNotes(newNotes)
-            await newNotes[index].upload()
+            const note = noteRef.current
+            if (note) await note.upload()
         },
-        [note, notes, setNotes],
+        [noteKey, setNotes],
     )
 }
 
@@ -111,7 +123,7 @@ function useEdit() {
     const note = useMemo(() => notes.find(n => n.key === noteKey), [noteKey, notes])
 
     const fetchNotes = useFetchNotes(setNotes)
-    const setNoteContent = useSetNoteContent(note, notes, setNotes)
+    const setNoteContent = useSetNoteContent(noteKey, setNotes)
     const removeAllNotes = useRemoveAllNotes(setNotes)
     const removeNote = useRemoveNote(noteKey, setNoteKey, notes, setNotes)
     const resetNotes = useResetNotes(setNotes)
