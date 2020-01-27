@@ -21,7 +21,7 @@ function useFetchNotes(setNotes: SetNotes) {
     return useCallback(
         async function fetchNotes(uid: string) {
             const query = await notesCollection.where("uid", "==", uid).get()
-            const originNotes = query.docs.map(snapshot => Note.new(uid, snapshot))
+            const originNotes = query.docs.map(snapshot => Note.new({ uid, snapshot }))
             const sortedNotes = sortBy(originNotes, note => [note.createTime, note.id]).reverse()
             setNotes(sortedNotes)
         },
@@ -113,7 +113,7 @@ function useResetNotes(setNotes: SetNotes, premadeNotes: Notes) {
 function useCreateNote(setNotes: SetNotes, setNoteKey: SetNoteKey) {
     return useCallback(
         function createNote(uid: string) {
-            const note = Note.new(uid)
+            const note = Note.new({ uid })
             setNotes(
                 produce((notes: Draft<Notes>) => {
                     notes.unshift(note)
