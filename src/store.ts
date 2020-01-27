@@ -1,4 +1,4 @@
-import { Note, User, getCurrentUser, theme } from "src/controller"
+import { User, getCurrentUser, theme } from "src/controller"
 import { createContainer } from "unstated-next"
 import { useMemo, useState } from "react"
 
@@ -6,15 +6,6 @@ const useAuth = () => {
     const [user, setUser] = useState<User | null>(getCurrentUser())
     const email: string | null = useMemo(() => user?.email || null, [user])
     return { user, email, setUser }
-}
-
-const useEdit = () => {
-    const [note, setNote] = useState<Note | null>(null)
-    const [notes, setNotes] = useState<Note[] | null>(null)
-    // renderKey is a number between 1 to 1000. Re-render NoteListItem when renderKey changes
-    const [renderKey, setRenderKey] = useState(1)
-    const updateRenderKey = () => setRenderKey(key => (key >= 1000 ? 1 : key + 1))
-    return { notes, setNotes, note, setNote, renderKey, updateRenderKey }
 }
 
 const useTheme = () => {
@@ -72,7 +63,6 @@ const useStore = () => {
     return {
         auth: useAuth(),
         state: { ...useUiState(), ...useNetworkState() },
-        edit: useEdit(),
     }
 }
 

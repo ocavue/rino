@@ -1,6 +1,7 @@
 import * as icons from "@material-ui/icons"
 import { AppBar, Menu, MenuItem, Theme, createStyles, makeStyles } from "@material-ui/core"
 import { AppbarIconButton } from "src/components/AppbarIconButton"
+import { EditContainer } from "src/controller"
 import { StoreContainer } from "src/store"
 import { appbarIconButtonSize, appbarIconMargin, maxDrawerWidth } from "src/constants"
 import { fade } from "@material-ui/core/styles/colorManipulator"
@@ -54,20 +55,15 @@ const AppbarMenu: React.FC<{
     handleMenuClose: () => void
 }> = ({ anchorEl, handleMenuClose }) => {
     const {
-        edit: { note, setNote, notes, setNotes },
         state: { setDrawerActivity },
     } = StoreContainer.useContainer()
 
+    const { removeNote } = EditContainer.useContainer()
+
     const deleteNote = () => {
-        if (note) {
-            setNote(null)
-            if (notes) {
-                setNotes(notes.filter(n => n !== note))
-            }
-            note.remove()
-            handleMenuClose()
-            setDrawerActivity(true) // TODO: test this logic
-        }
+        removeNote()
+        handleMenuClose()
+        setDrawerActivity(true) // TODO: test this logic
     }
 
     return (
@@ -82,8 +78,8 @@ const AppbarMenu: React.FC<{
 export const Appbar: React.FC = () => {
     const {
         state: { drawerActivity, setDrawerActivity },
-        edit: { note },
     } = StoreContainer.useContainer()
+    const { noteKey } = EditContainer.useContainer()
 
     const classes = useStyles()
     const toggleDrawerActivity = () => setDrawerActivity(!drawerActivity)
@@ -112,7 +108,7 @@ export const Appbar: React.FC = () => {
             >
                 <icons.Menu />
             </AppbarIconButton>
-            {note && (
+            {noteKey && (
                 <AppbarIconButton
                     aria-label="open drawer"
                     onClick={handleMenuBtnClick}

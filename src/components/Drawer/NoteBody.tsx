@@ -7,7 +7,6 @@ import React from "react"
 export const NoteBody: React.FC = () => {
     const {
         state: { loading },
-        edit: { notes },
     } = StoreContainer.useContainer()
 
     return loading ? (
@@ -15,6 +14,6 @@ export const NoteBody: React.FC = () => {
             <m.CircularProgress />
         </m.Box>
     ) : (
-        <NoteList notes={notes || []} />
+        <NoteList />
     )
 }

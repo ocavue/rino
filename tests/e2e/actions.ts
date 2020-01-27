@@ -51,7 +51,7 @@ export async function clickSidebarNoteListItem() {
 
 export async function cleanNotes() {
     await goto("/dev/clean-notes")
-    await wait("main") // Return home page
+    await wait("main") // Return to home page
 }
 
 export async function expectSidebarOpened() {

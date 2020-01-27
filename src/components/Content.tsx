@@ -1,3 +1,4 @@
+import { EditContainer } from "src/controller"
 import { Editor } from "./Editor"
 import { StoreContainer } from "src/store"
 import { Theme, createStyles, makeStyles } from "@material-ui/core"
@@ -31,11 +32,13 @@ const useStyles = makeStyles((theme: Theme) => {
 })
 
 export const Content: React.FC = () => {
+    const classes = useStyles()
+
     const {
         state: { drawerActivity },
-        edit: { note, updateRenderKey },
     } = StoreContainer.useContainer()
-    const classes = useStyles()
+
+    const { setNoteContent, note } = EditContainer.useContainer()
 
     return (
         <main
@@ -45,9 +48,9 @@ export const Content: React.FC = () => {
             {note ? (
                 <Editor
                     note={note}
+                    setNoteContent={setNoteContent}
                     autoFocus={true}
                     key={note.key}
-                    updateRenderKey={updateRenderKey}
                 />
             ) : (
                 <Welcome />
