@@ -80,7 +80,7 @@ class NoteCore {
         return this.data.createTime
     }
     get updateTime(): Timestamp {
-        return this.data.createTime
+        return this.data.updateTime
     }
     async upload() {
         if (this.deleting) return
@@ -124,7 +124,7 @@ class ImmutableNoteWrapper {
         return this.note.createTime
     }
     get updateTime() {
-        return this.note.createTime
+        return this.note.updateTime
     }
     get deleting() {
         return this.note.deleting
