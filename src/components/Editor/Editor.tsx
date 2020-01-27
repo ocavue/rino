@@ -48,7 +48,7 @@ class InnerEditor extends React.Component<InnerEditorProps> {
         this.createView(ProseMirrorView, this.note.content)
 
         this.update = debounce(() => {
-            console.log("Updating")
+            console.debug("Setting note content")
             if (this.view) {
                 this.setNoteContent(this.view.content)
             }
@@ -77,7 +77,7 @@ class InnerEditor extends React.Component<InnerEditorProps> {
     createView(View: typeof MarkdownView | typeof ProseMirrorView, content: string) {
         if (this.view) this.view.destroy()
         try {
-            console.log("creating view")
+            console.debug("Creating edior view")
             const ref = this.editorRef.current
             if (!ref) throw new Error("ref is empty")
             this.view = new View(ref, content)
