@@ -3,7 +3,7 @@ import { Note } from "./note"
 import { createContainer } from "unstated-next"
 import { notesCollection } from "./collection"
 import { sortBy } from "lodash"
-import { useCallback, useMemo, useRef, useState } from "react"
+import { useCallback, useMemo, useState } from "react"
 
 export type Notes = Note[]
 
@@ -30,9 +30,9 @@ function useFetchNotes(setNotes: SetNotes) {
 }
 
 function useSetNoteContent(noteKey: NoteKey, setNotes: SetNotes) {
-    const noteRef = useRef<Note | null | undefined>(null)
     return useCallback(
         async function setNoteContent(content: string) {
+            let noteRef: Note | null = null
             setNotes(notes => {
                 let noteRefIndex = -1
                 const newNotes = produce(notes, (draft: Draft<Notes>) => {
@@ -47,11 +47,12 @@ function useSetNoteContent(noteKey: NoteKey, setNotes: SetNotes) {
                         }
                     }
                 })
-                noteRef.current = newNotes[noteRefIndex]
+                noteRef = newNotes[noteRefIndex]
                 return newNotes
             })
-            const note = noteRef.current
-            if (note) await note.upload()
+            if (noteRef) {
+                await (noteRef as Note).upload()
+            }
         },
         [noteKey, setNotes],
     )
