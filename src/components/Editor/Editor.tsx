@@ -9,13 +9,10 @@ import clsx from "clsx"
 type EditorProps = {
     autoFocus: boolean
     note: Note
-    updateRenderKey: () => void
+    setNoteContent: (content: string) => void
 }
 
 type InnerEditorProps = EditorProps & {
-    autoFocus: boolean
-    note: Note
-    updateRenderKey: () => void
     classes: Record<never, string>
 }
 
@@ -31,18 +28,18 @@ class InnerEditor extends React.Component<InnerEditorProps> {
     private note: Note
     private update: () => void
     private handleKeydown: (event: KeyboardEvent) => void
-    private updateRenderKey: () => void
     private classes: Record<never, string>
     private sourceCodeMode: boolean
+    private setNoteContent: (content: string) => void
 
     constructor(props: InnerEditorProps) {
         super(props)
         this.editorRef = React.createRef<HTMLDivElement>()
         this.view = null
         this.note = props.note
+        this.setNoteContent = props.setNoteContent
         this.update = () => {}
         this.handleKeydown = () => {}
-        this.updateRenderKey = props.updateRenderKey
         this.classes = props.classes
         this.sourceCodeMode = false
     }
@@ -53,8 +50,7 @@ class InnerEditor extends React.Component<InnerEditorProps> {
         this.update = debounce(() => {
             console.log("Updating")
             if (this.view) {
-                this.note.updateContent(this.view.content)
-                this.updateRenderKey()
+                this.setNoteContent(this.view.content)
             }
         }, 1000)
 
@@ -73,7 +69,7 @@ class InnerEditor extends React.Component<InnerEditorProps> {
     componentWillUnmount() {
         window.removeEventListener("keydown", this.handleKeydown)
         if (this.view) {
-            this.note.updateContent(this.view.content)
+            this.setNoteContent(this.view.content)
             this.view.destroy()
         }
     }
@@ -109,13 +105,13 @@ class InnerEditor extends React.Component<InnerEditorProps> {
     }
 }
 
-export const Editor: React.FC<EditorProps> = ({ autoFocus, note, updateRenderKey }) => {
+export const Editor: React.FC<EditorProps> = ({ autoFocus, note, setNoteContent }) => {
     const classes = useStyles()
     return (
         <InnerEditor
             autoFocus={autoFocus}
             note={note}
-            updateRenderKey={updateRenderKey}
+            setNoteContent={setNoteContent}
             classes={classes}
         />
     )

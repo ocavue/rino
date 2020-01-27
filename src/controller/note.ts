@@ -1,10 +1,6 @@
-import { sortBy } from "lodash"
-
 import { DocumentReference, DocumentSnapshot, Timestamp, firebase } from "./firebase"
 import { generateRandomId } from "src/utils"
-
-type Listener = (notes: { id: string }[]) => void
-type Unsubscribe = () => void
+import { notesCollection } from "./collection"
 
 interface NoteData {
     uid: string
@@ -13,27 +9,23 @@ interface NoteData {
     updateTime: Timestamp
 }
 
-async function createNote(
-    collection: firebase.firestore.CollectionReference,
-    data: NoteData,
-): Promise<DocumentSnapshot> {
-    const ref = await collection.add(data)
+async function createNote(data: NoteData): Promise<DocumentSnapshot> {
+    const ref = await notesCollection.add(data)
     const snapshot = await ref.get()
     return snapshot
 }
 
-export class Note {
-    private static collection = firebase.firestore().collection("notes")
-
-    private snapshotPromise: Promise<DocumentSnapshot>
-
+class NoteCore {
     private firebaseId = ""
-    public readonly key: string // An unique constant.
     private data: NoteData
+    private snapshotPromise: Promise<DocumentSnapshot>
+    private referencePromise: Promise<DocumentReference>
     private deleting = false
-    public thumbnail = ""
+    private thumbnailContent: string | null = null
 
-    public constructor(uid: string, snapshot?: DocumentSnapshot) {
+    readonly key: string // An unique constant.
+
+    constructor(uid: string, snapshot?: DocumentSnapshot) {
         this.key = generateRandomId()
         if (snapshot) {
             this.data = {
@@ -54,14 +46,10 @@ export class Note {
             }
 
             // Insert a new Note document in firebase
-            this.snapshotPromise = createNote(Note.collection, this.data)
+            this.snapshotPromise = createNote(this.data)
             this.snapshotPromise.then(snapshot => (this.firebaseId = snapshot.ref.id))
         }
-        this.setThumbnail()
-    }
-
-    private get refPromise(): Promise<DocumentReference> {
-        return this.snapshotPromise.then(snapshot => snapshot.ref)
+        this.referencePromise = this.snapshotPromise.then(snap => snap.ref)
     }
 
     public get id(): string {
@@ -69,75 +57,83 @@ export class Note {
         return this.firebaseId
     }
 
-    public get content(): string {
+    get content(): string {
         return this.data.content
     }
-    public get createTime(): Timestamp {
-        return this.data.createTime
+    set content(value: string) {
+        if (this.data.content === value) return
+        this.data.content = value
+        this.thumbnailContent = null
     }
-    public get updateTime(): Timestamp {
-        return this.data.createTime
-    }
-
-    private setThumbnail(): void {
-        const lines = []
-        for (const line of this.content.split("\n")) {
-            if (line.trim()) lines.push(line.slice(0, 50))
-            if (lines.length >= 3) break
+    get thumbnail() {
+        if (this.thumbnailContent === null) {
+            const lines = []
+            for (const line of this.content.split("\n")) {
+                if (line.trim()) lines.push(line.slice(0, 50))
+                if (lines.length >= 3) break
+            }
+            this.thumbnailContent = lines.join("\n")
         }
-        this.thumbnail = lines.join("\n")
+        return this.thumbnailContent
     }
-
-    public async updateContent(content: string): Promise<void> {
-        if (this.deleting) return Promise.resolve()
-        if (this.data.content === content) return Promise.resolve()
-        const updateTime = firebase.firestore.Timestamp.now()
-        this.data.content = content
-        this.data.updateTime = updateTime
-        this.setThumbnail()
-        const ref = await this.refPromise
-        await ref.update({ content, updateTime })
+    get createTime(): Timestamp {
+        return this.data.createTime
     }
-
-    public static async list(uid: string): Promise<Note[]> {
-        const query = await this.collection.where("uid", "==", uid).get()
-        const notes = query.docs.map(snapshot => new Note(uid, snapshot))
-        return sortBy(notes, note => [note.createTime, note.id]).reverse()
+    get updateTime(): Timestamp {
+        return this.data.createTime
     }
-
-    public static async clean(uid: string): Promise<void> {
-        const query = await this.collection.where("uid", "==", uid).get()
-        query.forEach(doc => {
-            doc.ref.delete()
+    async upload() {
+        console.debug(`Uploading note ${this.id}`)
+        const ref = await this.referencePromise
+        await ref.update({
+            content: this.content,
+            updateTime: this.updateTime,
         })
     }
-
-    public static listen(listener: Listener, type?: "added" | "modified" | "removed"): Unsubscribe {
-        if (type) {
-            return this.collection.onSnapshot(querySnapshot => {
-                const notes = querySnapshot
-                    .docChanges()
-                    .filter(change => change.type === type)
-                    .map(change => ({ id: change.doc.id }))
-                listener(notes)
-            })
-        } else {
-            return this.collection.onSnapshot(querySnapshot => {
-                const notes = querySnapshot.docs.map(doc => ({ id: doc.id }))
-                listener(notes)
-            })
-        }
-    }
-
-    public static async get(id: string, uid: string): Promise<Note> {
-        const snapshot = await this.collection.doc(id).get()
-        if (!snapshot.exists) throw new Error(`Can't find note with id = ${id}`)
-        return new Note(uid, snapshot)
-    }
-
-    public async remove() {
+    async delete() {
+        if (this.deleting) return
         this.deleting = true
-        const ref = await this.refPromise
-        await ref.delete()
+        const ref = await this.referencePromise
+        ref.delete()
     }
 }
+
+class ImmutableNoteWrapper {
+    static new(uid: string, snapshot?: DocumentSnapshot) {
+        const note = new NoteCore(uid, snapshot)
+        return new ImmutableNoteWrapper(note)
+    }
+    private constructor(private note: NoteCore) {
+        this.note = note
+    }
+    get key() {
+        return this.note.key
+    }
+    get id() {
+        return this.note.id
+    }
+    get content() {
+        return this.note.content
+    }
+    get thumbnail() {
+        return this.note.thumbnail
+    }
+    get createTime() {
+        return this.note.createTime
+    }
+    get updateTime() {
+        return this.note.createTime
+    }
+    async upload() {
+        return await this.note.upload()
+    }
+    async delete() {
+        return await this.note.delete()
+    }
+    setContent(content: string): ImmutableNoteWrapper {
+        this.note.content = content
+        return new ImmutableNoteWrapper(this.note)
+    }
+}
+
+export { ImmutableNoteWrapper as Note }
