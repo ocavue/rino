@@ -1,9 +1,15 @@
+// import * as premadeNoteHome from "raw-loader!./docs/home.md.txt"
 import { Draft, produce } from "immer"
 import { Note } from "./note"
 import { createContainer } from "unstated-next"
 import { notesCollection } from "./collection"
 import { sortBy } from "lodash"
 import { useCallback, useMemo, useState } from "react"
+
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const premadeNoteHome = require("./docs/home.md.txt")
+
+console.log(premadeNoteHome.default)
 
 export type Notes = Note[]
 
@@ -96,8 +102,8 @@ function useRemoveNote(noteKey: NoteKey, setNoteKey: SetNoteKey, notes: Notes, s
 
 function usePremadeNotes() {
     return useMemo((): Notes => {
-        const notes: Notes = []
-        return notes
+        const texts = [premadeNoteHome.default]
+        return texts.map(content => Note.new({ local: true, content }))
     }, [])
 }
 

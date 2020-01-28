@@ -34,6 +34,19 @@ const nextConfig = {
             config.resolve.plugins = [new TsconfigPathsPlugin()]
         }
 
+        config.module.rules.push({
+            test: /\.(md|txt)$/i,
+            use: [
+                options.defaultLoaders.babel,
+                {
+                    loader: "raw-loader",
+                    options: {},
+                },
+            ],
+        })
+
+        // console.log("config.module.rules:", config.module.rules)
+
         return config
     },
     env: envVars,
