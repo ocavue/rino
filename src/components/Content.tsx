@@ -1,11 +1,13 @@
 import { EditContainer } from "src/controller"
 import { Editor } from "./Editor"
+import { SignInSnackbar } from "src/components/SignInSnackbar"
 import { StoreContainer } from "src/store"
 import { Theme, createStyles, makeStyles } from "@material-ui/core"
 import { Welcome } from "./Welcome"
 import { maxDrawerWidth } from "src/constants"
 import React from "react"
 import clsx from "clsx"
+
 const useStyles = makeStyles((theme: Theme) => {
     return createStyles({
         content: {
@@ -26,6 +28,22 @@ const useStyles = makeStyles((theme: Theme) => {
                     duration: theme.transitions.duration.enteringScreen,
                 }),
                 marginLeft: maxDrawerWidth,
+            },
+        },
+        snackbar: {
+            left: "calc(50% + 0px)",
+            transition: theme.transitions.create("left", {
+                easing: theme.transitions.easing.sharp,
+                duration: theme.transitions.duration.leavingScreen,
+            }),
+        },
+        snackbarShift: {
+            left: "calc(50% + 200px)",
+            [theme.breakpoints.up("md")]: {
+                transition: theme.transitions.create("left", {
+                    easing: theme.transitions.easing.easeOut,
+                    duration: theme.transitions.duration.enteringScreen,
+                }),
             },
         },
     })
@@ -55,6 +73,11 @@ export const Content: React.FC = () => {
             ) : (
                 <Welcome />
             )}
+            <SignInSnackbar
+                classes={{
+                    root: clsx(classes.snackbar, { [classes.snackbarShift]: drawerActivity }),
+                }}
+            />
         </main>
     )
 }
