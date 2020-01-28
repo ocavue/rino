@@ -33,7 +33,7 @@ const useStyles = m.makeStyles((theme: m.Theme) => {
     })
 })
 
-const Alert: React.FC<{ title: string; message: string }> = ({ title, message, children }) => {
+const Alert: React.FC<{ title: string; message: string }> = ({ title, message }) => {
     const classes = useStyles()
     return (
         <div className={classes.center} data-testid={`alert-${title}`}>
