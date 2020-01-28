@@ -15,18 +15,50 @@ async function createNote(data: NoteData): Promise<DocumentSnapshot> {
     return snapshot
 }
 
-class NoteCore {
+interface NoteInterface {
+    key: string
+    id: string
+    content: string
+    thumbnail: string
+    createTime: Timestamp
+    updateTime: Timestamp
+    deleting: boolean
+    upload: () => Promise<void>
+    delete: () => Promise<void>
+}
+
+abstract class BaseNote {
+    readonly key: string // An unique constant.
+    protected thumbnailContent: string | null = null
+
+    constructor() {
+        this.key = generateRandomId()
+    }
+
+    abstract get content(): string
+
+    get thumbnail() {
+        if (this.thumbnailContent === null) {
+            const lines = []
+            for (const line of this.content.split("\n")) {
+                if (line.trim()) lines.push(line.slice(0, 50))
+                if (lines.length >= 3) break
+            }
+            this.thumbnailContent = lines.join("\n")
+        }
+        return this.thumbnailContent
+    }
+}
+
+class FirebaseNote extends BaseNote implements NoteInterface {
     private firebaseId = ""
     private data: NoteData
     private snapshotPromise: Promise<DocumentSnapshot>
     private referencePromise: Promise<DocumentReference>
     public deleting = false
-    private thumbnailContent: string | null = null
-
-    readonly key: string // An unique constant.
 
     constructor(uid: string, snapshot?: DocumentSnapshot) {
-        this.key = generateRandomId()
+        super()
         if (snapshot) {
             this.data = {
                 uid: uid,
@@ -65,17 +97,6 @@ class NoteCore {
         this.data.content = value
         this.thumbnailContent = null
     }
-    get thumbnail() {
-        if (this.thumbnailContent === null) {
-            const lines = []
-            for (const line of this.content.split("\n")) {
-                if (line.trim()) lines.push(line.slice(0, 50))
-                if (lines.length >= 3) break
-            }
-            this.thumbnailContent = lines.join("\n")
-        }
-        return this.thumbnailContent
-    }
     get createTime(): Timestamp {
         return this.data.createTime
     }
@@ -100,13 +121,45 @@ class NoteCore {
     }
 }
 
-class ImmutableNoteWrapper {
-    static new(uid: string, snapshot?: DocumentSnapshot) {
-        const note = new NoteCore(uid, snapshot)
-        return new ImmutableNoteWrapper(note)
+class LocalNote extends BaseNote {
+    deleting: boolean
+    id: string
+    content: string
+    createTime: Timestamp
+    updateTime: Timestamp
+
+    constructor(content: string) {
+        super()
+        this.content = content
+        this.id = this.key
+        this.deleting = false
+        this.createTime = this.updateTime = firebase.firestore.Timestamp.now()
     }
-    private constructor(private note: NoteCore) {
+
+    async upload() {
+        return Promise.resolve()
+    }
+    async delete() {
+        this.deleting = true
+        return Promise.resolve()
+    }
+}
+
+class ImmutableNoteWrapper {
+    static new(
+        option:
+            | { local: true; content: string }
+            | { local?: false; uid: string; snapshot?: DocumentSnapshot },
+    ) {
+        const note = option.local
+            ? new LocalNote(option.content)
+            : new FirebaseNote(option.uid, option.snapshot)
+        return new ImmutableNoteWrapper(note, !!option.local)
+    }
+
+    private constructor(private note: NoteInterface, public local: boolean) {
         this.note = note
+        this.local = local
     }
     get key() {
         return this.note.key
@@ -137,7 +190,7 @@ class ImmutableNoteWrapper {
     }
     setContent(content: string): ImmutableNoteWrapper {
         this.note.content = content
-        return new ImmutableNoteWrapper(this.note)
+        return new ImmutableNoteWrapper(this.note, this.local)
     }
 }
 

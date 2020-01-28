@@ -26,6 +26,11 @@ const envVars = Object.keys(allEnvVars)
 
 const nextConfig = {
     exportTrailingSlash: true,
+    devIndicators: {
+        // Disable Next.js's prerender icon in the right bottom corner
+        // of the screen, who cover the sign-in snackbar.
+        autoPrerender: false,
+    },
     webpack: (config, options) => {
         // https://github.com/zeit/next.js/issues/7935
         if (config.resolve.plugins) {
@@ -33,6 +38,11 @@ const nextConfig = {
         } else {
             config.resolve.plugins = [new TsconfigPathsPlugin()]
         }
+
+        config.module.rules.push({
+            test: /\.(md|txt)$/i,
+            use: ["raw-loader"],
+        })
 
         return config
     },

@@ -6,6 +6,7 @@ import { Welcome } from "./Welcome"
 import { maxDrawerWidth } from "src/constants"
 import React from "react"
 import clsx from "clsx"
+
 const useStyles = makeStyles((theme: Theme) => {
     return createStyles({
         content: {

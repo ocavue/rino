@@ -1,6 +1,7 @@
 import { Draft, produce } from "immer"
 import { Note } from "./note"
 import { createContainer } from "unstated-next"
+import { docs } from "./docs"
 import { notesCollection } from "./collection"
 import { sortBy } from "lodash"
 import { useCallback, useMemo, useState } from "react"
@@ -21,7 +22,7 @@ function useFetchNotes(setNotes: SetNotes) {
     return useCallback(
         async function fetchNotes(uid: string) {
             const query = await notesCollection.where("uid", "==", uid).get()
-            const originNotes = query.docs.map(snapshot => Note.new(uid, snapshot))
+            const originNotes = query.docs.map(snapshot => Note.new({ uid, snapshot }))
             const sortedNotes = sortBy(originNotes, note => [note.createTime, note.id]).reverse()
             setNotes(sortedNotes)
         },
@@ -94,19 +95,25 @@ function useRemoveNote(noteKey: NoteKey, setNoteKey: SetNoteKey, notes: Notes, s
     )
 }
 
-function useResetNotes(setNotes: SetNotes) {
+function usePremadeNotes() {
+    return useMemo((): Notes => {
+        return docs.map(content => Note.new({ local: true, content }))
+    }, [])
+}
+
+function useResetNotes(setNotes: SetNotes, premadeNotes: Notes) {
     return useCallback(
         function resetNote() {
-            setNotes([])
+            setNotes(premadeNotes)
         },
-        [setNotes],
+        [premadeNotes, setNotes],
     )
 }
 
 function useCreateNote(setNotes: SetNotes, setNoteKey: SetNoteKey) {
     return useCallback(
         function createNote(uid: string) {
-            const note = Note.new(uid)
+            const note = Note.new({ uid })
             setNotes(
                 produce((notes: Draft<Notes>) => {
                     notes.unshift(note)
@@ -123,11 +130,12 @@ function useEdit() {
     const [noteKey, setNoteKey] = useNoteKey()
     const note = useMemo(() => notes.find(n => n.key === noteKey), [noteKey, notes])
 
-    const fetchNotes = useFetchNotes(setNotes)
+    const premadeNotes = usePremadeNotes()
     const setNoteContent = useSetNoteContent(noteKey, setNotes)
     const removeAllNotes = useRemoveAllNotes(setNotes)
+    const fetchNotes = useFetchNotes(setNotes)
     const removeNote = useRemoveNote(noteKey, setNoteKey, notes, setNotes)
-    const resetNotes = useResetNotes(setNotes)
+    const resetNotes = useResetNotes(setNotes, premadeNotes)
     const createNote = useCreateNote(setNotes, setNoteKey)
 
     return {
@@ -135,9 +143,9 @@ function useEdit() {
         notes,
         noteKey,
         setNoteKey,
-        fetchNotes,
         setNoteContent,
         removeAllNotes,
+        fetchNotes,
         removeNote,
         resetNotes,
         createNote,

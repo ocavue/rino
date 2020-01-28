@@ -3,16 +3,15 @@ import React from "react"
 
 const useStyles = m.makeStyles((theme: m.Theme) => {
     return m.createStyles({
-        page: {
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            height: "100vh",
-            padding: "16px",
-        },
         center: {
+            position: "fixed",
+            left: "50%",
+            top: "50%",
+            transform: "translateX(-50%) translateY(-50%)",
+
             display: "flex",
             alignItems: "center",
+            flexDirection: "column",
         },
         divider: {
             height: "56px",
@@ -28,14 +27,17 @@ const useStyles = m.makeStyles((theme: m.Theme) => {
         message: {
             fontSize: "1.0em",
         },
+        nav: {
+            textTransform: "none",
+        },
     })
 })
 
 const Alert: React.FC<{ title: string; message: string }> = ({ title, message }) => {
     const classes = useStyles()
     return (
-        <main className={classes.page}>
-            <div className={classes.center} data-testid={`alert-${title}`}>
+        <div className={classes.center} data-testid={`alert-${title}`}>
+            <m.Box display="flex" alignItems="center">
                 <h1 className={classes.title}>{title}</h1>
                 <m.Divider
                     orientation="vertical"
@@ -43,8 +45,12 @@ const Alert: React.FC<{ title: string; message: string }> = ({ title, message })
                     classes={{ root: classes.divider }}
                 />
                 <div className={classes.message}>{message}</div>
-            </div>
-        </main>
+            </m.Box>
+            <m.Box height="24px" />
+            <m.Button href="/" fullWidth={true} className={classes.nav}>
+                Return homepage
+            </m.Button>
+        </div>
     )
 }
 
