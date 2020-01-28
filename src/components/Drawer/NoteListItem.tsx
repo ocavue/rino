@@ -23,7 +23,7 @@ export const NoteListItem: React.FC<{ note: Note; onClick: () => void; selected:
             onClick={onClick}
             selected={selected}
             divider={true}
-            data-testid="sidebar-notes-list-item"
+            data-testid={note.local ? "sidebar-notes-list-item-local" : "sidebar-notes-list-item"}
         >
             <m.ListItemText
                 primary={note.thumbnail}

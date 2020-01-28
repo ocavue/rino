@@ -154,11 +154,12 @@ class ImmutableNoteWrapper {
         const note = option.local
             ? new LocalNote(option.content)
             : new FirebaseNote(option.uid, option.snapshot)
-        return new ImmutableNoteWrapper(note)
+        return new ImmutableNoteWrapper(note, !!option.local)
     }
 
-    private constructor(private note: NoteInterface) {
+    private constructor(private note: NoteInterface, public local: boolean) {
         this.note = note
+        this.local = local
     }
     get key() {
         return this.note.key
@@ -189,7 +190,7 @@ class ImmutableNoteWrapper {
     }
     setContent(content: string): ImmutableNoteWrapper {
         this.note.content = content
-        return new ImmutableNoteWrapper(this.note)
+        return new ImmutableNoteWrapper(this.note, this.local)
     }
 }
 
