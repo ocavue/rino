@@ -7,4 +7,4 @@ export const appbarIconMargin = 13
 export const appbarHeight = appbarIconButtonSize + appbarIconMargin * 2
 
 // Time (millisecond)
-export const SignInSnackbarTimeout = 3000
+export const signInSnackbarDelay = 3000

@@ -1,5 +1,5 @@
 import * as m from "@material-ui/core"
-import { SignInSnackbarTimeout } from "src/constants"
+import { signInSnackbarDelay } from "src/constants"
 import { StoreContainer } from "src/store"
 import NextLink from "next/link"
 import React from "react"
@@ -35,7 +35,7 @@ export const SignInSnackbar: React.FC = () => {
 
     React.useEffect(() => {
         if (!user && !loadingUser) {
-            const timeout = setTimeout(() => setOpen(true), SignInSnackbarTimeout)
+            const timeout = setTimeout(() => setOpen(true), signInSnackbarDelay)
             return () => clearTimeout(timeout)
         }
     }, [loadingUser, setOpen, user])
