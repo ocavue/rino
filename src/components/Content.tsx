@@ -30,22 +30,6 @@ const useStyles = makeStyles((theme: Theme) => {
                 marginLeft: maxDrawerWidth,
             },
         },
-        snackbar: {
-            left: "calc(50% + 0px)",
-            transition: theme.transitions.create("left", {
-                easing: theme.transitions.easing.sharp,
-                duration: theme.transitions.duration.leavingScreen,
-            }),
-        },
-        snackbarShift: {
-            left: "calc(50% + 200px)",
-            [theme.breakpoints.up("md")]: {
-                transition: theme.transitions.create("left", {
-                    easing: theme.transitions.easing.easeOut,
-                    duration: theme.transitions.duration.enteringScreen,
-                }),
-            },
-        },
     })
 })
 
@@ -73,11 +57,7 @@ export const Content: React.FC = () => {
             ) : (
                 <Welcome />
             )}
-            <SignInSnackbar
-                classes={{
-                    root: clsx(classes.snackbar, { [classes.snackbarShift]: drawerActivity }),
-                }}
-            />
+            <SignInSnackbar />
         </main>
     )
 }

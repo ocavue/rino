@@ -1,7 +1,7 @@
 import * as m from "@material-ui/core"
 import React from "react"
 
-export const SignInSnackbar: React.FC<{ classes: Record<string, string> }> = ({ classes }) => {
+export const SignInSnackbar: React.FC = () => {
     const handleClose = () => {}
     const open = true
     const content = (
@@ -17,8 +17,7 @@ export const SignInSnackbar: React.FC<{ classes: Record<string, string> }> = ({ 
         <m.Snackbar
             open={open}
             onClose={handleClose}
-            anchorOrigin={{ horizontal: "center", vertical: "bottom" }}
-            classes={classes}
+            anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
         >
             <m.SnackbarContent message={content} />
         </m.Snackbar>
