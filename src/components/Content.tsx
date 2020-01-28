@@ -1,6 +1,5 @@
 import { EditContainer } from "src/controller"
 import { Editor } from "./Editor"
-import { SignInSnackbar } from "src/components/SignInSnackbar"
 import { StoreContainer } from "src/store"
 import { Theme, createStyles, makeStyles } from "@material-ui/core"
 import { Welcome } from "./Welcome"
@@ -57,7 +56,6 @@ export const Content: React.FC = () => {
             ) : (
                 <Welcome />
             )}
-            <SignInSnackbar />
         </main>
     )
 }
