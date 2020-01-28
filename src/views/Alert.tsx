@@ -3,16 +3,13 @@ import React from "react"
 
 const useStyles = m.makeStyles((theme: m.Theme) => {
     return m.createStyles({
-        page: {
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            height: "100vh",
-            padding: "16px",
-        },
         center: {
             display: "flex",
             alignItems: "center",
+            position: "fixed",
+            left: "50%",
+            top: "50%",
+            transform: "translateX(-50%) translateY(-50%)",
         },
         divider: {
             height: "56px",
@@ -34,17 +31,11 @@ const useStyles = m.makeStyles((theme: m.Theme) => {
 const Alert: React.FC<{ title: string; message: string }> = ({ title, message }) => {
     const classes = useStyles()
     return (
-        <main className={classes.page}>
-            <div className={classes.center} data-testid={`alert-${title}`}>
-                <h1 className={classes.title}>{title}</h1>
-                <m.Divider
-                    orientation="vertical"
-                    light={true}
-                    classes={{ root: classes.divider }}
-                />
-                <div className={classes.message}>{message}</div>
-            </div>
-        </main>
+        <div className={classes.center} data-testid={`alert-${title}`}>
+            <h1 className={classes.title}>{title}</h1>
+            <m.Divider orientation="vertical" light={true} classes={{ root: classes.divider }} />
+            <div className={classes.message}>{message}</div>
+        </div>
     )
 }
 
