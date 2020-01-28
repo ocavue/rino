@@ -1,7 +1,0 @@
-# Shortcut
-
-## aaaa
-
-## bbbbb
-
-## cccccccccc

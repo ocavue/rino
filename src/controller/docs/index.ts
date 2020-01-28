@@ -1,4 +1,4 @@
 import home from "./home.md"
-import shortcut from "./shortcut.md"
+import mdSyntax from "./markdown-syntax.md.md"
 
-export const docs = [home, shortcut]
+export const docs = [home, mdSyntax]
