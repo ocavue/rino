@@ -27,7 +27,8 @@ const envVars = Object.keys(allEnvVars)
 const nextConfig = {
     exportTrailingSlash: true,
     devIndicators: {
-        // Disable Next.js's prerender state in the right bottom corner of the screen.
+        // Disable Next.js's prerender icon in the right bottom corner
+        // of the screen, who cover the sign-in snackbar.
         autoPrerender: false,
     },
     webpack: (config, options) => {
@@ -40,16 +41,8 @@ const nextConfig = {
 
         config.module.rules.push({
             test: /\.(md|txt)$/i,
-            use: [
-                options.defaultLoaders.babel,
-                {
-                    loader: "raw-loader",
-                    options: {},
-                },
-            ],
+            use: ["raw-loader"],
         })
-
-        // console.log("config.module.rules:", config.module.rules)
 
         return config
     },
