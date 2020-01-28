@@ -26,6 +26,10 @@ const envVars = Object.keys(allEnvVars)
 
 const nextConfig = {
     exportTrailingSlash: true,
+    devIndicators: {
+        // Disable Next.js's prerender state in the right bottom corner of the screen.
+        autoPrerender: false,
+    },
     webpack: (config, options) => {
         // https://github.com/zeit/next.js/issues/7935
         if (config.resolve.plugins) {
