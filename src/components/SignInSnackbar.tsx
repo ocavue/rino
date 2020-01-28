@@ -1,25 +1,46 @@
 import * as m from "@material-ui/core"
+import { StoreContainer } from "src/store"
+import NextLink from "next/link"
 import React from "react"
 
+const SignInSnackbarContent: React.FC = () => (
+    <m.SnackbarContent
+        message={
+            <span>
+                You are in anonymity mode. All changes will not be saved.
+                <NextLink href="/sign-in">
+                    <m.Button component="a" color="primary" size="small">
+                        Sign Up
+                    </m.Button>
+                </NextLink>{" "}
+                a free account now!
+            </span>
+        }
+    />
+)
+
 export const SignInSnackbar: React.FC = () => {
-    const handleClose = () => {}
-    const open = true
-    const content = (
-        <span>
-            You are in xx mode. All edit will not be save.
-            <m.Link href="/sign-up" underline="always">
-                <span> Sign up </span>
-            </m.Link>
-            a free account now!
-        </span>
-    )
+    const {
+        state: { loadingUser },
+        auth: { user },
+    } = StoreContainer.useContainer()
+
+    const [open, setOpen] = React.useState(false)
+
+    React.useEffect(() => {
+        if (!user && !loadingUser) {
+            const timeout = setTimeout(() => setOpen(true), 500)
+            return () => clearTimeout(timeout)
+        }
+    }, [loadingUser, setOpen, user])
+
     return (
         <m.Snackbar
             open={open}
-            onClose={handleClose}
             anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
+            data-testid="sign-in-snack-bar"
         >
-            <m.SnackbarContent message={content} />
+            <SignInSnackbarContent />
         </m.Snackbar>
     )
 }

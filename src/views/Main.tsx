@@ -4,6 +4,7 @@ import React from "react"
 import { Appbar } from "src/components/Appbar"
 import { Content } from "src/components/Content"
 import { Drawer } from "src/components/Drawer"
+import { SignInSnackbar } from "src/components/SignInSnackbar"
 
 const useStyles = makeStyles((theme: Theme) => {
     return createStyles({
@@ -21,6 +22,7 @@ export default function Main() {
             <Appbar />
             <Drawer />
             <Content />
+            <SignInSnackbar />
         </div>
     )
 }
