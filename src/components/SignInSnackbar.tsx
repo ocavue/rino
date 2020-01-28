@@ -18,7 +18,7 @@ const SignInSnackbarContent: React.FC = () => (
                     >
                         Sign Up
                     </m.Button>
-                </NextLink>{" "}
+                </NextLink>
                 a free account now!
             </span>
         }
