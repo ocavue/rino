@@ -1,4 +1,3 @@
-// import * as premadeNoteHome from "raw-loader!./docs/home.md.txt"
 import { Draft, produce } from "immer"
 import { Note } from "./note"
 import { createContainer } from "unstated-next"
