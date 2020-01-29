@@ -9,7 +9,7 @@ interface NoteData {
     updateTime: Timestamp
 }
 
-enum NoteType {
+export enum NoteType {
     Local = 1,
     Server,
 }

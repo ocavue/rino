@@ -1,5 +1,5 @@
 import { Draft, produce } from "immer"
-import { Note } from "./note"
+import { Note, NoteType } from "./note"
 import { createContainer } from "unstated-next"
 import { docs } from "./docs"
 import { notesCollection } from "./collection"
@@ -97,7 +97,7 @@ function useRemoveNote(noteKey: NoteKey, setNoteKey: SetNoteKey, notes: Notes, s
 
 function usePremadeNotes() {
     return useMemo((): Notes => {
-        return docs.map(content => Note.new({ local: true, content }))
+        return docs.map(content => Note.new({ type: NoteType.Local, content }))
     }, [])
 }
 
