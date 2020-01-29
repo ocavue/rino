@@ -163,7 +163,7 @@ class ImmutableNoteWrapper {
             | {
                   type?: NoteType.Server
                   uid: string
-                  snapshot: DocumentSnapshot
+                  snapshot?: DocumentSnapshot
               },
     ) {
         switch (params.type) {
