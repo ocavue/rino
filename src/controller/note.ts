@@ -9,6 +9,11 @@ interface NoteData {
     updateTime: Timestamp
 }
 
+export enum NoteType {
+    Local = 1,
+    Server,
+}
+
 async function createNote(data: NoteData): Promise<DocumentSnapshot> {
     const ref = await notesCollection.add(data)
     const snapshot = await ref.get()
@@ -16,6 +21,7 @@ async function createNote(data: NoteData): Promise<DocumentSnapshot> {
 }
 
 interface NoteInterface {
+    type: NoteType
     key: string
     id: string
     content: string
@@ -56,6 +62,7 @@ class FirebaseNote extends BaseNote implements NoteInterface {
     private snapshotPromise: Promise<DocumentSnapshot>
     private referencePromise: Promise<DocumentReference>
     public deleting = false
+    public type = NoteType.Server
 
     constructor(uid: string, snapshot?: DocumentSnapshot) {
         super()
@@ -127,6 +134,7 @@ class LocalNote extends BaseNote {
     content: string
     createTime: Timestamp
     updateTime: Timestamp
+    type = NoteType.Local
 
     constructor(content: string) {
         super()
@@ -147,19 +155,30 @@ class LocalNote extends BaseNote {
 
 class ImmutableNoteWrapper {
     static new(
-        option:
-            | { local: true; content: string }
-            | { local?: false; uid: string; snapshot?: DocumentSnapshot },
+        params:
+            | {
+                  type: NoteType.Local
+                  content: string
+              }
+            | {
+                  type?: NoteType.Server
+                  uid: string
+                  snapshot?: DocumentSnapshot
+              },
     ) {
-        const note = option.local
-            ? new LocalNote(option.content)
-            : new FirebaseNote(option.uid, option.snapshot)
-        return new ImmutableNoteWrapper(note, !!option.local)
+        switch (params.type) {
+            case NoteType.Local:
+                return new ImmutableNoteWrapper(new LocalNote(params.content))
+            case NoteType.Server:
+            default:
+                return new ImmutableNoteWrapper(new FirebaseNote(params.uid, params.snapshot))
+        }
     }
 
-    private constructor(private note: NoteInterface, public local: boolean) {
+    readonly local: boolean
+    private constructor(private note: NoteInterface) {
         this.note = note
-        this.local = local
+        this.local = note.type === NoteType.Local
     }
     get key() {
         return this.note.key
@@ -190,7 +209,7 @@ class ImmutableNoteWrapper {
     }
     setContent(content: string): ImmutableNoteWrapper {
         this.note.content = content
-        return new ImmutableNoteWrapper(this.note, this.local)
+        return new ImmutableNoteWrapper(this.note)
     }
 }
 
