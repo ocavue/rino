@@ -1,6 +1,6 @@
 <div align="center"><img src="https://github.com/ocavue/rino/blob/master/public/img/icons/android-chrome-192x192.png?raw=true" alt="Logo" height="192" width="192"></div>
 
-# Rino - Yet another markdown editor
+# 🦏 Rino - Yet another markdown editor
 
 [![Version](https://img.shields.io/github/v/tag/ocavue/rino?label=version)](https://github.com/ocavue/rino/releases)
 [![Build Status](https://circleci.com/gh/ocavue/rino/tree/master.svg?&style=shield)](https://circleci.com/gh/ocavue/rino/tree/master)
