@@ -4,8 +4,9 @@ set -e
 
 cd $(dirname $0)/..
 
-touch .env
-export $(cat .env | xargs)
+if [[ -f ".env" ]]; then
+    export $(cat .env | xargs)
+fi
 
 if [[ $1 == "unit" ]]; then
     shift 1

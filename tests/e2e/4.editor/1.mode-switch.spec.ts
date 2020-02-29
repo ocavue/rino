@@ -1,5 +1,5 @@
-import { click, pressKey, wait } from "../utils"
 import { clickSidebarNoteListItem, createNote, login } from "../actions"
+import { pressKey, wait } from "../utils"
 
 describe("Mode switch", function() {
     const expectWysiwygMode = async () => {
@@ -11,7 +11,7 @@ describe("Mode switch", function() {
         await wait("wysiwyg-mode-textarea", { hidden: true })
     }
     const pressHotkey = async () => {
-        await click("editor")
+        await page.click(".ProseMirror")
         await pressKey("Meta", "Slash")
     }
 
@@ -19,7 +19,7 @@ describe("Mode switch", function() {
         await login()
         await createNote()
         await clickSidebarNoteListItem()
-        await click("editor")
+        await page.click(".ProseMirror")
     })
     test("Default mode", async () => {
         await expectWysiwygMode()

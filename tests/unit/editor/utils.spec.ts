@@ -1,4 +1,4 @@
-import { dedent } from "../../../src/editor/utils"
+import { dedent } from "src/utils"
 
 describe("uitls", function() {
     test("dedent", function() {

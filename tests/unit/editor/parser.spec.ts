@@ -1,10 +1,8 @@
 import { Node } from "prosemirror-model"
 import { TaggedProsemirrorNode } from "prosemirror-test-builder"
-import { dedent } from "src/editor/utils"
-import { defaultMarkdownParser } from "src/editor/parser"
-import { nodes } from "./schema.spec"
+import { createBaseTestcases, defaultMarkdownParser, nodes } from "./base"
+import { dedent } from "src/utils"
 import { range } from "lodash"
-import { testcases } from "./base"
 
 const { doc, hr, ol, ul, li, p, checkedCheckbox, uncheckedCheckbox } = nodes
 
@@ -38,7 +36,7 @@ function assertEqual(markdown: string, node: TaggedProsemirrorNode) {
 }
 
 describe("base markdown parser", () => {
-    for (const [caseName, [markdown, node]] of Object.entries(testcases)) {
+    for (const [caseName, [markdown, node]] of Object.entries(createBaseTestcases())) {
         it(caseName, function() {
             assertEqual(markdown, node)
         })

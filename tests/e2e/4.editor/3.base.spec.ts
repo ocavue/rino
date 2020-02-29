@@ -1,11 +1,5 @@
-import { cleanNotes, createNote, login } from "../actions"
-import {
-    getSourceCodeModeText,
-    pressKey,
-    sleep,
-    type as typeByTestid,
-    wysiwygEditorSelector,
-} from "../utils"
+import { cleanNotes, createNote, switchMode } from "../actions"
+import { getSourceCodeModeText, goto, pressKey, type as typeByTestid } from "../utils"
 import { readFileSync } from "fs"
 
 function readText(filename: string) {
@@ -14,7 +8,7 @@ function readText(filename: string) {
 
 beforeAll(async () => {
     await jestPuppeteer.resetBrowser()
-    await login()
+    await goto("/")
 })
 
 afterAll(async () => {
@@ -27,11 +21,6 @@ async function type(text: string, pressEnter = true) {
 
 describe("Source code text", () => {
     jest.setTimeout(180000)
-
-    async function switchMode() {
-        await pressKey("Meta", "Slash")
-        await sleep(500)
-    }
 
     test("Create a note", async () => {
         await createNote()
@@ -51,19 +40,10 @@ describe("Source code text", () => {
         await type("###### h6")
     })
 
-    test("Code block with space", async () => {
-        await type("```python")
-        await type("for i in range(3000):")
-        await type("    print(f'love u {i + 1} times')")
-        await pressKey("Shift", "Enter")
-        await type("")
-    })
-
-    test("Code block with tab", async () => {
-        await type("```go")
-        await type("for i := 0; i < 3000; i++ {")
-        await type(`\tfmt.Printf("love u %d times\\n", i+1)`)
-        await type("}")
+    test("Code block", async () => {
+        await type("```")
+        await type("code")
+        await type("code")
         await pressKey("Shift", "Enter")
         await type("")
     })
@@ -96,48 +76,8 @@ describe("Source code text", () => {
 
     test("Check result", async () => {
         await switchMode() // Switch to the source code mode
-        expect(await getSourceCodeModeText()).toBe(readText("0.txt"))
+        const received = await getSourceCodeModeText()
+        expect(received).toBe(readText("0.txt"))
         await switchMode() // Switch back to the WYSIWYG mode
-    })
-})
-
-describe("HTML", () => {
-    describe("Image", () => {
-        const imageSelector = `${wysiwygEditorSelector} img`
-
-        beforeAll(async () => {
-            await createNote()
-            await page.waitFor(imageSelector, { hidden: true })
-        })
-
-        test("Input", async () => {
-            await type("h1")
-            await type("![Image](https://via.placeholder.com/100/)")
-        })
-
-        test("Check", async () => {
-            await page.waitFor(imageSelector)
-        })
-    })
-})
-
-describe("Firebase operation", () => {
-    // App should not throw any error when doing firebase operations
-
-    const microseconds = 5000 // Should be enough for firebase operations
-
-    test("Create note", async () => {
-        await createNote()
-        await sleep(microseconds)
-    })
-
-    test("Editor note", async () => {
-        await type("Something")
-        await sleep(microseconds)
-    })
-
-    test("Switch editor", async () => {
-        await pressKey("Meta", "Slash")
-        await sleep(microseconds)
     })
 })

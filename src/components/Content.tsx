@@ -1,5 +1,5 @@
 import { EditContainer } from "src/controller"
-import { Editor } from "./Editor"
+import { Editor } from "src/editor/components"
 import { StoreContainer } from "src/store"
 import { Theme, createStyles, makeStyles } from "@material-ui/core"
 import { Welcome } from "./Welcome"

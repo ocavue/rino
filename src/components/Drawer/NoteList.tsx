@@ -24,8 +24,8 @@ export const NoteList: React.FC<{}> = () => {
         <List className={classes.drawerBody} data-testid="sidebar-notes">
             {notes.map(note => (
                 <NoteListItem
-                    note={note}
                     key={note.key}
+                    note={note}
                     selected={note.key === noteKey}
                     onClick={() => selectNote(note.key)}
                 />

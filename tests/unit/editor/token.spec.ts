@@ -1,4 +1,4 @@
-import { mergeTokens, pushClass } from "src/editor/token"
+import { mergeTokens, pushClass } from "src/editor/extensions/decoration/token"
 
 function assertDeepEqual(a: any, b: any) {
     expect(a).toStrictEqual(b)

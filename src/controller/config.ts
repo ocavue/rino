@@ -1,4 +1,4 @@
-import firebaseJson from "config/firebase.json"
+import firebaseJson from "../../config/firebase.json"
 
 const firebaseConfig: {
     apiKey: string

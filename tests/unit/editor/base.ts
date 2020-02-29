@@ -1,6 +1,39 @@
+import { DefaultMarkdownParser } from "src/editor/transform/parser"
 import { TaggedProsemirrorNode } from "prosemirror-test-builder"
-import { dedent } from "src/editor/utils"
-import { nodes } from "./schema.spec"
+import { builders } from "prosemirror-test-builder"
+import { createWysiwygManager } from "src/editor"
+import { dedent } from "src/utils"
+
+export const wysiwygManager = createWysiwygManager()
+export const schema = wysiwygManager.schema
+export const defaultMarkdownParser = new DefaultMarkdownParser(schema)
+
+export const def = {
+    p: { nodeType: "paragraph" },
+    h1: { nodeType: "heading", level: 1 },
+    h2: { nodeType: "heading", level: 2 },
+    h3: { nodeType: "heading", level: 3 },
+    h4: { nodeType: "heading", level: 4 },
+    h5: { nodeType: "heading", level: 5 },
+    h6: { nodeType: "heading", level: 6 },
+    hr: { nodeType: "horizontalRule" },
+    li: { nodeType: "rinoListItem" },
+    checkedCheckbox: { nodeType: "rinoCheckbox", checked: true },
+    uncheckedCheckbox: { nodeType: "rinoCheckbox", checked: false },
+    ol: { nodeType: "rinoOrderedList" },
+    ul: { nodeType: "rinoBulletList" },
+    br: { nodeType: "hardBreak" },
+    pre: { nodeType: "codeBlock", userInputLanguage: "" }, // TODO: Remove `userInputLanguage: ""` after https://github.com/remirror/remirror/pull/248 been merged
+    preJS: { nodeType: "codeBlock", language: "javascript", userInputLanguage: "javascript" },
+    blockquote: { nodeType: "rinoBlockquote" },
+    table: { nodeType: "rinoTable" },
+    tableRow: { nodeType: "rinoTableRow" },
+    tableCell: { nodeType: "rinoTableCell" },
+} as const
+
+export const nodes = builders(schema, def)
+
+if (!nodes) throw new Error(`nodes is ${nodes}`)
 
 const {
     doc,
@@ -21,7 +54,7 @@ const {
     tableCell,
 } = nodes
 
-export const testcases: Record<string, [string, TaggedProsemirrorNode]> = {
+export const createBaseTestcases = (): Record<string, [string, TaggedProsemirrorNode]> => ({
     paragraph: ["hello", doc(p("hello"))],
     h1: ["# hello", doc(h1("hello"))],
     h6: ["###### hello", doc(h6("hello"))],
@@ -58,4 +91,4 @@ export const testcases: Record<string, [string, TaggedProsemirrorNode]> = {
     //         p('text',  br(), 'text')
     //     )
     // ],
-}
+})

@@ -1,1 +1,1 @@
-export { BaseView, ProseMirrorView, MarkdownView } from "./views"
+export * from "./components"

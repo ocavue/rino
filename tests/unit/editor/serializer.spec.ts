@@ -1,18 +1,17 @@
 import { TaggedProsemirrorNode } from "prosemirror-test-builder"
-import { dedent } from "src/editor/utils"
-import { defaultMarkdownSerializer } from "src/editor/serializer"
-import { nodes } from "./schema.spec"
-import { testcases } from "./base"
+import { createBaseTestcases, nodes } from "./base"
+import { dedent } from "src/utils"
+import { defaultMarkdownSerializer } from "src/editor/transform/serializer"
 
 const { doc, p, table, tableRow, tableCell, li, ul, uncheckedCheckbox, checkedCheckbox } = nodes
 
-function assertEqual(markdown: string, node: TaggedProsemirrorNode) {
-    expect(markdown).toBe(defaultMarkdownSerializer.serialize(node))
+function assertEqual(expectedMarkdown: string, receivedNode: TaggedProsemirrorNode) {
+    expect(defaultMarkdownSerializer.serialize(receivedNode)).toBe(expectedMarkdown)
 }
 
 describe("base markdown serializer", () => {
     describe("base test cases", function() {
-        for (const [caseName, [markdown, node]] of Object.entries(testcases)) {
+        for (const [caseName, [markdown, node]] of Object.entries(createBaseTestcases())) {
             test(caseName, function() {
                 assertEqual(markdown, node)
             })

@@ -105,7 +105,9 @@ export class MarkdownSerializerState {
 
     // Render the given node as a block.
     public render(node: Node, parent: Node, index: number) {
-        this.nodes[node.type.name](this, node, parent, index)
+        const spec = this.nodes[node.type.name]
+        if (!spec) throw new Error(`Can't find node spec for type '${node.type.name}'`)
+        spec(this, node, parent, index)
     }
 
     // Render the contents of `parent` as block nodes.
@@ -197,22 +199,22 @@ export class MarkdownSerializer {
 }
 
 export const defaultMarkdownSerializer = new MarkdownSerializer({
-    rinoBlockquote(state, node, parent, index) {
+    blockquote(state, node, parent, index) {
         state.wrapBlock("> ", null, node, () => state.renderContent(node))
     },
-    rinoCodeBlock(state, node, parent, index) {
-        state.write("```" + (node.attrs.language || "") + "\n")
+    codeBlock(state, node, parent, index) {
+        state.write("```" + (node.attrs.userInputLanguage || "") + "\n")
         state.text(node.textContent, false)
         state.ensureNewLine()
         state.write("```")
         state.closeBlock(node)
     },
-    rinoHeading(state, node, parent, index) {
+    heading(state, node, parent, index) {
         state.write(state.repeat("#", node.attrs.level) + " ")
         state.renderInline(node)
         state.closeBlock(node)
     },
-    rinoHorizontalRule(state, node, parent, index) {
+    horizontalRule(state, node, parent, index) {
         state.write(node.attrs.markup || "---")
         state.closeBlock(node)
     },
@@ -244,7 +246,7 @@ export const defaultMarkdownSerializer = new MarkdownSerializer({
             (node.attrs.title ? " " + state.quote(node.attrs.title) : "") + ")")
     },
     */
-    rinoHardBreak(state, node, parent, index) {
+    hardBreak(state, node, parent, index) {
         for (let i = index + 1; i < parent.childCount; i++)
             if (parent.child(i).type != node.type) {
                 state.write("\\\n")
