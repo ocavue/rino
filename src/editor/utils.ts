@@ -1,58 +1,66 @@
-import { Node } from "prosemirror-model"
-import { ResolvedPos } from "prosemirror-model"
+import { KeyBindings, convertCommand } from "@remirror/core"
+import { NodeType } from "prosemirror-model"
+import { TextSelection, Transaction } from "prosemirror-state"
 
-export function findParentNode(
-    $pos: ResolvedPos,
-    predicate: (node: Node) => boolean,
-): {
-    pos: number
-    node: Node
-} | null {
-    for (let i = $pos.depth; i > 0; i--) {
-        const node = $pos.node(i)
-        if (predicate(node)) {
-            return {
-                pos: i > 0 ? $pos.before(i) : 0,
-                node,
+export interface MarkdownNodeExtension {
+    toMarkdown: () => void
+    fromMarkdown: () => void
+}
+
+export function buildBlockEnterKeymapBindings(
+    regex: RegExp,
+    nodeType: NodeType,
+    options: {
+        getAttrs?: (match: string[]) => { [name: string]: string }
+        transact?: (match: string[], tr: Transaction, start: number, end: number) => Transaction
+    },
+): KeyBindings {
+    // https://github.com/ProseMirror/prosemirror/issues/374#issuecomment-224514332
+    // https://discuss.prosemirror.net/t/trigger-inputrule-on-enter/1118/4
+    return {
+        Enter: convertCommand((state, dispatch) => {
+            // Some code is copy from prosemirror-inputrules/src/inputrules.js
+            if (!(state.selection instanceof TextSelection)) {
+                return false
             }
-        }
-    }
-    return null
-}
-
-/**
- * Remove any common leading whitespace from every line in `text`.
- * Inspired by Python's `textwrap.dedent`.
- */
-export function dedent(text: string) {
-    let minWhitespace = -1
-    const lines = text.split("\n")
-    for (const line of lines) {
-        if (line.length > 0) {
-            const match = /^(\s*).*$/.exec(line)
-            if (match) {
-                minWhitespace =
-                    minWhitespace === -1
-                        ? match[1].length
-                        : Math.min(minWhitespace, match[1].length)
-            } else {
-                return text
+            const { nodeBefore } = state.selection.$from
+            if (!nodeBefore || !nodeBefore.isText) {
+                return false
             }
-        }
-    }
-    return lines.map(line => (line.length > 0 ? line.slice(minWhitespace) : line)).join("\n")
-}
+            const cursor = state.selection.$cursor
+            const match = regex.exec(nodeBefore.text || "")
+            if (match && cursor) {
+                const [start, end] = [cursor.pos - match[0].length, cursor.pos]
+                // copy from `textblockTypeInputRule`
+                const $start = state.doc.resolve(start)
+                if (
+                    !$start
+                        .node(-1)
+                        .canReplaceWith($start.index(-1), $start.indexAfter(-1), nodeType)
+                ) {
+                    return false
+                }
 
-export function all(items: any[]) {
-    for (const item of items) {
-        if (!item) return false
+                let tr: Transaction = state.tr
+                if (options.getAttrs) {
+                    tr = tr
+                        .delete(start, end)
+                        .setBlockType(start, start, nodeType, options.getAttrs(match))
+                }
+                if (options.transact) {
+                    tr = options.transact(match, tr, start, end)
+                }
+                if (dispatch) {
+                    // To be able to query whether a command is applicable for a given state, without
+                    // actually executing it, the `dispatch` argument is optional—commands should
+                    // simply return true without doing anything when they are applicable but no
+                    // `dispatch` argument is given
+                    // https://prosemirror.net/docs/guide/#commands
+                    dispatch(tr)
+                }
+                return true
+            }
+            return false
+        }),
     }
-    return true
-}
-
-export function any(items: any[]) {
-    for (const item of items) {
-        if (item) return true
-    }
-    return false
 }

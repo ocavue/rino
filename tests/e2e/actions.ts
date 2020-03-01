@@ -54,6 +54,11 @@ export async function cleanNotes() {
     await wait("main") // Return to home page
 }
 
+export async function switchMode() {
+    await pressKey("Meta", "Slash")
+    await sleep(500)
+}
+
 export async function expectSidebarOpened() {
     return await page.waitForSelector(".drawer--open")
 }

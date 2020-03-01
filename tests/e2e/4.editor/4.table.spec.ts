@@ -9,12 +9,11 @@ import {
     wait,
     wysiwygEditorSelector,
 } from "../utils"
-import { createNote, login } from "../actions"
-import { dedent } from "src/editor/utils"
+import { createNote } from "../actions"
+import { dedent } from "src/utils"
 
 async function prepare() {
     await goto("/")
-    await login()
     await createNote()
 }
 
@@ -98,7 +97,7 @@ describe("Table with inline style", () => {
 
     test("Validate text", async () => {
         const text = await getSourceCodeModeText()
-        expect(text).toEqual(
+        expect(text.trim()).toEqual(
             dedent(`
                 # Title
 
@@ -106,7 +105,7 @@ describe("Table with inline style", () => {
 
                 | content | text **strong** text | \`code\` |
                 | ------- | -------------------- | ------ |
-                `).trimLeft(),
+                `).trim(),
         )
     })
 })

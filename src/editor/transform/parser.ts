@@ -1,8 +1,9 @@
 import { Mark, Node, NodeType, Schema } from "prosemirror-model"
-import { schema } from "./schema"
+import { defaultRinoCodeBlockExtensionOptions } from "../extensions"
+import { getLanguage } from "@remirror/extension-code-block"
 import MarkdownIt from "markdown-it"
 import Token from "markdown-it/lib/token"
-import markdownItListCheckbox from "./markdown-it-list-checkbox"
+import markdownItListCheckbox from "src/editor/transform/markdown-it-list-checkbox"
 
 interface StackItem {
     type: NodeType
@@ -165,7 +166,12 @@ function withoutTrailingNewline(str: string): string {
     return str.endsWith("\n") ? str.slice(0, str.length - 1) : str
 }
 
-function buildBlockTokenHandler(type: string, spec: BlockTokenSpec, handlers: TokenHandlers): void {
+function buildBlockTokenHandler(
+    type: string,
+    spec: BlockTokenSpec,
+    handlers: TokenHandlers,
+    schema: Schema,
+): void {
     const nodeType: NodeType = schema.nodes[spec.block]
     if (nodeType === undefined) {
         throw new RangeError(`Can't find block type '${spec.block}'`)
@@ -186,7 +192,12 @@ function buildBlockTokenHandler(type: string, spec: BlockTokenSpec, handlers: To
     }
 }
 
-function buildNodeTokenHandler(type: string, spec: NodeTokenSpec, handlers: TokenHandlers): void {
+function buildNodeTokenHandler(
+    type: string,
+    spec: NodeTokenSpec,
+    handlers: TokenHandlers,
+    schema: Schema,
+): void {
     const nodeType: NodeType = schema.nodes[spec.node]
     if (nodeType === undefined) {
         throw new RangeError(`Can't find node type '${spec.node}'`)
@@ -204,9 +215,9 @@ function buildTokenHandlers(schema: Schema, tokens: TokenSpecs): TokenHandlers {
     }
     for (const [type, spec] of Object.entries(tokens)) {
         if (isBlockTokenSpec(spec)) {
-            buildBlockTokenHandler(type, spec, handlers)
+            buildBlockTokenHandler(type, spec, handlers, schema)
         } else {
-            buildNodeTokenHandler(type, spec, handlers)
+            buildNodeTokenHandler(type, spec, handlers, schema)
         }
     }
     return handlers
@@ -216,7 +227,7 @@ function buildTokenHandlers(schema: Schema, tokens: TokenSpecs): TokenHandlers {
 // [markdown-it](https://github.com/markdown-it/markdown-it) to
 // tokenize a file, and then runs the custom rules it is given over
 // the tokens to create a ProseMirror document tree.
-export class MarkdownParser {
+class MarkdownParser {
     private schema: Schema
     private tokenizer: MarkdownIt
     private tokenHandlers: TokenHandlers
@@ -254,88 +265,100 @@ export class MarkdownParser {
     }
 }
 
-// :: MarkdownParser
-// A parser parsing unextended [CommonMark](http://commonmark.org/),
-// without inline HTML, and producing a document in the basic schema.
-export const defaultMarkdownParser = new MarkdownParser(
-    schema,
-    MarkdownIt("commonmark", { html: true })
-        .disable(["emphasis", "autolink", "backticks", "entity"])
-        .enable(["table"])
-        .use(markdownItListCheckbox),
-    {
-        blockquote: {
-            block: "rinoBlockquote",
-            hasOpenClose: true,
-        },
-        paragraph: {
-            block: "paragraph",
-            hasOpenClose: true,
-        },
-        // eslint-disable-next-line prettier/prettier
-        "list_item": {
-            block: "rinoListItem",
-            hasOpenClose: true,
-        },
-        // eslint-disable-next-line prettier/prettier
-        "list_checkbox": {
-            block: "rinoCheckbox",
-            hasOpenClose: false,
-            getAttrs: tok => ({ checked: tok.attrGet("checked") === "" }),
-        },
-        // eslint-disable-next-line prettier/prettier
-        "bullet_list": {
-            block: "rinoBulletList",
-            hasOpenClose: true,
-        },
-        // eslint-disable-next-line prettier/prettier
-        "ordered_list": {
-            block: "rinoOrderedList",
-            hasOpenClose: true,
-            getAttrs: tok => ({ order: +(tok.attrGet("order") || 1) }),
-        },
-        heading: {
-            block: "rinoHeading",
-            hasOpenClose: true,
-            getAttrs: tok => ({ level: +tok.tag.slice(1) }),
-        },
-        // eslint-disable-next-line prettier/prettier
-        "code_block": {
-            block: "rinoCodeBlock",
-            hasOpenClose: false,
-        },
-        fence: {
-            block: "rinoCodeBlock",
-            hasOpenClose: false,
-            getAttrs: tok => ({ language: tok.info || "" }),
-        }, // TODO what does fence do?
-        hr: {
-            node: "rinoHorizontalRule",
-            hasOpenClose: false,
-        },
-        image: {
-            block: "paragraph",
-            hasOpenClose: false,
-        },
-        hardbreak: {
-            node: "rinoHardBreak",
-            hasOpenClose: false,
-        },
-        table: {
-            block: "rinoTable",
-            hasOpenClose: true,
-        },
-        tr: {
-            block: "rinoTableRow",
-            hasOpenClose: true,
-        },
-        th: {
-            block: "rinoTableCell",
-            hasOpenClose: true,
-        },
-        td: {
-            block: "rinoTableCell",
-            hasOpenClose: true,
-        },
-    },
-)
+export class DefaultMarkdownParser extends MarkdownParser {
+    public constructor(schema: Schema) {
+        super(
+            schema,
+            MarkdownIt("commonmark", { html: true })
+                .disable(["emphasis", "autolink", "backticks", "entity"])
+                .enable(["table"])
+                .use(markdownItListCheckbox),
+            {
+                blockquote: {
+                    block: "blockquote",
+                    hasOpenClose: true,
+                },
+                paragraph: {
+                    block: "paragraph",
+                    hasOpenClose: true,
+                },
+                // eslint-disable-next-line prettier/prettier
+                "list_item": {
+                    block: "rinoListItem",
+                    hasOpenClose: true,
+                },
+                // eslint-disable-next-line prettier/prettier
+                "list_checkbox": {
+                    block: "rinoCheckbox",
+                    hasOpenClose: false,
+                    getAttrs: tok => ({ checked: tok.attrGet("checked") === "" }),
+                },
+                // eslint-disable-next-line prettier/prettier
+                "bullet_list": {
+                    block: "rinoBulletList",
+                    hasOpenClose: true,
+                },
+                // eslint-disable-next-line prettier/prettier
+                "ordered_list": {
+                    block: "rinoOrderedList",
+                    hasOpenClose: true,
+                    getAttrs: tok => ({ order: +(tok.attrGet("order") || 1) }),
+                },
+                heading: {
+                    block: "heading",
+                    hasOpenClose: true,
+                    getAttrs: tok => ({ level: +tok.tag.slice(1) }),
+                },
+                // eslint-disable-next-line prettier/prettier
+                // "code_block": {
+                //     block: "rinoCodeBlock",
+                //     hasOpenClose: false,
+                // },
+                fence: {
+                    block: "codeBlock",
+                    hasOpenClose: false,
+                    getAttrs: tok => {
+                        const userInputLanguage = tok.info
+                        return {
+                            language: getLanguage({
+                                language: userInputLanguage,
+                                fallback: defaultRinoCodeBlockExtensionOptions.defaultLanguage,
+                                supportedLanguages:
+                                    defaultRinoCodeBlockExtensionOptions.supportedLanguages,
+                            }),
+                            userInputLanguage,
+                        }
+                    },
+                }, // TODO what does fence do?
+                hr: {
+                    node: "horizontalRule",
+                    hasOpenClose: false,
+                },
+                // image: {
+                //     block: "paragraph",
+                //     hasOpenClose: false,
+                // },
+                // hardbreak: {
+                //     node: "rinoHardBreak",
+                //     hasOpenClose: false,
+                // },
+                table: {
+                    block: "rinoTable",
+                    hasOpenClose: true,
+                },
+                tr: {
+                    block: "rinoTableRow",
+                    hasOpenClose: true,
+                },
+                th: {
+                    block: "rinoTableCell",
+                    hasOpenClose: true,
+                },
+                td: {
+                    block: "rinoTableCell",
+                    hasOpenClose: true,
+                },
+            },
+        )
+    }
+}

@@ -6,13 +6,15 @@ workflows:
     jobs:
       - test:
           # `filters` is required since `deploy` has tag filters AND requires `test`
-          filters: &run_for_all_branches_and_all_tags
+          filters: &default_filters
             tags:
+              ignore: /^_.*/
+            branches:
               only: /.*/
       - build:
-          filters: *run_for_all_branches_and_all_tags
+          filters: *default_filters
       - lint:
-          filters: *run_for_all_branches_and_all_tags
+          filters: *default_filters
       - deploy:
           requires:
             - test
@@ -24,28 +26,31 @@ workflows:
             branches:
               ignore: /.*/
       - regenerate_yarn_lock:
+          # set tag _dep_(git rev-parse --short HEAD); git tag $tag; git push origin $tag
           filters:
+            tags:
+              only: /^_dep.*/
             branches:
-              only:
-                - yarn_upgrade
+              ignore: /.*/
 
 executors:
   node-executor:
     docker:
       - image: circleci/node:12-stretch-browsers
     environment:
-      NEXT_TELEMETRY_DISABLED: '1'
+      NEXT_TELEMETRY_DISABLED: "1"
 
 commands:
   install:
     steps:
       - checkout
       - restore_cache:
-          key: &cache_key v8-dependencies-{{ checksum "yarn.lock" }}
+          key: &cache_key v0-dependencies-{{ checksum "yarn.lock" }}
       - run: yarn install --frozen-lockfile
       - save_cache:
           paths:
             - node_modules
+            - .next/cache # https://err.sh/next.js/no-cache
           key: *cache_key
 
 jobs:

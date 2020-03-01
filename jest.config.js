@@ -59,7 +59,7 @@ const base = {
     // ],
 
     // An array of file extensions your modules use
-    moduleFileExtensions: ["js", "json", "jsx", "ts", "tsx", "node", "vue"],
+    moduleFileExtensions: ["js", "json", "jsx", "ts", "tsx", "node", "vue", "md"],
 
     // A map from regular expressions to module names that allow to stub out resources with a single module
     moduleNameMapper: {
@@ -139,7 +139,7 @@ const base = {
     // A map from regular expressions to paths to transformers
     transform: {
         ".*\\.ts(x)?$": "babel-jest",
-        ".*\\.(css|styl|less|sass|scss|svg|png|jpg|ttf|woff|woff2)$": "jest-transform-stub",
+        ".*\\.(css|styl|less|sass|scss|svg|png|jpg|ttf|woff|woff2|md)$": "jest-transform-stub",
     },
 
     // An array of regexp pattern strings that are matched against all source file paths, matched files will skip transformation

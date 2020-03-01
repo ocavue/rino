@@ -20,6 +20,8 @@ async function createNote(data: NoteData): Promise<DocumentSnapshot> {
     return snapshot
 }
 
+const defaultNoteContent = "# \n\n"
+
 interface NoteInterface {
     type: NoteType
     key: string
@@ -79,7 +81,7 @@ class FirebaseNote extends BaseNote implements NoteInterface {
         } else {
             this.data = {
                 uid: uid,
-                content: "# \n\n",
+                content: defaultNoteContent,
                 createTime: firebase.firestore.Timestamp.now(),
                 updateTime: firebase.firestore.Timestamp.now(),
             }
@@ -131,19 +133,26 @@ class FirebaseNote extends BaseNote implements NoteInterface {
 class LocalNote extends BaseNote {
     deleting: boolean
     id: string
-    content: string
+    _content: string
     createTime: Timestamp
     updateTime: Timestamp
     type = NoteType.Local
 
-    constructor(content: string) {
+    constructor(content: string = defaultNoteContent) {
         super()
-        this.content = content
+        this._content = content
         this.id = this.key
         this.deleting = false
         this.createTime = this.updateTime = firebase.firestore.Timestamp.now()
     }
 
+    get content(): string {
+        return this._content
+    }
+    set content(value: string) {
+        this._content = value
+        this.thumbnailContent = null
+    }
     async upload() {
         return Promise.resolve()
     }
@@ -158,7 +167,7 @@ class ImmutableNoteWrapper {
         params:
             | {
                   type: NoteType.Local
-                  content: string
+                  content?: string
               }
             | {
                   type?: NoteType.Server
@@ -168,7 +177,7 @@ class ImmutableNoteWrapper {
     ) {
         switch (params.type) {
             case NoteType.Local:
-                return new ImmutableNoteWrapper(new LocalNote(params.content))
+                return new ImmutableNoteWrapper(new LocalNote(params?.content))
             case NoteType.Server:
             default:
                 return new ImmutableNoteWrapper(new FirebaseNote(params.uid, params.snapshot))

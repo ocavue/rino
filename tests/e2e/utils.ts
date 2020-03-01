@@ -69,6 +69,7 @@ export async function getInnerText(testid: string) {
     const elementHandle = await getOne(testid)
     expect(elementHandle).toBeTruthy()
     const innerText: string = await page.evaluate(e => e.innerText, elementHandle)
+    expect(typeof innerText).toEqual("string")
     return innerText
 }
 
@@ -77,14 +78,17 @@ export async function getTextAreaValue(testid: string) {
     const textareaHandle = await getOne(testid)
     expect(textareaHandle).toBeTruthy()
     const value: string = await page.evaluate(t => t.value, textareaHandle)
+    expect(typeof value).toEqual("string")
     return value
 }
 
-export const wysiwygEditorSelector =
-    testidSelector("editor") + " > " + testidSelector("wysiwyg-mode-textarea")
+export const [wysiwygEditorSelector, sourceCodeEditorSelector] = [
+    testidSelector("wysiwyg-mode-textarea") + ` .ProseMirror`,
+    testidSelector("source-code-mode-textarea") + ` .ProseMirror`,
+]
 
 export async function getSourceCodeModeText() {
-    return await getTextAreaValue("source-code-mode-textarea")
+    return await getInnerText("source-code-mode-textarea")
 }
 
 export async function waitAnimation<T>(promise: Promise<T>, ms = 500): Promise<T> {

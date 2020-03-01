@@ -13,10 +13,11 @@ export const NoteHeader: React.FC = () => {
         state: { loading },
     } = StoreContainer.useContainer()
 
-    const { createNote } = EditContainer.useContainer()
+    const { createServerNote, createLocalNote } = EditContainer.useContainer()
 
     const onClickCreateBtn = () => {
-        if (user) createNote(user.uid)
+        if (user) createServerNote(user.uid)
+        else createLocalNote()
     }
 
     return (

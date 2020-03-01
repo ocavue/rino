@@ -1,6 +1,6 @@
 import { Dialog } from "puppeteer"
-import { createEmptyNote, login } from "../actions"
-import { getSourceCodeModeText, pressKey, type } from "../utils"
+import { createEmptyNote } from "../actions"
+import { getInnerText, getSourceCodeModeText, goto, pressKey, type } from "../utils"
 
 function getDialog(callback: () => Promise<void>, timeout = 1000): Promise<Dialog | null> {
     return new Promise(resolve => {
@@ -24,36 +24,26 @@ function getDialog(callback: () => Promise<void>, timeout = 1000): Promise<Dialo
         )
     })
 }
-function expectDialog(dialog: Dialog | null, options: { message: string; type: string }) {
-    if (!dialog) {
-        expect(dialog).toBeTruthy()
-    } else {
-        expect(dialog.message()).toEqual(options.message)
-        expect(dialog.type()).toEqual(options.type)
-    }
-}
 
 describe("ProsemirrorView constructor error", () => {
     test("Prepare", async () => {
-        await login()
+        await goto("/")
         await createEmptyNote()
     })
 
-    test("Make the alert dialog", async () => {
-        const dialog = await getDialog(async function() {
-            await type("wysiwyg-mode-textarea", "HOOK:FAILED_TO_INIT_PROSEMIRROR_VIEW")
-            await pressKey("Meta", "Slash") // Switch to source code mode
-            await pressKey("Meta", "Slash") // Switch back to wysiwyg code mode
-        })
-        expectDialog(dialog, {
-            message: "Failed to load markown content:\nError: Found error hook for testing",
-            type: "alert",
-        })
+    test("Make the alert message", async () => {
+        await pressKey("Meta", "Slash") // Switch to source code mode
+        await type("source-code-mode-textarea", "HOOK:FAILED_TO_INIT_PROSEMIRROR_VIEW")
+        await pressKey("Meta", "Slash") // Switch back to wysiwyg code mode
+
+        const error = await getInnerText("wysiwyg-mode-error")
+        expect(error).toContain("Something went wrong.\n\nError: Found error hook for testing")
     })
 
     test("Switch to source code mode", async () => {
         await pressKey("Meta", "Slash") // Switch to source code mode, which should works
-        expect(await getSourceCodeModeText()).toEqual("HOOK:FAILED_TO_INIT_PROSEMIRROR_VIEW")
+        const text = await getSourceCodeModeText()
+        expect(text.trim()).toEqual("HOOK:FAILED_TO_INIT_PROSEMIRROR_VIEW")
     })
 
     test("Fix text in the source code mode", async () => {

@@ -59,16 +59,19 @@ function useSetNoteContent(noteKey: NoteKey, setNotes: SetNotes) {
     )
 }
 
-function useRemoveAllNotes(setNotes: SetNotes) {
+function useRemoveAllNotes(setNotes: SetNotes, setNoteKey: SetNoteKey) {
     return useCallback(
-        async function removeAllNotes(uid: string) {
+        async function removeAllNotes(uid?: string) {
             setNotes([])
-            const query = await notesCollection.where("uid", "==", uid).get()
-            query.forEach(doc => {
-                doc.ref.delete()
-            })
+            setNoteKey(null)
+            if (uid) {
+                const query = await notesCollection.where("uid", "==", uid).get()
+                query.forEach(doc => {
+                    doc.ref.delete()
+                })
+            }
         },
-        [setNotes],
+        [setNotes, setNoteKey],
     )
 }
 
@@ -110,10 +113,25 @@ function useResetNotes(setNotes: SetNotes, premadeNotes: Notes) {
     )
 }
 
-function useCreateNote(setNotes: SetNotes, setNoteKey: SetNoteKey) {
+function useCreateServerNote(setNotes: SetNotes, setNoteKey: SetNoteKey) {
     return useCallback(
-        function createNote(uid: string) {
-            const note = Note.new({ uid })
+        function createServerNote(uid: string) {
+            const note = Note.new({ uid, type: NoteType.Server })
+            setNotes(
+                produce((notes: Draft<Notes>) => {
+                    notes.unshift(note)
+                }),
+            )
+            setNoteKey(note.key)
+        },
+        [setNoteKey, setNotes],
+    )
+}
+
+function useCreateLocalNote(setNotes: SetNotes, setNoteKey: SetNoteKey) {
+    return useCallback(
+        function createLocalNote() {
+            const note = Note.new({ type: NoteType.Local })
             setNotes(
                 produce((notes: Draft<Notes>) => {
                     notes.unshift(note)
@@ -132,11 +150,12 @@ function useEdit() {
 
     const premadeNotes = usePremadeNotes()
     const setNoteContent = useSetNoteContent(noteKey, setNotes)
-    const removeAllNotes = useRemoveAllNotes(setNotes)
+    const removeAllNotes = useRemoveAllNotes(setNotes, setNoteKey)
     const fetchNotes = useFetchNotes(setNotes)
     const removeNote = useRemoveNote(noteKey, setNoteKey, notes, setNotes)
     const resetNotes = useResetNotes(setNotes, premadeNotes)
-    const createNote = useCreateNote(setNotes, setNoteKey)
+    const createServerNote = useCreateServerNote(setNotes, setNoteKey)
+    const createLocalNote = useCreateLocalNote(setNotes, setNoteKey)
 
     return {
         note,
@@ -148,7 +167,8 @@ function useEdit() {
         fetchNotes,
         removeNote,
         resetNotes,
-        createNote,
+        createServerNote,
+        createLocalNote,
     }
 }
 

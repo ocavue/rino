@@ -1,15 +1,10 @@
 import { EditorState, NodeSelection, Selection, Transaction } from "prosemirror-state"
-import { Fragment, Node, Slice } from "prosemirror-model"
+import { Fragment, Node, NodeType, Slice } from "prosemirror-model"
 import { canSplit } from "prosemirror-transform"
 
 import { range } from "lodash"
 
-import { all } from "./utils"
-import { schema } from "./schema"
-
-const paragraphType = schema.nodes.paragraph
-const rinoListItemType = schema.nodes.rinoListItem
-const rinoCheckboxType = schema.nodes.rinoCheckbox
+import { all } from "src/utils"
 
 class AssertError extends Error {}
 
@@ -19,7 +14,11 @@ function assert(result: boolean, msg = "") {
 
 // Build a command that splits a non-empty textblock at the top level
 // of a list item by also splitting that list item.
-export function splitListItem() {
+export function splitListItem(
+    paragraphType: NodeType,
+    rinoCheckboxType: NodeType,
+    rinoListItemType: NodeType,
+) {
     return function(state: EditorState, dispatch?: (tr: Transaction) => void): boolean {
         console.log("[splitListItem]")
         const { $from, $to, node } = state.selection as NodeSelection
