@@ -41,7 +41,6 @@ export class RinoTableExtension extends NodeExtension implements MarkdownNodeExt
     public keys({ type, schema }: ExtensionManagerNodeTypeParams): KeyBindings {
         return buildBlockEnterKeymapBindings(/^\|((?:[^\|]+\|){2,})\s*$/, type, {
             transact: (match: string[], tr: Transaction, start: number, end: number) => {
-                console.warn("TableExtension.keys")
                 const texts = match[1]
                     .split("|")
                     .slice(0, -1) // Remove the empty string at the end
