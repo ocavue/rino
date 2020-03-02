@@ -4,7 +4,6 @@ import {
     createNote,
     expectSidebarClosed,
     expectSidebarOpened,
-    login,
 } from "../actions"
 import { click, getDimensions, goto, waitAnimation } from "../utils"
 
@@ -15,7 +14,7 @@ const height = 800
 describe("Drawer type (persistent / temporary)", function() {
     beforeAll(async () => {
         await jestPuppeteer.resetBrowser()
-        await login()
+        await goto("/")
         await createNote()
     })
     afterAll(async () => await cleanNotes())
