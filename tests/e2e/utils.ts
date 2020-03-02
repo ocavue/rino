@@ -1,4 +1,4 @@
-import { ClickOptions, DirectNavigationOptions, WaitForSelectorOptions } from "puppeteer"
+import { ClickOptions, Dialog, DirectNavigationOptions, WaitForSelectorOptions } from "puppeteer"
 import os from "os"
 
 const testidSelector = (testid: string) => `[data-testid="${testid}"]`
@@ -174,4 +174,27 @@ export async function expectWysiwygHtml(shapes: Shape[]) {
     }, JSON.stringify(expectedSelectors))
 
     expect(receivedSelectors).toEqual(expectedSelectors)
+}
+
+export function getDialog(callback: () => Promise<void>, timeout = 1000): Promise<Dialog | null> {
+    return new Promise(resolve => {
+        let resolved = false
+        function handleDialog(dialog: Dialog) {
+            if (!resolved) {
+                resolved = true
+                page.removeListener("dialog", handleDialog)
+                dialog.dismiss().then(() => resolve(dialog))
+            }
+        }
+        page.on("dialog", handleDialog)
+        callback().then(() =>
+            setTimeout(() => {
+                if (!resolved) {
+                    resolved = true
+                    page.removeListener("dialog", handleDialog)
+                    resolve(null)
+                }
+            }, timeout),
+        )
+    })
 }
