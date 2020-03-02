@@ -1,6 +1,7 @@
-import { cleanNotes, createNote, login } from "../actions"
+import { cleanNotes, createNote } from "../actions"
 import {
     expectWysiwygHtml,
+    goto,
     pressKey,
     sleep,
     type as typeByTestid,
@@ -11,7 +12,7 @@ async function type(text: string, pressEnter = true) {
     await typeByTestid("wysiwyg-mode-textarea", text, pressEnter)
 }
 
-beforeAll(login)
+beforeAll(async () => await goto("/"))
 afterAll(cleanNotes)
 
 const checkedCheckboxSelector = `${wysiwygEditorSelector} input[type=checkbox][checked]`

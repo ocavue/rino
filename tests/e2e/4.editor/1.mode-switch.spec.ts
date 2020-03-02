@@ -1,5 +1,5 @@
-import { clickSidebarNoteListItem, createNote, login } from "../actions"
-import { pressKey, wait } from "../utils"
+import { clickSidebarNoteListItem, createNote } from "../actions"
+import { goto, pressKey, wait } from "../utils"
 
 describe("Mode switch", function() {
     const expectWysiwygMode = async () => {
@@ -16,7 +16,7 @@ describe("Mode switch", function() {
     }
 
     test("Parpare", async () => {
-        await login()
+        await goto("/")
         await createNote()
         await clickSidebarNoteListItem()
         await page.click(".ProseMirror")
