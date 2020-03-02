@@ -23,9 +23,9 @@ async function type(content: string) {
 
 async function expectTableShape(tableNumber: number, trNumber: number, tdNumber: number) {
     await sleep(200)
-    expect((await page.$$(`${wysiwygEditorSelector} > table`)).length).toBe(tableNumber)
-    expect((await page.$$(`${wysiwygEditorSelector} > table > tr`)).length).toBe(trNumber)
-    expect((await page.$$(`${wysiwygEditorSelector} > table > tr > td`)).length).toBe(tdNumber)
+    expect(await page.$$(`${wysiwygEditorSelector} > table`)).toHaveLength(tableNumber)
+    expect(await page.$$(`${wysiwygEditorSelector} > table > tr`)).toHaveLength(trNumber)
+    expect(await page.$$(`${wysiwygEditorSelector} > table > tr > td`)).toHaveLength(tdNumber)
 }
 
 describe("Table", () => {

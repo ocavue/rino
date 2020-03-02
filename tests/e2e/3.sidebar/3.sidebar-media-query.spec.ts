@@ -66,7 +66,7 @@ describe("Drawer type (persistent / temporary)", function() {
     }
 })
 
-describe.only("Drawer width", function() {
+describe("Drawer width", function() {
     beforeAll(async () => {
         await goto("/")
     })
@@ -81,7 +81,7 @@ describe.only("Drawer width", function() {
         const dimensions = await getDimensions("sidebar")
         expect(dimensions.width).toBeWithin(clientWidth - 49, clientWidth - 47)
     })
-    test("middle screen", async () => {
+    test("Middle screen", async () => {
         await waitAnimation(page.setViewport({ width: mobileBreakPoint - 10, height }))
         await waitAnimation(page.reload())
         await expectSidebarClosed()
@@ -90,7 +90,7 @@ describe.only("Drawer width", function() {
         const dimensions = await getDimensions("sidebar")
         expect(dimensions.width).toBeWithin(maxDrawerWidth - 1, maxDrawerWidth + 1)
     })
-    test("middle screen", async () => {
+    test("Large screen", async () => {
         await waitAnimation(page.setViewport({ width: mobileBreakPoint + 10, height }))
         await waitAnimation(page.reload())
         await expectSidebarOpened()
