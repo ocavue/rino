@@ -13,6 +13,15 @@
     "lint": "eslint --fix -c .eslintrc.yaml --ignore-path .gitignore --ext '.js,.jsx,ts,tsx' .",
     "coverage": "cat ./coverage/lcov.info | COVERALLS_REPO_TOKEN=$COVERALLS_REPO_TOKEN coveralls"
   },
+  "renovate": {
+    "extends": [
+      "config:base"
+    ],
+    "postUpdateOptions": [
+      "yarnDedupeHighest"
+    ],
+    "rangeStrategy": "update-lockfile"
+  },
   "dependencies": {
     "@emotion/core": "^10.0.27",
     "@material-ui/core": "^4.8.2",
