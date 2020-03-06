@@ -15,10 +15,36 @@
   },
   "renovate": {
     "extends": [
-      "config:base"
+      "config:base",
+      ":semanticCommitTypeAll(chore)"
     ],
     "postUpdateOptions": [
       "yarnDedupeHighest"
+    ],
+    "lockFileMaintenance": {
+      "enabled": true
+    },
+    "packageRules": [
+      {
+        "depTypeList": [
+          "dependencies"
+        ],
+        "updateTypes": [
+          "patch",
+          "minor"
+        ],
+        "groupName": "dependencies (non-major)"
+      },
+      {
+        "depTypeList": [
+          "devDependencies"
+        ],
+        "updateTypes": [
+          "patch",
+          "minor"
+        ],
+        "groupName": "devDependencies (non-major)"
+      }
     ],
     "rangeStrategy": "update-lockfile"
   },
