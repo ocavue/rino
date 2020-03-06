@@ -40,10 +40,6 @@ export class RinoTableExtension extends TableExtension implements MarkdownNodeEx
         }
     }
 
-    plugin() {
-        return tableEditing()
-    }
-
     toMarkdown() {}
     fromMarkdown() {}
 }
