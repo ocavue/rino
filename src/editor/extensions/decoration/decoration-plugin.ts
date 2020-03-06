@@ -1,6 +1,6 @@
 import { Decoration, DecorationSet } from "prosemirror-view"
 import { EditorState, Plugin, Transaction } from "prosemirror-state"
-import { InlineDecorateType } from "./type"
+import { InlineDecorateType } from "./decoration-type"
 import { InlineLexer } from "src/editor/extensions/decoration/lexer"
 import { Node } from "prosemirror-model"
 import { WysiwygSchema } from "src/editor"

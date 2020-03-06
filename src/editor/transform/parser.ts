@@ -343,19 +343,19 @@ export class DefaultMarkdownParser extends MarkdownParser {
                 //     hasOpenClose: false,
                 // },
                 table: {
-                    block: "rinoTable",
+                    block: "table",
                     hasOpenClose: true,
                 },
                 tr: {
-                    block: "rinoTableRow",
+                    block: "tableRow",
                     hasOpenClose: true,
                 },
                 th: {
-                    block: "rinoTableCell",
+                    block: "tableCell",
                     hasOpenClose: true,
                 },
                 td: {
-                    block: "rinoTableCell",
+                    block: "tableCell",
                     hasOpenClose: true,
                 },
             },

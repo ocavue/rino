@@ -1,5 +1,5 @@
 import { NodeExtension, NodeExtensionSpec } from "@remirror/core"
-import { createDecorationPlugin } from "./plugin"
+import { createDecorationPlugin } from "./decoration-plugin"
 
 export class RinoDecorationExtension extends NodeExtension {
     get name() {
