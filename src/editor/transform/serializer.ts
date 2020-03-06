@@ -256,7 +256,7 @@ export const defaultMarkdownSerializer = new MarkdownSerializer({
     text(state, node, parent, index) {
         state.text(node.text || "")
     },
-    rinoTable(state, node, parent, index) {
+    table(state, node, parent, index) {
         // TODO Use function `render` to handle each cell text.
 
         const table: string[][] = []

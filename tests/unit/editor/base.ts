@@ -26,9 +26,9 @@ export const def = {
     pre: { nodeType: "codeBlock", userInputLanguage: "" }, // TODO: Remove `userInputLanguage: ""` after https://github.com/remirror/remirror/pull/248 been merged
     preJS: { nodeType: "codeBlock", language: "javascript", userInputLanguage: "javascript" },
     blockquote: { nodeType: "rinoBlockquote" },
-    table: { nodeType: "rinoTable" },
-    tableRow: { nodeType: "rinoTableRow" },
-    tableCell: { nodeType: "rinoTableCell" },
+    table: { nodeType: "table" },
+    tableRow: { nodeType: "tableRow" },
+    tableCell: { nodeType: "tableCell" },
 } as const
 
 export const nodes = builders(schema, def)
