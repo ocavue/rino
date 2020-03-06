@@ -1,2 +1,2 @@
-export { RinoDecorationExtension } from "./ext"
-export * from "./type"
+export { RinoDecorationExtension } from "./decoration-extension"
+export * from "./decoration-type"

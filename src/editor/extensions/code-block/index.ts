@@ -1,1 +1,1 @@
-export * from "./ext"
+export * from "./code-block-extension"
