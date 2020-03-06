@@ -4,8 +4,7 @@ import { Node as ProsemirroNode } from "prosemirror-model"
 import { TableCellExtension, TableExtension, TableRowExtension } from "@remirror/extension-tables"
 import { Transaction } from "prosemirror-state"
 import { createTableHeigthlightPlugin } from "./plugin"
-import { selectedTableCell } from "./helper"
-import { tableEditing } from "prosemirror-tables"
+import { selectedTableCell } from "./table-helper"
 
 export class RinoTableExtension extends TableExtension implements MarkdownNodeExtension {
     readonly name = "table"
