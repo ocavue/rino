@@ -10,7 +10,7 @@ import {
 import { InputRule, wrappingInputRule } from "prosemirror-inputrules"
 import { Node as ProsemirrorNode, Schema } from "prosemirror-model"
 import { liftListItem, sinkListItem } from "prosemirror-schema-list"
-import { splitListItem } from "./split"
+import { splitListItem } from "./list-helper"
 
 export class ListItemView implements NodeView {
     public dom: HTMLElement
