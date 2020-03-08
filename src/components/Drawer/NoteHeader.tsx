@@ -22,13 +22,13 @@ export const NoteHeader: React.FC = () => {
 
     return (
         <div className={classes.drawerHeader}>
-            <AppbarIconButton
+            {/* <AppbarIconButton
                 className={classes.drawerHeaderButton}
                 disabled={loading}
                 data-testid={`sidebar-notes-btn-search${loading ? "-disabled" : ""}`}
             >
                 <icons.Search />
-            </AppbarIconButton>
+            </AppbarIconButton> */}
             <AppbarIconButton
                 className={classes.drawerHeaderButton}
                 onClick={onClickCreateBtn}
