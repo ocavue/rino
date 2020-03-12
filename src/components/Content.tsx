@@ -8,9 +8,10 @@ import React from "react"
 import clsx from "clsx"
 
 const useStyles = makeStyles((theme: Theme) => {
+    const padding = theme.spacing(3)
     return createStyles({
         content: {
-            padding: theme.spacing(3),
+            padding: padding,
             transition: theme.transitions.create("padding", {
                 easing: theme.transitions.easing.sharp,
                 duration: theme.transitions.duration.leavingScreen,
@@ -26,7 +27,7 @@ const useStyles = makeStyles((theme: Theme) => {
         },
         contentShift: {
             [theme.breakpoints.up("md")]: {
-                paddingLeft: maxDrawerWidth + theme.spacing(3),
+                paddingLeft: maxDrawerWidth + padding,
                 transition: theme.transitions.create("padding", {
                     easing: theme.transitions.easing.easeOut,
                     duration: theme.transitions.duration.enteringScreen,

@@ -6,10 +6,10 @@ const useStyles = m.makeStyles((theme: m.Theme) => {
         text: {
             color: theme.palette.text.secondary,
         },
-        topPedding: {
+        topSpacing: {
             flex: 5,
         },
-        buttonPedding: {
+        buttonSpacing: {
             flex: 7,
         },
     })
@@ -19,9 +19,9 @@ export function Welcome() {
     const classes = useStyles()
     return (
         <>
-            <div className={classes.topPedding} />
+            <div className={classes.topSpacing} />
             <h2 className={classes.text}>Welcome to Rino</h2>
-            <div className={classes.buttonPedding} />
+            <div className={classes.buttonSpacing} />
         </>
     )
 }
