@@ -1,3 +1,3 @@
 import { DynamicPage } from "src/utils"
 
-export default DynamicPage("Main", () => import("src/views/Main"))
+export default DynamicPage("Index", () => import("src/views/Index"))

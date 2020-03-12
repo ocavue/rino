@@ -3,14 +3,14 @@ import React from "react"
 
 const useStyles = m.makeStyles((theme: m.Theme) => {
     return m.createStyles({
-        wrapper: {
-            height: "100%",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-        },
         text: {
             color: theme.palette.text.secondary,
+        },
+        topSpacing: {
+            flex: 5,
+        },
+        buttonSpacing: {
+            flex: 7,
         },
     })
 })
@@ -18,8 +18,10 @@ const useStyles = m.makeStyles((theme: m.Theme) => {
 export function Welcome() {
     const classes = useStyles()
     return (
-        <div className={classes.wrapper}>
+        <>
+            <div className={classes.topSpacing} />
             <h2 className={classes.text}>Welcome to Rino</h2>
-        </div>
+            <div className={classes.buttonSpacing} />
+        </>
     )
 }

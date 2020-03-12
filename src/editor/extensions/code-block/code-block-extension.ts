@@ -33,7 +33,6 @@ export class RinoCodeBlockExtension extends CodeBlockExtension implements Markdo
 
     public keys(params: ExtensionManagerNodeTypeParams): KeyBindings {
         return {
-            // TODO: delete key can't work when the code block is the only child of doc
             ...super.keys(params),
             ...buildBlockEnterKeymapBindings(/^```([a-zA-Z]*)?$/, params.type, {
                 getAttrs: match => {

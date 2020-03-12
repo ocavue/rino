@@ -1,6 +1,7 @@
 import { Note } from "src/controller"
 import { SourceCodeEditor, WysiwygEditor } from "src/editor"
 import { Theme, createStyles, makeStyles } from "@material-ui/core"
+import { maxEditorWidth } from "src/constants"
 import { metaKey } from "src/utils"
 import React, { useEffect, useRef, useState } from "react"
 import clsx from "clsx"
@@ -10,13 +11,12 @@ const useStyles = makeStyles((theme: Theme) => {
         editor: {
             height: "100%",
             width: "100%",
+            maxWidth: maxEditorWidth,
             display: "flex",
             flexDirection: "column",
             justifyContent: "flex-start",
             alignItems: "stretch",
             "& .ProseMirror": {
-                paddingLeft: "calc(50% - 512px) !important",
-                paddingRight: "calc(50% - 512px) !important",
                 paddingTop: "40px !important",
                 flex: "1 !important",
                 border: "none",
