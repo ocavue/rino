@@ -10,23 +10,27 @@ import clsx from "clsx"
 const useStyles = makeStyles((theme: Theme) => {
     return createStyles({
         content: {
-            flexGrow: 1,
             padding: theme.spacing(3),
-            transition: theme.transitions.create("margin", {
+            transition: theme.transitions.create("padding", {
                 easing: theme.transitions.easing.sharp,
                 duration: theme.transitions.duration.leavingScreen,
             }),
-            marginLeft: 0,
+
+            width: "100%",
+            minHeight: "100vh",
+
             display: "flex",
             flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "flex-start",
         },
         contentShift: {
             [theme.breakpoints.up("md")]: {
-                transition: theme.transitions.create("margin", {
+                paddingLeft: maxDrawerWidth + theme.spacing(3),
+                transition: theme.transitions.create("padding", {
                     easing: theme.transitions.easing.easeOut,
                     duration: theme.transitions.duration.enteringScreen,
                 }),
-                marginLeft: maxDrawerWidth,
             },
         },
     })

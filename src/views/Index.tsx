@@ -9,8 +9,8 @@ import { SignInSnackbar } from "src/components/SignInSnackbar"
 const useStyles = makeStyles((theme: Theme) => {
     return createStyles({
         root: {
-            display: "flex",
             height: "100vh",
+            width: "100vw",
         },
     })
 })
