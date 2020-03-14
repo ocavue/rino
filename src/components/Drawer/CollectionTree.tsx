@@ -75,15 +75,10 @@ export const CollectionTree: React.FC = () => {
         setCollectionKey,
         initCollections,
     } = EditContainer.useContainer()
-    const {
-        state: { setEditable },
-    } = StoreContainer.useContainer()
 
     useEffect(() => {
         initCollections(notes)
     }, [notes, initCollections])
-
-    useEffect(() => setEditable(collectionKey !== "_trash"), [setEditable, collectionKey])
 
     return (
         <CollectionList

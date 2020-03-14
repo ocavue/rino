@@ -11,7 +11,6 @@ import {
     SourceCodeSchema,
     useSourceCodeManager,
 } from "./manager"
-import { StoreContainer } from "src/store"
 import { debounce } from "lodash"
 import { jsx } from "@emotion/core"
 
@@ -27,14 +26,12 @@ type Doc = ProsemirrorNode<SourceCodeSchema>
 export const SourceCodeEditor: FC<EditorProps> = ({
     className,
     content,
+    editable,
     autoFocus,
     setContent,
 }) => {
     const manager: SourceCodeManager = useSourceCodeManager()
     const docRef = useRef<Doc>()
-    const {
-        state: { editable },
-    } = StoreContainer.useContainer()
 
     const { initialNode, onChange, saveContent } = useMemo(() => {
         const schema = manager.schema
