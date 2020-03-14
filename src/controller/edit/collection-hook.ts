@@ -1,7 +1,6 @@
 import { Collection } from "./collection"
 import { Draft, produce } from "immer"
 import { Note } from "./note"
-import { createContainer } from "unstated-next"
 import { useCallback, useMemo, useState } from "react"
 
 function useCollections() {
