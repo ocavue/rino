@@ -82,24 +82,26 @@ function useRemoveNote(noteKey: NoteKey, setNoteKey: SetNoteKey, notes: Notes, s
             if (index < 0) return
             const note = notes[index]
 
-            // Remove note from react store
+            // Delete note from react store
             setNoteKey(null)
 
-            // Remove note from database
-            if (note.deleted) {
-                setNotes(
-                    produce((notes: Draft<Notes>) => {
-                        notes.splice(index, 1)
-                    }),
-                )
-                await note.delete({ type: "hard" })
-            } else {
+            // Delete note from database
+            if (!note.deleted) {
+                // Delete note logical
                 const newNote = await note.delete({ type: "soft" })
                 setNotes(
                     produce((notes: Draft<Notes>) => {
                         notes[index] = newNote
                     }),
                 )
+            } else {
+                // Delete note physical
+                setNotes(
+                    produce((notes: Draft<Notes>) => {
+                        notes.splice(index, 1)
+                    }),
+                )
+                await note.delete({ type: "hard" })
             }
         },
         [noteKey, notes, setNoteKey, setNotes],
