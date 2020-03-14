@@ -8,7 +8,7 @@ function useEditHook() {
         note,
         notes,
         noteKey,
-        setNoteKey: _setNoteKey,
+        setNoteKey,
         setNoteContent,
         removeAllNotes,
         fetchNotes,
@@ -23,15 +23,16 @@ function useEditHook() {
         collections,
         collectionKey,
         initCollections,
-        setCollectionKey,
+        setCollectionKey: _setCollectionKey,
     } = useCollection()
 
-    const setNoteKey = useCallback(
-        (noteKey: SetStateAction<string | null>) => {
-            _setNoteKey(noteKey)
-            setCollectionKey(null)
+    const setCollectionKey = useCallback(
+        // Don't select any note after switching collection
+        (collectionKey: SetStateAction<string | null>) => {
+            setNoteKey(null)
+            _setCollectionKey(collectionKey)
         },
-        [_setNoteKey, setCollectionKey],
+        [setNoteKey, _setCollectionKey],
     )
 
     return {
@@ -47,6 +48,7 @@ function useEditHook() {
         resetNotes,
         createServerNote,
         createLocalNote,
+
         // collection
         collection,
         collections,
