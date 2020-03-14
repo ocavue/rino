@@ -48,6 +48,7 @@ const useUiState = () => {
     const { isDarkTheme, toggleTheme } = useTheme()
     const [debug, setDebug] = useState(0)
     const updateDebug = () => setDebug(n => n + 1)
+    const [editable, setEditable] = useState(true)
 
     return {
         drawerActivity,
@@ -56,6 +57,8 @@ const useUiState = () => {
         toggleTheme,
         debug,
         updateDebug,
+        editable,
+        setEditable,
     }
 }
 
@@ -67,8 +70,3 @@ const useStore = () => {
 }
 
 export const StoreContainer = createContainer(useStore)
-
-// export const UiContainer = createContainer(useUiState)
-// export const EditContainer = createContainer(useEdit)
-// export const AuthContainer = createContainer(useAuth)
-// export const NetworkContainer = createContainer(useNetworkState)

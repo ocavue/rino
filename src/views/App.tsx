@@ -4,7 +4,7 @@ import { createMuiTheme } from "@material-ui/core"
 import React, { useEffect, useMemo } from "react"
 
 import {
-    EditContainer,
+    NoteContainer,
     getCurrentUser,
     onAuthStateChanged,
     registerConnectionEvent,
@@ -17,7 +17,7 @@ const ContainerConsumer: React.FC = props => {
         auth: { user, setUser },
     } = StoreContainer.useContainer()
 
-    const { fetchNotes, resetNotes } = EditContainer.useContainer()
+    const { fetchNotes, resetNotes } = NoteContainer.useContainer()
 
     useEffect(() => {
         const unsubscribe = registerConnectionEvent(connected => setConnected(connected))
@@ -69,9 +69,9 @@ const ContainerConsumer: React.FC = props => {
 const App: React.FC = props => {
     return (
         <StoreContainer.Provider>
-            <EditContainer.Provider>
+            <NoteContainer.Provider>
                 <ContainerConsumer>{props.children}</ContainerConsumer>
-            </EditContainer.Provider>
+            </NoteContainer.Provider>
         </StoreContainer.Provider>
     )
 }

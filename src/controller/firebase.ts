@@ -52,3 +52,5 @@ export function registerConnectionEvent(listenner: (connected: boolean) => void)
     const unsubscribe = () => ref.off("value")
     return unsubscribe
 }
+
+export const notesCollection = firebase.firestore().collection("notes")

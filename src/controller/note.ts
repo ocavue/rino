@@ -1,12 +1,14 @@
 import { DocumentReference, DocumentSnapshot, Timestamp, firebase } from "./firebase"
 import { generateRandomId } from "src/utils"
-import { notesCollection } from "./collection"
+import { notesCollection } from "./firebase"
 
 interface NoteData {
     uid: string
     content: string
+    deleted: boolean
     createTime: Timestamp
     updateTime: Timestamp
+    deleteTime: Timestamp | null
 }
 
 export enum NoteType {
@@ -22,30 +24,31 @@ async function createNote(data: NoteData): Promise<DocumentSnapshot> {
 
 const defaultNoteContent = "# \n\n"
 
-interface NoteInterface {
-    type: NoteType
-    key: string
-    id: string
-    content: string
-    thumbnail: string
-    createTime: Timestamp
-    updateTime: Timestamp
-    deleting: boolean
-    upload: () => Promise<void>
-    delete: () => Promise<void>
-}
+type DeleteOption = { type: "hard" | "soft" }
 
 abstract class BaseNote {
-    readonly key: string // An unique constant.
+    public readonly key: string // An unique constant.
+    public abstract readonly type: NoteType
+    public abstract readonly id: string
+    public abstract readonly createTime: Timestamp
+    public abstract readonly updateTime: Timestamp
+    public abstract readonly deleteTime: Timestamp | null
+    public abstract readonly deleting: boolean
+    public abstract readonly deleted: boolean
     protected thumbnailContent: string | null = null
 
-    constructor() {
+    public constructor() {
         this.key = generateRandomId()
     }
 
-    abstract get content(): string
+    public abstract get content(): string
+    public abstract set content(value: string)
 
-    get thumbnail() {
+    public abstract upload(): Promise<void>
+
+    public abstract delete(option: DeleteOption): Promise<void>
+
+    public get thumbnail() {
         if (this.thumbnailContent === null) {
             const lines = []
             for (const line of this.content.split("\n")) {
@@ -58,7 +61,7 @@ abstract class BaseNote {
     }
 }
 
-class FirebaseNote extends BaseNote implements NoteInterface {
+class FirebaseNote extends BaseNote {
     private firebaseId = ""
     private data: NoteData
     private snapshotPromise: Promise<DocumentSnapshot>
@@ -74,6 +77,8 @@ class FirebaseNote extends BaseNote implements NoteInterface {
                 content: snapshot.get("content"),
                 createTime: snapshot.get("createTime"),
                 updateTime: snapshot.get("updateTime"),
+                deleteTime: snapshot.get("updateTime") || null,
+                deleted: snapshot.get("deleted") || false,
             }
 
             this.snapshotPromise = Promise.resolve(snapshot)
@@ -84,6 +89,8 @@ class FirebaseNote extends BaseNote implements NoteInterface {
                 content: defaultNoteContent,
                 createTime: firebase.firestore.Timestamp.now(),
                 updateTime: firebase.firestore.Timestamp.now(),
+                deleteTime: null,
+                deleted: false,
             }
 
             // Insert a new Note document in firebase
@@ -112,6 +119,12 @@ class FirebaseNote extends BaseNote implements NoteInterface {
     get updateTime(): Timestamp {
         return this.data.updateTime
     }
+    get deleteTime(): Timestamp | null {
+        return this.data.deleteTime
+    }
+    get deleted(): boolean {
+        return this.data.deleted
+    }
     async upload() {
         if (this.deleting) return
         console.debug(`Uploading note ${this.id}`)
@@ -119,14 +132,21 @@ class FirebaseNote extends BaseNote implements NoteInterface {
         await ref.update({
             content: this.content,
             updateTime: this.updateTime,
+            deleteTime: this.deleteTime,
+            deleted: this.deleted,
         })
     }
-    async delete() {
+    async delete(option: DeleteOption) {
         if (this.deleting) return
         console.debug(`Deleting note ${this.id}`)
         this.deleting = true
-        const ref = await this.referencePromise
-        ref.delete()
+        if ((option.type = "hard")) {
+            const ref = await this.referencePromise
+            ref.delete()
+        } else {
+            this.data.deleted = true
+            this.upload()
+        }
     }
 }
 
@@ -136,6 +156,8 @@ class LocalNote extends BaseNote {
     _content: string
     createTime: Timestamp
     updateTime: Timestamp
+    deleteTime: Timestamp | null
+    deleted: boolean
     type = NoteType.Local
 
     constructor(content: string = defaultNoteContent) {
@@ -144,6 +166,8 @@ class LocalNote extends BaseNote {
         this.id = this.key
         this.deleting = false
         this.createTime = this.updateTime = firebase.firestore.Timestamp.now()
+        this.deleted = false
+        this.deleteTime = null
     }
 
     get content(): string {
@@ -156,8 +180,9 @@ class LocalNote extends BaseNote {
     async upload() {
         return Promise.resolve()
     }
-    async delete() {
+    async delete(option: DeleteOption) {
         this.deleting = true
+        this.deleted = true
         return Promise.resolve()
     }
 }
@@ -185,7 +210,7 @@ class ImmutableNoteWrapper {
     }
 
     readonly local: boolean
-    private constructor(private note: NoteInterface) {
+    private constructor(private note: BaseNote) {
         this.note = note
         this.local = note.type === NoteType.Local
     }
@@ -207,14 +232,18 @@ class ImmutableNoteWrapper {
     get updateTime() {
         return this.note.updateTime
     }
+    get deleted() {
+        return this.note.deleted
+    }
     get deleting() {
         return this.note.deleting
     }
     async upload() {
         return await this.note.upload()
     }
-    async delete() {
-        return await this.note.delete()
+    async delete(option: DeleteOption) {
+        await this.note.delete(option)
+        return new ImmutableNoteWrapper(this.note)
     }
     setContent(content: string): ImmutableNoteWrapper {
         this.note.content = content

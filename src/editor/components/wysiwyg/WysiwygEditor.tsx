@@ -6,6 +6,7 @@ import { EditorProps } from "../types"
 import { FC, useEffect, useMemo, useRef, useState } from "react"
 import { ProsemirrorNode } from "@remirror/core"
 import { RemirrorEventListener, RemirrorProvider, useRemirrorContext } from "@remirror/react"
+import { StoreContainer } from "src/store"
 import { TableMenu } from "./TableMenu"
 import { WysiwygExtensions, WysiwygManager, WysiwygSchema, useWysiwygManager } from "./manager"
 import { debounce } from "lodash"
@@ -25,6 +26,9 @@ export const WysiwygEditor: FC<EditorProps> = ({ className, autoFocus, content, 
     const manager: WysiwygManager = useWysiwygManager()
     const docRef = useRef<Doc>()
     const [error, setError] = useState<Error | null>(null)
+    const {
+        state: { editable },
+    } = StoreContainer.useContainer()
 
     const { initialNode, onChange, saveContent } = useMemo(() => {
         const schema = manager.schema
@@ -93,6 +97,7 @@ export const WysiwygEditor: FC<EditorProps> = ({ className, autoFocus, content, 
             autoFocus={autoFocus}
             initialContent={initialNode}
             onChange={onChange}
+            editable={editable}
         >
             <>
                 <InnerEditor className={className} />

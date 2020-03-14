@@ -11,6 +11,7 @@ import {
     SourceCodeSchema,
     useSourceCodeManager,
 } from "./manager"
+import { StoreContainer } from "src/store"
 import { debounce } from "lodash"
 import { jsx } from "@emotion/core"
 
@@ -31,6 +32,9 @@ export const SourceCodeEditor: FC<EditorProps> = ({
 }) => {
     const manager: SourceCodeManager = useSourceCodeManager()
     const docRef = useRef<Doc>()
+    const {
+        state: { editable },
+    } = StoreContainer.useContainer()
 
     const { initialNode, onChange, saveContent } = useMemo(() => {
         const schema = manager.schema
@@ -74,6 +78,7 @@ export const SourceCodeEditor: FC<EditorProps> = ({
             autoFocus={autoFocus}
             initialContent={initialNode}
             onChange={onChange}
+            editable={editable}
         >
             <>
                 <InnerEditor className={className} />

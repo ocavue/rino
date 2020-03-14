@@ -1,10 +1,10 @@
-import { EditContainer, getCurrentUser } from "src/controller"
+import { NoteContainer, getCurrentUser } from "src/controller"
 import { useRouter } from "next/router"
 import React from "react"
 
 export default function DevCleanNotes() {
     const router = useRouter()
-    const { removeAllNotes } = EditContainer.useContainer()
+    const { removeAllNotes } = NoteContainer.useContainer()
 
     React.useEffect(() => {
         const timeout = setTimeout(() => {

@@ -1,7 +1,7 @@
 import * as icons from "@material-ui/icons"
 import { AppBar, Menu, MenuItem, Theme, createStyles, makeStyles } from "@material-ui/core"
 import { AppbarIconButton } from "src/components/AppbarIconButton"
-import { EditContainer } from "src/controller"
+import { NoteContainer } from "src/controller"
 import { StoreContainer } from "src/store"
 import { appbarIconButtonSize, appbarIconMargin, maxDrawerWidth } from "src/constants"
 import { fade } from "@material-ui/core/styles/colorManipulator"
@@ -58,7 +58,7 @@ const AppbarMenu: React.FC<{
         state: { setDrawerActivity },
     } = StoreContainer.useContainer()
 
-    const { removeNote } = EditContainer.useContainer()
+    const { removeNote } = NoteContainer.useContainer()
 
     const deleteNote = () => {
         removeNote()
@@ -79,7 +79,7 @@ export const Appbar: React.FC = () => {
     const {
         state: { drawerActivity, setDrawerActivity },
     } = StoreContainer.useContainer()
-    const { noteKey } = EditContainer.useContainer()
+    const { noteKey } = NoteContainer.useContainer()
 
     const classes = useStyles()
     const toggleDrawerActivity = () => setDrawerActivity(!drawerActivity)

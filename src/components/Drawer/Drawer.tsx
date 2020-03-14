@@ -1,6 +1,7 @@
 import * as m from "@material-ui/core"
 import { ActivityBody } from "./ActivityBody"
 import { ActivityHeader } from "./ActivityHeader"
+import { CollectionContainer } from "src/controller"
 import { NoteBody } from "./NoteBody"
 import { NoteHeader } from "./NoteHeader"
 import { StoreContainer } from "src/store"
@@ -8,6 +9,7 @@ import { maxDrawerWidth } from "src/constants"
 import { useIsMobile } from "src/hooks"
 import React from "react"
 import clsx from "clsx"
+
 const useStyles = m.makeStyles((theme: m.Theme) => {
     return m.createStyles({
         drawer: {
@@ -53,19 +55,21 @@ export const Drawer: React.FC = () => {
     }, [isMobile, setDrawerActivity])
 
     const drawer = (
-        <div className={classes.drawer} data-testid="sidebar">
-            <div className={clsx(classes.drawerColumn, classes.drawerColumnActivity)}>
-                <ActivityHeader />
-                <m.Divider />
-                <ActivityBody />
+        <CollectionContainer.Provider>
+            <div className={classes.drawer} data-testid="sidebar">
+                <div className={clsx(classes.drawerColumn, classes.drawerColumnActivity)}>
+                    <ActivityHeader />
+                    <m.Divider />
+                    <ActivityBody />
+                </div>
+                <m.Divider orientation="vertical" />
+                <div className={clsx(classes.drawerColumn, classes.drawerColumnNote)}>
+                    <NoteHeader />
+                    <m.Divider />
+                    <NoteBody />
+                </div>
             </div>
-            <m.Divider orientation="vertical" />
-            <div className={clsx(classes.drawerColumn, classes.drawerColumnNote)}>
-                <NoteHeader />
-                <m.Divider />
-                <NoteBody />
-            </div>
-        </div>
+        </CollectionContainer.Provider>
     )
 
     return (

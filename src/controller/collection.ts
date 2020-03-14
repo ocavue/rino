@@ -1,3 +1,11 @@
-import { firebase } from "./firebase"
+import { Note } from "./note"
 
-export const notesCollection = firebase.firestore().collection("notes")
+export type collectionIconNames = "Inbox" | "Delete"
+
+export interface Collection {
+    key: string
+    name: string
+    icon: collectionIconNames
+    children?: Collection[]
+    notes: Note[]
+}

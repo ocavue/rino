@@ -2,7 +2,7 @@ import { Draft, produce } from "immer"
 import { Note, NoteType } from "./note"
 import { createContainer } from "unstated-next"
 import { docs } from "./docs"
-import { notesCollection } from "./collection"
+import { notesCollection } from "./firebase"
 import { sortBy } from "lodash"
 import { useCallback, useMemo, useState } from "react"
 
@@ -85,14 +85,23 @@ function useRemoveNote(noteKey: NoteKey, setNoteKey: SetNoteKey, notes: Notes, s
 
             // Remove note from react store
             setNoteKey(null)
-            setNotes(
-                produce((notes: Draft<Notes>) => {
-                    notes.splice(index, 1)
-                }),
-            )
 
             // Remove note from database
-            await note.delete()
+            if (note.deleted) {
+                setNotes(
+                    produce((notes: Draft<Notes>) => {
+                        notes.splice(index, 1)
+                    }),
+                )
+                await note.delete({ type: "hard" })
+            } else {
+                const newNote = await note.delete({ type: "soft" })
+                setNotes(
+                    produce((notes: Draft<Notes>) => {
+                        notes[index] = newNote
+                    }),
+                )
+            }
         },
         [noteKey, notes, setNoteKey, setNotes],
     )
@@ -143,7 +152,7 @@ function useCreateLocalNote(setNotes: SetNotes, setNoteKey: SetNoteKey) {
     )
 }
 
-function useEdit() {
+function useNote() {
     const [notes, setNotes] = useNotes()
     const [noteKey, setNoteKey] = useNoteKey()
     const note = useMemo(() => notes.find(n => n.key === noteKey), [noteKey, notes])
@@ -172,4 +181,4 @@ function useEdit() {
     }
 }
 
-export const EditContainer = createContainer(useEdit)
+export const NoteContainer = createContainer(useNote)

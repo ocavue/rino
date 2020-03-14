@@ -1,5 +1,5 @@
-import { EditContainer } from "src/controller"
 import { Editor } from "src/editor/components"
+import { NoteContainer } from "src/controller"
 import { StoreContainer } from "src/store"
 import { Theme, createStyles, makeStyles } from "@material-ui/core"
 import { Welcome } from "./Welcome"
@@ -44,7 +44,7 @@ export const Content: React.FC = () => {
         state: { drawerActivity },
     } = StoreContainer.useContainer()
 
-    const { setNoteContent, note } = EditContainer.useContainer()
+    const { setNoteContent, note } = NoteContainer.useContainer()
 
     return (
         <main
