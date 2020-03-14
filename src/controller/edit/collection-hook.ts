@@ -25,7 +25,7 @@ function useCollectionKey() {
     return useState<string | null>("_inbox")
 }
 
-function useCollectionHook() {
+export function useCollection() {
     const [collections, setCollections] = useCollections()
     const [collectionKey, setCollectionKey] = useCollectionKey()
     const collection = useMemo(
@@ -50,12 +50,12 @@ function useCollectionHook() {
     )
 
     return {
-        collections,
-        initCollections,
-        collectionKey,
-        setCollectionKey,
         collection,
+        collections,
+        collectionKey,
+        initCollections,
+        setCollectionKey,
     }
 }
 
-export const CollectionContainer = createContainer(useCollectionHook)
+export const CollectionContainer = createContainer(useCollection)

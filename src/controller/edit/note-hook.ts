@@ -152,7 +152,7 @@ function useCreateLocalNote(setNotes: SetNotes, setNoteKey: SetNoteKey) {
     )
 }
 
-function useNote() {
+export function useNote() {
     const [notes, setNotes] = useNotes()
     const [noteKey, setNoteKey] = useNoteKey()
     const note = useMemo(() => notes.find(n => n.key === noteKey), [noteKey, notes])
