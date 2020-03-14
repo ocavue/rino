@@ -8,7 +8,6 @@ import {
     createStyles,
     makeStyles,
 } from "@material-ui/core"
-import { StoreContainer } from "src/store"
 import React, { useEffect } from "react"
 import SvgIcon from "@material-ui/core/SvgIcon"
 
