@@ -1,8 +1,8 @@
 import { Draft, produce } from "immer"
 import { Note, NoteType } from "./note"
 import { createContainer } from "unstated-next"
-import { docs } from "./docs"
-import { notesCollection } from "./firebase"
+import { docs } from "../docs"
+import { notesCollection } from "../firebase"
 import { sortBy } from "lodash"
 import { useCallback, useMemo, useState } from "react"
 
