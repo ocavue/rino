@@ -58,10 +58,10 @@ const AppbarMenu: React.FC<{
         state: { setDrawerActivity },
     } = StoreContainer.useContainer()
 
-    const { removeNote } = EditContainer.useContainer()
+    const { deleteNote } = EditContainer.useContainer()
 
     const deleteNote = () => {
-        removeNote()
+        deleteNote()
         handleMenuClose()
         setDrawerActivity(true) // TODO: test this logic
     }

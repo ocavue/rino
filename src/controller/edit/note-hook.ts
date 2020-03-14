@@ -74,9 +74,9 @@ function useRemoveAllNotes(setNotes: SetNotes, setNoteKey: SetNoteKey) {
     )
 }
 
-function useRemoveNote(noteKey: NoteKey, setNoteKey: SetNoteKey, notes: Notes, setNotes: SetNotes) {
+function useDeleteNote(noteKey: NoteKey, setNoteKey: SetNoteKey, notes: Notes, setNotes: SetNotes) {
     return useCallback(
-        async function removeNote() {
+        async function deleteNote() {
             if (!noteKey) return
             const index = notes.findIndex(n => n.key === noteKey)
             if (index < 0) return
@@ -162,7 +162,7 @@ export function useNote() {
     const setNoteContent = useSetNoteContent(noteKey, setNotes)
     const removeAllNotes = useRemoveAllNotes(setNotes, setNoteKey)
     const fetchNotes = useFetchNotes(setNotes)
-    const removeNote = useRemoveNote(noteKey, setNoteKey, notes, setNotes)
+    const deleteNote = useDeleteNote(noteKey, setNoteKey, notes, setNotes)
     const resetNotes = useResetNotes(setNotes, premadeNotes)
     const createServerNote = useCreateServerNote(setNotes, setNoteKey)
     const createLocalNote = useCreateLocalNote(setNotes, setNoteKey)
@@ -175,7 +175,7 @@ export function useNote() {
         setNoteContent,
         removeAllNotes,
         fetchNotes,
-        removeNote,
+        deleteNote,
         resetNotes,
         createServerNote,
         createLocalNote,
