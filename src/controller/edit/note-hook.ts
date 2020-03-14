@@ -180,5 +180,3 @@ export function useNote() {
         createLocalNote,
     }
 }
-
-export const NoteContainer = createContainer(useNote)

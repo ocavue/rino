@@ -35,26 +35,24 @@ function useEditHook() {
     )
 
     return {
-        note: {
-            note,
-            notes,
-            noteKey,
-            setNoteKey,
-            setNoteContent,
-            removeAllNotes,
-            fetchNotes,
-            removeNote,
-            resetNotes,
-            createServerNote,
-            createLocalNote,
-        },
-        collection: {
-            collection,
-            collections,
-            collectionKey,
-            initCollections,
-            setCollectionKey,
-        },
+        // note
+        note,
+        notes,
+        noteKey,
+        setNoteKey,
+        setNoteContent,
+        removeAllNotes,
+        fetchNotes,
+        removeNote,
+        resetNotes,
+        createServerNote,
+        createLocalNote,
+        // collection
+        collection,
+        collections,
+        collectionKey,
+        initCollections,
+        setCollectionKey,
     }
 }
 

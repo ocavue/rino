@@ -1,5 +1,5 @@
 import * as icons from "@material-ui/icons"
-import { Collection, CollectionContainer, NoteContainer, collectionIconNames } from "src/controller"
+import { Collection, EditContainer, collectionIconNames } from "src/controller"
 import {
     List,
     ListItem,
@@ -69,12 +69,12 @@ const CollectionList: React.FC<{
 
 export const CollectionTree: React.FC = () => {
     const {
+        notes,
         collections,
         collectionKey,
         setCollectionKey,
         initCollections,
-    } = CollectionContainer.useContainer()
-    const { notes } = NoteContainer.useContainer()
+    } = EditContainer.useContainer()
     const {
         state: { setEditable },
     } = StoreContainer.useContainer()

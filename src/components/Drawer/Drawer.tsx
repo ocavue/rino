@@ -1,7 +1,6 @@
 import * as m from "@material-ui/core"
 import { ActivityBody } from "./ActivityBody"
 import { ActivityHeader } from "./ActivityHeader"
-import { CollectionContainer } from "src/controller"
 import { NoteBody } from "./NoteBody"
 import { NoteHeader } from "./NoteHeader"
 import { StoreContainer } from "src/store"
@@ -55,21 +54,19 @@ export const Drawer: React.FC = () => {
     }, [isMobile, setDrawerActivity])
 
     const drawer = (
-        <CollectionContainer.Provider>
-            <div className={classes.drawer} data-testid="sidebar">
-                <div className={clsx(classes.drawerColumn, classes.drawerColumnActivity)}>
-                    <ActivityHeader />
-                    <m.Divider />
-                    <ActivityBody />
-                </div>
-                <m.Divider orientation="vertical" />
-                <div className={clsx(classes.drawerColumn, classes.drawerColumnNote)}>
-                    <NoteHeader />
-                    <m.Divider />
-                    <NoteBody />
-                </div>
+        <div className={classes.drawer} data-testid="sidebar">
+            <div className={clsx(classes.drawerColumn, classes.drawerColumnActivity)}>
+                <ActivityHeader />
+                <m.Divider />
+                <ActivityBody />
             </div>
-        </CollectionContainer.Provider>
+            <m.Divider orientation="vertical" />
+            <div className={clsx(classes.drawerColumn, classes.drawerColumnNote)}>
+                <NoteHeader />
+                <m.Divider />
+                <NoteBody />
+            </div>
+        </div>
     )
 
     return (

@@ -1,4 +1,4 @@
-import { CollectionContainer, NoteContainer } from "src/controller"
+import { EditContainer } from "src/controller"
 import { List } from "@material-ui/core"
 import { NoteListItem } from "./NoteListItem"
 import { StoreContainer } from "src/store"
@@ -11,8 +11,7 @@ export const NoteList: React.FC<{}> = () => {
     const {
         state: { setDrawerActivity },
     } = StoreContainer.useContainer()
-    const { noteKey, setNoteKey, notes } = NoteContainer.useContainer()
-    const { collection } = CollectionContainer.useContainer()
+    const { noteKey, setNoteKey, notes, collection } = EditContainer.useContainer()
 
     const isMobile = useIsMobile()
 

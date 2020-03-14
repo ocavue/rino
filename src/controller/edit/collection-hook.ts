@@ -57,5 +57,3 @@ export function useCollection() {
         setCollectionKey,
     }
 }
-
-export const CollectionContainer = createContainer(useCollection)
