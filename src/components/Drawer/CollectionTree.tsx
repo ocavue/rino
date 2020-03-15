@@ -22,12 +22,13 @@ const useStyles = makeStyles(() => {
 const iconMap = {
     Inbox: icons.Inbox,
     Delete: icons.Delete,
+    LocalOffer: icons.LocalOffer,
 }
 type SvgIconComponent = typeof SvgIcon
 const getIconComponent = (name: collectionIconNames) => {
     const Icon: SvgIconComponent = iconMap[name]
     if (Icon) return Icon
-    else return icons.Inbox
+    else return icons.LocalOffer
 }
 
 const CollectionListItem: React.FC<{

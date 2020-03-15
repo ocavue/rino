@@ -11,7 +11,7 @@ export const NoteList: React.FC<{}> = () => {
     const {
         state: { setDrawerActivity },
     } = StoreContainer.useContainer()
-    const { noteKey, setNoteKey, notes, collection } = EditContainer.useContainer()
+    const { noteKey, setNoteKey, collection } = EditContainer.useContainer()
 
     const isMobile = useIsMobile()
 
@@ -20,11 +20,11 @@ export const NoteList: React.FC<{}> = () => {
         if (isMobile) setDrawerActivity(false)
     }
 
-    const visibleNotes = useMemo(() => collection?.notes || notes, [collection, notes])
+    const notes = useMemo(() => collection?.notes || [], [collection])
 
     return (
         <List className={classes.drawerBody} data-testid="sidebar-notes">
-            {visibleNotes.map(note => (
+            {notes.map(note => (
                 <NoteListItem
                     key={note.key}
                     note={note}
