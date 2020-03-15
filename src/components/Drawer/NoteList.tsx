@@ -20,11 +20,11 @@ export const NoteList: React.FC<{}> = () => {
         if (isMobile) setDrawerActivity(false)
     }
 
-    const notes = useMemo(() => collection?.notes || [], [collection])
+    const visibleNotes = useMemo(() => collection?.notes || [], [collection])
 
     return (
         <List className={classes.drawerBody} data-testid="sidebar-notes">
-            {notes.map(note => (
+            {visibleNotes.map(note => (
                 <NoteListItem
                     key={note.key}
                     note={note}
