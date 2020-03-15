@@ -35,12 +35,14 @@ export function useCollection() {
         (allNotes: Note[]) => {
             setCollections(
                 produce((collections: Draft<Collection[]>) => {
-                    collections[0].notes = []
-                    collections[1].notes = []
+                    const [inbox, trash] = collections
+
+                    inbox.notes = []
+                    trash.notes = []
 
                     for (const note of allNotes) {
-                        if (note.deleted) collections[1].notes.push(note)
-                        else collections[0].notes.push(note)
+                        if (note.deleted) trash.notes.push(note)
+                        else inbox.notes.push(note)
                     }
                 }),
             )
