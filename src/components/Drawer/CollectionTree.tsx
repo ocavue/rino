@@ -1,5 +1,4 @@
-import * as icons from "@material-ui/icons"
-import { Collection, EditContainer, collectionIconNames } from "src/controller"
+import { Collection, EditContainer, collectionIconMap, collectionIconNames } from "src/controller"
 import {
     List,
     ListItem,
@@ -9,7 +8,6 @@ import {
     makeStyles,
 } from "@material-ui/core"
 import React, { useEffect } from "react"
-import SvgIcon from "@material-ui/core/SvgIcon"
 
 const useStyles = makeStyles(() => {
     return createStyles({
@@ -19,16 +17,10 @@ const useStyles = makeStyles(() => {
     })
 })
 
-const iconMap = {
-    Inbox: icons.Inbox,
-    Delete: icons.Delete,
-    LocalOffer: icons.LocalOffer,
-}
-type SvgIconComponent = typeof SvgIcon
 const getIconComponent = (name: collectionIconNames) => {
-    const Icon: SvgIconComponent = iconMap[name]
+    const Icon = collectionIconMap[name]
     if (Icon) return Icon
-    else return icons.LocalOffer
+    else return collectionIconMap.Label
 }
 
 const CollectionListItem: React.FC<{

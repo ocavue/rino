@@ -1,6 +1,12 @@
+import * as icons from "@material-ui/icons"
 import { Note } from "./note"
 
-export type collectionIconNames = "Inbox" | "Delete"
+export const collectionIconMap = {
+    Inbox: icons.Inbox,
+    Delete: icons.Delete,
+    Label: icons.Label,
+}
+export type collectionIconNames = keyof typeof collectionIconMap
 
 export interface Collection {
     key: string
