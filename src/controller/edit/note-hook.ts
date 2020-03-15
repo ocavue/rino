@@ -1,8 +1,7 @@
 import { Draft, produce } from "immer"
 import { Note, NoteType } from "./note"
-import { createContainer } from "unstated-next"
-import { docs } from "./docs"
-import { notesCollection } from "./collection"
+import { docs } from "../docs"
+import { notesCollection } from "../firebase"
 import { sortBy } from "lodash"
 import { useCallback, useMemo, useState } from "react"
 
@@ -75,24 +74,35 @@ function useRemoveAllNotes(setNotes: SetNotes, setNoteKey: SetNoteKey) {
     )
 }
 
-function useRemoveNote(noteKey: NoteKey, setNoteKey: SetNoteKey, notes: Notes, setNotes: SetNotes) {
+function useDeleteNote(noteKey: NoteKey, setNoteKey: SetNoteKey, notes: Notes, setNotes: SetNotes) {
     return useCallback(
-        async function removeNote() {
+        async function deleteNote() {
             if (!noteKey) return
             const index = notes.findIndex(n => n.key === noteKey)
             if (index < 0) return
             const note = notes[index]
 
-            // Remove note from react store
+            // Delete note from react store
             setNoteKey(null)
-            setNotes(
-                produce((notes: Draft<Notes>) => {
-                    notes.splice(index, 1)
-                }),
-            )
 
-            // Remove note from database
-            await note.delete()
+            // Delete note from database
+            if (!note.deleted) {
+                // Delete note logical
+                const newNote = await note.delete({ type: "soft" })
+                setNotes(
+                    produce((notes: Draft<Notes>) => {
+                        notes[index] = newNote
+                    }),
+                )
+            } else {
+                // Delete note physical
+                setNotes(
+                    produce((notes: Draft<Notes>) => {
+                        notes.splice(index, 1)
+                    }),
+                )
+                await note.delete({ type: "hard" })
+            }
         },
         [noteKey, notes, setNoteKey, setNotes],
     )
@@ -143,7 +153,7 @@ function useCreateLocalNote(setNotes: SetNotes, setNoteKey: SetNoteKey) {
     )
 }
 
-function useEdit() {
+export function useNote() {
     const [notes, setNotes] = useNotes()
     const [noteKey, setNoteKey] = useNoteKey()
     const note = useMemo(() => notes.find(n => n.key === noteKey), [noteKey, notes])
@@ -152,7 +162,7 @@ function useEdit() {
     const setNoteContent = useSetNoteContent(noteKey, setNotes)
     const removeAllNotes = useRemoveAllNotes(setNotes, setNoteKey)
     const fetchNotes = useFetchNotes(setNotes)
-    const removeNote = useRemoveNote(noteKey, setNoteKey, notes, setNotes)
+    const deleteNote = useDeleteNote(noteKey, setNoteKey, notes, setNotes)
     const resetNotes = useResetNotes(setNotes, premadeNotes)
     const createServerNote = useCreateServerNote(setNotes, setNoteKey)
     const createLocalNote = useCreateLocalNote(setNotes, setNoteKey)
@@ -165,11 +175,9 @@ function useEdit() {
         setNoteContent,
         removeAllNotes,
         fetchNotes,
-        removeNote,
+        deleteNote,
         resetNotes,
         createServerNote,
         createLocalNote,
     }
 }
-
-export const EditContainer = createContainer(useEdit)

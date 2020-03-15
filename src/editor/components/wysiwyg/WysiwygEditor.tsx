@@ -21,7 +21,13 @@ const InnerEditor: FC<{ className: string }> = ({ className }) => {
 
 type Doc = ProsemirrorNode<WysiwygSchema>
 
-export const WysiwygEditor: FC<EditorProps> = ({ className, autoFocus, content, setContent }) => {
+export const WysiwygEditor: FC<EditorProps> = ({
+    className,
+    autoFocus,
+    editable,
+    content,
+    setContent,
+}) => {
     const manager: WysiwygManager = useWysiwygManager()
     const docRef = useRef<Doc>()
     const [error, setError] = useState<Error | null>(null)
@@ -93,6 +99,7 @@ export const WysiwygEditor: FC<EditorProps> = ({ className, autoFocus, content, 
             autoFocus={autoFocus}
             initialContent={initialNode}
             onChange={onChange}
+            editable={editable}
         >
             <>
                 <InnerEditor className={className} />

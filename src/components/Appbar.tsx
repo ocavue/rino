@@ -58,17 +58,17 @@ const AppbarMenu: React.FC<{
         state: { setDrawerActivity },
     } = StoreContainer.useContainer()
 
-    const { removeNote } = EditContainer.useContainer()
+    const { deleteNote } = EditContainer.useContainer()
 
-    const deleteNote = () => {
-        removeNote()
+    const onClickDeleteBtn = () => {
+        deleteNote()
         handleMenuClose()
         setDrawerActivity(true) // TODO: test this logic
     }
 
     return (
         <Menu keepMounted anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleMenuClose}>
-            <MenuItem onClick={deleteNote} data-testid="appbar-menu-item-delete">
+            <MenuItem onClick={onClickDeleteBtn} data-testid="appbar-menu-item-delete">
                 Delete
             </MenuItem>
         </Menu>

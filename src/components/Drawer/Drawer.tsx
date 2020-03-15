@@ -8,6 +8,7 @@ import { maxDrawerWidth } from "src/constants"
 import { useIsMobile } from "src/hooks"
 import React from "react"
 import clsx from "clsx"
+
 const useStyles = m.makeStyles((theme: m.Theme) => {
     return m.createStyles({
         drawer: {

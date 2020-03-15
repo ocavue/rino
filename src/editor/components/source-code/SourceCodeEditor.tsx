@@ -26,6 +26,7 @@ type Doc = ProsemirrorNode<SourceCodeSchema>
 export const SourceCodeEditor: FC<EditorProps> = ({
     className,
     content,
+    editable,
     autoFocus,
     setContent,
 }) => {
@@ -74,6 +75,7 @@ export const SourceCodeEditor: FC<EditorProps> = ({
             autoFocus={autoFocus}
             initialContent={initialNode}
             onChange={onChange}
+            editable={editable}
         >
             <>
                 <InnerEditor className={className} />

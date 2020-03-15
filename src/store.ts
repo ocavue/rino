@@ -67,8 +67,3 @@ const useStore = () => {
 }
 
 export const StoreContainer = createContainer(useStore)
-
-// export const UiContainer = createContainer(useUiState)
-// export const EditContainer = createContainer(useEdit)
-// export const AuthContainer = createContainer(useAuth)
-// export const NetworkContainer = createContainer(useNetworkState)

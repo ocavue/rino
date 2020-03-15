@@ -65,6 +65,7 @@ export const Editor: React.FC<EditorProps> = ({ autoFocus, note, setNoteContent 
             <SourceCodeEditor
                 className={clsx(classes.editor, "markdown-body")}
                 autoFocus={autoFocus}
+                editable={!note.deleted}
                 content={initialContent.current}
                 setContent={setNoteContent}
             />
@@ -74,6 +75,7 @@ export const Editor: React.FC<EditorProps> = ({ autoFocus, note, setNoteContent 
             <WysiwygEditor
                 className={clsx(classes.editor, "markdown-body")}
                 autoFocus={autoFocus}
+                editable={!note.deleted}
                 content={initialContent.current}
                 setContent={setNoteContent}
             />
