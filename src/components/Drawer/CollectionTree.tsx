@@ -31,14 +31,15 @@ const getIconComponent = (name: collectionIconNames) => {
 }
 
 const CollectionListItem: React.FC<{
+    testid: string
     collection: Collection
     selected: boolean
     onClick: () => void
-}> = ({ collection, selected, onClick }) => {
+}> = ({ testid, collection, selected, onClick }) => {
     const classes = useStyles()
     const Icon = getIconComponent(collection.icon)
     return (
-        <ListItem onClick={onClick} button selected={selected}>
+        <ListItem onClick={onClick} button selected={selected} data-testid={testid}>
             <ListItemIcon classes={{ root: classes.listItemIcon }}>
                 <Icon />
             </ListItemIcon>
@@ -57,6 +58,7 @@ const CollectionList: React.FC<{
             {collections.map(collection => (
                 <CollectionListItem
                     key={collection.key}
+                    testid={`drawer-collection-item-${collection.key}`}
                     selected={collection.key === collectionKey}
                     collection={collection}
                     onClick={() => setCollectionKey(collection.key)}
