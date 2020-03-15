@@ -28,13 +28,13 @@ type DeleteOption = { type: "hard" | "soft" }
 
 abstract class BaseNote {
     public readonly key: string // An unique constant.
-    public abstract readonly type: NoteType
-    public abstract readonly id: string
-    public abstract readonly createTime: Timestamp
-    public abstract readonly updateTime: Timestamp
-    public abstract readonly deleteTime: Timestamp | null
-    public abstract readonly deleting: boolean
-    public abstract readonly deleted: boolean
+    public abstract get type(): NoteType
+    public abstract get id(): string
+    public abstract get createTime(): Timestamp
+    public abstract get updateTime(): Timestamp
+    public abstract get deleteTime(): Timestamp | null
+    public abstract get deleting(): boolean
+    public abstract get deleted(): boolean
     protected thumbnailContent: string | null = null
 
     public constructor() {
@@ -138,12 +138,12 @@ class FirebaseNote extends BaseNote {
     }
     async delete(option: DeleteOption) {
         if (this.deleting) return
-        console.debug(`Deleting note ${this.id}`)
+        console.debug(`Deleting note ${this.id}. options:`, option)
         this.deleting = true
-        if ((option.type = "hard")) {
+        if (option.type === "hard") {
             const ref = await this.referencePromise
             ref.delete()
-        } else {
+        } else if (option.type === "soft") {
             this.data.deleted = true
             this.upload()
         }
