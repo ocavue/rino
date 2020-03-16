@@ -1,12 +1,13 @@
 import { TaggedProsemirrorNode } from "prosemirror-test-builder"
+import { buildMarkdownSerializer } from "src/editor/components/wysiwyg/wysiwyg-markdown"
 import { createBaseTestcases, nodes } from "./base"
 import { dedent } from "src/utils"
-import { defaultMarkdownSerializer } from "src/editor/transform/serializer"
 
 const { doc, p, table, tableRow, tableCell, li, ul, uncheckedCheckbox, checkedCheckbox } = nodes
 
+const markdownSerializer = buildMarkdownSerializer()
 function assertEqual(expectedMarkdown: string, receivedNode: TaggedProsemirrorNode) {
-    expect(defaultMarkdownSerializer.serialize(receivedNode)).toBe(expectedMarkdown)
+    expect(markdownSerializer.serialize(receivedNode)).toBe(expectedMarkdown)
 }
 
 describe("base markdown serializer", () => {

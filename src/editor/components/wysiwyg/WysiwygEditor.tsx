@@ -8,9 +8,8 @@ import { RemirrorEventListener, RemirrorProvider, useRemirrorContext } from "@re
 import { TableMenu } from "./TableMenu"
 import { WysiwygExtensions, WysiwygSchema } from "./wysiwyg-extension"
 import { WysiwygManager, useWysiwygManager } from "./wysiwyg-manager"
-import { buildMarkdownParser } from "./wysiwyg-markdown"
+import { buildMarkdownParser, buildMarkdownSerializer } from "./wysiwyg-markdown"
 import { debounce } from "lodash"
-import { defaultMarkdownSerializer } from "../../transform/serializer"
 import { jsx } from "@emotion/core"
 
 const InnerEditor: FC<{ className: string }> = ({ className }) => {
@@ -36,6 +35,7 @@ export const WysiwygEditor: FC<EditorProps> = ({
     const { initialNode, onChange, saveContent } = useMemo(() => {
         const schema = manager.schema
         const parser = buildMarkdownParser(schema)
+        const serializer = buildMarkdownSerializer()
         const initialNode = (() => {
             try {
                 if (process.env.NODE_ENV === "development" || process.env.REACT_APP_TESTING) {
@@ -49,7 +49,7 @@ export const WysiwygEditor: FC<EditorProps> = ({
             }
         })()
         const getContent = (doc: Doc) => {
-            const content = defaultMarkdownSerializer.serialize(doc)
+            const content = serializer.serialize(doc)
             return content
         }
         const saveContent = () => {
