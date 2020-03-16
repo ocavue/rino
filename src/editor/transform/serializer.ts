@@ -106,7 +106,7 @@ export class MarkdownSerializerState {
     public render(node: Node, parent: Node, index: number) {
         const spec = this.nodes[node.type.name]
         if (!spec) throw new Error(`Can't find node spec for type '${node.type.name}'`)
-        spec(this, node, parent, index)
+        spec({ state: this, node, parent, index })
     }
 
     // Render the contents of `parent` as block nodes.
