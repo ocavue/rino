@@ -1,5 +1,6 @@
 import { BlockquoteExtension } from "@remirror/core-extensions"
 import { MarkdownNodeExtension } from "../utils"
+import { NodeSerializerOptions } from "../transform/serializer"
 import { ParserTokenType } from "../transform/parser-type"
 
 export class RinoBlockquoteExtension extends BlockquoteExtension implements MarkdownNodeExtension {
@@ -15,5 +16,8 @@ export class RinoBlockquoteExtension extends BlockquoteExtension implements Mark
                 hasOpenClose: true,
             },
         ] as const
+    }
+    public toMarkdown({ state, node }: NodeSerializerOptions) {
+        state.wrapBlock("> ", null, node, () => state.renderContent(node))
     }
 }

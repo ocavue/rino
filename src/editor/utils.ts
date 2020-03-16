@@ -4,10 +4,8 @@ import { NodeType } from "prosemirror-model"
 import { ParserToken } from "src/editor/transform/parser-type"
 import { TextSelection, Transaction } from "prosemirror-state"
 
-export type FromMarkdown = () => readonly ParserToken[]
-
 export abstract class MarkdownNodeExtension<T = NodeExtensionOptions> extends NodeExtension<T> {
-    abstract fromMarkdown: FromMarkdown
+    abstract fromMarkdown: () => readonly ParserToken[]
     abstract toMarkdown: NodeSerializerSpec
 }
 

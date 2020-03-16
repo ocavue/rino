@@ -1,4 +1,3 @@
-import { HardBreakExtension, baseExtensions } from "@remirror/core-extensions"
 import { InferFlexibleExtensionList, SchemaFromExtensions } from "@remirror/core"
 import {
     RinoBlockquoteExtension,
@@ -6,6 +5,7 @@ import {
     RinoCheckboxExtension,
     RinoCodeBlockExtension,
     RinoDecorationExtension,
+    RinoHardBreakExtension,
     RinoHeadingExtension,
     RinoHorizontalRuleExtension,
     RinoListItemExtension,
@@ -15,6 +15,7 @@ import {
     RinoTableExtension,
     RinoTableRowExtension,
 } from "src/editor/extensions"
+import { baseExtensions } from "@remirror/core-extensions"
 
 /**
  * Replace ParagraphExtension as RinoParagraphExtension in baseExtensions.
@@ -33,7 +34,7 @@ const baseExtensionsWithRinoParagraph = baseExtensions.map(e => {
 
 export const wysiwygExtensions = [
     ...baseExtensionsWithRinoParagraph,
-    new HardBreakExtension(),
+    new RinoHardBreakExtension(),
     new RinoHorizontalRuleExtension(),
     new RinoCodeBlockExtension(),
     new RinoBlockquoteExtension(),

@@ -11,6 +11,7 @@ import { InputRule, wrappingInputRule } from "prosemirror-inputrules"
 import { MarkdownNodeExtension } from "src/editor/utils"
 import { ParserTokenType } from "src/editor/transform/parser-type"
 import { Node as ProsemirrorNode, Schema } from "prosemirror-model"
+import { ToMarkdownOptions } from "src/editor/transform/serializer"
 import { liftListItem, sinkListItem } from "prosemirror-schema-list"
 import { splitListItem } from "./list-helper"
 import Token from "markdown-it/lib/token"
@@ -90,6 +91,10 @@ export class RinoListItemExtension extends NodeExtension implements MarkdownNode
             },
         ] as const
     }
+
+    public toMarkdown({ state, node }: ToMarkdownOptions) {
+        state.renderContent(node)
+    }
 }
 
 export class RinoOrderedListExtension extends NodeExtension implements MarkdownNodeExtension {
@@ -138,6 +143,16 @@ export class RinoOrderedListExtension extends NodeExtension implements MarkdownN
             },
         ] as const
     }
+
+    public toMarkdown({ state, node }: ToMarkdownOptions) {
+        const start = node.attrs.order || 1
+        const maxW = String(start + node.childCount - 1).length
+        const space = state.repeat(" ", maxW + 2)
+        state.renderList(node, space, i => {
+            const nStr = String(start + i)
+            return state.repeat(" ", maxW - nStr.length) + nStr + ". "
+        })
+    }
 }
 
 export class RinoBulletListExtension extends NodeExtension {
@@ -176,6 +191,10 @@ export class RinoBulletListExtension extends NodeExtension {
                 hasOpenClose: true,
             },
         ] as const
+    }
+
+    public toMardown({ state, node }: ToMarkdownOptions) {
+        state.renderList(node, "  ", () => (node.attrs.bullet || "*") + " ")
     }
 }
 
@@ -242,6 +261,10 @@ export class RinoCheckboxExtension extends NodeExtension {
                 getAttrs: (tok: Token) => ({ checked: tok.attrGet("checked") === "" }),
             },
         ] as const
+    }
+
+    public toMarkdown({ state, node }: ToMarkdownOptions) {
+        state.text(node.attrs.checked ? "[x] " : "[ ] ", false)
     }
 
     public nodeView() {

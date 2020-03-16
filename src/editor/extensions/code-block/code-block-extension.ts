@@ -8,6 +8,7 @@ import { ExtensionManagerNodeTypeParams, KeyBindings } from "@remirror/core"
 import { InlineDecorateType } from "src/editor/extensions/decoration"
 import { MarkdownNodeExtension, buildBlockEnterKeymapBindings } from "src/editor/utils"
 
+import { NodeSerializerOptions } from "src/editor/transform/serializer"
 import { ParserTokenType } from "src/editor/transform/parser-type"
 import Token from "markdown-it/lib/token"
 import clike from "refractor/lang/clike"
@@ -80,5 +81,13 @@ export class RinoCodeBlockExtension extends CodeBlockExtension
                 },
             },
         ] as const
+    }
+
+    public toMarkdown({ state, node }: NodeSerializerOptions) {
+        state.write("```" + (node.attrs.userInputLanguage || "") + "\n")
+        state.text(node.textContent, false)
+        state.ensureNewLine()
+        state.write("```")
+        state.closeBlock(node)
     }
 }
