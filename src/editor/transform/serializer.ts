@@ -1,8 +1,13 @@
 import * as _ from "lodash"
 import { Fragment, Mark, Node } from "prosemirror-model"
 
-type NodeSpec = (state: MarkdownSerializerState, node: Node, parent: Node, index: number) => void
-type NodeSpecs = Record<string, NodeSpec>
+type NodeSerializerSpec = (
+    state: MarkdownSerializerState,
+    node: Node,
+    parent: Node,
+    index: number,
+) => void
+type NodeSerializerSpecs = Record<string, NodeSerializerSpec>
 
 enum TABLE_ALIGEN {
     DEFAULT = 1,
@@ -15,7 +20,7 @@ enum TABLE_ALIGEN {
 // methods related to markdown serialization. Instances are passed to
 // node and mark serialization methods (see `toMarkdown`).
 export class MarkdownSerializerState {
-    private nodes: NodeSpecs
+    private nodes: NodeSerializerSpecs
     private delimiter: string
     public out: string
     private closed: Node | null
@@ -23,7 +28,7 @@ export class MarkdownSerializerState {
     private options: Record<string, any>
     private marks: Record<string, any>
 
-    public constructor(nodes: NodeSpecs, options?: Record<string, any>) {
+    public constructor(nodes: NodeSerializerSpecs, options?: Record<string, any>) {
         this.nodes = nodes
         this.marks = {}
         this.delimiter = ""
@@ -183,9 +188,9 @@ export class MarkdownSerializerState {
 }
 
 export class MarkdownSerializer {
-    private nodes: NodeSpecs
+    private nodes: NodeSerializerSpecs
 
-    public constructor(nodes: NodeSpecs) {
+    public constructor(nodes: NodeSerializerSpecs) {
         this.nodes = nodes
     }
 
