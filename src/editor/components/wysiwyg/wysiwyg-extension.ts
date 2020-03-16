@@ -14,6 +14,7 @@ import {
     RinoTableCellExtension,
     RinoTableExtension,
     RinoTableRowExtension,
+    RinoTextExtension,
 } from "src/editor/extensions"
 import { baseExtensions } from "@remirror/core-extensions"
 
@@ -28,7 +29,7 @@ const rinoBaseExtensions = baseExtensions.map(e => {
         }
     else if (e.extension.name === "text")
         return {
-            extension: new RinoParagraphExtension(),
+            extension: new RinoTextExtension(),
             priority: e.priority,
         }
     else

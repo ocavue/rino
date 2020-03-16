@@ -155,7 +155,7 @@ export class RinoOrderedListExtension extends NodeExtension implements MarkdownN
     }
 }
 
-export class RinoBulletListExtension extends NodeExtension {
+export class RinoBulletListExtension extends NodeExtension implements MarkdownNodeExtension {
     get name() {
         return "rinoBulletList" as const
     }
@@ -193,12 +193,12 @@ export class RinoBulletListExtension extends NodeExtension {
         ] as const
     }
 
-    public toMardown({ state, node }: NodeSerializerOptions) {
+    public toMarkdown({ state, node }: NodeSerializerOptions) {
         state.renderList(node, "  ", () => (node.attrs.bullet || "*") + " ")
     }
 }
 
-export class RinoCheckboxExtension extends NodeExtension {
+export class RinoCheckboxExtension extends NodeExtension implements MarkdownNodeExtension {
     get name() {
         return "rinoCheckbox" as const
     }
