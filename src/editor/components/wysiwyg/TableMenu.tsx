@@ -2,15 +2,12 @@ import React from "react"
 
 import * as svg from "./TableMenuSvg"
 import { ActionMethod } from "@remirror/core"
-import { EditorState, Transaction } from "prosemirror-state"
 import { IconButton, Paper, Snackbar, Theme, createStyles, makeStyles } from "@material-ui/core"
 import { StoreContainer } from "src/store"
-import { WysiwygExtensions } from "./manager"
+import { WysiwygExtensions } from "./wysiwyg-extension"
 import { maxDrawerWidth } from "src/constants"
 import { useRemirrorContext } from "@remirror/react"
 import clsx from "clsx"
-
-type Command = (state: EditorState, dispatch: (tr: Transaction) => void) => boolean
 
 const useStyles = makeStyles((theme: Theme) => {
     return createStyles({

@@ -1,10 +1,12 @@
-import { KeyBindings, convertCommand } from "@remirror/core"
+import { KeyBindings, NodeExtension, NodeExtensionOptions, convertCommand } from "@remirror/core"
 import { NodeType } from "prosemirror-model"
+import { ParserToken } from "src/editor/transform/parser-type"
 import { TextSelection, Transaction } from "prosemirror-state"
 
-export interface MarkdownNodeExtension {
-    toMarkdown: () => void
-    fromMarkdown: () => void
+export type FromMarkdown = () => readonly ParserToken[]
+
+export abstract class MarkdownNodeExtension<T = NodeExtensionOptions> extends NodeExtension<T> {
+    abstract fromMarkdown: FromMarkdown
 }
 
 export function buildBlockEnterKeymapBindings(

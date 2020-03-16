@@ -1,13 +1,14 @@
 /** @jsx jsx */
 
-import { DefaultMarkdownParser } from "src/editor/transform/parser"
 import { DevTools } from "../DevTools"
 import { EditorProps } from "../types"
 import { FC, useEffect, useMemo, useRef, useState } from "react"
 import { ProsemirrorNode } from "@remirror/core"
 import { RemirrorEventListener, RemirrorProvider, useRemirrorContext } from "@remirror/react"
 import { TableMenu } from "./TableMenu"
-import { WysiwygExtensions, WysiwygManager, WysiwygSchema, useWysiwygManager } from "./manager"
+import { WysiwygExtensions, WysiwygSchema } from "./wysiwyg-extension"
+import { WysiwygManager, useWysiwygManager } from "./wysiwyg-manager"
+import { buildMarkdownParser } from "./wysiwyg-markdown"
 import { debounce } from "lodash"
 import { defaultMarkdownSerializer } from "../../transform/serializer"
 import { jsx } from "@emotion/core"
@@ -34,7 +35,7 @@ export const WysiwygEditor: FC<EditorProps> = ({
 
     const { initialNode, onChange, saveContent } = useMemo(() => {
         const schema = manager.schema
-        const parser = new DefaultMarkdownParser(schema)
+        const parser = buildMarkdownParser(schema)
         const initialNode = (() => {
             try {
                 if (process.env.NODE_ENV === "development" || process.env.REACT_APP_TESTING) {

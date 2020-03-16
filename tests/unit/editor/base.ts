@@ -1,12 +1,12 @@
-import { DefaultMarkdownParser } from "src/editor/transform/parser"
 import { TaggedProsemirrorNode } from "prosemirror-test-builder"
+import { buildMarkdownParser } from "src/editor/components/wysiwyg/wysiwyg-markdown"
 import { builders } from "prosemirror-test-builder"
 import { createWysiwygManager } from "src/editor"
 import { dedent } from "src/utils"
 
 export const wysiwygManager = createWysiwygManager()
 export const schema = wysiwygManager.schema
-export const defaultMarkdownParser = new DefaultMarkdownParser(schema)
+export const defaultMarkdownParser = buildMarkdownParser(schema)
 
 export const def = {
     p: { nodeType: "paragraph" },

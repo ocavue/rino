@@ -4,11 +4,14 @@ import {
     convertCommand,
     findParentNodeOfType,
 } from "@remirror/core"
-import { HeadingExtension } from "@remirror/core-extensions"
+import { HeadingExtension, HeadingExtensionOptions } from "@remirror/core-extensions"
 import { MarkdownNodeExtension } from "../utils"
+import { ParserTokenType } from "../transform/parser-type"
 import { setBlockType } from "prosemirror-commands"
+import Token from "markdown-it/lib/token"
 
-export class RinoHeadingExtension extends HeadingExtension implements MarkdownNodeExtension {
+export class RinoHeadingExtension extends HeadingExtension
+    implements MarkdownNodeExtension<HeadingExtensionOptions> {
     public keys({ type }: ExtensionManagerNodeTypeParams): KeyBindings {
         const keys: KeyBindings = {
             Backspace: ({ state, dispatch }) => {
@@ -44,6 +47,15 @@ export class RinoHeadingExtension extends HeadingExtension implements MarkdownNo
         return keys
     }
 
-    toMarkdown() {}
-    fromMarkdown() {}
+    fromMarkdown() {
+        return [
+            {
+                type: ParserTokenType.block,
+                token: "heading",
+                node: this.name,
+                hasOpenClose: true,
+                getAttrs: (tok: Token) => ({ level: +tok.tag.slice(1) }),
+            },
+        ] as const
+    }
 }

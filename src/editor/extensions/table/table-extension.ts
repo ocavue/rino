@@ -1,5 +1,6 @@
 import { ExtensionManagerNodeTypeParams, KeyBindings } from "@remirror/core"
 import { MarkdownNodeExtension, buildBlockEnterKeymapBindings } from "src/editor/utils"
+import { ParserTokenType } from "src/editor/transform/parser-type"
 import { Node as ProsemirroNode } from "prosemirror-model"
 import { TableCellExtension, TableExtension, TableRowExtension } from "@remirror/extension-tables"
 import { Transaction } from "prosemirror-state"
@@ -39,24 +40,58 @@ export class RinoTableExtension extends TableExtension implements MarkdownNodeEx
         }
     }
 
-    toMarkdown() {}
-    fromMarkdown() {}
+    public fromMarkdown() {
+        return [
+            {
+                type: ParserTokenType.block,
+                token: "table",
+                node: this.name,
+                hasOpenClose: true,
+            },
+            { type: ParserTokenType.ignore, token: "thead_open" },
+            { type: ParserTokenType.ignore, token: "thead_close" },
+            { type: ParserTokenType.ignore, token: "tbody_open" },
+            { type: ParserTokenType.ignore, token: "tbody_close" },
+        ] as const
+    }
 }
 
 export class RinoTableRowExtension extends TableRowExtension implements MarkdownNodeExtension {
     readonly name = "tableRow"
 
-    toMarkdown() {}
-    fromMarkdown() {}
+    public fromMarkdown() {
+        return [
+            {
+                type: ParserTokenType.block,
+                token: "tr",
+                node: this.name,
+                hasOpenClose: true,
+            },
+        ] as const
+    }
 }
 
 export class RinoTableCellExtension extends TableCellExtension implements MarkdownNodeExtension {
     readonly name = "tableCell"
 
-    plugin() {
+    public plugin() {
         return createTableHeigthlightPlugin()
     }
 
-    toMarkdown() {}
-    fromMarkdown() {}
+    public fromMarkdown() {
+        return [
+            {
+                type: ParserTokenType.block,
+                token: "th",
+                node: this.name,
+                hasOpenClose: true,
+            },
+            {
+                type: ParserTokenType.block,
+                token: "td",
+                node: this.name,
+                hasOpenClose: true,
+            },
+        ] as const
+    }
 }
