@@ -1,7 +1,7 @@
 import { AnyExtension, FlexibleExtension, isExtension } from "@remirror/core"
 import { MarkdownNodeExtension } from "src/editor/utils"
 import { MarkdownParser } from "src/editor/transform/parser"
-import { MarkdownSerializer } from "src/editor/transform/serializer-type"
+import { MarkdownSerializer, NodeSerializerSpecs } from "src/editor/transform/serializer"
 import { ParserToken } from "src/editor/transform/parser-type"
 import { WysiwygSchema, wysiwygExtensions } from "./wysiwyg-extension"
 
@@ -31,9 +31,10 @@ export function buildMarkdownParser(schema: WysiwygSchema) {
 }
 
 export function buildMarkdownSerializer() {
-    return new MarkdownSerializer({
-        text(state, node, parent, index) {
-            state.text(node.text || "")
-        },
-    })
+    const specs: NodeSerializerSpecs = {}
+    for (const extension of markdownNodeExtensions) {
+        specs[extension.name] = extension.toMarkdown
+    }
+
+    return new MarkdownSerializer(specs)
 }
