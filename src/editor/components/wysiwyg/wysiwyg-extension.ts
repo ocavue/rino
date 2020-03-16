@@ -1,9 +1,5 @@
-import { ExtensionManager, InferFlexibleExtensionList, SchemaFromExtensions } from "@remirror/core"
-import {
-    HardBreakExtension,
-    HorizontalRuleExtension,
-    baseExtensions,
-} from "@remirror/core-extensions"
+import { HardBreakExtension, baseExtensions } from "@remirror/core-extensions"
+import { InferFlexibleExtensionList, SchemaFromExtensions } from "@remirror/core"
 import {
     RinoBlockquoteExtension,
     RinoBulletListExtension,
@@ -11,17 +7,34 @@ import {
     RinoCodeBlockExtension,
     RinoDecorationExtension,
     RinoHeadingExtension,
+    RinoHorizontalRuleExtension,
     RinoListItemExtension,
     RinoOrderedListExtension,
+    RinoParagraphExtension,
     RinoTableCellExtension,
     RinoTableExtension,
     RinoTableRowExtension,
 } from "src/editor/extensions"
-import { useMemo } from "react"
 
-const wysiwygExtensions = [
-    ...baseExtensions,
-    new HorizontalRuleExtension(),
+/**
+ * Replace ParagraphExtension as RinoParagraphExtension in baseExtensions.
+ */
+const baseExtensionsWithRinoParagraph = baseExtensions.map(e => {
+    return e.extension.name === "paragraph"
+        ? {
+              extension: new RinoParagraphExtension(),
+              priority: e.priority,
+          }
+        : {
+              extension: e.extension,
+              priority: e.priority,
+          }
+})
+
+export const wysiwygExtensions = [
+    ...baseExtensionsWithRinoParagraph,
+    new HardBreakExtension(),
+    new RinoHorizontalRuleExtension(),
     new RinoCodeBlockExtension(),
     new RinoBlockquoteExtension(),
     new RinoDecorationExtension(),
@@ -30,19 +43,10 @@ const wysiwygExtensions = [
     new RinoListItemExtension(),
     new RinoBulletListExtension(),
     new RinoOrderedListExtension(),
-    new HardBreakExtension(),
     new RinoTableExtension(),
     new RinoTableRowExtension(),
     new RinoTableCellExtension(),
 ]
 
 export type WysiwygExtensions = InferFlexibleExtensionList<typeof wysiwygExtensions>
-export type WysiwygManager = ExtensionManager<WysiwygExtensions>
 export type WysiwygSchema = SchemaFromExtensions<WysiwygExtensions>
-
-export function createWysiwygManager(): WysiwygManager {
-    return ExtensionManager.create(wysiwygExtensions)
-}
-export function useWysiwygManager(): WysiwygManager {
-    return useMemo(createWysiwygManager, [])
-}

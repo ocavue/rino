@@ -1,5 +1,6 @@
 import {
     CodeBlockExtension,
+    CodeBlockExtensionOptions,
     codeBlockDefaultOptions,
     getLanguage,
 } from "@remirror/extension-code-block"
@@ -7,6 +8,8 @@ import { ExtensionManagerNodeTypeParams, KeyBindings } from "@remirror/core"
 import { InlineDecorateType } from "src/editor/extensions/decoration"
 import { MarkdownNodeExtension, buildBlockEnterKeymapBindings } from "src/editor/utils"
 
+import { ParserTokenType } from "src/editor/transform/parser-type"
+import Token from "markdown-it/lib/token"
 import clike from "refractor/lang/clike"
 import css from "refractor/lang/css"
 import go from "refractor/lang/go"
@@ -26,7 +29,8 @@ export const defaultRinoCodeBlockExtensionOptions = {
     ],
 }
 
-export class RinoCodeBlockExtension extends CodeBlockExtension implements MarkdownNodeExtension {
+export class RinoCodeBlockExtension extends CodeBlockExtension
+    implements MarkdownNodeExtension<CodeBlockExtensionOptions> {
     get defaultOptions() {
         return { ...defaultRinoCodeBlockExtensionOptions }
     }
@@ -55,6 +59,26 @@ export class RinoCodeBlockExtension extends CodeBlockExtension implements Markdo
         return []
     }
 
-    toMarkdown() {}
-    fromMarkdown() {}
+    public fromMarkdown() {
+        return [
+            {
+                type: ParserTokenType.block,
+                token: "fence",
+                node: this.name,
+                hasOpenClose: false,
+                getAttrs: (tok: Token) => {
+                    const userInputLanguage = tok.info
+                    return {
+                        language: getLanguage({
+                            language: userInputLanguage,
+                            fallback: defaultRinoCodeBlockExtensionOptions.defaultLanguage,
+                            supportedLanguages:
+                                defaultRinoCodeBlockExtensionOptions.supportedLanguages,
+                        }),
+                        userInputLanguage,
+                    }
+                },
+            },
+        ] as const
+    }
 }

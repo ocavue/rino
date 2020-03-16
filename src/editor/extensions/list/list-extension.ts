@@ -8,9 +8,12 @@ import {
     isElementDOMNode,
 } from "@remirror/core"
 import { InputRule, wrappingInputRule } from "prosemirror-inputrules"
+import { MarkdownNodeExtension } from "src/editor/utils"
+import { ParserTokenType } from "src/editor/transform/parser-type"
 import { Node as ProsemirrorNode, Schema } from "prosemirror-model"
 import { liftListItem, sinkListItem } from "prosemirror-schema-list"
 import { splitListItem } from "./list-helper"
+import Token from "markdown-it/lib/token"
 
 export class ListItemView implements NodeView {
     public dom: HTMLElement
@@ -42,7 +45,7 @@ export class ListItemView implements NodeView {
     }
 }
 
-export class RinoListItemExtension extends NodeExtension {
+export class RinoListItemExtension extends NodeExtension implements MarkdownNodeExtension {
     get name() {
         return "rinoListItem" as const
     }
@@ -76,9 +79,20 @@ export class RinoListItemExtension extends NodeExtension {
             return new ListItemView(node, view, getPos as () => number)
         }
     }
+
+    public fromMarkdown() {
+        return [
+            {
+                type: ParserTokenType.block,
+                token: "list_item",
+                node: this.name,
+                hasOpenClose: true,
+            },
+        ] as const
+    }
 }
 
-export class RinoOrderedListExtension extends NodeExtension {
+export class RinoOrderedListExtension extends NodeExtension implements MarkdownNodeExtension {
     get name() {
         return "rinoOrderedList" as const
     }
@@ -112,6 +126,18 @@ export class RinoOrderedListExtension extends NodeExtension {
             ),
         ]
     }
+
+    public fromMarkdown() {
+        return [
+            {
+                type: ParserTokenType.block,
+                token: "ordered_list",
+                node: this.name,
+                hasOpenClose: true,
+                getAttrs: (tok: Token) => ({ order: +(tok.attrGet("order") || 1) }),
+            },
+        ] as const
+    }
 }
 
 export class RinoBulletListExtension extends NodeExtension {
@@ -139,6 +165,17 @@ export class RinoBulletListExtension extends NodeExtension {
 
     public inputRules({ type }: ExtensionManagerNodeTypeParams) {
         return [wrappingInputRule(/^\s*([-+*])\s$/, type)]
+    }
+
+    public fromMarkdown() {
+        return [
+            {
+                type: ParserTokenType.block,
+                token: "bullet_list",
+                node: this.name,
+                hasOpenClose: true,
+            },
+        ] as const
     }
 }
 
@@ -193,6 +230,18 @@ export class RinoCheckboxExtension extends NodeExtension {
                 return null
             }),
         ]
+    }
+
+    public fromMarkdown() {
+        return [
+            {
+                type: ParserTokenType.block,
+                token: "list_checkbox",
+                node: this.name,
+                hasOpenClose: false,
+                getAttrs: (tok: Token) => ({ checked: tok.attrGet("checked") === "" }),
+            },
+        ] as const
     }
 
     public nodeView() {
