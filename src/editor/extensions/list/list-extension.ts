@@ -9,6 +9,7 @@ import {
 } from "@remirror/core"
 import { InputRule, wrappingInputRule } from "prosemirror-inputrules"
 import { MarkdownNodeExtension } from "src/editor/utils"
+import { NodeSerializerOptions } from "src/editor/transform/serializer"
 import { ParserTokenType } from "src/editor/transform/parser-type"
 import { Node as ProsemirrorNode, Schema } from "prosemirror-model"
 import { liftListItem, sinkListItem } from "prosemirror-schema-list"
@@ -90,6 +91,10 @@ export class RinoListItemExtension extends NodeExtension implements MarkdownNode
             },
         ] as const
     }
+
+    public toMarkdown({ state, node }: NodeSerializerOptions) {
+        state.renderContent(node)
+    }
 }
 
 export class RinoOrderedListExtension extends NodeExtension implements MarkdownNodeExtension {
@@ -138,9 +143,19 @@ export class RinoOrderedListExtension extends NodeExtension implements MarkdownN
             },
         ] as const
     }
+
+    public toMarkdown({ state, node }: NodeSerializerOptions) {
+        const start = node.attrs.order || 1
+        const maxW = String(start + node.childCount - 1).length
+        const space = state.repeat(" ", maxW + 2)
+        state.renderList(node, space, i => {
+            const nStr = String(start + i)
+            return state.repeat(" ", maxW - nStr.length) + nStr + ". "
+        })
+    }
 }
 
-export class RinoBulletListExtension extends NodeExtension {
+export class RinoBulletListExtension extends NodeExtension implements MarkdownNodeExtension {
     get name() {
         return "rinoBulletList" as const
     }
@@ -177,9 +192,13 @@ export class RinoBulletListExtension extends NodeExtension {
             },
         ] as const
     }
+
+    public toMarkdown({ state, node }: NodeSerializerOptions) {
+        state.renderList(node, "  ", () => (node.attrs.bullet || "*") + " ")
+    }
 }
 
-export class RinoCheckboxExtension extends NodeExtension {
+export class RinoCheckboxExtension extends NodeExtension implements MarkdownNodeExtension {
     get name() {
         return "rinoCheckbox" as const
     }
@@ -242,6 +261,10 @@ export class RinoCheckboxExtension extends NodeExtension {
                 getAttrs: (tok: Token) => ({ checked: tok.attrGet("checked") === "" }),
             },
         ] as const
+    }
+
+    public toMarkdown({ state, node }: NodeSerializerOptions) {
+        state.text(node.attrs.checked ? "[x] " : "[ ] ", false)
     }
 
     public nodeView() {

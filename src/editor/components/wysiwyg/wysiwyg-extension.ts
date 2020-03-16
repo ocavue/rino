@@ -1,4 +1,3 @@
-import { HardBreakExtension, baseExtensions } from "@remirror/core-extensions"
 import { InferFlexibleExtensionList, SchemaFromExtensions } from "@remirror/core"
 import {
     RinoBlockquoteExtension,
@@ -6,6 +5,7 @@ import {
     RinoCheckboxExtension,
     RinoCodeBlockExtension,
     RinoDecorationExtension,
+    RinoHardBreakExtension,
     RinoHeadingExtension,
     RinoHorizontalRuleExtension,
     RinoListItemExtension,
@@ -14,26 +14,34 @@ import {
     RinoTableCellExtension,
     RinoTableExtension,
     RinoTableRowExtension,
+    RinoTextExtension,
 } from "src/editor/extensions"
+import { baseExtensions } from "@remirror/core-extensions"
 
 /**
  * Replace ParagraphExtension as RinoParagraphExtension in baseExtensions.
  */
-const baseExtensionsWithRinoParagraph = baseExtensions.map(e => {
-    return e.extension.name === "paragraph"
-        ? {
-              extension: new RinoParagraphExtension(),
-              priority: e.priority,
-          }
-        : {
-              extension: e.extension,
-              priority: e.priority,
-          }
+const rinoBaseExtensions = baseExtensions.map(e => {
+    if (e.extension.name === "paragraph")
+        return {
+            extension: new RinoParagraphExtension(),
+            priority: e.priority,
+        }
+    else if (e.extension.name === "text")
+        return {
+            extension: new RinoTextExtension(),
+            priority: e.priority,
+        }
+    else
+        return {
+            extension: e.extension,
+            priority: e.priority,
+        }
 })
 
 export const wysiwygExtensions = [
-    ...baseExtensionsWithRinoParagraph,
-    new HardBreakExtension(),
+    ...rinoBaseExtensions,
+    new RinoHardBreakExtension(),
     new RinoHorizontalRuleExtension(),
     new RinoCodeBlockExtension(),
     new RinoBlockquoteExtension(),

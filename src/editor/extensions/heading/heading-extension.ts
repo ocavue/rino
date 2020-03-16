@@ -5,8 +5,9 @@ import {
     findParentNodeOfType,
 } from "@remirror/core"
 import { HeadingExtension, HeadingExtensionOptions } from "@remirror/core-extensions"
-import { MarkdownNodeExtension } from "../utils"
-import { ParserTokenType } from "../transform/parser-type"
+import { MarkdownNodeExtension } from "src/editor/utils"
+import { NodeSerializerOptions } from "src/editor/transform/serializer"
+import { ParserTokenType } from "src/editor/transform/parser-type"
 import { setBlockType } from "prosemirror-commands"
 import Token from "markdown-it/lib/token"
 
@@ -57,5 +58,10 @@ export class RinoHeadingExtension extends HeadingExtension
                 getAttrs: (tok: Token) => ({ level: +tok.tag.slice(1) }),
             },
         ] as const
+    }
+    toMarkdown({ state, node }: NodeSerializerOptions) {
+        state.write(state.repeat("#", node.attrs.level) + " ")
+        state.renderInline(node)
+        state.closeBlock(node)
     }
 }
