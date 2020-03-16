@@ -1,8 +1,8 @@
 import { MarkdownNodeExtension } from "src/editor/utils"
+import { NodeSerializerOptions } from "src/editor/transform/serializer"
 import { ParagraphExtension } from "@remirror/core-extensions"
 import { ParagraphExtensionOptions } from "@remirror/core-extensions/lib/nodes/paragraph/paragraph-types"
 import { ParserTokenType } from "src/editor/transform/parser-type"
-import { ToMarkdownOptions } from "src/editor/transform/serializer"
 
 export class RinoParagraphExtension extends ParagraphExtension
     implements MarkdownNodeExtension<ParagraphExtensionOptions> {
@@ -17,7 +17,7 @@ export class RinoParagraphExtension extends ParagraphExtension
         ] as const
     }
 
-    toMarkdown({ state, node }: ToMarkdownOptions) {
+    toMarkdown({ state, node }: NodeSerializerOptions) {
         state.renderInline(node)
         state.closeBlock(node)
     }

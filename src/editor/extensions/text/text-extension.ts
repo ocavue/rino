@@ -1,7 +1,7 @@
 import { MarkdownNodeExtension } from "src/editor/utils"
+import { NodeSerializerOptions } from "src/editor/transform/serializer"
 import { ParserTokenType } from "src/editor/transform/parser-type"
 import { TextExtension } from "@remirror/core"
-import { ToMarkdownOptions } from "src/editor/transform/serializer"
 import Token from "markdown-it/lib/token"
 
 export class RinoTextExtension extends TextExtension implements MarkdownNodeExtension {
@@ -25,7 +25,7 @@ export class RinoTextExtension extends TextExtension implements MarkdownNodeExte
         ] as const
     }
 
-    toMarkdown({ state, node }: ToMarkdownOptions) {
+    toMarkdown({ state, node }: NodeSerializerOptions) {
         state.text(node.text || "")
     }
 }

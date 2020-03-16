@@ -9,9 +9,9 @@ import {
 } from "@remirror/core"
 import { InputRule, wrappingInputRule } from "prosemirror-inputrules"
 import { MarkdownNodeExtension } from "src/editor/utils"
+import { NodeSerializerOptions } from "src/editor/transform/serializer"
 import { ParserTokenType } from "src/editor/transform/parser-type"
 import { Node as ProsemirrorNode, Schema } from "prosemirror-model"
-import { ToMarkdownOptions } from "src/editor/transform/serializer"
 import { liftListItem, sinkListItem } from "prosemirror-schema-list"
 import { splitListItem } from "./list-helper"
 import Token from "markdown-it/lib/token"
@@ -92,7 +92,7 @@ export class RinoListItemExtension extends NodeExtension implements MarkdownNode
         ] as const
     }
 
-    public toMarkdown({ state, node }: ToMarkdownOptions) {
+    public toMarkdown({ state, node }: NodeSerializerOptions) {
         state.renderContent(node)
     }
 }
@@ -144,7 +144,7 @@ export class RinoOrderedListExtension extends NodeExtension implements MarkdownN
         ] as const
     }
 
-    public toMarkdown({ state, node }: ToMarkdownOptions) {
+    public toMarkdown({ state, node }: NodeSerializerOptions) {
         const start = node.attrs.order || 1
         const maxW = String(start + node.childCount - 1).length
         const space = state.repeat(" ", maxW + 2)
@@ -193,7 +193,7 @@ export class RinoBulletListExtension extends NodeExtension {
         ] as const
     }
 
-    public toMardown({ state, node }: ToMarkdownOptions) {
+    public toMardown({ state, node }: NodeSerializerOptions) {
         state.renderList(node, "  ", () => (node.attrs.bullet || "*") + " ")
     }
 }
@@ -263,7 +263,7 @@ export class RinoCheckboxExtension extends NodeExtension {
         ] as const
     }
 
-    public toMarkdown({ state, node }: ToMarkdownOptions) {
+    public toMarkdown({ state, node }: NodeSerializerOptions) {
         state.text(node.attrs.checked ? "[x] " : "[ ] ", false)
     }
 

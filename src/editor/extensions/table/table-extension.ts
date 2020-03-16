@@ -1,9 +1,9 @@
 import { ExtensionManagerNodeTypeParams, KeyBindings } from "@remirror/core"
 import { Fragment, Node as ProsemirroNode } from "prosemirror-model"
 import { MarkdownNodeExtension, buildBlockEnterKeymapBindings } from "src/editor/utils"
+import { NodeSerializerOptions } from "src/editor/transform/serializer"
 import { ParserTokenType } from "src/editor/transform/parser-type"
 import { TableCellExtension, TableExtension, TableRowExtension } from "@remirror/extension-tables"
-import { ToMarkdownOptions } from "src/editor/transform/serializer"
 import { Transaction } from "prosemirror-state"
 import { createTableHeigthlightPlugin } from "./table-plugin"
 import { selectedTableCell } from "./table-helper"
@@ -63,7 +63,7 @@ export class RinoTableExtension extends TableExtension implements MarkdownNodeEx
         ] as const
     }
 
-    public toMarkdown({ state, node, parent, index }: ToMarkdownOptions) {
+    public toMarkdown({ state, node, parent, index }: NodeSerializerOptions) {
         // TODO Use function `render` to handle each cell text.
 
         const table: string[][] = []

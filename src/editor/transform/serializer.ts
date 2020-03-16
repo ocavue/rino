@@ -1,5 +1,5 @@
 import * as _ from "lodash"
-import { Fragment, Mark, Node } from "prosemirror-model"
+import { Mark, Node } from "prosemirror-model"
 
 export type NodeSerializerOptions = {
     state: MarkdownSerializerState
@@ -7,9 +7,7 @@ export type NodeSerializerOptions = {
     parent: Node
     index: number
 }
-export type ToMarkdownOptions = NodeSerializerOptions
 export type NodeSerializerSpec = (options: NodeSerializerOptions) => void
-
 export type NodeSerializerSpecs = Record<string, NodeSerializerSpec>
 
 // ::- This is an object used to track state and expose
