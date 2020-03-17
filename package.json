@@ -22,7 +22,8 @@
       "yarnDedupeHighest"
     ],
     "lockFileMaintenance": {
-      "enabled": true
+      "enabled": true,
+      "extends": "schedule:weekends"
     },
     "packageRules": [
       {
@@ -34,16 +35,6 @@
           "minor"
         ],
         "groupName": "dependencies (non-major)"
-      },
-      {
-        "depTypeList": [
-          "devDependencies"
-        ],
-        "updateTypes": [
-          "patch",
-          "minor"
-        ],
-        "groupName": "devDependencies (non-major)"
       }
     ],
     "rangeStrategy": "update-lockfile"
