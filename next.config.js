@@ -5,7 +5,6 @@ const execSync = require("child_process").execSync
 const dotenv = require("dotenv")
 
 const withImages = require("next-images")
-const withCSS = require("@zeit/next-css")
 const withBundleAnalyzer = require("@next/bundle-analyzer")({
     enabled: process.env.ANALYZE === "true",
 })
@@ -52,4 +51,4 @@ const nextImageConfig = {
     esModule: true,
 }
 
-module.exports = withBundleAnalyzer(withCSS(withImages({ ...nextConfig, ...nextImageConfig })))
+module.exports = withBundleAnalyzer(withImages({ ...nextConfig, ...nextImageConfig }))
