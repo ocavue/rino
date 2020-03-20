@@ -8,30 +8,16 @@ workflows:
           # `filters` is required since `deploy` has tag filters AND requires `test`
           filters: &default_filters
             tags:
-              ignore: /^_.*/
+              only: /.*/
             branches:
               only: /.*/
       - build:
           filters: *default_filters
       - lint:
           filters: *default_filters
-      - deploy:
+      - deploy_test:
           requires:
-            - test
             - build
-            - lint
-          filters:
-            tags:
-              only: /^v\d+\.\d+\.\d+.*/
-            branches:
-              ignore: /.*/
-      - regenerate_yarn_lock:
-          # set tag _dep_(git rev-parse --short HEAD); git tag $tag; git push origin $tag
-          filters:
-            tags:
-              only: /^_dep.*/
-            branches:
-              ignore: /.*/
 
 executors:
   node-executor:
@@ -65,15 +51,15 @@ jobs:
       - install
       - run: |
           echo ${DEV_CONFIG_FIREBASE} > ./config/firebase.json
-      - run: |
-          export REACT_APP_TESTING=1
-          yarn build
-          yarn export
-      - run: |
-          ./scripts/http-server.js > /dev/null &
-          yarn run test --coverage
-      - run: |
-          yarn run coverage
+      # - run: |
+      #     export REACT_APP_TESTING=1
+      #     yarn build
+      #     yarn export
+      # - run: |
+      #     ./scripts/http-server.js > /dev/null &
+      #     yarn run test --coverage
+      # - run: |
+      #     yarn run coverage
   build:
     executor: node-executor
     steps:
@@ -88,50 +74,50 @@ jobs:
       - run: |
           mkdir -p /tmp/deploy
           cp -r ./dist/* /tmp/deploy
-          echo "<!-- $(date '+%Y-%m-%d %H:%M:%S %z') -->" >> /tmp/deploy/index.html
-          echo "rino.app" >  /tmp/deploy/CNAME
-          touch /tmp/deploy/.nojekyll # Prevent GitHub Pages return 404 for URL with `/_next/`
-          echo "$(git rev-parse --short HEAD)" > /tmp/deploy/git_commit_sha
       - persist_to_workspace:
           root: /tmp/deploy
           paths:
             - .
-  deploy:
-    docker:
-      - image: python:3.7-stretch
-    steps:
-      - checkout
-      - run: |
-          ./scripts/verify-version.py
-      - attach_workspace:
-          at: /tmp/deploy
-      - run: |
-          git config --global user.email "ci@circleci.com"
-          git config --global user.name "circleci"
-          git clone -q ${DEPLOY_REPO_URL} ~/deploy
-      - run: |
-          cd ~/deploy
-          rm -rf ./*
-          cp -r /tmp/deploy/. ~/deploy/
-      # Make sure that some important files exist
-      - run: |
-          cd ~/deploy
-          cat index.html > /dev/null
-          cat 404.html > /dev/null
-          cat .nojekyll > /dev/null
-      - run: |
-          cd ~/deploy
-          git add --all
-          git commit -m "[$(date '+%Y-%m-%d %H:%M:%S %z')] $CIRCLE_TAG $(cat /tmp/deploy/git_commit_sha)"
-          git push -q
-  regenerate_yarn_lock:
+  deploy_test:
     executor: node-executor
     steps:
-      - checkout
-      - run: |
-          touch yarn.lock && rm yarn.lock
-          mkdir -p node_modules && rm -rf node_modules
-          yarn install
-          zip yarn.lock.zip yarn.lock
-      - store_artifacts:
-          path: ./yarn.lock.zip
+      - install
+      - attach_workspace:
+          at: /tmp/deploy
+      - run: >
+          yarn netlify deploy
+          --dir /tmp/deploy/
+          --message "Deployment from Circle CI. Ref: $(git rev-parse --abbrev-ref HEAD). Commit: $(git rev-parse --short HEAD)."
+  # check_version:
+  #   docker:
+  #     - image: python:3.7-stretch
+  #   steps:
+  #     - checkout
+  #     - run: |
+  #         ./scripts/verify-version.py
+  # deploy(prod):
+  #   docker:
+  #     - image: python:3.7-stretch
+  #   steps:
+  #     - checkout
+  #     - attach_workspace:
+  #         at: /tmp/deploy
+  #     - run: |
+  #         git config --global user.email "ci@circleci.com"
+  #         git config --global user.name "circleci"
+  #         git clone -q ${DEPLOY_REPO_URL} ~/deploy
+  #     - run: |
+  #         cd ~/deploy
+  #         rm -rf ./*
+  #         cp -r /tmp/deploy/. ~/deploy/
+  #     # Make sure that some important files exist
+  #     - run: |
+  #         cd ~/deploy
+  #         cat index.html > /dev/null
+  #         cat 404.html > /dev/null
+  #         cat .nojekyll > /dev/null
+  #     - run: |
+  #         cd ~/deploy
+  #         git add --all
+  #         git commit -m "[$(date '+%Y-%m-%d %H:%M:%S %z')] $CIRCLE_TAG $(cat /tmp/deploy/git_commit_sha)"
+  #         git push -q
