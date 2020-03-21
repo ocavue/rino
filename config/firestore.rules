@@ -1,0 +1,17 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /notes/{postId} {
+      allow read, delete:
+        if request.auth.uid != null
+        && request.auth.uid == resource.data.uid;
+      allow write:
+        if request.auth.uid != null
+        && request.auth.uid == resource.data.uid
+        && request.auth.uid == request.resource.data.uid;
+      allow create:
+        if request.auth.uid != null
+        && request.auth.uid == request.resource.data.uid;
+    }
+  }
+}
