@@ -23,6 +23,7 @@ workflows:
             tags:
               only: /^v\d+\.\d+\.\d+.*/
             branches:
+              only: "feature/netlify2"
               ignore: /.*/
           requires: [test, build, lint, deploy_test]
       - deploy_prod:
