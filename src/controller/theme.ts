@@ -1,6 +1,6 @@
 export type Theme = "light" | "dark"
 export const themes: Theme[] = ["light", "dark"]
-export const defaultTheme: Theme = "dark"
+export const defaultTheme: Theme = "light"
 const storeKey = "rinoTheme"
 export const setTheme = (theme: Theme) => window.localStorage.setItem(storeKey, theme)
 export const getTheme = (): Theme => {
