@@ -112,7 +112,7 @@ jobs:
       - attach_workspace:
           at: ./dist
       - run: ls -lrth ./dist
-      - run: >
+      - run: |
           message="Deployment from Circle CI. Ref: $(git rev-parse --abbrev-ref HEAD). Commit: $(git rev-parse --short HEAD)."
           command="yarn netlify deploy --dir ./dist --message '$message' $EXTRA_NETLIFY_ARGS"
           echo $command
