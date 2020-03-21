@@ -26,8 +26,11 @@ workflows:
               ignore: /.*/
           requires: [test, build, lint, deploy_test]
       - deploy_prod:
+          # filters: *release_filters
+          # requires: [pre_deploy_prod]
+          # Just for debug
           filters: *default_filters # TODO: debug
-          requires: [pre_deploy_prod]
+          requires: [test, build, lint, deploy_test]
 
 executors:
   node-executor:
