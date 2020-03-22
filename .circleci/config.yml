@@ -15,24 +15,18 @@ workflows:
           filters: *default_filters
       - lint:
           filters: *default_filters
-      # - release_check:
-      #     filters: &release_filters
-      #       tags:
-      #         only: /^v\d+\.\d+\.\d+.*/
-      #       branches:
-      #         ignore: /.*/
-      # - deploy_netlify_prod:
-      #     filters: *release_filters
-      #     requires: [test, build, lint, release_check]
-      # - deploy_firebase_prod:
-      #     filters: *release_filters
-      #     requires: [test, build, lint, release_check]
+      - release_check:
+          filters: &release_filters
+            tags:
+              only: /^v\d+\.\d+\.\d+.*/
+            branches:
+              ignore: /.*/
       - deploy_netlify_prod:
-          filters: *default_filters
-          requires: [build]
+          filters: *release_filters
+          requires: [test, build, lint, release_check]
       - deploy_firebase_prod:
-          filters: *default_filters
-          requires: [build]
+          filters: *release_filters
+          requires: [test, build, lint, release_check]
 
 executors:
   node-executor:
