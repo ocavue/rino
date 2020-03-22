@@ -25,12 +25,16 @@ workflows:
       - deploy_firebase_prod:
           filters: *release_filters
           requires: [test, build, lint, release_check]
-      # Deploy to Netlify (https://netlify.rino.app) for all pushs to master branch.
+      # Deploy to Netlify (https://netlify.rino.app) for master branch.
       - deploy_netlify_prod:
           filters:
             branches:
               only: master
           requires: [test, build, lint]
+      # Deploy to Netlify draft (https://xxxxxxxxxxxxxxxxx--rino.netlify.com) for all branchs.
+      - deploy_netlify_test:
+          requires: [build]
+          filters: *default_filters
 
 executors:
   node-executor:
@@ -107,9 +111,7 @@ jobs:
 
   deploy_netlify_test:
     executor: node-executor
-    environment:
-      EXTRA_NETLIFY_ARGS: ""
-    steps: &deploy_netlify_steps
+    steps:
       - prepare
       - attach_workspace:
           at: ./dist
@@ -118,15 +120,34 @@ jobs:
           echo '<!-- Netlify -->' >> ./dist/404.html
       - run: |
           message="Deployment from Circle CI. Ref: $(git rev-parse --abbrev-ref HEAD). Commit: $(git rev-parse --short HEAD)."
-          command="yarn netlify deploy --dir ./dist --message '$message' $EXTRA_NETLIFY_ARGS"
+          command="./node_modules/.bin/netlify deploy --json --message '$message'"
           echo $command
-          bash -c "$command"
+          bash -c "$command" > /tmp/deploy.json
+          cat /tmp/deploy.json
+      - run: |
+          export DEPLOY_JSON="$(cat /tmp/deploy.json)"
+          export DEPLOY_URL="$(node -e 'console.log(JSON.parse(process.env.DEPLOY_JSON).deploy_url)')"
+          mkdir -p lighthouse
+          yarn lighthouse --output json --output html --output-path ./lighthouse/lighthouse $DEPLOY_URL
+      - store_artifacts:
+          path: ./lighthouse
 
   deploy_netlify_prod:
     executor: node-executor
     environment:
       EXTRA_NETLIFY_ARGS: "--prod"
-    steps: *deploy_netlify_steps
+    steps:
+      - prepare
+      - attach_workspace:
+          at: ./dist
+      - run: |
+          echo '<!-- Netlify -->' >> ./dist/index.html
+          echo '<!-- Netlify -->' >> ./dist/404.html
+      - run: |
+          message="Deployment from Circle CI. Ref: $(git rev-parse --abbrev-ref HEAD). Commit: $(git rev-parse --short HEAD)."
+          command="./node_modules/.bin/netlify deploy --json --message '$message' --prod"
+          echo $command
+          bash -c "$command"
 
   deploy_firebase_prod:
     executor: node-executor
