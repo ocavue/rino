@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 const TsconfigPathsPlugin = require("tsconfig-paths-webpack-plugin")
+const withOffline = require("next-offline")
 const fs = require("fs")
 const execSync = require("child_process").execSync
 const dotenv = require("dotenv")
@@ -52,4 +53,4 @@ const nextImageConfig = {
     esModule: true,
 }
 
-module.exports = withBundleAnalyzer(withImages({ ...nextConfig, ...nextImageConfig }))
+module.exports = withBundleAnalyzer(withOffline(withImages({ ...nextConfig, ...nextImageConfig })))
