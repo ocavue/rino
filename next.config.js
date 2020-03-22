@@ -24,6 +24,7 @@ const envVars = Object.keys(allEnvVars)
     }, {})
 
 const nextConfig = {
+    // Next config
     exportTrailingSlash: true,
     devIndicators: {
         // Disable Next.js's prerender icon in the right bottom corner
@@ -47,10 +48,9 @@ const nextConfig = {
         return config
     },
     env: envVars,
-}
 
-const nextImageConfig = {
+    // next-image config
     esModule: true,
 }
 
-module.exports = withBundleAnalyzer(withOffline(withImages({ ...nextConfig, ...nextImageConfig })))
+module.exports = withBundleAnalyzer(withOffline(withImages(nextConfig)))
