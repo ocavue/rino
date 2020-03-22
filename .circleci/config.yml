@@ -110,6 +110,9 @@ jobs:
       - attach_workspace:
           at: ./dist
       - run: |
+          echo '<!-- Netlify -->' >> ./dist/index.html
+          echo '<!-- Netlify -->' >> ./dist/404.html
+      - run: |
           message="Deployment from Circle CI. Ref: $(git rev-parse --abbrev-ref HEAD). Commit: $(git rev-parse --short HEAD)."
           command="yarn netlify deploy --dir ./dist --message '$message' $EXTRA_NETLIFY_ARGS"
           echo $command
@@ -127,6 +130,9 @@ jobs:
       - prepare
       - attach_workspace:
           at: ./dist
+      - run: |
+          echo '<!-- Firebase hosting -->' >> ./dist/index.html
+          echo '<!-- Firebase hosting -->' >> ./dist/404.html
       - run: |
           echo ${FIREBASE_CLIENT_JSON} > ./config/firebase.client.json
           export FIREBASE_PROJECT_ID=$(node -e 'console.log(require("./config/firebase.client.json").projectId)')
