@@ -2,6 +2,9 @@
 
 # config
 config/
+!config/firestore.indexes.json
+!config/firestore.rules
+.firebaserc
 
 # cypress reports
 cypress/videos/
@@ -12,6 +15,7 @@ cypress/screenshots/
 dist
 tmp
 out-tsc
+.firebase
 
 # Runtime data
 pids
@@ -97,3 +101,6 @@ lerna-debug.log
 # System Files
 .DS_Store
 Thumbs.db
+
+# Local Netlify folder
+.netlify
