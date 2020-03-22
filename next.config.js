@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 const TsconfigPathsPlugin = require("tsconfig-paths-webpack-plugin")
+const withOffline = require("next-offline")
 const fs = require("fs")
 const execSync = require("child_process").execSync
 const dotenv = require("dotenv")
@@ -23,6 +24,7 @@ const envVars = Object.keys(allEnvVars)
     }, {})
 
 const nextConfig = {
+    // Next config
     exportTrailingSlash: true,
     devIndicators: {
         // Disable Next.js's prerender icon in the right bottom corner
@@ -31,6 +33,7 @@ const nextConfig = {
     },
     webpack: (config, options) => {
         // https://github.com/zeit/next.js/issues/7935
+        // https://github.com/zeit/next.js/issues/7779
         if (config.resolve.plugins) {
             config.resolve.plugins.push(new TsconfigPathsPlugin())
         } else {
@@ -45,10 +48,9 @@ const nextConfig = {
         return config
     },
     env: envVars,
-}
 
-const nextImageConfig = {
+    // next-image config
     esModule: true,
 }
 
-module.exports = withBundleAnalyzer(withImages({ ...nextConfig, ...nextImageConfig }))
+module.exports = withBundleAnalyzer(withOffline(withImages(nextConfig)))
