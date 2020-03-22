@@ -31,6 +31,7 @@ const nextConfig = {
     },
     webpack: (config, options) => {
         // https://github.com/zeit/next.js/issues/7935
+        // https://github.com/zeit/next.js/issues/7779
         if (config.resolve.plugins) {
             config.resolve.plugins.push(new TsconfigPathsPlugin())
         } else {
