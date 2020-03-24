@@ -46,6 +46,9 @@ def main():
     for in_filename, out_filename, size in [
         ["Circle.png", "android-chrome-192x192.png", 192],
         ["Circle.png", "android-chrome-512x512.png", 512],
+        # https://web.dev/apple-touch-icon/
+        ["Square.png", "apple-touch-icon-192x192.png", 192],
+        ["Square.png", "apple-touch-icon-180x180.png", 180],
         ["Square.png", "apple-touch-icon-152x152.png", 152],
         ["Circle.png", "msapplication-icon-144x144.png", 144],
         ["favicon.png", "favicon-16x16.png", 16],
@@ -72,7 +75,7 @@ def main():
     img.save(out_path)
 
     # Build src/assets/logo.png
-    in_path = get_input_path('Circle.png')
+    in_path = get_input_path("Circle.png")
     out_path = path.join(ROOT_PATH, "src", "assets", "logo.png")
     resize_image(in_path, out_path, 256)
 
