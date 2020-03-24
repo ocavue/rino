@@ -17,7 +17,13 @@ class MyDocument extends Document {
 
                     {/* PWA */}
                         <link rel="manifest" href="/manifest.json" />
-                        <meta name="theme-color" content="#000000"></meta>
+                        {/*
+                        > Always specify the theme color using the meta tag. Even though it can also be declared in the web app manifest file:
+                        > - Browsers only acknowledge the value from the web app manifest file once the user has added the page to their home screen.
+                        > - The theme-color meta tag overwrites the value specified in the web app manifest file so it allows for better individual page level customization.
+                        https://webhint.io/docs/user-guide/hints/hint-meta-theme-color/
+                        */}
+                        <meta name="theme-color" content="#ededed"></meta>
 
                     {/* Apple https://developer.apple.com/library/archive/documentation/AppleApplications/Reference/SafariWebContent/ConfiguringWebApplications/ConfiguringWebApplications.html */}
                         <link rel="apple-touch-icon" href="/img/icons/apple-touch-icon-192x192.png" sizes="192x192"></link>
