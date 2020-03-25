@@ -4,7 +4,7 @@ import React from "react"
 class MyDocument extends Document {
     render() {
         const host = "https://rino.app"
-        const image = host + "https://rino.app/img/icons/android-chrome-512x512.png"
+        const image = host + "/img/icons/android-chrome-512x512.png"
         const description = "WYSIWYG Markdown Editor"
 
         return (
