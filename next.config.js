@@ -16,8 +16,13 @@ const allEnvVars = {
     REACT_APP_VERSION: JSON.parse(fs.readFileSync("./package.json")).version,
     REACT_APP_COMMIT: `${execSync("git rev-parse --short HEAD")}`.trim(),
 }
-const envVars = Object.keys(allEnvVars)
-    .filter(key => key.startsWith("REACT_APP"))
+const appEnvVars = Object.keys(allEnvVars)
+    .filter(key => {
+        return (
+            key.startsWith("REACT_APP") ||
+            ["FIREBASE_DATABASE_EMULATOR_HOST", "FIRESTORE_EMULATOR_HOST"].includes(key)
+        )
+    })
     .reduce((obj, key) => {
         obj[key] = allEnvVars[key]
         return obj
@@ -47,7 +52,7 @@ const nextConfig = {
 
         return config
     },
-    env: envVars,
+    env: appEnvVars,
 
     // next-image config
     esModule: true,

@@ -6,16 +6,26 @@ import "firebase/database"
 import "firebase/firestore"
 
 import { firebaseConfig } from "./config"
+import { isTestEnv } from "src/utils"
 
 // Avoid duplicate initiations during development
 if (firebase.apps.length === 0) {
     // Initialize app
     firebase.initializeApp(firebaseConfig)
 
-    // Configure cache size (The default size is 40 MB)
-    firebase.firestore().settings({
+    let firestoreSettings: firebase.firestore.Settings = {
+        // Configure cache size (The default size is 40 MB)
         cacheSizeBytes: firebase.firestore.CACHE_SIZE_UNLIMITED,
-    })
+    }
+    if (isTestEnv() && process.env.FIRESTORE_EMULATOR_HOST) {
+        // Use local firebase emulator when running in localhost
+        firestoreSettings = {
+            ...firestoreSettings,
+            host: process.env.FIRESTORE_EMULATOR_HOST,
+            ssl: false,
+        }
+    }
+    firebase.firestore().settings(firestoreSettings)
 
     // Enable offline firestore
     firebase

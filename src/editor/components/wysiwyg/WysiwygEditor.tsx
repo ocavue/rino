@@ -10,6 +10,7 @@ import { WysiwygExtensions, WysiwygSchema } from "./wysiwyg-extension"
 import { WysiwygManager, useWysiwygManager } from "./wysiwyg-manager"
 import { buildMarkdownParser, buildMarkdownSerializer } from "./wysiwyg-markdown"
 import { debounce } from "lodash"
+import { isTestEnv } from "src/utils"
 import { jsx } from "@emotion/core"
 
 const InnerEditor: FC<{ className: string }> = ({ className }) => {
@@ -38,7 +39,7 @@ export const WysiwygEditor: FC<EditorProps> = ({
         const serializer = buildMarkdownSerializer()
         const initialNode = (() => {
             try {
-                if (process.env.NODE_ENV === "development" || process.env.REACT_APP_TESTING) {
+                if (isTestEnv()) {
                     if (content.trim() === "HOOK:FAILED_TO_INIT_PROSEMIRROR_VIEW") {
                         throw new Error("Found error hook for testing")
                     }

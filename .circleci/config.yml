@@ -4,14 +4,14 @@ workflows:
   version: 2
   main_workflow:
     jobs:
-      - test:
+      - build:
           # `filters` is required since `deploy` has tag filters AND requires `test`
           filters: &default_filters
             tags:
               only: /.*/
             branches:
               only: /.*/
-      - build:
+      - test:
           filters: *default_filters
       - lint:
           filters: *default_filters
@@ -48,20 +48,38 @@ commands:
     steps:
       - checkout
       - restore_cache:
-          key: &cache_key v0-dependencies-{{ checksum "yarn.lock" }}
+          key: &cache_key v5-dependencies-{{ checksum "yarn.lock" }}
       # Only install dependencies if the cache is failed to restore
-      - run: |
-          if [ ! -d "./node_modules" ]; then
-            yarn install --frozen-lockfile
-          fi
-
+      - run:
+          name: prepare dependencies
+          command: |
+            if [ ! -d "./node_modules" ]; then
+              yarn install --frozen-lockfile
+              yarn firebase setup:emulators:firestore
+            fi
+      - run:
+          name: check firebase emulators
+          command: |
+            ls -lrth ~/.cache/firebase/emulators/
   upload_cache:
     steps:
       - save_cache:
           paths:
             - node_modules
             - .next/cache # https://err.sh/next.js/no-cache
+            - ~/.cache/firebase
           key: *cache_key
+  config_firebase:
+    steps:
+      - run:
+          name: add firebase config file
+          command: |
+            echo ${FIREBASE_CLIENT_JSON} > ./config/firebase.client.json
+      - run:
+          name: set firebase project
+          command: |
+            export FIREBASE_PROJECT_ID=$(scripts/simple_jq.js ./config/firebase.client.json .projectId)
+            yarn firebase use --add $FIREBASE_PROJECT_ID
 
 jobs:
   lint:
@@ -74,15 +92,23 @@ jobs:
     executor: node-executor
     steps:
       - prepare
-      - run: |
-          echo ${FIREBASE_CLIENT_JSON} > ./config/firebase.client.json
-      - run: |
-          export REACT_APP_TESTING=1
-          yarn build
-          yarn export
-      - run: |
-          ./scripts/http-server.js > /dev/null &
-          yarn run test --coverage
+      - config_firebase
+      - run:
+          name: build static files
+          command: |
+            export REACT_APP_TESTING=1
+            export FIREBASE_DATABASE_EMULATOR_HOST="localhost:$(scripts/simple_jq.js ./firebase.json .emulators.database.port)"
+            export FIRESTORE_EMULATOR_HOST="localhost:$(scripts/simple_jq.js ./firebase.json .emulators.firestore.port)"
+            echo "firebase environment variables:" $FIREBASE_DATABASE_EMULATOR_HOST $FIRESTORE_EMULATOR_HOST
+            yarn build
+            yarn export
+      - run:
+          name: run tests
+          command: |
+            yarn firebase emulators:exec --only firestore "
+              ./scripts/http-server.js > /dev/null &
+              scripts/test.sh --coverage
+            "
       - run: |
           yarn run coverage
 
@@ -90,8 +116,7 @@ jobs:
     executor: node-executor
     steps:
       - prepare
-      - run: |
-          echo ${FIREBASE_CLIENT_JSON} > ./config/firebase.client.json
+      - config_firebase
       - run: |
           yarn run build
           yarn run export
@@ -158,8 +183,6 @@ jobs:
       - run: |
           echo '<!-- Firebase hosting -->' >> ./dist/index.html
           echo '<!-- Firebase hosting -->' >> ./dist/404.html
+      - config_firebase
       - run: |
-          echo ${FIREBASE_CLIENT_JSON} > ./config/firebase.client.json
-          export FIREBASE_PROJECT_ID=$(node -e 'console.log(require("./config/firebase.client.json").projectId)')
-          yarn firebase use --add $FIREBASE_PROJECT_ID
           yarn firebase deploy
