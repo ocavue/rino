@@ -1,3 +1,4 @@
+import Head from "next/head"
 import React from "react"
 
 // Import Global CSS
@@ -19,6 +20,9 @@ export default function Root<T>({
 }) {
     return (
         <App>
+            <Head>
+                <title>Rino</title>
+            </Head>
             <Component {...pageProps} />
         </App>
     )
