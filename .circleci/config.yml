@@ -11,30 +11,30 @@ workflows:
               only: /.*/
             branches:
               only: /.*/
-      - test:
-          filters: *default_filters
-      - lint:
-          filters: *default_filters
-      - release_check:
-          filters: &release_filters
-            tags:
-              only: /^v\d+\.\d+\.\d+.*/
-            branches:
-              ignore: /.*/
-      # Deploy to Firebase hosting (https://rino.app) only when a new version is released.
-      - deploy_firebase_prod:
-          filters: *release_filters
-          requires: [test, build, lint, release_check]
-      # Deploy to Netlify (https://netlify.rino.app) for master branch.
-      - deploy_netlify_prod:
-          filters:
-            branches:
-              only: master
-          requires: [test, build, lint]
-      # Deploy to Netlify draft (https://xxxxxxxxxxxxxxxxx--rino.netlify.com) for all branchs.
-      - deploy_netlify_test:
-          requires: [build]
-          filters: *default_filters
+      # - test:
+      #     filters: *default_filters
+      # - lint:
+      #     filters: *default_filters
+      # - release_check:
+      #     filters: &release_filters
+      #       tags:
+      #         only: /^v\d+\.\d+\.\d+.*/
+      #       branches:
+      #         ignore: /.*/
+      # # Deploy to Firebase hosting (https://rino.app) only when a new version is released.
+      # - deploy_firebase_prod:
+      #     filters: *release_filters
+      #     requires: [test, build, lint, release_check]
+      # # Deploy to Netlify (https://netlify.rino.app) for master branch.
+      # - deploy_netlify_prod:
+      #     filters:
+      #       branches:
+      #         only: master
+      #     requires: [test, build, lint]
+      # # Deploy to Netlify draft (https://xxxxxxxxxxxxxxxxx--rino.netlify.com) for all branchs.
+      # - deploy_netlify_test:
+      #     requires: [build]
+      #     filters: *default_filters
 
 executors:
   node-executor:
@@ -48,7 +48,7 @@ commands:
     steps:
       - checkout
       - restore_cache:
-          key: &cache_key v4-dependencies-{{ checksum "yarn.lock" }}
+          key: &cache_key v5-dependencies-{{ checksum "yarn.lock" }}
       # Only install dependencies if the cache is failed to restore
       - run:
           name: prepare dependencies
@@ -56,7 +56,6 @@ commands:
             if [ ! -d "./node_modules" ]; then
               yarn install --frozen-lockfile
               yarn firebase setup:emulators:firestore
-              yarn firebase setup:emulators:database
             fi
       - run:
           name: check firebase emulators
@@ -106,7 +105,7 @@ jobs:
       - run:
           name: run tests
           command: |
-            yarn firebase emulators:exec "
+            yarn firebase emulators:exec --only firestore "
               ./scripts/http-server.js > /dev/null &
               scripts/test.sh --coverage
             "
