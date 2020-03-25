@@ -51,6 +51,8 @@ overrides:
       browser: "readonly"
       context: "readonly"
       jestPuppeteer: "readonly"
+  - files: "scripts/*"
+    rules:
+      "@typescript-eslint/no-var-requires": off
 ignorePatterns:
-  - scripts/*
   - jest*.js

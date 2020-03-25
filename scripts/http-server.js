@@ -1,7 +1,5 @@
 #!/usr/bin/env node
 
-/* eslint-disable @typescript-eslint/no-var-requires */
-
 // A simple static http server
 
 const fs = require("fs")
@@ -15,12 +13,12 @@ function resolveFileAbsPath(reqPath) {
     if (reqPath === "/") {
         reqPath = "/index.html"
     }
-    let dir = path.join(__dirname, "..", "dist")
+    const dir = path.join(__dirname, "..", "dist")
     return path.join(dir, reqPath)
 }
 
 function logRes(url, filePath, statusCode) {
-    let date = new Date()
+    const date = new Date()
     console.log(`[${date.toISOString()}] ${statusCode} ${url} -> ${filePath}`)
 }
 
@@ -31,10 +29,10 @@ http.createServer(function(req, res) {
     if (!fs.existsSync(filePath)) {
         filePath = resolveFileAbsPath("/404.html")
     } else if (fs.lstatSync(filePath).isDirectory()) {
-        filePath = path.join(filePath, 'index.html')
+        filePath = path.join(filePath, "index.html")
     }
     try {
-        let content = fs.readFileSync(filePath, "utf-8")
+        const content = fs.readFileSync(filePath, "utf-8")
         res.writeHead(200)
         res.end(content)
         logRes(req.url, filePath, 200)
