@@ -1,4 +1,4 @@
-import { Collection, EditContainer, collectionIconMap, collectionIconNames } from "src/controller"
+import { Collection, CollectionIconName, EditContainer, collectionIconMap } from "src/controller"
 import {
     List,
     ListItem,
@@ -17,7 +17,7 @@ const useStyles = makeStyles(() => {
     })
 })
 
-const getIconComponent = (name: collectionIconNames) => {
+const getIconComponent = (name: CollectionIconName) => {
     const Icon = collectionIconMap[name]
     if (Icon) return Icon
     else return collectionIconMap.Label

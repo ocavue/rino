@@ -3,7 +3,7 @@ import { AppbarIconButton } from "src/components/AppbarIconButton"
 import { EditContainer } from "src/controller"
 import { StoreContainer } from "src/store"
 import { useHeaderStyles } from "./style"
-import React from "react"
+import React, { useMemo } from "react"
 
 export const NoteHeader: React.FC = () => {
     const classes = useHeaderStyles()
@@ -13,7 +13,12 @@ export const NoteHeader: React.FC = () => {
         state: { loading },
     } = StoreContainer.useContainer()
 
-    const { createServerNote, createLocalNote } = EditContainer.useContainer()
+    const { createServerNote, createLocalNote, collection } = EditContainer.useContainer()
+
+    const disableCreateBtn = useMemo(() => loading || collection.role === "trash", [
+        loading,
+        collection,
+    ])
 
     const onClickCreateBtn = () => {
         if (user) createServerNote(user.uid)
@@ -32,8 +37,8 @@ export const NoteHeader: React.FC = () => {
             <AppbarIconButton
                 className={classes.drawerHeaderButton}
                 onClick={onClickCreateBtn}
-                disabled={loading}
-                data-testid={`sidebar-notes-btn-create-note${loading ? "-disabled" : ""}`}
+                disabled={disableCreateBtn}
+                data-testid={`sidebar-notes-btn-create-note${disableCreateBtn ? "-disabled" : ""}`}
             >
                 <icons.Add />
             </AppbarIconButton>

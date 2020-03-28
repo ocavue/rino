@@ -8,8 +8,8 @@ describe("Before login", function() {
     })
 
     test("Show collection", async () => {
-        await wait("drawer-collection-item-_trash")
-        await wait("drawer-collection-item-_inbox")
+        await wait("drawer-collection-item-key:inbox")
+        await wait("drawer-collection-item-key:trash")
     })
 })
 
@@ -20,7 +20,7 @@ describe("After login", function() {
     })
 
     test("Show collection", async () => {
-        await wait("drawer-collection-item-_trash")
-        await wait("drawer-collection-item-_inbox")
+        await wait("drawer-collection-item-key:inbox")
+        await wait("drawer-collection-item-key:trash")
     })
 })
