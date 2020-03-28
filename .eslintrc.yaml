@@ -14,8 +14,8 @@ extends:
   - "prettier/@typescript-eslint"
   - "prettier/react"
   - "plugin:prettier/recommended"
+  - "plugin:react-hooks/recommended"
 plugins:
-  - react-hooks
   - sort-imports-es6-autofix
 settings:
   react:
@@ -34,8 +34,6 @@ rules:
   "@typescript-eslint/no-explicit-any": "off"
   "@typescript-eslint/no-unused-vars": [error, { args: "none" }]
   "@typescript-eslint/no-empty-function": "off"
-  "react-hooks/rules-of-hooks": "error"
-  "react-hooks/exhaustive-deps": "warn"
   "react/no-unescaped-entities": "off"
 overrides:
   - files: "tests/**/*.[t|j]s"
