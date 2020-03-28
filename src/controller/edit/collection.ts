@@ -6,12 +6,14 @@ export const collectionIconMap = {
     Delete: icons.Delete,
     Label: icons.Label,
 }
-export type collectionIconNames = keyof typeof collectionIconMap
+export type CollectionIconName = keyof typeof collectionIconMap
+export type CollectionRole = "inbox" | "trash" | "child"
 
 export interface Collection {
     key: string
     name: string
-    icon: collectionIconNames
+    role: CollectionRole
+    icon: CollectionIconName
     children?: Collection[]
     notes: Note[]
 }

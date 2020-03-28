@@ -3,52 +3,50 @@ import { Draft, produce } from "immer"
 import { Note } from "./note"
 import { useCallback, useMemo, useState } from "react"
 
-function useCollections() {
-    return useState<Collection[]>([
-        {
-            key: "_inbox",
-            name: "Inbox",
-            icon: "Inbox",
-            notes: [],
-        },
-        {
-            key: "_trash",
-            name: "Trash",
-            icon: "Delete",
-            notes: [],
-        },
-    ])
-}
-
-function useCollectionKey() {
-    return useState<string | null>("_inbox")
-}
-
 export function useCollection() {
-    const [collections, setCollections] = useCollections()
-    const [collectionKey, setCollectionKey] = useCollectionKey()
-    const collection = useMemo(
-        () => collections.find(collection => collection.key === collectionKey),
-        [collections, collectionKey],
-    )
-    const initCollections = useCallback(
-        (allNotes: Note[]) => {
-            setCollections(
-                produce((collections: Draft<Collection[]>) => {
-                    const [inbox, trash] = collections
+    const [inboxCollection, setInboxCollection] = useState<Collection>({
+        key: "key:inbox",
+        name: "Inbox",
+        icon: "Inbox",
+        notes: [],
+        role: "inbox",
+    })
+    const [trashCollection, setTrashCollection] = useState<Collection>({
+        key: "key:trash",
+        name: "Trash",
+        icon: "Delete",
+        notes: [],
+        role: "trash",
+    })
+    const [collectionKey, setCollectionKey] = useState<string | null>("key:inbox")
 
-                    inbox.notes = []
-                    trash.notes = []
+    const collection = useMemo(() => {
+        return collectionKey === inboxCollection.key ? inboxCollection : trashCollection
+    }, [collectionKey, trashCollection, inboxCollection])
 
-                    for (const note of allNotes) {
-                        if (note.deleted) trash.notes.push(note)
-                        else inbox.notes.push(note)
-                    }
-                }),
-            )
-        },
-        [setCollections],
-    )
+    const initCollections = useCallback((allNotes: Note[]) => {
+        const inboxNotes: Note[] = []
+        const trashNotes: Note[] = []
+
+        for (const note of allNotes) {
+            if (note.deleted) trashNotes.push(note)
+            else inboxNotes.push(note)
+        }
+        setInboxCollection(
+            produce((inboxCollection: Draft<Collection>) => {
+                inboxCollection.notes = inboxNotes
+            }),
+        )
+        setTrashCollection(
+            produce((trashCollection: Draft<Collection>) => {
+                trashCollection.notes = trashNotes
+            }),
+        )
+    }, [])
+    const collections = useMemo(() => [inboxCollection, trashCollection], [
+        inboxCollection,
+        trashCollection,
+    ])
 
     return {
         collection,
