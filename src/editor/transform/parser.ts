@@ -156,19 +156,12 @@ function buildTokenHandlers(schema: Schema, parserTokens: ParserToken[]): TokenH
     return handlers
 }
 
-// A configuration of a Markdown parser. Such a parser uses
-// [markdown-it](https://github.com/markdown-it/markdown-it) to
-// tokenize a file, and then runs the custom rules it is given over
-// the tokens to create a ProseMirror document tree.
 export class MarkdownParser {
     private schema: Schema
     private tokenizer: MarkdownIt
     private tokenHandlers: TokenHandlers
 
     public constructor(schema: Schema, parserTokens: ParserToken[]) {
-        // :: Object The value of the `tokens` object used to construct
-        // this parser. Can be useful to copy and modify to base other
-        // parsers on.
         this.schema = schema
         this.tokenizer = MarkdownIt("commonmark", { html: true })
             .disable(["emphasis", "autolink", "backticks", "entity"])
@@ -177,9 +170,6 @@ export class MarkdownParser {
         this.tokenHandlers = buildTokenHandlers(schema, parserTokens)
     }
 
-    // Parse a string as [CommonMark](http://commonmark.org/) markup,
-    // and create a ProseMirror document as prescribed by this parser's
-    // rules.
     public parse(text: string): Node {
         const state = new MarkdownParseState(this.schema, this.tokenHandlers)
         let doc: Node

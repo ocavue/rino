@@ -1,5 +1,10 @@
-import { convertCommand, KeyBindings, NodeExtension, NodeExtensionOptions } from "@remirror/core"
-import { NodeType } from "prosemirror-model"
+import {
+    convertCommand,
+    KeyBindings,
+    NodeExtension,
+    NodeExtensionOptions,
+    ProsemirrorNode,
+} from "@remirror/core"
 import { TextSelection, Transaction } from "prosemirror-state"
 
 import { ParserToken } from "src/editor/transform/parser-type"
@@ -12,58 +17,49 @@ export abstract class MarkdownNodeExtension<T = NodeExtensionOptions> extends No
 
 export function buildBlockEnterKeymapBindings(
     regex: RegExp,
-    nodeType: NodeType,
-    options: {
-        getAttrs?: (match: string[]) => { [name: string]: string }
-        transact?: (match: string[], tr: Transaction, start: number, end: number) => Transaction
-    },
+    getNode: (match: string[]) => ProsemirrorNode,
 ): KeyBindings {
     // https://github.com/ProseMirror/prosemirror/issues/374#issuecomment-224514332
     // https://discuss.prosemirror.net/t/trigger-inputrule-on-enter/1118/4
+    // Some code is copy from prosemirror-inputrules/src/inputrules.js
     return {
         Enter: convertCommand((state, dispatch) => {
-            // Some code is copy from prosemirror-inputrules/src/inputrules.js
-            if (!(state.selection instanceof TextSelection)) {
-                return false
-            }
-            const { nodeBefore } = state.selection.$from
-            if (!nodeBefore || !nodeBefore.isText) {
-                return false
-            }
-            const cursor = state.selection.$cursor
-            const match = regex.exec(nodeBefore.text || "")
-            if (match && cursor) {
-                const [start, end] = [cursor.pos - match[0].length, cursor.pos]
-                // copy from `textblockTypeInputRule`
-                const $start = state.doc.resolve(start)
-                if (
-                    !$start
-                        .node(-1)
-                        .canReplaceWith($start.index(-1), $start.indexAfter(-1), nodeType)
-                ) {
-                    return false
-                }
+            // Ensure that the selection is a TextSelection
+            if (!(state.selection instanceof TextSelection)) return false
 
-                let tr: Transaction = state.tr
-                if (options.getAttrs) {
-                    tr = tr
-                        .delete(start, end)
-                        .setBlockType(start, start, nodeType, options.getAttrs(match))
-                }
-                if (options.transact) {
-                    tr = options.transact(match, tr, start, end)
-                }
-                if (dispatch) {
-                    // To be able to query whether a command is applicable for a given state, without
-                    // actually executing it, the `dispatch` argument is optional—commands should
-                    // simply return true without doing anything when they are applicable but no
-                    // `dispatch` argument is given
-                    // https://prosemirror.net/docs/guide/#commands
-                    dispatch(tr)
-                }
-                return true
+            // Ensure that the selection is cursor (empty selection)
+            const $cursor = state.selection.$cursor
+            if (!$cursor) return false
+
+            // Get the text before the selection
+            const { nodeBefore } = state.selection.$from
+            const textBefore = nodeBefore && nodeBefore.isText && nodeBefore.text
+            if (!textBefore) return false
+
+            // Execute the regular expression
+            const match = regex.exec(textBefore)
+            if (!match) return false
+
+            // The range of text which will be replaced
+            const [start, end] = [$cursor.pos - match[0].length, $cursor.pos]
+            const $start = state.doc.resolve(start)
+            const node = getNode(match)
+
+            if (!$start.node(-1).canReplaceWith($start.index(-1), $start.indexAfter(-1), node.type))
+                return false
+
+            let tr: Transaction = state.tr
+            tr = tr.replaceRangeWith(start, end, node)
+
+            if (dispatch) {
+                // To be able to query whether a command is applicable for a given state, without
+                // actually executing it, the `dispatch` argument is optional—commands should
+                // simply return true without doing anything when they are applicable but no
+                // `dispatch` argument is given
+                // https://prosemirror.net/docs/guide/#commands
+                dispatch(tr)
             }
-            return false
+            return true
         }),
     }
 }

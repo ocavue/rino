@@ -36,9 +36,8 @@ export const WysiwygEditor: FC<EditorProps> = ({
     const [error, setError] = useState<Error | null>(null)
 
     const { initialNode, onChange, saveContent } = useMemo(() => {
-        const schema = manager.schema
-        const parser = buildMarkdownParser(schema)
-        const serializer = buildMarkdownSerializer()
+        const parser = buildMarkdownParser(manager)
+        const serializer = buildMarkdownSerializer(manager)
         const initialNode = (() => {
             try {
                 if (isTestEnv()) {
@@ -73,7 +72,7 @@ export const WysiwygEditor: FC<EditorProps> = ({
             onChange,
             saveContent,
         }
-    }, [manager.schema, content, setContent])
+    }, [manager, content, setContent])
 
     useEffect(() => {
         console.debug(`Mounting <${WysiwygEditor.displayName}/>`)

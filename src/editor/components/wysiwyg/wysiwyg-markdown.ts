@@ -1,42 +1,57 @@
-import { AnyExtension, FlexibleExtension, isExtension } from "@remirror/core"
+import { AnyExtension, ExtensionManager, FlexibleExtension, isExtension } from "@remirror/core"
 
 import { MarkdownParser } from "src/editor/transform/parser"
 import { ParserToken } from "src/editor/transform/parser-type"
 import { MarkdownSerializer, NodeSerializerSpecs } from "src/editor/transform/serializer"
 import { MarkdownNodeExtension } from "src/editor/utils"
 
-import { wysiwygExtensions, WysiwygSchema } from "./wysiwyg-extension"
-
-function isMarkdownNodeExtension(extension: FlexibleExtension): extension is MarkdownNodeExtension {
-    return (
-        isExtension(extension) && (extension as any).fromMarkdown
-        // TODO: Add toMarkdown
-        // isExtension(extension) && (extension as any).fromMarkdown && (extension as any).toMarkdown
+export function isMarkdownNodeExtension(
+    extension: FlexibleExtension,
+): extension is MarkdownNodeExtension {
+    return !!(
+        isExtension(extension) &&
+        (extension as MarkdownNodeExtension).fromMarkdown &&
+        (extension as MarkdownNodeExtension).toMarkdown
     )
 }
 
-function convertToAnyExtension<T extends AnyExtension>(extension: FlexibleExtension<T>): T {
-    return isExtension(extension) ? extension : extension.extension
-}
-
-const markdownNodeExtensions = (wysiwygExtensions as FlexibleExtension[])
-    .map(convertToAnyExtension)
-    .filter(isMarkdownNodeExtension)
-
-export function buildMarkdownParser(schema: WysiwygSchema) {
-    const parserTokens: ParserToken[] = []
-    for (const extension of markdownNodeExtensions) {
-        parserTokens.push(...extension.fromMarkdown())
+export function buildMarkdownParser<Extension extends AnyExtension>(
+    manage: ExtensionManager<Extension>,
+) {
+    const markdownNodeExtensions: MarkdownNodeExtension[] = []
+    for (const extension of manage.extensions) {
+        if (isMarkdownNodeExtension(extension)) {
+            markdownNodeExtensions.push(extension)
+        }
     }
 
-    return new MarkdownParser(schema, parserTokens)
+    const parserTokens = markdownNodeExtensions.reduce(
+        (tokens, extension): ParserToken[] => [...tokens, ...extension.fromMarkdown()],
+        [] as ParserToken[],
+    )
+
+    return new MarkdownParser(manage.schema, parserTokens)
 }
 
-export function buildMarkdownSerializer() {
-    const specs: NodeSerializerSpecs = {}
-    for (const extension of markdownNodeExtensions) {
-        specs[extension.name] = extension.toMarkdown
+export function buildMarkdownSerializer<Extension extends AnyExtension>(
+    manage: ExtensionManager<Extension>,
+) {
+    const markdownNodeExtensions: MarkdownNodeExtension[] = []
+    for (const extension of manage.extensions) {
+        if (isMarkdownNodeExtension(extension)) {
+            markdownNodeExtensions.push(extension)
+        }
     }
+
+    const specs: NodeSerializerSpecs = markdownNodeExtensions.reduce(
+        (specs, extension): NodeSerializerSpecs => {
+            return {
+                [extension.name]: extension.toMarkdown,
+                ...specs,
+            }
+        },
+        {} as NodeSerializerSpecs,
+    )
 
     return new MarkdownSerializer(specs)
 }

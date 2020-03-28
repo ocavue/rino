@@ -39,18 +39,16 @@ export class RinoCodeBlockExtension extends CodeBlockExtension
     public keys(params: ExtensionManagerNodeTypeParams): KeyBindings {
         return {
             ...super.keys(params),
-            ...buildBlockEnterKeymapBindings(/^```([a-zA-Z]*)?$/, params.type, {
-                getAttrs: (match) => {
-                    const userInputLanguage = match[1] || ""
-                    return {
-                        language: getLanguage({
-                            language: userInputLanguage,
-                            fallback: this.options.defaultLanguage,
-                            supportedLanguages: this.options.supportedLanguages,
-                        }),
-                        userInputLanguage,
-                    }
-                },
+            ...buildBlockEnterKeymapBindings(/^```([a-zA-Z]*)?$/, (match) => {
+                const userInputLanguage = match[1] || ""
+                return params.type.create({
+                    language: getLanguage({
+                        language: userInputLanguage,
+                        fallback: this.options.defaultLanguage,
+                        supportedLanguages: this.options.supportedLanguages,
+                    }),
+                    userInputLanguage,
+                })
             }),
         }
     }
