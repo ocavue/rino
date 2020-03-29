@@ -50,8 +50,10 @@ rules:
       # Absolute imports and other imports such as Vue-style `@/foo`.
       # Anything that does not start with a dot.
       ["^[^.]"],
-      # aaaa
-      ["^src\/"],
+      # Absolute imports based on tsconfig.json's `baseUrl`.
+      # Check https://github.com/lydell/eslint-plugin-simple-import-sort/issues/31 for more information.
+      # Anything that start with `src/`, `config/` or `tests/`
+      ["^(?:src|config|tests)\/"],
       # Relative imports.
       # Anything that starts with a dot.
       ["^\\."],
