@@ -88,19 +88,115 @@ describe("toMarkdown", () => {
         )
         expect(serializer.serialize(node)).toEqual(
             dedent(
-                // TODO: why four -
                 `
-                | 1    | 2    | 3    |
-                | ---- | ---- | ---- |
-                | 4    | 5    | 6    |
-                | 7    | 8    | 9    |
+                | 1   | 2   | 3   |
+                | --- | --- | --- |
+                | 4   | 5   | 6   |
+                | 7   | 8   | 9   |
+
                 `,
+            ).trimStart(),
+        )
+    })
+
+    test("make all cells with same length in a column (1)", () => {
+        expect(
+            serializer.serialize(
+                doc(
+                    buildRegularTable([
+                        ["x", "x", "x"],
+                        ["x", "x", "xxxxx"],
+                        ["x", "x", "x"],
+                    ]),
+                ),
             ),
+        ).toEqual(
+            dedent(
+                `
+                | x   | x   | x     |
+                | --- | --- | ----- |
+                | x   | x   | xxxxx |
+                | x   | x   | x     |
+
+                `,
+            ).trimStart(),
+        )
+    })
+
+    test("make all cells with same length in a column (2)", () => {
+        expect(
+            serializer.serialize(
+                doc(
+                    buildRegularTable([
+                        ["xxxxx", "x", "x"],
+                        ["x", "x", "x"],
+                        ["x", "x", "x"],
+                    ]),
+                ),
+            ),
+        ).toEqual(
+            dedent(
+                `
+                | xxxxx | x   | x   |
+                | ----- | --- | --- |
+                | x     | x   | x   |
+                | x     | x   | x   |
+
+                `,
+            ).trimStart(),
+        )
+    })
+
+    test("make all cells with same length in a column (3)", () => {
+        expect(
+            serializer.serialize(
+                doc(
+                    buildRegularTable([
+                        ["x", "xxxxxx", "x"],
+                        ["x", "x", "x"],
+                        ["x", "x", "x"],
+                    ]),
+                ),
+            ),
+        ).toEqual(
+            dedent(
+                `
+                | x   | xxxxxx | x   |
+                | --- | ------ | --- |
+                | x   | x      | x   |
+                | x   | x      | x   |
+
+                `,
+            ).trimStart(),
+        )
+    })
+
+    test("make all cells with same length in a column (4)", () => {
+        expect(
+            serializer.serialize(
+                doc(
+                    buildRegularTable([
+                        ["x", "x", "x"],
+                        ["x", "xxxxx", "x"],
+                        ["x", "x", "x"],
+                    ]),
+                ),
+            ),
+        ).toEqual(
+            dedent(
+                `
+                | x   | x     | x   |
+                | --- | ----- | --- |
+                | x   | xxxxx | x   |
+                | x   | x     | x   |
+
+                `,
+            ).trimStart(),
         )
     })
 })
 
-describe.only("inputRules", () => {
+describe("inputRules", () => {
     test("replaces string with table", () => {
         const { add, doc, p, table, tableRow, tableCell } = setup()
 

@@ -85,7 +85,7 @@ export class RinoTableExtension extends TableExtension implements MarkdownNodeEx
         table.forEach((row) => {
             row.forEach((cell, colIndex) => {
                 if (!colWidths[colIndex]) colWidths[colIndex] = 3
-                else colWidths[colIndex] = Math.max(cell.length, colWidths[colIndex])
+                colWidths[colIndex] = Math.max(cell.length, colWidths[colIndex])
             })
         })
 
