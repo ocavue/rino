@@ -22,7 +22,7 @@ import {
 /**
  * Replace ParagraphExtension as RinoParagraphExtension in baseExtensions.
  */
-export const rinoBaseExtensions = baseExtensions.map((e) => {
+const rinoBaseExtensions = baseExtensions.map((e) => {
     if (e.extension.name === "paragraph")
         return {
             extension: new RinoParagraphExtension(),
