@@ -11,7 +11,7 @@ import {
 } from "src/controller"
 import { StoreContainer } from "src/store"
 
-const ContainerConsumer: React.FC = (props) => {
+const ContainerConsumer: React.FC<{}> = (props) => {
     const {
         state: { isDarkTheme, setConnected, setLoadingData, setLoadingUser },
         auth: { user, setUser },
