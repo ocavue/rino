@@ -7,7 +7,7 @@ import { dedent } from "src/utils"
 
 export const wysiwygManager = createWysiwygManager()
 export const schema = wysiwygManager.schema
-export const defaultMarkdownParser = buildMarkdownParser(schema)
+export const defaultMarkdownParser = buildMarkdownParser(wysiwygManager)
 
 export const def = {
     p: { nodeType: "paragraph" },
