@@ -1,6 +1,6 @@
-import { TaggedProsemirrorNode, builders } from "prosemirror-test-builder"
+import { TaggedProsemirrorNode } from "prosemirror-test-builder"
 import { buildMarkdownParser } from "src/editor/components/wysiwyg/wysiwyg-markdown"
-
+import { builders } from "prosemirror-test-builder"
 import { createWysiwygManager } from "src/editor"
 import { dedent } from "src/utils"
 

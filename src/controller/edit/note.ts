@@ -1,11 +1,6 @@
-import {
-    DocumentReference,
-    DocumentSnapshot,
-    Timestamp,
-    firebase,
-    notesCollection,
-} from "../firebase"
+import { DocumentReference, DocumentSnapshot, Timestamp, firebase } from "../firebase"
 import { generateRandomId } from "src/utils"
+import { notesCollection } from "../firebase"
 
 interface NoteData {
     uid: string

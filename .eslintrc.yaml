@@ -22,11 +22,6 @@ extends:
   # runs Prettier as an ESLint rule
   - "plugin:prettier/recommended"
 
-  # eslint-plugin-import
-  - plugin:import/errors
-  - plugin:import/warnings
-  - plugin:import/typescript # this line does the trick
-
   # turns off all ELLint rules that are unnecessary or might conflict with Prettier
   - "prettier"
   - "prettier/@typescript-eslint" # for @typescript-eslint/eslint-plugin
@@ -35,14 +30,6 @@ plugins: []
 settings:
   react:
     version: "detect" # Tells eslint-plugin-react to automatically detect the version of React to use
-  import/parsers:
-    "@typescript-eslint/parser": [.ts, .tsx]
-  # import/resolver:
-    # "typescript":
-      # alwaysTryTypes: true # always try to resolve types under `<roo/>@types` directory even it doesn't contain any source code, like `@types/unist`
-      # directory:
-        # - "./tsconfig.json"
-
 env:
   browser: true
   node: true
