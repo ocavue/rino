@@ -26,8 +26,7 @@ extends:
   - "prettier"
   - "prettier/@typescript-eslint" # for @typescript-eslint/eslint-plugin
   - "prettier/react" # for eslint-plugin-react
-plugins:
-  - sort-imports-es6-autofix
+plugins: []
 settings:
   react:
     version: "detect" # Tells eslint-plugin-react to automatically detect the version of React to use
@@ -39,7 +38,6 @@ rules:
   "no-unused-vars": [error, { args: "none" }]
   "no-useless-escape": "off"
   "sort-imports": "off"
-  "sort-imports-es6-autofix/sort-imports-es6": [2]
   "react/prop-types": [1, { skipUndeclared: true }]
   "@typescript-eslint/explicit-function-return-type": "off"
   "@typescript-eslint/no-explicit-any": "off"
