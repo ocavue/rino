@@ -3,11 +3,10 @@ import { builders } from "prosemirror-test-builder"
 
 import { createWysiwygManager } from "src/editor"
 import { buildMarkdownParser } from "src/editor/components/wysiwyg/wysiwyg-markdown"
-import { dedent } from "src/utils"
 
 export const wysiwygManager = createWysiwygManager()
 export const schema = wysiwygManager.schema
-export const defaultMarkdownParser = buildMarkdownParser(schema)
+export const defaultMarkdownParser = buildMarkdownParser(wysiwygManager)
 
 export const def = {
     p: { nodeType: "paragraph" },
@@ -24,7 +23,7 @@ export const def = {
     ol: { nodeType: "rinoOrderedList" },
     ul: { nodeType: "rinoBulletList" },
     br: { nodeType: "hardBreak" },
-    pre: { nodeType: "codeBlock", userInputLanguage: "" }, // TODO: Remove `userInputLanguage: ""` after https://github.com/remirror/remirror/pull/248 been merged
+    pre: { nodeType: "codeBlock" },
     preJS: { nodeType: "codeBlock", language: "javascript", userInputLanguage: "javascript" },
     blockquote: { nodeType: "rinoBlockquote" },
     table: { nodeType: "table" },
@@ -50,9 +49,6 @@ const {
     preJS,
     blockquote,
     hr,
-    table,
-    tableRow,
-    tableCell,
 } = nodes
 
 export const createBaseTestcases = (): Record<string, [string, TaggedProsemirrorNode]> => ({
@@ -70,21 +66,6 @@ export const createBaseTestcases = (): Record<string, [string, TaggedProsemirror
     codeBlockWithLanguage: ["```javascript\n1+1\n```", doc(preJS("1+1"))],
     quote: ["> text\n> text", doc(blockquote(p("text\ntext")))],
     hr: ["---", doc(hr())],
-    table: [
-        dedent(`
-            | header | header |
-            | ------ | ------ |
-            | cell01 | cell02 |
-            | cell03 | cell04 |
-            `),
-        doc(
-            table(
-                tableRow(tableCell("header"), tableCell("header")),
-                tableRow(tableCell("cell01"), tableCell("cell02")),
-                tableRow(tableCell("cell03"), tableCell("cell04")),
-            ),
-        ),
-    ],
     // TODO: add test for hard break
     // br: [
     //     'text\rtext',

@@ -10,7 +10,7 @@ fi
 
 if [[ $1 == "unit" ]]; then
     shift 1
-    yarn jest --testPathPattern="tests/unit/.*\.spec\.(js|ts)" $@
+    yarn jest --testPathPattern="tests/unit" --testPathPattern="/__test__/" $@
 elif [[ $1 == "e2e" ]]; then
     shift 1
     scripts/wait-server.sh http://localhost:3000

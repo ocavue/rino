@@ -1,7 +1,7 @@
 import { ExtensionManagerNodeTypeParams, KeyBindings } from "@remirror/core"
 import { TableCellExtension, TableExtension, TableRowExtension } from "@remirror/extension-tables"
 import { Fragment, Node as ProsemirroNode } from "prosemirror-model"
-import { Transaction } from "prosemirror-state"
+import { TextSelection } from "prosemirror-state"
 
 import { ParserTokenType } from "src/editor/transform/parser-type"
 import { NodeSerializerOptions } from "src/editor/transform/serializer"
@@ -21,8 +21,9 @@ export class RinoTableExtension extends TableExtension implements MarkdownNodeEx
     readonly name = "table"
 
     public keys({ type, schema }: ExtensionManagerNodeTypeParams): KeyBindings {
-        return buildBlockEnterKeymapBindings(/^\|((?:[^\|]+\|){2,})\s*$/, type, {
-            transact: (match: string[], tr: Transaction, start: number, end: number) => {
+        return buildBlockEnterKeymapBindings(
+            /^\|((?:[^\|]+\|){2,})\s*$/,
+            ({ match }) => {
                 const texts = match[1]
                     .split("|")
                     .slice(0, -1) // Remove the empty string at the end
@@ -32,13 +33,28 @@ export class RinoTableExtension extends TableExtension implements MarkdownNodeEx
                         return schema.text(text)
                     })
 
-                const cells = texts.map((text) => schema.nodes.tableCell.create(null, text))
-                const row = schema.nodes.tableRow.create(null, cells)
-                const table = schema.nodes.table.create(null, row)
-                tr = tr.delete(start, end).insert(start, table)
-                return tr
+                const cells1 = texts.map((text) => schema.nodes.tableCell.create(null, text)) // first row
+                const cells2 = texts.map((text) => schema.nodes.tableCell.create(null)) // second row
+                const row1 = schema.nodes.tableRow.create(null, cells1)
+                const row2 = schema.nodes.tableRow.create(null, cells2)
+                const table = schema.nodes.table.create(null, [row1, row2])
+                return table
             },
-        })
+            ({ tr }) => {
+                const $cursor = (tr.selection as TextSelection)?.$cursor
+                if (!$cursor) {
+                    // The selection is not an empty TextSelection. Do nothing.
+                    return tr
+                } else {
+                    // $cursor.before(-1) is the end of the first tableRow
+                    // $cursor.before(-1) + 1 is the start of the second tableRow
+                    // $cursor.before(-1) + 2 is the start of the first cell in the second tableRow
+                    const pos = $cursor.before(-1) + 2
+                    const $pos = tr.doc.resolve(pos)
+                    return tr.setSelection(new TextSelection($pos))
+                }
+            },
+        )
     }
 
     public helpers(params: ExtensionManagerNodeTypeParams) {
@@ -83,16 +99,17 @@ export class RinoTableExtension extends TableExtension implements MarkdownNodeEx
             })
             table.push(row)
         })
+        const colNumber = colAligns.length // How many colume this table have
 
-        const colWidths: number[] = new Array(colAligns.length)
-        table.forEach((row, rowIndex) => {
+        const colWidths = new Array<number>(colNumber)
+        table.forEach((row) => {
             row.forEach((cell, colIndex) => {
-                if (!colWidths[colIndex]) colWidths[colIndex] = 4
+                if (!colWidths[colIndex]) colWidths[colIndex] = 3
                 colWidths[colIndex] = Math.max(cell.length, colWidths[colIndex])
             })
         })
 
-        const spliter: string[] = new Array(colAligns.length)
+        const spliter: string[] = new Array(colNumber)
         colWidths.forEach((width, colIndex) => {
             switch (colAligns[colIndex]) {
                 case TABLE_ALIGEN.LEFT:
@@ -111,7 +128,7 @@ export class RinoTableExtension extends TableExtension implements MarkdownNodeEx
         })
         table.splice(1, 0, spliter)
 
-        let text = "\n"
+        let text = ""
         table.forEach((row) => {
             row.forEach((cell, col) => {
                 text += "| "
@@ -128,6 +145,7 @@ export class RinoTableExtension extends TableExtension implements MarkdownNodeEx
             })
             text += "|\n"
         })
+        text += "\n"
 
         state.text(text, false)
     }
