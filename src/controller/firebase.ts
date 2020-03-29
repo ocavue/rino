@@ -31,7 +31,7 @@ if (firebase.apps.length === 0) {
     firebase
         .firestore()
         .enablePersistence({ synchronizeTabs: true })
-        .catch(error => {
+        .catch((error) => {
             console.error(error)
             if (error.code === "failed-precondition") {
                 // Multiple tabs open, persistence can only be enabled

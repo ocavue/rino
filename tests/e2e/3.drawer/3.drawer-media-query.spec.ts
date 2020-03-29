@@ -11,7 +11,7 @@ import { maxDrawerWidth, mobileBreakPoint } from "src/constants"
 
 const height = 800
 
-describe("Drawer type (persistent / temporary)", function() {
+describe("Drawer type (persistent / temporary)", function () {
     beforeAll(async () => {
         await jestPuppeteer.resetBrowser()
         await goto("/")
@@ -65,7 +65,7 @@ describe("Drawer type (persistent / temporary)", function() {
     }
 })
 
-describe("Drawer width", function() {
+describe("Drawer width", function () {
     beforeAll(async () => {
         await goto("/")
     })

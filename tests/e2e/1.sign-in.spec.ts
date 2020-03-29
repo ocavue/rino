@@ -1,13 +1,13 @@
 import { click, getInnerText, getTextAreaValue, goto, sleep, type, wait } from "./utils"
 import { login } from "./actions"
 
-describe("Sign-in for development", function() {
+describe("Sign-in for development", function () {
     test("Automatically sign in", async () => {
         await login()
     })
 })
 
-describe("Sign-in for production", function() {
+describe("Sign-in for production", function () {
     const invaildEmail = "INVAILD_EMAIL@@test.rino.app"
     const vaildEmail = "VAILD_EMAIL@test.rino.app"
 

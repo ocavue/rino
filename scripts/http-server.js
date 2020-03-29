@@ -24,7 +24,7 @@ function logRes(url, filePath, statusCode) {
 
 console.log("Serving HTTP on http://localhost:3000/")
 
-http.createServer(function(req, res) {
+http.createServer(function (req, res) {
     let filePath = resolveFileAbsPath(req.url)
     if (!fs.existsSync(filePath)) {
         filePath = resolveFileAbsPath("/404.html")

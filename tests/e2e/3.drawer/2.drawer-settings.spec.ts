@@ -78,7 +78,7 @@ describe("Settings", () => {
         })
     })
 
-    describe("About", function() {
+    describe("About", function () {
         beforeAll(async () => await jestPuppeteer.resetBrowser())
 
         test("Open the dialog", async () => {
@@ -108,7 +108,7 @@ describe("Settings", () => {
         })
     })
 
-    describe("Email", function() {
+    describe("Email", function () {
         beforeAll(async () => await jestPuppeteer.resetBrowser())
 
         test("Email", async () => {

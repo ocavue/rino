@@ -1,7 +1,7 @@
 import { goto, wait } from "../utils"
 import { login } from "../actions"
 
-describe("Before login", function() {
+describe("Before login", function () {
     beforeAll(async () => {
         await jestPuppeteer.resetBrowser()
         await goto("/")
@@ -13,7 +13,7 @@ describe("Before login", function() {
     })
 })
 
-describe("After login", function() {
+describe("After login", function () {
     beforeAll(async () => {
         await jestPuppeteer.resetBrowser()
         await login()

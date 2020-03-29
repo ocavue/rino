@@ -17,7 +17,7 @@ const allEnvVars = {
     REACT_APP_COMMIT: `${execSync("git rev-parse --short HEAD")}`.trim(),
 }
 const appEnvVars = Object.keys(allEnvVars)
-    .filter(key => {
+    .filter((key) => {
         return (
             key.startsWith("REACT_APP") ||
             ["FIREBASE_DATABASE_EMULATOR_HOST", "FIRESTORE_EMULATOR_HOST"].includes(key)

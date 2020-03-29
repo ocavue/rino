@@ -48,7 +48,7 @@ const CollectionList: React.FC<{
 }> = ({ collections, collectionKey, setCollectionKey }) => {
     return (
         <List dense>
-            {collections.map(collection => (
+            {collections.map((collection) => (
                 <CollectionListItem
                     key={collection.key}
                     testid={`drawer-collection-item-${collection.key}`}

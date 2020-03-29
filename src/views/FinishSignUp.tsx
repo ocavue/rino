@@ -8,7 +8,7 @@ export default function FinishSignUp() {
     useEffect(() => {
         signInWithEmailLink()
             .then(() => router.push("/"))
-            .catch(error => {
+            .catch((error) => {
                 console.error(error)
                 setMessage(String(error))
             })

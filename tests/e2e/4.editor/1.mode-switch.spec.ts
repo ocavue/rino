@@ -1,7 +1,7 @@
 import { clickSidebarNoteListItem, createNote } from "../actions"
 import { goto, pressKey, wait } from "../utils"
 
-describe("Mode switch", function() {
+describe("Mode switch", function () {
     const expectWysiwygMode = async () => {
         await wait("wysiwyg-mode-textarea")
         await wait("source-code-mode-textarea", { hidden: true })

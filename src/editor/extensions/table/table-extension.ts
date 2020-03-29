@@ -24,13 +24,13 @@ export class RinoTableExtension extends TableExtension implements MarkdownNodeEx
                 const texts = match[1]
                     .split("|")
                     .slice(0, -1) // Remove the empty string at the end
-                    .map(text => {
+                    .map((text) => {
                         text = text.trim()
                         if (!text) text = " " // Prosemirror text doesn't allow empty text
                         return schema.text(text)
                     })
 
-                const cells = texts.map(text => schema.nodes.tableCell.create(null, text))
+                const cells = texts.map((text) => schema.nodes.tableCell.create(null, text))
                 const row = schema.nodes.tableRow.create(null, cells)
                 const table = schema.nodes.table.create(null, row)
                 tr = tr.delete(start, end).insert(start, table)
@@ -110,7 +110,7 @@ export class RinoTableExtension extends TableExtension implements MarkdownNodeEx
         table.splice(1, 0, spliter)
 
         let text = "\n"
-        table.forEach(row => {
+        table.forEach((row) => {
             row.forEach((cell, col) => {
                 text += "| "
                 const width = colWidths[col]

@@ -11,7 +11,7 @@ async function expectNoteNumber(expected: number, local = false) {
     expect(await getNoteNumber(local)).toEqual(expected)
 }
 
-describe("Delete user notes", function() {
+describe("Delete user notes", function () {
     test("Parapre enviorment", async () => {
         await login()
         await cleanNotes()
@@ -33,7 +33,7 @@ describe("Delete user notes", function() {
     })
 })
 
-describe("Delete premade notes", function() {
+describe("Delete premade notes", function () {
     test("Parapre enviorment", async () => {
         await signOut()
     })

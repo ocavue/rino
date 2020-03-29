@@ -41,7 +41,7 @@ export class RinoHeadingExtension extends HeadingExtension
             },
         }
 
-        this.options.levels.forEach(level => {
+        this.options.levels.forEach((level) => {
             keys[`mod-${level}`] = convertCommand(setBlockType(type, { level }))
         })
 

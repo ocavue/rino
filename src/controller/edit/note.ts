@@ -95,9 +95,9 @@ class FirebaseNote extends BaseNote {
 
             // Insert a new Note document in firebase
             this.snapshotPromise = createNote(this.data)
-            this.snapshotPromise.then(snapshot => (this.firebaseId = snapshot.ref.id))
+            this.snapshotPromise.then((snapshot) => (this.firebaseId = snapshot.ref.id))
         }
-        this.referencePromise = this.snapshotPromise.then(snap => snap.ref)
+        this.referencePromise = this.snapshotPromise.then((snap) => snap.ref)
     }
 
     public get id(): string {

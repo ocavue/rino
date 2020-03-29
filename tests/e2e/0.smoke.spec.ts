@@ -4,7 +4,7 @@ beforeAll(async () => {
     await goto("/")
 })
 
-describe("Check main components", function() {
+describe("Check main components", function () {
     test("Drawer", async () => {
         await wait("sidebar")
     })
@@ -16,7 +16,7 @@ describe("Check main components", function() {
     })
 })
 
-describe("Check HTML header", function() {
+describe("Check HTML header", function () {
     test("title", async () => {
         await wait("main") // Wait the page
         expect(await page.title()).toEqual("Rino")

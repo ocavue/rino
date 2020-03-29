@@ -2,7 +2,7 @@ import { click, sleep, wait } from "./utils"
 import { login, signOut } from "./actions"
 import { signInSnackbarDelay } from "src/constants"
 
-describe("Sign up snackbar", function() {
+describe("Sign up snackbar", function () {
     test("Hide snackbar", async () => {
         await login()
         await sleep(signInSnackbarDelay + 1000)

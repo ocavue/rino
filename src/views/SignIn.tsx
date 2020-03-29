@@ -62,7 +62,7 @@ export default function SignIn() {
                 // if they open the link on the same device.
                 window.localStorage.setItem("emailForSignIn", email)
             })
-            .catch(error => {
+            .catch((error) => {
                 setError(String(error))
                 console.error(error)
             })
@@ -96,7 +96,7 @@ export default function SignIn() {
                     label="Email"
                     variant="filled"
                     autoFocus={true}
-                    onChange={e => setEmail(e.target.value)}
+                    onChange={(e) => setEmail(e.target.value)}
                     value={email}
                     inputProps={{ "data-testid": "login-text-field" }}
                 />

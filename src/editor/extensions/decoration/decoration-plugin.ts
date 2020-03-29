@@ -10,7 +10,7 @@ function parseText<S extends WysiwygSchema>(node: Node<S>, startIndex: number): 
         return []
     }
     const tokens = new InlineLexer().scan(node.text)
-    return tokens.map(token => {
+    return tokens.map((token) => {
         let deco: Decoration
         if (token.isWidget) {
             deco = Decoration.widget(startIndex, () => token.dom, { key: token.key })

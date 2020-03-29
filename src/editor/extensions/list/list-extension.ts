@@ -110,7 +110,7 @@ export class RinoOrderedListExtension extends NodeExtension implements MarkdownN
             parseDOM: [
                 {
                     tag: "ol",
-                    getAttrs: dom =>
+                    getAttrs: (dom) =>
                         isElementDOMNode(dom) ? { tight: dom.hasAttribute("data-tight") } : {},
                 },
             ],
@@ -148,7 +148,7 @@ export class RinoOrderedListExtension extends NodeExtension implements MarkdownN
         const start = node.attrs.order || 1
         const maxW = String(start + node.childCount - 1).length
         const space = state.repeat(" ", maxW + 2)
-        state.renderList(node, space, i => {
+        state.renderList(node, space, (i) => {
             const nStr = String(start + i)
             return state.repeat(" ", maxW - nStr.length) + nStr + ". "
         })
@@ -168,7 +168,7 @@ export class RinoBulletListExtension extends NodeExtension implements MarkdownNo
             parseDOM: [
                 {
                     tag: "ul",
-                    getAttrs: dom =>
+                    getAttrs: (dom) =>
                         isElementDOMNode(dom) ? { tight: dom.hasAttribute("data-tight") } : {},
                 },
             ],
@@ -213,7 +213,7 @@ export class RinoCheckboxExtension extends NodeExtension implements MarkdownNode
             parseDOM: [
                 {
                     tag: "input[type=checkbox]",
-                    getAttrs: dom =>
+                    getAttrs: (dom) =>
                         isElementDOMNode(dom) ? { checked: dom.hasAttribute("checked") } : {},
                 },
             ],
@@ -227,7 +227,7 @@ export class RinoCheckboxExtension extends NodeExtension implements MarkdownNode
 
     public inputRules({ type }: ExtensionManagerNodeTypeParams) {
         return [
-            new InputRule(/^\[([ |x])\] $/, function(state: EditorState, match, start, end) {
+            new InputRule(/^\[([ |x])\] $/, function (state: EditorState, match, start, end) {
                 const $from = state.selection.$from
 
                 console.log(

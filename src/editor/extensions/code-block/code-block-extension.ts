@@ -40,7 +40,7 @@ export class RinoCodeBlockExtension extends CodeBlockExtension
         return {
             ...super.keys(params),
             ...buildBlockEnterKeymapBindings(/^```([a-zA-Z]*)?$/, params.type, {
-                getAttrs: match => {
+                getAttrs: (match) => {
                     const userInputLanguage = match[1] || ""
                     return {
                         language: getLanguage({

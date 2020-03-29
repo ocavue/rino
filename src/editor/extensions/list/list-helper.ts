@@ -19,7 +19,7 @@ export function splitListItem(
     rinoCheckboxType: NodeType,
     rinoListItemType: NodeType,
 ) {
-    return function(state: EditorState, dispatch?: (tr: Transaction) => void): boolean {
+    return function (state: EditorState, dispatch?: (tr: Transaction) => void): boolean {
         console.log("[splitListItem]")
         const { $from, $to, node } = state.selection as NodeSelection
         if ((node && node.isBlock) || $from.depth < 2 || !$from.sameParent($to)) return false
@@ -60,17 +60,19 @@ export function splitListItem(
                         oldList.type.name,
                     )
                     const listItemIndex = $from.index(-2)
-                    const newListItems1 = range(0, listItemIndex).map(index => oldList.child(index))
+                    const newListItems1 = range(0, listItemIndex).map((index) =>
+                        oldList.child(index),
+                    )
 
                     // A note about lodash's `range` function: `range(1, 0)` will return `[1]`. I must use `range(1, 0, 1)` to return `[]`.
                     const newListItems2 = range(
                         listItemIndex + 1,
                         oldList.childCount,
                         1,
-                    ).map(index => oldList.child(index))
+                    ).map((index) => oldList.child(index))
 
-                    assert(all(newListItems1.map(node => node.type.name === "rinoListItem")))
-                    assert(all(newListItems2.map(node => node.type.name === "rinoListItem")))
+                    assert(all(newListItems1.map((node) => node.type.name === "rinoListItem")))
+                    assert(all(newListItems2.map((node) => node.type.name === "rinoListItem")))
                     assert(
                         newListItems1.length + newListItems2.length + 1 === oldList.childCount,
                         `newListItems1: ${newListItems1.length}; newListItems2: ${newListItems2.length}; oldList: ${oldList.childCount}`,
