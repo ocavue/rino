@@ -47,12 +47,14 @@ export function buildBlockEnterKeymapBindings<Node extends ProsemirrorNode>(
             const $start = state.doc.resolve(start)
 
             const node = getNode({ match, start, end })
+
+            // Ensure that the replacement is available
             if (!$start.node(-1).canReplaceWith($start.index(-1), $start.indexAfter(-1), node.type))
                 return false
 
             let tr: Transaction = state.tr
 
-            // Insert Prosemirror Node
+            // Insert the Prosemirror node
             tr = tr.replaceRangeWith(start, end, node)
 
             // Run transact
