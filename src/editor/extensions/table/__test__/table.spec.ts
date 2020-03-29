@@ -4,11 +4,11 @@ import {
     buildMarkdownParser,
     buildMarkdownSerializer,
 } from "src/editor/components/wysiwyg/wysiwyg-markdown"
+import { RinoParagraphExtension } from "src/editor/extensions"
+import { RinoTextExtension } from "src/editor/extensions"
 import { dedent } from "src/utils"
 
 import { RinoTableCellExtension, RinoTableExtension, RinoTableRowExtension } from ".."
-import { RinoParagraphExtension } from "../../paragraph"
-import { RinoTextExtension } from "../../text"
 
 const setup = () => {
     const {
