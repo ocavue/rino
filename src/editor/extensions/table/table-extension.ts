@@ -43,7 +43,7 @@ export class RinoTableExtension extends TableExtension implements MarkdownNodeEx
             ({ tr }) => {
                 const $cursor = (tr.selection as TextSelection)?.$cursor
                 if (!$cursor) {
-                    // The selection is not an empty TextSelection. Don't to anything
+                    // The selection is not an empty TextSelection. Do nothing.
                     return tr
                 } else {
                     // $cursor.before(-1) is the end of the first tableRow
