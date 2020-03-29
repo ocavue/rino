@@ -76,7 +76,7 @@ describe("fromMarkdown", () => {
         )
     })
 
-    test("handle empty cells correctly", () => {
+    test("empty cells", () => {
         expect(
             parser.parse(
                 dedent(
@@ -94,6 +94,29 @@ describe("fromMarkdown", () => {
                     ["", "x", "x"],
                     ["x", "", "x"],
                     ["x", "x", ""],
+                ]),
+            ),
+        )
+    })
+
+    test("bad format markdown text", () => {
+        expect(
+            parser.parse(
+                dedent(
+                    `
+                    |          x       | x   |    |
+                    | --- | -------- | --- |
+                    |     x              |      x        | x              |
+                    | x | x | x |
+                    `,
+                ),
+            ),
+        ).toEqualRemirrorDocument(
+            doc(
+                buildRegularTable([
+                    ["x", "x", ""],
+                    ["x", "x", "x"],
+                    ["x", "x", "x"],
                 ]),
             ),
         )
@@ -128,7 +151,7 @@ describe("toMarkdown", () => {
         )
     })
 
-    test("make all cells with same length in a column (1)", () => {
+    test("cell length (1)", () => {
         expect(
             serializer.serialize(
                 doc(
@@ -152,7 +175,7 @@ describe("toMarkdown", () => {
         )
     })
 
-    test("make all cells with same length in a column (2)", () => {
+    test("cell length (2)", () => {
         expect(
             serializer.serialize(
                 doc(
@@ -176,7 +199,7 @@ describe("toMarkdown", () => {
         )
     })
 
-    test("make all cells with same length in a column (3)", () => {
+    test("cell length (3)", () => {
         expect(
             serializer.serialize(
                 doc(
@@ -200,7 +223,7 @@ describe("toMarkdown", () => {
         )
     })
 
-    test("make all cells with same length in a column (4)", () => {
+    test("cell length (4)", () => {
         expect(
             serializer.serialize(
                 doc(
@@ -224,7 +247,7 @@ describe("toMarkdown", () => {
         )
     })
 
-    test("handle empty cells correctly", () => {
+    test("empty cells", () => {
         expect(
             serializer.serialize(
                 doc(
