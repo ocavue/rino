@@ -290,7 +290,7 @@ describe("inputRules", () => {
             })
     })
 
-    test("Keep the cursor at the first cell in the second row", () => {
+    test("cursor position", () => {
         const { add, doc, p, table, tableRow, tableCell } = setup()
 
         add(doc(p("| 1 | 2 |<cursor>")))
