@@ -79,16 +79,17 @@ export class RinoTableExtension extends TableExtension implements MarkdownNodeEx
             })
             table.push(row)
         })
+        const colNumber = colAligns.length // How many colume this table have
 
-        const colWidths: number[] = new Array(colAligns.length)
-        table.forEach((row, rowIndex) => {
+        const colWidths = new Array<number>(colNumber)
+        table.forEach((row) => {
             row.forEach((cell, colIndex) => {
-                if (!colWidths[colIndex]) colWidths[colIndex] = 4
-                colWidths[colIndex] = Math.max(cell.length, colWidths[colIndex])
+                if (!colWidths[colIndex]) colWidths[colIndex] = 3
+                else colWidths[colIndex] = Math.max(cell.length, colWidths[colIndex])
             })
         })
 
-        const spliter: string[] = new Array(colAligns.length)
+        const spliter: string[] = new Array(colNumber)
         colWidths.forEach((width, colIndex) => {
             switch (colAligns[colIndex]) {
                 case TABLE_ALIGEN.LEFT:
@@ -107,7 +108,7 @@ export class RinoTableExtension extends TableExtension implements MarkdownNodeEx
         })
         table.splice(1, 0, spliter)
 
-        let text = "\n"
+        let text = ""
         table.forEach((row) => {
             row.forEach((cell, col) => {
                 text += "| "
@@ -124,6 +125,7 @@ export class RinoTableExtension extends TableExtension implements MarkdownNodeEx
             })
             text += "|\n"
         })
+        text += "\n"
 
         state.text(text, false)
     }
