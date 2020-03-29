@@ -5,9 +5,7 @@ import { ParserToken } from "src/editor/transform/parser-type"
 import { MarkdownSerializer, NodeSerializerSpecs } from "src/editor/transform/serializer"
 import { MarkdownNodeExtension } from "src/editor/utils"
 
-export function isMarkdownNodeExtension(
-    extension: FlexibleExtension,
-): extension is MarkdownNodeExtension {
+function isMarkdownNodeExtension(extension: FlexibleExtension): extension is MarkdownNodeExtension {
     return !!(
         isExtension(extension) &&
         (extension as MarkdownNodeExtension).fromMarkdown &&
@@ -15,35 +13,33 @@ export function isMarkdownNodeExtension(
     )
 }
 
-export function buildMarkdownParser<Extension extends AnyExtension>(
+function filterMarkdownNodeExtensions<Extension extends AnyExtension>(
     manage: ExtensionManager<Extension>,
-) {
+): MarkdownNodeExtension[] {
     const markdownNodeExtensions: MarkdownNodeExtension[] = []
     for (const extension of manage.extensions) {
         if (isMarkdownNodeExtension(extension)) {
             markdownNodeExtensions.push(extension)
         }
     }
+    return markdownNodeExtensions
+}
 
-    const parserTokens = markdownNodeExtensions.reduce(
+export function buildMarkdownParser<Extension extends AnyExtension>(
+    manager: ExtensionManager<Extension>,
+) {
+    const parserTokens = filterMarkdownNodeExtensions(manager).reduce(
         (tokens, extension): ParserToken[] => [...tokens, ...extension.fromMarkdown()],
         [] as ParserToken[],
     )
 
-    return new MarkdownParser(manage.schema, parserTokens)
+    return new MarkdownParser(manager.schema, parserTokens)
 }
 
 export function buildMarkdownSerializer<Extension extends AnyExtension>(
-    manage: ExtensionManager<Extension>,
+    manager: ExtensionManager<Extension>,
 ) {
-    const markdownNodeExtensions: MarkdownNodeExtension[] = []
-    for (const extension of manage.extensions) {
-        if (isMarkdownNodeExtension(extension)) {
-            markdownNodeExtensions.push(extension)
-        }
-    }
-
-    const specs: NodeSerializerSpecs = markdownNodeExtensions.reduce(
+    const specs: NodeSerializerSpecs = filterMarkdownNodeExtensions(manager).reduce(
         (specs, extension): NodeSerializerSpecs => {
             return {
                 [extension.name]: extension.toMarkdown,
