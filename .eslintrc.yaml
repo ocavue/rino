@@ -7,14 +7,25 @@ parserOptions:
   ecmaFeatures:
     jsx: true
 extends:
+  # https://github.com/typescript-eslint/typescript-eslint/tree/v2.25.0/packages/eslint-plugin#recommended-configs
+  - "eslint:recommended" # the set of rules which are recommended for all projects by the ESLint Team
+  - "plugin:@typescript-eslint/eslint-recommended" # adjust the rules from `eslint:recommended` appropriately for TypeScript
+  - "plugin:@typescript-eslint/recommended" # recommended rules for typescript
+  - "plugin:@typescript-eslint/recommended-requiring-type-checking" # provide lint rules with access to type information
+
+  # https://www.npmjs.com/package/eslint-plugin-react
   - "plugin:react/recommended"
-  - "plugin:@typescript-eslint/recommended"
-  - "plugin:@typescript-eslint/recommended-requiring-type-checking"
-  - "prettier"
-  - "prettier/@typescript-eslint"
-  - "prettier/react"
-  - "plugin:prettier/recommended"
+
+  # https://www.npmjs.com/package/eslint-plugin-react-hooks
   - "plugin:react-hooks/recommended"
+
+  # runs Prettier as an ESLint rule
+  - "plugin:prettier/recommended"
+
+  # turns off all ELLint rules that are unnecessary or might conflict with Prettier
+  - "prettier"
+  - "prettier/@typescript-eslint" # for @typescript-eslint/eslint-plugin
+  - "prettier/react" # for eslint-plugin-react
 plugins:
   - sort-imports-es6-autofix
 settings:

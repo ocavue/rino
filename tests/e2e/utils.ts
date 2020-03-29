@@ -152,6 +152,7 @@ export async function expectWysiwygHtml(shapes: Shape[]) {
 
         // `for ... of Object.entries(selectors)` seems have some babel issues, so I use ancient JS syntex here
         for (const selector in selectors) {
+            // eslint-disable-next-line no-prototype-builtins
             if (!selectors.hasOwnProperty(selector)) {
                 continue
             }
