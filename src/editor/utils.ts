@@ -1,11 +1,13 @@
 import {
     convertCommand,
+    DispatchFunction,
     KeyBindings,
     NodeExtension,
     NodeExtensionOptions,
     ProsemirrorNode,
 } from "@remirror/core"
-import { TextSelection, Transaction } from "prosemirror-state"
+import { Schema } from "prosemirror-model"
+import { EditorState, TextSelection, Transaction } from "prosemirror-state"
 
 import { ParserToken } from "src/editor/transform/parser-type"
 import { NodeSerializerSpec } from "src/editor/transform/serializer"
@@ -15,15 +17,16 @@ export abstract class MarkdownNodeExtension<T = NodeExtensionOptions> extends No
     abstract toMarkdown: NodeSerializerSpec
 }
 
-export function buildBlockEnterKeymapBindings(
+export function buildBlockEnterKeymapBindings<Node extends ProsemirrorNode>(
     regex: RegExp,
-    getNode: (match: string[]) => ProsemirrorNode,
+    getNode: (args: { match: string[]; start: number; end: number }) => Node,
+    transact?: (args: { tr: Transaction }) => Transaction,
 ): KeyBindings {
     // https://github.com/ProseMirror/prosemirror/issues/374#issuecomment-224514332
     // https://discuss.prosemirror.net/t/trigger-inputrule-on-enter/1118/4
     // Some code is copy from prosemirror-inputrules/src/inputrules.js
     return {
-        Enter: convertCommand((state, dispatch) => {
+        Enter: convertCommand((state: EditorState, dispatch?: DispatchFunction) => {
             // Ensure that the selection is a TextSelection
             if (!(state.selection instanceof TextSelection)) return false
 
@@ -43,13 +46,18 @@ export function buildBlockEnterKeymapBindings(
             // The range of text which will be replaced
             const [start, end] = [$cursor.pos - match[0].length, $cursor.pos]
             const $start = state.doc.resolve(start)
-            const node = getNode(match)
 
+            const node = getNode({ match, start, end })
             if (!$start.node(-1).canReplaceWith($start.index(-1), $start.indexAfter(-1), node.type))
                 return false
 
             let tr: Transaction = state.tr
+
+            // Insert Prosemirror Node
             tr = tr.replaceRangeWith(start, end, node)
+
+            // Run transact
+            if (transact) tr = transact({ tr })
 
             if (dispatch) {
                 // To be able to query whether a command is applicable for a given state, without

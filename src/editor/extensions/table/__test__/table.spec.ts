@@ -283,14 +283,41 @@ describe("inputRules", () => {
                     // prettier-ignore
                     doc(
                         table(
-                            tableRow(tableCell("1"), tableCell("2"), tableCell("3"))
+                            tableRow(tableCell("1"), tableCell("2"), tableCell("3")),
+                            tableRow(tableCell(""), tableCell(""), tableCell(""))
                         ),
                     ),
                 )
             })
     })
 
-    test("Keep the cursor at the first cell in the second raw", () => {
-        //    TODO
+    test("Keep the cursor at the first cell in the second row", () => {
+        const { add, doc, p, table, tableRow, tableCell } = setup()
+
+        add(doc(p("| 1 | 2 |<cursor>")))
+            .press("Enter")
+            .callback((content) => {
+                expect(content.state.doc).toEqualRemirrorDocument(
+                    // prettier-ignore
+                    doc(
+                        table(
+                            tableRow(tableCell("1"), tableCell("2") ),
+                            tableRow(tableCell(""), tableCell("") )
+                        ),
+                    ),
+                )
+            })
+            .insertText("INSERT")
+            .callback((content) => {
+                expect(content.state.doc).toEqualRemirrorDocument(
+                    // prettier-ignore
+                    doc(
+                        table(
+                            tableRow(tableCell("1"), tableCell("2") ),
+                            tableRow(tableCell("INSERT"), tableCell(""))
+                        ),
+                    ),
+                )
+            })
     })
 })
