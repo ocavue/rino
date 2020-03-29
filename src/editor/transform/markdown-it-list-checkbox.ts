@@ -1,5 +1,5 @@
-import { Rule } from "markdown-it"
-import MarkdownIt from "markdown-it"
+import MarkdownIt, { Rule } from "markdown-it"
+
 import State from "markdown-it/lib/rules_core/state_core"
 import Token from "markdown-it/lib/token"
 

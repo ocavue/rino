@@ -1,6 +1,6 @@
-import { CssBaseline } from "@material-ui/core"
+import { CssBaseline, createMuiTheme } from "@material-ui/core"
 import { ThemeProvider } from "@material-ui/core/styles"
-import { createMuiTheme } from "@material-ui/core"
+
 import React, { useEffect, useMemo } from "react"
 
 import {
