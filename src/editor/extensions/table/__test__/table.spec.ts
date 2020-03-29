@@ -280,11 +280,10 @@ describe("inputRules", () => {
             .press("Enter")
             .callback((content) => {
                 expect(content.state.doc).toEqualRemirrorDocument(
-                    // prettier-ignore
                     doc(
                         table(
                             tableRow(tableCell("1"), tableCell("2"), tableCell("3")),
-                            tableRow(tableCell(""), tableCell(""), tableCell(""))
+                            tableRow(tableCell(""), tableCell(""), tableCell("")),
                         ),
                     ),
                 )
@@ -298,11 +297,10 @@ describe("inputRules", () => {
             .press("Enter")
             .callback((content) => {
                 expect(content.state.doc).toEqualRemirrorDocument(
-                    // prettier-ignore
                     doc(
                         table(
-                            tableRow(tableCell("1"), tableCell("2") ),
-                            tableRow(tableCell(""), tableCell("") )
+                            tableRow(tableCell("1"), tableCell("2")),
+                            tableRow(tableCell(""), tableCell("")),
                         ),
                     ),
                 )
@@ -310,11 +308,10 @@ describe("inputRules", () => {
             .insertText("INSERT")
             .callback((content) => {
                 expect(content.state.doc).toEqualRemirrorDocument(
-                    // prettier-ignore
                     doc(
                         table(
-                            tableRow(tableCell("1"), tableCell("2") ),
-                            tableRow(tableCell("INSERT"), tableCell(""))
+                            tableRow(tableCell("1"), tableCell("2")),
+                            tableRow(tableCell("INSERT"), tableCell("")),
                         ),
                     ),
                 )
