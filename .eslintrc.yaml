@@ -38,6 +38,14 @@ rules:
   "no-console": "off"
   "no-unused-vars": [error, { args: "none" }]
   "no-useless-escape": "off"
+  "react/prop-types": [1, { skipUndeclared: true }]
+  "@typescript-eslint/explicit-function-return-type": "off"
+  "@typescript-eslint/no-explicit-any": "off"
+  "@typescript-eslint/no-unused-vars": [error, { args: "none" }]
+  "@typescript-eslint/no-empty-function": "off"
+  "react/no-unescaped-entities": "off"
+
+  # use `simple-import-sort` to sort import
   "sort-imports": "off"
   "simple-import-sort/sort":
     - "error"
@@ -58,12 +66,6 @@ rules:
       # Anything that starts with a dot.
       ["^\\."],
     ]
-  "react/prop-types": [1, { skipUndeclared: true }]
-  "@typescript-eslint/explicit-function-return-type": "off"
-  "@typescript-eslint/no-explicit-any": "off"
-  "@typescript-eslint/no-unused-vars": [error, { args: "none" }]
-  "@typescript-eslint/no-empty-function": "off"
-  "react/no-unescaped-entities": "off"
 overrides:
   - files: "tests/**/*.[t|j]s"
     env:
