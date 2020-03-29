@@ -1,8 +1,9 @@
 import * as m from "@material-ui/core"
-import { StoreContainer } from "src/store"
-import { signInSnackbarDelay } from "src/constants"
 import NextLink from "next/link"
 import React from "react"
+
+import { signInSnackbarDelay } from "src/constants"
+import { StoreContainer } from "src/store"
 
 const SignInSnackbarContent: React.FC = () => (
     <m.SnackbarContent

@@ -10,7 +10,7 @@
     "export": "next export -o dist",
     "test": "scripts/test.sh",
     "analyze": "ANALYZE=true next build",
-    "lint": "eslint --fix -c .eslintrc.yaml --ignore-path .gitignore --ext '.js,.jsx,ts,tsx' .",
+    "lint": "eslint . --ignore-path .gitignore --ext '.js,.jsx,.ts,.tsx'",
     "coverage": "cat ./coverage/lcov.info | COVERALLS_REPO_TOKEN=$COVERALLS_REPO_TOKEN coveralls"
   },
   "renovate": {
@@ -69,8 +69,8 @@
     "@types/puppeteer": "^2.0.0",
     "@types/react": "^16.9.0",
     "@types/react-dom": "^16.9.0",
-    "@typescript-eslint/eslint-plugin": "^2.14.0",
-    "@typescript-eslint/parser": "^2.14.0",
+    "@typescript-eslint/eslint-plugin": "^2.0.0",
+    "@typescript-eslint/parser": "^2.0.0",
     "coveralls": "^3.0.9",
     "dotenv": "^8.2.0",
     "eslint": "^6.8.0",
@@ -79,7 +79,7 @@
     "eslint-plugin-prettier": "^3.1.2",
     "eslint-plugin-react": "^7.17.0",
     "eslint-plugin-react-hooks": "^3.0.0",
-    "eslint-plugin-sort-imports-es6-autofix": "^0.5.0",
+    "eslint-plugin-simple-import-sort": "^5.0.0",
     "firebase": "^7.4.0",
     "firebase-admin": "^8.10.0",
     "firebase-tools": "^7.15.1",

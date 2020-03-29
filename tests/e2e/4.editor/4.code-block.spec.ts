@@ -1,5 +1,6 @@
-import { createNote, switchMode } from "../actions"
 import { dedent } from "src/utils"
+
+import { createNote, switchMode } from "../actions"
 import { getSourceCodeModeText, goto, pressKey, type as typeByTestid } from "../utils"
 
 beforeAll(async () => {

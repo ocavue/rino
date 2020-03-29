@@ -1,24 +1,24 @@
 import { InlineLexer } from "src/editor/extensions/decoration/lexer"
 import { Token } from "src/editor/extensions/decoration/token"
 
-describe("InlineLexer", function() {
+describe("InlineLexer", function () {
     const lexer = new InlineLexer()
 
     function assertTokenEqual(a: Token[], b: Token[]) {
-        a.forEach(token => token.classes.sort())
-        b.forEach(token => token.classes.sort())
+        a.forEach((token) => token.classes.sort())
+        b.forEach((token) => token.classes.sort())
         return expect(a).toEqual(b)
     }
 
-    describe("code", function() {
-        it("without space", function() {
+    describe("code", function () {
+        it("without space", function () {
             assertTokenEqual(lexer.scan("`code`"), [
                 { length: 1, classes: ["decoration_mark"] },
                 { length: 4, classes: ["decoration_code_text"] },
                 { length: 1, classes: ["decoration_mark"] },
             ])
         })
-        it("with two side spaces", function() {
+        it("with two side spaces", function () {
             assertTokenEqual(lexer.scan("` code `"), [
                 { length: 1, classes: ["decoration_mark"] },
                 { length: 1, classes: ["decoration_code_space"] },
@@ -27,7 +27,7 @@ describe("InlineLexer", function() {
                 { length: 1, classes: ["decoration_mark"] },
             ])
         })
-        it("with one side space", function() {
+        it("with one side space", function () {
             assertTokenEqual(lexer.scan("` code`"), [
                 { length: 1, classes: ["decoration_mark"] },
                 { length: 1, classes: ["decoration_code_space"] },
@@ -43,8 +43,8 @@ describe("InlineLexer", function() {
         })
     })
 
-    describe("emphasis", function() {
-        it("without spaces", function() {
+    describe("emphasis", function () {
+        it("without spaces", function () {
             assertTokenEqual(lexer.scan("*word*"), [
                 { length: 1, classes: ["decoration_mark"] },
                 { length: 4, classes: ["decoration_emphasis_single_text"] },
@@ -64,7 +64,7 @@ describe("InlineLexer", function() {
                 { length: 3, classes: ["decoration_mark"] },
             ])
         })
-        it("with spaces", function() {
+        it("with spaces", function () {
             assertTokenEqual(lexer.scan("* word *"), [
                 { length: 1, classes: ["decoration_mark"] },
                 { length: 6, classes: ["decoration_emphasis_single_text"] },
@@ -84,7 +84,7 @@ describe("InlineLexer", function() {
                 { length: 3, classes: ["decoration_mark"] },
             ])
         })
-        it("mix", function() {
+        it("mix", function () {
             assertTokenEqual(lexer.scan("*1234**1234**1234*"), [
                 { length: 1, classes: ["decoration_mark"] },
                 { length: 4, classes: ["decoration_emphasis_single_text"] },
@@ -111,22 +111,22 @@ describe("InlineLexer", function() {
             ])
         })
     })
-    describe("delete", function() {
-        it("normal", function() {
+    describe("delete", function () {
+        it("normal", function () {
             assertTokenEqual(lexer.scan("~~1234~~"), [
                 { length: 2, classes: ["decoration_mark"] },
                 { length: 4, classes: ["decoration_delete"] },
                 { length: 2, classes: ["decoration_mark"] },
             ])
         })
-        it("with inside tilde", function() {
+        it("with inside tilde", function () {
             assertTokenEqual(lexer.scan("~~12~34~~"), [
                 { length: 2, classes: ["decoration_mark"] },
                 { length: 5, classes: ["decoration_delete"] },
                 { length: 2, classes: ["decoration_mark"] },
             ])
         })
-        it("with space", function() {
+        it("with space", function () {
             assertTokenEqual(lexer.scan("~~ 1234 ~~"), [
                 { length: 2, classes: ["decoration_mark"] },
                 { length: 6, classes: ["decoration_delete"] },
@@ -134,8 +134,8 @@ describe("InlineLexer", function() {
             ])
         })
     })
-    describe("autolink", function() {
-        it("normal", function() {
+    describe("autolink", function () {
+        it("normal", function () {
             assertTokenEqual(lexer.scan("<https://github.com>"), [
                 { length: 1, classes: ["decoration_mark"] },
                 {
@@ -150,7 +150,7 @@ describe("InlineLexer", function() {
                 { length: 1, classes: ["decoration_mark"] },
             ])
         })
-        it("wrap by text", function() {
+        it("wrap by text", function () {
             assertTokenEqual(lexer.scan("text<https://github.com>text"), [
                 { length: 4, classes: [] },
                 { length: 1, classes: ["decoration_mark"] },
@@ -168,7 +168,7 @@ describe("InlineLexer", function() {
             ])
         })
     })
-    describe("image", function() {
+    describe("image", function () {
         // Mocha environment has not global variable "Image", so I have to mock one.
         const ImageMock = class {
             public src: string
@@ -178,7 +178,7 @@ describe("InlineLexer", function() {
         }
         ;(global as any).Image = ImageMock
 
-        it("Solid image", function() {
+        it("Solid image", function () {
             const image = new ImageMock()
             image.src = "https://via.placeholder.com/42"
 
@@ -200,7 +200,7 @@ describe("InlineLexer", function() {
             assertTokenEqual(actualTokens, expectedTokens)
         })
 
-        it("Image with text around", function() {
+        it("Image with text around", function () {
             const image = new ImageMock()
             image.src = "https://via.placeholder.com/42"
 
@@ -226,8 +226,8 @@ describe("InlineLexer", function() {
             assertTokenEqual(actualTokens, expectedTokens)
         })
     })
-    describe("link", function() {
-        it("normal", function() {
+    describe("link", function () {
+        it("normal", function () {
             assertTokenEqual(lexer.scan("[GitHub](https://github.com)"), [
                 { length: 1, classes: ["decoration_mark"] },
                 { length: 6, classes: ["decoration_link_text"] },

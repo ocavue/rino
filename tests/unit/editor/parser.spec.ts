@@ -1,15 +1,17 @@
+import { range } from "lodash"
 import { Node } from "prosemirror-model"
 import { TaggedProsemirrorNode } from "prosemirror-test-builder"
-import { createBaseTestcases, defaultMarkdownParser, nodes } from "./base"
+
 import { dedent } from "src/utils"
-import { range } from "lodash"
+
+import { createBaseTestcases, defaultMarkdownParser, nodes } from "./base"
 
 const { doc, hr, ol, ul, li, p, checkedCheckbox, uncheckedCheckbox } = nodes
 
 function getChildrenTypeNames(node: Node): string[] {
     return range(node.content.childCount)
-        .map(i => node.child(i))
-        .map(n => n.type.name)
+        .map((i) => node.child(i))
+        .map((n) => n.type.name)
 }
 
 function assertNodeEqual(a: Node, b: Node) {
@@ -37,14 +39,14 @@ function assertEqual(markdown: string, node: TaggedProsemirrorNode) {
 
 describe("base markdown parser", () => {
     for (const [caseName, [markdown, node]] of Object.entries(createBaseTestcases())) {
-        it(caseName, function() {
+        it(caseName, function () {
             assertEqual(markdown, node)
         })
     }
 })
 
 describe("<hr> markdown parser", () => {
-    it("hr", function() {
+    it("hr", function () {
         assertEqual("---", doc(hr()))
         assertEqual("----", doc(hr()))
         assertEqual("-----", doc(hr()))
@@ -54,8 +56,8 @@ describe("<hr> markdown parser", () => {
 })
 
 describe("list markdown parser", () => {
-    describe("bullet list", function() {
-        it("bullet list with *", function() {
+    describe("bullet list", function () {
+        it("bullet list with *", function () {
             assertEqual(
                 dedent(`
                     * list item 0
@@ -73,7 +75,7 @@ describe("list markdown parser", () => {
                 ),
             )
         })
-        it("bullet list with -", function() {
+        it("bullet list with -", function () {
             assertEqual(
                 dedent(`
                     - list item 0
@@ -91,7 +93,7 @@ describe("list markdown parser", () => {
                 ),
             )
         })
-        it("bullet list with - and *", function() {
+        it("bullet list with - and *", function () {
             assertEqual(
                 dedent(`
                     - list item 0
@@ -106,8 +108,8 @@ describe("list markdown parser", () => {
             )
         })
     })
-    describe("order list", function() {
-        it("order list with offset", function() {
+    describe("order list", function () {
+        it("order list with offset", function () {
             assertEqual(
                 dedent(`
                     5. list item 0
@@ -125,7 +127,7 @@ describe("list markdown parser", () => {
                 ),
             )
         })
-        it("order list with wrong order", function() {
+        it("order list with wrong order", function () {
             assertEqual(
                 dedent(`
                     5. list item 0
@@ -143,7 +145,7 @@ describe("list markdown parser", () => {
                 ),
             )
         })
-        it("order list with same number (0)", function() {
+        it("order list with same number (0)", function () {
             assertEqual(
                 dedent(`
                     0. list item 0
@@ -161,7 +163,7 @@ describe("list markdown parser", () => {
                 ),
             )
         })
-        it("order list with same number (1)", function() {
+        it("order list with same number (1)", function () {
             assertEqual(
                 dedent(`
                     1. list item 0
@@ -179,7 +181,7 @@ describe("list markdown parser", () => {
                 ),
             )
         })
-        it("order list with same number (100)", function() {
+        it("order list with same number (100)", function () {
             assertEqual(
                 dedent(`
                     100. list item 0
@@ -197,7 +199,7 @@ describe("list markdown parser", () => {
                 ),
             )
         })
-        it("nset order list (shape 1)", function() {
+        it("nset order list (shape 1)", function () {
             assertEqual(
                 dedent(`
                     1. list item 1
@@ -237,7 +239,7 @@ describe("list markdown parser", () => {
                 ),
             )
         })
-        it("nset order list (shape 2)", function() {
+        it("nset order list (shape 2)", function () {
             assertEqual(
                 dedent(`
                     1. list item 1
@@ -269,7 +271,7 @@ describe("list markdown parser", () => {
                 ),
             )
         })
-        it("nset order list (shape 3)", function() {
+        it("nset order list (shape 3)", function () {
             assertEqual(
                 dedent(`
                     1. list item 1
@@ -323,8 +325,8 @@ describe("list markdown parser", () => {
             )
         })
     })
-    describe("selectable list", function() {
-        it("checked list", function() {
+    describe("selectable list", function () {
+        it("checked list", function () {
             assertEqual(
                 dedent(
                     `
@@ -342,7 +344,7 @@ describe("list markdown parser", () => {
                 ),
             )
         })
-        it("unchecked list", function() {
+        it("unchecked list", function () {
             assertEqual(
                 dedent(
                     `
@@ -360,7 +362,7 @@ describe("list markdown parser", () => {
                 ),
             )
         })
-        it("mixed list", function() {
+        it("mixed list", function () {
             assertEqual(
                 dedent(
                     `
@@ -378,7 +380,7 @@ describe("list markdown parser", () => {
                 ),
             )
         })
-        it("selectable list item and bullet list item", function() {
+        it("selectable list item and bullet list item", function () {
             assertEqual(
                 dedent(
                     `

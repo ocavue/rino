@@ -1,20 +1,22 @@
-import { EditorState } from "prosemirror-state"
-import { EditorView, NodeView } from "prosemirror-view"
 import {
+    convertCommand,
     ExtensionManagerNodeTypeParams,
+    isElementDOMNode,
     NodeExtension,
     NodeExtensionSpec,
-    convertCommand,
-    isElementDOMNode,
 } from "@remirror/core"
+import Token from "markdown-it/lib/token"
 import { InputRule, wrappingInputRule } from "prosemirror-inputrules"
-import { MarkdownNodeExtension } from "src/editor/utils"
-import { NodeSerializerOptions } from "src/editor/transform/serializer"
-import { ParserTokenType } from "src/editor/transform/parser-type"
 import { Node as ProsemirrorNode, Schema } from "prosemirror-model"
 import { liftListItem, sinkListItem } from "prosemirror-schema-list"
+import { EditorState } from "prosemirror-state"
+import { EditorView, NodeView } from "prosemirror-view"
+
+import { ParserTokenType } from "src/editor/transform/parser-type"
+import { NodeSerializerOptions } from "src/editor/transform/serializer"
+import { MarkdownNodeExtension } from "src/editor/utils"
+
 import { splitListItem } from "./list-helper"
-import Token from "markdown-it/lib/token"
 
 export class ListItemView implements NodeView {
     public dom: HTMLElement
@@ -110,7 +112,7 @@ export class RinoOrderedListExtension extends NodeExtension implements MarkdownN
             parseDOM: [
                 {
                     tag: "ol",
-                    getAttrs: dom =>
+                    getAttrs: (dom) =>
                         isElementDOMNode(dom) ? { tight: dom.hasAttribute("data-tight") } : {},
                 },
             ],
@@ -148,7 +150,7 @@ export class RinoOrderedListExtension extends NodeExtension implements MarkdownN
         const start = node.attrs.order || 1
         const maxW = String(start + node.childCount - 1).length
         const space = state.repeat(" ", maxW + 2)
-        state.renderList(node, space, i => {
+        state.renderList(node, space, (i) => {
             const nStr = String(start + i)
             return state.repeat(" ", maxW - nStr.length) + nStr + ". "
         })
@@ -168,7 +170,7 @@ export class RinoBulletListExtension extends NodeExtension implements MarkdownNo
             parseDOM: [
                 {
                     tag: "ul",
-                    getAttrs: dom =>
+                    getAttrs: (dom) =>
                         isElementDOMNode(dom) ? { tight: dom.hasAttribute("data-tight") } : {},
                 },
             ],
@@ -213,7 +215,7 @@ export class RinoCheckboxExtension extends NodeExtension implements MarkdownNode
             parseDOM: [
                 {
                     tag: "input[type=checkbox]",
-                    getAttrs: dom =>
+                    getAttrs: (dom) =>
                         isElementDOMNode(dom) ? { checked: dom.hasAttribute("checked") } : {},
                 },
             ],
@@ -227,7 +229,7 @@ export class RinoCheckboxExtension extends NodeExtension implements MarkdownNode
 
     public inputRules({ type }: ExtensionManagerNodeTypeParams) {
         return [
-            new InputRule(/^\[([ |x])\] $/, function(state: EditorState, match, start, end) {
+            new InputRule(/^\[([ |x])\] $/, function (state: EditorState, match, start, end) {
                 const $from = state.selection.$from
 
                 console.log(

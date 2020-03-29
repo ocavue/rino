@@ -1,13 +1,14 @@
-import { Collection, CollectionIconName, EditContainer, collectionIconMap } from "src/controller"
 import {
+    createStyles,
     List,
     ListItem,
     ListItemIcon,
     ListItemText,
-    createStyles,
     makeStyles,
 } from "@material-ui/core"
 import React, { useEffect } from "react"
+
+import { Collection, collectionIconMap, CollectionIconName, EditContainer } from "src/controller"
 
 const useStyles = makeStyles(() => {
     return createStyles({
@@ -48,7 +49,7 @@ const CollectionList: React.FC<{
 }> = ({ collections, collectionKey, setCollectionKey }) => {
     return (
         <List dense>
-            {collections.map(collection => (
+            {collections.map((collection) => (
                 <CollectionListItem
                     key={collection.key}
                     testid={`drawer-collection-item-${collection.key}`}

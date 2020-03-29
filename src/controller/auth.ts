@@ -1,14 +1,15 @@
-import { firebase } from "./firebase"
-import { generateRandomId } from "src/utils"
 import { testUser } from "src/controller/config"
+import { generateRandomId } from "src/utils"
+
+import { firebase } from "./firebase"
 
 async function closurePromiseWrapper<T>(closurePromise: Promise<T>): Promise<T> {
     // `firebase.auth` use Closure library's Promise implementation, so that I can only
     // use `.catch()` instead of `try...catch` to avoid uncaught error.
     // See also https://github.com/firebase/firebase-js-sdk/issues/1881#issuecomment-501886866
 
-    return new Promise(function(resolve, reject) {
-        closurePromise.then(result => resolve(result)).catch(error => reject(error))
+    return new Promise(function (resolve, reject) {
+        closurePromise.then((result) => resolve(result)).catch((error) => reject(error))
     })
 }
 
@@ -71,7 +72,7 @@ export async function signOut() {
 }
 
 export function onAuthStateChanged(next: (user: firebase.User | null) => void) {
-    const unsubscribe = firebase.auth().onAuthStateChanged(function(user) {
+    const unsubscribe = firebase.auth().onAuthStateChanged(function (user) {
         next(user)
     })
     return unsubscribe

@@ -1,13 +1,15 @@
 import * as m from "@material-ui/core"
+import clsx from "clsx"
+import React from "react"
+
+import { maxDrawerWidth } from "src/constants"
+import { useIsMobile } from "src/hooks"
+import { StoreContainer } from "src/store"
+
 import { ActivityBody } from "./ActivityBody"
 import { ActivityHeader } from "./ActivityHeader"
 import { NoteBody } from "./NoteBody"
 import { NoteHeader } from "./NoteHeader"
-import { StoreContainer } from "src/store"
-import { maxDrawerWidth } from "src/constants"
-import { useIsMobile } from "src/hooks"
-import React from "react"
-import clsx from "clsx"
 
 const useStyles = m.makeStyles((theme: m.Theme) => {
     return m.createStyles({

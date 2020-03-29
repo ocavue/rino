@@ -1,4 +1,5 @@
-import { Theme, createStyles, makeStyles } from "@material-ui/core"
+import { createStyles, makeStyles, Theme } from "@material-ui/core"
+
 import { appbarIconMargin } from "src/constants"
 
 export const useHeaderStyles = makeStyles((theme: Theme) => {

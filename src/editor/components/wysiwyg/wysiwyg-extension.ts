@@ -1,4 +1,6 @@
 import { InferFlexibleExtensionList, SchemaFromExtensions } from "@remirror/core"
+import { baseExtensions } from "@remirror/core-extensions"
+
 import {
     RinoBlockquoteExtension,
     RinoBulletListExtension,
@@ -16,12 +18,11 @@ import {
     RinoTableRowExtension,
     RinoTextExtension,
 } from "src/editor/extensions"
-import { baseExtensions } from "@remirror/core-extensions"
 
 /**
  * Replace ParagraphExtension as RinoParagraphExtension in baseExtensions.
  */
-const rinoBaseExtensions = baseExtensions.map(e => {
+const rinoBaseExtensions = baseExtensions.map((e) => {
     if (e.extension.name === "paragraph")
         return {
             extension: new RinoParagraphExtension(),

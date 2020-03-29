@@ -1,5 +1,5 @@
-import { click, waitAnimation } from "../utils"
 import { expectSidebarClosed, expectSidebarOpened, login, signOut } from "../actions"
+import { click, waitAnimation } from "../utils"
 
 describe("Open/close Sidebar", () => {
     beforeAll(async () => await jestPuppeteer.resetBrowser())

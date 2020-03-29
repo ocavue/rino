@@ -1,6 +1,7 @@
-import { User, getCurrentUser, theme } from "src/controller"
-import { createContainer } from "unstated-next"
 import { useMemo, useState } from "react"
+import { createContainer } from "unstated-next"
+
+import { getCurrentUser, theme, User } from "src/controller"
 
 const useAuth = () => {
     const [user, setUser] = useState<User | null>(getCurrentUser())
@@ -47,7 +48,7 @@ const useUiState = () => {
 
     const { isDarkTheme, toggleTheme } = useTheme()
     const [debug, setDebug] = useState(0)
-    const updateDebug = () => setDebug(n => n + 1)
+    const updateDebug = () => setDebug((n) => n + 1)
 
     return {
         drawerActivity,

@@ -1,6 +1,7 @@
 import * as m from "@material-ui/core"
-import { Note } from "src/controller"
 import React from "react"
+
+import { Note } from "src/controller"
 
 const useStyles = m.makeStyles((theme: m.Theme) => {
     return m.createStyles({

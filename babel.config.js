@@ -1,7 +1,7 @@
 // It is recommended to always use `babel.config.js` instead of other formats in Vue CLI projects.
 // https://cli.vuejs.org/config/#babel
 
-module.exports = function(api) {
+module.exports = function (api) {
     api.cache(true)
 
     const presets = ["next/babel"]

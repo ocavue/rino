@@ -1,12 +1,14 @@
 import { ExtensionManagerNodeTypeParams, KeyBindings } from "@remirror/core"
-import { Fragment, Node as ProsemirroNode } from "prosemirror-model"
-import { MarkdownNodeExtension, buildBlockEnterKeymapBindings } from "src/editor/utils"
-import { NodeSerializerOptions } from "src/editor/transform/serializer"
-import { ParserTokenType } from "src/editor/transform/parser-type"
 import { TableCellExtension, TableExtension, TableRowExtension } from "@remirror/extension-tables"
+import { Fragment, Node as ProsemirroNode } from "prosemirror-model"
 import { Transaction } from "prosemirror-state"
-import { createTableHeigthlightPlugin } from "./table-plugin"
+
+import { ParserTokenType } from "src/editor/transform/parser-type"
+import { NodeSerializerOptions } from "src/editor/transform/serializer"
+import { buildBlockEnterKeymapBindings, MarkdownNodeExtension } from "src/editor/utils"
+
 import { selectedTableCell } from "./table-helper"
+import { createTableHeigthlightPlugin } from "./table-plugin"
 
 enum TABLE_ALIGEN {
     DEFAULT = 1,
@@ -24,13 +26,13 @@ export class RinoTableExtension extends TableExtension implements MarkdownNodeEx
                 const texts = match[1]
                     .split("|")
                     .slice(0, -1) // Remove the empty string at the end
-                    .map(text => {
+                    .map((text) => {
                         text = text.trim()
                         if (!text) text = " " // Prosemirror text doesn't allow empty text
                         return schema.text(text)
                     })
 
-                const cells = texts.map(text => schema.nodes.tableCell.create(null, text))
+                const cells = texts.map((text) => schema.nodes.tableCell.create(null, text))
                 const row = schema.nodes.tableRow.create(null, cells)
                 const table = schema.nodes.table.create(null, row)
                 tr = tr.delete(start, end).insert(start, table)
@@ -110,7 +112,7 @@ export class RinoTableExtension extends TableExtension implements MarkdownNodeEx
         table.splice(1, 0, spliter)
 
         let text = "\n"
-        table.forEach(row => {
+        table.forEach((row) => {
             row.forEach((cell, col) => {
                 text += "| "
                 const width = colWidths[col]

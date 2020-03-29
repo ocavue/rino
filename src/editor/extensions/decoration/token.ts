@@ -52,7 +52,7 @@ export function mergeTokens(tokens: Token[]): Token[] {
             self.length = 0
         }
     }
-    return tokens.filter(token => token.isWidget || token.length > 0)
+    return tokens.filter((token) => token.isWidget || token.length > 0)
 }
 
 export function pushClass(token: Token, className: string): Token {

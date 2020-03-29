@@ -11,7 +11,7 @@ const objPath = process.argv[3]
 const obj = require(path.resolve(jsonFile))
 
 function deepFind(obj, path) {
-    const paths = path.split(".").filter(path => path)
+    const paths = path.split(".").filter((path) => path)
     let current = obj
 
     for (const path of paths) {

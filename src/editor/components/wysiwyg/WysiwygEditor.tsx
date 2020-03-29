@@ -1,17 +1,19 @@
 /** @jsx jsx */
 
-import { DevTools } from "../DevTools"
-import { EditorProps } from "../types"
-import { FC, useEffect, useMemo, useRef, useState } from "react"
+import { jsx } from "@emotion/core"
 import { ProsemirrorNode } from "@remirror/core"
 import { RemirrorEventListener, RemirrorProvider, useRemirrorContext } from "@remirror/react"
+import { debounce } from "lodash"
+import { FC, useEffect, useMemo, useRef, useState } from "react"
+
+import { isTestEnv } from "src/utils"
+
+import { DevTools } from "../DevTools"
+import { EditorProps } from "../types"
 import { TableMenu } from "./TableMenu"
 import { WysiwygExtensions, WysiwygSchema } from "./wysiwyg-extension"
-import { WysiwygManager, useWysiwygManager } from "./wysiwyg-manager"
+import { useWysiwygManager, WysiwygManager } from "./wysiwyg-manager"
 import { buildMarkdownParser, buildMarkdownSerializer } from "./wysiwyg-markdown"
-import { debounce } from "lodash"
-import { isTestEnv } from "src/utils"
-import { jsx } from "@emotion/core"
 
 const InnerEditor: FC<{ className: string }> = ({ className }) => {
     const context = useRemirrorContext()

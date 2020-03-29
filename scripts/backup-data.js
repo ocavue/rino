@@ -30,7 +30,7 @@ async function readData() {
     const db = admin.firestore()
     const collection = db.collection("notes")
     const query = await collection.get()
-    const jsonDocs = query.docs.map(snapshot => {
+    const jsonDocs = query.docs.map((snapshot) => {
         return JSON.parse(JSON.stringify(snapshot.data()))
     })
     const outputPath = path.resolve("./output.json")

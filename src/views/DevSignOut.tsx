@@ -1,7 +1,8 @@
-import { StoreContainer } from "src/store"
-import { signOut } from "src/controller"
 import { useRouter } from "next/router"
 import React from "react"
+
+import { signOut } from "src/controller"
+import { StoreContainer } from "src/store"
 
 export default function DevSignOut() {
     const router = useRouter()

@@ -1,7 +1,7 @@
 import { dedent } from "src/utils"
 
-describe("uitls", function() {
-    test("dedent", function() {
+describe("uitls", function () {
+    test("dedent", function () {
         expect(dedent(`  aaa\n  bbb`)).toEqual(`aaa\nbbb`)
         expect(
             dedent(`

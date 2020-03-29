@@ -1,5 +1,5 @@
-import { click, getInnerText, goto, retry, sleep, wait, waitAnimation } from "../utils"
 import { createNote, expectSignedIn, expectSignedOut, login, signOut } from "../actions"
+import { click, getInnerText, goto, retry, sleep, wait, waitAnimation } from "../utils"
 
 const settingsBtn = "sidebar-btn-settings"
 const settingsMenu = "sidebar-settings-menu"
@@ -78,7 +78,7 @@ describe("Settings", () => {
         })
     })
 
-    describe("About", function() {
+    describe("About", function () {
         beforeAll(async () => await jestPuppeteer.resetBrowser())
 
         test("Open the dialog", async () => {
@@ -108,7 +108,7 @@ describe("Settings", () => {
         })
     })
 
-    describe("Email", function() {
+    describe("Email", function () {
         beforeAll(async () => await jestPuppeteer.resetBrowser())
 
         test("Email", async () => {

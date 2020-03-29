@@ -1,7 +1,8 @@
-import { Decoration, DecorationSet } from "prosemirror-view"
 import { EditorState, Plugin } from "prosemirror-state"
-import { selectedTableCell } from "./table-helper"
 import { selectionCell } from "prosemirror-tables"
+import { Decoration, DecorationSet } from "prosemirror-view"
+
+import { selectedTableCell } from "./table-helper"
 
 export const createTableHeigthlightPlugin = () => {
     return new Plugin({

@@ -1,12 +1,14 @@
 // Firebase App (the core Firebase SDK) is always required and must be listed first
-import * as firebase from "firebase/app"
 // Add the Firebase products that you want to use
 import "firebase/auth"
 import "firebase/database"
 import "firebase/firestore"
 
-import { firebaseConfig } from "./config"
+import * as firebase from "firebase/app"
+
 import { isTestEnv } from "src/utils"
+
+import { firebaseConfig } from "./config"
 
 // Avoid duplicate initiations during development
 if (firebase.apps.length === 0) {
@@ -31,7 +33,7 @@ if (firebase.apps.length === 0) {
     firebase
         .firestore()
         .enablePersistence({ synchronizeTabs: true })
-        .catch(error => {
+        .catch((error) => {
             console.error(error)
             if (error.code === "failed-precondition") {
                 // Multiple tabs open, persistence can only be enabled

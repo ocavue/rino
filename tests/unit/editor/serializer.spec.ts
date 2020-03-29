@@ -1,7 +1,9 @@
 import { TaggedProsemirrorNode } from "prosemirror-test-builder"
+
 import { buildMarkdownSerializer } from "src/editor/components/wysiwyg/wysiwyg-markdown"
-import { createBaseTestcases, nodes } from "./base"
 import { dedent } from "src/utils"
+
+import { createBaseTestcases, nodes } from "./base"
 
 const { doc, p, table, tableRow, tableCell, li, ul, uncheckedCheckbox, checkedCheckbox } = nodes
 
@@ -11,16 +13,16 @@ function assertEqual(expectedMarkdown: string, receivedNode: TaggedProsemirrorNo
 }
 
 describe("base markdown serializer", () => {
-    describe("base test cases", function() {
+    describe("base test cases", function () {
         for (const [caseName, [markdown, node]] of Object.entries(createBaseTestcases())) {
-            test(caseName, function() {
+            test(caseName, function () {
                 assertEqual(markdown, node)
             })
         }
     })
 
-    describe("table seriallizer", function() {
-        test("table with long header cells and short body cells", function() {
+    describe("table seriallizer", function () {
+        test("table with long header cells and short body cells", function () {
             assertEqual(
                 dedent(`
                     | header | header |
@@ -38,7 +40,7 @@ describe("base markdown serializer", () => {
             )
         })
 
-        test("table with short header cells and long body cells", function() {
+        test("table with short header cells and long body cells", function () {
             assertEqual(
                 dedent(`
                     | h      | h      |
@@ -56,7 +58,7 @@ describe("base markdown serializer", () => {
             )
         })
 
-        test("table with short header cells and short body cells", function() {
+        test("table with short header cells and short body cells", function () {
             assertEqual(
                 dedent(`
                     | h    | h    |
@@ -74,7 +76,7 @@ describe("base markdown serializer", () => {
             )
         })
 
-        test("table with a long body cell", function() {
+        test("table with a long body cell", function () {
             assertEqual(
                 dedent(`
                     | h    | h         |
@@ -107,7 +109,7 @@ describe("base markdown serializer", () => {
             )
         })
 
-        test("table with a long header cell", function() {
+        test("table with a long header cell", function () {
             assertEqual(
                 dedent(`
                     | 123456789 | h    |
@@ -140,7 +142,7 @@ describe("base markdown serializer", () => {
             )
         })
 
-        test("table with emtpy cells", function() {
+        test("table with emtpy cells", function () {
             assertEqual(
                 dedent(`
                     | h    |      |
@@ -161,8 +163,8 @@ describe("base markdown serializer", () => {
 })
 
 describe("list markdown serializer", () => {
-    describe("selectable list", function() {
-        it("checked list", function() {
+    describe("selectable list", function () {
+        it("checked list", function () {
             assertEqual(
                 dedent(
                     `
@@ -180,7 +182,7 @@ describe("list markdown serializer", () => {
                 ),
             )
         })
-        it("unchecked list", function() {
+        it("unchecked list", function () {
             assertEqual(
                 dedent(
                     `
@@ -198,7 +200,7 @@ describe("list markdown serializer", () => {
                 ),
             )
         })
-        it("mixed list", function() {
+        it("mixed list", function () {
             assertEqual(
                 dedent(
                     `
@@ -216,7 +218,7 @@ describe("list markdown serializer", () => {
                 ),
             )
         })
-        it("selectable list item and bullet list item", function() {
+        it("selectable list item and bullet list item", function () {
             assertEqual(
                 dedent(
                     `

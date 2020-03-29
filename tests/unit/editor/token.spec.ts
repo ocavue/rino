@@ -4,8 +4,8 @@ function assertDeepEqual(a: any, b: any) {
     expect(a).toStrictEqual(b)
 }
 
-describe("Token", function() {
-    it("cleanTokens", function() {
+describe("Token", function () {
+    it("cleanTokens", function () {
         assertDeepEqual(mergeTokens([{ classes: ["A"], length: 0 }]), [])
         assertDeepEqual(
             mergeTokens([
@@ -51,7 +51,7 @@ describe("Token", function() {
             ],
         )
     })
-    it("pushClass", function() {
+    it("pushClass", function () {
         assertDeepEqual(pushClass({ classes: ["B"], length: 0 }, "A"), {
             classes: ["A", "B"],
             length: 0,

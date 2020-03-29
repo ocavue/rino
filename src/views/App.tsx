@@ -1,6 +1,6 @@
 import { CssBaseline } from "@material-ui/core"
-import { ThemeProvider } from "@material-ui/core/styles"
 import { createMuiTheme } from "@material-ui/core"
+import { ThemeProvider } from "@material-ui/core/styles"
 import React, { useEffect, useMemo } from "react"
 
 import {
@@ -11,7 +11,7 @@ import {
 } from "src/controller"
 import { StoreContainer } from "src/store"
 
-const ContainerConsumer: React.FC = props => {
+const ContainerConsumer: React.FC<{}> = (props) => {
     const {
         state: { isDarkTheme, setConnected, setLoadingData, setLoadingUser },
         auth: { user, setUser },
@@ -20,12 +20,12 @@ const ContainerConsumer: React.FC = props => {
     const { fetchNotes, resetNotes } = EditContainer.useContainer()
 
     useEffect(() => {
-        const unsubscribe = registerConnectionEvent(connected => setConnected(connected))
+        const unsubscribe = registerConnectionEvent((connected) => setConnected(connected))
         return () => unsubscribe()
     }, [setConnected])
 
     useEffect(() => {
-        const unsubscribe = onAuthStateChanged(user => {
+        const unsubscribe = onAuthStateChanged((user) => {
             const currentUser = getCurrentUser()
             if (currentUser?.uid !== user?.uid) {
                 console.warn(
@@ -66,7 +66,7 @@ const ContainerConsumer: React.FC = props => {
     )
 }
 
-const App: React.FC = props => {
+const App: React.FC = (props) => {
     return (
         <StoreContainer.Provider>
             <EditContainer.Provider>

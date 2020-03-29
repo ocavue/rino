@@ -1,8 +1,9 @@
-import { KeyBindings, NodeExtension, NodeExtensionOptions, convertCommand } from "@remirror/core"
-import { NodeSerializerSpec } from "src/editor/transform/serializer"
+import { convertCommand, KeyBindings, NodeExtension, NodeExtensionOptions } from "@remirror/core"
 import { NodeType } from "prosemirror-model"
-import { ParserToken } from "src/editor/transform/parser-type"
 import { TextSelection, Transaction } from "prosemirror-state"
+
+import { ParserToken } from "src/editor/transform/parser-type"
+import { NodeSerializerSpec } from "src/editor/transform/serializer"
 
 export abstract class MarkdownNodeExtension<T = NodeExtensionOptions> extends NodeExtension<T> {
     abstract fromMarkdown: () => readonly ParserToken[]

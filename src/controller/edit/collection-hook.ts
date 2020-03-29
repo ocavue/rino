@@ -1,7 +1,8 @@
-import { Collection } from "./collection"
 import { Draft, produce } from "immer"
-import { Note } from "./note"
 import { useCallback, useMemo, useState } from "react"
+
+import { Collection } from "./collection"
+import { Note } from "./note"
 
 export function useCollection() {
     const [inboxCollection, setInboxCollection] = useState<Collection>({

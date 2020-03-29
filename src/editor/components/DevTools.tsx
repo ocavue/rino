@@ -1,6 +1,5 @@
-import { FC } from "react"
-
 import { ProsemirrorDevTools } from "@remirror/dev"
+import { FC } from "react"
 
 let DevTools: FC = () => null
 

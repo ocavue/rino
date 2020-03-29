@@ -1,9 +1,10 @@
 import { Draft, produce } from "immer"
-import { Note, NoteType } from "./note"
-import { docs } from "../docs"
-import { notesCollection } from "../firebase"
 import { sortBy } from "lodash"
 import { useCallback, useMemo, useState } from "react"
+
+import { docs } from "../docs"
+import { notesCollection } from "../firebase"
+import { Note, NoteType } from "./note"
 
 export type Notes = Note[]
 
@@ -21,8 +22,8 @@ function useFetchNotes(setNotes: SetNotes) {
     return useCallback(
         async function fetchNotes(uid: string) {
             const query = await notesCollection.where("uid", "==", uid).get()
-            const originNotes = query.docs.map(snapshot => Note.new({ uid, snapshot }))
-            const sortedNotes = sortBy(originNotes, note => [note.createTime, note.id]).reverse()
+            const originNotes = query.docs.map((snapshot) => Note.new({ uid, snapshot }))
+            const sortedNotes = sortBy(originNotes, (note) => [note.createTime, note.id]).reverse()
             setNotes(sortedNotes)
         },
         [setNotes],
@@ -33,11 +34,11 @@ function useSetNoteContent(noteKey: NoteKey, setNotes: SetNotes) {
     return useCallback(
         async function setNoteContent(content: string) {
             let noteRef: Note | null = null
-            setNotes(notes => {
+            setNotes((notes) => {
                 let noteRefIndex = -1
                 const newNotes = produce(notes, (draft: Draft<Notes>) => {
                     if (noteKey) {
-                        const index = draft.findIndex(note => note.key === noteKey)
+                        const index = draft.findIndex((note) => note.key === noteKey)
                         if (index >= 0) {
                             const note = draft[index]
                             if (!note.deleting) {
@@ -65,7 +66,7 @@ function useRemoveAllNotes(setNotes: SetNotes, setNoteKey: SetNoteKey) {
             setNoteKey(null)
             if (uid) {
                 const query = await notesCollection.where("uid", "==", uid).get()
-                query.forEach(doc => {
+                query.forEach((doc) => {
                     doc.ref.delete()
                 })
             }
@@ -78,7 +79,7 @@ function useDeleteNote(noteKey: NoteKey, setNoteKey: SetNoteKey, notes: Notes, s
     return useCallback(
         async function deleteNote() {
             if (!noteKey) return
-            const index = notes.findIndex(n => n.key === noteKey)
+            const index = notes.findIndex((n) => n.key === noteKey)
             if (index < 0) return
             const note = notes[index]
 
@@ -110,7 +111,7 @@ function useDeleteNote(noteKey: NoteKey, setNoteKey: SetNoteKey, notes: Notes, s
 
 function usePremadeNotes() {
     return useMemo((): Notes => {
-        return docs.map(content => Note.new({ type: NoteType.Local, content }))
+        return docs.map((content) => Note.new({ type: NoteType.Local, content }))
     }, [])
 }
 
@@ -156,7 +157,7 @@ function useCreateLocalNote(setNotes: SetNotes, setNoteKey: SetNoteKey) {
 export function useNote() {
     const [notes, setNotes] = useNotes()
     const [noteKey, setNoteKey] = useNoteKey()
-    const note = useMemo(() => notes.find(n => n.key === noteKey), [noteKey, notes])
+    const note = useMemo(() => notes.find((n) => n.key === noteKey), [noteKey, notes])
 
     const premadeNotes = usePremadeNotes()
     const setNoteContent = useSetNoteContent(noteKey, setNotes)

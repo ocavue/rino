@@ -7,16 +7,27 @@ parserOptions:
   ecmaFeatures:
     jsx: true
 extends:
+  # https://github.com/typescript-eslint/typescript-eslint/tree/v2.25.0/packages/eslint-plugin#recommended-configs
+  - "eslint:recommended" # the set of rules which are recommended for all projects by the ESLint Team
+  - "plugin:@typescript-eslint/eslint-recommended" # adjust the rules from `eslint:recommended` appropriately for TypeScript
+  - "plugin:@typescript-eslint/recommended" # recommended rules for typescript
+  - "plugin:@typescript-eslint/recommended-requiring-type-checking" # provide lint rules with access to type information
+
+  # https://www.npmjs.com/package/eslint-plugin-react
   - "plugin:react/recommended"
-  - "plugin:@typescript-eslint/recommended"
-  - "plugin:@typescript-eslint/recommended-requiring-type-checking"
-  - "prettier"
-  - "prettier/@typescript-eslint"
-  - "prettier/react"
-  - "plugin:prettier/recommended"
+
+  # https://www.npmjs.com/package/eslint-plugin-react-hooks
   - "plugin:react-hooks/recommended"
+
+  # runs Prettier as an ESLint rule
+  - "plugin:prettier/recommended"
+
+  # turns off all ELLint rules that are unnecessary or might conflict with Prettier
+  - "prettier"
+  - "prettier/@typescript-eslint" # for @typescript-eslint/eslint-plugin
+  - "prettier/react" # for eslint-plugin-react
 plugins:
-  - sort-imports-es6-autofix
+  - "simple-import-sort"
 settings:
   react:
     version: "detect" # Tells eslint-plugin-react to automatically detect the version of React to use
@@ -24,17 +35,37 @@ env:
   browser: true
   node: true
 rules:
-  "no-console": "off"
-  "no-unused-vars": [error, { args: "none" }]
   "no-useless-escape": "off"
-  "sort-imports": "off"
-  "sort-imports-es6-autofix/sort-imports-es6": [2]
+
   "react/prop-types": [1, { skipUndeclared: true }]
-  "@typescript-eslint/explicit-function-return-type": "off"
-  "@typescript-eslint/no-explicit-any": "off"
-  "@typescript-eslint/no-unused-vars": [error, { args: "none" }]
-  "@typescript-eslint/no-empty-function": "off"
   "react/no-unescaped-entities": "off"
+
+  "@typescript-eslint/explicit-function-return-type": "off"
+  "@typescript-eslint/no-unused-vars": [error, { args: "none" }]
+  "@typescript-eslint/no-explicit-any": "off"
+  "@typescript-eslint/no-empty-function": "off"
+
+  # use `simple-import-sort` to sort import
+  "sort-imports": "off"
+  "simple-import-sort/sort":
+    - "error"
+    - groups: [
+      # Side effect imports.
+      ["^\\u0000"],
+      # Packages.
+      # Things that start with a letter (or digit or underscore), or `@` followed by a letter.
+      ["^@?\\w"],
+      # Absolute imports and other imports such as Vue-style `@/foo`.
+      # Anything that does not start with a dot.
+      ["^[^.]"],
+      # Absolute imports based on tsconfig.json's `baseUrl`.
+      # Check https://github.com/lydell/eslint-plugin-simple-import-sort/issues/31 for more information.
+      # Anything that start with `src/`, `config/` or `tests/`
+      ["^(?:src|config|tests)\/"],
+      # Relative imports.
+      # Anything that starts with a dot.
+      ["^\\."],
+    ]
 overrides:
   - files: "tests/**/*.[t|j]s"
     env:

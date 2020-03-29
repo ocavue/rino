@@ -1,5 +1,5 @@
-import { ClickOptions, Dialog, DirectNavigationOptions, WaitForSelectorOptions } from "puppeteer"
 import os from "os"
+import { ClickOptions, Dialog, DirectNavigationOptions, WaitForSelectorOptions } from "puppeteer"
 
 const testidSelector = (testid: string) => `[data-testid="${testid}"]`
 
@@ -68,7 +68,7 @@ export async function getInnerText(testid: string) {
     await wait(testid)
     const elementHandle = await getOne(testid)
     expect(elementHandle).toBeTruthy()
-    const innerText: string = await page.evaluate(e => e.innerText, elementHandle)
+    const innerText: string = await page.evaluate((e) => e.innerText, elementHandle)
     expect(typeof innerText).toEqual("string")
     return innerText
 }
@@ -77,7 +77,7 @@ export async function getTextAreaValue(testid: string) {
     await wait(testid)
     const textareaHandle = await getOne(testid)
     expect(textareaHandle).toBeTruthy()
-    const value: string = await page.evaluate(t => t.value, textareaHandle)
+    const value: string = await page.evaluate((t) => t.value, textareaHandle)
     expect(typeof value).toEqual("string")
     return value
 }
@@ -102,7 +102,7 @@ export async function getDimensions(testid: string) {
     await wait(testid)
     const element = await getOne(testid)
     expect(element).toBeTruthy()
-    return await page.evaluate(e => {
+    return await page.evaluate((e) => {
         const { x, y, width, height, top, right, bottom, left } = e.getBoundingClientRect()
         return { x, y, width, height, top, right, bottom, left }
     }, element)
@@ -152,6 +152,7 @@ export async function expectWysiwygHtml(shapes: Shape[]) {
 
         // `for ... of Object.entries(selectors)` seems have some babel issues, so I use ancient JS syntex here
         for (const selector in selectors) {
+            // eslint-disable-next-line no-prototype-builtins
             if (!selectors.hasOwnProperty(selector)) {
                 continue
             }
@@ -167,7 +168,7 @@ export async function expectWysiwygHtml(shapes: Shape[]) {
                 info.childrenTags = Array(element.children.length)
                     .fill(0)
                     .map((_, i) => element.children.item(i) as Element)
-                    .map(e => e.tagName)
+                    .map((e) => e.tagName)
             }
         }
         return selectors
@@ -177,7 +178,7 @@ export async function expectWysiwygHtml(shapes: Shape[]) {
 }
 
 export function getDialog(callback: () => Promise<void>, timeout = 1000): Promise<Dialog | null> {
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
         let resolved = false
         function handleDialog(dialog: Dialog) {
             if (!resolved) {

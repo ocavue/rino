@@ -1,18 +1,19 @@
 /** @jsx jsx */
 
-import { DevTools } from "../DevTools"
-import { EditorProps } from "../types"
-import { FC, useEffect, useMemo, useRef } from "react"
+import { jsx } from "@emotion/core"
 import { ProsemirrorNode } from "@remirror/core"
 import { RemirrorEventListener, RemirrorProvider, useRemirrorContext } from "@remirror/react"
+import { debounce } from "lodash"
+import { FC, useEffect, useMemo, useRef } from "react"
+
+import { DevTools } from "../DevTools"
+import { EditorProps } from "../types"
 import {
     SourceCodeExtensions,
     SourceCodeManager,
     SourceCodeSchema,
     useSourceCodeManager,
 } from "./manager"
-import { debounce } from "lodash"
-import { jsx } from "@emotion/core"
 
 const InnerEditor: FC<{ className: string }> = ({ className }) => {
     const { getRootProps } = useRemirrorContext()

@@ -1,6 +1,7 @@
 import { NextPageContext } from "next"
-import Alert from "src/views/Alert"
 import React from "react"
+
+import Alert from "src/views/Alert"
 
 // Some common status codes
 const statusCodeMap: Record<string, string> = {

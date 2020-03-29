@@ -1,15 +1,10 @@
+import { ExtensionManagerNodeTypeParams, KeyBindings } from "@remirror/core"
 import {
+    codeBlockDefaultOptions,
     CodeBlockExtension,
     CodeBlockExtensionOptions,
-    codeBlockDefaultOptions,
     getLanguage,
 } from "@remirror/extension-code-block"
-import { ExtensionManagerNodeTypeParams, KeyBindings } from "@remirror/core"
-import { InlineDecorateType } from "src/editor/extensions/decoration"
-import { MarkdownNodeExtension, buildBlockEnterKeymapBindings } from "src/editor/utils"
-
-import { NodeSerializerOptions } from "src/editor/transform/serializer"
-import { ParserTokenType } from "src/editor/transform/parser-type"
 import Token from "markdown-it/lib/token"
 import clike from "refractor/lang/clike"
 import css from "refractor/lang/css"
@@ -19,6 +14,11 @@ import js from "refractor/lang/javascript"
 import markup from "refractor/lang/markup"
 import python from "refractor/lang/python"
 import typescript from "refractor/lang/typescript"
+
+import { InlineDecorateType } from "src/editor/extensions/decoration"
+import { ParserTokenType } from "src/editor/transform/parser-type"
+import { NodeSerializerOptions } from "src/editor/transform/serializer"
+import { buildBlockEnterKeymapBindings, MarkdownNodeExtension } from "src/editor/utils"
 
 export const defaultRinoCodeBlockExtensionOptions = {
     ...codeBlockDefaultOptions,
@@ -40,7 +40,7 @@ export class RinoCodeBlockExtension extends CodeBlockExtension
         return {
             ...super.keys(params),
             ...buildBlockEnterKeymapBindings(/^```([a-zA-Z]*)?$/, params.type, {
-                getAttrs: match => {
+                getAttrs: (match) => {
                     const userInputLanguage = match[1] || ""
                     return {
                         language: getLanguage({

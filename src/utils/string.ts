@@ -1,13 +1,6 @@
 export function generateRandomId(): string {
     // https://stackoverflow.com/a/13403498
-    return (
-        Math.random()
-            .toString(36)
-            .substring(2, 15) +
-        Math.random()
-            .toString(36)
-            .substring(2, 15)
-    )
+    return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)
 }
 
 /**
@@ -30,5 +23,5 @@ export function dedent(text: string) {
             }
         }
     }
-    return lines.map(line => (line.length > 0 ? line.slice(minWhitespace) : line)).join("\n")
+    return lines.map((line) => (line.length > 0 ? line.slice(minWhitespace) : line)).join("\n")
 }

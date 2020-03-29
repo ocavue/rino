@@ -2,7 +2,7 @@
 Inspired by https://github.com/lepture/mistune/
 */
 
-import { Token, mergeTokens, pushClass } from "./token"
+import { mergeTokens, pushClass, Token } from "./token"
 
 type Render = (match: string[]) => Token[]
 type Rule = [RegExp, Render]
@@ -14,9 +14,9 @@ class InlineLexer {
         this.rules = {
             doubleEmphases: [
                 /^\*{2}(.+?)\*{2}(?!\*)/,
-                match => [
+                (match) => [
                     { length: 2, classes: ["decoration_mark"] },
-                    ...this.scan(match[1]).map(token =>
+                    ...this.scan(match[1]).map((token) =>
                         pushClass(token, "decoration_emphasis_double_text"),
                     ),
                     { length: 2, classes: ["decoration_mark"] },
@@ -24,9 +24,9 @@ class InlineLexer {
             ],
             singleEmphasis: [
                 /^\*((?:\*\*|[^\*])+?)\*(?!\*)/,
-                match => [
+                (match) => [
                     { length: 1, classes: ["decoration_mark"] },
-                    ...this.scan(match[1]).map(token =>
+                    ...this.scan(match[1]).map((token) =>
                         pushClass(token, "decoration_emphasis_single_text"),
                     ),
                     { length: 1, classes: ["decoration_mark"] },
@@ -34,7 +34,7 @@ class InlineLexer {
             ],
             delete: [
                 /^~~(.+?)~~/, // ~~Delete~~
-                match => [
+                (match) => [
                     { length: 2, classes: ["decoration_mark"] },
                     { length: match[1].length, classes: ["decoration_delete"] },
                     { length: 2, classes: ["decoration_mark"] },
@@ -42,7 +42,7 @@ class InlineLexer {
             ],
             code: [
                 /^(`+)(\s*)(.*?[^`])(\s*)\1(?!`)/, // `Code`
-                match => [
+                (match) => [
                     { length: match[1].length, classes: ["decoration_mark"] },
                     { length: match[2].length, classes: ["decoration_code_space"] },
                     { length: match[3].length, classes: ["decoration_code_text"] },
@@ -52,7 +52,7 @@ class InlineLexer {
             ],
             image: [
                 /^\!\[([^\[\]]+)\]\((.+?)\)/,
-                match => [
+                (match) => [
                     { length: 2, classes: ["decoration_mark"] },
                     { length: match[1].length, classes: ["decoration_image_text"] },
                     { length: 2, classes: ["decoration_mark"] },
@@ -73,9 +73,9 @@ class InlineLexer {
             ],
             link: [
                 /^\[([^\[\]]+)\]\((.+?)\)/, // [link](https://url)
-                match => [
+                (match) => [
                     { length: 1, classes: ["decoration_mark"] },
-                    ...this.scan(match[1]).map(token => pushClass(token, "decoration_link_text")),
+                    ...this.scan(match[1]).map((token) => pushClass(token, "decoration_link_text")),
                     { length: 2, classes: ["decoration_mark"] },
                     this.processLink(match[2]),
                     { length: 1, classes: ["decoration_mark"] },
@@ -83,7 +83,7 @@ class InlineLexer {
             ],
             autolink: [
                 /^<([^ >]+(@|:)[^ >]+)>/, // <https://url>
-                match => [
+                (match) => [
                     { length: 1, classes: ["decoration_mark"] },
                     this.processLink(match[1]),
                     { length: 1, classes: ["decoration_mark"] },
@@ -91,7 +91,7 @@ class InlineLexer {
             ],
             text: [
                 /^[\s\S]+?(?=[\\<!\[_*`~]|https?:\/\/| {2,}\n|$)/,
-                match => [{ length: match[0].length, classes: [] }],
+                (match) => [{ length: match[0].length, classes: [] }],
             ],
         }
     }
@@ -103,7 +103,7 @@ class InlineLexer {
                 continue
             }
             const tokens: Token[] = mergeTokens(render(match))
-            const length = tokens.map(token => token.length).reduce((a, b) => a + b)
+            const length = tokens.map((token) => token.length).reduce((a, b) => a + b)
             if (length !== match[0].length) {
                 console.error(tokens)
                 throw new Error(
