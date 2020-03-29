@@ -81,17 +81,17 @@ describe("fromMarkdown", () => {
             parser.parse(
                 dedent(
                     `
-                    |     | x   | x   |
-                    | --- | --- | --- |
-                    | x   |     | x   |
-                    | x   | x   |     |
+                    |     | xxxxxx | x   |
+                    | --- | ------ | --- |
+                    | x   |        | x   |
+                    | x   | x      |     |
                     `,
                 ),
             ),
         ).toEqualRemirrorDocument(
             doc(
                 buildRegularTable([
-                    ["", "x", "x"],
+                    ["", "xxxxxx", "x"],
                     ["x", "", "x"],
                     ["x", "x", ""],
                 ]),
