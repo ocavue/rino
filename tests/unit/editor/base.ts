@@ -24,7 +24,7 @@ export const def = {
     ol: { nodeType: "rinoOrderedList" },
     ul: { nodeType: "rinoBulletList" },
     br: { nodeType: "hardBreak" },
-    pre: { nodeType: "codeBlock", userInputLanguage: "" }, // TODO: Remove `userInputLanguage: ""` after https://github.com/remirror/remirror/pull/248 been merged
+    pre: { nodeType: "codeBlock" },
     preJS: { nodeType: "codeBlock", language: "javascript", userInputLanguage: "javascript" },
     blockquote: { nodeType: "rinoBlockquote" },
     table: { nodeType: "table" },
