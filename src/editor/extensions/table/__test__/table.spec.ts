@@ -53,21 +53,47 @@ describe("fromMarkdown", () => {
     const { manager, buildRegularTable, doc } = setup()
     const parser = buildMarkdownParser(manager)
 
-    test("base", () => {
-        const node = parser.parse(
-            dedent(`
-                | 1   | 2   | 3   |
-                | --- | --- | --- |
-                | 4   | 5   | 6   |
-                | 7   | 8   | 9   |
-                `),
-        )
-        expect(node).toEqualRemirrorDocument(
+    test("base case", () => {
+        expect(
+            parser.parse(
+                dedent(
+                    `
+                    | x   | x   | x   |
+                    | --- | --- | --- |
+                    | x   | x   | x   |
+                    | x   | x   | x   |
+                    `,
+                ),
+            ),
+        ).toEqualRemirrorDocument(
             doc(
                 buildRegularTable([
-                    ["1", "2", "3"],
-                    ["4", "5", "6"],
-                    ["7", "8", "9"],
+                    ["x", "x", "x"],
+                    ["x", "x", "x"],
+                    ["x", "x", "x"],
+                ]),
+            ),
+        )
+    })
+
+    test("handle empty cells correctly", () => {
+        expect(
+            parser.parse(
+                dedent(
+                    `
+                    |     | x   | x   |
+                    | --- | --- | --- |
+                    | x   |     | x   |
+                    | x   | x   |     |
+                    `,
+                ),
+            ),
+        ).toEqualRemirrorDocument(
+            doc(
+                buildRegularTable([
+                    ["", "x", "x"],
+                    ["x", "", "x"],
+                    ["x", "x", ""],
                 ]),
             ),
         )
@@ -78,15 +104,18 @@ describe("toMarkdown", () => {
     const { manager, buildRegularTable, doc } = setup()
     const serializer = buildMarkdownSerializer(manager)
 
-    test("minimal width of cell is 3", () => {
-        const node = doc(
-            buildRegularTable([
-                ["x", "x", "x"],
-                ["x", "x", "x"],
-                ["x", "x", "x"],
-            ]),
-        )
-        expect(serializer.serialize(node)).toEqual(
+    test("base case", () => {
+        expect(
+            serializer.serialize(
+                doc(
+                    buildRegularTable([
+                        ["x", "x", "x"],
+                        ["x", "x", "x"],
+                        ["x", "x", "x"],
+                    ]),
+                ),
+            ),
+        ).toEqual(
             dedent(
                 `
                 | x   | x   | x   |
@@ -189,6 +218,30 @@ describe("toMarkdown", () => {
                 | --- | ----- | --- |
                 | x   | xxxxx | x   |
                 | x   | x     | x   |
+
+                `,
+            ).trimStart(),
+        )
+    })
+
+    test("handle empty cells correctly", () => {
+        expect(
+            serializer.serialize(
+                doc(
+                    buildRegularTable([
+                        ["", "x", "x"],
+                        ["x", "", "x"],
+                        ["x", "x", ""],
+                    ]),
+                ),
+            ),
+        ).toEqual(
+            dedent(
+                `
+                |     | x   | x   |
+                | --- | --- | --- |
+                | x   |     | x   |
+                | x   | x   |     |
 
                 `,
             ).trimStart(),
