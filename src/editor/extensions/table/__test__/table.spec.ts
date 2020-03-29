@@ -78,21 +78,21 @@ describe("toMarkdown", () => {
     const { manager, buildRegularTable, doc } = setup()
     const serializer = buildMarkdownSerializer(manager)
 
-    test("base", () => {
+    test("minimal width of cell is 3", () => {
         const node = doc(
             buildRegularTable([
-                ["1", "2", "3"],
-                ["4", "5", "6"],
-                ["7", "8", "9"],
+                ["x", "x", "x"],
+                ["x", "x", "x"],
+                ["x", "x", "x"],
             ]),
         )
         expect(serializer.serialize(node)).toEqual(
             dedent(
                 `
-                | 1   | 2   | 3   |
+                | x   | x   | x   |
                 | --- | --- | --- |
-                | 4   | 5   | 6   |
-                | 7   | 8   | 9   |
+                | x   | x   | x   |
+                | x   | x   | x   |
 
                 `,
             ).trimStart(),
