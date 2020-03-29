@@ -2,7 +2,7 @@
 Inspired by https://github.com/lepture/mistune/
 */
 
-import { Token, mergeTokens, pushClass } from "./token"
+import { mergeTokens, pushClass, Token } from "./token"
 
 type Render = (match: string[]) => Token[]
 type Rule = [RegExp, Render]

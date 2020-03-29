@@ -1,10 +1,11 @@
+import { createStyles, makeStyles, Theme } from "@material-ui/core"
+import clsx from "clsx"
+import React, { useEffect, useRef, useState } from "react"
+
+import { maxEditorWidth } from "src/constants"
 import { Note } from "src/controller"
 import { SourceCodeEditor, WysiwygEditor } from "src/editor"
-import { Theme, createStyles, makeStyles } from "@material-ui/core"
-import { maxEditorWidth } from "src/constants"
 import { metaKey } from "src/utils"
-import React, { useEffect, useRef, useState } from "react"
-import clsx from "clsx"
 
 const useStyles = makeStyles((theme: Theme) => {
     return createStyles({

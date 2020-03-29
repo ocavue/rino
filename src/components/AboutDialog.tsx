@@ -1,7 +1,8 @@
 import * as m from "@material-ui/core"
-import { version } from "src/controller/config"
 import React from "react"
+
 import logo from "src/assets/logo.png"
+import { version } from "src/controller/config"
 
 export const AboutDialog: React.FC<{
     open: boolean

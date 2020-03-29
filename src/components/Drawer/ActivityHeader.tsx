@@ -1,10 +1,12 @@
 import * as icons from "@material-ui/icons"
-import { AboutDialog } from "../AboutDialog"
-import { AppbarIconButton } from "src/components/AppbarIconButton"
-import { SettingsMenu } from "./SettingsMenu"
-import { StoreContainer } from "src/store"
-import { useHeaderStyles } from "./style"
 import React from "react"
+
+import { AppbarIconButton } from "src/components/AppbarIconButton"
+import { StoreContainer } from "src/store"
+
+import { AboutDialog } from "../AboutDialog"
+import { SettingsMenu } from "./SettingsMenu"
+import { useHeaderStyles } from "./style"
 
 export const ActivityHeader: React.FC = () => {
     const classes = useHeaderStyles()

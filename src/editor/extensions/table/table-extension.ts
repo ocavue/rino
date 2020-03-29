@@ -1,12 +1,14 @@
 import { ExtensionManagerNodeTypeParams, KeyBindings } from "@remirror/core"
-import { Fragment, Node as ProsemirroNode } from "prosemirror-model"
-import { MarkdownNodeExtension, buildBlockEnterKeymapBindings } from "src/editor/utils"
-import { NodeSerializerOptions } from "src/editor/transform/serializer"
-import { ParserTokenType } from "src/editor/transform/parser-type"
 import { TableCellExtension, TableExtension, TableRowExtension } from "@remirror/extension-tables"
+import { Fragment, Node as ProsemirroNode } from "prosemirror-model"
 import { Transaction } from "prosemirror-state"
-import { createTableHeigthlightPlugin } from "./table-plugin"
+
+import { ParserTokenType } from "src/editor/transform/parser-type"
+import { NodeSerializerOptions } from "src/editor/transform/serializer"
+import { buildBlockEnterKeymapBindings, MarkdownNodeExtension } from "src/editor/utils"
+
 import { selectedTableCell } from "./table-helper"
+import { createTableHeigthlightPlugin } from "./table-plugin"
 
 enum TABLE_ALIGEN {
     DEFAULT = 1,

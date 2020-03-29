@@ -26,7 +26,8 @@ extends:
   - "prettier"
   - "prettier/@typescript-eslint" # for @typescript-eslint/eslint-plugin
   - "prettier/react" # for eslint-plugin-react
-plugins: []
+plugins:
+  - "simple-import-sort"
 settings:
   react:
     version: "detect" # Tells eslint-plugin-react to automatically detect the version of React to use
@@ -38,6 +39,23 @@ rules:
   "no-unused-vars": [error, { args: "none" }]
   "no-useless-escape": "off"
   "sort-imports": "off"
+  "simple-import-sort/sort":
+    - "error"
+    - groups: [
+      # Side effect imports.
+      ["^\\u0000"],
+      # Packages.
+      # Things that start with a letter (or digit or underscore), or `@` followed by a letter.
+      ["^@?\\w"],
+      # Absolute imports and other imports such as Vue-style `@/foo`.
+      # Anything that does not start with a dot.
+      ["^[^.]"],
+      # aaaa
+      ["^src\/"],
+      # Relative imports.
+      # Anything that starts with a dot.
+      ["^\\."],
+    ]
   "react/prop-types": [1, { skipUndeclared: true }]
   "@typescript-eslint/explicit-function-return-type": "off"
   "@typescript-eslint/no-explicit-any": "off"

@@ -1,3 +1,6 @@
+import { dedent } from "src/utils"
+
+import { createNote } from "../actions"
 import {
     click,
     focus,
@@ -9,8 +12,6 @@ import {
     wait,
     wysiwygEditorSelector,
 } from "../utils"
-import { createNote } from "../actions"
-import { dedent } from "src/utils"
 
 async function prepare() {
     await goto("/")

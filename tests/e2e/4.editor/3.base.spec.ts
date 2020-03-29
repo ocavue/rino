@@ -1,6 +1,7 @@
+import { readFileSync } from "fs"
+
 import { cleanNotes, createNote, switchMode } from "../actions"
 import { getSourceCodeModeText, goto, pressKey, type as typeByTestid } from "../utils"
-import { readFileSync } from "fs"
 
 function readText(filename: string) {
     return readFileSync(`${__dirname}/${filename}`, "utf-8")

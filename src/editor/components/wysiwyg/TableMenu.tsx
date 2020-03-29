@@ -1,13 +1,14 @@
-import React from "react"
-
-import * as svg from "./TableMenuSvg"
+import { createStyles, IconButton, makeStyles, Paper, Snackbar, Theme } from "@material-ui/core"
 import { ActionMethod } from "@remirror/core"
-import { IconButton, Paper, Snackbar, Theme, createStyles, makeStyles } from "@material-ui/core"
-import { StoreContainer } from "src/store"
-import { WysiwygExtensions } from "./wysiwyg-extension"
-import { maxDrawerWidth } from "src/constants"
 import { useRemirrorContext } from "@remirror/react"
 import clsx from "clsx"
+import React from "react"
+
+import { maxDrawerWidth } from "src/constants"
+import { StoreContainer } from "src/store"
+
+import * as svg from "./TableMenuSvg"
+import { WysiwygExtensions } from "./wysiwyg-extension"
 
 const useStyles = makeStyles((theme: Theme) => {
     return createStyles({

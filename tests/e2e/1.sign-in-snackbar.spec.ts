@@ -1,6 +1,7 @@
-import { click, sleep, wait } from "./utils"
-import { login, signOut } from "./actions"
 import { signInSnackbarDelay } from "src/constants"
+
+import { login, signOut } from "./actions"
+import { click, sleep, wait } from "./utils"
 
 describe("Sign up snackbar", function () {
     test("Hide snackbar", async () => {

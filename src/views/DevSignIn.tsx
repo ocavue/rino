@@ -1,6 +1,7 @@
-import { signInTestUser } from "src/controller"
 import { useRouter } from "next/router"
 import React from "react"
+
+import { signInTestUser } from "src/controller"
 
 export default function DevSignIn() {
     const router = useRouter()

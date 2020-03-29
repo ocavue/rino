@@ -1,15 +1,16 @@
 import {
-    ExtensionManagerNodeTypeParams,
-    KeyBindings,
     convertCommand,
+    ExtensionManagerNodeTypeParams,
     findParentNodeOfType,
+    KeyBindings,
 } from "@remirror/core"
 import { HeadingExtension, HeadingExtensionOptions } from "@remirror/core-extensions"
-import { MarkdownNodeExtension } from "src/editor/utils"
-import { NodeSerializerOptions } from "src/editor/transform/serializer"
-import { ParserTokenType } from "src/editor/transform/parser-type"
-import { setBlockType } from "prosemirror-commands"
 import Token from "markdown-it/lib/token"
+import { setBlockType } from "prosemirror-commands"
+
+import { ParserTokenType } from "src/editor/transform/parser-type"
+import { NodeSerializerOptions } from "src/editor/transform/serializer"
+import { MarkdownNodeExtension } from "src/editor/utils"
 
 export class RinoHeadingExtension extends HeadingExtension
     implements MarkdownNodeExtension<HeadingExtensionOptions> {

@@ -1,6 +1,6 @@
-import { CodeBlockExtension } from "@remirror/extension-code-block"
 import { ExtensionManager, InferFlexibleExtensionList, SchemaFromExtensions } from "@remirror/core"
 import { baseExtensions } from "@remirror/core-extensions"
+import { CodeBlockExtension } from "@remirror/extension-code-block"
 import { useMemo } from "react"
 import markdown from "refractor/lang/markdown"
 

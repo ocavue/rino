@@ -1,8 +1,9 @@
 import * as m from "@material-ui/core"
-import { sendSignInLink } from "src/controller"
+import clsx from "clsx"
 import { useRouter } from "next/router"
 import React, { useMemo, useState } from "react"
-import clsx from "clsx"
+
+import { sendSignInLink } from "src/controller"
 
 const useStyles = m.makeStyles((theme: m.Theme) => {
     const cardPadding = 24

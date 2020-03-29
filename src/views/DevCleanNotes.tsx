@@ -1,6 +1,7 @@
-import { EditContainer, getCurrentUser } from "src/controller"
 import { useRouter } from "next/router"
 import React from "react"
+
+import { EditContainer, getCurrentUser } from "src/controller"
 
 export default function DevCleanNotes() {
     const router = useRouter()

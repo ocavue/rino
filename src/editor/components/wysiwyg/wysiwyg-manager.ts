@@ -1,7 +1,7 @@
 import { ExtensionManager } from "@remirror/core"
+import { useMemo } from "react"
 
 import { WysiwygExtensions, wysiwygExtensions } from "./wysiwyg-extension"
-import { useMemo } from "react"
 
 export type WysiwygManager = ExtensionManager<WysiwygExtensions>
 

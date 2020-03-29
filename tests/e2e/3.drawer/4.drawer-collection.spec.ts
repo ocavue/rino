@@ -1,5 +1,5 @@
-import { goto, wait } from "../utils"
 import { login } from "../actions"
+import { goto, wait } from "../utils"
 
 describe("Before login", function () {
     beforeAll(async () => {

@@ -1,4 +1,4 @@
-import { Theme, createStyles, makeStyles } from "@material-ui/core"
+import { createStyles, makeStyles, Theme } from "@material-ui/core"
 import React from "react"
 
 import { Appbar } from "src/components/Appbar"

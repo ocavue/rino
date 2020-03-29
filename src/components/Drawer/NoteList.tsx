@@ -1,10 +1,12 @@
-import { EditContainer } from "src/controller"
 import { List } from "@material-ui/core"
-import { NoteListItem } from "./NoteListItem"
-import { StoreContainer } from "src/store"
-import { useBodyStyles } from "./style"
-import { useIsMobile } from "src/hooks"
 import React, { useMemo } from "react"
+
+import { EditContainer } from "src/controller"
+import { useIsMobile } from "src/hooks"
+import { StoreContainer } from "src/store"
+
+import { NoteListItem } from "./NoteListItem"
+import { useBodyStyles } from "./style"
 
 export const NoteList: React.FC<{}> = () => {
     const classes = useBodyStyles()

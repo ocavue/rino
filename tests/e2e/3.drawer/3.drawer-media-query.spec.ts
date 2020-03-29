@@ -1,3 +1,5 @@
+import { maxDrawerWidth, mobileBreakPoint } from "src/constants"
+
 import {
     cleanNotes,
     clickSidebarNoteListItem,
@@ -6,8 +8,6 @@ import {
     expectSidebarOpened,
 } from "../actions"
 import { click, getDimensions, goto, waitAnimation } from "../utils"
-
-import { maxDrawerWidth, mobileBreakPoint } from "src/constants"
 
 const height = 800
 

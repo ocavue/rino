@@ -1,8 +1,10 @@
+import { range } from "lodash"
 import { Node } from "prosemirror-model"
 import { TaggedProsemirrorNode } from "prosemirror-test-builder"
-import { createBaseTestcases, defaultMarkdownParser, nodes } from "./base"
+
 import { dedent } from "src/utils"
-import { range } from "lodash"
+
+import { createBaseTestcases, defaultMarkdownParser, nodes } from "./base"
 
 const { doc, hr, ol, ul, li, p, checkedCheckbox, uncheckedCheckbox } = nodes
 

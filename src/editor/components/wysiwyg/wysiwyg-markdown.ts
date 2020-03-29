@@ -1,9 +1,11 @@
 import { AnyExtension, FlexibleExtension, isExtension } from "@remirror/core"
-import { MarkdownNodeExtension } from "src/editor/utils"
+
 import { MarkdownParser } from "src/editor/transform/parser"
-import { MarkdownSerializer, NodeSerializerSpecs } from "src/editor/transform/serializer"
 import { ParserToken } from "src/editor/transform/parser-type"
-import { WysiwygSchema, wysiwygExtensions } from "./wysiwyg-extension"
+import { MarkdownSerializer, NodeSerializerSpecs } from "src/editor/transform/serializer"
+import { MarkdownNodeExtension } from "src/editor/utils"
+
+import { wysiwygExtensions, WysiwygSchema } from "./wysiwyg-extension"
 
 function isMarkdownNodeExtension(extension: FlexibleExtension): extension is MarkdownNodeExtension {
     return (

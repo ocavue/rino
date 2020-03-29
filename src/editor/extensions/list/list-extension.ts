@@ -1,20 +1,22 @@
-import { EditorState } from "prosemirror-state"
-import { EditorView, NodeView } from "prosemirror-view"
 import {
+    convertCommand,
     ExtensionManagerNodeTypeParams,
+    isElementDOMNode,
     NodeExtension,
     NodeExtensionSpec,
-    convertCommand,
-    isElementDOMNode,
 } from "@remirror/core"
+import Token from "markdown-it/lib/token"
 import { InputRule, wrappingInputRule } from "prosemirror-inputrules"
-import { MarkdownNodeExtension } from "src/editor/utils"
-import { NodeSerializerOptions } from "src/editor/transform/serializer"
-import { ParserTokenType } from "src/editor/transform/parser-type"
 import { Node as ProsemirrorNode, Schema } from "prosemirror-model"
 import { liftListItem, sinkListItem } from "prosemirror-schema-list"
+import { EditorState } from "prosemirror-state"
+import { EditorView, NodeView } from "prosemirror-view"
+
+import { ParserTokenType } from "src/editor/transform/parser-type"
+import { NodeSerializerOptions } from "src/editor/transform/serializer"
+import { MarkdownNodeExtension } from "src/editor/utils"
+
 import { splitListItem } from "./list-helper"
-import Token from "markdown-it/lib/token"
 
 export class ListItemView implements NodeView {
     public dom: HTMLElement

@@ -1,4 +1,5 @@
 import * as icons from "@material-ui/icons"
+
 import { Note } from "./note"
 
 export const collectionIconMap = {

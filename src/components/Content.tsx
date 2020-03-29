@@ -1,11 +1,13 @@
+import { createStyles, makeStyles, Theme } from "@material-ui/core"
+import clsx from "clsx"
+import React from "react"
+
+import { maxDrawerWidth } from "src/constants"
 import { EditContainer } from "src/controller"
 import { Editor } from "src/editor/components"
 import { StoreContainer } from "src/store"
-import { Theme, createStyles, makeStyles } from "@material-ui/core"
+
 import { Welcome } from "./Welcome"
-import { maxDrawerWidth } from "src/constants"
-import React from "react"
-import clsx from "clsx"
 
 const useStyles = makeStyles((theme: Theme) => {
     const padding = theme.spacing(3)

@@ -1,12 +1,13 @@
+import { AppBar, createStyles, makeStyles, Menu, MenuItem, Theme } from "@material-ui/core"
+import { fade } from "@material-ui/core/styles/colorManipulator"
 import * as icons from "@material-ui/icons"
-import { AppBar, Menu, MenuItem, Theme, createStyles, makeStyles } from "@material-ui/core"
+import clsx from "clsx"
+import React from "react"
+
 import { AppbarIconButton } from "src/components/AppbarIconButton"
+import { appbarIconButtonSize, appbarIconMargin, maxDrawerWidth } from "src/constants"
 import { EditContainer } from "src/controller"
 import { StoreContainer } from "src/store"
-import { appbarIconButtonSize, appbarIconMargin, maxDrawerWidth } from "src/constants"
-import { fade } from "@material-ui/core/styles/colorManipulator"
-import React from "react"
-import clsx from "clsx"
 
 const useStyles = makeStyles((theme: Theme) => {
     return createStyles({

@@ -1,5 +1,5 @@
-import { EditorState } from "prosemirror-state"
 import { Node as ProsemirrorNode } from "prosemirror-model"
+import { EditorState } from "prosemirror-state"
 
 export function selectedTableCell(state: EditorState): ProsemirrorNode | null {
     const fromCell: ProsemirrorNode = state.selection.$from.parent

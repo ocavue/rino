@@ -1,8 +1,10 @@
-import { BlockParserToken, ParserToken, ParserTokenType, TextParserToken } from "./parser-type"
-import { Mark, Node, NodeType, Schema } from "prosemirror-model"
 import MarkdownIt from "markdown-it"
 import Token from "markdown-it/lib/token"
+import { Mark, Node, NodeType, Schema } from "prosemirror-model"
+
 import markdownItListCheckbox from "src/editor/transform/markdown-it-list-checkbox"
+
+import { BlockParserToken, ParserToken, ParserTokenType, TextParserToken } from "./parser-type"
 
 interface StackItem {
     type: NodeType

@@ -1,9 +1,11 @@
-import { Decoration, DecorationSet } from "prosemirror-view"
-import { EditorState, Plugin, Transaction } from "prosemirror-state"
-import { InlineDecorateType } from "./decoration-type"
-import { InlineLexer } from "src/editor/extensions/decoration/lexer"
 import { Node } from "prosemirror-model"
+import { EditorState, Plugin, Transaction } from "prosemirror-state"
+import { Decoration, DecorationSet } from "prosemirror-view"
+
 import { WysiwygSchema } from "src/editor"
+import { InlineLexer } from "src/editor/extensions/decoration/lexer"
+
+import { InlineDecorateType } from "./decoration-type"
 
 function parseText<S extends WysiwygSchema>(node: Node<S>, startIndex: number): Decoration[] {
     if (!node.text) {

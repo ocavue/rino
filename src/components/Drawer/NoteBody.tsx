@@ -1,8 +1,9 @@
 import * as m from "@material-ui/core"
-import { NoteList } from "./NoteList"
+import React from "react"
+
 import { StoreContainer } from "src/store"
 
-import React from "react"
+import { NoteList } from "./NoteList"
 
 export const NoteBody: React.FC = () => {
     const {

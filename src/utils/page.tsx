@@ -1,6 +1,6 @@
 import { NextPage } from "next"
-import React from "react"
 import dynamic, { Loader } from "next/dynamic"
+import React from "react"
 
 export function noSsrPage<P>(dynamicOptions: Loader<P>) {
     return dynamic(dynamicOptions, { ssr: false })

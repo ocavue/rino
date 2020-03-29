@@ -1,9 +1,10 @@
 import { Draft, produce } from "immer"
-import { Note, NoteType } from "./note"
-import { docs } from "../docs"
-import { notesCollection } from "../firebase"
 import { sortBy } from "lodash"
 import { useCallback, useMemo, useState } from "react"
+
+import { docs } from "../docs"
+import { notesCollection } from "../firebase"
+import { Note, NoteType } from "./note"
 
 export type Notes = Note[]
 

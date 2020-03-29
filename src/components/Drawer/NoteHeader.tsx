@@ -1,9 +1,11 @@
 import * as icons from "@material-ui/icons"
+import React, { useMemo } from "react"
+
 import { AppbarIconButton } from "src/components/AppbarIconButton"
 import { EditContainer } from "src/controller"
 import { StoreContainer } from "src/store"
+
 import { useHeaderStyles } from "./style"
-import React, { useMemo } from "react"
 
 export const NoteHeader: React.FC = () => {
     const classes = useHeaderStyles()

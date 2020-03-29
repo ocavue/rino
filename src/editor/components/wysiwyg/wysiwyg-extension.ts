@@ -1,4 +1,6 @@
 import { InferFlexibleExtensionList, SchemaFromExtensions } from "@remirror/core"
+import { baseExtensions } from "@remirror/core-extensions"
+
 import {
     RinoBlockquoteExtension,
     RinoBulletListExtension,
@@ -16,7 +18,6 @@ import {
     RinoTableRowExtension,
     RinoTextExtension,
 } from "src/editor/extensions"
-import { baseExtensions } from "@remirror/core-extensions"
 
 /**
  * Replace ParagraphExtension as RinoParagraphExtension in baseExtensions.

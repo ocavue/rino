@@ -1,4 +1,5 @@
-import { IconButton, createStyles, withStyles } from "@material-ui/core"
+import { createStyles, IconButton, withStyles } from "@material-ui/core"
+
 import { appbarIconButtonSize, iconSize } from "src/constants"
 
 export const AppbarIconButton = withStyles(

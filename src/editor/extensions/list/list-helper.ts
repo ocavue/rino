@@ -1,8 +1,7 @@
-import { EditorState, NodeSelection, Selection, Transaction } from "prosemirror-state"
-import { Fragment, Node, NodeType, Slice } from "prosemirror-model"
-import { canSplit } from "prosemirror-transform"
-
 import { range } from "lodash"
+import { Fragment, Node, NodeType, Slice } from "prosemirror-model"
+import { EditorState, NodeSelection, Selection, Transaction } from "prosemirror-state"
+import { canSplit } from "prosemirror-transform"
 
 import { all } from "src/utils"
 
