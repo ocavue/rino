@@ -6,7 +6,6 @@ import {
     NodeExtensionOptions,
     ProsemirrorNode,
 } from "@remirror/core"
-import { Schema } from "prosemirror-model"
 import { EditorState, TextSelection, Transaction } from "prosemirror-state"
 
 import { ParserToken } from "src/editor/transform/parser-type"

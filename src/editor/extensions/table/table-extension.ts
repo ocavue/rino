@@ -1,7 +1,7 @@
 import { ExtensionManagerNodeTypeParams, KeyBindings } from "@remirror/core"
 import { TableCellExtension, TableExtension, TableRowExtension } from "@remirror/extension-tables"
 import { Fragment, Node as ProsemirroNode } from "prosemirror-model"
-import { Selection, TextSelection } from "prosemirror-state"
+import { TextSelection } from "prosemirror-state"
 
 import { ParserTokenType } from "src/editor/transform/parser-type"
 import { NodeSerializerOptions } from "src/editor/transform/serializer"
