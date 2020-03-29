@@ -106,7 +106,7 @@ describe("fromMarkdown", () => {
                     `
                     |          x       | x   |    |
                     | --- | -------- | --- |
-                    |     x              |      x        | x              |
+                    |     x              |      x | x      |
                     | x | x | x |
                     `,
                 ),
