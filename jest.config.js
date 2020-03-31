@@ -102,7 +102,7 @@ const base = {
     // runner: "jest-runner",
 
     // The paths to modules that run some code to configure or set up the testing environment before each test
-    // setupFiles: [],
+    // setupFiles: ["dotenv/config"],
 
     // A list of paths to snapshot serializer modules Jest should use for snapshot testing
     // snapshotSerializers: [],
@@ -156,6 +156,9 @@ const base = {
 
     // Whether to use watchman for file crawling
     // watchman: true,
+
+    // Default timeout of a test in milliseconds.
+    testTimeout: 30000,
 }
 
 module.exports = {
@@ -167,20 +170,20 @@ module.exports = {
             displayName: { name: "E2E", color: "magenta" },
 
             // The glob patterns Jest uses to detect test files
-            testMatch: ["<rootDir>/tests/e2e/**/*.spec.(js|ts)"],
+            testMatch: ["<rootDir>/tests/e2e/**/*.spec.(js|ts|jsx|tsx)"],
 
             // A preset that is used as a base for Jest's configuration
             preset: "jest-puppeteer",
 
             // A list of paths to modules that run some code to configure or set up the testing framework before each test
-            setupFilesAfterEnv: ["jest-extended", "jest-puppeteer-istanbul/lib/setup", "<rootDir>/tests/setup.js"],
+            setupFilesAfterEnv: ["jest-extended", "jest-puppeteer-istanbul/lib/setup", "<rootDir>/tests/wait-server.js"],
         },
         {
             ...base,
             displayName: { name: "UNIT", color: "cyan" },
 
             // The glob patterns Jest uses to detect test files
-            testMatch: ["<rootDir>/tests/unit/**/*.spec.(js|ts)", "<rootDir>/**/__test__/*.spec.(js|ts)"],
+            testMatch: ["<rootDir>/tests/unit/**/*.spec.(js|ts|jsx|tsx)", "**/__test__/**/*.spec.(js|ts|jsx|tsx)"],
 
             // A list of paths to modules that run some code to configure or set up the testing framework before each test
             setupFilesAfterEnv: ["jest-extended", "jest-prosemirror/environment", "jest-remirror/environment"],

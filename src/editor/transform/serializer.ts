@@ -1,10 +1,10 @@
 import * as _ from "lodash"
-import { Mark, Node } from "prosemirror-model"
+import { Mark, Node, Schema } from "prosemirror-model"
 
-export type NodeSerializerOptions = {
+export type NodeSerializerOptions<S extends Schema = any> = {
     state: MarkdownSerializerState
-    node: Node
-    parent: Node
+    node: Node<S>
+    parent: Node<S>
     index: number
 }
 export type NodeSerializerSpec = (options: NodeSerializerOptions) => void
@@ -18,8 +18,6 @@ export class MarkdownSerializerState {
     private delimiter: string
     public out: string
     private closed: Node | null
-    private inTightList: boolean
-    private options: Record<string, any>
     private marks: Record<string, any>
 
     public constructor(nodes: NodeSerializerSpecs, options?: Record<string, any>) {
@@ -28,15 +26,6 @@ export class MarkdownSerializerState {
         this.delimiter = ""
         this.out = ""
         this.closed = null
-        this.inTightList = false
-        // :: Object
-        // The options passed to the serializer.
-        //   tightLists:: ?bool
-        //   Whether to render lists in a tight style. This can be overridden
-        //   on a node level by specifying a tight attribute on the node.
-        //   Defaults to false.
-        this.options = options || {}
-        if (typeof this.options.tightLists == "undefined") this.options.tightLists = false
     }
 
     public flushClose(size?: number) {
@@ -127,18 +116,12 @@ export class MarkdownSerializerState {
     // `firstDelim` is a function going from an item index to a
     // delimiter for the first line of the item.
     public renderList(node: Node, delim: string, firstDelim: (n: number) => string): void {
-        if (this.closed instanceof Node && this.closed.type == node.type) this.flushClose(3)
-        else if (this.inTightList) this.flushClose(1)
-
-        const isTight =
-            typeof node.attrs.tight != "undefined" ? node.attrs.tight : this.options.tightLists
-        const prevTight = this.inTightList
-        this.inTightList = isTight
+        this.flushClose(1)
         node.forEach((child, _, i) => {
-            if (i && isTight) this.flushClose(1)
+            if (i) this.flushClose(1)
             this.wrapBlock(delim, firstDelim(i), node, () => this.render(child, node, i))
         })
-        this.inTightList = prevTight
+        this.ensureNewLine()
     }
 
     // Escape the given string so that it can safely appear in Markdown
