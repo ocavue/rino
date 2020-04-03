@@ -6,23 +6,17 @@ import {
     getLanguage,
 } from "@remirror/extension-code-block"
 import Token from "markdown-it/lib/token"
-import clike from "refractor/lang/clike"
-import css from "refractor/lang/css"
-import go from "refractor/lang/go"
-import java from "refractor/lang/java"
-import js from "refractor/lang/javascript"
-import markup from "refractor/lang/markup"
-import python from "refractor/lang/python"
-import typescript from "refractor/lang/typescript"
 
 import { InlineDecorateType } from "src/editor/extensions/decoration"
 import { ParserTokenType } from "src/editor/transform/parser-type"
 import { NodeSerializerOptions } from "src/editor/transform/serializer"
 import { buildBlockEnterKeymapBindings, MarkdownNodeExtension } from "src/editor/utils"
 
+import { supportedLanguages } from "./code-block-languages"
+
 export const defaultRinoCodeBlockExtensionOptions = {
     ...codeBlockDefaultOptions,
-    supportedLanguages: [java, clike, css, js, markup, python, typescript, go],
+    supportedLanguages: supportedLanguages,
     defaultLanguage: "",
     extraAttrs: [
         { name: "userInputLanguage", default: "" },
