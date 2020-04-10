@@ -22,7 +22,7 @@ class MyDocument extends Document {
                         > - The theme-color meta tag overwrites the value specified in the web app manifest file so it allows for better individual page level customization.
                         https://webhint.io/docs/user-guide/hints/hint-meta-theme-color/
                         */}
-                        <meta name="theme-color" content="#ededed"></meta>
+                        <meta name="theme-color" content="#e6eaed"></meta>
 
                     {/* Apple https://developer.apple.com/library/archive/documentation/AppleApplications/Reference/SafariWebContent/ConfiguringWebApplications/ConfiguringWebApplications.html */}
                         <link rel="apple-touch-icon" href="/img/icons/apple-touch-icon-192x192.png" sizes="192x192"></link>
