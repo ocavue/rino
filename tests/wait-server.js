@@ -16,7 +16,7 @@ function sleep(ms) {
     return new Promise((resolve) => setTimeout(resolve, ms))
 }
 
-async function checkServer() {
+async function waitServer() {
     console.log("")
     for (let i = 1; i <= 120; i++) {
         try {
@@ -31,4 +31,4 @@ async function checkServer() {
     throw Error(`Can't connect to ${url}`)
 }
 
-module.exports = checkServer
+module.exports = waitServer
