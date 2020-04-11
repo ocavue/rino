@@ -5,7 +5,7 @@ import {
     buildMarkdownParser,
     buildMarkdownSerializer,
 } from "src/editor/components/wysiwyg/wysiwyg-markdown"
-import { RinoParagraphExtension } from "src/editor/extensions"
+import { RinoHardBreakExtension, RinoParagraphExtension } from "src/editor/extensions"
 import { RinoTextExtension } from "src/editor/extensions"
 import { dedent } from "src/utils"
 
@@ -16,25 +16,30 @@ import {
     RinoOrderedListExtension,
 } from ".."
 
+const html = String.raw
+
 const setup = () => {
-    const {
-        view,
-        add,
-        nodes: { doc, p, rinoListItem, rinoOrderedList, rinoBulletList },
-        attrNodes: { rinoCheckbox },
-        manager,
-        schema,
-    } = renderEditor({
+    const result = renderEditor({
         plainNodes: [
             new RinoParagraphExtension(),
             new RinoTextExtension(),
             new RinoOrderedListExtension(),
             new RinoBulletListExtension(),
             new RinoListItemExtension(),
+            new RinoHardBreakExtension(),
         ],
         attrNodes: [new RinoCheckboxExtension()],
         others: [],
     })
+    // console.log("result:", result)
+    const {
+        view,
+        add,
+        nodes: { doc, p, rinoListItem, rinoOrderedList, rinoBulletList, hardBreak },
+        attrNodes: { rinoCheckbox },
+        manager,
+        schema,
+    } = result
 
     return {
         manager,
@@ -47,11 +52,21 @@ const setup = () => {
         rinoBulletList,
         rinoListItem,
         rinoCheckbox,
+        hardBreak,
     }
 }
 
 describe("schema", () => {
-    const { doc, schema, p, rinoOrderedList, rinoBulletList, rinoListItem, rinoCheckbox } = setup()
+    const {
+        doc,
+        schema,
+        p,
+        rinoOrderedList,
+        rinoBulletList,
+        rinoListItem,
+        rinoCheckbox,
+        hardBreak,
+    } = setup()
 
     function testHtmlTransformation<S extends EditorSchema>(
         node: TaggedProsemirrorNode<S>,
@@ -65,67 +80,113 @@ describe("schema", () => {
         })
     }
 
-    describe("ul", () => {
-        const node = rinoBulletList(
-            rinoListItem(p("111")),
-            rinoListItem(p("222")),
-            rinoListItem(p("333")),
-            rinoListItem(p("444")),
-        )
+    describe("single-line", () => {
+        describe("bullet list", () => {
+            const node = rinoBulletList(
+                rinoListItem(p("111")),
+                rinoListItem(p("222")),
+                rinoListItem(p("333")),
+                rinoListItem(p("444")),
+            )
 
-        const html =
-            `<ul>` +
-            `<li><p>111</p></li>` +
-            `<li><p>222</p></li>` +
-            `<li><p>333</p></li>` +
-            `<li><p>444</p></li>` +
-            `</ul>`
+            const html =
+                `<ul>` +
+                `<li><p>111</p></li>` +
+                `<li><p>222</p></li>` +
+                `<li><p>333</p></li>` +
+                `<li><p>444</p></li>` +
+                `</ul>`
 
-        testHtmlTransformation(node, html)
+            testHtmlTransformation(node, html)
+        })
+        describe("ordered list", () => {
+            const node = rinoOrderedList(
+                rinoListItem(p("111")),
+                rinoListItem(p("222")),
+                rinoListItem(p("333")),
+                rinoListItem(p("444")),
+            )
+
+            const html =
+                `<ol>` +
+                `<li><p>111</p></li>` +
+                `<li><p>222</p></li>` +
+                `<li><p>333</p></li>` +
+                `<li><p>444</p></li>` +
+                `</ol>`
+
+            testHtmlTransformation(node, html)
+        })
+        describe("checkbox list", () => {
+            const checked = rinoCheckbox({ checked: true })()
+            const uncheck = rinoCheckbox()()
+
+            const node = rinoBulletList(
+                rinoListItem(checked, p("111")),
+                rinoListItem(checked, p("222")),
+                rinoListItem(uncheck, p("333")),
+                rinoListItem(uncheck, p("444")),
+            )
+
+            const html =
+                `<ul>` +
+                `<li><input type="checkbox" checked=""><p>111</p></li>` +
+                `<li><input type="checkbox" checked=""><p>222</p></li>` +
+                `<li><input type="checkbox"><p>333</p></li>` +
+                `<li><input type="checkbox"><p>444</p></li>` +
+                `</ul>`
+
+            testHtmlTransformation(node, html)
+        })
     })
 
-    describe("ol", () => {
-        const node = rinoOrderedList(
-            rinoListItem(p("111")),
-            rinoListItem(p("222")),
-            rinoListItem(p("333")),
-            rinoListItem(p("444")),
-        )
-
-        const html =
-            `<ol>` +
-            `<li><p>111</p></li>` +
-            `<li><p>222</p></li>` +
-            `<li><p>333</p></li>` +
-            `<li><p>444</p></li>` +
-            `</ol>`
-
-        testHtmlTransformation(node, html)
+    describe("multiple-line", () => {
+        describe("bullet list", () => {
+            testHtmlTransformation(
+                rinoBulletList(
+                    rinoListItem(p("1.a", hardBreak(), "1.b")),
+                    rinoListItem(p("2.a", hardBreak(), "2.b")),
+                ),
+                // prettier-ignore
+                html`<ul><li><p>1.a<br>1.b</p></li><li><p>2.a<br>2.b</p></li></ul>`,
+            )
+        })
+        describe("ordered list", () => {
+            testHtmlTransformation(
+                rinoOrderedList(
+                    rinoListItem(p("1.a", hardBreak(), "1.b")),
+                    rinoListItem(p("2.a", hardBreak(), "2.b")),
+                ),
+                // prettier-ignore
+                html`<ol><li><p>1.a<br>1.b</p></li><li><p>2.a<br>2.b</p></li></ol>`,
+            )
+        })
+        describe("checkbox list", () => {
+            const checked = rinoCheckbox({ checked: true })()
+            const uncheck = rinoCheckbox()()
+            testHtmlTransformation(
+                rinoOrderedList(
+                    rinoListItem(checked, p("1.a", hardBreak(), "1.b")),
+                    rinoListItem(uncheck, p("2.a", hardBreak(), "2.b")),
+                ),
+                // prettier-ignore
+                html`
+                    <ol>
+                        <li>
+                            <input type="checkbox" checked="">
+                            <p>1.a<br>1.b</p>
+                        </li>
+                        <li>
+                            <input type="checkbox">
+                            <p>2.a<br>2.b</p>
+                        </li>
+                    </ol>
+                `.replace(/((?<=\>)\s+|^\s+)/g, ''),
+            )
+        })
     })
 
-    describe("ul + checkbox", () => {
-        const checked = rinoCheckbox({ checked: true })()
-        const uncheck = rinoCheckbox()()
-
-        const node = rinoBulletList(
-            rinoListItem(checked, p("111")),
-            rinoListItem(checked, p("222")),
-            rinoListItem(uncheck, p("333")),
-            rinoListItem(uncheck, p("444")),
-        )
-
-        const html =
-            `<ul>` +
-            `<li><input type="checkbox" checked=""><p>111</p></li>` +
-            `<li><input type="checkbox" checked=""><p>222</p></li>` +
-            `<li><input type="checkbox"><p>333</p></li>` +
-            `<li><input type="checkbox"><p>444</p></li>` +
-            `</ul>`
-
-        testHtmlTransformation(node, html)
-    })
-
-    describe("ul > ul > ul", () => {
+    describe("nested single-line bullet list", () => {
         // prettier-ignore
         const node = rinoBulletList(
             rinoListItem(
@@ -143,8 +204,7 @@ describe("schema", () => {
             ),
         )
 
-        // I can add a html Template literals tag if this issue is solved: https://github.com/prettier/prettier/issues/5588
-        const html = `
+        const HTML = html`
             <ul>
                 <li>
                     <p>1</p>
@@ -160,7 +220,7 @@ describe("schema", () => {
             </ul>
         `.replace(/\s+/g, "")
 
-        testHtmlTransformation(node, html)
+        testHtmlTransformation(node, HTML)
     })
 })
 
