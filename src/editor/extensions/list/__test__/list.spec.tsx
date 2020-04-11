@@ -635,11 +635,9 @@ describe("click the checkbox", () => {
 })
 
 describe("shortcuts", () => {
-    const { add, doc, p, rinoBulletList, rinoListItem, rinoCheckbox } = setup()
+    const { add, doc, p, rinoBulletList, rinoOrderedList, rinoListItem, rinoCheckbox } = setup()
 
     describe("split list item", () => {
-        const { add, doc, p, rinoBulletList, rinoOrderedList, rinoListItem, rinoCheckbox } = setup()
-
         test("ordered list", () => {
             add(doc(rinoOrderedList(rinoListItem(p("12<cursor>34")), rinoListItem(p("56")))))
                 .press("Enter")
