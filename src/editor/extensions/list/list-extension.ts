@@ -226,13 +226,6 @@ export class RinoCheckboxExtension extends NodeExtension implements MarkdownNode
         return [
             new InputRule(/^\[([ |x])\] $/, function (state: EditorState, match, start, end) {
                 const $from = state.selection.$from
-
-                console.log(
-                    `CheckboxExtension.inputRules:`,
-                    $from.node(-1).type.name,
-                    $from.node(-2).type.name,
-                    type.name,
-                )
                 if (
                     $from.depth >= 3 &&
                     $from.node(-1).type.name === "rinoListItem" &&
