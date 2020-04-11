@@ -586,101 +586,6 @@ describe("inputRules", () => {
     testCheckbox(false)
 })
 
-describe("split list item", () => {
-    const { add, doc, p, rinoBulletList, rinoOrderedList, rinoListItem, rinoCheckbox } = setup()
-
-    test("ordered list", () => {
-        add(doc(rinoOrderedList(rinoListItem(p("12<cursor>34")), rinoListItem(p("56")))))
-            .press("Enter")
-            .callback((content) => {
-                expect(content.state.doc).toEqualRemirrorDocument(
-                    doc(
-                        rinoOrderedList(
-                            rinoListItem(p("12")),
-                            rinoListItem(p("34")),
-                            rinoListItem(p("56")),
-                        ),
-                    ),
-                )
-            })
-            .insertText("INSERT")
-            .callback((content) => {
-                expect(content.state.doc).toEqualRemirrorDocument(
-                    doc(
-                        rinoOrderedList(
-                            rinoListItem(p("12")),
-                            rinoListItem(p("INSERT34")),
-                            rinoListItem(p("56")),
-                        ),
-                    ),
-                )
-            })
-    })
-
-    test("bullet list", () => {
-        add(doc(rinoBulletList(rinoListItem(p("12<cursor>34")), rinoListItem(p("56")))))
-            .press("Enter")
-            .callback((content) => {
-                expect(content.state.doc).toEqualRemirrorDocument(
-                    doc(
-                        rinoBulletList(
-                            rinoListItem(p("12")),
-                            rinoListItem(p("34")),
-                            rinoListItem(p("56")),
-                        ),
-                    ),
-                )
-            })
-            .insertText("INSERT")
-            .callback((content) => {
-                expect(content.state.doc).toEqualRemirrorDocument(
-                    doc(
-                        rinoBulletList(
-                            rinoListItem(p("12")),
-                            rinoListItem(p("INSERT34")),
-                            rinoListItem(p("56")),
-                        ),
-                    ),
-                )
-            })
-    })
-
-    test("checkbox list", () => {
-        add(
-            doc(
-                rinoBulletList(
-                    rinoListItem(rinoCheckbox({ checked: true })(), p("12<cursor>34")),
-                    rinoListItem(rinoCheckbox({ checked: false })(), p("56")),
-                ),
-            ),
-        )
-            .press("Enter")
-            .callback((content) => {
-                expect(content.state.doc).toEqualRemirrorDocument(
-                    doc(
-                        rinoBulletList(
-                            rinoListItem(rinoCheckbox({ checked: true })(), p("12")),
-                            rinoListItem(rinoCheckbox({ checked: false })(), p("34")),
-                            rinoListItem(rinoCheckbox({ checked: false })(), p("56")),
-                        ),
-                    ),
-                )
-            })
-            .insertText("INSERT")
-            .callback((content) => {
-                expect(content.state.doc).toEqualRemirrorDocument(
-                    doc(
-                        rinoBulletList(
-                            rinoListItem(rinoCheckbox({ checked: true })(), p("12")),
-                            rinoListItem(rinoCheckbox({ checked: false })(), p("INSERT34")),
-                            rinoListItem(rinoCheckbox({ checked: false })(), p("56")),
-                        ),
-                    ),
-                )
-            })
-    })
-})
-
 describe("click the checkbox", () => {
     const { add, doc, p, rinoBulletList, rinoListItem, rinoCheckbox } = setup()
 
@@ -731,6 +636,101 @@ describe("click the checkbox", () => {
 
 describe("shortcuts", () => {
     const { add, doc, p, rinoBulletList, rinoListItem, rinoCheckbox } = setup()
+
+    describe("split list item", () => {
+        const { add, doc, p, rinoBulletList, rinoOrderedList, rinoListItem, rinoCheckbox } = setup()
+
+        test("ordered list", () => {
+            add(doc(rinoOrderedList(rinoListItem(p("12<cursor>34")), rinoListItem(p("56")))))
+                .press("Enter")
+                .callback((content) => {
+                    expect(content.state.doc).toEqualRemirrorDocument(
+                        doc(
+                            rinoOrderedList(
+                                rinoListItem(p("12")),
+                                rinoListItem(p("34")),
+                                rinoListItem(p("56")),
+                            ),
+                        ),
+                    )
+                })
+                .insertText("INSERT")
+                .callback((content) => {
+                    expect(content.state.doc).toEqualRemirrorDocument(
+                        doc(
+                            rinoOrderedList(
+                                rinoListItem(p("12")),
+                                rinoListItem(p("INSERT34")),
+                                rinoListItem(p("56")),
+                            ),
+                        ),
+                    )
+                })
+        })
+
+        test("bullet list", () => {
+            add(doc(rinoBulletList(rinoListItem(p("12<cursor>34")), rinoListItem(p("56")))))
+                .press("Enter")
+                .callback((content) => {
+                    expect(content.state.doc).toEqualRemirrorDocument(
+                        doc(
+                            rinoBulletList(
+                                rinoListItem(p("12")),
+                                rinoListItem(p("34")),
+                                rinoListItem(p("56")),
+                            ),
+                        ),
+                    )
+                })
+                .insertText("INSERT")
+                .callback((content) => {
+                    expect(content.state.doc).toEqualRemirrorDocument(
+                        doc(
+                            rinoBulletList(
+                                rinoListItem(p("12")),
+                                rinoListItem(p("INSERT34")),
+                                rinoListItem(p("56")),
+                            ),
+                        ),
+                    )
+                })
+        })
+
+        test("checkbox list", () => {
+            add(
+                doc(
+                    rinoBulletList(
+                        rinoListItem(rinoCheckbox({ checked: true })(), p("12<cursor>34")),
+                        rinoListItem(rinoCheckbox({ checked: false })(), p("56")),
+                    ),
+                ),
+            )
+                .press("Enter")
+                .callback((content) => {
+                    expect(content.state.doc).toEqualRemirrorDocument(
+                        doc(
+                            rinoBulletList(
+                                rinoListItem(rinoCheckbox({ checked: true })(), p("12")),
+                                rinoListItem(rinoCheckbox({ checked: false })(), p("34")),
+                                rinoListItem(rinoCheckbox({ checked: false })(), p("56")),
+                            ),
+                        ),
+                    )
+                })
+                .insertText("INSERT")
+                .callback((content) => {
+                    expect(content.state.doc).toEqualRemirrorDocument(
+                        doc(
+                            rinoBulletList(
+                                rinoListItem(rinoCheckbox({ checked: true })(), p("12")),
+                                rinoListItem(rinoCheckbox({ checked: false })(), p("INSERT34")),
+                                rinoListItem(rinoCheckbox({ checked: false })(), p("56")),
+                            ),
+                        ),
+                    )
+                })
+        })
+    })
 
     test("Mod-]", () => {
         add(
