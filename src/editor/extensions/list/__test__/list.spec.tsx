@@ -681,6 +681,43 @@ describe("split list item", () => {
     })
 })
 
+describe("click the checkbox", () => {
+    const { add, doc, p, rinoBulletList, rinoListItem, rinoCheckbox } = setup()
+
+    test("click", () => {
+        add(
+            doc(
+                rinoBulletList(
+                    rinoListItem(rinoCheckbox({ checked: true })(), p("12")),
+                    rinoListItem(rinoCheckbox({ checked: true })(), p("56")),
+                ),
+            ),
+        )
+            .fire({ event: "click", position: 2 })
+            .callback((content) => {
+                expect(content.state.doc).toEqualRemirrorDocument(
+                    doc(
+                        rinoBulletList(
+                            rinoListItem(rinoCheckbox({ checked: false })(), p("12")),
+                            rinoListItem(rinoCheckbox({ checked: true })(), p("56")),
+                        ),
+                    ),
+                )
+            })
+            .fire({ event: "click", position: 2 })
+            .callback((content) => {
+                expect(content.state.doc).toEqualRemirrorDocument(
+                    doc(
+                        rinoBulletList(
+                            rinoListItem(rinoCheckbox({ checked: true })(), p("12")),
+                            rinoListItem(rinoCheckbox({ checked: true })(), p("56")),
+                        ),
+                    ),
+                )
+            })
+    })
+})
+
 describe("shortcuts", () => {
     // TODO
 })
