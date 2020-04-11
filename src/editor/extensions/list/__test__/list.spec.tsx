@@ -158,7 +158,7 @@ describe("schema", () => {
                     </ul>
                 </li>
             </ul>
-        `.replace(/\s+/gm, "")
+        `.replace(/\s+/g, "")
 
         testHtmlTransformation(node, html)
     })
