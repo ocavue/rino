@@ -18,6 +18,10 @@ import {
 
 const html = String.raw
 
+function simplifyHTML(html: string) {
+    return html.replace(/((?<=\>)\s+|^\s+)/g, "")
+}
+
 const setup = () => {
     const result = renderEditor({
         plainNodes: [
@@ -148,7 +152,15 @@ describe("schema", () => {
                     rinoListItem(p("2.a", hardBreak(), "2.b")),
                 ),
                 // prettier-ignore
-                html`<ul><li><p>1.a<br>1.b</p></li><li><p>2.a<br>2.b</p></li></ul>`,
+                simplifyHTML(html`
+                    <ul>
+                        <li>
+                            <p>1.a<br>1.b</p>
+                        </li><li>
+                            <p>2.a<br>2.b</p>
+                        </li>
+                    </ul>
+                `),
             )
         })
         describe("ordered list", () => {
@@ -158,7 +170,15 @@ describe("schema", () => {
                     rinoListItem(p("2.a", hardBreak(), "2.b")),
                 ),
                 // prettier-ignore
-                html`<ol><li><p>1.a<br>1.b</p></li><li><p>2.a<br>2.b</p></li></ol>`,
+                simplifyHTML(html`
+                    <ol>
+                        <li>
+                            <p>1.a<br>1.b</p>
+                        </li><li>
+                            <p>2.a<br>2.b</p>
+                        </li>
+                    </ol>
+                `),
             )
         })
         describe("checkbox list", () => {
@@ -170,7 +190,7 @@ describe("schema", () => {
                     rinoListItem(uncheck, p("2.a", hardBreak(), "2.b")),
                 ),
                 // prettier-ignore
-                html`
+                simplifyHTML(html`
                     <ol>
                         <li>
                             <input type="checkbox" checked="">
@@ -181,7 +201,7 @@ describe("schema", () => {
                             <p>2.a<br>2.b</p>
                         </li>
                     </ol>
-                `.replace(/((?<=\>)\s+|^\s+)/g, ''),
+                `).replace(/((?<=\>)\s+|^\s+)/g, ''),
             )
         })
     })
