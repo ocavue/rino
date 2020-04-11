@@ -730,5 +730,86 @@ describe("click the checkbox", () => {
 })
 
 describe("shortcuts", () => {
-    // TODO
+    const { add, doc, p, rinoBulletList, rinoListItem, rinoCheckbox } = setup()
+
+    test("Mod-]", () => {
+        add(
+            doc(
+                rinoBulletList(
+                    rinoListItem(rinoCheckbox({ checked: true })(), p("12")),
+                    rinoListItem(rinoCheckbox({ checked: true })(), p("56<cursor>")),
+                ),
+            ),
+        )
+            .shortcut("Mod-]")
+            .callback((content) => {
+                expect(content.state.doc).toEqualRemirrorDocument(
+                    doc(
+                        rinoBulletList(
+                            rinoListItem(
+                                rinoCheckbox({ checked: true })(),
+                                p("12"),
+                                rinoBulletList(
+                                    rinoListItem(rinoCheckbox({ checked: true })(), p("56")),
+                                ),
+                            ),
+                        ),
+                    ),
+                )
+            })
+            .insertText("INSERT")
+            .callback((content) => {
+                expect(content.state.doc).toEqualRemirrorDocument(
+                    doc(
+                        rinoBulletList(
+                            rinoListItem(
+                                rinoCheckbox({ checked: true })(),
+                                p("12"),
+                                rinoBulletList(
+                                    rinoListItem(rinoCheckbox({ checked: true })(), p("56INSERT")),
+                                ),
+                            ),
+                        ),
+                    ),
+                )
+            })
+    })
+
+    test("Mod-[", () => {
+        add(
+            doc(
+                rinoBulletList(
+                    rinoListItem(
+                        rinoCheckbox({ checked: true })(),
+                        p("12"),
+                        rinoBulletList(
+                            rinoListItem(rinoCheckbox({ checked: true })(), p("56<cursor>")),
+                        ),
+                    ),
+                ),
+            ),
+        )
+            .shortcut("Mod-[")
+            .callback((content) => {
+                expect(content.state.doc).toEqualRemirrorDocument(
+                    doc(
+                        rinoBulletList(
+                            rinoListItem(rinoCheckbox({ checked: true })(), p("12")),
+                            rinoListItem(rinoCheckbox({ checked: true })(), p("56")),
+                        ),
+                    ),
+                )
+            })
+            .insertText("INSERT")
+            .callback((content) => {
+                expect(content.state.doc).toEqualRemirrorDocument(
+                    doc(
+                        rinoBulletList(
+                            rinoListItem(rinoCheckbox({ checked: true })(), p("12")),
+                            rinoListItem(rinoCheckbox({ checked: true })(), p("56INSERT")),
+                        ),
+                    ),
+                )
+            })
+    })
 })
