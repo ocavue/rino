@@ -35,7 +35,6 @@ const setup = () => {
         attrNodes: [new RinoCheckboxExtension()],
         others: [],
     })
-    // console.log("result:", result)
     const {
         view,
         add,
@@ -207,40 +206,35 @@ describe("schema", () => {
     })
 
     describe("nested single-line bullet list", () => {
-        // prettier-ignore
-        const node = rinoBulletList(
-            rinoListItem(
-                p("1"),
-                rinoBulletList(
-                    rinoListItem(
-                        p("1.1"),
+        testHtmlTransformation(
+            // prettier-ignore
+            rinoBulletList(
+                rinoListItem(
+                    p("1"),
+                    rinoBulletList(
+                        rinoListItem(p("1.1"),
                         rinoBulletList(
-                            rinoListItem(
-                                p("1.1.1")
-                            ),
+                            rinoListItem(p("1.1.1")))
                         ),
                     ),
                 ),
             ),
+            simplifyHTML(html`
+                <ul>
+                    <li>
+                        <p>1</p>
+                        <ul>
+                            <li>
+                                <p>1.1</p>
+                                <ul>
+                                    <li><p>1.1.1</p></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            `),
         )
-
-        const HTML = html`
-            <ul>
-                <li>
-                    <p>1</p>
-                    <ul>
-                        <li>
-                            <p>1.1</p>
-                            <ul>
-                                <li><p>1.1.1</p></li>
-                            </ul>
-                        </li>
-                    </ul>
-                </li>
-            </ul>
-        `.replace(/\s+/g, "")
-
-        testHtmlTransformation(node, HTML)
     })
 })
 
