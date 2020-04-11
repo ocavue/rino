@@ -205,13 +205,20 @@ describe("schema", () => {
         })
     })
 
-    describe("nested single-line bullet list", () => {
+    describe("mixed list", () => {
         testHtmlTransformation(
             // prettier-ignore
             rinoBulletList(
                 rinoListItem(
-                    p("1"),
-                    rinoBulletList(
+                    rinoCheckbox({checked: true})(),
+                    p(
+                        '1',
+                        hardBreak(),
+                        '1b',
+                        hardBreak(),
+                        '1c'
+                    ),
+                    rinoOrderedList(
                         rinoListItem(p("1.1"),
                         rinoBulletList(
                             rinoListItem(p("1.1.1")))
@@ -219,18 +226,20 @@ describe("schema", () => {
                     ),
                 ),
             ),
+            // prettier-ignore
             simplifyHTML(html`
                 <ul>
                     <li>
-                        <p>1</p>
-                        <ul>
+                        <input type="checkbox" checked="">
+                        <p>1<br>1b<br>1c</p>
+                        <ol>
                             <li>
                                 <p>1.1</p>
                                 <ul>
                                     <li><p>1.1.1</p></li>
                                 </ul>
                             </li>
-                        </ul>
+                        </ol>
                     </li>
                 </ul>
             `),
