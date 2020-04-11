@@ -1,6 +1,6 @@
-import { Rule } from "markdown-it"
 import MarkdownIt from "markdown-it"
-import State from "markdown-it/lib/rules_core/state_core"
+import Core from "markdown-it/lib/parser_core"
+import StateCore from "markdown-it/lib/rules_core/state_core"
 import Token from "markdown-it/lib/token"
 
 function isBulletListItemToken(t: Token) {
@@ -13,7 +13,7 @@ function isInlineToken(t: Token) {
     return t.type === "inline"
 }
 
-const rule: Rule = (state: State, silent?: boolean) => {
+const rule: Core.RuleCore = (state: StateCore) => {
     let edited = false
     const tokens = state.tokens
     const tokensLength = tokens.length
