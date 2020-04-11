@@ -35,33 +35,12 @@ export const nodes = builders(schema, def)
 
 if (!nodes) throw new Error(`nodes is ${nodes}`)
 
-const {
-    doc,
-    p,
-    h1,
-    h6,
-    ol,
-    ul,
-    li,
-    checkedCheckbox,
-    uncheckedCheckbox,
-    pre,
-    preJS,
-    blockquote,
-    hr,
-} = nodes
+const { doc, p, h1, h6, pre, preJS, blockquote, hr } = nodes
 
 export const createBaseTestcases = (): Record<string, [string, TaggedProsemirrorNode]> => ({
     paragraph: ["hello", doc(p("hello"))],
     h1: ["# hello", doc(h1("hello"))],
     h6: ["###### hello", doc(h6("hello"))],
-    orderedList: ["1. aaa\n2. bbb\n3. ccc", doc(ol(li(p("aaa")), li(p("bbb")), li(p("ccc"))))],
-    // TODO: add tests for bullet list startswith '*' and '-'
-    bulletList: ["* aaa\n* bbb\n* ccc", doc(ul(li(p("aaa")), li(p("bbb")), li(p("ccc"))))],
-    checkboxListItem: [
-        "* [ ] aaa\n* [x] bbb",
-        doc(ul(li(uncheckedCheckbox(), p("aaa")), li(checkedCheckbox(), p("bbb")))),
-    ],
     codeBlock: ["```\n1+1\n```", doc(pre("1+1"))],
     codeBlockWithLanguage: ["```javascript\n1+1\n```", doc(preJS("1+1"))],
     quote: ["> text\n> text", doc(blockquote(p("text\ntext")))],

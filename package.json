@@ -8,9 +8,9 @@
     "start": "next start",
     "build": "next build",
     "export": "next export -o dist",
-    "test": "scripts/test.sh",
+    "test": "jest --runInBand",
     "analyze": "ANALYZE=true next build",
-    "lint": "eslint . --ignore-path .gitignore --ext '.js,.jsx,.ts,.tsx'",
+    "lint": "eslint --ignore-path .gitignore --ext '.js,.jsx,.ts,.tsx'",
     "coverage": "cat ./coverage/lcov.info | COVERALLS_REPO_TOKEN=$COVERALLS_REPO_TOKEN coveralls"
   },
   "renovate": {
@@ -22,8 +22,7 @@
       "yarnDedupeFewer"
     ],
     "lockFileMaintenance": {
-      "enabled": true,
-      "extends": "schedule:weekends"
+      "enabled": true
     },
     "packageRules": [
       {

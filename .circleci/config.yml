@@ -86,7 +86,7 @@ jobs:
     executor: node-executor
     steps:
       - prepare
-      - run: yarn run lint
+      - run: yarn run lint .
 
   test:
     executor: node-executor
@@ -107,7 +107,7 @@ jobs:
           command: |
             yarn firebase emulators:exec --only firestore "
               ./scripts/http-server.js > /dev/null &
-              scripts/test.sh --coverage
+              yarn run test --coverage
             "
       - run: |
           yarn run coverage

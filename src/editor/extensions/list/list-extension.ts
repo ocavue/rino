@@ -4,6 +4,7 @@ import {
     isElementDOMNode,
     NodeExtension,
     NodeExtensionSpec,
+    SchemaFromExtensions,
 } from "@remirror/core"
 import Token from "markdown-it/lib/token"
 import { InputRule, wrappingInputRule } from "prosemirror-inputrules"
@@ -18,7 +19,7 @@ import { MarkdownNodeExtension } from "src/editor/utils"
 
 import { splitListItem } from "./list-helper"
 
-export class ListItemView implements NodeView {
+class ListItemView implements NodeView {
     public dom: HTMLElement
     public contentDOM: HTMLElement
     private schema: Schema
@@ -58,9 +59,6 @@ export class RinoListItemExtension extends NodeExtension implements MarkdownNode
             content: "rinoCheckbox? paragraph block*",
             defining: true,
             parseDOM: [{ tag: "li" }],
-            attrs: {
-                checked: { default: false },
-            },
             toDOM(node) {
                 return ["li", 0]
             },
@@ -108,16 +106,13 @@ export class RinoOrderedListExtension extends NodeExtension implements MarkdownN
         return {
             content: "rinoListItem+",
             group: "block",
-            attrs: { tight: { default: true } },
             parseDOM: [
                 {
                     tag: "ol",
-                    getAttrs: (dom) =>
-                        isElementDOMNode(dom) ? { tight: dom.hasAttribute("data-tight") } : {},
                 },
             ],
             toDOM(node) {
-                return ["ol", { "data-tight": node.attrs.tight ? "true" : "" }, 0]
+                return ["ol", 0]
             },
         }
     }
@@ -166,16 +161,13 @@ export class RinoBulletListExtension extends NodeExtension implements MarkdownNo
         return {
             content: "rinoListItem+",
             group: "block",
-            attrs: { tight: { default: true } },
             parseDOM: [
                 {
                     tag: "ul",
-                    getAttrs: (dom) =>
-                        isElementDOMNode(dom) ? { tight: dom.hasAttribute("data-tight") } : {},
                 },
             ],
             toDOM(node) {
-                return ["ul", { "data-tight": node.attrs.tight ? "true" : "" }, 0]
+                return ["ul", 0]
             },
         }
     }
@@ -195,7 +187,10 @@ export class RinoBulletListExtension extends NodeExtension implements MarkdownNo
         ] as const
     }
 
-    public toMarkdown({ state, node }: NodeSerializerOptions) {
+    public toMarkdown({
+        state,
+        node,
+    }: NodeSerializerOptions<SchemaFromExtensions<RinoBulletListExtension>>) {
         state.renderList(node, "  ", () => (node.attrs.bullet || "*") + " ")
     }
 }
@@ -231,13 +226,6 @@ export class RinoCheckboxExtension extends NodeExtension implements MarkdownNode
         return [
             new InputRule(/^\[([ |x])\] $/, function (state: EditorState, match, start, end) {
                 const $from = state.selection.$from
-
-                console.log(
-                    `CheckboxExtension.inputRules:`,
-                    $from.node(-1).type.name,
-                    $from.node(-2).type.name,
-                    type.name,
-                )
                 if (
                     $from.depth >= 3 &&
                     $from.node(-1).type.name === "rinoListItem" &&

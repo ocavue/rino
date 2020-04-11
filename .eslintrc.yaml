@@ -68,8 +68,8 @@ rules:
     ]
 overrides:
   - files:
-      - "tests/**/*.[t|j]s"
-      - "**/__test__/*.spec.[t|j]s"
+      - "tests/**/*"
+      - "**/__test__/*"
     env:
       jest: true
     extends:
