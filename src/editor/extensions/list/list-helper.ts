@@ -19,7 +19,6 @@ export function splitListItem(
     rinoListItemType: NodeType,
 ) {
     return function (state: EditorState, dispatch?: (tr: Transaction) => void): boolean {
-        console.log("[splitListItem]")
         const { $from, $to, node } = state.selection as NodeSelection
         if ((node && node.isBlock) || $from.depth < 2 || !$from.sameParent($to)) return false
 
