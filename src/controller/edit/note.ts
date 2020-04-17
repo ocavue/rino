@@ -1,6 +1,6 @@
 import { generateRandomId } from "src/utils"
 
-import { DocumentReference, DocumentSnapshot, firebase, Timestamp } from "../firebase"
+import { DocumentReference, DocumentSnapshot, Timestamp } from "../firebase"
 import { notesCollection } from "../firebase"
 
 interface NoteData {
@@ -88,8 +88,8 @@ class FirebaseNote extends BaseNote {
             this.data = {
                 uid: uid,
                 content: defaultNoteContent,
-                createTime: firebase.firestore.Timestamp.now(),
-                updateTime: firebase.firestore.Timestamp.now(),
+                createTime: Timestamp.now(),
+                updateTime: Timestamp.now(),
                 deleteTime: null,
                 deleted: false,
             }
@@ -166,7 +166,7 @@ class LocalNote extends BaseNote {
         this._content = content
         this.id = this.key
         this.deleting = false
-        this.createTime = this.updateTime = firebase.firestore.Timestamp.now()
+        this.createTime = this.updateTime = Timestamp.now()
         this.deleted = false
         this.deleteTime = null
     }

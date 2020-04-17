@@ -1,7 +1,7 @@
 import { testUser } from "src/controller/config"
 import { generateRandomId } from "src/utils"
 
-import { firebase } from "./firebase"
+import { firebaseApp, User } from "./firebase"
 
 async function closurePromiseWrapper<T>(closurePromise: Promise<T>): Promise<T> {
     // `firebase.auth` use Closure library's Promise implementation, so that I can only
@@ -18,12 +18,12 @@ export async function sendSignInLink(email: string): Promise<void> {
     const url = `${host}/finish-sign-up?rino-random=${generateRandomId()}`
 
     return await closurePromiseWrapper(
-        firebase.auth().sendSignInLinkToEmail(email, { url, handleCodeInApp: true }),
+        firebaseApp.auth().sendSignInLinkToEmail(email, { url, handleCodeInApp: true }),
     )
 }
 
 export async function signInWithEmailLink() {
-    if (firebase.auth().isSignInWithEmailLink(window.location.href)) {
+    if (firebaseApp.auth().isSignInWithEmailLink(window.location.href)) {
         // Additional state parameters can also be passed via URL.
         // This can be used to continue the user's intended action before triggering
         // the sign-in operation.
@@ -36,7 +36,7 @@ export async function signInWithEmailLink() {
             email = window.prompt("Please provide your email for confirmation") || ""
         }
         // The client SDK will parse the code from the link for you.
-        const signInPromise = firebase.auth().signInWithEmailLink(email, window.location.href)
+        const signInPromise = firebaseApp.auth().signInWithEmailLink(email, window.location.href)
         let result: firebase.auth.UserCredential
         try {
             result = await closurePromiseWrapper(signInPromise)
@@ -59,7 +59,9 @@ export async function signInWithEmailLink() {
     }
 }
 export async function signInWithEmailAndPassword(email: string, password: string) {
-    return await closurePromiseWrapper(firebase.auth().signInWithEmailAndPassword(email, password))
+    return await closurePromiseWrapper(
+        firebaseApp.auth().signInWithEmailAndPassword(email, password),
+    )
 }
 
 export async function signInTestUser() {
@@ -68,16 +70,14 @@ export async function signInTestUser() {
 }
 
 export async function signOut() {
-    await closurePromiseWrapper(firebase.auth().signOut())
+    await closurePromiseWrapper(firebaseApp.auth().signOut())
 }
 
-export function onAuthStateChanged(next: (user: firebase.User | null) => void) {
-    const unsubscribe = firebase.auth().onAuthStateChanged(function (user) {
-        next(user)
-    })
+export function onAuthStateChanged(next: (user: User | null) => void) {
+    const unsubscribe = firebaseApp.auth().onAuthStateChanged(next)
     return unsubscribe
 }
 
 export function getCurrentUser() {
-    return firebase.auth().currentUser
+    return firebaseApp.auth().currentUser
 }
