@@ -4,54 +4,60 @@ import "firebase/auth"
 import "firebase/database"
 import "firebase/firestore"
 
-import * as firebase from "firebase/app"
+import firebase from "firebase/app"
 
 import { isTestEnv } from "src/utils"
 
 import { firebaseConfig } from "./config"
 
-// Avoid duplicate initiations during development
-if (firebase.apps.length === 0) {
+export const firebaseApp: firebase.app.App = (() => {
+    // Avoid duplicate initiations during development
+    if (firebase.apps.length) {
+        return firebase.apps[0]
+    }
+
     // Initialize app
-    firebase.initializeApp(firebaseConfig)
+    const app = firebase.initializeApp(firebaseConfig)
 
-    let firestoreSettings: firebase.firestore.Settings = {
-        // Configure cache size (The default size is 40 MB)
-        cacheSizeBytes: firebase.firestore.CACHE_SIZE_UNLIMITED,
+    const usingEmulator = isTestEnv() && process.env.FIRESTORE_EMULATOR_HOST
+    usingEmulator
+        ? app.firestore().settings({
+              // Configure cache size (The default size is 40 MB)
+              cacheSizeBytes: firebase.firestore.CACHE_SIZE_UNLIMITED,
+              host: process.env.FIRESTORE_EMULATOR_HOST,
+              ssl: false,
+          })
+        : app.firestore().settings({
+              cacheSizeBytes: firebase.firestore.CACHE_SIZE_UNLIMITED,
+          })
+
+    // Enable offline firestore.
+    // When running unit tests, since JSDOM doesn't support `LocalStorage`, firebase cann't enable persistence.
+    if (process.env.NODE_ENV !== "test") {
+        app.firestore()
+            .enablePersistence({ synchronizeTabs: true })
+            .catch((error) => {
+                console.error(error)
+                if (error.code === "failed-precondition") {
+                    // Multiple tabs open, persistence can only be enabled
+                    // in one tab at a a time.
+                    // ...
+                } else if (error.code === "unimplemented") {
+                    // The current browser does not support all of the
+                    // features required to enable persistence
+                    // ...
+                }
+            })
     }
-    if (isTestEnv() && process.env.FIRESTORE_EMULATOR_HOST) {
-        // Use local firebase emulator when running in localhost
-        firestoreSettings = {
-            ...firestoreSettings,
-            host: process.env.FIRESTORE_EMULATOR_HOST,
-            ssl: false,
-        }
-    }
-    firebase.firestore().settings(firestoreSettings)
 
-    // Enable offline firestore
-    firebase
-        .firestore()
-        .enablePersistence({ synchronizeTabs: true })
-        .catch((error) => {
-            console.error(error)
-            if (error.code === "failed-precondition") {
-                // Multiple tabs open, persistence can only be enabled
-                // in one tab at a a time.
-                // ...
-            } else if (error.code === "unimplemented") {
-                // The current browser does not support all of the
-                // features required to enable persistence
-                // ...
-            }
-        })
-}
+    return app
+})()
 
-export { firebase }
 export type DocumentReference = firebase.firestore.DocumentReference
 export type DocumentSnapshot = firebase.firestore.DocumentSnapshot
-export type Timestamp = firebase.firestore.Timestamp
 export type User = firebase.User
+export type Timestamp = firebase.firestore.Timestamp
+export const Timestamp = firebase.firestore.Timestamp
 
 export function registerConnectionEvent(listenner: (connected: boolean) => void) {
     const onConnectedChanged = (snap: firebase.database.DataSnapshot) => {
@@ -59,10 +65,10 @@ export function registerConnectionEvent(listenner: (connected: boolean) => void)
         console.log(`Firebase is ${connected ? "online" : "offline"}`)
         listenner(connected)
     }
-    const ref = firebase.database().ref(".info/connected")
+    const ref = firebaseApp.database().ref(".info/connected")
     ref.on("value", onConnectedChanged)
     const unsubscribe = () => ref.off("value")
     return unsubscribe
 }
 
-export const notesCollection = firebase.firestore().collection("notes")
+export const notesCollection = firebaseApp.firestore().collection("notes")
