@@ -1,12 +1,4 @@
-import {
-    Button,
-    createStyles,
-    IconButton,
-    makeStyles,
-    Snackbar,
-    SnackbarContent,
-    Theme,
-} from "@material-ui/core"
+import { Button, createStyles, IconButton, makeStyles, Snackbar, Theme } from "@material-ui/core"
 import CloseIcon from "@material-ui/icons/Close"
 import NextLink from "next/link"
 import React from "react"
@@ -32,30 +24,6 @@ const useStyles = makeStyles((theme: Theme) => {
     })
 })
 
-const DenseSignInSnackbarContent: React.FC<{
-    onClick: () => void
-}> = ({ onClick }) => {
-    const classes = useStyles()
-    return (
-        <SnackbarContent
-            classes={{ root: classes.denseRoot }}
-            message={
-                <span>
-                    <Button
-                        component="a"
-                        size="small"
-                        data-testid="dense-sign-in-snack-bar-button"
-                        onClick={onClick}
-                        classes={{ root: classes.button }}
-                    >
-                        Sign Up
-                    </Button>
-                </span>
-            }
-        />
-    )
-}
-
 const DenseSignInSnackbar: React.FC<{
     setState: React.Dispatch<React.SetStateAction<SnackbarState>>
     open: boolean
@@ -64,44 +32,25 @@ const DenseSignInSnackbar: React.FC<{
         setState("off")
         setTimeout(() => setState("full"), 300)
     }
+    const classes = useStyles()
     return (
         <Snackbar
             open={open}
             anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
             data-testid="dense-sign-in-snack-bar"
-        >
-            <DenseSignInSnackbarContent onClick={expand} />
-        </Snackbar>
-    )
-}
-
-const FullSignInSnackbarContent: React.FC<{
-    onClick: () => void
-}> = ({ onClick }) => {
-    const classes = useStyles()
-    return (
-        <SnackbarContent
+            ContentProps={{ classes: { root: classes.denseRoot } }}
             message={
                 <span>
-                    You are in anonymity mode. All changes will not be saved.
-                    <NextLink href="/sign-in">
-                        <Button
-                            component="a"
-                            color="inherit"
-                            size="small"
-                            data-testid="full-sign-in-snack-bar-button"
-                            classes={{ root: classes.button }}
-                        >
-                            Sign Up
-                        </Button>
-                    </NextLink>
-                    a free account now!
+                    <Button
+                        component="a"
+                        size="small"
+                        data-testid="dense-sign-in-snack-bar-button"
+                        onClick={expand}
+                        classes={{ root: classes.button }}
+                    >
+                        Sign Up
+                    </Button>
                 </span>
-            }
-            action={
-                <IconButton key="close" aria-label="close" color="inherit" onClick={onClick}>
-                    <CloseIcon />
-                </IconButton>
             }
         />
     )
@@ -115,19 +64,45 @@ const FullSignInSnackbar: React.FC<{
         setState("off")
         setTimeout(() => setState("dense"), 300)
     }
+    const classes = useStyles()
     return (
         <Snackbar
             open={open}
             anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
-            data-testid="full-sign-in-snack-bar"
             onClose={close}
             // `autoHideDuration` is the number of milliseconds to wait before automatically
             // calling the onClose function. onClose should then set the state of the open
             // prop to hide the Snackbar.
             autoHideDuration={SIGN_IN_SNACKBAR_HIDE_DELAY}
-        >
-            <FullSignInSnackbarContent onClick={close} />
-        </Snackbar>
+            data-testid="full-sign-in-snack-bar"
+            message={
+                <span>
+                    You are in anonymity mode. All changes will not be saved.
+                    <NextLink href="/sign-in">
+                        <Button
+                            component="a"
+                            size="small"
+                            data-testid="full-sign-in-snack-bar-button"
+                            classes={{ root: classes.button }}
+                        >
+                            Sign Up
+                        </Button>
+                    </NextLink>
+                    a free account now!
+                </span>
+            }
+            action={
+                <IconButton
+                    key="close"
+                    aria-label="close"
+                    color="inherit"
+                    onClick={close}
+                    size="small"
+                >
+                    <CloseIcon fontSize="small" />
+                </IconButton>
+            }
+        />
     )
 }
 
