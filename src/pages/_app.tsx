@@ -4,6 +4,7 @@ import "../../node_modules/github-markdown-css/github-markdown.css"
 import "../../node_modules/prosemirror-tables/style/tables.css"
 import "../../node_modules/prosemirror-view/style/prosemirror.css"
 import "../../src/editor/components/markdown.css"
+import "../../src/style/develop.css"
 
 import Head from "next/head"
 import React from "react"
