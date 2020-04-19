@@ -96,9 +96,10 @@ export class RinoCodeBlockExtension extends CodeBlockExtension
         if (node.attrs.codeBlockType === "fence") {
             state.write("```" + (node.attrs.userInputLanguage || "") + "\n")
             state.text(node.textContent, false)
-            state.ensureNewLine()
+            state.text("\n")
             state.write("```")
             state.closeBlock(node)
+            state.ensureNewLine()
         } else {
             state.wrapBlock("    ", "    ", node, () => state.renderContent(node))
             state.ensureNewLine()

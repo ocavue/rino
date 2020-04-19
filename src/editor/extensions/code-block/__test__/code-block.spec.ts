@@ -164,5 +164,46 @@ describe("toMarkdown", () => {
             ).toEqual("    markdown\n    markdown\n    markdown\n    \n")
         })
     })
-    describe("Fenced code blocks", () => {})
+
+    describe("Fenced code blocks", () => {
+        test("one-line code with 0 newline at the end", () => {
+            expect(
+                serializer.serialize(
+                    doc(
+                        codeBlock({
+                            language: "",
+                            userInputLanguage: "",
+                            codeBlockType: "fence",
+                        })("markdown"),
+                    ),
+                ),
+            ).toEqual("```\nmarkdown\n```\n")
+        })
+        test("one-line code with 1 newline at the end", () => {
+            expect(
+                serializer.serialize(
+                    doc(
+                        codeBlock({
+                            language: "",
+                            userInputLanguage: "",
+                            codeBlockType: "fence",
+                        })("markdown\n"),
+                    ),
+                ),
+            ).toEqual("```\nmarkdown\n\n```\n")
+        })
+        test("one-line code with 2 newlines at the end", () => {
+            expect(
+                serializer.serialize(
+                    doc(
+                        codeBlock({
+                            language: "",
+                            userInputLanguage: "",
+                            codeBlockType: "fence",
+                        })("markdown\n\n"),
+                    ),
+                ),
+            ).toEqual("```\nmarkdown\n\n\n```\n")
+        })
+    })
 })
