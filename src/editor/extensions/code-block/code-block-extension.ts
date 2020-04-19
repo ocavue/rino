@@ -21,7 +21,7 @@ export const defaultRinoCodeBlockExtensionOptions = {
     extraAttrs: [
         { name: "userInputLanguage", default: "" },
         { name: "inlineDecorateType", default: InlineDecorateType.Ignore },
-        { name: "codeBlockType", default: "fence" },
+        { name: "codeBlockType", default: "fenced" },
     ],
 }
 
