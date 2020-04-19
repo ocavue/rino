@@ -35,14 +35,12 @@ export const nodes = builders(schema, def)
 
 if (!nodes) throw new Error(`nodes is ${nodes}`)
 
-const { doc, p, h1, h6, pre, preJS, blockquote, hr } = nodes
+const { doc, p, h1, h6, blockquote, hr } = nodes
 
 export const createBaseTestcases = (): Record<string, [string, TaggedProsemirrorNode]> => ({
     paragraph: ["hello", doc(p("hello"))],
     h1: ["# hello", doc(h1("hello"))],
     h6: ["###### hello", doc(h6("hello"))],
-    codeBlock: ["```\n1+1\n```", doc(pre("1+1"))],
-    codeBlockWithLanguage: ["```javascript\n1+1\n```", doc(preJS("1+1"))],
     quote: ["> text\n> text", doc(blockquote(p("text\ntext")))],
     hr: ["---", doc(hr())],
     // TODO: add test for hard break
