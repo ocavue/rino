@@ -8,4 +8,4 @@ export const appbarHeight = appbarIconButtonSize + appbarIconMargin * 2
 export const maxEditorWidth = 1200
 
 // Time (millisecond)
-export const signInSnackbarDelay = 3000
+export const SIGN_IN_SNACKBAR_SHOW_DELAY = 3000

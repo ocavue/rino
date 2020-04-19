@@ -2,7 +2,7 @@ version: 2.1
 
 workflows:
   version: 2
-  main_workflow:
+  CircleCI:
     jobs:
       - build:
           # `filters` is required since `deploy` has tag filters AND requires `test`

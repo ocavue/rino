@@ -1,30 +1,111 @@
-import * as m from "@material-ui/core"
+import { Button, createStyles, IconButton, makeStyles, Snackbar, Theme } from "@material-ui/core"
+import CloseIcon from "@material-ui/icons/Close"
 import NextLink from "next/link"
 import React from "react"
 
-import { signInSnackbarDelay } from "src/constants"
+import { SIGN_IN_SNACKBAR_SHOW_DELAY } from "src/constants"
 import { StoreContainer } from "src/store"
 
-const SignInSnackbarContent: React.FC = () => (
-    <m.SnackbarContent
-        message={
-            <span>
-                You are in anonymity mode. All changes will not be saved.
-                <NextLink href="/sign-in">
-                    <m.Button
+type SnackbarState = "off" | "full" | "dense"
+
+const closeDelay = 300
+
+const useStyles = makeStyles((theme: Theme) => {
+    return createStyles({
+        denseContentRoot: {
+            minWidth: "auto",
+        },
+        denseContentAction: {
+            marginLeft: "-8px",
+            paddingLeft: "0px",
+        },
+        button: {
+            // When using a light theme, the snackbar's background color is dark by default, so
+            // we choice a light color for the button in this case.
+            color:
+                theme.palette.type === "light"
+                    ? theme.palette.secondary.light
+                    : theme.palette.secondary.dark,
+        },
+    })
+})
+
+const DenseSignInSnackbar: React.FC<{
+    setState: React.Dispatch<React.SetStateAction<SnackbarState>>
+    open: boolean
+}> = ({ setState, open }) => {
+    const expand = () => {
+        setState("off")
+        setTimeout(() => setState("full"), closeDelay)
+    }
+    const classes = useStyles()
+    return (
+        <Snackbar
+            open={open}
+            anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
+            data-testid="dense-sign-in-snack-bar"
+            ContentProps={{
+                classes: { root: classes.denseContentRoot, action: classes.denseContentAction },
+            }}
+            action={
+                <span>
+                    <Button
                         component="a"
-                        color="primary"
                         size="small"
-                        data-testid="sign-in-snack-bar-button"
+                        data-testid="dense-sign-in-snack-bar-button"
+                        onClick={expand}
+                        classes={{ root: classes.button }}
                     >
                         Sign Up
-                    </m.Button>
-                </NextLink>
-                a free account now!
-            </span>
-        }
-    />
-)
+                    </Button>
+                </span>
+            }
+        />
+    )
+}
+
+const FullSignInSnackbar: React.FC<{
+    setState: React.Dispatch<React.SetStateAction<SnackbarState>>
+    open: boolean
+}> = ({ setState, open }) => {
+    const close = () => {
+        setState("off")
+        setTimeout(() => setState("dense"), closeDelay)
+    }
+    const classes = useStyles()
+    return (
+        <Snackbar
+            open={open}
+            anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
+            data-testid="full-sign-in-snack-bar"
+            message="You are in anonymity mode. All changes will not be saved."
+            action={
+                <>
+                    <NextLink href="/sign-in">
+                        <Button
+                            component="a"
+                            size="small"
+                            data-testid="full-sign-in-snack-bar-sign-up-button"
+                            classes={{ root: classes.button }}
+                        >
+                            Sign Up
+                        </Button>
+                    </NextLink>
+                    <IconButton
+                        key="close"
+                        aria-label="close"
+                        color="inherit"
+                        onClick={close}
+                        size="small"
+                        data-testid="full-sign-in-snack-bar-close-button"
+                    >
+                        <CloseIcon fontSize="small" />
+                    </IconButton>
+                </>
+            }
+        />
+    )
+}
 
 export const SignInSnackbar: React.FC = () => {
     const {
@@ -32,22 +113,19 @@ export const SignInSnackbar: React.FC = () => {
         auth: { user },
     } = StoreContainer.useContainer()
 
-    const [open, setOpen] = React.useState(false)
+    const [state, setState] = React.useState<SnackbarState>("off")
 
     React.useEffect(() => {
         if (!user && !loadingUser) {
-            const timeout = setTimeout(() => setOpen(true), signInSnackbarDelay)
+            const timeout = setTimeout(() => setState("full"), SIGN_IN_SNACKBAR_SHOW_DELAY)
             return () => clearTimeout(timeout)
         }
-    }, [loadingUser, setOpen, user])
+    }, [loadingUser, setState, user])
 
     return (
-        <m.Snackbar
-            open={open}
-            anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
-            data-testid="sign-in-snack-bar"
-        >
-            <SignInSnackbarContent />
-        </m.Snackbar>
+        <>
+            <FullSignInSnackbar setState={setState} open={state === "full"} />
+            <DenseSignInSnackbar setState={setState} open={state === "dense"} />
+        </>
     )
 }
