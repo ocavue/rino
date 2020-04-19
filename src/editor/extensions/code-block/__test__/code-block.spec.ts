@@ -69,11 +69,7 @@ describe("fromMarkdown", () => {
                         language: "python",
                         userInputLanguage: "python",
                         codeBlockType: "fenced",
-                    })(
-                        "print('hello world!')\n" +
-                            "print('hello world!')\n" +
-                            "print('hello world!')",
-                    ),
+                    })("print('hello world!')\nprint('hello world!')\nprint('hello world!')"),
                 ),
             )
         })
