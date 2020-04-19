@@ -12,8 +12,12 @@ const closeDelay = 300
 
 const useStyles = makeStyles((theme: Theme) => {
     return createStyles({
-        denseRoot: {
+        denseContentRoot: {
             minWidth: "auto",
+        },
+        denseContentAction: {
+            marginLeft: "-8px",
+            paddingLeft: "0px",
         },
         button: {
             // When using a light theme, the snackbar's background color is dark by default, so
@@ -40,8 +44,10 @@ const DenseSignInSnackbar: React.FC<{
             open={open}
             anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
             data-testid="dense-sign-in-snack-bar"
-            ContentProps={{ classes: { root: classes.denseRoot } }}
-            message={
+            ContentProps={{
+                classes: { root: classes.denseContentRoot, action: classes.denseContentAction },
+            }}
+            action={
                 <span>
                     <Button
                         component="a"
@@ -72,31 +78,30 @@ const FullSignInSnackbar: React.FC<{
             open={open}
             anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
             data-testid="full-sign-in-snack-bar"
-            message={
-                <span>
-                    You are in anonymity mode. All changes will not be saved.{" "}
+            message="You are in anonymity mode. All changes will not be saved."
+            action={
+                <>
                     <NextLink href="/sign-in">
-                        <a
+                        <Button
+                            component="a"
+                            size="small"
                             data-testid="full-sign-in-snack-bar-sign-up-button"
-                            className={classes.button}
+                            classes={{ root: classes.button }}
                         >
                             Sign Up
-                        </a>
-                    </NextLink>{" "}
-                    a free account now!
-                </span>
-            }
-            action={
-                <IconButton
-                    key="close"
-                    aria-label="close"
-                    color="inherit"
-                    onClick={close}
-                    size="small"
-                    data-testid="full-sign-in-snack-bar-close-button"
-                >
-                    <CloseIcon fontSize="small" />
-                </IconButton>
+                        </Button>
+                    </NextLink>
+                    <IconButton
+                        key="close"
+                        aria-label="close"
+                        color="inherit"
+                        onClick={close}
+                        size="small"
+                        data-testid="full-sign-in-snack-bar-close-button"
+                    >
+                        <CloseIcon fontSize="small" />
+                    </IconButton>
+                </>
             }
         />
     )
