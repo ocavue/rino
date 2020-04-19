@@ -21,6 +21,7 @@ export const defaultRinoCodeBlockExtensionOptions = {
     extraAttrs: [
         { name: "userInputLanguage", default: "" },
         { name: "inlineDecorateType", default: InlineDecorateType.Ignore },
+        { name: "codeBlockType", default: "fence" },
     ],
 }
 
@@ -55,6 +56,7 @@ export class RinoCodeBlockExtension extends CodeBlockExtension
     public fromMarkdown() {
         return [
             {
+                // https://spec.commonmark.org/0.29/#fenced-code-blocks
                 type: ParserTokenType.block,
                 token: "fence",
                 node: this.name,
@@ -69,6 +71,21 @@ export class RinoCodeBlockExtension extends CodeBlockExtension
                                 defaultRinoCodeBlockExtensionOptions.supportedLanguages,
                         }),
                         userInputLanguage,
+                        codeBlockType: "fence",
+                    }
+                },
+            },
+            {
+                // https://spec.commonmark.org/0.29/#indented-code-block
+                type: ParserTokenType.block,
+                token: "code_block",
+                node: this.name,
+                hasOpenClose: false,
+                getAttrs: (tok: Token) => {
+                    return {
+                        language: "",
+                        userInputLanguage: "",
+                        codeBlockType: "indented",
                     }
                 },
             },
@@ -76,10 +93,15 @@ export class RinoCodeBlockExtension extends CodeBlockExtension
     }
 
     public toMarkdown({ state, node }: NodeSerializerOptions) {
-        state.write("```" + (node.attrs.userInputLanguage || "") + "\n")
-        state.text(node.textContent, false)
-        state.ensureNewLine()
-        state.write("```")
-        state.closeBlock(node)
+        if (node.attrs.codeBlockType === "fence") {
+            state.write("```" + (node.attrs.userInputLanguage || "") + "\n")
+            state.text(node.textContent, false)
+            state.ensureNewLine()
+            state.write("```")
+            state.closeBlock(node)
+        } else {
+            state.wrapBlock("    ", "    ", node, () => state.renderContent(node))
+            state.ensureNewLine()
+        }
     }
 }
