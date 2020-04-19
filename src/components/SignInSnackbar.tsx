@@ -79,17 +79,12 @@ const FullSignInSnackbar: React.FC<{
             data-testid="full-sign-in-snack-bar"
             message={
                 <span>
-                    You are in anonymity mode. All changes will not be saved.
+                    You are in anonymity mode. All changes will not be saved.{" "}
                     <NextLink href="/sign-in">
-                        <Button
-                            component="a"
-                            size="small"
-                            data-testid="full-sign-in-snack-bar-button"
-                            classes={{ root: classes.button }}
-                        >
+                        <a data-testid="full-sign-in-snack-bar-button" className={classes.button}>
                             Sign Up
-                        </Button>
-                    </NextLink>
+                        </a>
+                    </NextLink>{" "}
                     a free account now!
                 </span>
             }
