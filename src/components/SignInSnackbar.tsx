@@ -101,12 +101,7 @@ const FullSignInSnackbarContent: React.FC<{
                 </span>
             }
             action={
-                <IconButton
-                    key="close"
-                    aria-label="close"
-                    color="inherit"
-                    onClick={() => onClick()}
-                >
+                <IconButton key="close" aria-label="close" color="inherit" onClick={onClick}>
                     <CloseIcon />
                 </IconButton>
             }
