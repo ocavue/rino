@@ -3,7 +3,7 @@ import CloseIcon from "@material-ui/icons/Close"
 import NextLink from "next/link"
 import React from "react"
 
-import { SIGN_IN_SNACKBAR_HIDE_DELAY, SIGN_IN_SNACKBAR_SHOW_DELAY } from "src/constants"
+import { SIGN_IN_SNACKBAR_SHOW_DELAY } from "src/constants"
 import { StoreContainer } from "src/store"
 
 type SnackbarState = "off" | "full" | "dense"
@@ -71,17 +71,15 @@ const FullSignInSnackbar: React.FC<{
         <Snackbar
             open={open}
             anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
-            onClose={close}
-            // `autoHideDuration` is the number of milliseconds to wait before automatically
-            // calling the onClose function. onClose should then set the state of the open
-            // prop to hide the Snackbar.
-            autoHideDuration={SIGN_IN_SNACKBAR_HIDE_DELAY}
             data-testid="full-sign-in-snack-bar"
             message={
                 <span>
                     You are in anonymity mode. All changes will not be saved.{" "}
                     <NextLink href="/sign-in">
-                        <a data-testid="full-sign-in-snack-bar-button" className={classes.button}>
+                        <a
+                            data-testid="full-sign-in-snack-bar-sign-up-button"
+                            className={classes.button}
+                        >
                             Sign Up
                         </a>
                     </NextLink>{" "}
@@ -95,6 +93,7 @@ const FullSignInSnackbar: React.FC<{
                     color="inherit"
                     onClick={close}
                     size="small"
+                    data-testid="full-sign-in-snack-bar-close-button"
                 >
                     <CloseIcon fontSize="small" />
                 </IconButton>

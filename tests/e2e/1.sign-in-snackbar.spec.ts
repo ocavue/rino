@@ -1,4 +1,4 @@
-import { SIGN_IN_SNACKBAR_HIDE_DELAY, SIGN_IN_SNACKBAR_SHOW_DELAY } from "src/constants"
+import { SIGN_IN_SNACKBAR_SHOW_DELAY } from "src/constants"
 
 import { login, signOut } from "./actions"
 import { click, sleep, wait } from "./utils"
@@ -18,7 +18,7 @@ describe("Sign up snackbar", function () {
         await wait("full-sign-in-snack-bar")
     })
     test("Show dense snackbar", async () => {
-        await sleep(SIGN_IN_SNACKBAR_HIDE_DELAY + 1000)
+        await click("full-sign-in-snack-bar-close-button")
         await wait("dense-sign-in-snack-bar")
         await wait("full-sign-in-snack-bar", { hidden: true, visible: false })
     })
@@ -26,8 +26,8 @@ describe("Sign up snackbar", function () {
         await click("dense-sign-in-snack-bar-button")
         await wait("full-sign-in-snack-bar")
     })
-    test("Click full snackbar button", async () => {
-        await click("full-sign-in-snack-bar-button")
+    test("Jump to sign up page", async () => {
+        await click("full-sign-in-snack-bar-sign-up-button")
         await wait("login-form-card")
     })
 })

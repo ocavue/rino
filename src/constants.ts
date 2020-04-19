@@ -9,4 +9,3 @@ export const maxEditorWidth = 1200
 
 // Time (millisecond)
 export const SIGN_IN_SNACKBAR_SHOW_DELAY = 3000
-export const SIGN_IN_SNACKBAR_HIDE_DELAY = 30000
