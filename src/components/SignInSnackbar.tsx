@@ -43,7 +43,6 @@ const DenseSignInSnackbarContent: React.FC<{
                 <span>
                     <Button
                         component="a"
-                        color="inherit"
                         size="small"
                         data-testid="dense-sign-in-snack-bar-button"
                         onClick={onClick}
@@ -61,7 +60,7 @@ const DenseSignInSnackbar: React.FC<{
     setState: React.Dispatch<React.SetStateAction<SnackbarState>>
     open: boolean
 }> = ({ setState, open }) => {
-    const explain = () => {
+    const expand = () => {
         setState("off")
         setTimeout(() => setState("full"), 300)
     }
@@ -70,9 +69,8 @@ const DenseSignInSnackbar: React.FC<{
             open={open}
             anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
             data-testid="dense-sign-in-snack-bar"
-            ContentProps={{ classes: { root: "" } }}
         >
-            <DenseSignInSnackbarContent onClick={explain} />
+            <DenseSignInSnackbarContent onClick={expand} />
         </Snackbar>
     )
 }
