@@ -8,6 +8,8 @@ import { StoreContainer } from "src/store"
 
 type SnackbarState = "off" | "full" | "dense"
 
+const closeDelay = 300
+
 const useStyles = makeStyles((theme: Theme) => {
     return createStyles({
         denseRoot: {
@@ -30,7 +32,7 @@ const DenseSignInSnackbar: React.FC<{
 }> = ({ setState, open }) => {
     const expand = () => {
         setState("off")
-        setTimeout(() => setState("full"), 300)
+        setTimeout(() => setState("full"), closeDelay)
     }
     const classes = useStyles()
     return (
@@ -62,7 +64,7 @@ const FullSignInSnackbar: React.FC<{
 }> = ({ setState, open }) => {
     const close = () => {
         setState("off")
-        setTimeout(() => setState("dense"), 300)
+        setTimeout(() => setState("dense"), closeDelay)
     }
     const classes = useStyles()
     return (
