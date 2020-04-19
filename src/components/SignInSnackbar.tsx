@@ -127,6 +127,10 @@ const FullSignInSnackbar: React.FC<{
             open={open}
             anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
             data-testid="full-sign-in-snack-bar"
+            onClose={close}
+            // `autoHideDuration` is the number of milliseconds to wait before automatically
+            // calling the onClose function. onClose should then set the state of the open
+            // prop to hide the Snackbar.
             autoHideDuration={SIGN_IN_SNACKBAR_HIDE_DELAY}
         >
             <FullSignInSnackbarContent onClick={close} />
