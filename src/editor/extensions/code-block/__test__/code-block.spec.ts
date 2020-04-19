@@ -68,7 +68,7 @@ describe("fromMarkdown", () => {
                     codeBlock({
                         language: "python",
                         userInputLanguage: "python",
-                        codeBlockType: "fence",
+                        codeBlockType: "fenced",
                     })(
                         "print('hello world!')\n" +
                             "print('hello world!')\n" +
@@ -86,7 +86,7 @@ describe("fromMarkdown", () => {
                     codeBlock({
                         language: "",
                         userInputLanguage: "unknow",
-                        codeBlockType: "fence",
+                        codeBlockType: "fenced",
                     })("bla bla bla bla"),
                 ),
             )
@@ -97,7 +97,7 @@ describe("fromMarkdown", () => {
                 parser.parse(["```", "echo 'hello world!'", "```"].join("\n")),
             ).toEqualRemirrorDocument(
                 doc(
-                    codeBlock({ language: "", userInputLanguage: "", codeBlockType: "fence" })(
+                    codeBlock({ language: "", userInputLanguage: "", codeBlockType: "fenced" })(
                         "echo 'hello world!'",
                     ),
                 ),
@@ -111,7 +111,7 @@ describe("toMarkdown", () => {
     const serializer = buildMarkdownSerializer(manager)
 
     describe("Indented code blocks", () => {
-        test("one-line code without newline at the end", () => {
+        test("one-line code with 0 newline at the end", () => {
             expect(
                 serializer.serialize(
                     doc(
@@ -124,7 +124,7 @@ describe("toMarkdown", () => {
                 ),
             ).toEqual("    markdown\n")
         })
-        test("one-line code with newline at the end", () => {
+        test("one-line code with 1 newline at the end", () => {
             expect(
                 serializer.serialize(
                     doc(
@@ -137,7 +137,7 @@ describe("toMarkdown", () => {
                 ),
             ).toEqual("    markdown\n    \n")
         })
-        test("multi-line code without newline at the end", () => {
+        test("multi-line code with 0 newline at the end", () => {
             expect(
                 serializer.serialize(
                     doc(
@@ -150,7 +150,7 @@ describe("toMarkdown", () => {
                 ),
             ).toEqual("    markdown\n    markdown\n    markdown\n")
         })
-        test("multi-line code with newline at the end", () => {
+        test("multi-line code with 1 newline at the end", () => {
             expect(
                 serializer.serialize(
                     doc(
@@ -173,7 +173,7 @@ describe("toMarkdown", () => {
                         codeBlock({
                             language: "",
                             userInputLanguage: "",
-                            codeBlockType: "fence",
+                            codeBlockType: "fenced",
                         })("markdown"),
                     ),
                 ),
@@ -186,7 +186,7 @@ describe("toMarkdown", () => {
                         codeBlock({
                             language: "",
                             userInputLanguage: "",
-                            codeBlockType: "fence",
+                            codeBlockType: "fenced",
                         })("markdown\n"),
                     ),
                 ),
@@ -199,7 +199,7 @@ describe("toMarkdown", () => {
                         codeBlock({
                             language: "",
                             userInputLanguage: "",
-                            codeBlockType: "fence",
+                            codeBlockType: "fenced",
                         })("markdown\n\n"),
                     ),
                 ),

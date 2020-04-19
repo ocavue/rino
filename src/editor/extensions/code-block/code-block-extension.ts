@@ -71,7 +71,7 @@ export class RinoCodeBlockExtension extends CodeBlockExtension
                                 defaultRinoCodeBlockExtensionOptions.supportedLanguages,
                         }),
                         userInputLanguage,
-                        codeBlockType: "fence",
+                        codeBlockType: "fenced",
                     }
                 },
             },
@@ -93,7 +93,7 @@ export class RinoCodeBlockExtension extends CodeBlockExtension
     }
 
     public toMarkdown({ state, node }: NodeSerializerOptions) {
-        if (node.attrs.codeBlockType === "fence") {
+        if (node.attrs.codeBlockType === "fenced") {
             state.write("```" + (node.attrs.userInputLanguage || "") + "\n")
             state.text(node.textContent, false)
             state.text("\n")
