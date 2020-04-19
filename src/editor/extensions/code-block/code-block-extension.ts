@@ -99,10 +99,10 @@ export class RinoCodeBlockExtension extends CodeBlockExtension
             state.text("\n")
             state.write("```")
             state.closeBlock(node)
-            state.ensureNewLine()
         } else {
             state.wrapBlock("    ", "    ", node, () => state.renderContent(node))
-            state.ensureNewLine()
+            state.closeBlock(node)
         }
+        state.ensureNewLine()
     }
 }

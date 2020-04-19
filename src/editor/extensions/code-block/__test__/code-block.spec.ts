@@ -6,6 +6,7 @@ import {
 } from "src/editor/components/wysiwyg/wysiwyg-markdown"
 import { RinoParagraphExtension } from "src/editor/extensions"
 import { RinoTextExtension } from "src/editor/extensions"
+import { dedent } from "src/utils"
 
 import { RinoCodeBlockExtension } from ".."
 
@@ -103,7 +104,7 @@ describe("fromMarkdown", () => {
 })
 
 describe("toMarkdown", () => {
-    const { manager, doc, codeBlock } = setup()
+    const { manager, doc, codeBlock, p } = setup()
     const serializer = buildMarkdownSerializer(manager)
 
     describe("Indented code blocks", () => {
@@ -201,5 +202,52 @@ describe("toMarkdown", () => {
                 ),
             ).toEqual("```\nmarkdown\n\n\n```\n")
         })
+
+        describe("Mixed with other blocks", () => {
+            test("case 1", () => {
+                expect(
+                    serializer.serialize(
+                        doc(
+                            p("p0"),
+                            p("p1"),
+                            codeBlock({
+                                language: "",
+                                userInputLanguage: "",
+                                codeBlockType: "fenced",
+                            })("code"),
+                            codeBlock({
+                                language: "",
+                                userInputLanguage: "",
+                                codeBlockType: "indented",
+                            })("code"),
+                            p("p2"),
+                        ),
+                    ),
+                ).toEqual(
+                    // TODO: I don't need two empty lines between two blocks
+                    dedent(
+                        `
+                        p0
+
+
+                        p1
+
+
+                        \`\`\`
+                        code
+                        \`\`\`
+
+
+                            code
+
+
+                        p2
+                        `,
+                    ).trim(),
+                )
+            })
+        })
     })
 })
+
+describe("input rules", () => {})
