@@ -16,7 +16,7 @@ describe("Empty languange", () => {
         await createNote()
         await type("```")
         await type("code")
-        await type("code")
+        await type("code", false)
         await pressKey("Shift", "Enter")
         await type("")
     })
@@ -30,7 +30,8 @@ describe("Empty languange", () => {
                 code
                 code
                 \`\`\`
-                `).trim(),
+
+                `).trimStart(),
         )
     })
 })
@@ -40,7 +41,7 @@ describe("Not-exist languange", () => {
         await createNote()
         await type("```thislanguagedoesnotexist")
         await type("code")
-        await type("code")
+        await type("code", false)
         await pressKey("Shift", "Enter")
         await type("")
     })
@@ -54,7 +55,8 @@ describe("Not-exist languange", () => {
                 code
                 code
                 \`\`\`
-                `).trim(),
+
+                `).trimStart(),
         )
     })
 })
@@ -64,7 +66,7 @@ describe("Normal language", () => {
         await createNote()
         await type("```python")
         await type("code")
-        await type("code")
+        await type("code", false)
         await pressKey("Shift", "Enter")
         await type("")
     })
@@ -78,7 +80,8 @@ describe("Normal language", () => {
                 code
                 code
                 \`\`\`
-                `).trim(),
+
+                `).trimStart(),
         )
     })
 })

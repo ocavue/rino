@@ -44,7 +44,7 @@ describe("Source code text", () => {
     test("Code block", async () => {
         await type("```")
         await type("code")
-        await type("code")
+        await type("code", false)
         await pressKey("Shift", "Enter")
         await type("")
     })
