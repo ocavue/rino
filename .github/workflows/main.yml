@@ -1,0 +1,322 @@
+{
+  "name": "Core",
+  "on": {
+    "push": {
+      "branches": [
+        "master"
+      ]
+    },
+    "pull_request": {
+      "branches": [
+        "master"
+      ]
+    }
+  },
+  "env": {
+    "CI": true
+  },
+  "jobs": {
+    "Build": {
+      "runs-on": "ubuntu-18.04",
+      "steps": [
+        {
+          "name": "Checkout code repository",
+          "uses": "actions/checkout@v2"
+        },
+        {
+          "name": "Setup node.js",
+          "uses": "actions/setup-node@v1",
+          "with": {
+            "node-version": 12
+          }
+        },
+        {
+          "id": "step_cache",
+          "name": "Cache",
+          "uses": "actions/cache@master",
+          "with": {
+            "path": "node_modules\n*/*/node_modules\n.next/cache\n~/.cache/firebase\n",
+            "key": "${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}"
+          }
+        },
+        {
+          "name": "Install Dependencies",
+          "if": "steps.step_cache.outputs.cache-hit != 'true'",
+          "run": "yarn install --frozen-lockfile\nyarn firebase setup:emulators:firestore\nls -lrth ~/.cache/firebase/emulators/\n"
+        },
+        {
+          "name": "Configrate firebase",
+          "env": {
+            "FIREBASE_CLIENT_JSON": "${{ secrets.FIREBASE_CLIENT_JSON }}",
+            "FIREBASE_TOKEN": "${{ secrets.FIREBASE_TOKEN }}"
+          },
+          "run": "echo \"${FIREBASE_CLIENT_JSON}\" > ./config/firebase.client.json\nexport FIREBASE_PROJECT_ID=$(scripts/simple_jq.js ./config/firebase.client.json .projectId)\nyarn firebase use --add $FIREBASE_PROJECT_ID\n"
+        },
+        {
+          "name": "Build",
+          "run": "yarn run build\nyarn run export\n"
+        },
+        {
+          "name": "Upload dist",
+          "uses": "actions/upload-artifact@v1",
+          "with": {
+            "name": "dist",
+            "path": "./dist"
+          }
+        }
+      ]
+    },
+    "Test": {
+      "runs-on": "ubuntu-18.04",
+      "steps": [
+        {
+          "name": "Checkout code repository",
+          "uses": "actions/checkout@v2"
+        },
+        {
+          "name": "Setup node.js",
+          "uses": "actions/setup-node@v1",
+          "with": {
+            "node-version": 12
+          }
+        },
+        {
+          "id": "step_cache",
+          "name": "Cache",
+          "uses": "actions/cache@master",
+          "with": {
+            "path": "node_modules\n*/*/node_modules\n.next/cache\n~/.cache/firebase\n",
+            "key": "${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}"
+          }
+        },
+        {
+          "name": "Install Dependencies",
+          "if": "steps.step_cache.outputs.cache-hit != 'true'",
+          "run": "yarn install --frozen-lockfile\nyarn firebase setup:emulators:firestore\nls -lrth ~/.cache/firebase/emulators/\n"
+        },
+        {
+          "name": "Configrate firebase",
+          "env": {
+            "FIREBASE_CLIENT_JSON": "${{ secrets.FIREBASE_CLIENT_JSON }}",
+            "FIREBASE_TOKEN": "${{ secrets.FIREBASE_TOKEN }}"
+          },
+          "run": "echo \"${FIREBASE_CLIENT_JSON}\" > ./config/firebase.client.json\nexport FIREBASE_PROJECT_ID=$(scripts/simple_jq.js ./config/firebase.client.json .projectId)\nyarn firebase use --add $FIREBASE_PROJECT_ID\n"
+        },
+        {
+          "name": "Build static files",
+          "env": {
+            "REACT_APP_TEST_USERNAME": "${{ secrets.REACT_APP_TEST_USERNAME }}",
+            "REACT_APP_TEST_PASSWORD": "${{ secrets.REACT_APP_TEST_PASSWORD }}"
+          },
+          "run": "export REACT_APP_TESTING=1\nexport FIREBASE_DATABASE_EMULATOR_HOST=\"localhost:$(scripts/simple_jq.js ./firebase.json .emulators.database.port)\"\nexport FIRESTORE_EMULATOR_HOST=\"localhost:$(scripts/simple_jq.js ./firebase.json .emulators.firestore.port)\"\necho \"firebase environment variables:\" $FIREBASE_DATABASE_EMULATOR_HOST $FIRESTORE_EMULATOR_HOST\nyarn build\nyarn export\n"
+        },
+        {
+          "name": "Run tests",
+          "env": {
+            "FIREBASE_TOKEN": "${{ secrets.FIREBASE_TOKEN }}",
+            "REACT_APP_TEST_USERNAME": "${{ secrets.REACT_APP_TEST_USERNAME }}",
+            "REACT_APP_TEST_PASSWORD": "${{ secrets.REACT_APP_TEST_PASSWORD }}"
+          },
+          "run": "yarn firebase emulators:exec --only firestore \"\n  ./scripts/http-server.js > /dev/null &\n  yarn run test --coverage\n\"\n"
+        },
+        {
+          "name": "Export coverage",
+          "uses": "coverallsapp/github-action@master",
+          "with": {
+            "github-token": "${{ secrets.GITHUB_TOKEN }}"
+          }
+        }
+      ]
+    },
+    "Lint": {
+      "runs-on": "ubuntu-18.04",
+      "steps": [
+        {
+          "name": "Checkout code repository",
+          "uses": "actions/checkout@v2"
+        },
+        {
+          "name": "Setup node.js",
+          "uses": "actions/setup-node@v1",
+          "with": {
+            "node-version": 12
+          }
+        },
+        {
+          "id": "step_cache",
+          "name": "Cache",
+          "uses": "actions/cache@master",
+          "with": {
+            "path": "node_modules\n*/*/node_modules\n.next/cache\n~/.cache/firebase\n",
+            "key": "${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}"
+          }
+        },
+        {
+          "name": "Install Dependencies",
+          "if": "steps.step_cache.outputs.cache-hit != 'true'",
+          "run": "yarn install --frozen-lockfile\nyarn firebase setup:emulators:firestore\nls -lrth ~/.cache/firebase/emulators/\n"
+        },
+        {
+          "name": "Lint",
+          "run": "yarn run lint ."
+        },
+        {
+          "name": "Check actions configration",
+          "run": "hash1=$(sha1sum .github/workflows/main.yml)\n./node_modules/.bin/js-yaml .github/temp/main.yml > .github/workflows/main.yml\nhash2=$(sha1sum .github/workflows/main.yml)\necho \"$hash1\" \"$hash2\"\nif [ \"$hash1\" != \"$hash2\" ]; then exit 1; fi\n"
+        }
+      ]
+    },
+    "Lighthouse": {
+      "runs-on": "ubuntu-18.04",
+      "needs": "build",
+      "steps": [
+        {
+          "name": "Checkout code repository",
+          "uses": "actions/checkout@v2"
+        },
+        {
+          "name": "Setup node.js",
+          "uses": "actions/setup-node@v1",
+          "with": {
+            "node-version": 12
+          }
+        },
+        {
+          "id": "step_cache",
+          "name": "Cache",
+          "uses": "actions/cache@master",
+          "with": {
+            "path": "node_modules\n*/*/node_modules\n.next/cache\n~/.cache/firebase\n",
+            "key": "${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}"
+          }
+        },
+        {
+          "name": "Install Dependencies",
+          "if": "steps.step_cache.outputs.cache-hit != 'true'",
+          "run": "yarn install --frozen-lockfile\nyarn firebase setup:emulators:firestore\nls -lrth ~/.cache/firebase/emulators/\n"
+        },
+        {
+          "name": "Download dist",
+          "uses": "actions/download-artifact@v1",
+          "with": {
+            "name": "dist"
+          }
+        },
+        {
+          "name": "Run lighthouse",
+          "env": {
+            "GITHUB_TOKEN": "${{ secrets.GITHUB_TOKEN }}",
+            "LHCI_GITHUB_APP_TOKEN": "${{ secrets.LHCI_GITHUB_APP_TOKEN }}"
+          },
+          "run": "rm ./dist/404.html # Don't let lighthouse to check 404.html\nyarn run lhci autorun\n"
+        }
+      ]
+    },
+    "Netlify": {
+      "runs-on": "ubuntu-18.04",
+      "needs": "build",
+      "steps": [
+        {
+          "name": "Checkout code repository",
+          "uses": "actions/checkout@v2"
+        },
+        {
+          "name": "Setup node.js",
+          "uses": "actions/setup-node@v1",
+          "with": {
+            "node-version": 12
+          }
+        },
+        {
+          "id": "step_cache",
+          "name": "Cache",
+          "uses": "actions/cache@master",
+          "with": {
+            "path": "node_modules\n*/*/node_modules\n.next/cache\n~/.cache/firebase\n",
+            "key": "${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}"
+          }
+        },
+        {
+          "name": "Install Dependencies",
+          "if": "steps.step_cache.outputs.cache-hit != 'true'",
+          "run": "yarn install --frozen-lockfile\nyarn firebase setup:emulators:firestore\nls -lrth ~/.cache/firebase/emulators/\n"
+        },
+        {
+          "name": "Download dist",
+          "uses": "actions/download-artifact@v1",
+          "with": {
+            "name": "dist"
+          }
+        },
+        {
+          "name": "Deploy to Netlify",
+          "env": {
+            "NETLIFY_AUTH_TOKEN": "${{ secrets.NETLIFY_AUTH_TOKEN }}",
+            "NETLIFY_SITE_ID": "${{ secrets.NETLIFY_SITE_ID }}"
+          },
+          "run": "echo '<!-- Netlify -->' >> ./dist/index.html\necho '<!-- Netlify -->' >> ./dist/404.html\nmessage=\"Deployment from Circle CI. Ref: $(git rev-parse --abbrev-ref HEAD). Commit: $(git rev-parse --short HEAD).\"\n./node_modules/.bin/netlify deploy --json --message \"$message\" > /tmp/deploy.json\ncat /tmp/deploy.json\n"
+        }
+      ]
+    },
+    "Firebase": {
+      "runs-on": "ubuntu-18.04",
+      "needs": [
+        "build",
+        "test",
+        "lint",
+        "lighthouse",
+        "netlify"
+      ],
+      "if": "github.ref == 'refs/heads/master'",
+      "steps": [
+        {
+          "name": "Checkout code repository",
+          "uses": "actions/checkout@v2"
+        },
+        {
+          "name": "Setup node.js",
+          "uses": "actions/setup-node@v1",
+          "with": {
+            "node-version": 12
+          }
+        },
+        {
+          "id": "step_cache",
+          "name": "Cache",
+          "uses": "actions/cache@master",
+          "with": {
+            "path": "node_modules\n*/*/node_modules\n.next/cache\n~/.cache/firebase\n",
+            "key": "${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}"
+          }
+        },
+        {
+          "name": "Install Dependencies",
+          "if": "steps.step_cache.outputs.cache-hit != 'true'",
+          "run": "yarn install --frozen-lockfile\nyarn firebase setup:emulators:firestore\nls -lrth ~/.cache/firebase/emulators/\n"
+        },
+        {
+          "name": "Download dist",
+          "uses": "actions/download-artifact@v1",
+          "with": {
+            "name": "dist"
+          }
+        },
+        {
+          "name": "Configrate firebase",
+          "env": {
+            "FIREBASE_CLIENT_JSON": "${{ secrets.FIREBASE_CLIENT_JSON }}",
+            "FIREBASE_TOKEN": "${{ secrets.FIREBASE_TOKEN }}"
+          },
+          "run": "echo \"${FIREBASE_CLIENT_JSON}\" > ./config/firebase.client.json\nexport FIREBASE_PROJECT_ID=$(scripts/simple_jq.js ./config/firebase.client.json .projectId)\nyarn firebase use --add $FIREBASE_PROJECT_ID\n"
+        },
+        {
+          "name": "Deploy to Firebase",
+          "env": {
+            "FIREBASE_TOKEN": "${{ secrets.FIREBASE_TOKEN }}"
+          },
+          "run": "echo '<!-- Firebase hosting -->' >> ./dist/index.html\necho '<!-- Firebase hosting -->' >> ./dist/404.html\n# TODO: Use changesets actions\n# yarn firebase deploy\n"
+        }
+      ]
+    }
+  }
+}

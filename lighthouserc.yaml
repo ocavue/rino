@@ -1,0 +1,7 @@
+# This is the configration file for https://github.com/GoogleChrome/lighthouse-ci
+
+ci:
+  upload:
+    target: temporary-public-storage
+  assert:
+    preset: "lighthouse:recommended"
