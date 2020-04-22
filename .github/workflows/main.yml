@@ -258,16 +258,62 @@
         }
       ]
     },
+    "Changesets": {
+      "runs-on": "ubuntu-18.04",
+      "needs": [
+        "Build",
+        "Test",
+        "Lint",
+        "Lighthouse",
+        "Netlify"
+      ],
+      "if": "github.ref == 'refs/heads/master'",
+      "steps": [
+        {
+          "name": "Checkout code repository",
+          "uses": "actions/checkout@v2"
+        },
+        {
+          "name": "Setup node.js",
+          "uses": "actions/setup-node@v1",
+          "with": {
+            "node-version": 12
+          }
+        },
+        {
+          "id": "step_cache",
+          "name": "Cache",
+          "uses": "actions/cache@master",
+          "with": {
+            "path": "node_modules\n*/*/node_modules\n.next/cache\n~/.cache/firebase\n",
+            "key": "${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}"
+          }
+        },
+        {
+          "name": "Install Dependencies",
+          "if": "steps.step_cache.outputs.cache-hit != 'true'",
+          "run": "yarn install --frozen-lockfile\nyarn firebase setup:emulators:firestore\nls -lrth ~/.cache/firebase/emulators/\n"
+        },
+        {
+          "id": "step_changesets",
+          "name": "Create Release Pull Request or Publish to npm",
+          "uses": "changesets/action@master",
+          "with": {
+            "publish": "yarn run changeset publish"
+          },
+          "env": {
+            "GITHUB_TOKEN": "${{ secrets.GITHUB_TOKEN }}",
+            "NPM_TOKEN": "${{ secrets.NPM_TOKEN }}"
+          }
+        }
+      ]
+    },
     "Firebase": {
       "runs-on": "ubuntu-18.04",
       "needs": [
-        "build",
-        "test",
-        "lint",
-        "lighthouse",
-        "netlify"
+        "Changesets"
       ],
-      "if": "github.ref == 'refs/heads/master'",
+      "if": "steps.step_changesets.outputs.published == 'true'",
       "steps": [
         {
           "name": "Checkout code repository",
