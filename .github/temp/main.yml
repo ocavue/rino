@@ -1,0 +1,203 @@
+name: Core
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+env:
+  CI: true
+
+jobs:
+  Build:
+    runs-on: ubuntu-18.04
+    steps:
+      - &step_checkout
+        name: Checkout code repository
+        uses: actions/checkout@v2
+
+      - &step_setup_node
+        name: Setup node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12
+
+      - &step_cache
+        id: step_cache
+        name: Cache
+        uses: actions/cache@master
+        with:
+          # https://err.sh/next.js/no-cache
+          path: |
+            node_modules
+            */*/node_modules
+            .next/cache
+            ~/.cache/firebase
+          # Note this example uses the new multi-paths feature and is only available at master
+          # https://github.com/actions/cache/blob/f00dedfa6c708c51f4e4296f092458a4a891bddd/examples.md#node---lerna
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+
+      - &step_deps
+        name: Install Dependencies
+        if: steps.step_cache.outputs.cache-hit != 'true' # Skipping steps based on cache-hit
+        run: |
+          yarn install --frozen-lockfile
+          yarn firebase setup:emulators:firestore
+          ls -lrth ~/.cache/firebase/emulators/
+
+      - &step_config_firebase
+        name: Configrate firebase
+        env:
+          FIREBASE_CLIENT_JSON: ${{ secrets.FIREBASE_CLIENT_JSON }}
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }} # https://firebase.google.com/docs/cli#cli-ci-systems
+        run: |
+          echo "${FIREBASE_CLIENT_JSON}" > ./config/firebase.client.json
+          export FIREBASE_PROJECT_ID=$(scripts/simple_jq.js ./config/firebase.client.json .projectId)
+          yarn firebase use --add $FIREBASE_PROJECT_ID
+
+      - name: Build
+        run: |
+          yarn run build
+          yarn run export
+
+      - name: Upload dist
+        uses: actions/upload-artifact@v1
+        with:
+          name: dist
+          path: ./dist
+
+  Test:
+    runs-on: ubuntu-18.04
+    steps:
+      - *step_checkout
+      - *step_setup_node
+      - *step_cache
+      - *step_deps
+      - *step_config_firebase
+
+      - name: Build static files
+        env:
+          REACT_APP_TEST_USERNAME: ${{ secrets.REACT_APP_TEST_USERNAME }}
+          REACT_APP_TEST_PASSWORD: ${{ secrets.REACT_APP_TEST_PASSWORD }}
+        run: |
+          export REACT_APP_TESTING=1
+          export FIREBASE_DATABASE_EMULATOR_HOST="localhost:$(scripts/simple_jq.js ./firebase.json .emulators.database.port)"
+          export FIRESTORE_EMULATOR_HOST="localhost:$(scripts/simple_jq.js ./firebase.json .emulators.firestore.port)"
+          echo "firebase environment variables:" $FIREBASE_DATABASE_EMULATOR_HOST $FIRESTORE_EMULATOR_HOST
+          yarn build
+          yarn export
+
+      - name: Run tests
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }} # https://firebase.google.com/docs/cli#cli-ci-systems
+          REACT_APP_TEST_USERNAME: ${{ secrets.REACT_APP_TEST_USERNAME }}
+          REACT_APP_TEST_PASSWORD: ${{ secrets.REACT_APP_TEST_PASSWORD }}
+        run: |
+          yarn firebase emulators:exec --only firestore "
+            ./scripts/http-server.js > /dev/null &
+            yarn run test --coverage
+          "
+
+      - name: Export coverage
+        uses: coverallsapp/github-action@master
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+  Lint:
+    runs-on: ubuntu-18.04
+    steps:
+      - *step_checkout
+      - *step_setup_node
+      - *step_cache
+      - *step_deps
+
+      - name: Lint
+        run: yarn run lint .
+
+      - name: Check actions configration
+        run: |
+          hash1=$(sha1sum .github/workflows/main.yml)
+          ./node_modules/.bin/js-yaml .github/temp/main.yml > .github/workflows/main.yml
+          hash2=$(sha1sum .github/workflows/main.yml)
+          echo "$hash1" "$hash2"
+          if [ "$hash1" != "$hash2" ]; then exit 1; fi
+
+  # TODO: Send Lighthouse result to commit/PR
+  Lighthouse:
+    runs-on: ubuntu-18.04
+    needs: build
+    steps:
+      - *step_checkout
+      - *step_setup_node
+      - *step_cache
+      - *step_deps
+
+      - &step_download_dist
+        name: Download dist
+        uses: actions/download-artifact@v1
+        with:
+          name: dist
+
+      - name: Run lighthouse
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }} # Install this GitHub App and get the token: https://github.com/apps/lighthouse-ci
+        run: |
+          rm ./dist/404.html # Don't let lighthouse to check 404.html
+          yarn run lhci autorun
+
+  # TODO: Send Netlify URL to commit/PR
+  Netlify: # Development deployment
+    runs-on: ubuntu-18.04
+    needs: build
+    steps:
+      - *step_checkout
+      - *step_setup_node
+      - *step_cache
+      - *step_deps
+      - *step_download_dist
+
+      - name: Deploy to Netlify
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+        run: |
+          echo '<!-- Netlify -->' >> ./dist/index.html
+          echo '<!-- Netlify -->' >> ./dist/404.html
+          message="Deployment from Circle CI. Ref: $(git rev-parse --abbrev-ref HEAD). Commit: $(git rev-parse --short HEAD)."
+          ./node_modules/.bin/netlify deploy --json --message "$message" > /tmp/deploy.json
+          cat /tmp/deploy.json
+
+      # - name: Create commit comment
+      #   uses: peter-evans/commit-comment@v1
+      #   with:
+      #     token: ${{ secrets.GITHUB_TOKEN }}
+      #     body: |
+      #       This is a multi-line test comment
+      #       - With GitHub **Markdown**
+      #       - Created by [commit-comment][1]
+      #       [1]: https://github.com/peter-evans/commit-comment
+
+  Firebase: # Production deployment
+    runs-on: ubuntu-18.04
+    needs: [build, test, lint, lighthouse, netlify]
+    if: github.ref == 'refs/heads/master'
+    steps:
+      - *step_checkout
+      - *step_setup_node
+      - *step_cache
+      - *step_deps
+      - *step_download_dist
+      - *step_config_firebase
+
+      - name: Deploy to Firebase
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+        run: |
+          echo '<!-- Firebase hosting -->' >> ./dist/index.html
+          echo '<!-- Firebase hosting -->' >> ./dist/404.html
+          # TODO: Use changesets actions
+          # yarn firebase deploy

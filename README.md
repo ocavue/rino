@@ -3,8 +3,8 @@
 # 🦏 Rino - Yet another Markdown editor
 
 [![Version](https://img.shields.io/github/v/tag/ocavue/rino?label=version)](https://github.com/ocavue/rino/releases)
-[![Build Status](https://circleci.com/gh/ocavue/rino/tree/master.svg?&style=shield)](https://circleci.com/gh/ocavue/rino/tree/master)
 [![Coverage Status](https://coveralls.io/repos/github/ocavue/rino/badge.svg?branch=master)](https://coveralls.io/github/ocavue/rino?branch=master)
+![GitHub Actions](https://github.com/ocavue/rino/workflows/GitHub%20Actions/badge.svg)
 
 Try Rino: <https://rino.app>
 
