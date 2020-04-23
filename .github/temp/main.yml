@@ -1,4 +1,4 @@
-name: Core
+name: CI
 
 on: push
 
@@ -176,7 +176,7 @@ jobs:
   Changesets:
     runs-on: ubuntu-18.04
     needs: [Build, Test, Lint, Lighthouse, Netlify]
-    if: github.ref == 'refs/heads/master'
+    if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/chore/changesets'
     steps:
       - *step_checkout
       - *step_setup_node
