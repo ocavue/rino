@@ -1,5 +1,5 @@
 {
-  "name": "Core",
+  "name": "CI",
   "on": "push",
   "jobs": {
     "Build": {
@@ -257,7 +257,7 @@
         "Lighthouse",
         "Netlify"
       ],
-      "if": "github.ref == 'refs/heads/master'",
+      "if": "github.ref == 'refs/heads/master' || github.ref == 'refs/heads/chore/changesets'",
       "steps": [
         {
           "name": "Checkout code repository",
