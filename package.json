@@ -1,8 +1,7 @@
 {
-  "name": "rino",
+  "name": "@rino.app/web",
   "version": "0.6.7",
-  "license": "GPLv3",
-  "private": true,
+  "license": "GPL-3.0",
   "scripts": {
     "dev": "next dev",
     "start": "next start",
@@ -43,6 +42,7 @@
     "rangeStrategy": "update-lockfile"
   },
   "dependencies": {
+    "@changesets/cli": "^2.6.5",
     "@emotion/core": "^10.0.27",
     "@lhci/cli": "^0.3.12",
     "@material-ui/core": "^4.8.2",
@@ -130,6 +130,12 @@
   ],
   "engines": {
     "node": ">= 12"
+  },
+  "files": [
+    "this_file_dose_not_exist"
+  ],
+  "publishConfig": {
+    "access": "public"
   },
   "//": [
     "jest-puppeteer: Requires Jest v22+ TypeScript users should additionally install `@types/puppeteer`, `@types/jest-environment-puppeteer` and `@types/expect-puppeteer`"
