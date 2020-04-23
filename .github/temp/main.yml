@@ -1,15 +1,6 @@
 name: Core
 
-on:
-  push:
-    branches:
-      - master
-  pull_request:
-    branches:
-      - master
-
-env:
-  CI: true
+on: push
 
 jobs:
   Build:
@@ -102,9 +93,9 @@ jobs:
           "
 
       - name: Export coverage
-        uses: coverallsapp/github-action@master
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+        env:
+          COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
+        run: yarn run coverage
 
   Lint:
     runs-on: ubuntu-18.04
@@ -141,13 +132,14 @@ jobs:
         with:
           name: dist
 
+      - name: Remove 404.html
+        run: rm ./dist/404.html # Don't let lighthouse to check 404.html
+
       - name: Run lighthouse
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }} # Install this GitHub App and get the token: https://github.com/apps/lighthouse-ci
-        run: |
-          rm ./dist/404.html # Don't let lighthouse to check 404.html
-          yarn run lhci autorun
+        run: yarn run lhci autorun
 
   # TODO: Send Netlify URL to commit/PR
   Netlify: # Development deployment
@@ -181,10 +173,31 @@ jobs:
       #       - Created by [commit-comment][1]
       #       [1]: https://github.com/peter-evans/commit-comment
 
-  Firebase: # Production deployment
+  Changesets:
     runs-on: ubuntu-18.04
-    needs: [build, test, lint, lighthouse, netlify]
+    needs: [Build, Test, Lint, Lighthouse, Netlify]
     if: github.ref == 'refs/heads/master'
+    steps:
+      - *step_checkout
+      - *step_setup_node
+      - *step_cache
+      - *step_deps
+
+      - id: step_changesets
+        name: Create Release Pull Request or Publish to npm
+        uses: changesets/action@master
+        with:
+          publish: yarn run changeset publish
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+    outputs:
+      published: ${{ steps.step_changesets.outputs.published }}
+
+  Firebase:
+    runs-on: ubuntu-18.04
+    needs: [Changesets]
+    if: github.ref == 'refs/heads/master' && needs.Changesets.outputs.published == 'true'
     steps:
       - *step_checkout
       - *step_setup_node
