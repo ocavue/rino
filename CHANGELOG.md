@@ -3,4 +3,4 @@
 ## 0.7.0
 ### Minor Changes
 
-- 92d987e: Support indented code blocks
+- d43c16d: Support indented code blocks
