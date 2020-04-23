@@ -1,143 +1,143 @@
 {
-  "name": "@rino.app/web",
-  "version": "0.6.7",
-  "license": "GPL-3.0",
-  "scripts": {
-    "dev": "next dev",
-    "start": "next start",
-    "build": "next build",
-    "export": "next export -o dist",
-    "test": "jest --runInBand",
-    "analyze": "ANALYZE=true next build",
-    "lint": "eslint --ignore-path .gitignore --ext '.js,.jsx,.ts,.tsx'",
-    "coverage": "cat ./coverage/lcov.info | COVERALLS_REPO_TOKEN=$COVERALLS_REPO_TOKEN coveralls"
-  },
-  "renovate": {
-    "extends": [
-      "config:base",
-      ":semanticCommitTypeAll(chore)"
-    ],
-    "postUpdateOptions": [
-      "yarnDedupeFewer"
-    ],
-    "lockFileMaintenance": {
-      "enabled": true,
-      "extends": "schedule:monthly"
+    "name": "@rino.app/web",
+    "version": "0.7.0",
+    "license": "GPL-3.0",
+    "scripts": {
+        "dev": "next dev",
+        "start": "next start",
+        "build": "next build",
+        "export": "next export -o dist",
+        "test": "jest --runInBand",
+        "analyze": "ANALYZE=true next build",
+        "lint": "eslint --ignore-path .gitignore --ext '.js,.jsx,.ts,.tsx'",
+        "coverage": "cat ./coverage/lcov.info | COVERALLS_REPO_TOKEN=$COVERALLS_REPO_TOKEN coveralls"
     },
-    "packageRules": [
-      {
-        "depTypeList": [
-          "dependencies"
+    "renovate": {
+        "extends": [
+            "config:base",
+            ":semanticCommitTypeAll(chore)"
         ],
-        "updateTypes": [
-          "patch",
-          "minor"
+        "postUpdateOptions": [
+            "yarnDedupeFewer"
         ],
-        "groupName": "dependencies (non-major)"
-      }
+        "lockFileMaintenance": {
+            "enabled": true,
+            "extends": "schedule:monthly"
+        },
+        "packageRules": [
+            {
+                "depTypeList": [
+                    "dependencies"
+                ],
+                "updateTypes": [
+                    "patch",
+                    "minor"
+                ],
+                "groupName": "dependencies (non-major)"
+            }
+        ],
+        "ignoreDeps": [
+            "node"
+        ],
+        "rangeStrategy": "update-lockfile"
+    },
+    "dependencies": {
+        "@changesets/cli": "^2.6.5",
+        "@emotion/core": "^10.0.27",
+        "@lhci/cli": "^0.3.12",
+        "@material-ui/core": "^4.8.2",
+        "@material-ui/icons": "^4.5.1",
+        "@next/bundle-analyzer": "^9.2.0",
+        "@remirror/core": "^0.11.0",
+        "@remirror/core-extensions": "^0.11.0",
+        "@remirror/dev": "^0.11.0",
+        "@remirror/extension-code-block": "^0.12.0",
+        "@remirror/extension-tables": "^0.11.0",
+        "@remirror/react": "^0.11.0",
+        "@types/expect-puppeteer": "^4.4.0",
+        "@types/jest": "^25.0.0",
+        "@types/jest-environment-puppeteer": "^4.3.0",
+        "@types/lodash": "^4.14.134",
+        "@types/markdown-it": "^10.0.0",
+        "@types/node": "^12.0.0",
+        "@types/prosemirror-commands": "^1.0.0",
+        "@types/prosemirror-dropcursor": "^1.0.0",
+        "@types/prosemirror-history": "^1.0.0",
+        "@types/prosemirror-inputrules": "^1.0.0",
+        "@types/prosemirror-keymap": "^1.0.0",
+        "@types/prosemirror-model": "^1.0.0",
+        "@types/prosemirror-schema-list": "^1.0.0",
+        "@types/prosemirror-state": "^1.0.0",
+        "@types/prosemirror-test-builder": "^1.0.0",
+        "@types/prosemirror-view": "^1.0.0",
+        "@types/puppeteer": "^2.0.0",
+        "@types/react": "^16.9.0",
+        "@types/react-dom": "^16.9.0",
+        "@typescript-eslint/eslint-plugin": "^2.0.0",
+        "@typescript-eslint/parser": "^2.0.0",
+        "coveralls": "^3.0.9",
+        "dotenv": "^8.2.0",
+        "eslint": "^6.8.0",
+        "eslint-config-prettier": "^6.9.0",
+        "eslint-plugin-jest": "^23.0.0",
+        "eslint-plugin-prettier": "^3.1.2",
+        "eslint-plugin-react": "^7.17.0",
+        "eslint-plugin-react-hooks": "^3.0.0",
+        "eslint-plugin-simple-import-sort": "^5.0.0",
+        "firebase": "^7.4.0",
+        "firebase-admin": "^8.10.0",
+        "firebase-tools": "^8.0.0",
+        "github-markdown-css": "^4.0.0",
+        "immer": "^6.0.0",
+        "jest": "^25.0.0",
+        "jest-extended": "^0.11.4",
+        "jest-prosemirror": "^0.8.0",
+        "jest-puppeteer": "^4.3.0",
+        "jest-puppeteer-istanbul": "^0.5.2",
+        "jest-remirror": "^0.11.0",
+        "jest-transform-stub": "^2.0.0",
+        "lodash": "^4.17.13",
+        "markdown-it": "^10.0.0",
+        "netlify-cli": "^2.40.0",
+        "next": "^9.2.0",
+        "next-images": "^1.3.0",
+        "next-offline": "^5.0.0",
+        "prettier": "^2.0.0",
+        "prosemirror-commands": "^1.0.8",
+        "prosemirror-dev-tools": "^2.1.1",
+        "prosemirror-dropcursor": "^1.1.1",
+        "prosemirror-history": "^1.0.4",
+        "prosemirror-inputrules": "^1.0.4",
+        "prosemirror-keymap": "^1.0.1",
+        "prosemirror-model": "^1.7.1",
+        "prosemirror-schema-list": "^1.0.3",
+        "prosemirror-state": "^1.2.3",
+        "prosemirror-test-builder": "^1.0.0",
+        "prosemirror-view": "^1.14.2",
+        "puppeteer": "^2.0.0",
+        "raw-loader": "^4.0.0",
+        "react": "^16.12.0",
+        "react-dom": "^16.12.0",
+        "tsconfig-paths-webpack-plugin": "^3.2.0",
+        "typescript": "~3.8.0",
+        "unstated-next": "^1.1.0",
+        "webpack": "^4.0.0"
+    },
+    "browserslist": [
+        "> 1%",
+        "not dead",
+        "not op_mini all"
     ],
-    "ignoreDeps": [
-      "node"
+    "engines": {
+        "node": ">= 12"
+    },
+    "files": [
+        "this_file_dose_not_exist"
     ],
-    "rangeStrategy": "update-lockfile"
-  },
-  "dependencies": {
-    "@changesets/cli": "^2.6.5",
-    "@emotion/core": "^10.0.27",
-    "@lhci/cli": "^0.3.12",
-    "@material-ui/core": "^4.8.2",
-    "@material-ui/icons": "^4.5.1",
-    "@next/bundle-analyzer": "^9.2.0",
-    "@remirror/core": "^0.11.0",
-    "@remirror/core-extensions": "^0.11.0",
-    "@remirror/dev": "^0.11.0",
-    "@remirror/extension-code-block": "^0.12.0",
-    "@remirror/extension-tables": "^0.11.0",
-    "@remirror/react": "^0.11.0",
-    "@types/expect-puppeteer": "^4.4.0",
-    "@types/jest": "^25.0.0",
-    "@types/jest-environment-puppeteer": "^4.3.0",
-    "@types/lodash": "^4.14.134",
-    "@types/markdown-it": "^10.0.0",
-    "@types/node": "^12.0.0",
-    "@types/prosemirror-commands": "^1.0.0",
-    "@types/prosemirror-dropcursor": "^1.0.0",
-    "@types/prosemirror-history": "^1.0.0",
-    "@types/prosemirror-inputrules": "^1.0.0",
-    "@types/prosemirror-keymap": "^1.0.0",
-    "@types/prosemirror-model": "^1.0.0",
-    "@types/prosemirror-schema-list": "^1.0.0",
-    "@types/prosemirror-state": "^1.0.0",
-    "@types/prosemirror-test-builder": "^1.0.0",
-    "@types/prosemirror-view": "^1.0.0",
-    "@types/puppeteer": "^2.0.0",
-    "@types/react": "^16.9.0",
-    "@types/react-dom": "^16.9.0",
-    "@typescript-eslint/eslint-plugin": "^2.0.0",
-    "@typescript-eslint/parser": "^2.0.0",
-    "coveralls": "^3.0.9",
-    "dotenv": "^8.2.0",
-    "eslint": "^6.8.0",
-    "eslint-config-prettier": "^6.9.0",
-    "eslint-plugin-jest": "^23.0.0",
-    "eslint-plugin-prettier": "^3.1.2",
-    "eslint-plugin-react": "^7.17.0",
-    "eslint-plugin-react-hooks": "^3.0.0",
-    "eslint-plugin-simple-import-sort": "^5.0.0",
-    "firebase": "^7.4.0",
-    "firebase-admin": "^8.10.0",
-    "firebase-tools": "^8.0.0",
-    "github-markdown-css": "^4.0.0",
-    "immer": "^6.0.0",
-    "jest": "^25.0.0",
-    "jest-extended": "^0.11.4",
-    "jest-prosemirror": "^0.8.0",
-    "jest-puppeteer": "^4.3.0",
-    "jest-puppeteer-istanbul": "^0.5.2",
-    "jest-remirror": "^0.11.0",
-    "jest-transform-stub": "^2.0.0",
-    "lodash": "^4.17.13",
-    "markdown-it": "^10.0.0",
-    "netlify-cli": "^2.40.0",
-    "next": "^9.2.0",
-    "next-images": "^1.3.0",
-    "next-offline": "^5.0.0",
-    "prettier": "^2.0.0",
-    "prosemirror-commands": "^1.0.8",
-    "prosemirror-dev-tools": "^2.1.1",
-    "prosemirror-dropcursor": "^1.1.1",
-    "prosemirror-history": "^1.0.4",
-    "prosemirror-inputrules": "^1.0.4",
-    "prosemirror-keymap": "^1.0.1",
-    "prosemirror-model": "^1.7.1",
-    "prosemirror-schema-list": "^1.0.3",
-    "prosemirror-state": "^1.2.3",
-    "prosemirror-test-builder": "^1.0.0",
-    "prosemirror-view": "^1.14.2",
-    "puppeteer": "^2.0.0",
-    "raw-loader": "^4.0.0",
-    "react": "^16.12.0",
-    "react-dom": "^16.12.0",
-    "tsconfig-paths-webpack-plugin": "^3.2.0",
-    "typescript": "~3.8.0",
-    "unstated-next": "^1.1.0",
-    "webpack": "^4.0.0"
-  },
-  "browserslist": [
-    "> 1%",
-    "not dead",
-    "not op_mini all"
-  ],
-  "engines": {
-    "node": ">= 12"
-  },
-  "files": [
-    "this_file_dose_not_exist"
-  ],
-  "publishConfig": {
-    "access": "public"
-  },
-  "//": [
-    "jest-puppeteer: Requires Jest v22+ TypeScript users should additionally install `@types/puppeteer`, `@types/jest-environment-puppeteer` and `@types/expect-puppeteer`"
-  ]
+    "publishConfig": {
+        "access": "public"
+    },
+    "//": [
+        "jest-puppeteer: Requires Jest v22+ TypeScript users should additionally install `@types/puppeteer`, `@types/jest-environment-puppeteer` and `@types/expect-puppeteer`"
+    ]
 }
