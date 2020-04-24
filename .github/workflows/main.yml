@@ -353,7 +353,7 @@
           "env": {
             "FIREBASE_TOKEN": "${{ secrets.FIREBASE_TOKEN }}"
           },
-          "run": "echo '<!-- Firebase hosting -->' >> ./dist/index.html\necho '<!-- Firebase hosting -->' >> ./dist/404.html\n# TODO: Use changesets actions\n# yarn firebase deploy\n"
+          "run": "echo '<!-- Firebase hosting -->' >> ./dist/index.html\necho '<!-- Firebase hosting -->' >> ./dist/404.html\nyarn firebase deploy\n"
         }
       ]
     }
