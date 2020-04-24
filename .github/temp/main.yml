@@ -212,5 +212,4 @@ jobs:
         run: |
           echo '<!-- Firebase hosting -->' >> ./dist/index.html
           echo '<!-- Firebase hosting -->' >> ./dist/404.html
-          # TODO: Use changesets actions
-          # yarn firebase deploy
+          yarn firebase deploy
