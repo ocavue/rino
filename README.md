@@ -20,10 +20,6 @@ Try Rino: <https://rino.app>
 
 - [How to develop from source](https://github.com/ocavue/rino/wiki/Development)
 
-## Change log
-
-Check [this link](https://github.com/ocavue/rino/wiki/Changelog).
-
 ## License
 
 [GPL-3.0](https://github.com/ocavue/rino/blob/master/LICENSE)
