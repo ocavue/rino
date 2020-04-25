@@ -1,6 +1,9 @@
 {
   "name": "CI",
   "on": "push",
+  "env": {
+    "NEXT_TELEMETRY_DISABLED": 1
+  },
   "jobs": {
     "Build": {
       "runs-on": "ubuntu-18.04",
