@@ -1,3 +1,10 @@
 codecov:
   # Should Codecov wait for all other statues to pass before sending it's status.
-  require_ci_to_pass: yes
+  # Type: Boolean
+  # Default: yes
+  require_ci_to_pass: no
+  # Should Codecov wait for all CI statuses to complete before sending ours.
+  # Note: Codecov considers all non-codecov statues to be CI statuses
+  # Type: Boolean
+  # Default: yes
+  wait_for_ci: no
