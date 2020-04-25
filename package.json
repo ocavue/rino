@@ -41,6 +41,11 @@
         ],
         "rangeStrategy": "update-lockfile"
     },
+    "husky": {
+        "hooks": {
+            "pre-commit": "./scripts/pre-commit.sh"
+        }
+    },
     "dependencies": {
         "@changesets/cli": "^2.6.5",
         "@emotion/core": "^10.0.27",
@@ -88,6 +93,7 @@
         "firebase-admin": "^8.10.0",
         "firebase-tools": "^8.0.0",
         "github-markdown-css": "^4.0.0",
+        "husky": "^4.2.5",
         "immer": "^6.0.0",
         "jest": "^25.0.0",
         "jest-extended": "^0.11.4",
