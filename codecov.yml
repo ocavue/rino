@@ -1,0 +1,12 @@
+codecov:
+  # Should Codecov wait for all other statues to pass before sending it's status.
+  # Type: Boolean
+  # Default: yes
+  require_ci_to_pass: no
+
+  status:
+    project:
+      default:
+        # Allow the coverage to drop by X%, and posting a success status.
+        # Install Codecov's GitHub App: https://github.com/apps/codecov
+        threshold: 1%
