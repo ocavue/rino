@@ -1,6 +1,9 @@
 {
   "name": "CI",
   "on": "push",
+  "env": {
+    "NEXT_TELEMETRY_DISABLED": 1
+  },
   "jobs": {
     "Build": {
       "runs-on": "ubuntu-18.04",
@@ -17,17 +20,17 @@
           }
         },
         {
-          "id": "step_cache",
-          "name": "Cache",
+          "id": "step_cache_deps",
+          "name": "Cache dependencies",
           "uses": "actions/cache@master",
           "with": {
-            "path": "node_modules\n*/*/node_modules\n.next/cache\n~/.cache/firebase\n",
-            "key": "${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}"
+            "path": "node_modules\n*/*/node_modules\n~/.cache/firebase\n",
+            "key": "${{ runner.os }}-deps-${{ hashFiles('**/yarn.lock') }}"
           }
         },
         {
           "name": "Install Dependencies",
-          "if": "steps.step_cache.outputs.cache-hit != 'true'",
+          "if": "steps.step_cache_deps.outputs.cache-hit != 'true'",
           "run": "yarn install --frozen-lockfile\nyarn firebase setup:emulators:firestore\nls -lrth ~/.cache/firebase/emulators/\n"
         },
         {
@@ -67,17 +70,17 @@
           }
         },
         {
-          "id": "step_cache",
-          "name": "Cache",
+          "id": "step_cache_deps",
+          "name": "Cache dependencies",
           "uses": "actions/cache@master",
           "with": {
-            "path": "node_modules\n*/*/node_modules\n.next/cache\n~/.cache/firebase\n",
-            "key": "${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}"
+            "path": "node_modules\n*/*/node_modules\n~/.cache/firebase\n",
+            "key": "${{ runner.os }}-deps-${{ hashFiles('**/yarn.lock') }}"
           }
         },
         {
           "name": "Install Dependencies",
-          "if": "steps.step_cache.outputs.cache-hit != 'true'",
+          "if": "steps.step_cache_deps.outputs.cache-hit != 'true'",
           "run": "yarn install --frozen-lockfile\nyarn firebase setup:emulators:firestore\nls -lrth ~/.cache/firebase/emulators/\n"
         },
         {
@@ -87,6 +90,15 @@
             "FIREBASE_TOKEN": "${{ secrets.FIREBASE_TOKEN }}"
           },
           "run": "echo \"${FIREBASE_CLIENT_JSON}\" > ./config/firebase.client.json\nexport FIREBASE_PROJECT_ID=$(scripts/simple_jq.js ./config/firebase.client.json .projectId)\nyarn firebase use --add $FIREBASE_PROJECT_ID\n"
+        },
+        {
+          "id": "step_cache_next",
+          "name": "Cache next.js build bundles",
+          "uses": "actions/cache@master",
+          "with": {
+            "path": "./.next/cache",
+            "key": "${{ runner.os }}-next-${{ hashFiles('**/yarn.lock') }}"
+          }
         },
         {
           "name": "Build static files",
@@ -136,17 +148,17 @@
           }
         },
         {
-          "id": "step_cache",
-          "name": "Cache",
+          "id": "step_cache_deps",
+          "name": "Cache dependencies",
           "uses": "actions/cache@master",
           "with": {
-            "path": "node_modules\n*/*/node_modules\n.next/cache\n~/.cache/firebase\n",
-            "key": "${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}"
+            "path": "node_modules\n*/*/node_modules\n~/.cache/firebase\n",
+            "key": "${{ runner.os }}-deps-${{ hashFiles('**/yarn.lock') }}"
           }
         },
         {
           "name": "Install Dependencies",
-          "if": "steps.step_cache.outputs.cache-hit != 'true'",
+          "if": "steps.step_cache_deps.outputs.cache-hit != 'true'",
           "run": "yarn install --frozen-lockfile\nyarn firebase setup:emulators:firestore\nls -lrth ~/.cache/firebase/emulators/\n"
         },
         {
@@ -175,17 +187,17 @@
           }
         },
         {
-          "id": "step_cache",
-          "name": "Cache",
+          "id": "step_cache_deps",
+          "name": "Cache dependencies",
           "uses": "actions/cache@master",
           "with": {
-            "path": "node_modules\n*/*/node_modules\n.next/cache\n~/.cache/firebase\n",
-            "key": "${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}"
+            "path": "node_modules\n*/*/node_modules\n~/.cache/firebase\n",
+            "key": "${{ runner.os }}-deps-${{ hashFiles('**/yarn.lock') }}"
           }
         },
         {
           "name": "Install Dependencies",
-          "if": "steps.step_cache.outputs.cache-hit != 'true'",
+          "if": "steps.step_cache_deps.outputs.cache-hit != 'true'",
           "run": "yarn install --frozen-lockfile\nyarn firebase setup:emulators:firestore\nls -lrth ~/.cache/firebase/emulators/\n"
         },
         {
@@ -225,17 +237,17 @@
           }
         },
         {
-          "id": "step_cache",
-          "name": "Cache",
+          "id": "step_cache_deps",
+          "name": "Cache dependencies",
           "uses": "actions/cache@master",
           "with": {
-            "path": "node_modules\n*/*/node_modules\n.next/cache\n~/.cache/firebase\n",
-            "key": "${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}"
+            "path": "node_modules\n*/*/node_modules\n~/.cache/firebase\n",
+            "key": "${{ runner.os }}-deps-${{ hashFiles('**/yarn.lock') }}"
           }
         },
         {
           "name": "Install Dependencies",
-          "if": "steps.step_cache.outputs.cache-hit != 'true'",
+          "if": "steps.step_cache_deps.outputs.cache-hit != 'true'",
           "run": "yarn install --frozen-lockfile\nyarn firebase setup:emulators:firestore\nls -lrth ~/.cache/firebase/emulators/\n"
         },
         {
@@ -278,17 +290,17 @@
           }
         },
         {
-          "id": "step_cache",
-          "name": "Cache",
+          "id": "step_cache_deps",
+          "name": "Cache dependencies",
           "uses": "actions/cache@master",
           "with": {
-            "path": "node_modules\n*/*/node_modules\n.next/cache\n~/.cache/firebase\n",
-            "key": "${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}"
+            "path": "node_modules\n*/*/node_modules\n~/.cache/firebase\n",
+            "key": "${{ runner.os }}-deps-${{ hashFiles('**/yarn.lock') }}"
           }
         },
         {
           "name": "Install Dependencies",
-          "if": "steps.step_cache.outputs.cache-hit != 'true'",
+          "if": "steps.step_cache_deps.outputs.cache-hit != 'true'",
           "run": "yarn install --frozen-lockfile\nyarn firebase setup:emulators:firestore\nls -lrth ~/.cache/firebase/emulators/\n"
         },
         {
@@ -327,17 +339,17 @@
           }
         },
         {
-          "id": "step_cache",
-          "name": "Cache",
+          "id": "step_cache_deps",
+          "name": "Cache dependencies",
           "uses": "actions/cache@master",
           "with": {
-            "path": "node_modules\n*/*/node_modules\n.next/cache\n~/.cache/firebase\n",
-            "key": "${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}"
+            "path": "node_modules\n*/*/node_modules\n~/.cache/firebase\n",
+            "key": "${{ runner.os }}-deps-${{ hashFiles('**/yarn.lock') }}"
           }
         },
         {
           "name": "Install Dependencies",
-          "if": "steps.step_cache.outputs.cache-hit != 'true'",
+          "if": "steps.step_cache_deps.outputs.cache-hit != 'true'",
           "run": "yarn install --frozen-lockfile\nyarn firebase setup:emulators:firestore\nls -lrth ~/.cache/firebase/emulators/\n"
         },
         {

@@ -2,6 +2,7 @@ import { useRouter } from "next/router"
 import React from "react"
 
 import { signInTestUser } from "src/controller"
+import Alert from "src/views/Alert"
 
 export default function DevSignIn() {
     const router = useRouter()
@@ -19,5 +20,5 @@ export default function DevSignIn() {
         }, 2000)
         return () => clearTimeout(timeout)
     }, [router, query])
-    return <div>dev sign in</div>
+    return <Alert title="sign in" message="development" />
 }

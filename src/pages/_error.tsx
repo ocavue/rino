@@ -1,3 +1,4 @@
+import { Button } from "@material-ui/core"
 import { NextPageContext } from "next"
 import React from "react"
 
@@ -23,7 +24,13 @@ function Error(props: { statusCode?: number }) {
     // In static build, `statusCode` is empty since `getInitialProps` will not be executed.
     const code = String(props.statusCode || 404)
     const message = statusCodeMap[code] || `The server return status code "${code}".`
-    return <Alert title={code} message={message} />
+    return (
+        <Alert title={code} message={message}>
+            <Button href="/" size="small" variant="outlined">
+                Return homepage
+            </Button>
+        </Alert>
+    )
 }
 
 Error.getInitialProps = ({ res, err }: NextPageContext) => {

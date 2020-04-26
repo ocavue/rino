@@ -2,6 +2,7 @@ import { useRouter } from "next/router"
 import React from "react"
 
 import { EditContainer, getCurrentUser } from "src/controller"
+import Alert from "src/views/Alert"
 
 export default function DevCleanNotes() {
     const router = useRouter()
@@ -16,5 +17,5 @@ export default function DevCleanNotes() {
         return () => clearTimeout(timeout)
     }, [removeAllNotes, router])
 
-    return <div>dev clean notes</div>
+    return <Alert title="clean notes" message="development" />
 }

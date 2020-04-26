@@ -3,6 +3,7 @@ import React from "react"
 
 import { signOut } from "src/controller"
 import { StoreContainer } from "src/store"
+import Alert from "src/views/Alert"
 
 export default function DevSignOut() {
     const router = useRouter()
@@ -32,5 +33,5 @@ export default function DevSignOut() {
         }
         return unsubscribe
     }, [router, loading, loadingData, loadingUser, user])
-    return <div>dev sign out</div>
+    return <Alert title="sign out" message="development" />
 }

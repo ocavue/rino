@@ -2,6 +2,9 @@ name: CI
 
 on: push
 
+env:
+  NEXT_TELEMETRY_DISABLED: 1 # https://nextjs.org/telemetry
+
 jobs:
   Build:
     runs-on: ubuntu-18.04
@@ -16,24 +19,22 @@ jobs:
         with:
           node-version: 12
 
-      - &step_cache
-        id: step_cache
-        name: Cache
+      - &step_cache_deps
+        id: step_cache_deps
+        name: Cache dependencies
         uses: actions/cache@master
         with:
-          # https://err.sh/next.js/no-cache
+          # Note this example uses the new multi-paths feature and is only available at master
+          # https://github.com/actions/cache/blob/f00dedfa6c708c51f4e4296f092458a4a891bddd/examples.md#node---lerna
           path: |
             node_modules
             */*/node_modules
-            .next/cache
             ~/.cache/firebase
-          # Note this example uses the new multi-paths feature and is only available at master
-          # https://github.com/actions/cache/blob/f00dedfa6c708c51f4e4296f092458a4a891bddd/examples.md#node---lerna
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          key: ${{ runner.os }}-deps-${{ hashFiles('**/yarn.lock') }}
 
-      - &step_deps
+      - &step_install_deps
         name: Install Dependencies
-        if: steps.step_cache.outputs.cache-hit != 'true' # Skipping steps based on cache-hit
+        if: steps.step_cache_deps.outputs.cache-hit != 'true' # Skipping steps based on cache-hit
         run: |
           yarn install --frozen-lockfile
           yarn firebase setup:emulators:firestore
@@ -65,9 +66,18 @@ jobs:
     steps:
       - *step_checkout
       - *step_setup_node
-      - *step_cache
-      - *step_deps
+      - *step_cache_deps
+      - *step_install_deps
       - *step_config_firebase
+
+      - &step_cache_next
+        id: step_cache_next
+        name: Cache next.js build bundles
+        uses: actions/cache@master
+        with:
+          # https://err.sh/next.js/no-cache
+          path: ./.next/cache
+          key: ${{ runner.os }}-next-${{ hashFiles('**/yarn.lock') }}
 
       - name: Build static files
         env:
@@ -107,8 +117,8 @@ jobs:
     steps:
       - *step_checkout
       - *step_setup_node
-      - *step_cache
-      - *step_deps
+      - *step_cache_deps
+      - *step_install_deps
 
       - name: Lint
         run: yarn run lint .
@@ -128,8 +138,8 @@ jobs:
     steps:
       - *step_checkout
       - *step_setup_node
-      - *step_cache
-      - *step_deps
+      - *step_cache_deps
+      - *step_install_deps
 
       - &step_download_dist
         name: Download dist
@@ -153,8 +163,8 @@ jobs:
     steps:
       - *step_checkout
       - *step_setup_node
-      - *step_cache
-      - *step_deps
+      - *step_cache_deps
+      - *step_install_deps
       - *step_download_dist
 
       - name: Deploy to Netlify
@@ -185,8 +195,8 @@ jobs:
     steps:
       - *step_checkout
       - *step_setup_node
-      - *step_cache
-      - *step_deps
+      - *step_cache_deps
+      - *step_install_deps
 
       - id: step_changesets
         name: Create release pull request or publish to npm
@@ -206,8 +216,8 @@ jobs:
     steps:
       - *step_checkout
       - *step_setup_node
-      - *step_cache
-      - *step_deps
+      - *step_cache_deps
+      - *step_install_deps
       - *step_download_dist
       - *step_config_firebase
 
