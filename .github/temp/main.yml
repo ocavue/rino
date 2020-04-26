@@ -21,7 +21,7 @@ jobs:
 
       - &step_cache_deps
         id: step_cache_deps
-        name: Cache
+        name: Cache dependencies
         uses: actions/cache@master
         with:
           # Note this example uses the new multi-paths feature and is only available at master
@@ -72,7 +72,7 @@ jobs:
 
       - &step_cache_next
         id: step_cache_next
-        name: Cache
+        name: Cache next.js build bundles
         uses: actions/cache@master
         with:
           # https://err.sh/next.js/no-cache
