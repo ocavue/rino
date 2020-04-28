@@ -118,13 +118,6 @@
           "run": "yarn firebase emulators:exec --only firestore \"\n  ./scripts/http-server.js > /dev/null &\n  yarn run test --coverage\n\"\n"
         },
         {
-          "name": "Upload coverage information to coveralls",
-          "env": {
-            "COVERALLS_REPO_TOKEN": "${{ secrets.COVERALLS_REPO_TOKEN }}"
-          },
-          "run": "yarn run coverage"
-        },
-        {
           "name": "Upload coverage information to codecov",
           "uses": "codecov/codecov-action@v1",
           "with": {
