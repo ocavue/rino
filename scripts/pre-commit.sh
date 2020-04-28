@@ -7,3 +7,4 @@ fi
 
 # build github action configration
 ./node_modules/.bin/js-yaml .github/temp/main.yml > .github/workflows/main.yml
+git add .github/workflows/main.yml
