@@ -9,8 +9,7 @@
         "export": "next export -o dist",
         "test": "jest --runInBand",
         "analyze": "ANALYZE=true next build",
-        "lint": "eslint --ignore-path .gitignore --ext '.js,.jsx,.ts,.tsx'",
-        "coverage": "cat ./coverage/lcov.info | COVERALLS_REPO_TOKEN=$COVERALLS_REPO_TOKEN coveralls"
+        "lint": "eslint --ignore-path .gitignore --ext '.js,.jsx,.ts,.tsx'"
     },
     "renovate": {
         "extends": [
@@ -80,7 +79,6 @@
         "@types/react-dom": "^16.9.0",
         "@typescript-eslint/eslint-plugin": "^2.0.0",
         "@typescript-eslint/parser": "^2.0.0",
-        "coveralls": "^3.0.9",
         "dotenv": "^8.2.0",
         "eslint": "^6.8.0",
         "eslint-config-prettier": "^6.9.0",
