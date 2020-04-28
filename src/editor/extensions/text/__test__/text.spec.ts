@@ -31,13 +31,16 @@ describe("fromMarkdown", () => {
     const { manager, doc, p } = setup()
     const parser = buildMarkdownParser(manager)
 
-    test("not-break", () => {
+    test("non newline", () => {
         expect(parser.parse("text")).toEqualRemirrorDocument(doc(p("text")))
     })
-    test("soft-break", () => {
+    test("one newline", () => {
         expect(parser.parse("text\ntext")).toEqualRemirrorDocument(doc(p("text\ntext")))
     })
-    test("hard-break", () => {
+    test("two newlines", () => {
         expect(parser.parse("text\n\ntext")).toEqualRemirrorDocument(doc(p("text"), p("text")))
+    })
+    test("three newlines", () => {
+        expect(parser.parse("text\n\n\ntext")).toEqualRemirrorDocument(doc(p("text"), p("text")))
     })
 })
