@@ -1,19 +1,22 @@
 import { List } from "@material-ui/core"
-import React, { useMemo } from "react"
+import React from "react"
 
-import { EditContainer } from "src/controller"
+import { Note } from "src/controller"
 import { useIsMobile } from "src/hooks"
 import { StoreContainer } from "src/store"
 
 import { NoteListItem } from "./NoteListItem"
 import { useBodyStyles } from "./style"
 
-export const NoteList: React.FC<{}> = () => {
+export const NoteList: React.FC<{
+    visibleNotes: Note[]
+    noteKey: string | null
+    setNoteKey: React.Dispatch<React.SetStateAction<string | null>>
+}> = ({ visibleNotes, noteKey, setNoteKey }) => {
     const classes = useBodyStyles()
     const {
         state: { setDrawerActivity },
     } = StoreContainer.useContainer()
-    const { noteKey, setNoteKey, collection } = EditContainer.useContainer()
 
     const isMobile = useIsMobile()
 
@@ -21,8 +24,6 @@ export const NoteList: React.FC<{}> = () => {
         setNoteKey(key)
         if (isMobile) setDrawerActivity(false)
     }
-
-    const visibleNotes = useMemo(() => collection?.notes || [], [collection])
 
     return (
         <List className={classes.drawerBody} data-testid="sidebar-notes">

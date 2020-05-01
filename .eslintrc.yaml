@@ -11,7 +11,7 @@ extends:
   - "eslint:recommended" # the set of rules which are recommended for all projects by the ESLint Team
   - "plugin:@typescript-eslint/eslint-recommended" # adjust the rules from `eslint:recommended` appropriately for TypeScript
   - "plugin:@typescript-eslint/recommended" # recommended rules for typescript
-  - "plugin:@typescript-eslint/recommended-requiring-type-checking" # provide lint rules with access to type information
+  # - "plugin:@typescript-eslint/recommended-requiring-type-checking" # provide lint rules with access to type information
 
   # https://www.npmjs.com/package/eslint-plugin-react
   - "plugin:react/recommended"
@@ -87,3 +87,6 @@ overrides:
       "@typescript-eslint/no-var-requires": off
 ignorePatterns:
   - jest*.js
+  - node_modules/
+  - .next
+  - .dist

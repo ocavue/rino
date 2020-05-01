@@ -47,16 +47,12 @@ const useUiState = () => {
     const [drawerActivity, setDrawerActivity] = useState(true)
 
     const { isDarkTheme, toggleTheme } = useTheme()
-    const [debug, setDebug] = useState(0)
-    const updateDebug = () => setDebug((n) => n + 1)
 
     return {
         drawerActivity,
         setDrawerActivity,
         isDarkTheme,
         toggleTheme,
-        debug,
-        updateDebug,
     }
 }
 
