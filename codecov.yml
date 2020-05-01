@@ -6,6 +6,6 @@ codecov:
 
   status:
     project:
-      # Allow the coverage to drop by X%, and posting a success status.
-      # Install Codecov's GitHub App: https://github.com/apps/codecov
-      threshold: 1%
+      default:
+        target: auto # auto % coverage target
+        threshold: 5%  # allow for 5% reduction of coverage without failing
