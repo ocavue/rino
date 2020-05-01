@@ -306,7 +306,9 @@
           "name": "Create release pull request or publish to npm",
           "uses": "changesets/action@master",
           "with": {
-            "publish": "yarn run changeset publish"
+            "publish": "yarn run changeset publish",
+            "commit": "chore(changesets): release a new version",
+            "title": "chore(changesets): release a new version"
           },
           "env": {
             "GITHUB_TOKEN": "${{ secrets.GITHUB_TOKEN }}",
