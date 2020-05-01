@@ -105,6 +105,7 @@ jobs:
       - name: Upload coverage information to codecov
         uses: codecov/codecov-action@v1
         with:
+          file: ./coverage/coverage-final.json
           fail_ci_if_error: true # Specify if CI pipeline should fail when Codecov runs into errors during upload. Defaults to false
 
   Lint:

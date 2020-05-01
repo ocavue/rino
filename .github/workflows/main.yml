@@ -121,6 +121,7 @@
           "name": "Upload coverage information to codecov",
           "uses": "codecov/codecov-action@v1",
           "with": {
+            "file": "./coverage/coverage-final.json",
             "fail_ci_if_error": true
           }
         }
