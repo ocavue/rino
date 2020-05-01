@@ -1,11 +1,14 @@
+# Run the follow command to validate this file
+# curl --data-binary @codecov.yml https://codecov.io/validate
+
 codecov:
   # Should Codecov wait for all other statues to pass before sending it's status.
   # Type: Boolean
   # Default: yes
   require_ci_to_pass: no
 
+coverage:
   status:
     project:
       default:
-        target: auto # auto % coverage target
-        threshold: 5%  # allow for 5% reduction of coverage without failing
+        threshold: 1%  # allow for 5% reduction of coverage without failing
