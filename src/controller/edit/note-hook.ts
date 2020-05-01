@@ -117,8 +117,13 @@ function usePremadeNotes() {
 
 function useResetNotes(setNotes: SetNotes, premadeNotes: Notes) {
     return useCallback(
-        function resetNote() {
-            setNotes(premadeNotes)
+        /**
+         * Reset `notes` to premade notes.
+         *
+         * You can also pass a note list as the premade note. Useful when testing.
+         */
+        function resetNote(notes?: Note[]) {
+            setNotes(notes || premadeNotes)
         },
         [premadeNotes, setNotes],
     )
@@ -157,7 +162,6 @@ function useCreateLocalNote(setNotes: SetNotes, setNoteKey: SetNoteKey) {
 export function useNote() {
     const [notes, setNotes] = useNotes()
     const [noteKey, setNoteKey] = useNoteKey()
-    const note = useMemo(() => notes.find((n) => n.key === noteKey), [noteKey, notes])
 
     const premadeNotes = usePremadeNotes()
     const setNoteContent = useSetNoteContent(noteKey, setNotes)
@@ -169,7 +173,6 @@ export function useNote() {
     const createLocalNote = useCreateLocalNote(setNotes, setNoteKey)
 
     return {
-        note,
         notes,
         noteKey,
         setNoteKey,

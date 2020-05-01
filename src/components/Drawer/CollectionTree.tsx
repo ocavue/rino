@@ -6,7 +6,7 @@ import {
     ListItemText,
     makeStyles,
 } from "@material-ui/core"
-import React, { useEffect } from "react"
+import React from "react"
 
 import { Collection, collectionIconMap, CollectionIconName, EditContainer } from "src/controller"
 
@@ -63,17 +63,7 @@ const CollectionList: React.FC<{
 }
 
 export const CollectionTree: React.FC = () => {
-    const {
-        notes,
-        collections,
-        collectionKey,
-        setCollectionKey,
-        initCollections,
-    } = EditContainer.useContainer()
-
-    useEffect(() => {
-        initCollections(notes)
-    }, [notes, initCollections])
+    const { collections, collectionKey, setCollectionKey } = EditContainer.useContainer()
 
     return (
         <CollectionList
