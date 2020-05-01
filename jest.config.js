@@ -30,7 +30,7 @@ const base = {
     coveragePathIgnorePatterns: ["/node_modules/"],
 
     // A list of reporter names that Jest uses when writing coverage reports
-    coverageReporters: ["text-summary", "lcov", "json", "json-summary"],
+    coverageReporters: ["text-summary", "json", "json-summary"],
 
     // An object that configures minimum threshold enforcement for coverage results
     // coverageThreshold: null,
