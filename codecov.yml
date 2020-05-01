@@ -1,6 +1,8 @@
 # Run the follow command to validate this file
 # curl --data-binary @codecov.yml https://codecov.io/validate
 
+# You need to install Codecov's GitHub App ( https://github.com/apps/codecov ) to use some feature.
+
 codecov:
   # Should Codecov wait for all other statues to pass before sending it's status.
   # Type: Boolean
@@ -11,4 +13,4 @@ coverage:
   status:
     project:
       default:
-        threshold: 1%  # allow for 5% reduction of coverage without failing
+        threshold: 1%  # allow for X% reduction of coverage without failing
