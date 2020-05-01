@@ -21,7 +21,7 @@ function renderWithCallback(component: React.ReactNode, callback: () => any) {
     )
 }
 
-test("<SearchBar />", async () => {
+test("<SearchBar />", () => {
     let storeHooks = {} as ReturnType<typeof StoreContainer.useContainer>
     let editHooks = {} as ReturnType<typeof EditContainer.useContainer>
 
