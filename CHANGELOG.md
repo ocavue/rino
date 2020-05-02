@@ -1,5 +1,12 @@
 # @rino.app/web
 
+## 0.8.1
+
+### Patch Changes
+
+-   60fa5ac: Fix markdown text style in dark mode
+-   60fa5ac: Fix markdown table style in dark mode
+
 ## 0.8.0
 
 ### Minor Changes
