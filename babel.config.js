@@ -6,22 +6,23 @@ module.exports = function (api) {
 
     const presets = ["next/babel"]
     const plugins = [
-        // [
-        //     "inline-react-svg",
-        //     {
-        //         svgo: {
-        //             plugins: [
-        //                 {
-        //                     removeAttrs: { attrs: "(data-name)" },
-        //                 },
-        //                 {
-        //                     cleanupIDs: true,
-        //                 },
-        //             ],
-        //         },
-        //     },
-        // ],
-        "inline-react-svg",
+        [
+            "inline-react-svg",
+            {
+                svgo: {
+                    plugins: [
+                        {
+                            // Avoid react from complaining "Invalid attribute name: `'data-name'`"
+                            removeAttrs: { attrs: "(data-name)" },
+                        },
+                        {
+                            // Remove the <style> part so that I can change the svg style with JavaScript
+                            removeStyleElement: true,
+                        },
+                    ],
+                },
+            },
+        ],
     ]
 
     if (process.env.NODE_ENV === "development" || process.env.REACT_APP_TESTING) {

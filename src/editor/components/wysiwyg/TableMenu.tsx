@@ -32,6 +32,9 @@ const useStyles = makeStyles((theme: Theme) => {
             padding: "12px",
             height: "48px",
             width: "48px",
+            "& svg": {
+                fill: "green",
+            },
         },
     })
 })
@@ -66,7 +69,7 @@ export const TableMenu: React.FC = () => {
                     onClick={action}
                     className={classes.menuButton}
                 >
-                    {/* <SvgComponent /> */}
+                    <SvgComponent />
                 </IconButton>
             )
         })

@@ -1,10 +1,11 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-const TsconfigPathsPlugin = require("tsconfig-paths-webpack-plugin")
-const withOffline = require("next-offline")
 const fs = require("fs")
+const path = require("path")
 const execSync = require("child_process").execSync
 const dotenv = require("dotenv")
 
+const TsconfigPathsPlugin = require("tsconfig-paths-webpack-plugin")
+const withOffline = require("next-offline")
 const withImages = require("next-images")
 const withBundleAnalyzer = require("@next/bundle-analyzer")({
     enabled: process.env.ANALYZE === "true",
@@ -56,6 +57,7 @@ const nextConfig = {
 
     // next-image config
     esModule: true,
+    exclude: path.resolve(__dirname, "src/assets/svg/"),
 }
 
 module.exports = withBundleAnalyzer(withOffline(withImages(nextConfig)))
