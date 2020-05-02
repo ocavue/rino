@@ -2,4 +2,4 @@
 "@rino.app/web": patch
 ---
 
-Fix markdown style in dark mode
+Fix markdown text style in dark mode
