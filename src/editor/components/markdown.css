@@ -33,21 +33,6 @@
     color: #24292e;
     padding: .2em .4em;
 }
-.markdown-body table tr {
-    background-color: #f6f8fa;
-}
-.markdown-body table tr:nth-child(2n) {
-    background-color: #fff;
-}
 .markdown-body table tr:nth-child(1) {
     font-weight: 700;
-}
-.markdown-body li.selectable-list-item {
-    /* CSS4 ':has()' draft can be used here: li:has(> input[type=checkbox]) */
-    list-style-type: none;
-}
-.markdown-body li.selectable-list-item > input[type=checkbox] {
-    position: absolute;
-    left: -1.3em;
-    top: 0.3em;
 }

@@ -921,15 +921,17 @@
   tab-size: 12;
 }
 
-.markdown-body .task-list-item {
+.markdown-body li.selectable-list-item {
+  /* CSS4 ':has()' draft can be used here: li:has(> input[type=checkbox]) */
   list-style-type: none;
 }
 
-.markdown-body .task-list-item+.task-list-item {
+.markdown-body .selectable-list-item+.selectable-list-item {
   margin-top: 3px;
 }
 
-.markdown-body .task-list-item input {
-  margin: 0 .2em .25em -1.6em;
-  vertical-align: middle;
+.markdown-body li.selectable-list-item > input[type=checkbox] {
+  position: absolute;
+  left: -1.3em;
+  top: 0.25em;
 }
