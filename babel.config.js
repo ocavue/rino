@@ -6,21 +6,22 @@ module.exports = function (api) {
 
     const presets = ["next/babel"]
     const plugins = [
-        [
-            "inline-react-svg",
-            {
-                svgo: {
-                    plugins: [
-                        {
-                            removeAttrs: { attrs: "(data-name)" },
-                        },
-                        {
-                            cleanupIDs: true,
-                        },
-                    ],
-                },
-            },
-        ],
+        // [
+        //     "inline-react-svg",
+        //     {
+        //         svgo: {
+        //             plugins: [
+        //                 {
+        //                     removeAttrs: { attrs: "(data-name)" },
+        //                 },
+        //                 {
+        //                     cleanupIDs: true,
+        //                 },
+        //             ],
+        //         },
+        //     },
+        // ],
+        "inline-react-svg",
     ]
 
     if (process.env.NODE_ENV === "development" || process.env.REACT_APP_TESTING) {

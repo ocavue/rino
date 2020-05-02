@@ -2,7 +2,7 @@ import { createStyles, IconButton, makeStyles, Paper, Snackbar, Theme } from "@m
 import { ActionMethod } from "@remirror/core"
 import { useRemirrorContext } from "@remirror/react"
 import clsx from "clsx"
-import React from "react"
+import React, { useMemo } from "react"
 
 import { maxDrawerWidth } from "src/constants"
 import { StoreContainer } from "src/store"
@@ -45,28 +45,32 @@ export const TableMenu: React.FC = () => {
     } = StoreContainer.useContainer()
 
     const classes = useStyles()
-    const options: [string, React.FC, ActionMethod][] = [
-        ["add-row-before", svg.AddRowBefore, actions.tableAddRowBefore],
-        ["add-row-after", svg.AddRowAfter, actions.tableAddRowAfter],
-        ["add-column-before", svg.AddColumnBefore, actions.tableAddColumnBefore],
-        ["add-column-after", svg.AddColumnAfter, actions.tableAddColumnAfter],
-        ["delete-row", svg.DeleteRow, actions.tableDeleteRow],
-        ["delete-column", svg.DeleteColumn, actions.tableDeleteColumn],
-    ]
 
-    const buttons = options.map(([id, SvgComponent, action]) => {
-        return (
-            <IconButton
-                key={id}
-                id={id}
-                data-testid={id}
-                onClick={action}
-                className={classes.menuButton}
-            >
-                <SvgComponent />
-            </IconButton>
-        )
-    })
+    const buttons = useMemo(() => {
+        const options: [string, React.FC, ActionMethod][] = [
+            ["add-row-before", svg.AddRowBefore, actions.tableAddRowBefore],
+            ["add-row-after", svg.AddRowAfter, actions.tableAddRowAfter],
+            ["add-column-before", svg.AddColumnBefore, actions.tableAddColumnBefore],
+            ["add-column-after", svg.AddColumnAfter, actions.tableAddColumnAfter],
+            ["delete-row", svg.DeleteRow, actions.tableDeleteRow],
+            ["delete-column", svg.DeleteColumn, actions.tableDeleteColumn],
+        ]
+        return options.map(([id, SvgComponent, action]) => {
+            console.log("SvgComponent:", typeof SvgComponent, SvgComponent)
+
+            return (
+                <IconButton
+                    key={id}
+                    id={id}
+                    data-testid={id}
+                    onClick={action}
+                    className={classes.menuButton}
+                >
+                    {/* <SvgComponent /> */}
+                </IconButton>
+            )
+        })
+    }, [actions, classes.menuButton])
 
     return (
         <Snackbar
