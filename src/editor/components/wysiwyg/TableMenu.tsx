@@ -33,7 +33,8 @@ const useStyles = makeStyles((theme: Theme) => {
             height: "48px",
             width: "48px",
             "& svg": {
-                fill: "green",
+                // Change the svg color based on the theme
+                fill: theme.palette.text.secondary,
             },
         },
     })
