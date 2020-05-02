@@ -45,16 +45,16 @@ export const TableMenu: React.FC = () => {
     } = StoreContainer.useContainer()
 
     const classes = useStyles()
-    const options: [string, string, ActionMethod][] = [
-        ["add-row-before", svg.addRowBefore, actions.tableAddRowBefore],
-        ["add-row-after", svg.addRowAfter, actions.tableAddRowAfter],
-        ["add-column-before", svg.addColumnBefore, actions.tableAddColumnBefore],
-        ["add-column-after", svg.addColumnAfter, actions.tableAddColumnAfter],
-        ["delete-row", svg.deleteRow, actions.tableDeleteRow],
-        ["delete-column", svg.deleteColumn, actions.tableDeleteColumn],
+    const options: [string, React.FC, ActionMethod][] = [
+        ["add-row-before", svg.AddRowBefore, actions.tableAddRowBefore],
+        ["add-row-after", svg.AddRowAfter, actions.tableAddRowAfter],
+        ["add-column-before", svg.AddColumnBefore, actions.tableAddColumnBefore],
+        ["add-column-after", svg.AddColumnAfter, actions.tableAddColumnAfter],
+        ["delete-row", svg.DeleteRow, actions.tableDeleteRow],
+        ["delete-column", svg.DeleteColumn, actions.tableDeleteColumn],
     ]
 
-    const buttons = options.map(([id, svg, action]) => {
+    const buttons = options.map(([id, SvgComponent, action]) => {
         return (
             <IconButton
                 key={id}
@@ -63,7 +63,7 @@ export const TableMenu: React.FC = () => {
                 onClick={action}
                 className={classes.menuButton}
             >
-                <img src={svg} />
+                <SvgComponent />
             </IconButton>
         )
     })

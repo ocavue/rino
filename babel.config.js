@@ -5,7 +5,23 @@ module.exports = function (api) {
     api.cache(true)
 
     const presets = ["next/babel"]
-    const plugins = []
+    const plugins = [
+        [
+            "inline-react-svg",
+            {
+                svgo: {
+                    plugins: [
+                        {
+                            removeAttrs: { attrs: "(data-name)" },
+                        },
+                        {
+                            cleanupIDs: true,
+                        },
+                    ],
+                },
+            },
+        ],
+    ]
 
     if (process.env.NODE_ENV === "development" || process.env.REACT_APP_TESTING) {
         plugins.push("istanbul")
