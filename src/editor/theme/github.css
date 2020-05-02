@@ -714,11 +714,22 @@
 }
 
 .markdown-body table tr {
-  background-color: #fff;
   border-top: 1px solid #c6cbd1;
 }
 
-.markdown-body table tr:nth-child(2n) {
+.markdown-body--dark table tr{
+  background-color: #3b3b3b;
+}
+
+.markdown-body--light table tr{
+  background-color: #fff;
+}
+
+.markdown-body--dark table tr:nth-child(2n) {
+  background-color: #525252;
+}
+
+.markdown-body--light table tr:nth-child(2n) {
   background-color: #f6f8fa;
 }
 

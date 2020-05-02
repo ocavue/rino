@@ -1,4 +1,5 @@
 import { createStyles, makeStyles, Theme } from "@material-ui/core"
+import { useTheme } from "@material-ui/core/styles"
 import clsx from "clsx"
 import React, { useEffect, useRef, useState } from "react"
 
@@ -61,10 +62,17 @@ export const Editor: React.FC<EditorProps> = ({ autoFocus, note, setNoteContent 
         return () => console.debug(`Unmounting <${Editor.displayName}/>`)
     }, [])
 
+    const theme = useTheme()
+    const className = clsx(
+        classes.editor,
+        "markdown-body",
+        theme.palette.type === "light" ? "markdown-body--light" : "markdown-body--dark",
+    )
+
     if (mode === "source-code")
         return (
             <SourceCodeEditor
-                className={clsx(classes.editor, "markdown-body")}
+                className={className}
                 autoFocus={autoFocus}
                 editable={!note.deleted}
                 content={initialContent.current}
@@ -74,7 +82,7 @@ export const Editor: React.FC<EditorProps> = ({ autoFocus, note, setNoteContent 
     else if (mode === "wysiwyg")
         return (
             <WysiwygEditor
-                className={clsx(classes.editor, "markdown-body")}
+                className={className}
                 autoFocus={autoFocus}
                 editable={!note.deleted}
                 content={initialContent.current}
