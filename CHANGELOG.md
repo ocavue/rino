@@ -1,5 +1,11 @@
 # @rino.app/web
 
+## 0.8.2
+
+### Patch Changes
+
+-   44f15d9: Fix markdown inline code style in dark mode
+
 ## 0.8.1
 
 ### Patch Changes
