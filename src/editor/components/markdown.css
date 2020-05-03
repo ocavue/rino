@@ -28,11 +28,20 @@
     text-decoration-color: black;
 }
 .markdown-body .decoration_code_text {
-    background-color: rgba(27, 31, 35, .05);
     border-radius: 3px;
-    color: #24292e;
     padding: .2em .4em;
 }
+
+.markdown-body--light .decoration_code_text {
+    background-color: rgba(27, 31, 35, .05);
+    color: #24292e;
+}
+
+.markdown-body--dark .decoration_code_text {
+    background-color: rgba(27, 31, 35, 0.712);
+    color: #d2e5f8;
+}
+
 .markdown-body table tr:nth-child(1) {
     font-weight: 700;
 }
