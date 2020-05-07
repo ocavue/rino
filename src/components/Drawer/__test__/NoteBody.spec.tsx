@@ -23,7 +23,7 @@ function renderWithCallback(component: React.ReactNode, callback: () => any) {
     )
 }
 
-test("<NoteBody />", async () => {
+test("<NoteBody />", () => {
     let storeHooks = {} as ReturnType<typeof StoreContainer.useContainer>
     let editHooks = {} as ReturnType<typeof EditContainer.useContainer>
 
@@ -33,7 +33,7 @@ test("<NoteBody />", async () => {
     })
 
     expect(storeHooks.state.loading).toBeTrue()
-    await waitFor(() => screen.getByTestId("drawer-note-body-loading"))
+    screen.getByTestId("drawer-note-body-loading")
 
     act(() => {
         storeHooks.state.setLoadingUser(false)
@@ -42,7 +42,7 @@ test("<NoteBody />", async () => {
 
     // Set loading to false
     expect(storeHooks.state.loading).toBeFalse()
-    await waitFor(() => screen.getByTestId("sidebar-notes")) // TODO: rename sidebar to drawer
+    screen.getByTestId("sidebar-notes") // TODO: rename sidebar to drawer
     expect(editHooks.notes).toHaveLength(0)
     expect(screen.queryByTestId("sidebar-notes-list-item")).toBeNull()
 
@@ -55,26 +55,20 @@ test("<NoteBody />", async () => {
         storeHooks.state.setLoadingData(false)
     })
     expect(editHooks.notes).toHaveLength(2)
-    await waitFor(() =>
-        expect(screen.getAllByTestId("sidebar-notes-list-item-local")).toHaveLength(2),
-    )
+    expect(screen.getAllByTestId("sidebar-notes-list-item-local")).toHaveLength(2)
 
     // Search not exist notes
     act(() => editHooks.setSearchQuery("CCCC"))
     expect(editHooks.searchQuery).toEqual("CCCC")
     expect(editHooks.searchedNotes).toHaveLength(0)
-    await waitFor(() =>
-        expect(screen.queryAllByTestId("sidebar-notes-list-item-local")).toHaveLength(0),
-    )
-    await waitFor(() => expect(screen.getByTestId("drawer-note-body-note-not-fount")))
+    expect(screen.queryAllByTestId("sidebar-notes-list-item-local")).toHaveLength(0)
+    screen.getByTestId("drawer-note-body-note-not-fount")
 
     // Search exist notes
     act(() => editHooks.setSearchQuery("AAAA"))
     expect(editHooks.searchQuery).toEqual("AAAA")
     expect(editHooks.searchedNotes).toHaveLength(1)
-    await waitFor(() =>
-        expect(screen.getAllByTestId("sidebar-notes-list-item-local")).toHaveLength(1),
-    )
+    expect(screen.getAllByTestId("sidebar-notes-list-item-local")).toHaveLength(1)
 
     // Empty search query
     act(() => editHooks.setSearchQuery(""))
@@ -82,7 +76,5 @@ test("<NoteBody />", async () => {
     // `searchedNotes` should be an empty array but `searchedNotes` shouldn't be empty
     expect(editHooks.searchedNotes).toHaveLength(0)
     expect(editHooks.visibleNotes).toHaveLength(2)
-    await waitFor(() =>
-        expect(screen.getAllByTestId("sidebar-notes-list-item-local")).toHaveLength(2),
-    )
+    expect(screen.getAllByTestId("sidebar-notes-list-item-local")).toHaveLength(2)
 })
