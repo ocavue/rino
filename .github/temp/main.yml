@@ -127,9 +127,6 @@ jobs:
           echo "$hash1" "$hash2"
           if [ "$hash1" != "$hash2" ]; then exit 1; fi
 
-      - name: Check codecov configration
-        run: curl --fail --data-binary @codecov.yml https://codecov.io/validate
-
   # TODO: Send Lighthouse result to commit/PR
   Lighthouse:
     runs-on: ubuntu-18.04
