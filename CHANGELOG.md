@@ -1,5 +1,11 @@
 # @rino.app/web
 
+## 0.9.0
+
+### Minor Changes
+
+-   a1d5915: Add context menu for note items in the drawer
+
 ## 0.8.2
 
 ### Patch Changes
