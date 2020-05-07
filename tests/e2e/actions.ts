@@ -43,7 +43,7 @@ export async function createEmptyNote() {
 export async function deleteNote() {
     await click("appbar-btn-dots")
     await sleep(50)
-    await click("appbar-menu-item-delete")
+    await click("note-menu-item-delete")
 }
 
 export async function clickSidebarNoteListItem() {

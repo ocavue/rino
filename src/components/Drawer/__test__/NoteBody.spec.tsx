@@ -77,11 +77,11 @@ test("<NoteBody />", async () => {
     expect(screen.getAllByTestId("sidebar-notes-list-item-local")).toHaveLength(2)
 
     // Show the list item context menu
-    expect(screen.queryAllByTestId("appbar-menu-item-delete")).toHaveLength(0)
+    expect(screen.queryAllByTestId("note-menu")).toHaveLength(0)
     fireEvent.contextMenu(screen.getAllByTestId("sidebar-notes-list-item-local")[0])
-    expect(screen.queryAllByTestId("appbar-menu-item-delete")).toHaveLength(1)
+    expect(screen.queryAllByTestId("note-menu")).toHaveLength(1)
 
     // Hide the list item context menu
-    fireEvent.click(screen.queryAllByTestId("appbar-menu-item-delete")[0])
-    await waitFor(() => expect(screen.queryAllByTestId("appbar-menu-item-delete")).toHaveLength(0))
+    fireEvent.click(screen.getByTestId("note-menu-item-delete"))
+    await waitFor(() => expect(screen.queryAllByTestId("note-menu")).toHaveLength(0))
 })
