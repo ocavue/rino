@@ -23,7 +23,7 @@
 
 ### Patch Changes
 
--   8ec9550: Fix the publish workflow.
+-   8ec9550: Fix the publish workflow
 
 ## 0.7.0
 
