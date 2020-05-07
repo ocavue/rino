@@ -162,10 +162,6 @@
         {
           "name": "Check actions configration",
           "run": "hash1=$(sha1sum .github/workflows/main.yml)\n./node_modules/.bin/js-yaml .github/temp/main.yml > .github/workflows/main.yml\nhash2=$(sha1sum .github/workflows/main.yml)\necho \"$hash1\" \"$hash2\"\nif [ \"$hash1\" != \"$hash2\" ]; then exit 1; fi\n"
-        },
-        {
-          "name": "Check codecov configration",
-          "run": "curl --fail --data-binary @codecov.yml https://codecov.io/validate"
         }
       ]
     },

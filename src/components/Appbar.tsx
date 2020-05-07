@@ -1,10 +1,11 @@
-import { AppBar, createStyles, makeStyles, Menu, MenuItem, Theme } from "@material-ui/core"
+import { AppBar, createStyles, makeStyles, Theme } from "@material-ui/core"
 import { fade } from "@material-ui/core/styles/colorManipulator"
 import * as icons from "@material-ui/icons"
 import clsx from "clsx"
 import React from "react"
 
 import { AppbarIconButton } from "src/components/AppbarIconButton"
+import { NoteMenu } from "src/components/NoteMenu"
 import { appbarIconButtonSize, appbarIconMargin, maxDrawerWidth } from "src/constants"
 import { EditContainer } from "src/controller"
 import { StoreContainer } from "src/store"
@@ -51,31 +52,6 @@ const useStyles = makeStyles((theme: Theme) => {
     })
 })
 
-const AppbarMenu: React.FC<{
-    anchorEl: HTMLElement | null
-    handleMenuClose: () => void
-}> = ({ anchorEl, handleMenuClose }) => {
-    const {
-        state: { setDrawerActivity },
-    } = StoreContainer.useContainer()
-
-    const { deleteNote } = EditContainer.useContainer()
-
-    const onClickDeleteBtn = () => {
-        deleteNote()
-        handleMenuClose()
-        setDrawerActivity(true) // TODO: test this logic
-    }
-
-    return (
-        <Menu keepMounted anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleMenuClose}>
-            <MenuItem onClick={onClickDeleteBtn} data-testid="appbar-menu-item-delete">
-                Delete
-            </MenuItem>
-        </Menu>
-    )
-}
-
 export const Appbar: React.FC = () => {
     const {
         state: { drawerActivity, setDrawerActivity },
@@ -119,7 +95,7 @@ export const Appbar: React.FC = () => {
                     <icons.MoreVert />
                 </AppbarIconButton>
             )}
-            <AppbarMenu anchorEl={anchorEl} handleMenuClose={handleMenuClose} />
+            <NoteMenu noteKey={noteKey} anchorEl={anchorEl} handleMenuClose={handleMenuClose} />
         </AppBar>
     )
 }
