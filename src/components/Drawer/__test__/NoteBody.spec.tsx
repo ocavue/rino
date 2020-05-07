@@ -7,6 +7,8 @@ import { StoreContainer } from "src/store"
 import { TestHook } from "tests/unit/react-test-utils"
 
 import { NoteBody } from "../NoteBody"
+import { NoteList } from "../NoteList"
+import { NoteListItem } from "../NoteListItem"
 
 function renderWithCallback(component: React.ReactNode, callback: () => any) {
     return render(
@@ -72,5 +74,15 @@ test("<NoteBody />", async () => {
     expect(editHooks.searchedNotes).toHaveLength(1)
     await waitFor(() =>
         expect(screen.getAllByTestId("sidebar-notes-list-item-local")).toHaveLength(1),
+    )
+
+    // Empty search query
+    act(() => editHooks.setSearchQuery(""))
+    expect(editHooks.searchQuery).toEqual("")
+    // `searchedNotes` should be an empty array but `searchedNotes` shouldn't be empty
+    expect(editHooks.searchedNotes).toHaveLength(0)
+    expect(editHooks.visibleNotes).toHaveLength(2)
+    await waitFor(() =>
+        expect(screen.getAllByTestId("sidebar-notes-list-item-local")).toHaveLength(2),
     )
 })
