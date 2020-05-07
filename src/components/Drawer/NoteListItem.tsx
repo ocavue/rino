@@ -35,24 +35,28 @@ export const NoteListItem: React.FC<{ note: Note; onClick: () => void; selected:
     }
 
     return (
-        <ListItem
-            button
-            onClick={onClick}
-            selected={selected}
-            divider={true}
-            data-testid={note.local ? "sidebar-notes-list-item-local" : "sidebar-notes-list-item"}
-            onContextMenu={handleMenuOpen}
-        >
-            <ListItemText
-                primary={note.thumbnail}
-                primaryTypographyProps={{
-                    display: "block",
-                    noWrap: true,
-                    classes: {
-                        root: classes.thumbnail,
-                    },
-                }}
-            />
+        <>
+            <ListItem
+                button
+                onClick={onClick}
+                selected={selected}
+                divider={true}
+                data-testid={
+                    note.local ? "sidebar-notes-list-item-local" : "sidebar-notes-list-item"
+                }
+                onContextMenu={handleMenuOpen}
+            >
+                <ListItemText
+                    primary={note.thumbnail}
+                    primaryTypographyProps={{
+                        display: "block",
+                        noWrap: true,
+                        classes: {
+                            root: classes.thumbnail,
+                        },
+                    }}
+                />
+            </ListItem>
             <NoteMenu
                 noteKey={note.key}
                 anchorEl={menuProps.anchorEl}
@@ -62,6 +66,6 @@ export const NoteListItem: React.FC<{ note: Note; onClick: () => void; selected:
                 }}
                 handleMenuClose={handleMenuClose}
             />
-        </ListItem>
+        </>
     )
 }
