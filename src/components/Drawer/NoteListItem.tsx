@@ -1,10 +1,11 @@
-import * as m from "@material-ui/core"
-import React from "react"
+import { createStyles, ListItem, ListItemText, makeStyles, Theme } from "@material-ui/core"
+import React, { useState } from "react"
 
+import { NoteMenu } from "src/components/NoteMenu"
 import { Note } from "src/controller"
 
-const useStyles = m.makeStyles((theme: m.Theme) => {
-    return m.createStyles({
+const useStyles = makeStyles((theme: Theme) => {
+    return createStyles({
         thumbnail: {
             whiteSpace: "pre-line", // Line break with `\n`
             height: 72,
@@ -18,15 +19,31 @@ export const NoteListItem: React.FC<{ note: Note; onClick: () => void; selected:
     selected,
 }) => {
     const classes = useStyles()
+
+    const [menuProps, setMenuProps] = useState<{
+        anchorEl: HTMLElement | null
+        left: number
+        top: number
+    }>({ anchorEl: null, left: 0, top: 0 })
+
+    const handleMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
+        event.preventDefault()
+        setMenuProps({ anchorEl: event.currentTarget, left: event.clientX, top: event.clientY })
+    }
+    const handleMenuClose = () => {
+        setMenuProps({ anchorEl: null, left: 0, top: 0 })
+    }
+
     return (
-        <m.ListItem
+        <ListItem
             button
             onClick={onClick}
             selected={selected}
             divider={true}
             data-testid={note.local ? "sidebar-notes-list-item-local" : "sidebar-notes-list-item"}
+            onContextMenu={handleMenuOpen}
         >
-            <m.ListItemText
+            <ListItemText
                 primary={note.thumbnail}
                 primaryTypographyProps={{
                     display: "block",
@@ -36,6 +53,15 @@ export const NoteListItem: React.FC<{ note: Note; onClick: () => void; selected:
                     },
                 }}
             />
-        </m.ListItem>
+            <NoteMenu
+                noteKey={note.key}
+                anchorEl={menuProps.anchorEl}
+                anchorPosition={{
+                    top: menuProps.top,
+                    left: menuProps.left,
+                }}
+                handleMenuClose={handleMenuClose}
+            />
+        </ListItem>
     )
 }
