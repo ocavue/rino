@@ -1,5 +1,5 @@
 import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles"
-import { act, render, screen, waitFor } from "@testing-library/react"
+import { act, fireEvent, render, screen } from "@testing-library/react"
 import React from "react"
 
 import { EditContainer, Note, NoteType } from "src/controller"
@@ -7,8 +7,6 @@ import { StoreContainer } from "src/store"
 import { TestHook } from "tests/unit/react-test-utils"
 
 import { NoteBody } from "../NoteBody"
-import { NoteList } from "../NoteList"
-import { NoteListItem } from "../NoteListItem"
 
 function renderWithCallback(component: React.ReactNode, callback: () => any) {
     return render(
@@ -77,4 +75,9 @@ test("<NoteBody />", () => {
     expect(editHooks.searchedNotes).toHaveLength(0)
     expect(editHooks.visibleNotes).toHaveLength(2)
     expect(screen.getAllByTestId("sidebar-notes-list-item-local")).toHaveLength(2)
+
+    // Right click a list item
+    expect(screen.queryAllByTestId("appbar-menu-item-delete")).toHaveLength(0)
+    fireEvent.contextMenu(screen.getAllByTestId("sidebar-notes-list-item-local")[0])
+    expect(screen.queryAllByTestId("appbar-menu-item-delete")).toHaveLength(1)
 })

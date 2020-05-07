@@ -31,7 +31,6 @@ export const NoteMenu: React.FC<NoteMenuOptions> = ({
 
     return (
         <Menu
-            keepMounted
             anchorEl={anchorEl}
             open={Boolean(anchorEl)}
             onClose={handleMenuClose}
