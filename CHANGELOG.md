@@ -1,5 +1,11 @@
 # @rino.app/web
 
+## 0.9.1
+
+### Patch Changes
+
+-   2ad3b01: Fix the issue of deleting notes after login
+
 ## 0.9.0
 
 ### Minor Changes
