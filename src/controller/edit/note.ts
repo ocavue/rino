@@ -126,8 +126,8 @@ class FirebaseNote extends BaseNote {
     get deleted(): boolean {
         return this.data.deleted
     }
-    async upload() {
-        if (this.deleting) return
+    async upload(ignoreDeleting = false) {
+        if (this.deleting && !ignoreDeleting) return
         console.debug(`Uploading note ${this.id}`)
         const ref = await this.referencePromise
         await ref.update({
@@ -146,7 +146,7 @@ class FirebaseNote extends BaseNote {
             ref.delete()
         } else if (option.type === "soft") {
             this.data.deleted = true
-            this.upload()
+            this.upload(true)
         }
     }
 }
