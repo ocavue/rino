@@ -5,7 +5,7 @@ import { getCurrentUser, theme, User } from "src/controller"
 
 const useAuth = () => {
     const [user, setUser] = useState<User | null>(getCurrentUser())
-    const email: string | null = useMemo(() => user?.email || null, [user])
+    const email: string | null = useMemo(() => (user ? user.email : null), [user])
     return { user, email, setUser }
 }
 
