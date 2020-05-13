@@ -44,7 +44,7 @@ function useEditHook() {
         if (searchQuery) {
             return searchedNotes
         } else {
-            return collection?.notes || []
+            return collection.notes || []
         }
     }, [searchQuery, searchedNotes, collection])
 
