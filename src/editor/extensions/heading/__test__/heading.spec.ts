@@ -79,7 +79,7 @@ describe("fromMarkdown", () => {
 })
 
 describe("shortcut", () => {
-    const { manager, add, doc, p, h1, h2, h3, h4, h5, h6 } = setup()
+    const { add, doc, p, h1, h2, h3, h4, h5, h6 } = setup()
 
     test("press Enter at the center of heading", () => {
         add(doc(h3("head<cursor>ing")))
@@ -123,22 +123,21 @@ describe("shortcut", () => {
 
     test("press Mod-Number", () => {
         add(doc(p("1<cursor>4")))
-            .insertText("2")
             .shortcut("Mod-4")
             .callback((content) => {
-                expect(content.state.doc).toEqualRemirrorDocument(doc(h4("124")))
+                expect(content.state.doc).toEqualRemirrorDocument(doc(h4("14")))
             })
             .shortcut("Mod-5")
             .callback((content) => {
-                expect(content.state.doc).toEqualRemirrorDocument(doc(h5("124")))
+                expect(content.state.doc).toEqualRemirrorDocument(doc(h5("14")))
             })
-            .shortcut("Mod-6")
+            .shortcut("Mod-1")
             .callback((content) => {
-                expect(content.state.doc).toEqualRemirrorDocument(doc(h6("124")))
+                expect(content.state.doc).toEqualRemirrorDocument(doc(h1("14")))
             })
-            .insertText("3")
+            .insertText("23")
             .callback((content) => {
-                expect(content.state.doc).toEqualRemirrorDocument(doc(h6("1234")))
+                expect(content.state.doc).toEqualRemirrorDocument(doc(h1("1234")))
             })
     })
 })
