@@ -131,6 +131,10 @@ describe("shortcut", () => {
             .callback((content) => {
                 expect(content.state.doc).toEqualRemirrorDocument(doc(h5("14")))
             })
+            .shortcut("Mod-6")
+            .callback((content) => {
+                expect(content.state.doc).toEqualRemirrorDocument(doc(h6("14")))
+            })
             .shortcut("Mod-1")
             .callback((content) => {
                 expect(content.state.doc).toEqualRemirrorDocument(doc(h1("14")))
@@ -138,6 +142,14 @@ describe("shortcut", () => {
             .insertText("23")
             .callback((content) => {
                 expect(content.state.doc).toEqualRemirrorDocument(doc(h1("1234")))
+            })
+    })
+
+    test("press Backspace at the begin of heading", () => {
+        add(doc(h2("<cursor>heading")))
+            .press("Backspace")
+            .callback((content) => {
+                expect(content.state.doc).toEqualRemirrorDocument(doc(p("heading")))
             })
     })
 })
