@@ -136,10 +136,6 @@ describe("shortcut", () => {
             .callback((content) => {
                 expect(content.state.doc).toEqualRemirrorDocument(doc(h6("124")))
             })
-            .insertText("123")
-            .callback((content) => {
-                expect(content.state.doc).toEqualRemirrorDocument(doc(h6("124")))
-            })
             .insertText("3")
             .callback((content) => {
                 expect(content.state.doc).toEqualRemirrorDocument(doc(h6("1234")))
