@@ -1,3 +1,4 @@
+import { BaseKeymapExtension } from "@remirror/core-extensions"
 import { renderEditor } from "jest-remirror"
 
 import { buildMarkdownParser } from "src/editor/components/wysiwyg/wysiwyg-markdown"
@@ -18,12 +19,12 @@ const setup = () => {
         schema,
     } = renderEditor({
         plainNodes: [
-            new RinoHardBreakExtension(),
-            new RinoTextExtension(),
             new RinoParagraphExtension(),
+            new RinoTextExtension(),
+            new RinoHardBreakExtension(),
         ],
         attrNodes: [new RinoHeadingExtension()],
-        others: [],
+        others: [new BaseKeymapExtension()],
     })
 
     const [h1, h2, h3, h4, h5, h6] = [
@@ -74,5 +75,74 @@ describe("fromMarkdown", () => {
         expect(parser.parse("P\n# H")).toEqualRemirrorDocument(doc(p("P"), h1("H")))
         expect(parser.parse("P\n\n# H")).toEqualRemirrorDocument(doc(p("P"), h1("H")))
         expect(parser.parse("P\n\n\n# H")).toEqualRemirrorDocument(doc(p("P"), h1("H")))
+    })
+})
+
+describe("shortcut", () => {
+    const { manager, add, doc, p, h1, h2, h3, h4, h5, h6 } = setup()
+
+    test("press Enter at the center of heading", () => {
+        add(doc(h3("head<cursor>ing")))
+            .press("Enter")
+            .callback((content) => {
+                expect(content.state.doc).toEqualRemirrorDocument(doc(h3("head"), h3("ing")))
+            })
+            .insertText("123")
+            .callback((content) => {
+                expect(content.state.doc).toEqualRemirrorDocument(doc(h3("head"), h3("123ing")))
+            })
+    })
+
+    test("press Enter at the begin of heading", () => {
+        add(doc(h3("<cursor>heading")))
+            .press("Enter")
+            .callback((content) => {
+                expect(content.state.doc).toEqualRemirrorDocument(doc(p(""), h3("heading")))
+            })
+            .insertText("123")
+            .callback((content) => {
+                expect(content.state.doc).toEqualRemirrorDocument(doc(p(""), h3("123heading")))
+            })
+    })
+
+    test("press Enter at the end of heading", () => {
+        add(doc(h3("heading<cursor>")))
+            .press("Enter")
+            .callback((content) => {
+                expect(content.state.doc).toEqualRemirrorDocument(doc(h3("heading"), p("")))
+            })
+            .insertText("123")
+            .callback((content) => {
+                expect(content.state.doc).toEqualRemirrorDocument(doc(h3("heading"), p("123")))
+            })
+    })
+
+    test("press Shift+Enter at the center of heading", () => {
+        // TODO
+    })
+
+    test("press Mod-Number", () => {
+        add(doc(p("1<cursor>4")))
+            .insertText("2")
+            .shortcut("Mod-4")
+            .callback((content) => {
+                expect(content.state.doc).toEqualRemirrorDocument(doc(h4("124")))
+            })
+            .shortcut("Mod-5")
+            .callback((content) => {
+                expect(content.state.doc).toEqualRemirrorDocument(doc(h5("124")))
+            })
+            .shortcut("Mod-6")
+            .callback((content) => {
+                expect(content.state.doc).toEqualRemirrorDocument(doc(h6("124")))
+            })
+            .insertText("123")
+            .callback((content) => {
+                expect(content.state.doc).toEqualRemirrorDocument(doc(h6("124")))
+            })
+            .insertText("3")
+            .callback((content) => {
+                expect(content.state.doc).toEqualRemirrorDocument(doc(h6("1234")))
+            })
     })
 })
