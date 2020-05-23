@@ -1,5 +1,5 @@
 import * as _ from "lodash"
-import { Mark, Node, Schema } from "prosemirror-model"
+import { Node, Schema } from "prosemirror-model"
 
 export type NodeSerializerOptions<S extends Schema = any> = {
     state: MarkdownSerializerState
