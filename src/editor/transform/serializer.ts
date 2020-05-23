@@ -1,5 +1,5 @@
 import * as _ from "lodash"
-import { Mark, Node, Schema } from "prosemirror-model"
+import { Node, Schema } from "prosemirror-model"
 
 export type NodeSerializerOptions<S extends Schema = any> = {
     state: MarkdownSerializerState
@@ -18,11 +18,9 @@ export class MarkdownSerializerState {
     private delimiter: string
     public out: string
     private closed: Node | null
-    private marks: Record<string, any>
 
     public constructor(nodes: NodeSerializerSpecs, options?: Record<string, any>) {
         this.nodes = nodes
-        this.marks = {}
         this.delimiter = ""
         this.out = ""
         this.closed = null
@@ -143,13 +141,6 @@ export class MarkdownSerializerState {
         let out = ""
         for (let i = 0; i < n; i++) out += str
         return out
-    }
-
-    // Get the markdown string for a given opening or closing mark.
-    public markString(mark: Mark, open: boolean, parent: Node, index: number): string {
-        const info = this.marks[mark.type.name]
-        const value = open ? info.open : info.close
-        return typeof value == "string" ? value : value(this, mark, parent, index)
     }
 
     // :: (string) → { leading: ?string, trailing: ?string }

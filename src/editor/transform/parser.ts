@@ -53,7 +53,7 @@ class MarkdownParseState {
 
     private mergeTextNode(a: Node<Schema>, b: Node<Schema>): Node<Schema> | undefined {
         if (a.isText && b.isText && Mark.sameSet(a.marks, b.marks)) {
-            const text: string = a.text || "" + b.text || ""
+            const text: string = (a.text || "") + (b.text || "")
             return a.type.schema.text(text, a.marks)
         }
     }

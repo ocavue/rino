@@ -68,7 +68,7 @@ export async function getInnerText(testid: string) {
     await wait(testid)
     const elementHandle = await getOne(testid)
     expect(elementHandle).toBeTruthy()
-    const innerText: string = await page.evaluate((e) => e.innerText, elementHandle)
+    const innerText = await page.evaluate((e: HTMLElement) => e.innerText, elementHandle)
     expect(typeof innerText).toEqual("string")
     return innerText
 }
@@ -77,7 +77,7 @@ export async function getTextAreaValue(testid: string) {
     await wait(testid)
     const textareaHandle = await getOne(testid)
     expect(textareaHandle).toBeTruthy()
-    const value: string = await page.evaluate((t) => t.value, textareaHandle)
+    const value = await page.evaluate((t: HTMLTextAreaElement) => t.value, textareaHandle)
     expect(typeof value).toEqual("string")
     return value
 }
@@ -102,7 +102,7 @@ export async function getDimensions(testid: string) {
     await wait(testid)
     const element = await getOne(testid)
     expect(element).toBeTruthy()
-    return await page.evaluate((e) => {
+    return await page.evaluate((e: HTMLElement) => {
         const { x, y, width, height, top, right, bottom, left } = e.getBoundingClientRect()
         return { x, y, width, height, top, right, bottom, left }
     }, element)
@@ -148,7 +148,7 @@ export async function expectWysiwygHtml(shapes: Shape[]) {
     const expectedSelectors: Selectors = buildExpectedSelectors(`${wysiwygEditorSelector}`, shapes)
 
     const receivedSelectors = await page.evaluate((selectorsJson: string) => {
-        const selectors: Selectors = JSON.parse(selectorsJson)
+        const selectors = JSON.parse(selectorsJson) as Selectors
 
         // `for ... of Object.entries(selectors)` seems have some babel issues, so I use ancient JS syntex here
         for (const selector in selectors) {
@@ -184,11 +184,11 @@ export function getDialog(callback: () => Promise<void>, timeout = 1000): Promis
             if (!resolved) {
                 resolved = true
                 page.removeListener("dialog", handleDialog)
-                dialog.dismiss().then(() => resolve(dialog))
+                void dialog.dismiss().then(() => resolve(dialog))
             }
         }
         page.on("dialog", handleDialog)
-        callback().then(() =>
+        void callback().then(() =>
             setTimeout(() => {
                 if (!resolved) {
                     resolved = true

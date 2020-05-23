@@ -24,7 +24,7 @@ export const NoteMenu: React.FC<NoteMenuOptions> = ({
     const { deleteNote } = EditContainer.useContainer()
 
     const onClickDeleteBtn = () => {
-        deleteNote(noteKey)
+        void deleteNote(noteKey)
         handleMenuClose()
         setDrawerActivity(true) // TODO: test this logic
     }

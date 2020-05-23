@@ -50,6 +50,7 @@ def main():
         ["Square.png", "apple-touch-icon-192x192.png", 192],
         ["Square.png", "apple-touch-icon-180x180.png", 180],
         ["Square.png", "apple-touch-icon-152x152.png", 152],
+        ["Square.png", "apple-touch-icon-512x512.png", 512],
         ["Circle.png", "msapplication-icon-144x144.png", 144],
         ["favicon.png", "favicon-16x16.png", 16],
         ["favicon.png", "favicon-32x32.png", 32],

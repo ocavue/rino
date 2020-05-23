@@ -3,13 +3,12 @@ parser: "@typescript-eslint/parser"
 parserOptions:
   parser: "@typescript-eslint/parser"
   ecmaVersion: 2018 # Allows for the parsing of modern ECMAScript features
-  project: "./tsconfig.json"
+  project: ["./tsconfig.json"]
   ecmaFeatures:
     jsx: true
 extends:
   # https://github.com/typescript-eslint/typescript-eslint/tree/v2.25.0/packages/eslint-plugin#recommended-configs
   - "eslint:recommended" # the set of rules which are recommended for all projects by the ESLint Team
-  - "plugin:@typescript-eslint/eslint-recommended" # adjust the rules from `eslint:recommended` appropriately for TypeScript
   - "plugin:@typescript-eslint/recommended" # recommended rules for typescript
   - "plugin:@typescript-eslint/recommended-requiring-type-checking" # provide lint rules with access to type information
 
@@ -40,10 +39,13 @@ rules:
   "react/prop-types": [1, { skipUndeclared: true }]
   "react/no-unescaped-entities": "off"
 
-  "@typescript-eslint/explicit-function-return-type": "off"
   "@typescript-eslint/no-unused-vars": [error, { args: "none" }]
-  "@typescript-eslint/no-explicit-any": "off"
-  "@typescript-eslint/no-empty-function": "off"
+  "@typescript-eslint/explicit-module-boundary-types": off
+  "@typescript-eslint/no-unsafe-return": off
+  "@typescript-eslint/no-empty-function": off
+  "@typescript-eslint/no-explicit-any": off
+  "@typescript-eslint/restrict-template-expressions": off
+  "@typescript-eslint/no-unsafe-assignment": off
 
   # use `simple-import-sort` to sort import
   "sort-imports": "off"
@@ -82,8 +84,12 @@ overrides:
       browser: "readonly"
       context: "readonly"
       jestPuppeteer: "readonly"
-  - files: "scripts/*"
+  - files: "*.js"
     rules:
+      "@typescript-eslint/*": off
+      "@typescript-eslint/no-floating-promises": off
+      "@typescript-eslint/no-unsafe-call": off
+      "@typescript-eslint/no-unsafe-member-access": off
       "@typescript-eslint/no-var-requires": off
 ignorePatterns:
   - jest*.js

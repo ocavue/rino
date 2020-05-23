@@ -1,4 +1,4 @@
-export const TestHook = ({ callback }: { callback: () => any }) => {
+export const TestHook = <T>({ callback }: { callback: () => T }) => {
     callback()
     return null
 }

@@ -17,11 +17,11 @@ export default function DevSignOut() {
         if (loading) return () => {}
         const timeout = setTimeout(() => {
             console.log(`running timeout function ${timeout}: before sign-out`)
-            signOut().then(() => {
+            void signOut().then(() => {
                 console.log(`running timeout function ${timeout}: after sign-out`)
                 setTimeout(() => {
                     console.log("before router.push()")
-                    router.push("/")
+                    void router.push("/")
                     console.log("after router.push()")
                 }, 0)
             })
