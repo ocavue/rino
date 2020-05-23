@@ -8,7 +8,7 @@ import Center from "src/views/Center"
 function Redirect() {
     const router = useRouter()
     React.useEffect(() => {
-        router.replace("/")
+        void router.replace("/")
     })
     return <Center>Redirecting...</Center>
 }

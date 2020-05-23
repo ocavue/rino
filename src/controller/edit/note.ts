@@ -96,7 +96,7 @@ class FirebaseNote extends BaseNote {
 
             // Insert a new Note document in firebase
             this.snapshotPromise = createNote(this.data)
-            this.snapshotPromise.then((snapshot) => (this.firebaseId = snapshot.ref.id))
+            void this.snapshotPromise.then((snapshot) => (this.firebaseId = snapshot.ref.id))
         }
         this.referencePromise = this.snapshotPromise.then((snap) => snap.ref)
     }
@@ -143,10 +143,10 @@ class FirebaseNote extends BaseNote {
         this.deleting = true
         if (option.type === "hard") {
             const ref = await this.referencePromise
-            ref.delete()
+            void ref.delete()
         } else if (option.type === "soft") {
             this.data.deleted = true
-            this.upload(true)
+            void this.upload(true)
         }
     }
 }

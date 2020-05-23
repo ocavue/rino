@@ -36,7 +36,7 @@ export const firebaseApp: firebase.app.App = (() => {
     if (process.env.NODE_ENV !== "test") {
         app.firestore()
             .enablePersistence({ synchronizeTabs: true })
-            .catch((error) => {
+            .catch((error: firebase.functions.HttpsError) => {
                 console.error(error)
                 if (error.code === "failed-precondition") {
                     // Multiple tabs open, persistence can only be enabled
