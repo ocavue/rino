@@ -11,8 +11,7 @@ export default function DevCleanNotes() {
     React.useEffect(() => {
         const timeout = setTimeout(() => {
             const user = getCurrentUser()
-            removeAllNotes(user?.uid)
-            router.push(`/`)
+            void removeAllNotes(user?.uid).then(() => router.push(`/`))
         }, 2000)
         return () => clearTimeout(timeout)
     }, [removeAllNotes, router])

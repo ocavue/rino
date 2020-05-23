@@ -1,11 +1,5 @@
 import os from "os"
-import {
-    ClickOptions,
-    Dialog,
-    DirectNavigationOptions,
-    ElementHandle,
-    WaitForSelectorOptions,
-} from "puppeteer"
+import { ClickOptions, Dialog, DirectNavigationOptions, WaitForSelectorOptions } from "puppeteer"
 
 const testidSelector = (testid: string) => `[data-testid="${testid}"]`
 

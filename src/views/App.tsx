@@ -11,7 +11,7 @@ import {
 } from "src/controller"
 import { StoreContainer } from "src/store"
 
-const ContainerConsumer: React.FC<{}> = (props) => {
+const ContainerConsumer: React.FC = (props) => {
     const {
         state: { isDarkTheme, setConnected, setLoadingData, setLoadingUser },
         auth: { user, setUser },
@@ -52,7 +52,7 @@ const ContainerConsumer: React.FC<{}> = (props) => {
                 setLoadingData(false)
             }
         }
-        loadData()
+        void loadData()
     }, [fetchNotes, resetNotes, setLoadingData, user])
 
     const lightTheme = useMemo(() => createMuiTheme({ palette: { type: "light" } }), [])
