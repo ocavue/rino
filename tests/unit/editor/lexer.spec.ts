@@ -175,8 +175,9 @@ describe("InlineLexer", function () {
             public constructor() {
                 this.src = ""
             }
-        }
-        ;(global as any).Image = ImageMock
+        } as typeof HTMLImageElement
+
+        global.Image = ImageMock
 
         it("Solid image", function () {
             const image = new ImageMock()
@@ -193,7 +194,7 @@ describe("InlineLexer", function () {
                     length: 0,
                     classes: [],
                     key: "https://via.placeholder.com/42",
-                    dom: (image as any) as HTMLElement,
+                    dom: image,
                 },
                 { length: 1, classes: ["decoration_mark"] },
             ]
@@ -218,7 +219,7 @@ describe("InlineLexer", function () {
                     length: 0,
                     classes: [],
                     key: "https://via.placeholder.com/42",
-                    dom: (image as any) as HTMLElement,
+                    dom: image,
                 },
                 { length: 1, classes: ["decoration_mark"] },
                 { length: 4, classes: [] },

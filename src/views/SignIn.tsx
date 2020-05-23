@@ -72,7 +72,7 @@ export default function SignIn() {
             })
     }
     const cancel = () => {
-        router.push("/")
+        return router.push("/")
     }
     const back = () => {
         setError("")

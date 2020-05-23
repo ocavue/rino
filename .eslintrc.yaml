@@ -40,10 +40,11 @@ rules:
   "react/prop-types": [1, { skipUndeclared: true }]
   "react/no-unescaped-entities": "off"
 
-  "@typescript-eslint/explicit-function-return-type": "off"
+  "@typescript-eslint/explicit-module-boundary-types": "off"
   "@typescript-eslint/no-unused-vars": [error, { args: "none" }]
-  "@typescript-eslint/no-explicit-any": "off"
+  "@typescript-eslint/no-unsafe-return": "off"
   "@typescript-eslint/no-empty-function": "off"
+  "@typescript-eslint/restrict-template-expressions": "off"
 
   # use `simple-import-sort` to sort import
   "sort-imports": "off"

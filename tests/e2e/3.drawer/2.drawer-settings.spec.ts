@@ -89,9 +89,9 @@ describe("Settings", () => {
 
         test("Check version format", async () => {
             // Should be something like 'Version 0.23.4 (2fd4e1c)'
-            const received = await getInnerText("about-dialog-version")
-            const expected = expect.stringMatching(/^Version \d+\.\d+.\d+ \([0-9a-z]{7}\)$/)
-            expect(received).toEqual(expected)
+            expect(await getInnerText("about-dialog-version")).toEqual(
+                expect.stringMatching(/^Version \d+\.\d+.\d+ \([0-9a-z]{7}\)$/),
+            )
         })
 
         test("Check copyright format", async () => {

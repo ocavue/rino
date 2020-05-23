@@ -12,11 +12,11 @@ export default function DevSignIn() {
             await signInTestUser()
             const redirect = query.get("redirect") || "/"
             setTimeout(() => {
-                router.push(redirect)
+                void router.push(redirect)
             }, 500)
         }
         const timeout = setTimeout(() => {
-            effect()
+            void effect()
         }, 2000)
         return () => clearTimeout(timeout)
     }, [router, query])
