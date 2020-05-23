@@ -7,6 +7,7 @@ import {
 import { HeadingExtension, HeadingExtensionOptions } from "@remirror/core-extensions"
 import Token from "markdown-it/lib/token"
 import { setBlockType } from "prosemirror-commands"
+import { Schema } from "prosemirror-model"
 
 import { ParserTokenType } from "src/editor/transform/parser-type"
 import { NodeSerializerOptions } from "src/editor/transform/serializer"
@@ -33,7 +34,7 @@ export class RinoHeadingExtension extends HeadingExtension
                 const tr = state.tr.setBlockType(
                     parent.start,
                     parent.start,
-                    state.schema.nodes.paragraph,
+                    (state.schema as Schema).nodes.paragraph,
                 )
                 if (dispatch) {
                     dispatch(tr)

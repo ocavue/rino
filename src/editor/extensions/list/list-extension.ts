@@ -24,7 +24,7 @@ class ListItemView implements NodeView {
     public contentDOM: HTMLElement
     private schema: Schema
 
-    public constructor(node: ProsemirrorNode, view: EditorView, getPos: () => number) {
+    public constructor(node: ProsemirrorNode, view: EditorView<Schema>, getPos: () => number) {
         this.dom = this.contentDOM = document.createElement("li")
         this.schema = view.state.schema
         this.updateListItemClass(node)
@@ -124,7 +124,7 @@ export class RinoOrderedListExtension extends NodeExtension implements MarkdownN
                 type,
                 (match: string[]) => ({ order: +match[1] }),
                 (match: string[], node: ProsemirrorNode) =>
-                    node.childCount + node.attrs.order == +match[1],
+                    node.childCount + (node.attrs.order as number) == +match[1],
             ),
         ]
     }
@@ -142,7 +142,7 @@ export class RinoOrderedListExtension extends NodeExtension implements MarkdownN
     }
 
     public toMarkdown({ state, node }: NodeSerializerOptions) {
-        const start = node.attrs.order || 1
+        const start = (node.attrs.order as number) || 1
         const maxW = String(start + node.childCount - 1).length
         const space = state.repeat(" ", maxW + 2)
         state.renderList(node, space, (i) => {
@@ -191,7 +191,7 @@ export class RinoBulletListExtension extends NodeExtension implements MarkdownNo
         state,
         node,
     }: NodeSerializerOptions<SchemaFromExtensions<RinoBulletListExtension>>) {
-        state.renderList(node, "  ", () => (node.attrs.bullet || "*") + " ")
+        state.renderList(node, "  ", () => ((node.attrs.bullet as string) || "*") + " ")
     }
 }
 

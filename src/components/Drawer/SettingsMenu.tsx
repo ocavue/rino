@@ -35,13 +35,13 @@ const SettingsMenu: React.FC<{
     }
 
     const onClickSignIn = () => {
-        router.push("/sign-in")
+        void router.push("/sign-in")
     }
 
     const onClickSignOut = () => {
         handleMenuClose()
         setTimeout(() => {
-            signOut()
+            void signOut()
         }, 200)
     }
 

@@ -67,7 +67,7 @@ function useRemoveAllNotes(setNotes: SetNotes, setNoteKey: SetNoteKey) {
             if (uid) {
                 const query = await notesCollection.where("uid", "==", uid).get()
                 query.forEach((doc) => {
-                    doc.ref.delete()
+                    void doc.ref.delete()
                 })
             }
         },
