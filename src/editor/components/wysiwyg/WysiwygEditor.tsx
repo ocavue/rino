@@ -9,7 +9,7 @@ import { FC, useEffect, useMemo, useRef, useState } from "react"
 import { isTestEnv } from "src/utils"
 
 import { DevTools } from "../DevTools"
-import { InnerEditorProps } from "../types"
+import { EditorProps } from "../types"
 import { TableMenu } from "./TableMenu"
 import { WysiwygExtensions, WysiwygSchema } from "./wysiwyg-extension"
 import { useWysiwygManager, WysiwygManager } from "./wysiwyg-manager"
@@ -24,7 +24,7 @@ const InnerEditor: FC<{ className: string }> = ({ className }) => {
 
 type Doc = ProsemirrorNode<WysiwygSchema>
 
-export const WysiwygEditor: FC<InnerEditorProps> = ({
+export const WysiwygEditor: FC<EditorProps> = ({
     className,
     autoFocus,
     editable,

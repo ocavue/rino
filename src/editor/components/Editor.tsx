@@ -4,8 +4,8 @@ import clsx from "clsx"
 import React, { useEffect, useRef, useState } from "react"
 
 import { maxEditorWidth } from "src/constants"
+import { Note } from "src/controller"
 import { SourceCodeEditor, WysiwygEditor } from "src/editor"
-import { OuterEditorProps } from "src/editor/components/types"
 import { metaKey } from "src/utils"
 
 const useStyles = makeStyles((theme: Theme) => {
@@ -29,7 +29,13 @@ const useStyles = makeStyles((theme: Theme) => {
     })
 })
 
-export const Editor: React.FC<OuterEditorProps> = ({ autoFocus, note, setNoteContent }) => {
+type EditorProps = {
+    autoFocus: boolean
+    note: Note
+    setNoteContent: (content: string) => void
+}
+
+export const Editor: React.FC<EditorProps> = ({ autoFocus, note, setNoteContent }) => {
     const classes = useStyles()
     const [mode, setMode] = useState<"source-code" | "wysiwyg" | null>("wysiwyg")
     const initialContent = useRef<string>(note.content)
@@ -87,5 +93,3 @@ export const Editor: React.FC<OuterEditorProps> = ({ autoFocus, note, setNoteCon
 }
 
 Editor.displayName = "Editor"
-
-export default Editor

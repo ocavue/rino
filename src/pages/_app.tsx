@@ -11,7 +11,7 @@ import React from "react"
 
 import { DynamicPage } from "src/utils"
 
-const App = DynamicPage("AppPage", () => import("../views/App"))
+const App = DynamicPage("App", () => import("../views/App"))
 
 export default function Root<T>({
     Component,
@@ -20,10 +20,6 @@ export default function Root<T>({
     Component: React.FC<T>
     pageProps: T
 }) {
-    if (typeof document !== "undefined") {
-        const l = document?.querySelector("#_loading")
-        if (l) l.setAttribute("hidden", "")
-    }
     return (
         <App>
             <Head>

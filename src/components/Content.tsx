@@ -4,12 +4,10 @@ import React from "react"
 
 import { maxDrawerWidth } from "src/constants"
 import { EditContainer } from "src/controller"
-import { OuterEditorProps } from "src/editor/components/types"
+import { Editor } from "src/editor/components"
 import { StoreContainer } from "src/store"
 
 import { Welcome } from "./Welcome"
-
-const Editor = React.lazy(() => import("src/editor/components/Editor"))
 
 const useStyles = makeStyles((theme: Theme) => {
     const padding = theme.spacing(3)
@@ -41,14 +39,6 @@ const useStyles = makeStyles((theme: Theme) => {
     })
 })
 
-const LazyEditor: React.FC<OuterEditorProps> = (props) => {
-    return (
-        <React.Suspense fallback={<p>Loading...</p>}>
-            <Editor {...props} />
-        </React.Suspense>
-    )
-}
-
 export const Content: React.FC = () => {
     const classes = useStyles()
 
@@ -64,7 +54,7 @@ export const Content: React.FC = () => {
             data-testid="main"
         >
             {note ? (
-                <LazyEditor
+                <Editor
                     note={note}
                     setNoteContent={setNoteContent}
                     autoFocus={true}

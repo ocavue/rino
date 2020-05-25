@@ -58,7 +58,6 @@ class MyDocument extends Document {
                             Please enable it to continue.
                         </strong>
                     </noscript>
-                    <div id="_loading">LLOOAADDIINNGG</div>
                     <Main />
                     <NextScript />
                 </body>
