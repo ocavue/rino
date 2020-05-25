@@ -6,9 +6,9 @@
         "dev": "next dev",
         "start": "next start",
         "build": "next build",
+        "build:analyze": "ANALYZE=true next build",
         "export": "next export -o dist",
         "test": "jest --runInBand",
-        "analyze": "ANALYZE=true next build",
         "lint": "eslint --ignore-path .gitignore --ext '.js,.jsx,.ts,.tsx'"
     },
     "renovate": {
@@ -48,7 +48,7 @@
     "dependencies": {
         "@changesets/cli": "^2.6.5",
         "@emotion/core": "^10.0.27",
-        "@lhci/cli": "^0.3.0",
+        "@lhci/cli": "^0.4.0",
         "@material-ui/core": "^4.8.2",
         "@material-ui/icons": "^4.5.1",
         "@next/bundle-analyzer": "^9.2.0",
