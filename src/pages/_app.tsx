@@ -9,9 +9,9 @@ import "../../src/editor/theme/github.css"
 import Head from "next/head"
 import React from "react"
 
-import { noSsrPage } from "src/utils"
+import { DynamicPage } from "src/utils"
 
-const App = noSsrPage(() => import("../views/App"))
+const App = DynamicPage("App", () => import("../views/App"))
 
 export default function Root<T>({
     Component,

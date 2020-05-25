@@ -2,12 +2,10 @@ import { NextPage } from "next"
 import dynamic, { Loader } from "next/dynamic"
 import React from "react"
 
-export function noSsrPage<P>(dynamicOptions: Loader<P>) {
-    return dynamic(dynamicOptions, { ssr: false })
-}
+import { Loading } from "src/views/Loading"
 
 export function DynamicPage<P>(displayName: string, dynamicOptions: Loader<P>) {
-    const View = dynamic(dynamicOptions, { ssr: false })
+    const View = dynamic(dynamicOptions, { ssr: false, loading: Loading })
     const Page: NextPage<P> = (props: P) => {
         return <View {...props} />
     }
