@@ -10,7 +10,7 @@ declare module "*.txt" {
 
 // .svg files will be transform to React components by `babel-plugin-inline-react-svg`
 declare module "*.svg" {
-    const value: React.FC
+    const value: React.FC<{ viewBox?: string; width?: number; height?: number; className?: string }>
     export = value
 }
 

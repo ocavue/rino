@@ -7,7 +7,7 @@ import { debounce } from "lodash"
 import { FC, useEffect, useMemo, useRef } from "react"
 
 import { DevTools } from "../DevTools"
-import { EditorProps } from "../types"
+import { InnerEditorProps } from "../types"
 import {
     SourceCodeExtensions,
     SourceCodeManager,
@@ -24,7 +24,7 @@ const InnerEditor: FC<{ className: string }> = ({ className }) => {
 
 type Doc = ProsemirrorNode<SourceCodeSchema>
 
-export const SourceCodeEditor: FC<EditorProps> = ({
+export const SourceCodeEditor: FC<InnerEditorProps> = ({
     className,
     content,
     editable,
