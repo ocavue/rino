@@ -1,11 +1,10 @@
 import { createStyles, IconButton, withStyles } from "@material-ui/core"
 
-import { appbarIconButtonSize, iconSize } from "src/constants"
+import { appbarIconButtonSize } from "src/constants"
 
 export const AppbarIconButton = withStyles(
     createStyles({
         root: {
-            paddingTop: (appbarIconButtonSize - iconSize) / 2,
             width: appbarIconButtonSize,
             height: appbarIconButtonSize,
         },

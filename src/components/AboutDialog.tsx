@@ -1,4 +1,11 @@
-import * as m from "@material-ui/core"
+import {
+    Box,
+    Dialog,
+    DialogContent,
+    DialogContentText,
+    DialogTitle,
+    Typography,
+} from "@material-ui/core"
 import React from "react"
 
 import logo from "src/assets/logo.png"
@@ -10,22 +17,23 @@ export const AboutDialog: React.FC<{
 }> = ({ open, setOpen }) => {
     const onClose = () => setOpen(false)
     return (
-        <m.Dialog open={open} onClose={onClose} data-testid="about-dialog">
-            <m.DialogTitle>
-                <m.Typography align="center">
+        <Dialog open={open} onClose={onClose} data-testid="about-dialog">
+            <Box height="24px" />
+            <DialogTitle>
+                <Typography align="center">
                     <img src={logo} width="128px" height="128px" />
-                </m.Typography>
-                <m.Typography align="center">Rino</m.Typography>
-            </m.DialogTitle>
-            <m.DialogContent>
-                <m.DialogContentText align="center">
+                </Typography>
+                <Typography align="center">Rino</Typography>
+            </DialogTitle>
+            <DialogContent>
+                <DialogContentText align="center">
                     <span data-testid="about-dialog-version">Version {version}</span>
                     <br />
                     <span data-testid="about-dialog-copyright">
                         Copyright © 2020 Ocavue. All rights reserved.
                     </span>
-                </m.DialogContentText>
-            </m.DialogContent>
-        </m.Dialog>
+                </DialogContentText>
+            </DialogContent>
+        </Dialog>
     )
 }
