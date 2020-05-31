@@ -310,6 +310,13 @@
             "GITHUB_TOKEN": "${{ secrets.GITHUB_TOKEN }}",
             "NPM_TOKEN": "${{ secrets.NPM_TOKEN }}"
           }
+        },
+        {
+          "name": "Print outputs for debug",
+          "run": "echo \"changeset_outputs_published: [$changeset_outputs_published]\"\n",
+          "env": {
+            "changeset_outputs_published": "${{ steps.step_changesets.outputs.published }}"
+          }
         }
       ],
       "outputs": {
@@ -321,7 +328,7 @@
       "needs": [
         "Changesets"
       ],
-      "if": "github.ref == 'refs/heads/master' && needs.Changesets.outputs.published == 'true'",
+      "if": "github.ref == 'refs/heads/master' && ( needs.Changesets.outputs.published == 'true' || contains(github.event.head_commit.message, 'force-publish') )",
       "steps": [
         {
           "name": "Checkout code repository",

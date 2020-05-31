@@ -204,13 +204,20 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Print outputs for debug
+        run: |
+          echo "changeset_outputs_published: [$changeset_outputs_published]"
+        env:
+          changeset_outputs_published: ${{ steps.step_changesets.outputs.published }}
+
     outputs:
       published: ${{ steps.step_changesets.outputs.published }}
 
   Firebase:
     runs-on: ubuntu-18.04
     needs: [Changesets]
-    if: github.ref == 'refs/heads/master' && needs.Changesets.outputs.published == 'true'
+    if: github.ref == 'refs/heads/master' && ( needs.Changesets.outputs.published == 'true' || contains(github.event.head_commit.message, 'force-publish') )
     steps:
       - *step_checkout
       - *step_setup_node
