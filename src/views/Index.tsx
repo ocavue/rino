@@ -15,10 +15,10 @@ const useStyles = makeStyles((theme: Theme) => {
     })
 })
 
-export default function Main() {
+export default function Index() {
     const classes = useStyles()
     return (
-        <div className={classes.root} data-testid="main">
+        <div className={classes.root} data-testid="index">
             <Appbar />
             <Drawer />
             <Content />
