@@ -23,7 +23,8 @@ export const SearchBar = () => {
             variant="outlined"
             margin="dense"
             onChange={onChange}
-            style={{ marginTop: 0, marginBottom: 0, marginRight: "8px" }}
+            style={{ marginTop: 0, marginBottom: 0, marginRight: "8px", justifyContent: "center" }}
+            inputProps={{ style: { paddingTop: "8px", paddingBottom: "8px" } }}
         />
     )
 }

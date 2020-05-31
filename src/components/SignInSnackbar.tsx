@@ -12,8 +12,15 @@ const closeDelay = 300
 
 const useStyles = makeStyles((theme: Theme) => {
     return createStyles({
+        fullContentRoot: {
+            marginBottom: "env(safe-area-inset-bottom)",
+        },
+        denseRoot: {
+            left: "auto",
+        },
         denseContentRoot: {
             minWidth: "auto",
+            marginBottom: "env(safe-area-inset-bottom)",
         },
         denseContentAction: {
             marginLeft: "-8px",
@@ -47,6 +54,7 @@ const DenseSignInSnackbar: React.FC<{
             ContentProps={{
                 classes: { root: classes.denseContentRoot, action: classes.denseContentAction },
             }}
+            classes={{ root: classes.denseRoot }}
             action={
                 <span>
                     <Button
@@ -79,6 +87,9 @@ const FullSignInSnackbar: React.FC<{
             anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
             data-testid="full-sign-in-snack-bar"
             message="You are in anonymity mode. All changes will not be saved."
+            ContentProps={{
+                classes: { root: classes.fullContentRoot },
+            }}
             action={
                 <>
                     <NextLink href="/sign-in">
