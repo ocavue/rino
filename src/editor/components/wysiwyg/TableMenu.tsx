@@ -18,6 +18,7 @@ const useStyles = makeStyles((theme: Theme) => {
                 easing: theme.transitions.easing.easeOut,
                 duration: theme.transitions.duration.enteringScreen,
             }),
+            marginBottom: "env(safe-area-inset-bottom)",
         },
         snackbarShift: {
             [theme.breakpoints.up("md")]: {
