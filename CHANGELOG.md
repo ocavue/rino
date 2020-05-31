@@ -1,5 +1,11 @@
 # @rino.app/web
 
+## 0.9.2
+
+### Patch Changes
+
+-   4bbcf3c: Add some small UI improvements
+
 ## 0.9.1
 
 ### Patch Changes
