@@ -131,7 +131,7 @@ const RinoMarkExtensionClasses = [
             return {
                 spanning: false,
                 attrs: commonAttrs,
-                toDOM: (mark, inline) => ["span", { class: "md-link" }, 0],
+                toDOM: (mark, inline) => ["a", { class: "md-link" }, 0],
             }
         }
     },
@@ -140,3 +140,7 @@ const RinoMarkExtensionClasses = [
 export const rinoMarkExtensions = RinoMarkExtensionClasses.map((Ext) => new Ext())
 export type RinoMarkExtension = typeof rinoMarkExtensions[number]
 export type RinoMarkName = RinoMarkExtension["name"]
+
+export function isAutoHideMark(name?: string) {
+    return name === "mdKey" || name === "mdLinkUri"
+}

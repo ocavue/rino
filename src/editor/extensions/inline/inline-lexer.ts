@@ -11,7 +11,7 @@ type Rule = [RegExp, Render]
 function processLink(url: string, depth: number): Token {
     return {
         text: url,
-        marks: ["mdLinkText"],
+        marks: ["mdLinkUri"],
         attrs: { depth: depth, href: url },
     }
 }
@@ -95,7 +95,11 @@ export class InlineLexer {
                     { attrs: { depth, start: true }, text: "[", marks: ["mdKey"] },
                     ...this.scan(match[1], depth + 1).map((token) => pushMark(token, "mdLinkText")),
                     { attrs: { depth }, text: "](", marks: ["mdKey"] },
-                    processLink(match[2], depth),
+                    {
+                        text: match[2],
+                        marks: ["mdLinkUri"],
+                        attrs: { depth: depth, href: match[2] },
+                    },
                     { attrs: { depth, end: true }, text: ")", marks: ["mdKey"] },
                 ],
             ],
@@ -103,7 +107,11 @@ export class InlineLexer {
                 /<([^ >]+(@|:)[^ >]+)>/y, // <https://url>
                 (match, depth) => [
                     { attrs: { depth, start: true }, text: "<", marks: ["mdKey"] },
-                    processLink(match[1], depth),
+                    {
+                        text: match[1],
+                        marks: ["mdLinkText"],
+                        attrs: { depth: depth, href: match[1] },
+                    },
                     { attrs: { depth, end: true }, text: ">", marks: ["mdKey"] },
                 ],
             ],

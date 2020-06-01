@@ -92,11 +92,17 @@
 
 .markdown-body a {
   color: #0366d6;
+  cursor: pointer;
+
   text-decoration: none;
+  &:hover {
+    text-decoration: underline;
+  }
 }
 
-.markdown-body a:hover {
-  text-decoration: underline;
+.markdown-body .md-link {
+  font-size: 0;
+  letter-spacing: 0; // A .md-link element could caontain many characters. Although the font-size is 0, there is still a obvious gap because of the letter-spacing.
 }
 
 .markdown-body strong {
@@ -515,10 +521,6 @@
   position: absolute;
   left: -1.3em;
   top: 0.3em;
-}
-
-.markdown-body a {
-  cursor: pointer;
 }
 
 .markdown-body--light {

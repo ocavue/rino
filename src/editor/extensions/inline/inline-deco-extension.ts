@@ -1,7 +1,9 @@
 import { Extension } from "@remirror/core"
-import { Mark, Node as ProsemirrorNode } from "prosemirror-model"
+import { Node as ProsemirrorNode } from "prosemirror-model"
 import { EditorState, Plugin } from "prosemirror-state"
 import { Decoration, DecorationSet } from "prosemirror-view"
+
+import { isAutoHideMark } from "./inline-mark-define"
 
 interface TextInfo {
     attrs: {
@@ -28,7 +30,7 @@ function iterUnilStart(
     for (let i = tokenIndex; i >= 0; i--) {
         const textNode = textBlock.content.child(i)
         const info = getTextInfo(textNode)
-        if (info.name === "mdKey") {
+        if (isAutoHideMark(info.name)) {
             posPairs.push([tokenTo - textNode.nodeSize, tokenTo])
         }
         tokenTo -= textNode.nodeSize
@@ -47,7 +49,7 @@ function iterUnilEnd(
     for (let i = tokenIndex; i < textBlock.content.childCount; i++) {
         const textNode = textBlock.content.child(i)
         const info = getTextInfo(textNode)
-        if (info.name === "mdKey") {
+        if (isAutoHideMark(info.name)) {
             posPairs.push([tokenFrom, tokenFrom + textNode.nodeSize])
         } else {
             console.debug(`[iterUnilEnd] `, info)
