@@ -7,7 +7,7 @@ import {
 } from "@remirror/extension-code-block"
 import Token from "markdown-it/lib/token"
 
-import { InlineDecorateType } from "src/editor/extensions/decoration"
+import { InlineDecorateType } from "src/editor/extensions/inline"
 import { ParserTokenType } from "src/editor/transform/parser-type"
 import { NodeSerializerOptions } from "src/editor/transform/serializer"
 import { buildBlockEnterKeymapBindings, MarkdownNodeExtension } from "src/editor/utils"

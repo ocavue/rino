@@ -6,7 +6,6 @@ import {
     RinoBulletListExtension,
     RinoCheckboxExtension,
     RinoCodeBlockExtension,
-    RinoDecorationExtension,
     RinoHardBreakExtension,
     RinoHeadingExtension,
     RinoHorizontalRuleExtension,
@@ -18,6 +17,11 @@ import {
     RinoTableRowExtension,
     RinoTextExtension,
 } from "src/editor/extensions"
+import {
+    RinoInlineDecorationExtension,
+    RinoInlineMarkExtension,
+    rinoMarkExtensions,
+} from "src/editor/extensions/inline"
 
 /**
  * Replace ParagraphExtension as RinoParagraphExtension in baseExtensions.
@@ -42,11 +46,13 @@ const rinoBaseExtensions = baseExtensions.map((e) => {
 
 export const wysiwygExtensions = [
     ...rinoBaseExtensions,
+    ...rinoMarkExtensions,
+    new RinoInlineMarkExtension(),
+    new RinoInlineDecorationExtension(),
     new RinoHardBreakExtension(),
     new RinoHorizontalRuleExtension(),
     new RinoCodeBlockExtension(),
     new RinoBlockquoteExtension(),
-    new RinoDecorationExtension(),
     new RinoHeadingExtension(),
     new RinoCheckboxExtension(),
     new RinoListItemExtension(),

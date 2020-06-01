@@ -61,8 +61,6 @@ export const TableMenu: React.FC = () => {
             ["delete-column", svg.DeleteColumn, actions.tableDeleteColumn],
         ]
         return options.map(([id, SvgComponent, action]) => {
-            console.log("SvgComponent:", typeof SvgComponent, SvgComponent)
-
             return (
                 <IconButton
                     key={id}

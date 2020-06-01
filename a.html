@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        p {
+            font-size: 30px;
+        }
+
+        .md-mark {
+            font-size: 40px;
+        }
+
+        span::first-line {
+            color: red;
+        }
+
+        span > * {
+            color: pink;
+        }
+
+
+        span > *:first-child {
+            color: green;
+        }
+
+        /* .show {
+            font-size: 1rem;
+        } */
+    </style>
+</head>
+
+<body>
+    <p>
+        <span>text</span><span class="md-mark">HIDE</span><span class="md-mark"><span class="show">SHOW</span></span><span>text v1</span>
+    </p>
+</body>
+
+</html>

@@ -6,6 +6,7 @@ import {
     NodeExtensionOptions,
     ProsemirrorNode,
 } from "@remirror/core"
+import { NodeRange, Schema } from "prosemirror-model"
 import { EditorState, TextSelection, Transaction } from "prosemirror-state"
 
 import { ParserToken } from "src/editor/transform/parser-type"
@@ -70,5 +71,40 @@ export function buildBlockEnterKeymapBindings<Node extends ProsemirrorNode>(
             }
             return true
         }),
+    }
+}
+
+/**
+ * Iterate all children from a parent node. Yield child node, its
+ * offset into this parent node and its index.
+ *
+ * Same function as node.forEach but with two benefits by using
+ * ES6 generator:
+ * 1. better readability
+ * 2. ability to break the loop
+ *
+ * @param node The parent node
+ */
+export function* iterNode<S extends Schema>(node: ProsemirrorNode<S>) {
+    const fragment = node.content
+    for (let i = 0, offset = 0; i < fragment.childCount; i++) {
+        const child = fragment.child(i)
+        yield [child, offset, i] as const
+        offset += child.nodeSize
+    }
+}
+
+/**
+ * Iterage all children from a NodeRange object. Yield each child node
+ * and its (absolute) position
+ * @param range
+ */
+export function* iterNodeRange<S extends Schema>(range: NodeRange<S>) {
+    let pos = range.start + 1
+    for (const [child, , index] of iterNode(range.parent)) {
+        if (index < range.startIndex) continue
+        else if (index >= range.endIndex) break
+        yield [child, pos] as const
+        pos += child.nodeSize
     }
 }
