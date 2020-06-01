@@ -164,25 +164,17 @@ jobs:
       - *step_download_dist
 
       - name: Deploy to Netlify
+        uses: nwtgck/actions-netlify@v1.1
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
-        run: |
-          echo '<!-- Netlify -->' >> ./dist/index.html
-          echo '<!-- Netlify -->' >> ./dist/404.html
-          message="Deployment from Circle CI. Ref: $(git rev-parse --abbrev-ref HEAD). Commit: $(git rev-parse --short HEAD)."
-          ./node_modules/.bin/netlify deploy --json --message "$message" > /tmp/deploy.json
-          cat /tmp/deploy.json
-
-      # - name: Create commit comment
-      #   uses: peter-evans/commit-comment@v1
-      #   with:
-      #     token: ${{ secrets.GITHUB_TOKEN }}
-      #     body: |
-      #       This is a multi-line test comment
-      #       - With GitHub **Markdown**
-      #       - Created by [commit-comment][1]
-      #       [1]: https://github.com/peter-evans/commit-comment
+        with:
+          publish-dir: './dist'
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          deploy-message: "Deploy from GitHub Actions (SHA: ${{ github.sha }}; Ref: ${{github.ref }})"
+          enable-commit-comment: false
+          enable-pull-request-comment: true
+          overwrites-pull-request-comment: true
 
   Changesets:
     runs-on: ubuntu-18.04
