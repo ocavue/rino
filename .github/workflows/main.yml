@@ -253,11 +253,19 @@
         },
         {
           "name": "Deploy to Netlify",
+          "uses": "nwtgck/actions-netlify@v1.1",
           "env": {
             "NETLIFY_AUTH_TOKEN": "${{ secrets.NETLIFY_AUTH_TOKEN }}",
             "NETLIFY_SITE_ID": "${{ secrets.NETLIFY_SITE_ID }}"
           },
-          "run": "echo '<!-- Netlify -->' >> ./dist/index.html\necho '<!-- Netlify -->' >> ./dist/404.html\nmessage=\"Deployment from Circle CI. Ref: $(git rev-parse --abbrev-ref HEAD). Commit: $(git rev-parse --short HEAD).\"\n./node_modules/.bin/netlify deploy --json --message \"$message\" > /tmp/deploy.json\ncat /tmp/deploy.json\n"
+          "with": {
+            "publish-dir": "./dist",
+            "github-token": "${{ secrets.GITHUB_TOKEN }}",
+            "deploy-message": "Deploy from GitHub Actions (SHA: ${{ github.sha }}; Ref: ${{github.ref }})",
+            "enable-commit-comment": false,
+            "enable-pull-request-comment": true,
+            "overwrites-pull-request-comment": true
+          }
         }
       ]
     },
