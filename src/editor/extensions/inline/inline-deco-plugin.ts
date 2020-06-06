@@ -14,27 +14,36 @@ interface TextInfo {
     name?: string
 }
 
+/**
+ * Read a text node' and return information from its mark
+ */
 function getTextInfo(textNode: ProsemirrorNode | undefined | null): TextInfo {
-    // A text node should contain only one mark
+    // A text node should contain one or zero mark
     const mark = textNode?.marks?.[0]
     return mark ? { attrs: mark.attrs, name: mark.type.name } : { attrs: {} }
 }
 
+/**
+ *
+ * @param textBlock
+ * @param tokenIndex
+ * @param tokenToPos
+ * @param posPairs
+ */
 function iterUnilStart(
     textBlock: ProsemirrorNode,
     tokenIndex: number,
-    tokenDepth: number,
-    tokenTo: number,
+    tokenToPos: number,
     posPairs: [number, number][],
 ): void {
     for (let i = tokenIndex; i >= 0; i--) {
         const textNode = textBlock.content.child(i)
         const info = getTextInfo(textNode)
         if (isAutoHideMark(info.name)) {
-            posPairs.push([tokenTo - textNode.nodeSize, tokenTo])
+            posPairs.push([tokenToPos - textNode.nodeSize, tokenToPos])
         }
-        tokenTo -= textNode.nodeSize
-        // Break the loop if match a "top level" start token
+        tokenToPos -= textNode.nodeSize
+        // Break the loop if match a top level start token
         if (info.attrs.depth === 1 && info.attrs.start) break
     }
 }
@@ -42,19 +51,17 @@ function iterUnilStart(
 function iterUnilEnd(
     textBlock: ProsemirrorNode,
     tokenIndex: number,
-    tokenDepth: number, // TODO: remove it
-    tokenFrom: number,
+    tokenFromPos: number,
     posPairs: [number, number][],
 ): void {
     for (let i = tokenIndex; i < textBlock.content.childCount; i++) {
         const textNode = textBlock.content.child(i)
         const info = getTextInfo(textNode)
         if (isAutoHideMark(info.name)) {
-            posPairs.push([tokenFrom, tokenFrom + textNode.nodeSize])
-        } else {
-            console.debug(`[iterUnilEnd] `, info)
+            posPairs.push([tokenFromPos, tokenFromPos + textNode.nodeSize])
         }
-        tokenFrom += textNode.nodeSize
+        tokenFromPos += textNode.nodeSize
+        // Break the loop if match a top level end token
         if (info.attrs.depth === 1 && info.attrs.end) break
     }
 }
@@ -78,45 +85,31 @@ function createDecorationPlugin() {
                     // The cursor is between two nodes.
 
                     // If the cursor is at the begin or at the end of the text block node, then
-                    // one of `nodeAfter` and `nodeBefore` is be empty.
-                    const textBefore = $pos.nodeBefore
-                    const textAfter = $pos.nodeAfter
-                    const textBeforeDepth = getTextInfo(textBefore).attrs.depth
-                    const textAfterDepth = getTextInfo(textAfter).attrs.depth
+                    // one of `nodeAfter` and `nodeBefore` is empty.
+                    const textNodeBefore = $pos.nodeBefore
+                    const textNodeAfter = $pos.nodeAfter
 
-                    if (textBefore && textBeforeDepth) {
-                        iterUnilStart(
-                            textBlock,
-                            $pos.index($pos.depth) - 1,
-                            textBeforeDepth,
-                            $pos.pos,
-                            posPairs,
-                        )
+                    if (textNodeBefore) {
+                        iterUnilStart(textBlock, $pos.index($pos.depth) - 1, $pos.pos, posPairs)
                     }
-                    if (textAfter && textAfterDepth) {
-                        iterUnilEnd(
-                            textBlock,
-                            $pos.index($pos.depth),
-                            textAfterDepth,
-                            $pos.pos,
-                            posPairs,
-                        )
+                    if (textNodeAfter) {
+                        iterUnilEnd(textBlock, $pos.index($pos.depth), $pos.pos, posPairs)
                     }
                 } else {
                     // The cursor is inside a text node
 
-                    const tokenIndex = $pos.index($pos.depth)
-                    const tokenNode = textBlock.content.maybeChild(tokenIndex)
-                    if (!tokenNode) return
+                    const textNodeIndex = $pos.index($pos.depth)
+                    const textNode = textBlock.content.maybeChild(textNodeIndex)
+                    if (!textNode) return
 
-                    const tokenDepth = getTextInfo(tokenNode).attrs.depth
-                    if (!tokenDepth && tokenDepth !== 0) return
+                    const tokenDepth = getTextInfo(textNode).attrs.depth
+                    if (!tokenDepth) return
 
                     const textFrom = $pos.pos - $pos.textOffset
-                    const textTo = textFrom + textBlock.content.child(tokenIndex).nodeSize
+                    const textTo = textFrom + textBlock.content.child(textNodeIndex).nodeSize
 
-                    iterUnilStart(textBlock, tokenIndex, tokenDepth, textTo, posPairs)
-                    iterUnilEnd(textBlock, tokenIndex, tokenDepth, textFrom, posPairs)
+                    iterUnilStart(textBlock, textNodeIndex, textTo, posPairs)
+                    iterUnilEnd(textBlock, textNodeIndex, textFrom, posPairs)
                 }
 
                 return DecorationSet.create(
