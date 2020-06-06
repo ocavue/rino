@@ -12,7 +12,7 @@ describe("InlineLexer", function () {
                 { text: "`", marks: ["mdKey"], attrs: { depth: 1, end: true } },
             ])
         })
-        test("with two side spaces", function () {
+        test("with two trim spaces", function () {
             expect(lexer.scan("` code `", 1)).toStrictEqual([
                 { text: "`", marks: ["mdKey"], attrs: { depth: 1, start: true } },
                 { text: " ", marks: ["mdCodeSpace"], attrs: { depth: 1 } },
@@ -21,7 +21,7 @@ describe("InlineLexer", function () {
                 { text: "`", marks: ["mdKey"], attrs: { depth: 1, end: true } },
             ])
         })
-        test("with one side space", function () {
+        test("with one trim space", function () {
             expect(lexer.scan("` code`", 1)).toStrictEqual([
                 { text: "`", marks: ["mdKey"], attrs: { depth: 1, start: true } },
                 { text: " ", marks: ["mdCodeSpace"], attrs: { depth: 1 } },
