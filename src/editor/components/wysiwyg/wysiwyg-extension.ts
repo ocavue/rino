@@ -9,7 +9,10 @@ import {
     RinoHardBreakExtension,
     RinoHeadingExtension,
     RinoHorizontalRuleExtension,
+    RinoInlineDecorationExtension,
+    RinoInlineMarkExtension,
     RinoListItemExtension,
+    rinoMarkExtensions,
     RinoOrderedListExtension,
     RinoParagraphExtension,
     RinoTableCellExtension,
@@ -17,11 +20,6 @@ import {
     RinoTableRowExtension,
     RinoTextExtension,
 } from "src/editor/extensions"
-import {
-    RinoInlineDecorationExtension,
-    RinoInlineMarkExtension,
-    rinoMarkExtensions,
-} from "src/editor/extensions/inline"
 
 /**
  * Replace ParagraphExtension as RinoParagraphExtension in baseExtensions.
