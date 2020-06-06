@@ -19,7 +19,7 @@ import { RinoMarkName } from "./inline-mark-define"
  *               { depth: 2, mark: "em strong", content: "em"},
  *               { depth: 3, mark: "em strong code", content: "code"}]
  */
-export interface InlineTextToken {
+export interface InlineToken {
     marks: RinoMarkName[]
     text: string
     attrs: {
@@ -28,15 +28,4 @@ export interface InlineTextToken {
         start?: boolean // Is the first token of a serial of tokens
         end?: boolean // Is the last token of a serial of tokens
     }
-}
-
-export interface InlineWidgetToken {
-    tag: keyof HTMLElementTagNameMap
-    options: ElementCreationOptions
-}
-
-export type InlineToken = InlineTextToken | InlineWidgetToken
-
-export function isWidgetToken(token: InlineToken): token is InlineWidgetToken {
-    return Object.prototype.hasOwnProperty.call(token, "tag")
 }
