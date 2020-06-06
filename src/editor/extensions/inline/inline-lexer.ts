@@ -8,14 +8,6 @@ import { Token } from "./inline-types"
 type Render = (match: string[], depth: number) => Token[]
 type Rule = [RegExp, Render]
 
-function processLink(url: string, depth: number): Token {
-    return {
-        text: url,
-        marks: ["mdLinkUri"],
-        attrs: { depth: depth, href: url },
-    }
-}
-
 function fixMarkNames(marks: RinoMarkName[]): RinoMarkName[] {
     if (marks.length <= 1) return marks
     if (marks.includes("mdKey")) return ["mdKey"]
@@ -72,9 +64,9 @@ export class InlineLexer {
                 /\!\[([^\[\]]+)\]\((.+?)\)/y,
                 (match, depth) => [
                     { attrs: { depth, start: true }, text: "[(", marks: ["mdKey"] },
-                    { attrs: { depth }, text: match[1], marks: ["mdLinkText"] },
+                    { attrs: { depth }, text: match[1], marks: ["mdImgText"] },
                     { attrs: { depth }, text: ")]", marks: ["mdKey"] },
-                    { attrs: { depth }, text: match[2], marks: ["mdLinkUri"] },
+                    { attrs: { depth }, text: match[2], marks: ["mdImgUri"] },
                     // {
                     //     isWidget: true,
                     //     length: 0,

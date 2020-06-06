@@ -135,6 +135,37 @@ const RinoMarkExtensionClasses = [
             }
         }
     },
+
+    class ImgText extends MarkExtension {
+        get name() {
+            return "mdImgText" as const
+        }
+        get schema(): MarkExtensionSpec {
+            return {
+                spanning: false,
+                attrs: commonAttrs,
+                toDOM: (mark, inline) => ["span", { class: "md-img-text" }, 0],
+            }
+        }
+    },
+
+    class ImgUri extends MarkExtension {
+        get name() {
+            return "mdImgUri" as const
+        }
+        get schema(): MarkExtensionSpec {
+            return {
+                spanning: false,
+                attrs: {
+                    ...commonAttrs,
+                    href: {
+                        default: "",
+                    },
+                },
+                toDOM: (mark, inline) => ["span", { class: "md-img-uri" }, 0],
+            }
+        }
+    },
 ]
 
 export const rinoMarkExtensions = RinoMarkExtensionClasses.map((Ext) => new Ext())
@@ -142,5 +173,5 @@ export type RinoMarkExtension = typeof rinoMarkExtensions[number]
 export type RinoMarkName = RinoMarkExtension["name"]
 
 export function isAutoHideMark(name?: string) {
-    return name === "mdKey" || name === "mdLinkUri"
+    return name === "mdKey" || name === "mdLinkUri" || name === "mdImgText" || name === "mdImgUri"
 }
