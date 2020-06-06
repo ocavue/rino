@@ -3,9 +3,9 @@ Inspired by https://github.com/lepture/mistune/
 */
 
 import { RinoMarkName } from "./inline-mark-define"
-import { Token } from "./inline-types"
+import { InlineToken } from "./inline-types"
 
-type Render = (match: string[], depth: number) => Token[]
+type Render = (match: string[], depth: number) => InlineToken[]
 type Rule = [RegExp, Render]
 
 function fixMarkNames(marks: RinoMarkName[]): RinoMarkName[] {
@@ -16,7 +16,7 @@ function fixMarkNames(marks: RinoMarkName[]): RinoMarkName[] {
     return marks
 }
 
-function pushMark(token: Token, markName: RinoMarkName): Token {
+function pushMark(token: InlineToken, markName: RinoMarkName): InlineToken {
     if (!token.marks.includes(markName)) token.marks = fixMarkNames([...token.marks, markName])
     return token
 }
@@ -116,7 +116,7 @@ export class InlineLexer {
         }
     }
 
-    private manipulate(text: string, startIndex: number, depth: number): [Token[], number] {
+    private manipulate(text: string, startIndex: number, depth: number): [InlineToken[], number] {
         for (const [name, [regex, render]] of Object.entries(this.rules)) {
             regex.lastIndex = startIndex
             const match = regex.exec(text)
@@ -127,7 +127,7 @@ export class InlineLexer {
                 // Otherwise we set `regex.lastIndex` to 0 manually to avoid some unexpected behavior.
                 regex.lastIndex = 0
             }
-            const tokens: Token[] = render(match, depth).filter((token) => token.text.length) // Rmove all empty tokens
+            const tokens: InlineToken[] = render(match, depth).filter((token) => token.text.length) // Rmove all empty tokens
             const length = tokens.map((token) => token.text.length).reduce((a, b) => a + b, 0)
             if (length !== match[0].length) {
                 console.error(tokens)
@@ -141,8 +141,8 @@ export class InlineLexer {
         throw new Error(`Infinite loop at: ${text}`)
     }
 
-    public scan(text: string, depth = 1): Token[] {
-        const output: Token[] = []
+    public scan(text: string, depth = 1): InlineToken[] {
+        const output: InlineToken[] = []
         let start = 0
         while (start < text.length) {
             const [tokens, length] = this.manipulate(text, start, depth)

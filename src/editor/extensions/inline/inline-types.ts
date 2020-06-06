@@ -29,5 +29,3 @@ export interface InlineToken {
         end?: boolean // Is the last token of a serial of tokens
     }
 }
-
-export type Token = InlineToken // TODO: remove it
