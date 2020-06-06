@@ -8,7 +8,7 @@ import { WysiwygSchema } from "src/editor"
 import { InlineLexer } from "src/editor/extensions/inline/inline-lexer"
 import { iterNode, iterNodeRange } from "src/editor/utils"
 
-import { InlineDecorateType } from "./inline-types"
+import { InlineDecorateType, isWidgetToken } from "./inline-types"
 const inlineLexer = new InlineLexer()
 const maxMarkStep = 10
 
@@ -50,6 +50,10 @@ function parseTextBlock(schema: Schema, node: Node<Schema>, startPos: number): M
     }))
 
     for (const token of tokens) {
+        if (isWidgetToken(token)) {
+            continue
+        }
+
         const [expectedFrom, expectedTo] = [markStartPos, markStartPos + token.text.length]
         const expectedMarks: Mark[] = token.marks.map((name) =>
             schema.marks[name].create(token.attrs),

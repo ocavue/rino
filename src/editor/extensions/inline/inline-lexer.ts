@@ -3,7 +3,7 @@ Inspired by https://github.com/lepture/mistune/
 */
 
 import { RinoMarkName } from "./inline-mark-define"
-import { InlineToken } from "./inline-types"
+import { InlineToken, isWidgetToken } from "./inline-types"
 
 type Render = (match: string[], depth: number) => InlineToken[]
 type Rule = [RegExp, Render]
@@ -17,6 +17,7 @@ function fixMarkNames(marks: RinoMarkName[]): RinoMarkName[] {
 }
 
 function pushMark(token: InlineToken, markName: RinoMarkName): InlineToken {
+    if (isWidgetToken(token)) return token
     if (!token.marks.includes(markName)) token.marks = fixMarkNames([...token.marks, markName])
     return token
 }
@@ -127,9 +128,20 @@ export class InlineLexer {
                 // Otherwise we set `regex.lastIndex` to 0 manually to avoid some unexpected behavior.
                 regex.lastIndex = 0
             }
-            const tokens: InlineToken[] = render(match, depth).filter((token) => token.text.length) // Rmove all empty tokens
-            const length = tokens.map((token) => token.text.length).reduce((a, b) => a + b, 0)
-            if (length !== match[0].length) {
+
+            const tokens: InlineToken[] = []
+            let textLength = 0
+            for (const token of render(match, depth)) {
+                if (isWidgetToken(token)) {
+                    tokens.push(token)
+                } else if (token.text.length) {
+                    // Rmove all empty text tokens
+                    textLength += token.text.length
+                    tokens.push(token)
+                }
+            }
+
+            if (textLength !== match[0].length) {
                 console.error(tokens)
                 throw new Error(
                     `Tokenization get wrong length when using inline render '${name}'. Before rendering: ${match[0].length}; After rendering: ${length}.`,
