@@ -134,7 +134,7 @@ describe("InlineLexer", function () {
         })
     })
     describe("delete", function () {
-        test.only("normal", function () {
+        test("normal", function () {
             expect(lexer.scan("~~1234~~")).toStrictEqual([
                 {
                     text: "~~",
@@ -153,7 +153,7 @@ describe("InlineLexer", function () {
                 },
             ])
         })
-        test.only("with inside tilde", function () {
+        test("with inside tilde", function () {
             expect(lexer.scan("~~12~34~~")).toStrictEqual([
                 {
                     text: "~~",
@@ -177,7 +177,7 @@ describe("InlineLexer", function () {
                 },
             ])
         })
-        test.only("with space", function () {
+        test("with space", function () {
             expect(lexer.scan("~~ 1234 ~~")).toStrictEqual([
                 {
                     text: "~~",
@@ -199,114 +199,82 @@ describe("InlineLexer", function () {
     })
     describe("autolink", function () {
         test("normal", function () {
-            assertTokenEqual(lexer.scan("<https://github.com>"), [
-                { length: 1, classes: ["decoration_mark"] },
+            expect(lexer.scan("<https://rino.app>")).toStrictEqual([
+                { text: "<", marks: ["mdKey"], attrs: { depth: 1, start: true } },
                 {
-                    length: 18,
-                    classes: ["decoration_link_url"],
-                    nodeName: "a",
-                    nodeAttrs: {
-                        href: "https://github.com",
-                        onClick: 'window.open("https://github.com")',
-                    },
+                    text: "https://rino.app",
+                    marks: ["mdLinkText"],
+                    attrs: { depth: 1, href: "https://rino.app" },
                 },
-                { length: 1, classes: ["decoration_mark"] },
+                { text: ">", marks: ["mdKey"], attrs: { depth: 1, end: true } },
             ])
         })
         test("wrap by text", function () {
-            assertTokenEqual(lexer.scan("text<https://github.com>text"), [
-                { length: 4, classes: [] },
-                { length: 1, classes: ["decoration_mark"] },
+            expect(lexer.scan("text<https://rino.app>text")).toStrictEqual([
+                { text: "text", marks: ["mdText"], attrs: { depth: 1, start: true, end: true } },
+                { text: "<", marks: ["mdKey"], attrs: { depth: 1, start: true } },
                 {
-                    length: 18,
-                    classes: ["decoration_link_url"],
-                    nodeName: "a",
-                    nodeAttrs: {
-                        href: "https://github.com",
-                        onClick: 'window.open("https://github.com")',
-                    },
+                    text: "https://rino.app",
+                    marks: ["mdLinkText"],
+                    attrs: { depth: 1, href: "https://rino.app" },
                 },
-                { length: 1, classes: ["decoration_mark"] },
-                { length: 4, classes: [] },
+                { text: ">", marks: ["mdKey"], attrs: { depth: 1, end: true } },
+                { text: "text", marks: ["mdText"], attrs: { depth: 1, start: true, end: true } },
             ])
         })
     })
     describe("image", function () {
-        // Mocha environment has not global variable "Image", so I have to mock one.
-        const ImageMock = class {
-            public src: string
-            public constructor() {
-                this.src = ""
-            }
-        } as typeof HTMLImageElement
-
-        global.Image = ImageMock
-
         test("Solid image", function () {
-            const image = new ImageMock()
-            image.src = "https://via.placeholder.com/42"
-
             const actualTokens: Token[] = lexer.scan("![Image](https://via.placeholder.com/42)")
             const expectedTokens: Token[] = [
-                { length: 2, classes: ["decoration_mark"] },
-                { length: 5, classes: ["decoration_image_text"] },
-                { length: 2, classes: ["decoration_mark"] },
-                { length: 30, classes: ["decoration_image_url"] },
+                { text: "![", marks: ["mdKey"], attrs: { depth: 1, start: true } },
+                { text: "Image", marks: ["mdImgText"], attrs: { depth: 1 } },
+                { text: "](", marks: ["mdKey"], attrs: { depth: 1 } },
                 {
-                    isWidget: true,
-                    length: 0,
-                    classes: [],
-                    key: "https://via.placeholder.com/42",
-                    dom: image,
+                    text: "https://via.placeholder.com/42",
+                    marks: ["mdImgUri"],
+                    attrs: { depth: 1, href: "https://via.placeholder.com/42" },
                 },
-                { length: 1, classes: ["decoration_mark"] },
+                { text: ")", marks: ["mdKey"], attrs: { depth: 1, end: true } },
             ]
-            assertTokenEqual(actualTokens, expectedTokens)
+            expect(actualTokens).toStrictEqual(expectedTokens)
         })
 
         test("Image with text around", function () {
-            const image = new ImageMock()
-            image.src = "https://via.placeholder.com/42"
-
             const actualTokens: Token[] = lexer.scan(
                 "text![Image](https://via.placeholder.com/42)text",
             )
             const expectedTokens: Token[] = [
-                { length: 4, classes: [] },
-                { length: 2, classes: ["decoration_mark"] },
-                { length: 5, classes: ["decoration_image_text"] },
-                { length: 2, classes: ["decoration_mark"] },
-                { length: 30, classes: ["decoration_image_url"] },
+                { text: "text", marks: ["mdText"], attrs: { depth: 1, start: true, end: true } },
+                { text: "![", marks: ["mdKey"], attrs: { depth: 1, start: true } },
+                { text: "Image", marks: ["mdImgText"], attrs: { depth: 1 } },
+                { text: "](", marks: ["mdKey"], attrs: { depth: 1 } },
                 {
-                    isWidget: true,
-                    length: 0,
-                    classes: [],
-                    key: "https://via.placeholder.com/42",
-                    dom: image,
+                    text: "https://via.placeholder.com/42",
+                    marks: ["mdImgUri"],
+                    attrs: { depth: 1, href: "https://via.placeholder.com/42" },
                 },
-                { length: 1, classes: ["decoration_mark"] },
-                { length: 4, classes: [] },
+                { text: ")", marks: ["mdKey"], attrs: { depth: 1, end: true } },
+                { text: "text", marks: ["mdText"], attrs: { depth: 1, start: true, end: true } },
             ]
-            assertTokenEqual(actualTokens, expectedTokens)
+            expect(actualTokens).toStrictEqual(expectedTokens)
         })
     })
     describe("link", function () {
         test("normal", function () {
-            assertTokenEqual(lexer.scan("[GitHub](https://github.com)"), [
-                { length: 1, classes: ["decoration_mark"] },
-                { length: 6, classes: ["decoration_link_text"] },
-                { length: 2, classes: ["decoration_mark"] },
+            const actualTokens: Token[] = lexer.scan("[GitHub](https://github.com)")
+            const expectedTokens: Token[] = [
+                { text: "[", marks: ["mdKey"], attrs: { depth: 1, start: true } },
+                { text: "GitHub", marks: ["mdLinkText"], attrs: { depth: 1 } },
+                { text: "](", marks: ["mdKey"], attrs: { depth: 1 } },
                 {
-                    length: 18,
-                    classes: ["decoration_link_url"],
-                    nodeName: "a",
-                    nodeAttrs: {
-                        href: "https://github.com",
-                        onClick: 'window.open("https://github.com")',
-                    },
+                    text: "https://github.com",
+                    marks: ["mdLinkUri"],
+                    attrs: { depth: 1, href: "https://github.com" },
                 },
-                { length: 1, classes: ["decoration_mark"] },
-            ])
+                { text: ")", marks: ["mdKey"], attrs: { depth: 1, end: true } },
+            ]
+            expect(actualTokens).toStrictEqual(expectedTokens)
         })
     })
 })

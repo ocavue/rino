@@ -63,9 +63,9 @@ export class InlineLexer {
             image: [
                 /\!\[([^\[\]]+)\]\((.+?)\)/y,
                 (match, depth) => [
-                    { attrs: { depth, start: true }, text: "[(", marks: ["mdKey"] },
+                    { attrs: { depth, start: true }, text: "![", marks: ["mdKey"] },
                     { attrs: { depth }, text: match[1], marks: ["mdImgText"] },
-                    { attrs: { depth }, text: ")]", marks: ["mdKey"] },
+                    { attrs: { depth }, text: "](", marks: ["mdKey"] },
                     { attrs: { depth, href: match[2] }, text: match[2], marks: ["mdImgUri"] },
                     { attrs: { depth, end: true }, text: ")", marks: ["mdKey"] },
                 ],
@@ -74,7 +74,7 @@ export class InlineLexer {
                 /\[([^\[\]]+)\]\((.+?)\)/y, // [link](https://url)
                 (match, depth) => [
                     { attrs: { depth, start: true }, text: "[", marks: ["mdKey"] },
-                    ...this.scan(match[1], depth + 1).map((token) => pushMark(token, "mdLinkText")),
+                    { attrs: { depth }, text: match[1], marks: ["mdLinkText"] },
                     { attrs: { depth }, text: "](", marks: ["mdKey"] },
                     {
                         text: match[2],
