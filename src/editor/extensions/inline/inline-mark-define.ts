@@ -182,10 +182,17 @@ const RinoMarkExtensionClasses = [
     },
 ]
 
+const autoHideMarks: Record<string, true> = {
+    mdKey: true,
+    mdLinkUri: true,
+    mdImgText: true,
+    mdImgUri: true,
+}
+export function isAutoHideMark(name?: string) {
+    // This should be the fastest way based on my test.
+    return autoHideMarks[name as string]
+}
+
 export const rinoMarkExtensions = RinoMarkExtensionClasses.map((Ext) => new Ext())
 export type RinoMarkExtension = typeof rinoMarkExtensions[number]
 export type RinoMarkName = RinoMarkExtension["name"]
-
-export function isAutoHideMark(name?: string) {
-    return name === "mdKey" || name === "mdLinkUri" || name === "mdImgText" || name === "mdImgUri"
-}
