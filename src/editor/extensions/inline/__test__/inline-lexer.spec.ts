@@ -5,14 +5,14 @@ describe("InlineLexer", function () {
     const lexer = new InlineLexer()
 
     describe("code", function () {
-        test.only("without space", function () {
+        test("without space", function () {
             expect(lexer.scan("`code`", 1)).toStrictEqual([
                 { text: "`", marks: ["mdKey"], attrs: { depth: 1, start: true } },
                 { text: "code", marks: ["mdCodeText"], attrs: { depth: 1 } },
                 { text: "`", marks: ["mdKey"], attrs: { depth: 1, end: true } },
             ])
         })
-        test.only("with two side spaces", function () {
+        test("with two side spaces", function () {
             expect(lexer.scan("` code `", 1)).toStrictEqual([
                 { text: "`", marks: ["mdKey"], attrs: { depth: 1, start: true } },
                 { text: " ", marks: ["mdCodeSpace"], attrs: { depth: 1 } },
@@ -21,7 +21,7 @@ describe("InlineLexer", function () {
                 { text: "`", marks: ["mdKey"], attrs: { depth: 1, end: true } },
             ])
         })
-        test.only("with one side space", function () {
+        test("with one side space", function () {
             expect(lexer.scan("` code`", 1)).toStrictEqual([
                 { text: "`", marks: ["mdKey"], attrs: { depth: 1, start: true } },
                 { text: " ", marks: ["mdCodeSpace"], attrs: { depth: 1 } },
@@ -38,7 +38,7 @@ describe("InlineLexer", function () {
     })
 
     describe("emphasis", function () {
-        test.only("without spaces", function () {
+        test("without spaces", function () {
             expect(lexer.scan("*word*")).toStrictEqual([
                 { text: "*", marks: ["mdKey"], attrs: { depth: 1, start: true } },
                 { text: "word", marks: ["mdEm"], attrs: { depth: 2, start: true, end: true } },
@@ -61,7 +61,7 @@ describe("InlineLexer", function () {
                 { text: "**", marks: ["mdKey"], attrs: { depth: 1, end: true } },
             ])
         })
-        test.only("with spaces", function () {
+        test("with spaces", function () {
             expect(lexer.scan("* word *")).toStrictEqual([
                 { text: "*", marks: ["mdKey"], attrs: { depth: 1, start: true } },
                 { text: " word ", marks: ["mdEm"], attrs: { depth: 2, start: true, end: true } },
@@ -88,7 +88,7 @@ describe("InlineLexer", function () {
                 { text: "**", marks: ["mdKey"], attrs: { depth: 1, end: true } },
             ])
         })
-        test.only("mix", function () {
+        test("mix", function () {
             expect(lexer.scan("*1234**1234**1234*")).toStrictEqual([
                 { text: "*", marks: ["mdKey"], attrs: { depth: 1, start: true } },
                 {
@@ -134,25 +134,66 @@ describe("InlineLexer", function () {
         })
     })
     describe("delete", function () {
-        test("normal", function () {
-            assertTokenEqual(lexer.scan("~~1234~~"), [
-                { length: 2, classes: ["decoration_mark"] },
-                { length: 4, classes: ["decoration_delete"] },
-                { length: 2, classes: ["decoration_mark"] },
+        test.only("normal", function () {
+            expect(lexer.scan("~~1234~~")).toStrictEqual([
+                {
+                    text: "~~",
+                    marks: ["mdKey"],
+                    attrs: { depth: 1, start: true },
+                },
+                {
+                    text: "1234",
+                    marks: ["mdDel"],
+                    attrs: { depth: 2, start: true, end: true },
+                },
+                {
+                    text: "~~",
+                    marks: ["mdKey"],
+                    attrs: { depth: 1, end: true },
+                },
             ])
         })
-        test("with inside tilde", function () {
-            assertTokenEqual(lexer.scan("~~12~34~~"), [
-                { length: 2, classes: ["decoration_mark"] },
-                { length: 5, classes: ["decoration_delete"] },
-                { length: 2, classes: ["decoration_mark"] },
+        test.only("with inside tilde", function () {
+            expect(lexer.scan("~~12~34~~")).toStrictEqual([
+                {
+                    text: "~~",
+                    marks: ["mdKey"],
+                    attrs: { depth: 1, start: true },
+                },
+                {
+                    text: "12",
+                    marks: ["mdDel"],
+                    attrs: { depth: 2, start: true, end: true },
+                },
+                {
+                    text: "~34",
+                    marks: ["mdDel"],
+                    attrs: { depth: 2, start: true, end: true },
+                },
+                {
+                    text: "~~",
+                    marks: ["mdKey"],
+                    attrs: { depth: 1, end: true },
+                },
             ])
         })
-        test("with space", function () {
-            assertTokenEqual(lexer.scan("~~ 1234 ~~"), [
-                { length: 2, classes: ["decoration_mark"] },
-                { length: 6, classes: ["decoration_delete"] },
-                { length: 2, classes: ["decoration_mark"] },
+        test.only("with space", function () {
+            expect(lexer.scan("~~ 1234 ~~")).toStrictEqual([
+                {
+                    text: "~~",
+                    marks: ["mdKey"],
+                    attrs: { depth: 1, start: true },
+                },
+                {
+                    text: " 1234 ",
+                    marks: ["mdDel"],
+                    attrs: { depth: 2, start: true, end: true },
+                },
+                {
+                    text: "~~",
+                    marks: ["mdKey"],
+                    attrs: { depth: 1, end: true },
+                },
             ])
         })
     })

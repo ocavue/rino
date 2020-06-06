@@ -46,7 +46,7 @@ export class InlineLexer {
                 /~~(.+?)~~/y, // ~~Delete~~
                 (match, depth) => [
                     { attrs: { depth, start: true }, text: "~~", marks: ["mdKey"] },
-                    { attrs: { depth }, text: match[1], marks: ["mdDel"] },
+                    ...this.scan(match[1], depth + 1).map((token) => pushMark(token, "mdDel")),
                     { attrs: { depth, end: true }, text: "~~", marks: ["mdKey"] },
                 ],
             ],
