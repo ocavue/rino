@@ -1,4 +1,4 @@
-import { MarkExtension, MarkExtensionSpec } from "@remirror/core"
+import { MarkExtension, MarkExtensionSpec, NodeView, NodeViewMethod } from "@remirror/core"
 
 const commonAttrs = {
     depth: { default: 0 },
@@ -162,7 +162,21 @@ const RinoMarkExtensionClasses = [
                         default: "",
                     },
                 },
-                toDOM: (mark, inline) => ["span", { class: "md-img-uri" }, 0],
+            }
+        }
+        public nodeView(): NodeViewMethod {
+            return (mark, view): NodeView => {
+                const innerContainer = document.createElement("span")
+
+                const img = document.createElement("img")
+                img.setAttribute("src", mark.attrs.href)
+
+                const outerContainer = document.createElement("span")
+                outerContainer.appendChild(img)
+                outerContainer.appendChild(innerContainer)
+                outerContainer.setAttribute("class", "md-img-uri")
+
+                return { dom: outerContainer, contentDOM: innerContainer }
             }
         }
     },

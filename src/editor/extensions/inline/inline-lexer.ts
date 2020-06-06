@@ -66,18 +66,7 @@ export class InlineLexer {
                     { attrs: { depth, start: true }, text: "[(", marks: ["mdKey"] },
                     { attrs: { depth }, text: match[1], marks: ["mdImgText"] },
                     { attrs: { depth }, text: ")]", marks: ["mdKey"] },
-                    { attrs: { depth }, text: match[2], marks: ["mdImgUri"] },
-                    // {
-                    //     isWidget: true,
-                    //     length: 0,
-                    //     classes: [],
-                    //     key: match[2],
-                    //     dom: (() => {
-                    //         const img = new Image()
-                    //         img.src = match[2]
-                    //         return img
-                    //     })(),
-                    // },
+                    { attrs: { depth, href: match[2] }, text: match[2], marks: ["mdImgUri"] },
                     { attrs: { depth, end: true }, text: ")", marks: ["mdKey"] },
                 ],
             ],
