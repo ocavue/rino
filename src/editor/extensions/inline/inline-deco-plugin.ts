@@ -6,11 +6,9 @@ import { Decoration, DecorationSet } from "prosemirror-view"
 import { isAutoHideMark } from "./inline-mark-define"
 
 interface TextInfo {
-    attrs: {
-        depth?: number
-        start?: boolean
-        end?: boolean
-    }
+    depth?: number
+    start?: boolean
+    end?: boolean
     name?: string
 }
 
@@ -20,7 +18,7 @@ interface TextInfo {
 function getTextInfo(textNode: ProsemirrorNode | undefined | null): TextInfo {
     // A text node should contain one or zero mark
     const mark = textNode?.marks?.[0]
-    return mark ? { attrs: mark.attrs, name: mark.type.name } : { attrs: {} }
+    return mark ? { ...mark.attrs, name } : {}
 }
 
 /**
@@ -44,7 +42,7 @@ function iterUnilStart(
         }
         tokenToPos -= textNode.nodeSize
         // Break the loop if match a top level start token
-        if (info.attrs.depth === 1 && info.attrs.start) break
+        if (info.depth === 1 && info.start) break
     }
 }
 
@@ -62,7 +60,7 @@ function iterUnilEnd(
         }
         tokenFromPos += textNode.nodeSize
         // Break the loop if match a top level end token
-        if (info.attrs.depth === 1 && info.attrs.end) break
+        if (info.depth === 1 && info.end) break
     }
 }
 
@@ -102,7 +100,7 @@ function createDecorationPlugin() {
                     const textNode = textBlock.content.maybeChild(textNodeIndex)
                     if (!textNode) return
 
-                    const tokenDepth = getTextInfo(textNode).attrs.depth
+                    const tokenDepth = getTextInfo(textNode).depth
                     if (!tokenDepth) return
 
                     const textFrom = $pos.pos - $pos.textOffset
