@@ -39,12 +39,6 @@ function findVisibleMarks(
     textIndex: number,
     includeBefore: boolean,
 ): [number, number][] {
-    console.debug(`[findVisibleMarks]:`, {
-        textBlock: textBlock,
-        cursorPos: cursorPos,
-        textIndex: textIndex,
-    })
-
     const posPairs: [number, number][] = []
 
     // Find all visible marks after the cursor.
@@ -91,9 +85,6 @@ function createDecorationPlugin() {
                 const textBlock = $pos.parent
                 if (!textBlock.isTextblock) return
 
-                console.debug(`[decoration] $pos.textOffset: ${$pos.textOffset}`)
-                console.debug(`[decoration] $pos.index($pos.depth): ${$pos.index($pos.depth)}`)
-
                 let posPairs: [number, number][]
 
                 if ($pos.textOffset === 0) {
@@ -116,8 +107,6 @@ function createDecorationPlugin() {
                         false,
                     )
                 }
-
-                console.debug(`[decoration] posPairs:`, posPairs)
 
                 return DecorationSet.create(
                     state.doc,

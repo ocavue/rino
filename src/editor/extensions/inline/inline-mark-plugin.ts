@@ -36,7 +36,6 @@ function parseTextBlock(schema: Schema, node: Node<Schema>, startPos: number): M
     if (!node.textContent) {
         return []
     }
-    console.debug("[parseTextBlock]", node.textContent)
     const steps: MarkStep[] = []
     const tokens = inlineLexer.scan(node.textContent, 1)
     let markStartPos = 0 // The start position of next mark, relative to the parent text block node
@@ -91,7 +90,6 @@ function parseTextBlock(schema: Schema, node: Node<Schema>, startPos: number): M
             })
     }
 
-    console.debug(`[parseTextBlock] created ${steps.length} steps`, steps)
     return steps
 }
 
@@ -139,7 +137,6 @@ function applyMarksToNode<S extends WysiwygSchema>(
     node: Node<S>,
     startPos: number,
 ) {
-    console.debug(`[applyMarksToNode] parsing node '${node.type.name}' start from ${startPos}`)
     const tr = view.state.tr
 
     if (!node.isTextblock) {
@@ -183,32 +180,28 @@ function applyMarksToCurrentNode<S extends WysiwygSchema>(view: EditorView<S>) {
     const { $from, $to } = view.state.selection
     const range = $from.blockRange($to)
     if (!range) {
-        console.warn(`[applyMarksToCurrentNode] parsing root doc`)
         applyMarksToNode(view, view.state.doc, 0)
     } else {
-        console.debug(
-            `[applyMarksToCurrentNode] found a range in depth ${range.depth} with ${
-                range.endIndex - range.startIndex
-            } children`,
-        )
         for (const [child, pos] of iterNodeRange(range)) {
             applyMarksToNode(view, child, pos)
         }
     }
 }
 
-const createInlineMarkPlugin = () => {
+const createInlineMarkPlugin = (testing = false) => {
     let marksTimeoutId: ReturnType<typeof setTimeout> | null = null
 
-    const debounceApplyMarks = (view: EditorView) => {
-        if (marksTimeoutId) {
-            clearTimeout(marksTimeoutId)
-        }
-        marksTimeoutId = setTimeout(() => {
-            applyMarksToCurrentNode(view)
-            marksTimeoutId = null
-        }, 50)
-    }
+    const debounceApplyMarks: (view: EditorView) => void = testing
+        ? applyMarksToCurrentNode
+        : (view: EditorView) => {
+              if (marksTimeoutId) {
+                  clearTimeout(marksTimeoutId)
+              }
+              marksTimeoutId = setTimeout(() => {
+                  applyMarksToCurrentNode(view)
+                  marksTimeoutId = null
+              }, 50)
+          }
 
     const plugin = new Plugin({
         state: {
@@ -238,7 +231,7 @@ const createInlineMarkPlugin = () => {
         },
         view: (view: EditorView) => {
             // This function will be called when the editor is initializing.
-            setTimeout(() => applyMarksToNode(view, view.state.doc, 0), 0)
+            setTimeout(() => testing || applyMarksToNode(view, view.state.doc, 0), 0)
             return {}
         },
     })
@@ -247,6 +240,13 @@ const createInlineMarkPlugin = () => {
 }
 
 export class RinoInlineMarkExtension extends Extension {
+    #testing: boolean
+
+    public constructor(testing = false) {
+        super()
+        this.#testing = testing
+    }
+
     get name() {
         return "inlineMark" as const
     }
@@ -258,6 +258,6 @@ export class RinoInlineMarkExtension extends Extension {
     }
 
     public plugin() {
-        return createInlineMarkPlugin()
+        return createInlineMarkPlugin(this.#testing)
     }
 }
