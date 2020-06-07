@@ -188,8 +188,8 @@ const autoHideMarks: Record<string, true> = {
     mdImgText: true,
     mdImgUri: true,
 }
-export function isAutoHideMark(name?: string) {
-    // This should be the fastest way based on my test.
+export function isAutoHideMark(name?: string): boolean {
+    // This should be the fastest way based on my performance test.
     return autoHideMarks[name as string]
 }
 

@@ -13,55 +13,72 @@ interface TextInfo {
 }
 
 /**
- * Read a text node' and return information from its mark
+ * Read a text node and return information from its mark
  */
 function getTextInfo(textNode: ProsemirrorNode | undefined | null): TextInfo {
     // A text node should contain one or zero mark
     const mark = textNode?.marks?.[0]
-    return mark ? { ...mark.attrs, name } : {}
+    return mark ? { ...mark.attrs, name: mark.type.name } : {}
 }
 
 /**
+ * Find all auto hidden text nodes that need to show based on the position of the cursor.
  *
- * @param textBlock
- * @param tokenIndex
- * @param tokenToPos
- * @param posPairs
+ * @param textBlock     The parent text block.
+ * @param cursorPos     The (absolute) position of the cursor. This cursor should be between two text nodes.
+ * @param textIndex     The index relative to the parent text block of the text node that right after the cursor. If
+ *                      the cursor is at the end of the text block (so there is not text node after the cursor),
+ *                      `textIndex` should be the length of the text block's children.
+ * @param includeBefore Force to search text nodes before the cursor.
+ *
+ * @returns The (absolute) position pairs of all visible marks
  */
-function iterUnilStart(
+function findVisibleMarks(
     textBlock: ProsemirrorNode,
-    tokenIndex: number,
-    tokenToPos: number,
-    posPairs: [number, number][],
-): void {
-    for (let i = tokenIndex; i >= 0; i--) {
-        const textNode = textBlock.content.child(i)
-        const info = getTextInfo(textNode)
-        if (isAutoHideMark(info.name)) {
-            posPairs.push([tokenToPos - textNode.nodeSize, tokenToPos])
-        }
-        tokenToPos -= textNode.nodeSize
-        // Break the loop if match a top level start token
-        if (info.depth === 1 && info.start) break
-    }
-}
+    cursorPos: number,
+    textIndex: number,
+    includeBefore: boolean,
+): [number, number][] {
+    console.debug(`[findVisibleMarks]:`, {
+        textBlock: textBlock,
+        cursorPos: cursorPos,
+        textIndex: textIndex,
+    })
 
-function iterUnilEnd(
-    textBlock: ProsemirrorNode,
-    tokenIndex: number,
-    tokenFromPos: number,
-    posPairs: [number, number][],
-): void {
-    for (let i = tokenIndex; i < textBlock.content.childCount; i++) {
+    const posPairs: [number, number][] = []
+
+    // Find all visible marks after the cursor.
+    let textStartPos = cursorPos
+    for (let i = textIndex; i < textBlock.content.childCount; i++) {
         const textNode = textBlock.content.child(i)
         const info = getTextInfo(textNode)
-        if (isAutoHideMark(info.name)) {
-            posPairs.push([tokenFromPos, tokenFromPos + textNode.nodeSize])
+        if (isAutoHideMark(info.name) && i !== textIndex) {
+            posPairs.push([textStartPos, textStartPos + textNode.nodeSize])
         }
-        tokenFromPos += textNode.nodeSize
+        textStartPos += textNode.nodeSize
         // Break the loop if match a top level end token
         if (info.depth === 1 && info.end) break
     }
+
+    const infoAfterCursor = getTextInfo(textBlock.maybeChild(textIndex))
+    if (infoAfterCursor.depth === 1 && infoAfterCursor.start && !includeBefore) {
+        return posPairs
+    }
+
+    // Find all visible marks before the cursor.
+    let textEndPos = cursorPos
+    for (let i = textIndex - 1; i >= 0; i--) {
+        const textNode = textBlock.content.child(i)
+        const info = getTextInfo(textNode)
+        if (isAutoHideMark(info.name)) {
+            posPairs.push([textEndPos - textNode.nodeSize, textEndPos])
+        }
+        textEndPos -= textNode.nodeSize
+        // Break the loop if match a top level start token
+        if (info.depth === 1 && info.start) break
+    }
+
+    return posPairs
 }
 
 function createDecorationPlugin() {
@@ -77,22 +94,11 @@ function createDecorationPlugin() {
                 console.debug(`[decoration] $pos.textOffset: ${$pos.textOffset}`)
                 console.debug(`[decoration] $pos.index($pos.depth): ${$pos.index($pos.depth)}`)
 
-                const posPairs: [number, number][] = []
+                let posPairs: [number, number][]
 
                 if ($pos.textOffset === 0) {
                     // The cursor is between two nodes.
-
-                    // If the cursor is at the begin or at the end of the text block node, then
-                    // one of `nodeAfter` and `nodeBefore` is empty.
-                    const textNodeBefore = $pos.nodeBefore
-                    const textNodeAfter = $pos.nodeAfter
-
-                    if (textNodeBefore) {
-                        iterUnilStart(textBlock, $pos.index($pos.depth) - 1, $pos.pos, posPairs)
-                    }
-                    if (textNodeAfter) {
-                        iterUnilEnd(textBlock, $pos.index($pos.depth), $pos.pos, posPairs)
-                    }
+                    posPairs = findVisibleMarks(textBlock, $pos.pos, $pos.index($pos.depth), true)
                 } else {
                     // The cursor is inside a text node
 
@@ -103,12 +109,15 @@ function createDecorationPlugin() {
                     const tokenDepth = getTextInfo(textNode).depth
                     if (!tokenDepth) return
 
-                    const textFrom = $pos.pos - $pos.textOffset
-                    const textTo = textFrom + textBlock.content.child(textNodeIndex).nodeSize
-
-                    iterUnilStart(textBlock, textNodeIndex, textTo, posPairs)
-                    iterUnilEnd(textBlock, textNodeIndex, textFrom, posPairs)
+                    posPairs = findVisibleMarks(
+                        textBlock,
+                        $pos.pos - $pos.textOffset,
+                        $pos.index($pos.depth),
+                        false,
+                    )
                 }
+
+                console.debug(`[decoration] posPairs:`, posPairs)
 
                 return DecorationSet.create(
                     state.doc,
