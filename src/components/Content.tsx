@@ -57,7 +57,7 @@ export const Content: React.FC = () => {
                 <Editor
                     note={note}
                     setNoteContent={setNoteContent}
-                    autoFocus={true}
+                    autoFocus={false}
                     key={note.key}
                 />
             ) : (
