@@ -19,7 +19,7 @@ const InnerEditor: FC<{ className: string }> = ({ className }) => {
     const { getRootProps } = useRemirrorContext()
     const rootProps = getRootProps()
 
-    return <div {...rootProps} className={className} data-testid="source-code-mode-textarea" />
+    return <div {...rootProps} className={className} />
 }
 
 type Doc = ProsemirrorNode<SourceCodeSchema>
@@ -77,6 +77,7 @@ export const SourceCodeEditor: FC<EditorProps> = ({
             initialContent={initialNode}
             onChange={onChange}
             editable={editable}
+            attributes={{ "data-testid": "source-code-mode-textarea" }}
         >
             <>
                 <InnerEditor className={className} />
