@@ -83,8 +83,8 @@ export async function getTextAreaValue(testid: string) {
 }
 
 export const [wysiwygEditorSelector, sourceCodeEditorSelector] = [
-    testidSelector("wysiwyg-mode-textarea") + ` .ProseMirror`,
-    testidSelector("source-code-mode-textarea") + ` .ProseMirror`,
+    testidSelector("wysiwyg-mode-textarea"),
+    testidSelector("source-code-mode-textarea"),
 ]
 
 export async function getSourceCodeModeText() {

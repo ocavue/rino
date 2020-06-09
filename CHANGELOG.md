@@ -1,5 +1,11 @@
 # @rino.app/web
 
+## 0.9.3
+
+### Patch Changes
+
+-   0f31e15: Don't automatically focus the editor
+
 ## 0.9.2
 
 ### Patch Changes

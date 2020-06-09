@@ -19,7 +19,7 @@ const InnerEditor: FC<{ className: string }> = ({ className }) => {
     const context = useRemirrorContext()
     const rootProps = context.getRootProps()
 
-    return <div {...rootProps} className={className} data-testid="wysiwyg-mode-textarea" />
+    return <div {...rootProps} className={className} />
 }
 
 type Doc = ProsemirrorNode<WysiwygSchema>
@@ -103,6 +103,7 @@ export const WysiwygEditor: FC<EditorProps> = ({
             initialContent={initialNode}
             onChange={onChange}
             editable={editable}
+            attributes={{ "data-testid": "wysiwyg-mode-textarea" }}
         >
             <>
                 <InnerEditor className={className} />
