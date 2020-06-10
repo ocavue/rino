@@ -1,5 +1,5 @@
 export * from "./blockquote"
-export * from "./decoration"
+export * from "./inline"
 export * from "./heading"
 export * from "./list"
 export * from "./code-block"
