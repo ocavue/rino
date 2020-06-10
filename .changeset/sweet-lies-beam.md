@@ -2,4 +2,4 @@
 "@rino.app/web": patch
 ---
 
-Disallow hard breaks in headings
+Improve the behavior when pressing Shift+Enter in headings
