@@ -2,4 +2,4 @@
 "@rino.app/web": patch
 ---
 
-Improve the behavior when pressing Shift+Enter in headings
+Improve the editor behavior when pressing Shift+Enter in headings
