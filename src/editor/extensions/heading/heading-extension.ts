@@ -3,6 +3,7 @@ import {
     ExtensionManagerNodeTypeParams,
     findParentNodeOfType,
     KeyBindings,
+    NodeExtensionSpec,
 } from "@remirror/core"
 import { HeadingExtension, HeadingExtensionOptions } from "@remirror/core-extensions"
 import Token from "markdown-it/lib/token"
@@ -15,6 +16,12 @@ import { MarkdownNodeExtension } from "src/editor/utils"
 
 export class RinoHeadingExtension extends HeadingExtension
     implements MarkdownNodeExtension<HeadingExtensionOptions> {
+    get schema(): NodeExtensionSpec {
+        const schema = super.schema
+        schema.content = "text*" // Disallow hard breaks in headings
+        return schema
+    }
+
     public keys({ type }: ExtensionManagerNodeTypeParams): KeyBindings {
         const keys: KeyBindings = {
             Backspace: ({ state, dispatch }) => {
