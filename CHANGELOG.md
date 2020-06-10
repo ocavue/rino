@@ -1,5 +1,11 @@
 # @rino.app/web
 
+## 0.10.0
+
+### Minor Changes
+
+-   adb92f8: Automatically show and hide markdown decorations
+
 ## 0.9.3
 
 ### Patch Changes
