@@ -46,7 +46,7 @@ function findVisibleMarks(
     for (let i = textIndex; i < textBlock.content.childCount; i++) {
         const textNode = textBlock.content.child(i)
         const info = getTextInfo(textNode)
-        if (isAutoHideMark(info.name) && i !== textIndex) {
+        if (isAutoHideMark(info.name)) {
             posPairs.push([textStartPos, textStartPos + textNode.nodeSize])
         }
         textStartPos += textNode.nodeSize
