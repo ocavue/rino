@@ -17,9 +17,10 @@ import { MarkdownNodeExtension } from "src/editor/utils"
 export class RinoHeadingExtension extends HeadingExtension
     implements MarkdownNodeExtension<HeadingExtensionOptions> {
     get schema(): NodeExtensionSpec {
-        const schema = super.schema
-        schema.content = "text*" // Disallow hard breaks in headings
-        return schema
+        return {
+            ...super.schema,
+            content: "text*", // Disallow hard breaks in headings
+        }
     }
 
     public keys({ type }: ExtensionManagerNodeTypeParams): KeyBindings {
