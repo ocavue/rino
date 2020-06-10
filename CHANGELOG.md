@@ -1,5 +1,12 @@
 # @rino.app/web
 
+## 0.10.1
+
+### Patch Changes
+
+-   13e6e7f: Fix a bug causing markdown mark to disappear
+-   21700dd: Improve the editor behavior when pressing Shift+Enter in headings
+
 ## 0.10.0
 
 ### Minor Changes
