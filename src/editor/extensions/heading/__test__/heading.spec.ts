@@ -118,7 +118,15 @@ describe("shortcut", () => {
     })
 
     test("press Shift+Enter at the center of heading", () => {
-        // TODO
+        add(doc(h3("heading<cursor>text")))
+            .press("Shift-Enter")
+            .callback((content) => {
+                expect(content.state.doc).toEqualRemirrorDocument(doc(h3("heading"), h3("text")))
+            })
+            .insertText("123")
+            .callback((content) => {
+                expect(content.state.doc).toEqualRemirrorDocument(doc(h3("heading"), h3("123text")))
+            })
     })
 
     test("press Mod-Number", () => {
