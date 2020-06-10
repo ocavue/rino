@@ -34,7 +34,6 @@ export class RinoHardBreakExtension extends HardBreakExtension implements Markdo
             if (canReplace) {
                 if (dispatch) {
                     dispatch(state.tr.replaceSelectionWith(type.create()).scrollIntoView())
-                    console.debug("dispatch ing !")
                 }
                 return true
             } else {
