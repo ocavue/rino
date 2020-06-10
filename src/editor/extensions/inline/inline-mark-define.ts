@@ -12,7 +12,7 @@ const endpointAttrs = {
 const RinoMarkExtensionClasses = [
     class MetaKey extends MarkExtension {
         get name() {
-            return "mdKey" as const
+            return "mdMark" as const
         }
         get schema(): MarkExtensionSpec {
             return {
@@ -183,7 +183,7 @@ const RinoMarkExtensionClasses = [
 ]
 
 const autoHideMarks: Record<string, true> = {
-    mdKey: true,
+    mdMark: true,
     mdLinkUri: true,
     mdImgText: true,
     mdImgUri: true,

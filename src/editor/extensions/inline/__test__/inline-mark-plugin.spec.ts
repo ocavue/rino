@@ -10,7 +10,7 @@ const setup = () => {
         view,
         add,
         nodes: { doc, p },
-        attrMarks: { mdCodeSpace, mdCodeText, mdText, mdKey },
+        attrMarks: { mdCodeSpace, mdCodeText, mdText, mdMark },
         manager,
         schema,
     } = renderEditor({
@@ -29,12 +29,12 @@ const setup = () => {
         mdCodeSpace,
         mdCodeText,
         mdText,
-        mdKey,
+        mdMark,
     }
 }
 
 describe("Mark transform", () => {
-    const { doc, p, add, mdCodeText, mdText, mdKey } = setup()
+    const { doc, p, add, mdCodeText, mdText, mdMark } = setup()
 
     describe("inline code", () => {
         test("base case", () => {
@@ -48,9 +48,9 @@ describe("Mark transform", () => {
                         doc(
                             p(
                                 mdText({ depth: 1, start: true, end: true })("text"),
-                                mdKey({ depth: 1, start: true })("`"),
+                                mdMark({ depth: 1, start: true })("`"),
                                 mdCodeText({ depth: 1 })("code"),
-                                mdKey({ depth: 1, end: true })("`"),
+                                mdMark({ depth: 1, end: true })("`"),
                                 mdText({ depth: 1, start: true, end: true })("text "),
                             ),
                         ),
