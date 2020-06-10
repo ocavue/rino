@@ -4,7 +4,7 @@
 
 ### Patch Changes
 
--   21700dd: Fix a bug causing markdown mark to disappear
+-   13e6e7f: Fix a bug causing markdown mark to disappear
 -   21700dd: Improve the editor behavior when pressing Shift+Enter in headings
 
 ## 0.10.0
