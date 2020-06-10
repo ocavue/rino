@@ -24,7 +24,7 @@ export interface InlineToken {
     text: string
     attrs: {
         depth: number
-        href?: string // Link link token
+        href?: string
         start?: boolean // Is the first token of a serial of tokens
         end?: boolean // Is the last token of a serial of tokens
     }

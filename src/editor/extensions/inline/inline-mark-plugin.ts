@@ -223,15 +223,14 @@ const createInlineMarkPlugin = (testing = false) => {
                 debounceApplyMarks(view)
                 return false
             },
-            // handleKeyDown(view) {
-            //     return {
-            //         ''
-            //     }
-            // }
         },
         view: (view: EditorView) => {
             // This function will be called when the editor is initializing.
-            setTimeout(() => testing || applyMarksToNode(view, view.state.doc, 0), 0)
+            setTimeout(() => {
+                if (!testing) {
+                    applyMarksToNode(view, view.state.doc, 0)
+                }
+            }, 0)
             return {}
         },
     })
