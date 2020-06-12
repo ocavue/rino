@@ -43,8 +43,7 @@ const rinoBaseExtensions = baseExtensions.map((e) => {
         }
 })
 
-// By doing this, TypeScript can find extensions with wrong `MarkdownNodeExtension` implementation
-const rinoMarkdownNodeExtensions: MarkdownNodeExtension[] = [
+const rinoMarkdownNodeExtensions = [
     new RinoHardBreakExtension(),
     new RinoHorizontalRuleExtension(),
     new RinoCodeBlockExtension(),
@@ -58,6 +57,14 @@ const rinoMarkdownNodeExtensions: MarkdownNodeExtension[] = [
     new RinoTableRowExtension(),
     new RinoTableCellExtension(),
 ]
+
+if (process.env.NODE_ENV === "test") {
+    // By doing this, TypeScript can find extensions with wrong `MarkdownNodeExtension` implementation.
+    // Notice that the variable `rinoMarkdownNodeExtensions` should NOT be type `MarkdownNodeExtension[]` since we want TypeScript
+    // to know the actual shapes of `WysiwygExtensions`, `WysiwygSchema` and `WysiwygManager`.
+    const f = (x: MarkdownNodeExtension[]) => {}
+    f(rinoMarkdownNodeExtensions)
+}
 
 export const wysiwygExtensions = [
     ...rinoBaseExtensions,
