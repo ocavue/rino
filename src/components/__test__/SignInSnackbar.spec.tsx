@@ -1,7 +1,4 @@
-import { ThemeProvider } from "@material-ui/core"
-import { fireEvent, render, screen, waitFor, waitForDomChange } from "@testing-library/react"
-import { act } from "@testing-library/react"
-// import NextLink from "next/link"
+import { act, fireEvent, render, screen } from "@testing-library/react"
 import React from "react"
 
 import { SIGN_IN_SNACKBAR_SHOW_DELAY } from "src/constants"
