@@ -7,7 +7,7 @@ import {
 import Token from "markdown-it/lib/token"
 
 import { InlineDecorateType } from "src/editor/extensions"
-import { ParserTokenType } from "src/editor/transform/parser-type"
+import { ParserRuleType } from "src/editor/transform/parser-type"
 import { NodeSerializerOptions } from "src/editor/transform/serializer"
 import { buildBlockEnterKeymapBindings } from "src/editor/utils"
 
@@ -55,7 +55,7 @@ export class RinoCodeBlockExtension extends CodeBlockExtension {
         return [
             {
                 // https://spec.commonmark.org/0.29/#fenced-code-blocks
-                type: ParserTokenType.block,
+                type: ParserRuleType.block,
                 token: "fence",
                 node: this.name,
                 hasOpenClose: false,
@@ -75,7 +75,7 @@ export class RinoCodeBlockExtension extends CodeBlockExtension {
             },
             {
                 // https://spec.commonmark.org/0.29/#indented-code-block
-                type: ParserTokenType.block,
+                type: ParserRuleType.block,
                 token: "code_block",
                 node: this.name,
                 hasOpenClose: false,

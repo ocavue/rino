@@ -13,7 +13,7 @@ import { liftListItem, sinkListItem } from "prosemirror-schema-list"
 import { EditorState } from "prosemirror-state"
 import { EditorView, NodeView } from "prosemirror-view"
 
-import { ParserTokenType } from "src/editor/transform/parser-type"
+import { ParserRuleType } from "src/editor/transform/parser-type"
 import { NodeSerializerOptions } from "src/editor/transform/serializer"
 
 import { splitListItem } from "./list-helper"
@@ -83,7 +83,7 @@ export class RinoListItemExtension extends NodeExtension {
     public fromMarkdown() {
         return [
             {
-                type: ParserTokenType.block,
+                type: ParserRuleType.block,
                 token: "list_item",
                 node: this.name,
                 hasOpenClose: true,
@@ -131,7 +131,7 @@ export class RinoOrderedListExtension extends NodeExtension {
     public fromMarkdown() {
         return [
             {
-                type: ParserTokenType.block,
+                type: ParserRuleType.block,
                 token: "ordered_list",
                 node: this.name,
                 hasOpenClose: true,
@@ -178,7 +178,7 @@ export class RinoBulletListExtension extends NodeExtension {
     public fromMarkdown() {
         return [
             {
-                type: ParserTokenType.block,
+                type: ParserRuleType.block,
                 token: "bullet_list",
                 node: this.name,
                 hasOpenClose: true,
@@ -243,7 +243,7 @@ export class RinoCheckboxExtension extends NodeExtension {
     public fromMarkdown() {
         return [
             {
-                type: ParserTokenType.block,
+                type: ParserRuleType.block,
                 token: "list_checkbox",
                 node: this.name,
                 hasOpenClose: false,

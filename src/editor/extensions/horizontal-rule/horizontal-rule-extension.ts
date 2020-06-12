@@ -1,13 +1,13 @@
 import { HorizontalRuleExtension } from "@remirror/core-extensions"
 
-import { ParserTokenType } from "src/editor/transform/parser-type"
+import { ParserRuleType } from "src/editor/transform/parser-type"
 import { NodeSerializerOptions } from "src/editor/transform/serializer"
 
 export class RinoHorizontalRuleExtension extends HorizontalRuleExtension {
     fromMarkdown() {
         return [
             {
-                type: ParserTokenType.block,
+                type: ParserRuleType.block,
                 token: "hr",
                 node: this.name,
                 hasOpenClose: false,

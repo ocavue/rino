@@ -1,24 +1,24 @@
 import { TextExtension } from "@remirror/core"
 import Token from "markdown-it/lib/token"
 
-import { ParserTokenType } from "src/editor/transform/parser-type"
+import { ParserRuleType } from "src/editor/transform/parser-type"
 import { NodeSerializerOptions } from "src/editor/transform/serializer"
 
 export class RinoTextExtension extends TextExtension {
     fromMarkdown() {
         return [
             {
-                type: ParserTokenType.text,
+                type: ParserRuleType.text,
                 token: "text",
                 getText: (tok: Token) => tok.content,
             },
             {
-                type: ParserTokenType.text,
+                type: ParserRuleType.text,
                 token: "inline",
                 getText: (tok: Token) => tok.content,
             },
             {
-                type: ParserTokenType.text,
+                type: ParserRuleType.text,
                 token: "softbreak",
                 getText: (tok: Token) => "\n",
             },
