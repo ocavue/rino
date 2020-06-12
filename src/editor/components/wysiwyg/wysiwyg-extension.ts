@@ -20,6 +20,7 @@ import {
     RinoTableRowExtension,
     RinoTextExtension,
 } from "src/editor/extensions"
+import { MarkdownNodeExtension } from "src/editor/utils"
 
 /**
  * Replace ParagraphExtension as RinoParagraphExtension in baseExtensions.
@@ -42,11 +43,8 @@ const rinoBaseExtensions = baseExtensions.map((e) => {
         }
 })
 
-export const wysiwygExtensions = [
-    ...rinoBaseExtensions,
-    ...rinoMarkExtensions,
-    new RinoInlineMarkExtension(),
-    new RinoInlineDecorationExtension(),
+// By doing this, TypeScript can find extensions with wrong `MarkdownNodeExtension` implementation
+const rinoMarkdownNodeExtensions: MarkdownNodeExtension[] = [
     new RinoHardBreakExtension(),
     new RinoHorizontalRuleExtension(),
     new RinoCodeBlockExtension(),
@@ -59,6 +57,15 @@ export const wysiwygExtensions = [
     new RinoTableExtension(),
     new RinoTableRowExtension(),
     new RinoTableCellExtension(),
+]
+
+export const wysiwygExtensions = [
+    ...rinoBaseExtensions,
+    ...rinoMarkExtensions,
+    ...rinoMarkdownNodeExtensions,
+
+    new RinoInlineMarkExtension(),
+    new RinoInlineDecorationExtension(),
 ]
 
 export type WysiwygExtensions = InferFlexibleExtensionList<typeof wysiwygExtensions>
