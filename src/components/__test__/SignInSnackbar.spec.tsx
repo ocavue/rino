@@ -62,6 +62,9 @@ describe("<SignInSnackbar />", () => {
 
         // Jump to the sign-in page
         fireEvent.click(screen.getByTestId("full-sign-in-snack-bar-sign-up-button"))
+        act(() => {
+            jest.runAllTimers()
+        })
     })
 
     test("with login user", () => {
