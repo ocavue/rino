@@ -1,7 +1,7 @@
 import { AnyExtension, ExtensionManager, FlexibleExtension, isExtension } from "@remirror/core"
 
 import { MarkdownParser } from "src/editor/transform/parser"
-import { ParserToken } from "src/editor/transform/parser-type"
+import { ParserRule } from "src/editor/transform/parser-type"
 import { MarkdownSerializer, NodeSerializerSpecs } from "src/editor/transform/serializer"
 import { MarkdownNodeExtension } from "src/editor/utils"
 
@@ -28,12 +28,12 @@ function filterMarkdownNodeExtensions<Extension extends AnyExtension>(
 export function buildMarkdownParser<Extension extends AnyExtension>(
     manager: ExtensionManager<Extension>,
 ) {
-    const parserTokens = filterMarkdownNodeExtensions(manager).reduce(
-        (tokens, extension): ParserToken[] => [...tokens, ...extension.fromMarkdown()],
-        [] as ParserToken[],
+    const parserRules = filterMarkdownNodeExtensions(manager).reduce(
+        (tokens, extension): ParserRule[] => [...tokens, ...extension.fromMarkdown()],
+        [] as ParserRule[],
     )
 
-    return new MarkdownParser(manager.schema, parserTokens)
+    return new MarkdownParser(manager.schema, parserRules)
 }
 
 export function buildMarkdownSerializer<Extension extends AnyExtension>(

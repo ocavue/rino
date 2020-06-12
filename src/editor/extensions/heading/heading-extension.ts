@@ -10,7 +10,7 @@ import Token from "markdown-it/lib/token"
 import { setBlockType } from "prosemirror-commands"
 import { Schema } from "prosemirror-model"
 
-import { ParserTokenType } from "src/editor/transform/parser-type"
+import { ParserRuleType } from "src/editor/transform/parser-type"
 import { NodeSerializerOptions } from "src/editor/transform/serializer"
 
 export class RinoHeadingExtension extends HeadingExtension {
@@ -59,7 +59,7 @@ export class RinoHeadingExtension extends HeadingExtension {
     fromMarkdown() {
         return [
             {
-                type: ParserTokenType.block,
+                type: ParserRuleType.block,
                 token: "heading",
                 node: this.name,
                 hasOpenClose: true,

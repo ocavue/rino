@@ -2,21 +2,21 @@ import Token from "markdown-it/lib/token"
 
 type MarkdownItToken = string
 
-export enum ParserTokenType {
+export enum ParserRuleType {
     text = 1,
     block,
     ignore,
 }
 
-export type TextParserToken = {
-    type: ParserTokenType.text
+export type TextParserRule = {
+    type: ParserRuleType.text
     /** The name of the markdown-it token */
     token: MarkdownItToken
     getText: (token: Token) => string
 }
 
-export type BlockParserToken = {
-    type: ParserTokenType.block
+export type BlockParserRule = {
+    type: ParserRuleType.block
     /** The name of the prosemirror node type */
     node: string
     /** The name of the markdown-it token */
@@ -27,10 +27,10 @@ export type BlockParserToken = {
     getAttrs?: (token: Token) => Record<string, any>
 }
 
-export type IgnoreParserToken = {
-    type: ParserTokenType.ignore
+export type IgnoreParserRule = {
+    type: ParserRuleType.ignore
     /** The name of the markdown-it token */
     token: MarkdownItToken
 }
 
-export type ParserToken = TextParserToken | BlockParserToken | IgnoreParserToken
+export type ParserRule = TextParserRule | BlockParserRule | IgnoreParserRule

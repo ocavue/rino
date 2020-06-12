@@ -4,7 +4,7 @@ import { Mark, Node, NodeType, Schema } from "prosemirror-model"
 
 import markdownItListCheckbox from "src/editor/transform/markdown-it-list-checkbox"
 
-import { BlockParserToken, ParserToken, ParserTokenType, TextParserToken } from "./parser-type"
+import { BlockParserRule, ParserRule, ParserRuleType, TextParserRule } from "./parser-type"
 
 interface StackItem {
     type: NodeType
@@ -105,25 +105,25 @@ function withoutTrailingNewline(str: string): string {
 }
 
 function buildBlockTokenHandler(
-    parserToken: BlockParserToken,
+    parserRule: BlockParserRule,
     handlers: TokenHandlers,
     schema: Schema,
 ): void {
-    const nodeType: NodeType = schema.nodes[parserToken.node]
+    const nodeType: NodeType = schema.nodes[parserRule.node]
     if (nodeType === undefined) {
-        throw new RangeError(`Can't find block type '${parserToken.node}'`)
+        throw new RangeError(`Can't find block type '${parserRule.node}'`)
     }
-    if (parserToken.hasOpenClose) {
-        handlers[parserToken.token + "_open"] = (state: MarkdownParseState, tok: Token) => {
-            const attrs = parserToken.getAttrs ? parserToken.getAttrs(tok) : undefined
+    if (parserRule.hasOpenClose) {
+        handlers[parserRule.token + "_open"] = (state: MarkdownParseState, tok: Token) => {
+            const attrs = parserRule.getAttrs ? parserRule.getAttrs(tok) : undefined
             state.openNode(nodeType, attrs)
         }
-        handlers[parserToken.token + "_close"] = (state: MarkdownParseState, tok: Token) => {
+        handlers[parserRule.token + "_close"] = (state: MarkdownParseState, tok: Token) => {
             state.closeNode()
         }
     } else {
-        handlers[parserToken.token] = (state: MarkdownParseState, tok: Token) => {
-            const attrs = parserToken.getAttrs ? parserToken.getAttrs(tok) : undefined
+        handlers[parserRule.token] = (state: MarkdownParseState, tok: Token) => {
+            const attrs = parserRule.getAttrs ? parserRule.getAttrs(tok) : undefined
             state.openNode(nodeType, attrs)
             state.addText(withoutTrailingNewline(tok.content))
             state.closeNode()
@@ -131,24 +131,24 @@ function buildBlockTokenHandler(
     }
 }
 
-function buildTextTokenHandler(parserToken: TextParserToken, handlers: TokenHandlers): void {
-    handlers[parserToken.token] = (state: MarkdownParseState, tok: Token) => {
-        state.addText(parserToken.getText(tok))
+function buildTextTokenHandler(parserRule: TextParserRule, handlers: TokenHandlers): void {
+    handlers[parserRule.token] = (state: MarkdownParseState, tok: Token) => {
+        state.addText(parserRule.getText(tok))
     }
 }
 
-function buildTokenHandlers(schema: Schema, parserTokens: ParserToken[]): TokenHandlers {
+function buildTokenHandlers(schema: Schema, parserRules: ParserRule[]): TokenHandlers {
     const handlers: TokenHandlers = {}
-    for (const parserToken of parserTokens) {
-        switch (parserToken.type) {
-            case ParserTokenType.text:
-                buildTextTokenHandler(parserToken, handlers)
+    for (const parserRule of parserRules) {
+        switch (parserRule.type) {
+            case ParserRuleType.text:
+                buildTextTokenHandler(parserRule, handlers)
                 break
-            case ParserTokenType.block:
-                buildBlockTokenHandler(parserToken, handlers, schema)
+            case ParserRuleType.block:
+                buildBlockTokenHandler(parserRule, handlers, schema)
                 break
-            case ParserTokenType.ignore:
-                handlers[parserToken.token] = () => {}
+            case ParserRuleType.ignore:
+                handlers[parserRule.token] = () => {}
                 break
         }
     }
@@ -161,13 +161,13 @@ export class MarkdownParser {
     private tokenizer: MarkdownIt
     private tokenHandlers: TokenHandlers
 
-    public constructor(schema: Schema, parserTokens: ParserToken[]) {
+    public constructor(schema: Schema, parserRules: ParserRule[]) {
         this.schema = schema
         this.tokenizer = MarkdownIt("commonmark", { html: true })
             .disable(["emphasis", "autolink", "backticks", "entity"])
             .enable(["table"])
             .use(markdownItListCheckbox)
-        this.tokenHandlers = buildTokenHandlers(schema, parserTokens)
+        this.tokenHandlers = buildTokenHandlers(schema, parserRules)
     }
 
     public parse(text: string): Node {

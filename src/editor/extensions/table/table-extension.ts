@@ -3,7 +3,7 @@ import { TableCellExtension, TableExtension, TableRowExtension } from "@remirror
 import { Fragment, Node as ProsemirroNode } from "prosemirror-model"
 import { TextSelection } from "prosemirror-state"
 
-import { ParserTokenType } from "src/editor/transform/parser-type"
+import { ParserRuleType } from "src/editor/transform/parser-type"
 import { NodeSerializerOptions } from "src/editor/transform/serializer"
 import { buildBlockEnterKeymapBindings } from "src/editor/utils"
 
@@ -69,15 +69,15 @@ export class RinoTableExtension extends TableExtension {
     public fromMarkdown() {
         return [
             {
-                type: ParserTokenType.block,
+                type: ParserRuleType.block,
                 token: "table",
                 node: this.name,
                 hasOpenClose: true,
             },
-            { type: ParserTokenType.ignore, token: "thead_open" },
-            { type: ParserTokenType.ignore, token: "thead_close" },
-            { type: ParserTokenType.ignore, token: "tbody_open" },
-            { type: ParserTokenType.ignore, token: "tbody_close" },
+            { type: ParserRuleType.ignore, token: "thead_open" },
+            { type: ParserRuleType.ignore, token: "thead_close" },
+            { type: ParserRuleType.ignore, token: "tbody_open" },
+            { type: ParserRuleType.ignore, token: "tbody_close" },
         ] as const
     }
 
@@ -157,7 +157,7 @@ export class RinoTableRowExtension extends TableRowExtension {
     public fromMarkdown() {
         return [
             {
-                type: ParserTokenType.block,
+                type: ParserRuleType.block,
                 token: "tr",
                 node: this.name,
                 hasOpenClose: true,
@@ -178,13 +178,13 @@ export class RinoTableCellExtension extends TableCellExtension {
     public fromMarkdown() {
         return [
             {
-                type: ParserTokenType.block,
+                type: ParserRuleType.block,
                 token: "th",
                 node: this.name,
                 hasOpenClose: true,
             },
             {
-                type: ParserTokenType.block,
+                type: ParserRuleType.block,
                 token: "td",
                 node: this.name,
                 hasOpenClose: true,

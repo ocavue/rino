@@ -9,13 +9,13 @@ import {
 import { NodeRange, Schema } from "prosemirror-model"
 import { EditorState, TextSelection, Transaction } from "prosemirror-state"
 
-import { ParserToken } from "src/editor/transform/parser-type"
+import { ParserRule } from "src/editor/transform/parser-type"
 import { NodeSerializerSpec } from "src/editor/transform/serializer"
 
 export abstract class MarkdownNodeExtension<
     T extends NodeExtensionOptions = any
 > extends NodeExtension<T> {
-    abstract fromMarkdown: () => readonly ParserToken[]
+    abstract fromMarkdown: () => readonly ParserRule[]
     abstract toMarkdown: NodeSerializerSpec
 }
 

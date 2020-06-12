@@ -1,13 +1,13 @@
 import { ParagraphExtension } from "@remirror/core-extensions"
 
-import { ParserTokenType } from "src/editor/transform/parser-type"
+import { ParserRuleType } from "src/editor/transform/parser-type"
 import { NodeSerializerOptions } from "src/editor/transform/serializer"
 
 export class RinoParagraphExtension extends ParagraphExtension {
     fromMarkdown() {
         return [
             {
-                type: ParserTokenType.block,
+                type: ParserRuleType.block,
                 token: "paragraph",
                 node: this.name,
                 hasOpenClose: true,
