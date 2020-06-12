@@ -5,7 +5,7 @@ import { act } from "@testing-library/react"
 import React from "react"
 
 import { SIGN_IN_SNACKBAR_SHOW_DELAY } from "src/constants"
-import { EditContainer } from "src/controller"
+import { EditContainer, User } from "src/controller"
 import { StoreContainer } from "src/store"
 import { mockNextLink, TestHook } from "tests/unit/react-test-utils"
 
@@ -65,5 +65,24 @@ describe("<SignInSnackbar />", () => {
 
         // Jump to the sign-in page
         fireEvent.click(screen.getByTestId("full-sign-in-snack-bar-sign-up-button"))
+    })
+
+    test("with login user", () => {
+        // Parpare the environment
+        let storeHooks = {} as ReturnType<typeof StoreContainer.useContainer>
+        renderWithCallback(<SignInSnackbar />, () => {
+            storeHooks = StoreContainer.useContainer()
+        })
+        act(() => {
+            storeHooks.state.setLoadingData(false)
+            storeHooks.state.setLoadingUser(false)
+            storeHooks.auth.setUser({} as User)
+
+            jest.advanceTimersByTime(SIGN_IN_SNACKBAR_SHOW_DELAY + 1000)
+        })
+
+        // Don't show the snackbar
+        expect(screen.queryByTestId("full-sign-in-snack-bar")).toBeNull()
+        expect(screen.queryByTestId("dense-sign-in-snack-bar")).toBeNull()
     })
 })
