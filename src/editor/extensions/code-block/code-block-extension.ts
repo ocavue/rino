@@ -2,7 +2,6 @@ import { ExtensionManagerNodeTypeParams, KeyBindings } from "@remirror/core"
 import {
     codeBlockDefaultOptions,
     CodeBlockExtension,
-    CodeBlockExtensionOptions,
     getLanguage,
 } from "@remirror/extension-code-block"
 import Token from "markdown-it/lib/token"
@@ -10,7 +9,7 @@ import Token from "markdown-it/lib/token"
 import { InlineDecorateType } from "src/editor/extensions"
 import { ParserTokenType } from "src/editor/transform/parser-type"
 import { NodeSerializerOptions } from "src/editor/transform/serializer"
-import { buildBlockEnterKeymapBindings, MarkdownNodeExtension } from "src/editor/utils"
+import { buildBlockEnterKeymapBindings } from "src/editor/utils"
 
 import { supportedLanguages } from "./code-block-languages"
 
@@ -25,8 +24,7 @@ export const defaultRinoCodeBlockExtensionOptions = {
     ],
 }
 
-export class RinoCodeBlockExtension extends CodeBlockExtension
-    implements MarkdownNodeExtension<CodeBlockExtensionOptions> {
+export class RinoCodeBlockExtension extends CodeBlockExtension {
     get defaultOptions() {
         return { ...defaultRinoCodeBlockExtensionOptions }
     }

@@ -15,7 +15,6 @@ import { EditorView, NodeView } from "prosemirror-view"
 
 import { ParserTokenType } from "src/editor/transform/parser-type"
 import { NodeSerializerOptions } from "src/editor/transform/serializer"
-import { MarkdownNodeExtension } from "src/editor/utils"
 
 import { splitListItem } from "./list-helper"
 
@@ -49,7 +48,7 @@ class ListItemView implements NodeView {
     }
 }
 
-export class RinoListItemExtension extends NodeExtension implements MarkdownNodeExtension {
+export class RinoListItemExtension extends NodeExtension {
     get name() {
         return "rinoListItem" as const
     }
@@ -97,7 +96,7 @@ export class RinoListItemExtension extends NodeExtension implements MarkdownNode
     }
 }
 
-export class RinoOrderedListExtension extends NodeExtension implements MarkdownNodeExtension {
+export class RinoOrderedListExtension extends NodeExtension {
     get name() {
         return "rinoOrderedList" as const
     }
@@ -152,7 +151,7 @@ export class RinoOrderedListExtension extends NodeExtension implements MarkdownN
     }
 }
 
-export class RinoBulletListExtension extends NodeExtension implements MarkdownNodeExtension {
+export class RinoBulletListExtension extends NodeExtension {
     get name() {
         return "rinoBulletList" as const
     }
@@ -195,7 +194,7 @@ export class RinoBulletListExtension extends NodeExtension implements MarkdownNo
     }
 }
 
-export class RinoCheckboxExtension extends NodeExtension implements MarkdownNodeExtension {
+export class RinoCheckboxExtension extends NodeExtension {
     get name() {
         return "rinoCheckbox" as const
     }

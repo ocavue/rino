@@ -5,7 +5,7 @@ import { TextSelection } from "prosemirror-state"
 
 import { ParserTokenType } from "src/editor/transform/parser-type"
 import { NodeSerializerOptions } from "src/editor/transform/serializer"
-import { buildBlockEnterKeymapBindings, MarkdownNodeExtension } from "src/editor/utils"
+import { buildBlockEnterKeymapBindings } from "src/editor/utils"
 
 import { selectedTableCell } from "./table-helper"
 import { createTableHeigthlightPlugin } from "./table-plugin"
@@ -17,7 +17,7 @@ enum TABLE_ALIGEN {
     LEFT = 4,
 }
 
-export class RinoTableExtension extends TableExtension implements MarkdownNodeExtension {
+export class RinoTableExtension extends TableExtension {
     readonly name = "table"
 
     public keys({ type, schema }: ExtensionManagerNodeTypeParams): KeyBindings {
@@ -151,7 +151,7 @@ export class RinoTableExtension extends TableExtension implements MarkdownNodeEx
     }
 }
 
-export class RinoTableRowExtension extends TableRowExtension implements MarkdownNodeExtension {
+export class RinoTableRowExtension extends TableRowExtension {
     readonly name = "tableRow"
 
     public fromMarkdown() {
@@ -168,7 +168,7 @@ export class RinoTableRowExtension extends TableRowExtension implements Markdown
     public toMarkdown() {}
 }
 
-export class RinoTableCellExtension extends TableCellExtension implements MarkdownNodeExtension {
+export class RinoTableCellExtension extends TableCellExtension {
     readonly name = "tableCell"
 
     public plugin() {
