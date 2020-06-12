@@ -4,7 +4,7 @@ import React from "react"
 import { SIGN_IN_SNACKBAR_SHOW_DELAY } from "src/constants"
 import { EditContainer, User } from "src/controller"
 import { StoreContainer } from "src/store"
-import { mockNextLink, TestHook } from "tests/unit/react-test-utils"
+import { mockNextLink, TestHook } from "tests/react-test-utils"
 
 import { SignInSnackbar } from "../SignInSnackbar"
 

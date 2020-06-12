@@ -4,7 +4,7 @@ import React from "react"
 
 import { EditContainer, Note, NoteType } from "src/controller"
 import { StoreContainer } from "src/store"
-import { TestHook } from "tests/unit/react-test-utils"
+import { TestHook } from "tests/react-test-utils"
 
 import { NoteBody } from "../NoteBody"
 
