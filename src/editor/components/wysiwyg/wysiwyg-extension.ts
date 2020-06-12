@@ -58,6 +58,7 @@ const rinoMarkdownNodeExtensions = [
     new RinoTableCellExtension(),
 ]
 
+/* istanbul ignore if */
 if (process.env.NODE_ENV === "test") {
     // By doing this, TypeScript can find extensions with wrong `MarkdownNodeExtension` implementation.
     // Notice that the variable `rinoMarkdownNodeExtensions` should NOT be type `MarkdownNodeExtension[]` since we want TypeScript
