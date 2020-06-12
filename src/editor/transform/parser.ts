@@ -15,6 +15,13 @@ interface StackItem {
 type TokenHandler = (state: MarkdownParseState, tok: Token) => void
 type TokenHandlers = Record<string, TokenHandler>
 
+export class UnknowMarkdownItTokenError extends Error {
+    constructor(public tokenType: string) {
+        super(`MarkdownIt token type '${tokenType}' not supported by Rino Markdown parser`)
+        this.tokenType = tokenType
+    }
+}
+
 // Object used to track the context of a running parse.
 class MarkdownParseState {
     private schema: Schema
@@ -71,10 +78,7 @@ class MarkdownParseState {
     public parseTokens(toks: Token[]): void {
         for (const tok of toks) {
             const handler = this.tokenHandlers[tok.type]
-            if (!handler)
-                throw new Error(
-                    `MarkdownIt token type '${tok.type}' not supported by Rino Markdown parser`,
-                )
+            if (!handler) throw new UnknowMarkdownItTokenError(tok.type)
             handler(this, tok)
         }
     }
