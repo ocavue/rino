@@ -20,6 +20,7 @@ import {
     RinoTableRowExtension,
     RinoTextExtension,
 } from "src/editor/extensions"
+import { MarkdownNodeExtension } from "src/editor/utils"
 
 /**
  * Replace ParagraphExtension as RinoParagraphExtension in baseExtensions.
@@ -42,11 +43,7 @@ const rinoBaseExtensions = baseExtensions.map((e) => {
         }
 })
 
-export const wysiwygExtensions = [
-    ...rinoBaseExtensions,
-    ...rinoMarkExtensions,
-    new RinoInlineMarkExtension(),
-    new RinoInlineDecorationExtension(),
+const rinoMarkdownNodeExtensions = [
     new RinoHardBreakExtension(),
     new RinoHorizontalRuleExtension(),
     new RinoCodeBlockExtension(),
@@ -59,6 +56,24 @@ export const wysiwygExtensions = [
     new RinoTableExtension(),
     new RinoTableRowExtension(),
     new RinoTableCellExtension(),
+]
+
+/* istanbul ignore if */
+if (process.env.NODE_ENV === "test") {
+    // By doing this, TypeScript can find extensions with wrong `MarkdownNodeExtension` implementation.
+    // Notice that the variable `rinoMarkdownNodeExtensions` should NOT be type `MarkdownNodeExtension[]` since we want TypeScript
+    // to know the actual shapes of `WysiwygExtensions`, `WysiwygSchema` and `WysiwygManager`.
+    const f = (x: MarkdownNodeExtension[]) => {}
+    f(rinoMarkdownNodeExtensions)
+}
+
+export const wysiwygExtensions = [
+    ...rinoBaseExtensions,
+    ...rinoMarkExtensions,
+    ...rinoMarkdownNodeExtensions,
+
+    new RinoInlineMarkExtension(),
+    new RinoInlineDecorationExtension(),
 ]
 
 export type WysiwygExtensions = InferFlexibleExtensionList<typeof wysiwygExtensions>

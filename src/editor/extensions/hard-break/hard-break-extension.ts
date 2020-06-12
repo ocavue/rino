@@ -9,9 +9,8 @@ import { baseKeymap, exitCode } from "prosemirror-commands"
 import { EditorState } from "prosemirror-state"
 
 import { NodeSerializerOptions } from "src/editor/transform/serializer"
-import { MarkdownNodeExtension } from "src/editor/utils"
 
-export class RinoHardBreakExtension extends HardBreakExtension implements MarkdownNodeExtension {
+export class RinoHardBreakExtension extends HardBreakExtension {
     fromMarkdown() {
         return []
     }

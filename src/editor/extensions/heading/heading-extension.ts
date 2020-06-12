@@ -5,17 +5,15 @@ import {
     KeyBindings,
     NodeExtensionSpec,
 } from "@remirror/core"
-import { HeadingExtension, HeadingExtensionOptions } from "@remirror/core-extensions"
+import { HeadingExtension } from "@remirror/core-extensions"
 import Token from "markdown-it/lib/token"
 import { setBlockType } from "prosemirror-commands"
 import { Schema } from "prosemirror-model"
 
 import { ParserTokenType } from "src/editor/transform/parser-type"
 import { NodeSerializerOptions } from "src/editor/transform/serializer"
-import { MarkdownNodeExtension } from "src/editor/utils"
 
-export class RinoHeadingExtension extends HeadingExtension
-    implements MarkdownNodeExtension<HeadingExtensionOptions> {
+export class RinoHeadingExtension extends HeadingExtension {
     get schema(): NodeExtensionSpec {
         return {
             ...super.schema,
