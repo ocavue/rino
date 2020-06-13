@@ -190,7 +190,7 @@ const autoHideMarks: Record<string, true> = {
 }
 export function isAutoHideMark(name?: string): boolean {
     // This should be the fastest way based on my performance test.
-    return autoHideMarks[name as string]
+    return autoHideMarks[name]
 }
 
 export const rinoMarkExtensions = RinoMarkExtensionClasses.map((Ext) => new Ext())
