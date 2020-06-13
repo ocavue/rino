@@ -1,7 +1,11 @@
 // For a detailed explanation regarding each configuration property, visit:
 // https://jestjs.io/docs/en/configuration.html
 
+const baseConfig = require('../../tests/jest.base.config')
+
 const base = {
+    ...baseConfig,
+
     // All imported modules in your tests should be mocked automatically
     // automock: false,
 
@@ -76,8 +80,6 @@ const base = {
     // An enum that specifies notification mode. Requires { notify: true }
     // notifyMode: "failure-change",
 
-    // Use this configuration option to add custom reporters to Jest
-    reporters: ["default", "jest-puppeteer-istanbul/lib/reporter"],
 
     // Automatically reset mock state between every test
     // resetMocks: false,
@@ -137,14 +139,7 @@ const base = {
     // Setting this value to "fake" allows the use of fake timers for functions such as "setTimeout"
     // timers: "real",
 
-    // A map from regular expressions to paths to transformers
-    transform: {
-        ".*\\.ts(x)?$": "babel-jest",
-        ".*\\.(css|styl|less|sass|scss|svg|png|jpg|ttf|woff|woff2|md)$": "jest-transform-stub",
-    },
 
-    // An array of regexp pattern strings that are matched against all source file paths, matched files will skip transformation
-    transformIgnorePatterns: ["/node_modules/"],
 
     // An array of regexp pattern strings that are matched against all modules before the module loader will automatically return a mock for them
     // unmockedModulePathPatterns: undefined,
