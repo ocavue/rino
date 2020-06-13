@@ -1,8 +1,12 @@
 {
     "compilerOptions": {
         "target": "es6",
-        "module": "esnext",
-        "composite": true,
+        "strict": true,
+        "importHelpers": true,
+        "moduleResolution": "node",
+        "esModuleInterop": true,
+        "allowSyntheticDefaultImports": true,
+        "resolveJsonModule": true,
         "baseUrl": ".",
         "lib": [
             "esnext",
@@ -12,7 +16,6 @@
         "allowJs": true,
         "isolatedModules": true,
         "noEmit": true,
-        "jsx": "preserve",
         "forceConsistentCasingInFileNames": true,
         "skipLibCheck": true
     },
