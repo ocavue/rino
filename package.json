@@ -17,6 +17,12 @@
         "eslint-plugin-react-hooks": "^4.0.0",
         "eslint-plugin-simple-import-sort": "^5.0.0",
         "prettier": "^2.0.0",
-        "typescript": "~3.9.0"
+        "typescript": "~3.9.0",
+        "husky": "^4.2.5"
+    },
+    "husky": {
+        "hooks": {
+            "pre-commit": "./scripts/pre-commit.sh"
+        }
     }
 }
