@@ -168,7 +168,7 @@ export class MarkdownParser {
     public constructor(schema: Schema, parserRules: ParserRule[]) {
         this.schema = schema
         this.tokenizer = MarkdownIt("commonmark", { html: true })
-            .disable(["emphasis", "autolink", "backticks", "entity"])
+            .disable(["emphasis", "autolink", "backticks", "entity", "html_block"])
             .enable(["table"])
             .use(markdownItListCheckbox)
         this.tokenHandlers = buildTokenHandlers(schema, parserRules)
