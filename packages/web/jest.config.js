@@ -157,7 +157,7 @@ module.exports = {
             displayName: { name: "WEB:UNIT", color: "cyan" },
 
             // The glob patterns Jest uses to detect test files
-            testMatch: ["<rootDir>/tests/unit/**/*.spec.(js|ts|jsx|tsx)", "**/__test__/**/*ar.spec.(js|ts|jsx|tsx)"],
+            testMatch: ["**/__test__/**/*ar.spec.(js|ts|jsx|tsx)"],
 
             // A list of paths to modules that run some code to configure or set up the testing framework before each test
             setupFilesAfterEnv: ["jest-extended", "jest-prosemirror/environment", "jest-remirror/environment"],

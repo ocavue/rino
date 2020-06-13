@@ -1,3 +1,5 @@
+// This file stores all shared Jest config for each packages
+
 module.exports = {
     // A map from regular expressions to paths to transformers
     transform: {
