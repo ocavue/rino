@@ -1,5 +1,4 @@
 import { createWysiwygManager } from "src/editor"
-import { UnknowMarkdownItTokenError } from "src/editor/transform/parser"
 import { dedent } from "src/utils"
 
 import { buildMarkdownParser } from "../wysiwyg-markdown"
@@ -32,16 +31,8 @@ describe("parser token support", () => {
             try {
                 parser.parse(t.markdown)
             } catch (error) {
-                if (
-                    error instanceof UnknowMarkdownItTokenError &&
-                    error.tokenType === "html_block"
-                ) {
-                    // Ignore
-                    // TODO: support html_block
-                } else {
-                    console.warn("test case:", t)
-                    throw error
-                }
+                console.warn("test case:", t)
+                throw error
             }
         })
     }
