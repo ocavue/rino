@@ -4,6 +4,7 @@
     "workspaces": ["packages/*"],
     "scripts": {
         "lint": "eslint --ignore-path .gitignore --ext '.js,.jsx,.ts,.tsx'",
+        "test": "jest --runInBand",
         "web": "yarn workspace @rino.app/web"
     },
     "dependencies": {
