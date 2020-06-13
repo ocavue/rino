@@ -1,8 +1,8 @@
 {
+    "extends": "../../tsconfig.json",
     "compilerOptions": {
         "target": "es6",
         "module": "esnext",
-        "composite": true,
         "baseUrl": ".",
         "lib": [
             "esnext",
@@ -11,14 +11,14 @@
         ],
         "allowJs": true,
         "isolatedModules": true,
-        "noEmit": true,
         "jsx": "preserve",
         "forceConsistentCasingInFileNames": true,
         "skipLibCheck": true,
         "strict": false,
         "esModuleInterop": true,
         "moduleResolution": "node",
-        "resolveJsonModule": true
+        "resolveJsonModule": true,
+        "noEmit": true
     },
     "include": [
         "next-env.d.ts",
