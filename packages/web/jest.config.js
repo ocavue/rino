@@ -164,21 +164,21 @@ const base = {
 
 module.exports = {
     ...base,
-    projects: [
-        {
-            ...base,
-            displayName: { name: "E2E", color: "magenta" },
+    // projects: [
+    //     {
+    //         ...base,
+    //         displayName: { name: "E2E", color: "magenta" },
 
-            // The glob patterns Jest uses to detect test files
-            testMatch: ["<rootDir>/tests/e2e_NOT_EXIST/**/*.spec.(js|ts|jsx|tsx)"],
+    //         // The glob patterns Jest uses to detect test files
+    //         testMatch: ["<rootDir>/tests/e2e_NOT_EXIST/**/*.spec.(js|ts|jsx|tsx)"],
 
-            // A preset that is used as a base for Jest's configuration
-            preset: "jest-puppeteer",
+    //         // A preset that is used as a base for Jest's configuration
+    //         preset: "jest-puppeteer",
 
-            // A list of paths to modules that run some code to configure or set up the testing framework before each test
-            setupFilesAfterEnv: ["jest-extended", "jest-puppeteer-istanbul/lib/setup", "<rootDir>/../../tests/wait-server.js"],
-        },
-        {
+    //         // A list of paths to modules that run some code to configure or set up the testing framework before each test
+    //         setupFilesAfterEnv: ["jest-extended", "jest-puppeteer-istanbul/lib/setup", "<rootDir>/../../tests/wait-server.js"],
+    //     },
+    //     {
             ...base,
             displayName: { name: "UNIT", color: "cyan" },
 
@@ -190,6 +190,6 @@ module.exports = {
 
             // Required for dom jest-prosemirror and jest-remirror
             testEnvironment: "jsdom",
-        },
-    ],
+    //     },
+    // ],
 }
