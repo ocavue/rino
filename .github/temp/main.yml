@@ -52,14 +52,14 @@ jobs:
 
       - name: Build
         run: |
-          yarn run build
-          yarn run export
+          yarn run web build
+          yarn run web export
 
       - name: Upload dist
         uses: actions/upload-artifact@v1
         with:
           name: dist
-          path: ./dist
+          path: ./packages/web/dist
 
   Test:
     runs-on: ubuntu-18.04
@@ -88,8 +88,8 @@ jobs:
           export FIREBASE_DATABASE_EMULATOR_HOST="localhost:$(scripts/simple_jq.js ./firebase.json .emulators.database.port)"
           export FIRESTORE_EMULATOR_HOST="localhost:$(scripts/simple_jq.js ./firebase.json .emulators.firestore.port)"
           echo "firebase environment variables:" $FIREBASE_DATABASE_EMULATOR_HOST $FIRESTORE_EMULATOR_HOST
-          yarn build
-          yarn export
+          yarn run web build
+          yarn run web export
 
       - name: Run tests
         env:
@@ -144,7 +144,7 @@ jobs:
           name: dist
 
       - name: Remove 404.html
-        run: rm ./dist/404.html # Don't let lighthouse to check 404.html
+        run: rm ./packages/web/dist/404.html # Don't let lighthouse to check 404.html
 
       - name: Run lighthouse
         env:
@@ -169,7 +169,7 @@ jobs:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
         with:
-          publish-dir: './dist'
+          publish-dir: './packages/web/dist'
           github-token: ${{ secrets.GITHUB_TOKEN }}
           deploy-message: "Deploy from GitHub Actions (SHA: ${{ github.sha }}; Ref: ${{github.ref }})"
           enable-commit-comment: false
@@ -222,6 +222,4 @@ jobs:
         env:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
         run: |
-          echo '<!-- Firebase hosting -->' >> ./dist/index.html
-          echo '<!-- Firebase hosting -->' >> ./dist/404.html
-          yarn firebase deploy
+          yarn run web firebase deploy

@@ -1,9 +1,10 @@
 {
-    "private": true,
     "name": "rino",
+    "private": true,
     "workspaces": ["packages/*"],
     "scripts": {
-        "lint": "eslint --ignore-path .gitignore --ext '.js,.jsx,.ts,.tsx'"
+        "lint": "eslint --ignore-path .gitignore --ext '.js,.jsx,.ts,.tsx'",
+        "web": "yarn workspace @rino.app/web"
     },
     "dependencies": {
         "@typescript-eslint/eslint-plugin": "^3.0.0",
