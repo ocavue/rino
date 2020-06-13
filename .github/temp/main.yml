@@ -46,8 +46,8 @@ jobs:
           FIREBASE_CLIENT_JSON: ${{ secrets.FIREBASE_CLIENT_JSON }}
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }} # https://firebase.google.com/docs/cli#cli-ci-systems
         run: |
-          echo "${FIREBASE_CLIENT_JSON}" > ./config/firebase.client.json
-          export FIREBASE_PROJECT_ID=$(scripts/simple_jq.js ./config/firebase.client.json .projectId)
+          echo "${FIREBASE_CLIENT_JSON}" > ./packages/web/config/firebase.client.json
+          export FIREBASE_PROJECT_ID=$(scripts/simple_jq.js ./packages/web/config/firebase.client.json .projectId)
           yarn firebase use --add $FIREBASE_PROJECT_ID
 
       - name: Build

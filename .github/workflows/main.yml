@@ -39,7 +39,7 @@
             "FIREBASE_CLIENT_JSON": "${{ secrets.FIREBASE_CLIENT_JSON }}",
             "FIREBASE_TOKEN": "${{ secrets.FIREBASE_TOKEN }}"
           },
-          "run": "echo \"${FIREBASE_CLIENT_JSON}\" > ./config/firebase.client.json\nexport FIREBASE_PROJECT_ID=$(scripts/simple_jq.js ./config/firebase.client.json .projectId)\nyarn firebase use --add $FIREBASE_PROJECT_ID\n"
+          "run": "echo \"${FIREBASE_CLIENT_JSON}\" > ./packages/web/config/firebase.client.json\nexport FIREBASE_PROJECT_ID=$(scripts/simple_jq.js ./packages/web/config/firebase.client.json .projectId)\nyarn firebase use --add $FIREBASE_PROJECT_ID\n"
         },
         {
           "name": "Build",
@@ -89,7 +89,7 @@
             "FIREBASE_CLIENT_JSON": "${{ secrets.FIREBASE_CLIENT_JSON }}",
             "FIREBASE_TOKEN": "${{ secrets.FIREBASE_TOKEN }}"
           },
-          "run": "echo \"${FIREBASE_CLIENT_JSON}\" > ./config/firebase.client.json\nexport FIREBASE_PROJECT_ID=$(scripts/simple_jq.js ./config/firebase.client.json .projectId)\nyarn firebase use --add $FIREBASE_PROJECT_ID\n"
+          "run": "echo \"${FIREBASE_CLIENT_JSON}\" > ./packages/web/config/firebase.client.json\nexport FIREBASE_PROJECT_ID=$(scripts/simple_jq.js ./packages/web/config/firebase.client.json .projectId)\nyarn firebase use --add $FIREBASE_PROJECT_ID\n"
         },
         {
           "id": "step_cache_next",
@@ -376,7 +376,7 @@
             "FIREBASE_CLIENT_JSON": "${{ secrets.FIREBASE_CLIENT_JSON }}",
             "FIREBASE_TOKEN": "${{ secrets.FIREBASE_TOKEN }}"
           },
-          "run": "echo \"${FIREBASE_CLIENT_JSON}\" > ./config/firebase.client.json\nexport FIREBASE_PROJECT_ID=$(scripts/simple_jq.js ./config/firebase.client.json .projectId)\nyarn firebase use --add $FIREBASE_PROJECT_ID\n"
+          "run": "echo \"${FIREBASE_CLIENT_JSON}\" > ./packages/web/config/firebase.client.json\nexport FIREBASE_PROJECT_ID=$(scripts/simple_jq.js ./packages/web/config/firebase.client.json .projectId)\nyarn firebase use --add $FIREBASE_PROJECT_ID\n"
         },
         {
           "name": "Deploy to Firebase",
