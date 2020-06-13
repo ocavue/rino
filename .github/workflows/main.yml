@@ -47,7 +47,7 @@
         },
         {
           "name": "Upload dist",
-          "uses": "actions/upload-artifact@v1",
+          "uses": "actions/upload-artifact@v2",
           "with": {
             "name": "dist",
             "path": "./packages/web/dist"
@@ -196,9 +196,10 @@
         },
         {
           "name": "Download dist",
-          "uses": "actions/download-artifact@v1",
+          "uses": "actions/download-artifact@v2",
           "with": {
-            "name": "dist"
+            "name": "dist",
+            "path": "./packages/web/dist"
           }
         },
         {
@@ -246,9 +247,10 @@
         },
         {
           "name": "Download dist",
-          "uses": "actions/download-artifact@v1",
+          "uses": "actions/download-artifact@v2",
           "with": {
-            "name": "dist"
+            "name": "dist",
+            "path": "./packages/web/dist"
           }
         },
         {
@@ -365,9 +367,10 @@
         },
         {
           "name": "Download dist",
-          "uses": "actions/download-artifact@v1",
+          "uses": "actions/download-artifact@v2",
           "with": {
-            "name": "dist"
+            "name": "dist",
+            "path": "./packages/web/dist"
           }
         },
         {

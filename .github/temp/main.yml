@@ -56,7 +56,7 @@ jobs:
           yarn run web export
 
       - name: Upload dist
-        uses: actions/upload-artifact@v1
+        uses: actions/upload-artifact@v2
         with:
           name: dist
           path: ./packages/web/dist
@@ -139,9 +139,10 @@ jobs:
 
       - &step_download_dist
         name: Download dist
-        uses: actions/download-artifact@v1
+        uses: actions/download-artifact@v2
         with:
           name: dist
+          path: ./packages/web/dist
 
       - name: Remove 404.html
         run: rm ./packages/web/dist/404.html # Don't let lighthouse to check 404.html
