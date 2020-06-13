@@ -17,16 +17,11 @@ module.exports = {
     // Use this configuration option to add custom reporters to Jest
     reporters: ["default", "jest-puppeteer-istanbul/lib/reporter"],
 
-
     // An array of file extensions your modules use
     moduleFileExtensions: ["js", "json", "jsx", "ts", "tsx", "node", "vue", "md"],
-
 
     // Stop running tests after `n` failures
     bail: 1,
 
-
-    projects: [
-        "./packages/web/jest.config.js"
-    ],
+    projects: ["./packages/web/jest.config.js"],
 }

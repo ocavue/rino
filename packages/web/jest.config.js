@@ -1,7 +1,7 @@
 // For a detailed explanation regarding each configuration property, visit:
 // https://jestjs.io/docs/en/configuration.html
 
-const baseConfig = require('../../tests/jest.base.config')
+const baseConfig = require("../../tests/jest.base.config")
 
 const base = {
     ...baseConfig,
@@ -58,7 +58,6 @@ const base = {
 
     // An enum that specifies notification mode. Requires { notify: true }
     // notifyMode: "failure-change",
-
 
     // Automatically reset mock state between every test
     // resetMocks: false,
@@ -118,8 +117,6 @@ const base = {
     // Setting this value to "fake" allows the use of fake timers for functions such as "setTimeout"
     // timers: "real",
 
-
-
     // An array of regexp pattern strings that are matched against all modules before the module loader will automatically return a mock for them
     // unmockedModulePathPatterns: undefined,
 
@@ -153,17 +150,21 @@ module.exports = {
     //         setupFilesAfterEnv: ["jest-extended", "jest-puppeteer-istanbul/lib/setup", "<rootDir>/../../tests/wait-server.js"],
     //     },
     //     {
-            ...base,
-            displayName: { name: "WEB:UNIT", color: "cyan" },
+    ...base,
+    displayName: { name: "WEB:UNIT", color: "cyan" },
 
-            // The glob patterns Jest uses to detect test files
-            testMatch: ["**/__test__/**/*ar.spec.(js|ts|jsx|tsx)"],
+    // The glob patterns Jest uses to detect test files
+    testMatch: ["**/__test__/**/*ar.spec.(js|ts|jsx|tsx)"],
 
-            // A list of paths to modules that run some code to configure or set up the testing framework before each test
-            setupFilesAfterEnv: ["jest-extended", "jest-prosemirror/environment", "jest-remirror/environment"],
+    // A list of paths to modules that run some code to configure or set up the testing framework before each test
+    setupFilesAfterEnv: [
+        "jest-extended",
+        "jest-prosemirror/environment",
+        "jest-remirror/environment",
+    ],
 
-            // Required for dom jest-prosemirror and jest-remirror
-            testEnvironment: "jsdom",
+    // Required for dom jest-prosemirror and jest-remirror
+    testEnvironment: "jsdom",
     //     },
     // ],
 }
