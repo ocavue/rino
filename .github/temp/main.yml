@@ -37,7 +37,7 @@ jobs:
         if: steps.step_cache_deps.outputs.cache-hit != 'true' # Skipping steps based on cache-hit
         run: |
           yarn install --frozen-lockfile
-          yarn firebase setup:emulators:firestore
+          yarn run web firebase setup:emulators:firestore
           ls -lrth ~/.cache/firebase/emulators/
 
       - &step_config_firebase
@@ -48,7 +48,7 @@ jobs:
         run: |
           echo "${FIREBASE_CLIENT_JSON}" > ./packages/web/config/firebase.client.json
           export FIREBASE_PROJECT_ID=$(scripts/simple_jq.js ./packages/web/config/firebase.client.json .projectId)
-          yarn firebase use --add $FIREBASE_PROJECT_ID
+          yarn run web firebase use --add $FIREBASE_PROJECT_ID
 
       - name: Build
         run: |
@@ -97,7 +97,7 @@ jobs:
           REACT_APP_TEST_USERNAME: ${{ secrets.REACT_APP_TEST_USERNAME }}
           REACT_APP_TEST_PASSWORD: ${{ secrets.REACT_APP_TEST_PASSWORD }}
         run: |
-          yarn firebase emulators:exec --only firestore "
+          yarn run web firebase emulators:exec --only firestore "
             ./scripts/http-server.js > /dev/null &
             yarn run test --coverage
           "
