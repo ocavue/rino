@@ -9,9 +9,6 @@ const base = {
     // All imported modules in your tests should be mocked automatically
     // automock: false,
 
-    // Stop running tests after `n` failures
-    bail: 1,
-
     // Respect "browser" field in package.json when resolving modules
     // browser: false,
 
@@ -20,21 +17,6 @@ const base = {
 
     // Automatically clear mock calls and instances between every test
     // clearMocks: true,
-
-    // Indicates whether the coverage information should be collected while executing the test
-    collectCoverage: false,
-
-    // An array of glob patterns indicating a set of files for which coverage information should be collected
-    collectCoverageFrom: ["src/**/*", "!**/__test__/**"],
-
-    // The directory where Jest should output its coverage files
-    coverageDirectory: "coverage",
-
-    // An array of regexp pattern strings used to skip coverage collection
-    coveragePathIgnorePatterns: ["/node_modules/"],
-
-    // A list of reporter names that Jest uses when writing coverage reports
-    coverageReporters: ["text-summary", "json", "json-summary"],
 
     // An object that configures minimum threshold enforcement for coverage results
     // coverageThreshold: null,
@@ -61,9 +43,6 @@ const base = {
     // moduleDirectories: [
     //   "node_modules"
     // ],
-
-    // An array of file extensions your modules use
-    moduleFileExtensions: ["js", "json", "jsx", "ts", "tsx", "node", "vue", "md"],
 
     // A map from regular expressions to module names that allow to stub out resources with a single module
     moduleNameMapper: {
@@ -175,10 +154,10 @@ module.exports = {
     //     },
     //     {
             ...base,
-            displayName: { name: "UNIT", color: "cyan" },
+            displayName: { name: "WEB:UNIT", color: "cyan" },
 
             // The glob patterns Jest uses to detect test files
-            testMatch: ["<rootDir>/tests/unit/**/*.spec.(js|ts|jsx|tsx)", "**/__test__/**/*.spec.(js|ts|jsx|tsx)"],
+            testMatch: ["<rootDir>/tests/unit/**/*.spec.(js|ts|jsx|tsx)", "**/__test__/**/*ar.spec.(js|ts|jsx|tsx)"],
 
             // A list of paths to modules that run some code to configure or set up the testing framework before each test
             setupFilesAfterEnv: ["jest-extended", "jest-prosemirror/environment", "jest-remirror/environment"],
