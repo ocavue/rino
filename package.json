@@ -28,16 +28,49 @@
         "@types/expect-puppeteer": "^4.4.0",
         "@types/puppeteer": "^3.0.0",
 
+        "@changesets/cli": "~2.7.0",
+        "@lhci/cli": "^0.4.0",
 
         "jest": "^26.0.0",
-
         "jest-transform-stub": "^2.0.0"
+
+    },
+    "renovate": {
+        "extends": [
+            "config:base",
+            ":semanticCommitTypeAll(chore)"
+        ],
+        "postUpdateOptions": [
+            "yarnDedupeFewer"
+        ],
+        "lockFileMaintenance": {
+            "enabled": true,
+            "extends": "schedule:monthly"
+        },
+        "packageRules": [
+            {
+                "depTypeList": [
+                    "dependencies"
+                ],
+                "updateTypes": [
+                    "patch",
+                    "minor"
+                ],
+                "groupName": "dependencies (non-major)"
+            }
+        ],
+        "ignoreDeps": [
+            "@changesets/cli",
+            "node"
+        ],
+        "rangeStrategy": "update-lockfile"
     },
     "husky": {
         "hooks": {
             "pre-commit": "./scripts/pre-commit.sh"
         }
     },
+
     "//": [
         "jest-puppeteer: Requires Jest v22+ TypeScript users should additionally install `@types/puppeteer`, `@types/jest-environment-puppeteer` and `@types/expect-puppeteer`"
     ]

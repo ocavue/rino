@@ -9,40 +9,9 @@
         "build:analyze": "ANALYZE=true next build",
         "export": "next export -o dist"
     },
-    "renovate": {
-        "extends": [
-            "config:base",
-            ":semanticCommitTypeAll(chore)"
-        ],
-        "postUpdateOptions": [
-            "yarnDedupeFewer"
-        ],
-        "lockFileMaintenance": {
-            "enabled": true,
-            "extends": "schedule:monthly"
-        },
-        "packageRules": [
-            {
-                "depTypeList": [
-                    "dependencies"
-                ],
-                "updateTypes": [
-                    "patch",
-                    "minor"
-                ],
-                "groupName": "dependencies (non-major)"
-            }
-        ],
-        "ignoreDeps": [
-            "@changesets/cli",
-            "node"
-        ],
-        "rangeStrategy": "update-lockfile"
-    },
     "dependencies": {
-        "@changesets/cli": "~2.7.0",
         "@emotion/core": "^10.0.27",
-        "@lhci/cli": "^0.4.0",
+
         "@material-ui/core": "^4.8.2",
         "@material-ui/icons": "^4.5.1",
         "@next/bundle-analyzer": "^9.2.0",
