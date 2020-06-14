@@ -3,7 +3,9 @@ parser: "@typescript-eslint/parser"
 parserOptions:
   parser: "@typescript-eslint/parser"
   ecmaVersion: 2018 # Allows for the parsing of modern ECMAScript features
-  project: ["./tsconfig.json"]
+  project:
+    - "./packages/*/tsconfig.json"
+    - "./tsconfig.json"
   ecmaFeatures:
     jsx: true
 extends:
@@ -70,7 +72,7 @@ rules:
     ]
 overrides:
   - files:
-      - "tests/**/*"
+      - "**/tests/**/*"
       - "**/__test__/*"
     env:
       jest: true
@@ -92,7 +94,6 @@ overrides:
       "@typescript-eslint/no-unsafe-member-access": off
       "@typescript-eslint/no-var-requires": off
 ignorePatterns:
-  - jest*.js
   - node_modules/
   - .next/
   - .dist/

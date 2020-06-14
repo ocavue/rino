@@ -37,7 +37,7 @@ jobs:
         if: steps.step_cache_deps.outputs.cache-hit != 'true' # Skipping steps based on cache-hit
         run: |
           yarn install --frozen-lockfile
-          yarn firebase setup:emulators:firestore
+          yarn run web firebase setup:emulators:firestore
           ls -lrth ~/.cache/firebase/emulators/
 
       - &step_config_firebase
@@ -46,20 +46,20 @@ jobs:
           FIREBASE_CLIENT_JSON: ${{ secrets.FIREBASE_CLIENT_JSON }}
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }} # https://firebase.google.com/docs/cli#cli-ci-systems
         run: |
-          echo "${FIREBASE_CLIENT_JSON}" > ./config/firebase.client.json
-          export FIREBASE_PROJECT_ID=$(scripts/simple_jq.js ./config/firebase.client.json .projectId)
-          yarn firebase use --add $FIREBASE_PROJECT_ID
+          echo "${FIREBASE_CLIENT_JSON}" > ./packages/web/config/firebase.client.json
+          export FIREBASE_PROJECT_ID=$(scripts/simple_jq.js ./packages/web/config/firebase.client.json .projectId)
+          yarn run web firebase use --add $FIREBASE_PROJECT_ID
 
       - name: Build
         run: |
-          yarn run build
-          yarn run export
+          yarn run web build
+          yarn run web export
 
       - name: Upload dist
-        uses: actions/upload-artifact@v1
+        uses: actions/upload-artifact@v2
         with:
           name: dist
-          path: ./dist
+          path: ./packages/web/dist
 
   Test:
     runs-on: ubuntu-18.04
@@ -85,11 +85,11 @@ jobs:
           REACT_APP_TEST_PASSWORD: ${{ secrets.REACT_APP_TEST_PASSWORD }}
         run: |
           export REACT_APP_TESTING=1
-          export FIREBASE_DATABASE_EMULATOR_HOST="localhost:$(scripts/simple_jq.js ./firebase.json .emulators.database.port)"
-          export FIRESTORE_EMULATOR_HOST="localhost:$(scripts/simple_jq.js ./firebase.json .emulators.firestore.port)"
+          export FIREBASE_DATABASE_EMULATOR_HOST="localhost:$(scripts/simple_jq.js ./packages/web/firebase.json .emulators.database.port)"
+          export FIRESTORE_EMULATOR_HOST="localhost:$(scripts/simple_jq.js ./packages/web/firebase.json .emulators.firestore.port)"
           echo "firebase environment variables:" $FIREBASE_DATABASE_EMULATOR_HOST $FIRESTORE_EMULATOR_HOST
-          yarn build
-          yarn export
+          yarn run web build
+          yarn run web export
 
       - name: Run tests
         env:
@@ -97,7 +97,7 @@ jobs:
           REACT_APP_TEST_USERNAME: ${{ secrets.REACT_APP_TEST_USERNAME }}
           REACT_APP_TEST_PASSWORD: ${{ secrets.REACT_APP_TEST_PASSWORD }}
         run: |
-          yarn firebase emulators:exec --only firestore "
+          yarn run firebase emulators:exec --only firestore "
             ./scripts/http-server.js > /dev/null &
             yarn run test --coverage
           "
@@ -139,12 +139,10 @@ jobs:
 
       - &step_download_dist
         name: Download dist
-        uses: actions/download-artifact@v1
+        uses: actions/download-artifact@v2
         with:
           name: dist
-
-      - name: Remove 404.html
-        run: rm ./dist/404.html # Don't let lighthouse to check 404.html
+          path: ./packages/web/dist
 
       - name: Run lighthouse
         env:
@@ -169,7 +167,7 @@ jobs:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
         with:
-          publish-dir: './dist'
+          publish-dir: './packages/web/dist'
           github-token: ${{ secrets.GITHUB_TOKEN }}
           deploy-message: "Deploy from GitHub Actions (SHA: ${{ github.sha }}; Ref: ${{github.ref }})"
           enable-commit-comment: false
@@ -222,6 +220,4 @@ jobs:
         env:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
         run: |
-          echo '<!-- Firebase hosting -->' >> ./dist/index.html
-          echo '<!-- Firebase hosting -->' >> ./dist/404.html
-          yarn firebase deploy
+          yarn run web firebase deploy

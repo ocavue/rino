@@ -1,6 +1,8 @@
 # This is the configration file for https://github.com/GoogleChrome/lighthouse-ci
 
 ci:
+  collect:
+    staticDistDir: ./packages/web/dist
   upload:
     target: temporary-public-storage
   assert:

@@ -31,7 +31,7 @@
         {
           "name": "Install Dependencies",
           "if": "steps.step_cache_deps.outputs.cache-hit != 'true'",
-          "run": "yarn install --frozen-lockfile\nyarn firebase setup:emulators:firestore\nls -lrth ~/.cache/firebase/emulators/\n"
+          "run": "yarn install --frozen-lockfile\nyarn run web firebase setup:emulators:firestore\nls -lrth ~/.cache/firebase/emulators/\n"
         },
         {
           "name": "Configrate firebase",
@@ -39,18 +39,18 @@
             "FIREBASE_CLIENT_JSON": "${{ secrets.FIREBASE_CLIENT_JSON }}",
             "FIREBASE_TOKEN": "${{ secrets.FIREBASE_TOKEN }}"
           },
-          "run": "echo \"${FIREBASE_CLIENT_JSON}\" > ./config/firebase.client.json\nexport FIREBASE_PROJECT_ID=$(scripts/simple_jq.js ./config/firebase.client.json .projectId)\nyarn firebase use --add $FIREBASE_PROJECT_ID\n"
+          "run": "echo \"${FIREBASE_CLIENT_JSON}\" > ./packages/web/config/firebase.client.json\nexport FIREBASE_PROJECT_ID=$(scripts/simple_jq.js ./packages/web/config/firebase.client.json .projectId)\nyarn run web firebase use --add $FIREBASE_PROJECT_ID\n"
         },
         {
           "name": "Build",
-          "run": "yarn run build\nyarn run export\n"
+          "run": "yarn run web build\nyarn run web export\n"
         },
         {
           "name": "Upload dist",
-          "uses": "actions/upload-artifact@v1",
+          "uses": "actions/upload-artifact@v2",
           "with": {
             "name": "dist",
-            "path": "./dist"
+            "path": "./packages/web/dist"
           }
         }
       ]
@@ -81,7 +81,7 @@
         {
           "name": "Install Dependencies",
           "if": "steps.step_cache_deps.outputs.cache-hit != 'true'",
-          "run": "yarn install --frozen-lockfile\nyarn firebase setup:emulators:firestore\nls -lrth ~/.cache/firebase/emulators/\n"
+          "run": "yarn install --frozen-lockfile\nyarn run web firebase setup:emulators:firestore\nls -lrth ~/.cache/firebase/emulators/\n"
         },
         {
           "name": "Configrate firebase",
@@ -89,7 +89,7 @@
             "FIREBASE_CLIENT_JSON": "${{ secrets.FIREBASE_CLIENT_JSON }}",
             "FIREBASE_TOKEN": "${{ secrets.FIREBASE_TOKEN }}"
           },
-          "run": "echo \"${FIREBASE_CLIENT_JSON}\" > ./config/firebase.client.json\nexport FIREBASE_PROJECT_ID=$(scripts/simple_jq.js ./config/firebase.client.json .projectId)\nyarn firebase use --add $FIREBASE_PROJECT_ID\n"
+          "run": "echo \"${FIREBASE_CLIENT_JSON}\" > ./packages/web/config/firebase.client.json\nexport FIREBASE_PROJECT_ID=$(scripts/simple_jq.js ./packages/web/config/firebase.client.json .projectId)\nyarn run web firebase use --add $FIREBASE_PROJECT_ID\n"
         },
         {
           "id": "step_cache_next",
@@ -106,7 +106,7 @@
             "REACT_APP_TEST_USERNAME": "${{ secrets.REACT_APP_TEST_USERNAME }}",
             "REACT_APP_TEST_PASSWORD": "${{ secrets.REACT_APP_TEST_PASSWORD }}"
           },
-          "run": "export REACT_APP_TESTING=1\nexport FIREBASE_DATABASE_EMULATOR_HOST=\"localhost:$(scripts/simple_jq.js ./firebase.json .emulators.database.port)\"\nexport FIRESTORE_EMULATOR_HOST=\"localhost:$(scripts/simple_jq.js ./firebase.json .emulators.firestore.port)\"\necho \"firebase environment variables:\" $FIREBASE_DATABASE_EMULATOR_HOST $FIRESTORE_EMULATOR_HOST\nyarn build\nyarn export\n"
+          "run": "export REACT_APP_TESTING=1\nexport FIREBASE_DATABASE_EMULATOR_HOST=\"localhost:$(scripts/simple_jq.js ./packages/web/firebase.json .emulators.database.port)\"\nexport FIRESTORE_EMULATOR_HOST=\"localhost:$(scripts/simple_jq.js ./packages/web/firebase.json .emulators.firestore.port)\"\necho \"firebase environment variables:\" $FIREBASE_DATABASE_EMULATOR_HOST $FIRESTORE_EMULATOR_HOST\nyarn run web build\nyarn run web export\n"
         },
         {
           "name": "Run tests",
@@ -115,7 +115,7 @@
             "REACT_APP_TEST_USERNAME": "${{ secrets.REACT_APP_TEST_USERNAME }}",
             "REACT_APP_TEST_PASSWORD": "${{ secrets.REACT_APP_TEST_PASSWORD }}"
           },
-          "run": "yarn firebase emulators:exec --only firestore \"\n  ./scripts/http-server.js > /dev/null &\n  yarn run test --coverage\n\"\n"
+          "run": "yarn run firebase emulators:exec --only firestore \"\n  ./scripts/http-server.js > /dev/null &\n  yarn run test --coverage\n\"\n"
         },
         {
           "name": "Upload coverage information to codecov",
@@ -153,7 +153,7 @@
         {
           "name": "Install Dependencies",
           "if": "steps.step_cache_deps.outputs.cache-hit != 'true'",
-          "run": "yarn install --frozen-lockfile\nyarn firebase setup:emulators:firestore\nls -lrth ~/.cache/firebase/emulators/\n"
+          "run": "yarn install --frozen-lockfile\nyarn run web firebase setup:emulators:firestore\nls -lrth ~/.cache/firebase/emulators/\n"
         },
         {
           "name": "Lint",
@@ -192,18 +192,15 @@
         {
           "name": "Install Dependencies",
           "if": "steps.step_cache_deps.outputs.cache-hit != 'true'",
-          "run": "yarn install --frozen-lockfile\nyarn firebase setup:emulators:firestore\nls -lrth ~/.cache/firebase/emulators/\n"
+          "run": "yarn install --frozen-lockfile\nyarn run web firebase setup:emulators:firestore\nls -lrth ~/.cache/firebase/emulators/\n"
         },
         {
           "name": "Download dist",
-          "uses": "actions/download-artifact@v1",
+          "uses": "actions/download-artifact@v2",
           "with": {
-            "name": "dist"
+            "name": "dist",
+            "path": "./packages/web/dist"
           }
-        },
-        {
-          "name": "Remove 404.html",
-          "run": "rm ./dist/404.html"
         },
         {
           "name": "Run lighthouse",
@@ -242,13 +239,14 @@
         {
           "name": "Install Dependencies",
           "if": "steps.step_cache_deps.outputs.cache-hit != 'true'",
-          "run": "yarn install --frozen-lockfile\nyarn firebase setup:emulators:firestore\nls -lrth ~/.cache/firebase/emulators/\n"
+          "run": "yarn install --frozen-lockfile\nyarn run web firebase setup:emulators:firestore\nls -lrth ~/.cache/firebase/emulators/\n"
         },
         {
           "name": "Download dist",
-          "uses": "actions/download-artifact@v1",
+          "uses": "actions/download-artifact@v2",
           "with": {
-            "name": "dist"
+            "name": "dist",
+            "path": "./packages/web/dist"
           }
         },
         {
@@ -259,7 +257,7 @@
             "NETLIFY_SITE_ID": "${{ secrets.NETLIFY_SITE_ID }}"
           },
           "with": {
-            "publish-dir": "./dist",
+            "publish-dir": "./packages/web/dist",
             "github-token": "${{ secrets.GITHUB_TOKEN }}",
             "deploy-message": "Deploy from GitHub Actions (SHA: ${{ github.sha }}; Ref: ${{github.ref }})",
             "enable-commit-comment": false,
@@ -303,7 +301,7 @@
         {
           "name": "Install Dependencies",
           "if": "steps.step_cache_deps.outputs.cache-hit != 'true'",
-          "run": "yarn install --frozen-lockfile\nyarn firebase setup:emulators:firestore\nls -lrth ~/.cache/firebase/emulators/\n"
+          "run": "yarn install --frozen-lockfile\nyarn run web firebase setup:emulators:firestore\nls -lrth ~/.cache/firebase/emulators/\n"
         },
         {
           "id": "step_changesets",
@@ -361,13 +359,14 @@
         {
           "name": "Install Dependencies",
           "if": "steps.step_cache_deps.outputs.cache-hit != 'true'",
-          "run": "yarn install --frozen-lockfile\nyarn firebase setup:emulators:firestore\nls -lrth ~/.cache/firebase/emulators/\n"
+          "run": "yarn install --frozen-lockfile\nyarn run web firebase setup:emulators:firestore\nls -lrth ~/.cache/firebase/emulators/\n"
         },
         {
           "name": "Download dist",
-          "uses": "actions/download-artifact@v1",
+          "uses": "actions/download-artifact@v2",
           "with": {
-            "name": "dist"
+            "name": "dist",
+            "path": "./packages/web/dist"
           }
         },
         {
@@ -376,14 +375,14 @@
             "FIREBASE_CLIENT_JSON": "${{ secrets.FIREBASE_CLIENT_JSON }}",
             "FIREBASE_TOKEN": "${{ secrets.FIREBASE_TOKEN }}"
           },
-          "run": "echo \"${FIREBASE_CLIENT_JSON}\" > ./config/firebase.client.json\nexport FIREBASE_PROJECT_ID=$(scripts/simple_jq.js ./config/firebase.client.json .projectId)\nyarn firebase use --add $FIREBASE_PROJECT_ID\n"
+          "run": "echo \"${FIREBASE_CLIENT_JSON}\" > ./packages/web/config/firebase.client.json\nexport FIREBASE_PROJECT_ID=$(scripts/simple_jq.js ./packages/web/config/firebase.client.json .projectId)\nyarn run web firebase use --add $FIREBASE_PROJECT_ID\n"
         },
         {
           "name": "Deploy to Firebase",
           "env": {
             "FIREBASE_TOKEN": "${{ secrets.FIREBASE_TOKEN }}"
           },
-          "run": "echo '<!-- Firebase hosting -->' >> ./dist/index.html\necho '<!-- Firebase hosting -->' >> ./dist/404.html\nyarn firebase deploy\n"
+          "run": "yarn run web firebase deploy\n"
         }
       ]
     }

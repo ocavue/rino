@@ -34,7 +34,7 @@ const nextConfig = {
     exportTrailingSlash: true,
     devIndicators: {
         // Disable Next.js's prerender icon in the right bottom corner
-        // of the screen, who cover the sign-in snackbar.
+        // of the screen, which cover the sign-in snackbar.
         autoPrerender: false,
     },
     webpack: (config, options) => {

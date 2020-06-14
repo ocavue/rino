@@ -99,8 +99,8 @@ class MarkdownParseState {
     // Close and return the node that is currently on top of the stack.
     public closeNode(): Node {
         if (this.marks.length) this.marks = Mark.none
-        const info = this.stack.pop() as StackItem
-        return this.addNode(info.type, info.attrs, info.content) as Node
+        const info = this.stack.pop()
+        return this.addNode(info.type, info.attrs, info.content)
     }
 }
 

@@ -167,7 +167,7 @@ export async function expectWysiwygHtml(shapes: Shape[]) {
                 info.childrenNumber = element.children.length
                 info.childrenTags = Array(element.children.length)
                     .fill(0)
-                    .map((_, i) => element.children.item(i) as Element)
+                    .map((_, i) => element.children.item(i))
                     .map((e) => e.tagName)
             }
         }

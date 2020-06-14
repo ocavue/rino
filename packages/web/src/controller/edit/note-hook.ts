@@ -52,7 +52,7 @@ function useSetNoteContent(noteKey: NoteKey, setNotes: SetNotes) {
                 return newNotes
             })
             if (noteRef) {
-                await (noteRef as Note).upload()
+                await noteRef.upload()
             }
         },
         [noteKey, setNotes],

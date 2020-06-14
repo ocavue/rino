@@ -1,0 +1,30 @@
+{
+    "presets": [
+        "next/babel"
+    ],
+    "plugins": [
+        [
+            "inline-react-svg",
+            {
+                "svgo": {
+                    "plugins": [
+                        {
+                            // Avoid react from complaining "Invalid attribute name: `'data-name'`"
+                            "removeAttrs": {
+                                "attrs": "(data-name)"
+                            }
+                        },
+                        {
+                            // Remove the <style> part so that I can change the svg style with JavaScript
+                            "removeStyleElement": true
+                        }
+                    ]
+                }
+            }
+        ]
+    ],
+    // "babelrcRoots": [
+    //     ".",
+    //     "packages/*"
+    //   ]
+}
