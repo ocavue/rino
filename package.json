@@ -7,9 +7,10 @@
     "scripts": {
         "lint": "eslint --ignore-path .gitignore --ext '.js,.jsx,.ts,.tsx'",
         "test": "jest --runInBand",
-        "build:pkg": "yarn run common build && yarn run next build",
-        "build:all": "yarn run common build && yarn run next build && yarn run home build && yarn run web build",
+        "build:pkg": "yarn run common build && yarn run next build && yarn run markdown build",
+        "build:all": "yarn run common build && yarn run next build && yarn run markdown build && yarn run home build && yarn run web build",
         "postinstall": "./scripts/post-install.sh",
+        "markdown": "yarn workspace @rino.app/markdown",
         "common": "yarn workspace @rino.app/common",
         "next": "yarn workspace @rino.app/next",
         "home": "yarn workspace @rino.app/home",

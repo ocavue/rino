@@ -2,6 +2,8 @@
 Inspired by https://github.com/lepture/mistune/
 */
 
+import { parseInline, Token as MdToken } from "@rino.app/markdown"
+
 import { RinoMarkName } from "./inline-mark-define"
 import { InlineToken } from "./inline-types"
 
@@ -21,7 +23,7 @@ function pushMark(token: InlineToken, markName: RinoMarkName): InlineToken {
     return token
 }
 
-export class InlineLexer {
+export class InlineLexerV1 {
     private rules: Record<string, Rule>
 
     public constructor() {
@@ -141,3 +143,70 @@ export class InlineLexer {
         return output
     }
 }
+
+const mdTokenToMarkMap: Record<
+    string,
+    { markName: RinoMarkName; addMarkName?: RinoMarkName; delMarkName?: RinoMarkName }
+> = {
+    text: { markName: "mdText" },
+    em_open: { markName: "mdMark", addMarkName: "mdEm" },
+    em_close: { markName: "mdMark", delMarkName: "mdEm" },
+    strong_open: { markName: "mdMark", addMarkName: "mdStrong" },
+    strong_close: { markName: "mdMark", delMarkName: "mdStrong" },
+
+    link_label_open: { markName: "mdMark", addMarkName: "mdLinkText" },
+    link_label_close: { markName: "mdMark", delMarkName: "mdLinkText" },
+    link_parenthesis_open: { markName: "mdMark", addMarkName: "mdLinkUri" },
+    link_parenthesis_close: { markName: "mdMark", delMarkName: "mdLinkUri" },
+    link_title: { markName: "mdMark" },
+    link_space: { markName: "mdMark" },
+}
+
+function mdTokenToInlineToken(mdToken: MdToken, currMarkNames: Set<RinoMarkName>): InlineToken {
+    let { markName, addMarkName, delMarkName } = mdTokenToMarkMap[mdToken.type] || {}
+
+    if (!markName) {
+        console.warn(`unknow markdown token type: ${mdToken.type}`)
+        markName = "mdText"
+    }
+    if (addMarkName) {
+        currMarkNames.add(addMarkName)
+    }
+    if (delMarkName) {
+        currMarkNames.delete(delMarkName)
+    }
+
+    return {
+        marks: fixMarkNames([markName, ...currMarkNames]),
+        text: mdToken.content,
+        attrs: {
+            depth: mdToken.level + Math.abs(mdToken.nesting),
+            start: mdToken.nesting === 1,
+            end: mdToken.nesting === -1,
+        },
+    }
+}
+
+class InlineLexerV2 {
+    constructor() {}
+
+    public scan(text: string, depth = 1): InlineToken[] {
+        const mdTokens: MdToken[] = parseInline(text)
+        const currMarkNames: Set<RinoMarkName> = new Set<RinoMarkName>()
+        const _mdTokenToInlineToken = (t: MdToken) => mdTokenToInlineToken(t, currMarkNames)
+        const tokens: InlineToken[] = mdTokens.filter((t) => t.content).map(_mdTokenToInlineToken)
+
+        const length = tokens.map((token) => token.text.length).reduce((a, b) => a + b, 0)
+        if (length !== text.length) {
+            console.error(
+                `Tokenization get wrong length when using inline render. Before rendering: ${text.length}; After rendering: ${length}.`,
+                { text, tokens },
+            )
+            return [] // Ignore the result
+        }
+
+        return tokens
+    }
+}
+
+export class InlineLexer extends InlineLexerV2 {}

@@ -1,0 +1,27 @@
+{
+    "compilerOptions": {
+        "target": "ES2019",
+        "module": "ESNext",
+        "strict": true,
+        "importHelpers": true,
+        "moduleResolution": "node",
+        "esModuleInterop": true,
+        "allowJs": true,
+        "allowSyntheticDefaultImports": true,
+        "sourceMap": true,
+        "noEmit": false,
+        "outDir": "dist",
+        "declaration": true,
+        "declarationDir": "dist",
+        "forceConsistentCasingInFileNames": true,
+        "skipLibCheck": true
+    },
+    "include": [
+        "./*.d.ts",
+        "./src/**/*"
+    ],
+    "exclude": [
+        "node_modules",
+        "dist",
+    ],
+}

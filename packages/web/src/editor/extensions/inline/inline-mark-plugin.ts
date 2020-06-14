@@ -8,7 +8,8 @@ import { WysiwygSchema } from "src/editor/components/wysiwyg/wysiwyg-manager"
 import { InlineLexer } from "src/editor/extensions/inline/inline-lexer"
 import { iterNode, iterNodeRange } from "src/editor/utils"
 
-import { InlineDecorateType } from "./inline-types"
+import { InlineDecorateType, InlineToken } from "./inline-types"
+
 const inlineLexer = new InlineLexer()
 const maxMarkStep = 10
 
@@ -37,7 +38,11 @@ function parseTextBlock(schema: Schema, node: Node<Schema>, startPos: number): M
         return []
     }
     const steps: MarkStep[] = []
-    const tokens = inlineLexer.scan(node.textContent, 1)
+    const tokens: InlineToken[] = inlineLexer.scan(node.textContent, 1)
+    if (tokens.length === 0) {
+        return []
+    }
+
     let markStartPos = 0 // The start position of next mark, relative to the parent text block node
 
     // Since `node` is a text block node, all its children are inline nodes (text node for example).

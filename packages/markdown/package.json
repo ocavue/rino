@@ -1,0 +1,20 @@
+{
+    "name": "@rino.app/markdown",
+    "version": "0.1.0",
+    "license": "GPL-3.0",
+    "main": "dist/index.js",
+    "module": "dist/index.js",
+    "scripts": {
+        "build": "mkdir -p dist && rm -rf dist && tsc --build ./tsconfig.build.json"
+    },
+    "dependencies": {
+        "@types/markdown-it": "^10.0.2",
+        "markdown-it": "^11.0.0"
+    },
+    "publishConfig": {
+        "access": "public"
+    },
+    "devDependencies": {
+        "commonmark-spec": "^0.29.0"
+    }
+}
