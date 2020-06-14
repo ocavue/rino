@@ -23,5 +23,5 @@ module.exports = {
     // Stop running tests after `n` failures
     bail: 1,
 
-    projects: ["./packages/web/jest.config.js"],
+    projects: ["./packages/web/jest.config.js", "./packages/web/jest.e2e.config.js"],
 }
