@@ -15,8 +15,7 @@ module.exports = {
     displayName: { name: "E2E", color: "magenta" },
 
     // The glob patterns Jest uses to detect test files
-    // testMatch: ["<rootDir>/tests/e2e_NOT_EXIST/**/*.spec.(js|ts|jsx|tsx)"],
-    testMatch: ["<rootDir>/tests/e2e/1.not-found.spec.ts"],
+    testMatch: ["<rootDir>/tests/e2e/**/*.spec.(js|ts|jsx|tsx)"],
 
     // A preset that is used as a base for Jest's configuration
     preset: "jest-puppeteer",
