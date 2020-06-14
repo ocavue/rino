@@ -13,7 +13,7 @@ function resolveFileAbsPath(reqPath) {
     if (reqPath === "/") {
         reqPath = "/index.html"
     }
-    const dir = path.join(__dirname, "..", "dist")
+    const dir = path.join(__dirname, "..", "packages", "web", "dist")
     return path.join(dir, reqPath)
 }
 
