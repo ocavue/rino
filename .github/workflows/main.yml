@@ -115,7 +115,7 @@
             "REACT_APP_TEST_USERNAME": "${{ secrets.REACT_APP_TEST_USERNAME }}",
             "REACT_APP_TEST_PASSWORD": "${{ secrets.REACT_APP_TEST_PASSWORD }}"
           },
-          "run": "yarn run web firebase emulators:exec --only firestore \"\n  ./scripts/http-server.js > /dev/null &\n  yarn run test --coverage\n\"\n"
+          "run": "yarn run firebase emulators:exec --only firestore \"\n  ./scripts/http-server.js > /dev/null &\n  yarn run test --coverage\n\"\n"
         },
         {
           "name": "Upload coverage information to codecov",
