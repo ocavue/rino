@@ -6,12 +6,6 @@ const baseConfig = require("../../tests/jest.base.config")
 module.exports = {
     ...baseConfig,
 
-    // A map from regular expressions to module names that allow to stub out resources with a single module
-    moduleNameMapper: {
-        "^src/(.*)$": "<rootDir>/src/$1",
-        "^tests/(.*)$": "<rootDir>/tests/$1",
-    },
-
     displayName: { name: "E2E", color: "magenta" },
 
     // The glob patterns Jest uses to detect test files
