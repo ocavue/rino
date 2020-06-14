@@ -1,4 +1,4 @@
-import { maxDrawerWidth, mobileBreakPoint } from "@rino.app/web/src/constants"
+import { maxDrawerWidth, mobileBreakPoint } from "src/constants"
 
 import {
     cleanNotes,
