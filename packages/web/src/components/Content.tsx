@@ -1,10 +1,10 @@
 import { createStyles, makeStyles, Theme } from "@material-ui/core"
+import { Editor } from "@rino.app/editor/src/editor/components"
 import clsx from "clsx"
 import React from "react"
 
 import { maxDrawerWidth } from "src/constants"
 import { EditContainer } from "src/controller"
-import { Editor } from "src/editor/components"
 import { StoreContainer } from "src/store"
 
 import { Welcome } from "./Welcome"

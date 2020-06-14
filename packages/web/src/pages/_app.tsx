@@ -3,8 +3,8 @@
 import "../../../../node_modules/prosemirror-tables/style/tables.css"
 import "../../../../node_modules/prosemirror-view/style/prosemirror.css"
 import "../../src/style/develop.css"
-import "../../src/editor/theme/github.scss"
 
+// import "../../src/editor/theme/github.scss"
 import Head from "next/head"
 import React from "react"
 
