@@ -144,9 +144,6 @@ jobs:
           name: dist
           path: ./packages/web/dist
 
-      - name: Remove 404.html
-        run: rm ./packages/web/dist/404.html # Don't let lighthouse to check 404.html
-
       - name: Run lighthouse
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

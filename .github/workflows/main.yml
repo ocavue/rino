@@ -203,10 +203,6 @@
           }
         },
         {
-          "name": "Remove 404.html",
-          "run": "rm ./packages/web/dist/404.html"
-        },
-        {
           "name": "Run lighthouse",
           "env": {
             "GITHUB_TOKEN": "${{ secrets.GITHUB_TOKEN }}",
