@@ -1,11 +1,15 @@
-const config = require("../../babel.config.js")
+console.log("loading babel.config.js")
 
 module.exports = function (api) {
-    const output = config(api)
+    api.cache(true)
 
+    const plugins = []
     if (process.env.NODE_ENV === "development" || process.env.REACT_APP_TESTING) {
-        output.plugins.push("istanbul")
+        plugins.push("istanbul")
     }
 
-    return output
+    return {
+        extends: "../../babel.config.json",
+        plugins,
+    }
 }
