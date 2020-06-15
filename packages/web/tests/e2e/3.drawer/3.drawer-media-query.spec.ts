@@ -19,23 +19,6 @@ describe("Drawer type (persistent / temporary)", function () {
     })
     afterAll(async () => await cleanNotes())
 
-    const testSmallScreen = async (width: number) => {
-        // Exepect the drawer is persistent
-        await waitAnimation(page.setViewport({ width, height }))
-        await expectSidebarClosed()
-        await waitAnimation(click("appbar-btn-menu"))
-        await expectSidebarOpened()
-        await waitAnimation(clickSidebarNoteListItem())
-        await expectSidebarClosed()
-    }
-    const testLargeScreen = async (width: number) => {
-        // Exepect the drawer is temporary
-        await waitAnimation(page.setViewport({ width, height }))
-        await expectSidebarOpened()
-        await waitAnimation(clickSidebarNoteListItem())
-        await expectSidebarOpened()
-    }
-
     for (const width of [
         maxDrawerWidth - 10,
         maxDrawerWidth,
@@ -47,9 +30,22 @@ describe("Drawer type (persistent / temporary)", function () {
     ]) {
         test(`Small screen ${width}px`, async () => {
             expect(width).toBeLessThan(mobileBreakPoint)
-            await testSmallScreen(width)
+
+            // Exepect the drawer is persistent
+            await waitAnimation(page.setViewport({ width, height }))
+            await expectSidebarClosed()
+            await waitAnimation(click("appbar-btn-menu"))
+            await expectSidebarOpened()
+            await waitAnimation(clickSidebarNoteListItem())
+            await expectSidebarClosed()
         })
     }
+
+    test(`Toggle the drawer`, async () => {
+        await expectSidebarClosed()
+        await waitAnimation(click("appbar-btn-menu"))
+        await expectSidebarOpened()
+    })
 
     for (const width of [
         mobileBreakPoint + 0,
@@ -60,7 +56,12 @@ describe("Drawer type (persistent / temporary)", function () {
     ]) {
         test(`Large screen ${width}px`, async () => {
             expect(width).toBeGreaterThanOrEqual(mobileBreakPoint)
-            await testLargeScreen(width)
+
+            // Exepect the drawer is temporary
+            await waitAnimation(page.setViewport({ width, height }))
+            await expectSidebarOpened()
+            await waitAnimation(clickSidebarNoteListItem())
+            await expectSidebarOpened()
         })
     }
 })
