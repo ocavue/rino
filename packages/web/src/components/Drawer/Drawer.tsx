@@ -50,8 +50,6 @@ export const Drawer: React.FC = () => {
     React.useEffect(() => {
         if (isMobile) {
             setDrawerActivity(false)
-        } else {
-            setDrawerActivity(true)
         }
     }, [isMobile, setDrawerActivity])
 
