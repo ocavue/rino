@@ -41,7 +41,13 @@ describe("Drawer type (persistent / temporary)", function () {
         })
     }
 
-    test(`Toggle the drawer`, async () => {
+    test("Don't open the drawer when window size increase", async () => {
+        await expectSidebarClosed()
+        await waitAnimation(page.setViewport({ width: mobileBreakPoint + 10, height }))
+        await expectSidebarClosed()
+    })
+
+    test("Toggle the drawer", async () => {
         await expectSidebarClosed()
         await waitAnimation(click("appbar-btn-menu"))
         await expectSidebarOpened()
