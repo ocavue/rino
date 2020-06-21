@@ -10,9 +10,9 @@ import {
     SubmitButton,
     UsernameTextField,
 } from "src/components/Auth"
-import { signInWithEmailAndPassword } from "src/controller"
+import { createUserWithEmailAndPassword } from "src/controller"
 
-export default function SignIn() {
+export default function SignUp() {
     const router = useRouter()
     const [sending, setSending] = useState(false)
     const [error, setError] = useState("")
@@ -22,49 +22,40 @@ export default function SignIn() {
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         setSending(true)
         setError("")
-        signInWithEmailAndPassword(email, password)
+        createUserWithEmailAndPassword(email, password)
             .then(() => {
                 return router.push("/")
             })
             .catch((error: FirebaseError) => {
                 console.error(error)
-
-                if (error?.code === "auth/user-not-found") {
-                    setError("Couldn't find your Rino account")
-                } else {
-                    setError(String(error))
-                }
+                setError(String(error))
                 setSending(false)
             })
         event.preventDefault()
     }
 
     return (
-        <AuthContainer title="Sign in to Rino" error={error} progressing={sending}>
-            <AuthForm onSubmit={handleSubmit} data-testid="auth_signin_form">
+        <AuthContainer title="Sign up to Rino" error={error} progressing={sending}>
+            <AuthForm onSubmit={handleSubmit} data-testid="auth_signup_form">
                 <UsernameTextField
                     disabled={sending}
                     onChange={(e) => setEmail(e.target.value)}
-                    inputProps={{ "data-testid": "auth_signin_username_textfield" }}
+                    inputProps={{ "data-testid": "auth_signup_username_textfield" }}
                 />
                 <PasswordTextField
                     disabled={sending}
                     onChange={(e) => setPassword(e.target.value)}
-                    inputProps={{ "data-testid": "auth_signin_password_textfield" }}
+                    inputProps={{ "data-testid": "auth_signup_password_textfield" }}
                 />
 
-                <SubmitButton disabled={disableSubmit} data-testid="auth_signin_submit">
-                    Sign In
+                <SubmitButton disabled={disableSubmit} data-testid="auth_signup_submit">
+                    Sign Up
                 </SubmitButton>
                 <Grid container>
-                    <Grid item xs>
-                        <Link href="/password-reset" variant="body2">
-                            Forgot password?
-                        </Link>
-                    </Grid>
+                    <Grid item xs></Grid>
                     <Grid item>
-                        <Link href="/sign-up" variant="body2">
-                            Sign up for Rino
+                        <Link href="#" variant="body2">
+                            Already have an account? Sign in
                         </Link>
                     </Grid>
                 </Grid>

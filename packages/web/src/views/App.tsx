@@ -56,7 +56,10 @@ const ContainerConsumer: React.FC = (props) => {
     }, [fetchNotes, resetNotes, setLoadingData, user])
 
     const lightTheme = useMemo(() => createMuiTheme({ palette: { type: "light" } }), [])
-    const darkTheme = useMemo(() => createMuiTheme({ palette: { type: "dark" } }), [])
+    const darkTheme = useMemo(
+        () => createMuiTheme({ palette: { type: "dark", primary: { main: "#5599d6" } } }),
+        [],
+    )
 
     return (
         <ThemeProvider theme={isDarkTheme ? darkTheme : lightTheme}>
