@@ -19,5 +19,6 @@ module.exports = {
         "jest-extended",
         "jest-puppeteer-istanbul/lib/setup",
         "<rootDir>/../../tests/wait-server.js",
+        "<rootDir>/../../tests/load-dotenv.js",
     ],
 }

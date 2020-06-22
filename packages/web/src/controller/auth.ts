@@ -1,5 +1,4 @@
 import { testUser } from "src/controller/config"
-import { generateRandomId } from "src/utils"
 
 import { firebaseApp, User } from "./firebase"
 
@@ -13,51 +12,6 @@ async function closurePromiseWrapper<T>(closurePromise: Promise<T>): Promise<T> 
     })
 }
 
-export async function sendSignInLink(email: string): Promise<void> {
-    const host = window.location.protocol + "//" + window.location.host
-    const url = `${host}/finish-sign-up?rino-random=${generateRandomId()}`
-
-    return await closurePromiseWrapper(
-        firebaseApp.auth().sendSignInLinkToEmail(email, { url, handleCodeInApp: true }),
-    )
-}
-
-export async function signInWithEmailLink() {
-    if (firebaseApp.auth().isSignInWithEmailLink(window.location.href)) {
-        // Additional state parameters can also be passed via URL.
-        // This can be used to continue the user's intended action before triggering
-        // the sign-in operation.
-        // Get the email if available. This should be available if the user completes
-        // the flow on the same device where they started it.
-        let email = window.localStorage.getItem("emailForSignIn")
-        if (!email) {
-            // User opened the link on a different device. To prevent session fixation
-            // attacks, ask the user to provide the associated email again. For example:
-            email = window.prompt("Please provide your email for confirmation") || ""
-        }
-        // The client SDK will parse the code from the link for you.
-        const signInPromise = firebaseApp.auth().signInWithEmailLink(email, window.location.href)
-        let result: firebase.auth.UserCredential
-        try {
-            result = await closurePromiseWrapper(signInPromise)
-        } catch (error) {
-            // Some error occurred, you can inspect the code: error.code
-            // Common errors could be invalid email and invalid or expired OTPs.
-            console.error("Failed to sign in:", error)
-            throw error
-        }
-        // Clear email from storage.
-        window.localStorage.removeItem("emailForSignIn")
-        // You can access the new user via result.user
-        // Additional user info profile not available via:
-        // result.additionalUserInfo.profile == null
-        // You can check if the user is new or existing:
-        // result.additionalUserInfo.isNewUser
-        return result
-    } else {
-        throw Error("Wrong email link")
-    }
-}
 export async function signInWithEmailAndPassword(email: string, password: string) {
     return await closurePromiseWrapper(
         firebaseApp.auth().signInWithEmailAndPassword(email, password),
@@ -80,4 +34,14 @@ export function onAuthStateChanged(next: (user: User | null) => void) {
 
 export function getCurrentUser() {
     return firebaseApp.auth().currentUser
+}
+
+export async function createUserWithEmailAndPassword(email: string, password: string) {
+    return await closurePromiseWrapper(
+        firebaseApp.auth().createUserWithEmailAndPassword(email, password),
+    )
+}
+
+export async function sendPasswordResetEmail(email: string) {
+    return await closurePromiseWrapper(firebaseApp.auth().sendPasswordResetEmail(email))
 }

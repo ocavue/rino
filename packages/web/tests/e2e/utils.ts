@@ -9,6 +9,9 @@ export async function goto(url: string, options?: DirectNavigationOptions) {
 }
 
 export async function wait(testid: string, options?: WaitForSelectorOptions) {
+    if (!options?.timeout) {
+        options = { ...options, timeout: 10000 }
+    }
     return await page.waitForSelector(testidSelector(testid), options)
 }
 
