@@ -6,10 +6,9 @@ import React from "react"
 
 import { AppbarIconButton } from "src/components/AppbarIconButton"
 import { NoteMenu } from "src/components/NoteMenu"
-import { appbarIconButtonSize, appbarIconMargin, maxDrawerWidth } from "src/constants"
+import { appbarHeight, appbarIconButtonMargin, maxDrawerWidth } from "src/constants"
 import { EditContainer } from "src/controller"
 import { StoreContainer } from "src/store"
-
 const useStyles = makeStyles((theme: Theme) => {
     return createStyles({
         appBar: {
@@ -17,7 +16,7 @@ const useStyles = makeStyles((theme: Theme) => {
             flexDirection: "row",
             justifyContent: "space-between",
             alignItems: "flex-end",
-            height: appbarIconMargin + appbarIconButtonSize,
+            height: appbarHeight,
             transition: theme.transitions.create(["margin", "width"], {
                 easing: theme.transitions.easing.sharp,
                 duration: theme.transitions.duration.leavingScreen,
@@ -44,10 +43,10 @@ const useStyles = makeStyles((theme: Theme) => {
             backgroundColor: fade(theme.palette.background.default, 0.6),
         },
         menuButtonLeft: {
-            left: appbarIconMargin,
+            left: appbarIconButtonMargin,
         },
         menuButtonRight: {
-            right: appbarIconMargin,
+            right: appbarIconButtonMargin,
         },
     })
 })

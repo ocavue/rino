@@ -3,8 +3,8 @@ export const mobileBreakPoint = 960
 export const maxDrawerWidth = 400
 export const appbarIconButtonSize = 40
 export const appbarIconSize = 24
-export const appbarIconMargin = 12
-export const appbarHeight = appbarIconButtonSize + appbarIconMargin * 2
+export const appbarIconButtonMargin = 12
+export const appbarHeight = appbarIconButtonSize + appbarIconButtonMargin * 2
 export const maxEditorWidth = 1200
 
 // Time (millisecond)
