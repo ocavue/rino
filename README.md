@@ -1,4 +1,4 @@
-<div align="center"><img src="https://github.com/ocavue/rino/blob/master/public/img/icons/android-chrome-192x192.png?raw=true" alt="Logo" height="192" width="192"></div>
+<div align="center"><img src="https://user-images.githubusercontent.com/24715727/85297218-10bbd380-b4d5-11ea-93da-ee8b5d8fe0e3.png" alt="Logo" height="192" width="192"></div>
 
 # 🦏 Rino - Yet another Markdown editor
 
