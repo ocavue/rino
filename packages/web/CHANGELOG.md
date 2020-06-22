@@ -1,5 +1,11 @@
 # @rino.app/web
 
+## 0.11.0
+
+### Minor Changes
+
+-   8c3658e: Now you can login with your email and password
+
 ## 0.10.3
 
 ### Patch Changes
