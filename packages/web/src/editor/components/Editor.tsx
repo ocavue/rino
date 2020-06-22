@@ -3,7 +3,7 @@ import { useTheme } from "@material-ui/core/styles"
 import clsx from "clsx"
 import React, { useEffect, useRef, useState } from "react"
 
-import { maxEditorWidth } from "src/constants"
+import { MAX_EDITOR_WIDTH } from "src/constants"
 import { Note } from "src/controller"
 import { SourceCodeEditor, WysiwygEditor } from "src/editor"
 import { metaKey } from "src/utils"
@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme: Theme) => {
         editor: {
             height: "100%",
             width: "100%",
-            maxWidth: maxEditorWidth,
+            maxWidth: MAX_EDITOR_WIDTH,
             display: "flex",
             flexDirection: "column",
             justifyContent: "flex-start",

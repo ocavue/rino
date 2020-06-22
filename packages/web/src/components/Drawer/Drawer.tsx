@@ -2,7 +2,7 @@ import * as m from "@material-ui/core"
 import clsx from "clsx"
 import React from "react"
 
-import { maxDrawerWidth } from "src/constants"
+import { MAX_DRAWER_WIDTH } from "src/constants"
 import { useIsMobile } from "src/hooks"
 import { StoreContainer } from "src/store"
 
@@ -32,7 +32,7 @@ const useStyles = m.makeStyles((theme: m.Theme) => {
             flex: 2,
         },
         drawerPaper: {
-            maxWidth: maxDrawerWidth,
+            maxWidth: MAX_DRAWER_WIDTH,
             width: `calc(100vw - 48px)`,
         },
     })

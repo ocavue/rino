@@ -1,11 +1,11 @@
 // UI
-export const mobileBreakPoint = 960
-export const maxDrawerWidth = 400
-export const appbarIconButtonSize = 40
-export const appbarIconSize = 24
-export const appbarIconButtonMargin = 12
-export const appbarHeight = appbarIconButtonSize + appbarIconButtonMargin * 2
-export const maxEditorWidth = 1200
+export const MOBILE_BREAK_POINT = 960
+export const MAX_DRAWER_WIDTH = 400
+export const APPBAR_ICON_BUTTON_SIZE = 40
+export const APPBAR_ICON_SIZE = 24
+export const APPBAR_ICON_BUTTON_MARGIN = 12
+export const APPBAR_HEIGHT = APPBAR_ICON_BUTTON_SIZE + APPBAR_ICON_BUTTON_MARGIN * 2
+export const MAX_EDITOR_WIDTH = 1024
 
 // Time (millisecond)
 export const SIGN_IN_SNACKBAR_SHOW_DELAY = 3000

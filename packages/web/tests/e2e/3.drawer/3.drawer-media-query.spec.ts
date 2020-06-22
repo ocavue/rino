@@ -1,4 +1,4 @@
-import { maxDrawerWidth, mobileBreakPoint } from "src/constants"
+import { MAX_DRAWER_WIDTH, MOBILE_BREAK_POINT } from "src/constants"
 
 import {
     cleanNotes,
@@ -20,16 +20,16 @@ describe("Drawer type (persistent / temporary)", function () {
     afterAll(async () => await cleanNotes())
 
     for (const width of [
-        maxDrawerWidth - 10,
-        maxDrawerWidth,
-        maxDrawerWidth + 10,
-        mobileBreakPoint - 200,
-        mobileBreakPoint - 3,
-        mobileBreakPoint - 2,
-        mobileBreakPoint - 1,
+        MAX_DRAWER_WIDTH - 10,
+        MAX_DRAWER_WIDTH,
+        MAX_DRAWER_WIDTH + 10,
+        MOBILE_BREAK_POINT - 200,
+        MOBILE_BREAK_POINT - 3,
+        MOBILE_BREAK_POINT - 2,
+        MOBILE_BREAK_POINT - 1,
     ]) {
         test(`Small screen ${width}px`, async () => {
-            expect(width).toBeLessThan(mobileBreakPoint)
+            expect(width).toBeLessThan(MOBILE_BREAK_POINT)
 
             // Exepect the drawer is persistent
             await waitAnimation(page.setViewport({ width, height }))
@@ -43,7 +43,7 @@ describe("Drawer type (persistent / temporary)", function () {
 
     test("Don't open the drawer when window size increase", async () => {
         await expectSidebarClosed()
-        await waitAnimation(page.setViewport({ width: mobileBreakPoint + 10, height }))
+        await waitAnimation(page.setViewport({ width: MOBILE_BREAK_POINT + 10, height }))
         await expectSidebarClosed()
     })
 
@@ -54,14 +54,14 @@ describe("Drawer type (persistent / temporary)", function () {
     })
 
     for (const width of [
-        mobileBreakPoint + 0,
-        mobileBreakPoint + 1,
-        mobileBreakPoint + 2,
-        mobileBreakPoint + 200,
-        mobileBreakPoint * 2,
+        MOBILE_BREAK_POINT + 0,
+        MOBILE_BREAK_POINT + 1,
+        MOBILE_BREAK_POINT + 2,
+        MOBILE_BREAK_POINT + 200,
+        MOBILE_BREAK_POINT * 2,
     ]) {
         test(`Large screen ${width}px`, async () => {
-            expect(width).toBeGreaterThanOrEqual(mobileBreakPoint)
+            expect(width).toBeGreaterThanOrEqual(MOBILE_BREAK_POINT)
 
             // Exepect the drawer is temporary
             await waitAnimation(page.setViewport({ width, height }))
@@ -78,7 +78,7 @@ describe("Drawer width", function () {
     })
 
     test("Small screen", async () => {
-        const clientWidth = maxDrawerWidth - 100
+        const clientWidth = MAX_DRAWER_WIDTH - 100
         await waitAnimation(page.setViewport({ width: clientWidth, height }))
         await waitAnimation(page.reload())
         await expectSidebarClosed()
@@ -88,19 +88,19 @@ describe("Drawer width", function () {
         expect(dimensions.width).toBeWithin(clientWidth - 49, clientWidth - 47)
     })
     test("Middle screen", async () => {
-        await waitAnimation(page.setViewport({ width: mobileBreakPoint - 10, height }))
+        await waitAnimation(page.setViewport({ width: MOBILE_BREAK_POINT - 10, height }))
         await waitAnimation(page.reload())
         await expectSidebarClosed()
         await waitAnimation(click("appbar-btn-menu"))
         await expectSidebarOpened()
         const dimensions = await getDimensions("sidebar")
-        expect(dimensions.width).toBeWithin(maxDrawerWidth - 1, maxDrawerWidth + 1)
+        expect(dimensions.width).toBeWithin(MAX_DRAWER_WIDTH - 1, MAX_DRAWER_WIDTH + 1)
     })
     test("Large screen", async () => {
-        await waitAnimation(page.setViewport({ width: mobileBreakPoint + 10, height }))
+        await waitAnimation(page.setViewport({ width: MOBILE_BREAK_POINT + 10, height }))
         await waitAnimation(page.reload())
         await expectSidebarOpened()
         const dimensions = await getDimensions("sidebar")
-        expect(dimensions.width).toBeWithin(maxDrawerWidth - 1, maxDrawerWidth + 1)
+        expect(dimensions.width).toBeWithin(MAX_DRAWER_WIDTH - 1, MAX_DRAWER_WIDTH + 1)
     })
 })
