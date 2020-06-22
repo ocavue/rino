@@ -262,7 +262,8 @@
             "deploy-message": "Deploy from GitHub Actions (SHA: ${{ github.sha }}; Ref: ${{github.ref }})",
             "enable-commit-comment": false,
             "enable-pull-request-comment": true,
-            "overwrites-pull-request-comment": true
+            "overwrites-pull-request-comment": true,
+            "alias": "${{ github.head_ref }}"
           }
         }
       ]

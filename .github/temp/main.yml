@@ -173,6 +173,7 @@ jobs:
           enable-commit-comment: false
           enable-pull-request-comment: true
           overwrites-pull-request-comment: true
+          alias: ${{ github.head_ref }}
 
   Changesets:
     runs-on: ubuntu-18.04
