@@ -1,11 +1,13 @@
 import { createStyles, makeStyles, Theme } from "@material-ui/core"
 
-import { appbarIconMargin } from "src/constants"
+import { APPBAR_HEIGHT, APPBAR_ICON_BUTTON_MARGIN } from "src/constants"
 
 export const useHeaderStyles = makeStyles((theme: Theme) => {
     return createStyles({
         drawerHeader: {
-            padding: appbarIconMargin,
+            padding: APPBAR_ICON_BUTTON_MARGIN,
+            height: APPBAR_HEIGHT,
+            minHeight: APPBAR_HEIGHT,
             display: "flex",
             justifyContent: "flex-end",
         },

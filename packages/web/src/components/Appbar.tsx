@@ -6,7 +6,7 @@ import React from "react"
 
 import { AppbarIconButton } from "src/components/AppbarIconButton"
 import { NoteMenu } from "src/components/NoteMenu"
-import { appbarIconButtonSize, appbarIconMargin, maxDrawerWidth } from "src/constants"
+import { APPBAR_HEIGHT, APPBAR_ICON_BUTTON_MARGIN, MAX_DRAWER_WIDTH } from "src/constants"
 import { EditContainer } from "src/controller"
 import { StoreContainer } from "src/store"
 
@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme: Theme) => {
             flexDirection: "row",
             justifyContent: "space-between",
             alignItems: "flex-end",
-            height: appbarIconMargin + appbarIconButtonSize,
+            height: APPBAR_HEIGHT,
             transition: theme.transitions.create(["margin", "width"], {
                 easing: theme.transitions.easing.sharp,
                 duration: theme.transitions.duration.leavingScreen,
@@ -28,8 +28,8 @@ const useStyles = makeStyles((theme: Theme) => {
         },
         appBarShift: {
             [theme.breakpoints.up("md")]: {
-                width: `calc(100% - ${maxDrawerWidth}px)`,
-                marginLeft: maxDrawerWidth,
+                width: `calc(100% - ${MAX_DRAWER_WIDTH}px)`,
+                marginLeft: MAX_DRAWER_WIDTH,
                 transition: theme.transitions.create(["margin", "width"], {
                     easing: theme.transitions.easing.easeOut,
                     duration: theme.transitions.duration.enteringScreen,
@@ -44,10 +44,10 @@ const useStyles = makeStyles((theme: Theme) => {
             backgroundColor: fade(theme.palette.background.default, 0.6),
         },
         menuButtonLeft: {
-            left: appbarIconMargin,
+            left: APPBAR_ICON_BUTTON_MARGIN,
         },
         menuButtonRight: {
-            right: appbarIconMargin,
+            right: APPBAR_ICON_BUTTON_MARGIN,
         },
     })
 })

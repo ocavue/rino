@@ -4,7 +4,7 @@ import { useRemirrorContext } from "@remirror/react"
 import clsx from "clsx"
 import React, { useMemo } from "react"
 
-import { maxDrawerWidth } from "src/constants"
+import { MAX_DRAWER_WIDTH } from "src/constants"
 import { StoreContainer } from "src/store"
 
 import * as svg from "./TableMenuSvg"
@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme: Theme) => {
         },
         snackbarShift: {
             [theme.breakpoints.up("md")]: {
-                left: `calc(50% + ${maxDrawerWidth / 2}px)`,
+                left: `calc(50% + ${MAX_DRAWER_WIDTH / 2}px)`,
             },
         },
         menuPaper: {
