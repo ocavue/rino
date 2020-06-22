@@ -6,9 +6,9 @@ import React from "react"
 
 import { AppbarIconButton } from "src/components/AppbarIconButton"
 import { NoteMenu } from "src/components/NoteMenu"
-import { APPBAR_ICON_BUTTON_MARGIN, appbarHeight, MAX_DRAWER_WIDTH } from "src/constants"
+import { APPBAR_HEIGHT, APPBAR_ICON_BUTTON_MARGIN, MAX_DRAWER_WIDTH } from "src/constants"
 import { EditContainer } from "src/controller"
-import { StoreContainer } from "src/store""
+import { StoreContainer } from "src/store"
 const useStyles = makeStyles((theme: Theme) => {
     return createStyles({
         appBar: {

@@ -1,6 +1,6 @@
 import { createStyles, makeStyles, Theme } from "@material-ui/core"
 
-import { APPBAR_ICON_BUTTON_MARGIN,appbarHeight } from "src/constants""
+import { APPBAR_ICON_BUTTON_MARGIN,APPBAR_HEIGHT } from "src/constants""
 
 export const useHeaderStyles = makeStyles((theme: Theme) => {
     return createStyles({
