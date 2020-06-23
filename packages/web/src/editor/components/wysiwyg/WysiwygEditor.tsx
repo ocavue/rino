@@ -1,10 +1,7 @@
-/** @jsx jsx */
-
-import { jsx } from "@emotion/core"
 import { ProsemirrorNode } from "@remirror/core"
 import { RemirrorEventListener, RemirrorProvider, useRemirrorContext } from "@remirror/react"
 import { debounce } from "lodash"
-import { FC, useEffect, useMemo, useRef, useState } from "react"
+import React, { FC, useEffect, useMemo, useRef, useState } from "react"
 
 import { isTestEnv } from "src/utils"
 

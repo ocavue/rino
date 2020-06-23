@@ -1,10 +1,7 @@
-/** @jsx jsx */
-
-import { jsx } from "@emotion/core"
 import { ProsemirrorNode } from "@remirror/core"
 import { RemirrorEventListener, RemirrorProvider, useRemirrorContext } from "@remirror/react"
 import { debounce } from "lodash"
-import { FC, useEffect, useMemo, useRef } from "react"
+import React, { FC, useEffect, useMemo, useRef } from "react"
 
 import { DevTools } from "../DevTools"
 import { EditorProps } from "../types"
@@ -16,8 +13,8 @@ import {
 } from "./manager"
 
 const InnerEditor: FC<{ className: string }> = ({ className }) => {
-    const { getRootProps } = useRemirrorContext()
-    const rootProps = getRootProps()
+    const context = useRemirrorContext()
+    const rootProps = context.getRootProps()
 
     return <div {...rootProps} className={className} />
 }
