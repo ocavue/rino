@@ -69,16 +69,6 @@ describe("Settings", () => {
             await expectSignedOut()
             await wait(signInBtn)
         })
-        test("Click sign in button", async () => {
-            const url = new URL(page.url())
-            const expectedSignInUrls = [url.origin + "/sign-in", url.origin + "/sign-in/"]
-            await click(signInBtn)
-            const checkCallback = () => expectedSignInUrls.includes(page.url())
-            const resultAfterRetry = await retry(checkCallback)
-            if (!resultAfterRetry) {
-                expect(page.url()).toBeOneOf(expectedSignInUrls)
-            }
-        })
     })
 
     describe("About", function () {

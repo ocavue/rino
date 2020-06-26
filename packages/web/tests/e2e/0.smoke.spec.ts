@@ -1,5 +1,7 @@
+import { waitFor } from "@testing-library/react"
+
 import { login } from "./actions"
-import { goto, wait } from "./utils"
+import { click, goto, wait } from "./utils"
 
 beforeAll(async () => {
     await goto("/")
@@ -8,6 +10,22 @@ beforeAll(async () => {
 describe("before sign-in", function () {
     test("landing page", async () => {
         await wait("landing")
+    })
+
+    test("click sign-in button", async () => {
+        await goto("/")
+        const url = new URL(page.url())
+        const expectedSignInUrls = [url.origin + "/sign-in", url.origin + "/sign-in/"]
+        await click("landing_signin_btn")
+        await waitFor(() => expectedSignInUrls.includes(page.url()))
+    })
+
+    test("click sign-up button", async () => {
+        await goto("/")
+        const url = new URL(page.url())
+        const expectedSignInUrls = [url.origin + "/sign-up", url.origin + "/sign-up/"]
+        await click("landing_signup_btn")
+        await waitFor(() => expectedSignInUrls.includes(page.url()))
     })
 })
 
