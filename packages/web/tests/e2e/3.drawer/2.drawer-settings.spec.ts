@@ -64,10 +64,7 @@ describe("Settings", () => {
         })
         test("Signed out", async () => {
             await waitAnimation(signOut(), 1000)
-            await wait("main")
-            await openSettingsMenu()
-            await expectSignedOut()
-            await wait(signInBtn)
+            await wait("landing")
         })
     })
 
