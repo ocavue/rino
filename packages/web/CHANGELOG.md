@@ -93,19 +93,19 @@
 
 -   d43c16d: Support indented code blocks
 
-## 0.6.7 - 2020-04-16
+## 0.6.7
 
 ### Patch Changes
 
 - Add syntax highlighting support for more languages
 
-## 0.6.6 - 2020-04-11
+## 0.6.6
 
 ### Patch Changes
 
 - Change PWA theme color.
 
-## 0.6.5 - 2020-04-03
+## 0.6.5
 
 ### Patch Changes
 
@@ -113,100 +113,100 @@
 - Add two languages for code blocks: JSON and YAML.
 - Disable the add button when selecting the trash selection.
 
-## 0.6.4 - 2020-03-25
+## 0.6.4
 
 ### Patch Changes
 
 - Change PWA theme color.
 
-## 0.6.3 - 2020-03-25
+## 0.6.3
 
 ### Patch Changes
 
 - Fix PWA support.
 
-## 0.6.2 - 2020-03-22
+## 0.6.2
 
 ### Patch Changes
 
 - Deploy https://rino.app to Google Firebase to increase speed.
 
-## 0.6.1 - 2020-03-21
+## 0.6.1
 
 ### Patch Changes
 
 - Change the default theme to light.
 
-## 0.6.0 - 2020-03-15
+## 0.6.0
 
 ### Minor Changes
 
 - Add two sections (inbox and trash) in the drawer.
 
-## 0.5.2 - 2020-03-13
+## 0.5.2
 
 ### Patch Changes
 
 - Fix #136.
 
-## 0.5.1 - 2020-03-08
+## 0.5.1
 
 ### Patch Changes
 
 - Remove the unusable search button.
 
-## 0.5.0 - 2020-03-02
+## 0.5.0
 
 ### Minor Changes
 
 - Add syntax highlighting for code block and source code mode.
 - Allow user to try Rino before sign-up.
 
-## 0.4.4 - 2020-01-23
+## 0.4.4
 
 ### Patch Changes
 
 - Fix the drawer width issue in small screens.
 
-## 0.4.3 - 2020-01-23
+## 0.4.3
 
 ### Patch Changes
 
 - Fix the issue that 404 page show nothing.
 - Beautify 404 page style.
 
-## 0.4.2 - 2020-01-23
+## 0.4.2
 
 ### Patch Changes
 
 - Fix unexpected website files 404.
 
-## 0.4.1 - 2020-01-23
+## 0.4.1
 
 ### Patch Changes
 
 - Fix unexpected static files 404.
 
-## 0.4.0 - 2020-01-23
+## 0.4.0
 
 ### Minor Changes
 
 - A big refactoring: Using Next.js.
 
-## 0.3.1 - 2019-12-31
+## 0.3.1
 
 ### Patch Changes
 
 - Fix #80.
 
-## 0.3.0 - 2019-12-31
+## 0.3.0
 
 ### Minor Changes
 
 - Checkbox list item.
 - UI improvement.
 
-## 0.2.0 - 2019-12-19
+## 0.2.0
 
 ### Minor Changes
 
