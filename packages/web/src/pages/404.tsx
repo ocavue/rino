@@ -9,7 +9,7 @@ export default function NotFoundError() {
     return (
         <Alert title={code} message={message}>
             <Button href="/" size="small" variant="outlined">
-                Return homepage
+                Return Index
             </Button>
         </Alert>
     )
