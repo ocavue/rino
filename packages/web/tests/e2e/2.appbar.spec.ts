@@ -1,4 +1,4 @@
-import { cleanNotes, createNote, deleteNote, login, signOut } from "./actions"
+import { cleanNotes, createNote, deleteNote, login } from "./actions"
 import { click, getAll, sleep, wait, waitAnimation } from "./utils"
 
 async function getNoteNumber(local = false) {
