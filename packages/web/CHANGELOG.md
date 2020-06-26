@@ -1,5 +1,12 @@
 # @rino.app/web
 
+## 0.11.1
+
+### Patch Changes
+
+-   8bcab8c: Fix search bar style in Safari
+-   8bcab8c: Adjust the maximum width of editor area
+
 ## 0.11.0
 
 ### Minor Changes
