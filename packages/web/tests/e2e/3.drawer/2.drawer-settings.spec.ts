@@ -1,5 +1,5 @@
 import { createNote, expectSignedIn, expectSignedOut, login, signOut } from "../actions"
-import { click, getInnerText, goto, retry, sleep, wait, waitAnimation } from "../utils"
+import { click, getInnerText, goto, sleep, wait, waitAnimation } from "../utils"
 
 const settingsBtn = "sidebar-btn-settings"
 const settingsMenu = "sidebar-settings-menu"
