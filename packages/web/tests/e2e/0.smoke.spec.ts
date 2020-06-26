@@ -16,19 +16,13 @@ describe("after sign-in", function () {
         await login()
     })
 
-    describe("Check main components", function () {
-        test("Drawer", async () => {
-            await wait("sidebar")
-        })
-        test("Appbar", async () => {
-            await wait("appbar")
-        })
-        test("Main", async () => {
-            await wait("main")
-        })
+    test("core components", async function () {
+        await wait("sidebar")
+        await wait("appbar")
+        await wait("main")
     })
 
-    describe("Check HTML header", function () {
+    describe("HTML header", function () {
         test("title", async () => {
             await wait("main") // Wait the page
             expect(await page.title()).toEqual("Rino")
