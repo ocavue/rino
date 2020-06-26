@@ -10,7 +10,7 @@ export default function Landing() {
             <h1>Welcome to Rino</h1>
 
             <Box>
-                <NextLink href="/sign-up">
+                <NextLink href="/sign-in">
                     <Button component="a" size="large" style={{ marginRight: 16 }}>
                         Sign In
                     </Button>
