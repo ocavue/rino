@@ -7,7 +7,7 @@ import Center from "./Center"
 export default function Landing() {
     return (
         <Center>
-            <h1>Welcome to Rino</h1>
+            <h1 data-testid="landing">Rino</h1>
 
             <Box>
                 <NextLink href="/sign-in">
