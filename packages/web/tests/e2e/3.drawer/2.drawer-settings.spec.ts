@@ -23,7 +23,10 @@ describe("Settings", () => {
     }
 
     describe("Open/close settings menu", () => {
-        beforeAll(async () => await jestPuppeteer.resetBrowser())
+        beforeAll(async () => {
+            await jestPuppeteer.resetBrowser()
+            await login()
+        })
 
         test("Except button exist", async () => {
             await goto("/")
@@ -82,7 +85,7 @@ describe("Settings", () => {
         beforeAll(async () => await jestPuppeteer.resetBrowser())
 
         test("Open the dialog", async () => {
-            await goto("/")
+            await login()
             await clickSettingsMenuButton(aboutBtn)
             await wait("about-dialog")
         })
@@ -109,10 +112,12 @@ describe("Settings", () => {
     })
 
     describe("Email", function () {
-        beforeAll(async () => await jestPuppeteer.resetBrowser())
+        beforeAll(async () => {
+            await jestPuppeteer.resetBrowser()
+            await login()
+        })
 
         test("Email", async () => {
-            await login()
             await waitAnimation(click(settingsBtn))
             const received = await getInnerText(signOutBtn)
             expect(received).toContain(process.env.REACT_APP_TEST_USERNAME)
