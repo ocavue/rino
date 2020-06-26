@@ -4,7 +4,6 @@ import { click, getInnerText, goto, sleep, wait, waitAnimation } from "../utils"
 const settingsBtn = "sidebar-btn-settings"
 const settingsMenu = "sidebar-settings-menu"
 const signOutBtn = "sidebar-settings-menu-item-sign-out"
-const signInBtn = "sidebar-settings-menu-item-sign-in"
 const aboutBtn = "sidebar-settings-menu-item-about"
 
 describe("Settings", () => {
