@@ -6,7 +6,8 @@ describe("Open/close Sidebar", () => {
 
     describe("Before sign in", () => {
         test("Step 1", () => waitAnimation(signOut()))
-        test("Step 2", () => waitAnimation(wait("appbar-btn-menu", { visible: false })))
+        test("Step 2", () =>
+            waitAnimation(wait("appbar-btn-menu", { hidden: true, visible: false })))
     })
 
     describe("After sign in", () => {
