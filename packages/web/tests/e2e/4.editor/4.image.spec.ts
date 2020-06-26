@@ -1,8 +1,8 @@
-import { cleanNotes, createNote } from "../actions"
-import { goto, type as typeByTestid, wysiwygEditorSelector } from "../utils"
+import { cleanNotes, createNote, login } from "../actions"
+import { type as typeByTestid, wysiwygEditorSelector } from "../utils"
 
 beforeAll(async () => {
-    await goto("/")
+    await login()
     await createNote()
 })
 
