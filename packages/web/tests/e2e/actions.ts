@@ -4,7 +4,7 @@ import { click, focus, goto, pressKey, retry, sleep, wait } from "./utils"
 
 async function isSignedIn(): Promise<boolean> {
     const state = await page.evaluate(() => localStorage.getItem("__rino_dev_auth_state"))
-    return state === "yes"
+    return state === "authed"
 }
 
 export async function expectSignedIn() {

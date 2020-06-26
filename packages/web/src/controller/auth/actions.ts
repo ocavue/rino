@@ -1,3 +1,5 @@
+import { set as setCookie } from "js-cookie"
+
 import { testUser } from "src/controller/config"
 import { firebaseApp } from "src/controller/firebase/app"
 import { User } from "src/controller/firebase/firebase-types"
@@ -44,4 +46,15 @@ export async function createUserWithEmailAndPassword(email: string, password: st
 
 export async function sendPasswordResetEmail(email: string) {
     return await closurePromiseWrapper(firebaseApp.auth().sendPasswordResetEmail(email))
+}
+
+export function setSignedInState(signedIn: boolean) {
+    const flag = signedIn ? "authed" : "unauth"
+
+    window.localStorage.setItem("__rino_dev_auth_state", flag)
+
+    // Firebase Hosting CDN will return different cached content based on `__session` cookie.
+    // Useful for different home page.
+    // https://firebase.google.com/docs/hosting/manage-cache#using_cookies
+    setCookie("__session", flag)
 }

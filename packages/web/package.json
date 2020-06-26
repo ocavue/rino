@@ -9,6 +9,7 @@
         "build:analyze": "ANALYZE=true next build",
         "export": "next export -o dist"
     },
+    "main": "server.js",
     "devDependencies": {
         "@babel/core": "^7.11.6",
         "@material-ui/core": "^4.11.0",
@@ -89,10 +90,10 @@
         "not op_mini all"
     ],
     "engines": {
-        "node": ">= 12"
+        "node": ">= 10"
     },
     "files": [
-        "this_file_dose_not_exist"
+        ".next"
     ],
     "homepage": "https://rino.app",
     "repository": {

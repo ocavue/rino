@@ -4,12 +4,22 @@
     "indexes": "config/firestore.indexes.json"
   },
   "hosting": {
-    "public": "./dist",
+    "public": "./public",
     "ignore": [
       "firebase.json",
       "**/.*",
       "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "function": "nextjs-server"
+      }
     ]
+  },
+  "functions": {
+    // Note: The static files in the `public` directory take precedence over the `rewrites`, so any static files will be served alongside the Cloud Functions endpoints.
+    "source": "."
   },
   "emulators": {
     "firestore": {
@@ -20,6 +30,9 @@
     },
     "hosting": {
       "port": 8430
-    }
+    },
+		"functions": {
+			"port": 8440
+		}
   }
 }
