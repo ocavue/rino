@@ -54,6 +54,7 @@ jobs:
         run: |
           yarn run web build
           yarn run web export
+          tree ./packages/web/dist
 
       - name: Upload dist
         uses: actions/upload-artifact@v2
