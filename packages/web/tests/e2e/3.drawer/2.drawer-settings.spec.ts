@@ -1,10 +1,9 @@
 import { createNote, expectSignedIn, expectSignedOut, login, signOut } from "../actions"
-import { click, getInnerText, goto, retry, sleep, wait, waitAnimation } from "../utils"
+import { click, getInnerText, goto, sleep, wait, waitAnimation } from "../utils"
 
 const settingsBtn = "sidebar-btn-settings"
 const settingsMenu = "sidebar-settings-menu"
 const signOutBtn = "sidebar-settings-menu-item-sign-out"
-const signInBtn = "sidebar-settings-menu-item-sign-in"
 const aboutBtn = "sidebar-settings-menu-item-about"
 
 describe("Settings", () => {
@@ -23,7 +22,10 @@ describe("Settings", () => {
     }
 
     describe("Open/close settings menu", () => {
-        beforeAll(async () => await jestPuppeteer.resetBrowser())
+        beforeAll(async () => {
+            await jestPuppeteer.resetBrowser()
+            await login()
+        })
 
         test("Except button exist", async () => {
             await goto("/")
@@ -61,20 +63,7 @@ describe("Settings", () => {
         })
         test("Signed out", async () => {
             await waitAnimation(signOut(), 1000)
-            await wait("main")
-            await openSettingsMenu()
-            await expectSignedOut()
-            await wait(signInBtn)
-        })
-        test("Click sign in button", async () => {
-            const url = new URL(page.url())
-            const expectedSignInUrls = [url.origin + "/sign-in", url.origin + "/sign-in/"]
-            await click(signInBtn)
-            const checkCallback = () => expectedSignInUrls.includes(page.url())
-            const resultAfterRetry = await retry(checkCallback)
-            if (!resultAfterRetry) {
-                expect(page.url()).toBeOneOf(expectedSignInUrls)
-            }
+            await wait("landing")
         })
     })
 
@@ -82,7 +71,7 @@ describe("Settings", () => {
         beforeAll(async () => await jestPuppeteer.resetBrowser())
 
         test("Open the dialog", async () => {
-            await goto("/")
+            await login()
             await clickSettingsMenuButton(aboutBtn)
             await wait("about-dialog")
         })
@@ -109,10 +98,12 @@ describe("Settings", () => {
     })
 
     describe("Email", function () {
-        beforeAll(async () => await jestPuppeteer.resetBrowser())
+        beforeAll(async () => {
+            await jestPuppeteer.resetBrowser()
+            await login()
+        })
 
         test("Email", async () => {
-            await login()
             await waitAnimation(click(settingsBtn))
             const received = await getInnerText(signOutBtn)
             expect(received).toContain(process.env.REACT_APP_TEST_USERNAME)

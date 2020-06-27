@@ -1,9 +1,9 @@
-import { createEmptyNote, switchMode } from "../actions"
-import { getInnerText, getSourceCodeModeText, goto, type, wait } from "../utils"
+import { createEmptyNote, login, switchMode } from "../actions"
+import { getInnerText, getSourceCodeModeText, type, wait } from "../utils"
 
 describe("ProsemirrorView constructor error", () => {
     test("Prepare", async () => {
-        await goto("/")
+        await login()
         await createEmptyNote()
     })
 

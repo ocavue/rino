@@ -6,15 +6,16 @@ import {
     createNote,
     expectSidebarClosed,
     expectSidebarOpened,
+    login,
 } from "../actions"
-import { click, getDimensions, goto, waitAnimation } from "../utils"
+import { click, getDimensions, waitAnimation } from "../utils"
 
 const height = 800
 
 describe("Drawer type (persistent / temporary)", function () {
     beforeAll(async () => {
         await jestPuppeteer.resetBrowser()
-        await goto("/")
+        await login()
         await createNote()
     })
     afterAll(async () => await cleanNotes())
@@ -74,7 +75,7 @@ describe("Drawer type (persistent / temporary)", function () {
 
 describe("Drawer width", function () {
     beforeAll(async () => {
-        await goto("/")
+        await login()
     })
 
     test("Small screen", async () => {

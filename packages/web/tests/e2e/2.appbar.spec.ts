@@ -1,4 +1,4 @@
-import { cleanNotes, createNote, deleteNote, login, signOut } from "./actions"
+import { cleanNotes, createNote, deleteNote, login } from "./actions"
 import { click, getAll, sleep, wait, waitAnimation } from "./utils"
 
 async function getNoteNumber(local = false) {
@@ -30,22 +30,5 @@ describe("Delete user notes", function () {
         await click("sidebar-notes-list-item")
         await waitAnimation(deleteNote(), 1000)
         await expectNoteNumber(notes - 1)
-    })
-})
-
-describe("Delete premade notes", function () {
-    test("Parapre enviorment", async () => {
-        await signOut()
-    })
-    test("Verify initial note number", async () => {
-        await wait("sidebar-notes-list-item-local")
-        await wait("sidebar-notes-list-item", { visible: false, hidden: true })
-        await expectNoteNumber(2, true)
-        await sleep(500)
-    })
-    test("Delete note A", async () => {
-        await click("sidebar-notes-list-item-local")
-        await waitAnimation(deleteNote(), 1000)
-        await expectNoteNumber(1, true)
     })
 })

@@ -1,7 +1,7 @@
 import { readFileSync } from "fs"
 
-import { cleanNotes, createNote, switchMode } from "../actions"
-import { getSourceCodeModeText, goto, pressKey, type as typeByTestid } from "../utils"
+import { cleanNotes, createNote, login, switchMode } from "../actions"
+import { getSourceCodeModeText, pressKey, type as typeByTestid } from "../utils"
 
 function readText(filename: string) {
     return readFileSync(`${__dirname}/${filename}`, "utf-8")
@@ -9,7 +9,7 @@ function readText(filename: string) {
 
 beforeAll(async () => {
     await jestPuppeteer.resetBrowser()
-    await goto("/")
+    await login()
 })
 
 afterAll(async () => {

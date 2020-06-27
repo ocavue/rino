@@ -26,7 +26,7 @@ export async function login() {
 }
 export async function signOut() {
     await goto("/dev/sign-out")
-    await wait("main") // Return home page
+    await wait("landing") // Return home page
     await expectSignedOut()
 }
 

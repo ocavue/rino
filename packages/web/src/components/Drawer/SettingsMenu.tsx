@@ -1,5 +1,4 @@
 import { Divider, ListItemText, Menu, MenuItem } from "@material-ui/core"
-import { useRouter } from "next/router"
 import React from "react"
 
 import { signOut } from "src/controller"
@@ -14,7 +13,6 @@ const SettingsMenu: React.FC<{
         state: { toggleTheme },
         auth: { email },
     } = StoreContainer.useContainer()
-    const router = useRouter()
 
     const handleMenuClose = () => {
         setAnchor(null)
@@ -32,10 +30,6 @@ const SettingsMenu: React.FC<{
         setTimeout(() => {
             toggleTheme()
         }, 500)
-    }
-
-    const onClickSignIn = () => {
-        void router.push("/sign-in")
     }
 
     const onClickSignOut = () => {
@@ -60,18 +54,9 @@ const SettingsMenu: React.FC<{
                 About Rino
             </MenuItem>
             <Divider />
-            {email ? (
-                <MenuItem
-                    onClick={onClickSignOut}
-                    data-testid="sidebar-settings-menu-item-sign-out"
-                >
-                    <ListItemText primary="Sign out" secondary={email} />
-                </MenuItem>
-            ) : (
-                <MenuItem onClick={onClickSignIn} data-testid="sidebar-settings-menu-item-sign-in">
-                    <ListItemText primary="Sign in / Sign up" secondary={email} />
-                </MenuItem>
-            )}
+            <MenuItem onClick={onClickSignOut} data-testid="sidebar-settings-menu-item-sign-out">
+                <ListItemText primary="Sign out" secondary={email} />
+            </MenuItem>
         </Menu>
     )
 }

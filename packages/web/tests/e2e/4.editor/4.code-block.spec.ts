@@ -1,10 +1,10 @@
 import { dedent } from "src/utils"
 
-import { createNote, switchMode } from "../actions"
-import { getSourceCodeModeText, goto, pressKey, type as typeByTestid } from "../utils"
+import { createNote, login, switchMode } from "../actions"
+import { getSourceCodeModeText, pressKey, type as typeByTestid } from "../utils"
 
 beforeAll(async () => {
-    await goto("/")
+    await login()
 })
 
 async function type(text: string, pressEnter = true) {
