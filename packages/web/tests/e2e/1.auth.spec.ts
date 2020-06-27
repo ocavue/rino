@@ -45,13 +45,13 @@ describe("Sign-in", () => {
     test("with clicking submit button", async () => {
         await signIn(username, password, false)
         // go to the index page after sign-in successfully
-        await wait("index")
+        await wait("workspace")
     })
 
     test("with pressing Enter key", async () => {
         await signIn(username, password, true)
         // go to the index page after sign-in successfully
-        await wait("index")
+        await wait("workspace")
     })
 })
 

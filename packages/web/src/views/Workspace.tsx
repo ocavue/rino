@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme: Theme) => {
 export default function Workspace() {
     const classes = useStyles()
     return (
-        <div className={classes.root} data-testid="index">
+        <div className={classes.root} data-testid="workspace">
             <Appbar />
             <Drawer />
             <Content />
