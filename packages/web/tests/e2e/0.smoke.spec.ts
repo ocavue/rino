@@ -7,7 +7,7 @@ beforeAll(async () => {
 
 describe("before sign-in", function () {
     test("landing page", async () => {
-        await wait("landing")
+        await wait("homepage_root")
     })
 
     test("click sign-in button", async () => {

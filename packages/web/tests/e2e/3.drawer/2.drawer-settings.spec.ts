@@ -63,7 +63,7 @@ describe("Settings", () => {
         })
         test("Signed out", async () => {
             await waitAnimation(signOut(), 1000)
-            await wait("landing")
+            await wait("homepage_root")
         })
     })
 
