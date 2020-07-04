@@ -1,5 +1,5 @@
 import { Box, CircularProgress } from "@material-ui/core"
-import React from "react"
+import React, { useMemo } from "react"
 
 import { EditContainer } from "src/controller"
 import { StoreContainer } from "src/store"
@@ -8,8 +8,10 @@ import { NoteList } from "./NoteList"
 
 export const NoteBody: React.FC = () => {
     const {
-        state: { loading },
+        state: { loadingUser, loadingData },
     } = StoreContainer.useContainer()
+
+    const loading = useMemo(() => loadingUser || loadingData, [loadingData, loadingUser])
 
     const { noteKey, setNoteKey, searchQuery, visibleNotes } = EditContainer.useContainer()
 

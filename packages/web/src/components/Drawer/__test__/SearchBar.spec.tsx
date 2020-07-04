@@ -35,7 +35,8 @@ test("<SearchBar />", () => {
         storeHooks.state.setLoadingUser(false)
         storeHooks.state.setLoadingData(false)
     })
-    expect(storeHooks.state.loading).toBeFalse()
+    expect(storeHooks.state.loadingUser).toBeFalse()
+    expect(storeHooks.state.loadingData).toBeFalse()
 
     // Insert some notes
     act(() => {

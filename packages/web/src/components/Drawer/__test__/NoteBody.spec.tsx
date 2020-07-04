@@ -30,7 +30,8 @@ test("<NoteBody />", async () => {
         editHooks = EditContainer.useContainer()
     })
 
-    expect(storeHooks.state.loading).toBeTrue()
+    expect(storeHooks.state.loadingUser).toBeTrue()
+    expect(storeHooks.state.loadingData).toBeTrue()
     screen.getByTestId("drawer-note-body-loading")
 
     act(() => {
@@ -39,7 +40,8 @@ test("<NoteBody />", async () => {
     })
 
     // Set loading to false
-    expect(storeHooks.state.loading).toBeFalse()
+    expect(storeHooks.state.loadingUser).toBeFalse()
+    expect(storeHooks.state.loadingData).toBeFalse()
     screen.getByTestId("sidebar-notes") // TODO: rename sidebar to drawer
     expect(editHooks.notes).toHaveLength(0)
     expect(screen.queryByTestId("sidebar-notes-list-item")).toBeNull()

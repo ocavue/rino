@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react"
+import { useState } from "react"
 import { createContainer } from "unstated-next"
 
 import { theme } from "src/controller"
@@ -16,14 +16,12 @@ const useTheme = () => {
 const useLoading = () => {
     const [loadingUser, setLoadingUser] = useState(true)
     const [loadingData, setLoadingData] = useState(true)
-    const loading = useMemo(() => loadingUser || loadingData, [loadingData, loadingUser])
 
     return {
         loadingUser,
         setLoadingUser,
         loadingData,
         setLoadingData,
-        loading,
     }
 }
 

@@ -13,7 +13,7 @@ export const NoteHeader: React.FC = () => {
     const classes = useHeaderStyles()
 
     const {
-        state: { loading },
+        state: { loadingData, loadingUser },
     } = StoreContainer.useContainer()
     const { user } = AuthContainer.useContainer()
 
@@ -25,10 +25,10 @@ export const NoteHeader: React.FC = () => {
         setSearchQuery,
     } = EditContainer.useContainer()
 
-    const disableCreateBtn = useMemo(() => loading || collection.role === "trash", [
-        loading,
-        collection,
-    ])
+    const disableCreateBtn = useMemo(
+        () => loadingData || loadingUser || collection.role === "trash",
+        [loadingData, loadingUser, collection],
+    )
 
     const onClickCreateBtn = () => {
         // Exit search if a new note is been added so that the new note will show in the drawer note list
