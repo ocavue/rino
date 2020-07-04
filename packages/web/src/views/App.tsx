@@ -7,11 +7,12 @@ import { ThemeContainer } from "src/controller/theme/hook"
 import { WorksapceStateContainer } from "src/controller/workspace-state/hook"
 
 const ThemeConsumer: React.FC = (props) => {
-    const lightTheme = useMemo(() => createMuiTheme({ palette: { type: "light" } }), [])
-    const darkTheme = useMemo(
-        () => createMuiTheme({ palette: { type: "dark", primary: { main: "#5599d6" } } }),
-        [],
-    )
+    const lightTheme = useMemo(() => {
+        return createMuiTheme({ palette: { type: "light" } })
+    }, [])
+    const darkTheme = useMemo(() => {
+        return createMuiTheme({ palette: { type: "dark", primary: { main: "#5599d6" } } })
+    }, [])
     const { isDarkTheme } = ThemeContainer.useContainer()
 
     return (
