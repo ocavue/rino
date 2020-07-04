@@ -1,3 +1,3 @@
-import { DynamicPage } from "src/utils"
+import SignUp from "src/views/SignUp"
 
-export default DynamicPage("SignUp", () => import("src/views/SignUp"))
+export default SignUp

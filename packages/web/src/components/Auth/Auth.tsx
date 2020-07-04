@@ -30,17 +30,12 @@ const useStyles = makeStyles((theme: Theme) => {
     })
 })
 
-type AuthContainerProps = {
+type AuthLayoutProps = {
     title: string
     error: string
     progressing: boolean
 }
-export const AuthContainer: React.FC<AuthContainerProps> = ({
-    title,
-    error,
-    progressing,
-    children,
-}) => {
+export const AuthLayout: React.FC<AuthLayoutProps> = ({ title, error, progressing, children }) => {
     const classes = useStyles()
 
     return (

@@ -1,58 +1,38 @@
 import { Grid, Link, Typography } from "@material-ui/core"
-import { FirebaseError } from "firebase"
-import React, { useMemo, useState } from "react"
+import dynamic from "next/dynamic"
+import React, { useState } from "react"
 
-import { AuthContainer, AuthForm, SubmitButton, UsernameTextField } from "src/components/Auth"
-import { sendPasswordResetEmail } from "src/controller"
+import { AuthLayout } from "src/components/Auth/Auth"
+
+const PasswordResetForm = dynamic(() => import("../components/Auth/PasswordResetForm"), {
+    ssr: false,
+})
 
 export default function PasswordReset() {
-    const [sending, setSending] = useState(false)
-    const [sent, setSent] = useState(false)
+    const [progressing, setProgressing] = useState(false)
+    const [progressed, setProgressed] = useState(false)
     const [error, setError] = useState("")
     const [email, setEmail] = useState("")
-    const disableSubmit = useMemo(() => !email || sending, [email, sending])
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-        setSending(true)
-        setError("")
-        sendPasswordResetEmail(email)
-            .then(() => {
-                setSent(true)
-                setSending(false)
-            })
-            .catch((error: FirebaseError) => {
-                console.error(error)
 
-                if (error?.code === "auth/user-not-found") {
-                    setError("Couldn't find your Rino account")
-                } else {
-                    setError(String(error))
-                }
-                setSending(false)
-            })
-        event.preventDefault()
-    }
-
-    if (!sent) {
+    if (!progressed) {
         return (
-            <AuthContainer title="Reset your password" error={error} progressing={sending}>
-                <AuthForm onSubmit={handleSubmit} data-testid="auth_password_reset_form">
-                    <UsernameTextField
-                        disabled={sending}
-                        onChange={(e) => setEmail(e.target.value)}
-                        inputProps={{ "data-testid": "auth_password_reset_username_textfield" }}
-                    />
-                    <SubmitButton disabled={disableSubmit} data-testid="auth_password_reset_submit">
-                        Next
-                    </SubmitButton>
-                </AuthForm>
-            </AuthContainer>
+            <AuthLayout title="Reset your password" error={error} progressing={progressing}>
+                <PasswordResetForm
+                    email={email}
+                    setEmail={setEmail}
+                    progressing={progressing}
+                    setProgressing={setProgressing}
+                    setProgressed={setProgressed}
+                    setError={setError}
+                />
+            </AuthLayout>
         )
     } else {
         return (
-            <AuthContainer title="Check your email" error="" progressing={false}>
+            <AuthLayout title="Check your email" error="" progressing={false}>
                 <Typography variant="body1" data-testid="auth_password_reset_result">
-                    We've sent an email to <strong>{email}</strong>. Click the link in the email to
-                    reset your password.
+                    We've progressed an email to <strong>{email}</strong>. Click the link in the
+                    email to reset your password.
                 </Typography>
                 <Grid container>
                     <Grid item>
@@ -61,7 +41,7 @@ export default function PasswordReset() {
                         </Link>
                     </Grid>
                 </Grid>
-            </AuthContainer>
+            </AuthLayout>
         )
     }
 }
