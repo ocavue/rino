@@ -13,7 +13,4 @@ module.exports = {
 
     // A list of paths to modules that run some code to configure or set up the testing framework before each test
     setupFilesAfterEnv: ["jest-extended"],
-
-    // Required for dom jest-prosemirror and jest-remirror
-    testEnvironment: "jsdom",
 }

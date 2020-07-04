@@ -16,6 +16,7 @@ export const MobileMenu: React.FC<{
     <div
         className="absolute top-0 inset-x-0 p-2 transition transform origin-top-right md:hidden"
         hidden={!activity}
+        data-testid="homepage_appbar_mobile_menu"
     >
         <div className="rounded-lg shadow-lg">
             <div className="rounded-lg shadow-xs bg-white divide-y-2 divide-gray-50">
