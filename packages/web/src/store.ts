@@ -1,18 +1,6 @@
 import { useState } from "react"
 import { createContainer } from "unstated-next"
 
-import { theme } from "src/controller"
-
-const useTheme = () => {
-    const [isDarkTheme, setDarkTheme] = useState(theme.getTheme() === "dark")
-    const toggleTheme = () => {
-        const newAppTheme = isDarkTheme ? "light" : "dark"
-        theme.setTheme(newAppTheme)
-        setDarkTheme(!isDarkTheme)
-    }
-    return { isDarkTheme, toggleTheme }
-}
-
 const useLoading = () => {
     const [loadingData, setLoadingData] = useState(true)
 
@@ -35,13 +23,9 @@ const useNetworkState = () => {
 const useUiState = () => {
     const [drawerActivity, setDrawerActivity] = useState(true)
 
-    const { isDarkTheme, toggleTheme } = useTheme()
-
     return {
         drawerActivity,
         setDrawerActivity,
-        isDarkTheme,
-        toggleTheme,
     }
 }
 

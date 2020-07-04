@@ -3,18 +3,16 @@ import { createMuiTheme } from "@material-ui/core"
 import { ThemeProvider } from "@material-ui/core/styles"
 import React, { useMemo } from "react"
 
+import { ThemeContainer } from "src/controller/theme/hook"
 import { StoreContainer } from "src/store"
 
-const ContainerConsumer: React.FC = (props) => {
-    const {
-        state: { isDarkTheme },
-    } = StoreContainer.useContainer()
-
+const ThemeConsumer: React.FC = (props) => {
     const lightTheme = useMemo(() => createMuiTheme({ palette: { type: "light" } }), [])
     const darkTheme = useMemo(
         () => createMuiTheme({ palette: { type: "dark", primary: { main: "#5599d6" } } }),
         [],
     )
+    const { isDarkTheme } = ThemeContainer.useContainer()
 
     return (
         <ThemeProvider theme={isDarkTheme ? darkTheme : lightTheme}>
@@ -26,9 +24,11 @@ const ContainerConsumer: React.FC = (props) => {
 
 const App: React.FC = (props) => {
     return (
-        <StoreContainer.Provider>
-            <ContainerConsumer>{props.children}</ContainerConsumer>
-        </StoreContainer.Provider>
+        <ThemeContainer.Provider>
+            <StoreContainer.Provider>
+                <ThemeConsumer>{props.children}</ThemeConsumer>
+            </StoreContainer.Provider>
+        </ThemeContainer.Provider>
     )
 }
 
