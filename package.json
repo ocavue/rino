@@ -30,7 +30,7 @@
         "jest": "^26.0.0",
         "jest-transform-stub": "^2.0.0",
         "prettier": "^2.0.0",
-        "typescript": "~3.9.0"
+        "typescript": "^3.9.6"
     },
     "renovate": {
         "extends": [
@@ -47,7 +47,8 @@
         "packageRules": [
             {
                 "depTypeList": [
-                    "dependencies"
+                    "dependencies",
+                    "devDependencies"
                 ],
                 "updateTypes": [
                     "patch",
@@ -60,7 +61,7 @@
             "@changesets/cli",
             "node"
         ],
-        "rangeStrategy": "update-lockfile"
+        "rangeStrategy": "bump"
     },
     "husky": {
         "hooks": {
