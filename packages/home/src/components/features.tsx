@@ -59,9 +59,9 @@ export const Features: React.FC = () => {
     return (
         <div className="mt-10 mx-auto px-4 sm:px-6 lg:px-8">
             <div className="lg:text-center">
-                <h3 className="mt-2 text-4xl leading-10 font-bold tracking-tight text-gray-900">
+                <h2 className="mt-2 text-4xl leading-10 font-bold tracking-tight text-gray-900">
                     Why Rino?
-                </h3>
+                </h2>
             </div>
             <div className="mt-10">
                 <ul className="md:grid md:grid-cols-2 md:col-gap-8 md:row-gap-10">
