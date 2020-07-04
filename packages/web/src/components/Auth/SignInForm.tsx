@@ -10,6 +10,7 @@ import {
     UsernameTextField,
 } from "src/components/Auth/Auth"
 import { signInWithEmailAndPassword } from "src/controller/auth/actions"
+import { AuthContainer } from "src/controller/auth/hook"
 
 type SignInFormProps = {
     progressing: boolean
@@ -47,33 +48,35 @@ export default function SignInForm({ progressing, setProgressing, setError }: Si
     }
 
     return (
-        <AuthForm onSubmit={handleSubmit} data-testid="auth_signin_form">
-            <UsernameTextField
-                disabled={progressing}
-                onChange={(e) => setEmail(e.target.value)}
-                inputProps={{ "data-testid": "auth_signin_username_textfield" }}
-            />
-            <PasswordTextField
-                disabled={progressing}
-                onChange={(e) => setPassword(e.target.value)}
-                inputProps={{ "data-testid": "auth_signin_password_textfield" }}
-            />
+        <AuthContainer.Provider>
+            <AuthForm onSubmit={handleSubmit} data-testid="auth_signin_form">
+                <UsernameTextField
+                    disabled={progressing}
+                    onChange={(e) => setEmail(e.target.value)}
+                    inputProps={{ "data-testid": "auth_signin_username_textfield" }}
+                />
+                <PasswordTextField
+                    disabled={progressing}
+                    onChange={(e) => setPassword(e.target.value)}
+                    inputProps={{ "data-testid": "auth_signin_password_textfield" }}
+                />
 
-            <SubmitButton disabled={disableSubmit} data-testid="auth_signin_submit">
-                Sign In
-            </SubmitButton>
-            <Grid container>
-                <Grid item xs>
-                    <Link href="/password-reset" variant="body2">
-                        Forgot password?
-                    </Link>
+                <SubmitButton disabled={disableSubmit} data-testid="auth_signin_submit">
+                    Sign In
+                </SubmitButton>
+                <Grid container>
+                    <Grid item xs>
+                        <Link href="/password-reset" variant="body2">
+                            Forgot password?
+                        </Link>
+                    </Grid>
+                    <Grid item>
+                        <Link href="/sign-up" variant="body2">
+                            Sign up for Rino
+                        </Link>
+                    </Grid>
                 </Grid>
-                <Grid item>
-                    <Link href="/sign-up" variant="body2">
-                        Sign up for Rino
-                    </Link>
-                </Grid>
-            </Grid>
-        </AuthForm>
+            </AuthForm>
+        </AuthContainer.Provider>
     )
 }

@@ -21,4 +21,4 @@ ci:
       # Currently there are 9 javascript bundle files who has a large part of unused code. Firebase contributes most part of them.
       # Check this link for the method to get all unused javascript code: https://web.dev/remove-unused-code/
       # Check this link to follow the progress of tree-shakeable Firebase library: https://github.com/firebase/firebase-js-sdk/issues/2241
-      unused-javascript: ["error", { maxLength: 9 }]
+      unused-javascript: ["warn", { maxLength: 9 }]

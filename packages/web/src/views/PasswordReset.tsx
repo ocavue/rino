@@ -3,13 +3,12 @@ import dynamic from "next/dynamic"
 import React, { useState } from "react"
 
 import { AuthLayout } from "src/components/Auth/Auth"
-import { AuthContainer } from "src/controller/auth/hook"
 
 const PasswordResetForm = dynamic(() => import("../components/Auth/PasswordResetForm"), {
     ssr: false,
 })
 
-function PasswordResetConsumer() {
+export default function PasswordReset() {
     const [progressing, setProgressing] = useState(false)
     const [progressed, setProgressed] = useState(false)
     const [error, setError] = useState("")
@@ -45,12 +44,4 @@ function PasswordResetConsumer() {
             </AuthLayout>
         )
     }
-}
-
-export default function PasswordReset() {
-    return (
-        <AuthContainer.Provider>
-            <PasswordResetConsumer />
-        </AuthContainer.Provider>
-    )
 }
