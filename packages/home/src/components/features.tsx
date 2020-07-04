@@ -13,7 +13,7 @@ const FeatureBlock: React.FC<{
                 </div>
             </div>
             <div className="ml-4">
-                <h4 className="text-lg leading-6 font-medium text-gray-900">{title}</h4>
+                <span className="text-lg leading-6 font-medium text-gray-900">{title}</span>
                 <p className="mt-2 text-base leading-6 text-gray-500">{desc}</p>
             </div>
         </div>
