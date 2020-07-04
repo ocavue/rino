@@ -10,6 +10,8 @@ function useAuth() {
     const email: string | null = useMemo(() => (user ? user.email : null), [user])
     const [loadingUser, setLoadingUser] = useState(true)
 
+    // `AuthContainer.Provoder` must be used on all pages that can only be accessed by signed in users
+    // because we need to set cookie and/or localstorage for signed in users with this `useEffect`.
     useEffect(() => {
         const unsubscribe = onAuthStateChanged((user) => {
             const currentUser = getCurrentUser()

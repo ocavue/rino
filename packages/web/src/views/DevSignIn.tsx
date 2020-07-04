@@ -2,9 +2,10 @@ import { useRouter } from "next/router"
 import React from "react"
 
 import { signInTestUser } from "src/controller/auth/actions"
+import { AuthContainer } from "src/controller/auth/hook"
 import Alert from "src/views/Alert"
 
-export default function DevSignIn() {
+function DevSignInConsumer() {
     const router = useRouter()
     const query = new URLSearchParams(window.location.search)
     React.useEffect(() => {
@@ -21,4 +22,12 @@ export default function DevSignIn() {
         return () => clearTimeout(timeout)
     }, [router, query])
     return <Alert title="sign in" message="development" />
+}
+
+export default function DevSignIn() {
+    return (
+        <AuthContainer.Provider>
+            <DevSignInConsumer />
+        </AuthContainer.Provider>
+    )
 }

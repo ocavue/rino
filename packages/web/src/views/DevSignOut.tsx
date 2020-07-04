@@ -3,18 +3,12 @@ import React from "react"
 
 import { signOut } from "src/controller/auth/actions"
 import { AuthContainer } from "src/controller/auth/hook"
-import { StoreContainer } from "src/store"
 import Alert from "src/views/Alert"
 
-export default function DevSignOut() {
+function DevSignOutConsumer() {
     const router = useRouter()
-    const {
-        state: { loadingData },
-    } = StoreContainer.useContainer()
-    const { user, loadingUser } = AuthContainer.useContainer()
 
     React.useEffect(() => {
-        if (loadingUser || loadingData) return () => {}
         const timeout = setTimeout(() => {
             console.log(`running timeout function ${timeout}: before sign-out`)
             void signOut().then(() => {
@@ -32,6 +26,14 @@ export default function DevSignOut() {
             clearTimeout(timeout)
         }
         return unsubscribe
-    }, [router, loadingData, loadingUser, user])
+    }, [router])
     return <Alert title="sign out" message="development" />
+}
+
+export default function DevSignOut() {
+    return (
+        <AuthContainer.Provider>
+            <DevSignOutConsumer />
+        </AuthContainer.Provider>
+    )
 }
