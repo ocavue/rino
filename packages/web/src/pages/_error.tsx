@@ -24,16 +24,6 @@ function Error(props: { statusCode?: number }) {
     // In static build, `statusCode` is empty since `getInitialProps` will not be executed.
     const code = String(props.statusCode || 404)
     const message = statusCodeMap[code] || `The server return status code "${code}".`
-
-    React.useEffect(() => {
-        // Copy from https://github.com/mui-org/material-ui/blob/v4.11.0/examples/nextjs/pages/_app.js#L11
-        // Remove the server-side injected CSS.
-        const jssStyles = document.querySelector("#jss-server-side")
-        if (jssStyles) {
-            jssStyles.parentElement.removeChild(jssStyles)
-        }
-    }, [])
-
     return (
         <Alert title={code} message={message}>
             <Button href="/" size="small" variant="outlined">
