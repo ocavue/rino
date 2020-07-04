@@ -30,8 +30,10 @@
         },
         {
           "name": "Install Dependencies",
-          "if": "steps.step_cache_deps.outputs.cache-hit != 'true'",
-          "run": "yarn install --frozen-lockfile\nyarn run web firebase setup:emulators:firestore\nls -lrth ~/.cache/firebase/emulators/\n"
+          "run": "yarn install --frozen-lockfile\necho \"[DEBUG ]CACHE_HIT: $CACHE_HIT\"\nif [ $CACHE_HIT != 'true' ]\nthen\n  echo \"[DEBUG] installing\"\n  yarn run web firebase setup:emulators:firestore\nelse\n  echo \"[DEBUG] skipped\"\nfi\nls -lrth ~/.cache/firebase/emulators/\n",
+          "env": {
+            "CACHE_HIT": "${{ steps.step_cache_deps.outputs.cache-hit }}"
+          }
         },
         {
           "name": "Configrate firebase",
@@ -80,8 +82,10 @@
         },
         {
           "name": "Install Dependencies",
-          "if": "steps.step_cache_deps.outputs.cache-hit != 'true'",
-          "run": "yarn install --frozen-lockfile\nyarn run web firebase setup:emulators:firestore\nls -lrth ~/.cache/firebase/emulators/\n"
+          "run": "yarn install --frozen-lockfile\necho \"[DEBUG ]CACHE_HIT: $CACHE_HIT\"\nif [ $CACHE_HIT != 'true' ]\nthen\n  echo \"[DEBUG] installing\"\n  yarn run web firebase setup:emulators:firestore\nelse\n  echo \"[DEBUG] skipped\"\nfi\nls -lrth ~/.cache/firebase/emulators/\n",
+          "env": {
+            "CACHE_HIT": "${{ steps.step_cache_deps.outputs.cache-hit }}"
+          }
         },
         {
           "name": "Configrate firebase",
@@ -152,8 +156,10 @@
         },
         {
           "name": "Install Dependencies",
-          "if": "steps.step_cache_deps.outputs.cache-hit != 'true'",
-          "run": "yarn install --frozen-lockfile\nyarn run web firebase setup:emulators:firestore\nls -lrth ~/.cache/firebase/emulators/\n"
+          "run": "yarn install --frozen-lockfile\necho \"[DEBUG ]CACHE_HIT: $CACHE_HIT\"\nif [ $CACHE_HIT != 'true' ]\nthen\n  echo \"[DEBUG] installing\"\n  yarn run web firebase setup:emulators:firestore\nelse\n  echo \"[DEBUG] skipped\"\nfi\nls -lrth ~/.cache/firebase/emulators/\n",
+          "env": {
+            "CACHE_HIT": "${{ steps.step_cache_deps.outputs.cache-hit }}"
+          }
         },
         {
           "name": "Lint",
@@ -191,8 +197,10 @@
         },
         {
           "name": "Install Dependencies",
-          "if": "steps.step_cache_deps.outputs.cache-hit != 'true'",
-          "run": "yarn install --frozen-lockfile\nyarn run web firebase setup:emulators:firestore\nls -lrth ~/.cache/firebase/emulators/\n"
+          "run": "yarn install --frozen-lockfile\necho \"[DEBUG ]CACHE_HIT: $CACHE_HIT\"\nif [ $CACHE_HIT != 'true' ]\nthen\n  echo \"[DEBUG] installing\"\n  yarn run web firebase setup:emulators:firestore\nelse\n  echo \"[DEBUG] skipped\"\nfi\nls -lrth ~/.cache/firebase/emulators/\n",
+          "env": {
+            "CACHE_HIT": "${{ steps.step_cache_deps.outputs.cache-hit }}"
+          }
         },
         {
           "name": "Download dist",
@@ -238,8 +246,10 @@
         },
         {
           "name": "Install Dependencies",
-          "if": "steps.step_cache_deps.outputs.cache-hit != 'true'",
-          "run": "yarn install --frozen-lockfile\nyarn run web firebase setup:emulators:firestore\nls -lrth ~/.cache/firebase/emulators/\n"
+          "run": "yarn install --frozen-lockfile\necho \"[DEBUG ]CACHE_HIT: $CACHE_HIT\"\nif [ $CACHE_HIT != 'true' ]\nthen\n  echo \"[DEBUG] installing\"\n  yarn run web firebase setup:emulators:firestore\nelse\n  echo \"[DEBUG] skipped\"\nfi\nls -lrth ~/.cache/firebase/emulators/\n",
+          "env": {
+            "CACHE_HIT": "${{ steps.step_cache_deps.outputs.cache-hit }}"
+          }
         },
         {
           "name": "Download dist",
@@ -300,8 +310,10 @@
         },
         {
           "name": "Install Dependencies",
-          "if": "steps.step_cache_deps.outputs.cache-hit != 'true'",
-          "run": "yarn install --frozen-lockfile\nyarn run web firebase setup:emulators:firestore\nls -lrth ~/.cache/firebase/emulators/\n"
+          "run": "yarn install --frozen-lockfile\necho \"[DEBUG ]CACHE_HIT: $CACHE_HIT\"\nif [ $CACHE_HIT != 'true' ]\nthen\n  echo \"[DEBUG] installing\"\n  yarn run web firebase setup:emulators:firestore\nelse\n  echo \"[DEBUG] skipped\"\nfi\nls -lrth ~/.cache/firebase/emulators/\n",
+          "env": {
+            "CACHE_HIT": "${{ steps.step_cache_deps.outputs.cache-hit }}"
+          }
         },
         {
           "id": "step_changesets",
@@ -358,8 +370,10 @@
         },
         {
           "name": "Install Dependencies",
-          "if": "steps.step_cache_deps.outputs.cache-hit != 'true'",
-          "run": "yarn install --frozen-lockfile\nyarn run web firebase setup:emulators:firestore\nls -lrth ~/.cache/firebase/emulators/\n"
+          "run": "yarn install --frozen-lockfile\necho \"[DEBUG ]CACHE_HIT: $CACHE_HIT\"\nif [ $CACHE_HIT != 'true' ]\nthen\n  echo \"[DEBUG] installing\"\n  yarn run web firebase setup:emulators:firestore\nelse\n  echo \"[DEBUG] skipped\"\nfi\nls -lrth ~/.cache/firebase/emulators/\n",
+          "env": {
+            "CACHE_HIT": "${{ steps.step_cache_deps.outputs.cache-hit }}"
+          }
         },
         {
           "name": "Download dist",
