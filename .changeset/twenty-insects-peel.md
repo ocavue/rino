@@ -1,5 +1,5 @@
 ---
-"@rino.app/home": patch
+"@rino.app/home": minor
 ---
 
 First homepage version
