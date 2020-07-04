@@ -19,7 +19,7 @@ export const MobileMenu: React.FC<{
             setAnimationClassName("rino-mobile-menu-hide")
             setTimeout(() => {
                 setHidden(true)
-            }, 200)
+            }, 220)
         }
     }, [activity])
 
