@@ -4,7 +4,6 @@ import { ThemeProvider } from "@material-ui/core/styles"
 import React, { useEffect, useMemo } from "react"
 
 import { EditContainer, registerConnectionEvent } from "src/controller"
-import { getCurrentUser, onAuthStateChanged } from "src/controller/auth/actions"
 import { AuthContainer } from "src/controller/auth/hook"
 import { StoreContainer } from "src/store"
 
@@ -12,7 +11,7 @@ const ContainerConsumer: React.FC = (props) => {
     const {
         state: { isDarkTheme, setConnected, setLoadingData },
     } = StoreContainer.useContainer()
-    const { user, setUser, setLoadingUser } = AuthContainer.useContainer()
+    const { user } = AuthContainer.useContainer()
 
     const { fetchNotes, resetNotes } = EditContainer.useContainer()
 
@@ -20,21 +19,6 @@ const ContainerConsumer: React.FC = (props) => {
         const unsubscribe = registerConnectionEvent((connected) => setConnected(connected))
         return () => unsubscribe()
     }, [setConnected])
-
-    useEffect(() => {
-        const unsubscribe = onAuthStateChanged((user) => {
-            const currentUser = getCurrentUser()
-            if (currentUser?.uid !== user?.uid) {
-                console.warn(
-                    `getCurrentUser return ${currentUser} but onAuthStateChanged call ${user}`,
-                )
-            }
-            setUser(user)
-            setLoadingUser(false)
-            window.localStorage.setItem("__rino_dev_auth_state", user ? "yes" : "no")
-        })
-        return () => unsubscribe()
-    }, [setLoadingUser, setUser])
 
     useEffect(() => {
         const loadData = async () => {
