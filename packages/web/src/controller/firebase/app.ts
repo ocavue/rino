@@ -8,7 +8,7 @@ import firebase from "firebase/app"
 
 import { isTestEnv } from "src/utils"
 
-import { firebaseConfig } from "./config"
+import { firebaseConfig } from "../config"
 
 export const firebaseApp: firebase.app.App = (() => {
     // Avoid duplicate initiations during development
@@ -52,12 +52,6 @@ export const firebaseApp: firebase.app.App = (() => {
 
     return app
 })()
-
-export type DocumentReference = firebase.firestore.DocumentReference
-export type DocumentSnapshot = firebase.firestore.DocumentSnapshot
-export type User = firebase.User
-export type Timestamp = firebase.firestore.Timestamp
-export const Timestamp = firebase.firestore.Timestamp
 
 export function registerConnectionEvent(listenner: (connected: boolean) => void) {
     const onConnectedChanged = (snap: firebase.database.DataSnapshot) => {

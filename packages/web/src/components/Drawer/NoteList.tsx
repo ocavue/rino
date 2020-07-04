@@ -1,7 +1,7 @@
 import { List } from "@material-ui/core"
 import React from "react"
 
-import { Note } from "src/controller"
+import { Note } from "src/controller/edit"
 import { WorksapceStateContainer } from "src/controller/workspace-state/hook"
 import { useIsMobile } from "src/hooks"
 

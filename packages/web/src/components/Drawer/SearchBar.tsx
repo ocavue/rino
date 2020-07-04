@@ -1,7 +1,7 @@
 import { TextField } from "@material-ui/core"
 import React from "react"
 
-import { EditContainer } from "src/controller"
+import { EditContainer } from "src/controller/edit"
 
 export const SearchBar = () => {
     const { setSearchQuery } = EditContainer.useContainer()

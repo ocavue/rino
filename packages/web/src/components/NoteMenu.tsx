@@ -1,7 +1,7 @@
 import { Menu, MenuItem } from "@material-ui/core"
 import React from "react"
 
-import { EditContainer } from "src/controller"
+import { EditContainer } from "src/controller/edit"
 import { WorksapceStateContainer } from "src/controller/workspace-state/hook"
 
 export type NoteMenuOptions = {

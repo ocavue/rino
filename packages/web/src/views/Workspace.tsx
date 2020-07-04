@@ -5,8 +5,9 @@ import { Appbar } from "src/components/Appbar"
 import { Content } from "src/components/Content"
 import { Drawer } from "src/components/Drawer"
 import { SignInSnackbar } from "src/components/SignInSnackbar"
-import { EditContainer, registerConnectionEvent } from "src/controller"
 import { AuthContainer } from "src/controller/auth/hook"
+import { EditContainer } from "src/controller/edit"
+import { registerConnectionEvent } from "src/controller/firebase/app"
 import { WorksapceStateContainer } from "src/controller/workspace-state/hook"
 
 const useStyles = makeStyles((theme: Theme) => {

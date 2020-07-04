@@ -2,7 +2,7 @@ import { createStyles, ListItem, ListItemText, makeStyles, Theme } from "@materi
 import React, { useState } from "react"
 
 import { NoteMenu } from "src/components/NoteMenu"
-import { Note } from "src/controller"
+import { Note } from "src/controller/edit"
 
 const useStyles = makeStyles((theme: Theme) => {
     return createStyles({

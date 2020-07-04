@@ -2,8 +2,8 @@ import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles"
 import { act, fireEvent, render, screen, within } from "@testing-library/react"
 import React from "react"
 
-import { EditContainer, Note, NoteType } from "src/controller"
 import { AuthContainer } from "src/controller/auth/hook"
+import { EditContainer, Note, NoteType } from "src/controller/edit"
 import { WorksapceStateContainer } from "src/controller/workspace-state/hook"
 import { TestHook } from "tests/react-test-utils"
 

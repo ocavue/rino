@@ -1,8 +1,8 @@
 import { Box, CircularProgress } from "@material-ui/core"
 import React, { useMemo } from "react"
 
-import { EditContainer } from "src/controller"
 import { AuthContainer } from "src/controller/auth/hook"
+import { EditContainer } from "src/controller/edit"
 import { WorksapceStateContainer } from "src/controller/workspace-state/hook"
 
 import { NoteList } from "./NoteList"

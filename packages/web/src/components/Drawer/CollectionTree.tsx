@@ -8,7 +8,12 @@ import {
 } from "@material-ui/core"
 import React from "react"
 
-import { Collection, collectionIconMap, CollectionIconName, EditContainer } from "src/controller"
+import {
+    Collection,
+    collectionIconMap,
+    CollectionIconName,
+    EditContainer,
+} from "src/controller/edit"
 
 const useStyles = makeStyles(() => {
     return createStyles({

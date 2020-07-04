@@ -1,7 +1,7 @@
 import { generateRandomId } from "src/utils"
 
-import { DocumentReference, DocumentSnapshot, Timestamp } from "../firebase"
-import { notesCollection } from "../firebase"
+import { notesCollection } from "../firebase/app"
+import { DocumentReference, DocumentSnapshot, Timestamp } from "../firebase/firebase-types"
 
 interface NoteData {
     uid: string

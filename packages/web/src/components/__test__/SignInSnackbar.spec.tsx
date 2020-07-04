@@ -2,8 +2,8 @@ import { act, fireEvent, render, screen } from "@testing-library/react"
 import React from "react"
 
 import { SIGN_IN_SNACKBAR_SHOW_DELAY } from "src/constants"
-import { EditContainer, User } from "src/controller"
 import { AuthContainer } from "src/controller/auth/hook"
+import { EditContainer, User } from "src/controller/edit"
 import { WorksapceStateContainer } from "src/controller/workspace-state/hook"
 import { mockNextLink, TestHook } from "tests/react-test-utils"
 

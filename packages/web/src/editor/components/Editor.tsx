@@ -4,7 +4,7 @@ import clsx from "clsx"
 import React, { useEffect, useRef, useState } from "react"
 
 import { MAX_EDITOR_WIDTH } from "src/constants"
-import { Note } from "src/controller"
+import { Note } from "src/controller/edit"
 import { SourceCodeEditor, WysiwygEditor } from "src/editor"
 import { metaKey } from "src/utils"
 
