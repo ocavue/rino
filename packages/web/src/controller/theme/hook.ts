@@ -11,10 +11,12 @@ const storeKey = "rinoTheme"
 const setTheme = (theme: Theme) => window.localStorage.setItem(storeKey, theme)
 
 const getTheme = (): Theme => {
-    // when this function is called in the server, localStorage doesn't exist
-    const theme = window?.localStorage?.getItem(storeKey) as Theme
-    if (themes.includes(theme)) return theme
-    else return defaultTheme
+    // `localStorage` doesn't exist when doing SSR
+    if (typeof localStorage !== "undefined") {
+        const theme = localStorage?.getItem(storeKey) as Theme
+        if (themes.includes(theme)) return theme
+    }
+    return defaultTheme
 }
 
 const useTheme = () => {
