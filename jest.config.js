@@ -12,7 +12,7 @@ module.exports = {
     coveragePathIgnorePatterns: ["/node_modules/"],
 
     // A list of reporter names that Jest uses when writing coverage reports
-    coverageReporters: ["text-summary", "json", "json-summary", "html"],
+    coverageReporters: ["text-summary", "json", "json-summary"],
 
     // Use this configuration option to add custom reporters to Jest
     reporters: ["default", "jest-puppeteer-istanbul/lib/reporter"],
