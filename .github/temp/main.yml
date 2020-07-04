@@ -37,13 +37,11 @@ jobs:
         # Reinstall node modules even if `cache-hit` is `true` because we need to build symlinks for Yarn workspace
         run: |
           yarn install --frozen-lockfile
-          echo "[DEBUG ]CACHE_HIT: $CACHE_HIT"
+          echo "[DEBUG] CACHE_HIT: $CACHE_HIT"
           if [ $CACHE_HIT != 'true' ]
           then
             echo "[DEBUG] installing"
             yarn run web firebase setup:emulators:firestore
-          else
-            echo "[DEBUG] skipped"
           fi
           ls -lrth ~/.cache/firebase/emulators/
         env:
