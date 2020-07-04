@@ -71,16 +71,8 @@ export const Features: React.FC = () => {
                         desc=""
                         svg={cloudUploadSvg}
                     />
-                    <FeatureBlock
-                        title="Work offline"
-                        desc="Lorem ipsum, dolor sit amet consectetur adipisicing elit. Maiores impedit perferendis suscipit eaque, iste dolor cupiditate blanditiis ratione."
-                        svg={offlineSvg}
-                    />
-                    <FeatureBlock
-                        title="Free and open source"
-                        desc="Lorem ipsum, dolor sit amet consectetur adipisicing elit. Maiores impedit perferendis suscipit eaque, iste dolor cupiditate blanditiis ratione."
-                        svg={githubSvg}
-                    />
+                    <FeatureBlock title="Work offline" desc="" svg={offlineSvg} />
+                    <FeatureBlock title="Free and open source" desc="" svg={githubSvg} />
                 </ul>
             </div>
         </div>
