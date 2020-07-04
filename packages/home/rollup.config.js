@@ -28,7 +28,9 @@ export default {
         commonjs({
             include: /node_modules/,
         }),
-        postcss(),
+        postcss({
+            minimize: true,
+        }),
         typescript(),
         image(),
         !isProd &&
