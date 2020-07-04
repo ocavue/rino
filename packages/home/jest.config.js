@@ -12,7 +12,7 @@ module.exports = {
     testMatch: ["**/__test__/**/*.spec.(js|ts|jsx|tsx)"],
 
     // A list of paths to modules that run some code to configure or set up the testing framework before each test
-    setupFilesAfterEnv: ["jest-extended"],
+    setupFilesAfterEnv: ["jest-extended", "@testing-library/jest-dom"],
 
     coveragePathIgnorePatterns: ["<rootDir>/src/index.tsx", "/node_modules/"],
 }
