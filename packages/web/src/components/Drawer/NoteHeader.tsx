@@ -4,7 +4,7 @@ import React, { useMemo } from "react"
 import { AppbarIconButton } from "src/components/AppbarIconButton"
 import { EditContainer } from "src/controller"
 import { AuthContainer } from "src/controller/auth/hook"
-import { StoreContainer } from "src/store"
+import { WorksapceStateContainer } from "src/controller/workspace-state/hook"
 
 import { SearchBar } from "./SearchBar"
 import { useHeaderStyles } from "./style"
@@ -12,9 +12,7 @@ import { useHeaderStyles } from "./style"
 export const NoteHeader: React.FC = () => {
     const classes = useHeaderStyles()
 
-    const {
-        state: { loadingData },
-    } = StoreContainer.useContainer()
+    const { loadingData } = WorksapceStateContainer.useContainer()
     const { user, loadingUser } = AuthContainer.useContainer()
 
     const {

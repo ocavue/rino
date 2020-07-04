@@ -4,7 +4,7 @@ import { ThemeProvider } from "@material-ui/core/styles"
 import React, { useMemo } from "react"
 
 import { ThemeContainer } from "src/controller/theme/hook"
-import { StoreContainer } from "src/store"
+import { WorksapceStateContainer } from "src/controller/workspace-state/hook"
 
 const ThemeConsumer: React.FC = (props) => {
     const lightTheme = useMemo(() => createMuiTheme({ palette: { type: "light" } }), [])
@@ -25,9 +25,9 @@ const ThemeConsumer: React.FC = (props) => {
 const App: React.FC = (props) => {
     return (
         <ThemeContainer.Provider>
-            <StoreContainer.Provider>
+            <WorksapceStateContainer.Provider>
                 <ThemeConsumer>{props.children}</ThemeConsumer>
-            </StoreContainer.Provider>
+            </WorksapceStateContainer.Provider>
         </ThemeContainer.Provider>
     )
 }

@@ -5,7 +5,7 @@ import clsx from "clsx"
 import React, { useMemo } from "react"
 
 import { MAX_DRAWER_WIDTH } from "src/constants"
-import { StoreContainer } from "src/store"
+import { WorksapceStateContainer } from "src/controller/workspace-state/hook"
 
 import * as svg from "./TableMenuSvg"
 import { WysiwygExtensions } from "./wysiwyg-extension"
@@ -45,9 +45,7 @@ export const TableMenu: React.FC = () => {
     const { actions, helpers } = useRemirrorContext<WysiwygExtensions>()
     const showTableMenu = !!helpers.selectedTableCell()
 
-    const {
-        state: { drawerActivity },
-    } = StoreContainer.useContainer()
+    const { drawerActivity } = WorksapceStateContainer.useContainer()
 
     const classes = useStyles()
 

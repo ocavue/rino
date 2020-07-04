@@ -4,8 +4,8 @@ import React from "react"
 
 import { MAX_DRAWER_WIDTH } from "src/constants"
 import { EditContainer } from "src/controller"
+import { WorksapceStateContainer } from "src/controller/workspace-state/hook"
 import { Editor } from "src/editor/components"
-import { StoreContainer } from "src/store"
 
 import { Welcome } from "./Welcome"
 
@@ -42,9 +42,7 @@ const useStyles = makeStyles((theme: Theme) => {
 export const Content: React.FC = () => {
     const classes = useStyles()
 
-    const {
-        state: { drawerActivity },
-    } = StoreContainer.useContainer()
+    const { drawerActivity } = WorksapceStateContainer.useContainer()
 
     const { setNoteContent, note } = EditContainer.useContainer()
 

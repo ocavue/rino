@@ -3,14 +3,12 @@ import React, { useMemo } from "react"
 
 import { EditContainer } from "src/controller"
 import { AuthContainer } from "src/controller/auth/hook"
-import { StoreContainer } from "src/store"
+import { WorksapceStateContainer } from "src/controller/workspace-state/hook"
 
 import { NoteList } from "./NoteList"
 
 export const NoteBody: React.FC = () => {
-    const {
-        state: { loadingData },
-    } = StoreContainer.useContainer()
+    const { loadingData } = WorksapceStateContainer.useContainer()
     const { loadingUser } = AuthContainer.useContainer()
 
     const loading = useMemo(() => loadingUser || loadingData, [loadingData, loadingUser])

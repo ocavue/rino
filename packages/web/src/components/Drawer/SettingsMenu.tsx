@@ -3,16 +3,14 @@ import React from "react"
 
 import { signOut } from "src/controller/auth/actions"
 import { AuthContainer } from "src/controller/auth/hook"
-import { StoreContainer } from "src/store"
+import { ThemeContainer } from "src/controller/theme/hook"
 
 const SettingsMenu: React.FC<{
     anchor: HTMLElement | null
     setAnchor: (val: HTMLElement | null) => void
     setOpenAboutDialog: (val: boolean) => void
 }> = ({ anchor, setAnchor, setOpenAboutDialog }) => {
-    const {
-        state: { toggleTheme },
-    } = StoreContainer.useContainer()
+    const { toggleTheme } = ThemeContainer.useContainer()
     const { email } = AuthContainer.useContainer()
 
     const handleMenuClose = () => {

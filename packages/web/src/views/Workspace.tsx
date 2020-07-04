@@ -7,7 +7,7 @@ import { Drawer } from "src/components/Drawer"
 import { SignInSnackbar } from "src/components/SignInSnackbar"
 import { EditContainer, registerConnectionEvent } from "src/controller"
 import { AuthContainer } from "src/controller/auth/hook"
-import { StoreContainer } from "src/store"
+import { WorksapceStateContainer } from "src/controller/workspace-state/hook"
 
 const useStyles = makeStyles((theme: Theme) => {
     return createStyles({
@@ -21,9 +21,7 @@ const useStyles = makeStyles((theme: Theme) => {
 function WorkspaceConsumer() {
     const classes = useStyles()
     const { user } = AuthContainer.useContainer()
-    const {
-        state: { setConnected, setLoadingData },
-    } = StoreContainer.useContainer()
+    const { setConnected, setLoadingData } = WorksapceStateContainer.useContainer()
 
     const { fetchNotes, resetNotes } = EditContainer.useContainer()
 
@@ -60,10 +58,12 @@ function WorkspaceConsumer() {
 
 export default function Workspace() {
     return (
-        <AuthContainer.Provider>
-            <EditContainer.Provider>
-                <WorkspaceConsumer />
-            </EditContainer.Provider>
-        </AuthContainer.Provider>
+        <WorksapceStateContainer.Provider>
+            <AuthContainer.Provider>
+                <EditContainer.Provider>
+                    <WorkspaceConsumer />
+                </EditContainer.Provider>
+            </AuthContainer.Provider>
+        </WorksapceStateContainer.Provider>
     )
 }

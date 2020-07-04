@@ -4,7 +4,7 @@ import React from "react"
 
 import { EditContainer, Note, NoteType } from "src/controller"
 import { AuthContainer } from "src/controller/auth/hook"
-import { StoreContainer } from "src/store"
+import { WorksapceStateContainer } from "src/controller/workspace-state/hook"
 import { TestHook } from "tests/react-test-utils"
 
 import { SearchBar } from "../SearchBar"
@@ -12,25 +12,25 @@ import { SearchBar } from "../SearchBar"
 function renderWithCallback(component: React.ReactNode, callback: () => any) {
     return render(
         <ThemeProvider theme={createMuiTheme()}>
-            <StoreContainer.Provider>
+            <WorksapceStateContainer.Provider>
                 <EditContainer.Provider>
                     <AuthContainer.Provider>
                         {component}
                         <TestHook callback={callback} />
                     </AuthContainer.Provider>
                 </EditContainer.Provider>
-            </StoreContainer.Provider>
+            </WorksapceStateContainer.Provider>
         </ThemeProvider>,
     )
 }
 
 test("<SearchBar />", () => {
-    let storeHooks = {} as ReturnType<typeof StoreContainer.useContainer>
+    let workHooks = {} as ReturnType<typeof WorksapceStateContainer.useContainer>
     let editHooks = {} as ReturnType<typeof EditContainer.useContainer>
     let authHooks = {} as ReturnType<typeof AuthContainer.useContainer>
 
     renderWithCallback(<SearchBar />, () => {
-        storeHooks = StoreContainer.useContainer()
+        workHooks = WorksapceStateContainer.useContainer()
         editHooks = EditContainer.useContainer()
         authHooks = AuthContainer.useContainer()
     })
@@ -38,10 +38,10 @@ test("<SearchBar />", () => {
     // Set loading to false
     act(() => {
         authHooks.setLoadingUser(false)
-        storeHooks.state.setLoadingData(false)
+        workHooks.setLoadingData(false)
     })
     expect(authHooks.loadingUser).toBeFalse()
-    expect(storeHooks.state.loadingData).toBeFalse()
+    expect(workHooks.loadingData).toBeFalse()
 
     // Insert some notes
     act(() => {
@@ -49,7 +49,7 @@ test("<SearchBar />", () => {
             Note.new({ type: NoteType.Local, content: "AAAA" }),
             Note.new({ type: NoteType.Local, content: "BBBB" }),
         ])
-        storeHooks.state.setLoadingData(false)
+        workHooks.setLoadingData(false)
     })
 
     // Check states before searching
