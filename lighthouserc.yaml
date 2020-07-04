@@ -3,6 +3,13 @@
 ci:
   collect:
     staticDistDir: ./packages/web/dist
+    url:
+      - http://localhost/index.html
+      - http://localhost/404.html
+      - http://localhost/sign-in/index.html
+      - http://localhost/sign-up/index.html
+      - http://localhost/password-reset/index.html
+
   upload:
     target: temporary-public-storage
   assert:
