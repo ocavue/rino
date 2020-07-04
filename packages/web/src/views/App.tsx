@@ -3,19 +3,16 @@ import { createMuiTheme } from "@material-ui/core"
 import { ThemeProvider } from "@material-ui/core/styles"
 import React, { useEffect, useMemo } from "react"
 
-import {
-    EditContainer,
-    getCurrentUser,
-    onAuthStateChanged,
-    registerConnectionEvent,
-} from "src/controller"
+import { EditContainer, registerConnectionEvent } from "src/controller"
+import { getCurrentUser, onAuthStateChanged } from "src/controller/auth/actions"
+import { AuthContainer } from "src/controller/auth/hook"
 import { StoreContainer } from "src/store"
 
 const ContainerConsumer: React.FC = (props) => {
     const {
         state: { isDarkTheme, setConnected, setLoadingData, setLoadingUser },
-        auth: { user, setUser },
     } = StoreContainer.useContainer()
+    const { user, setUser } = AuthContainer.useContainer()
 
     const { fetchNotes, resetNotes } = EditContainer.useContainer()
 
@@ -73,7 +70,9 @@ const App: React.FC = (props) => {
     return (
         <StoreContainer.Provider>
             <EditContainer.Provider>
-                <ContainerConsumer>{props.children}</ContainerConsumer>
+                <AuthContainer.Provider>
+                    <ContainerConsumer>{props.children}</ContainerConsumer>
+                </AuthContainer.Provider>
             </EditContainer.Provider>
         </StoreContainer.Provider>
     )

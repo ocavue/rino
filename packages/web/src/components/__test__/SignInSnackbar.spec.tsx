@@ -3,6 +3,7 @@ import React from "react"
 
 import { SIGN_IN_SNACKBAR_SHOW_DELAY } from "src/constants"
 import { EditContainer, User } from "src/controller"
+import { AuthContainer } from "src/controller/auth/hook"
 import { StoreContainer } from "src/store"
 import { mockNextLink, TestHook } from "tests/react-test-utils"
 
@@ -16,8 +17,10 @@ function renderWithCallback(component: React.ReactNode, callback: () => any) {
         <div>
             <StoreContainer.Provider>
                 <EditContainer.Provider>
-                    {component}
-                    <TestHook callback={callback} />
+                    <AuthContainer.Provider>
+                        {component}
+                        <TestHook callback={callback} />
+                    </AuthContainer.Provider>
                 </EditContainer.Provider>
             </StoreContainer.Provider>
             ,
@@ -29,13 +32,15 @@ describe("<SignInSnackbar />", () => {
     test("without login user", () => {
         // Parpare the environment
         let storeHooks = {} as ReturnType<typeof StoreContainer.useContainer>
+        let authHooks = {} as ReturnType<typeof AuthContainer.useContainer>
         renderWithCallback(<SignInSnackbar />, () => {
             storeHooks = StoreContainer.useContainer()
+            authHooks = AuthContainer.useContainer()
         })
         act(() => {
             storeHooks.state.setLoadingData(false)
             storeHooks.state.setLoadingUser(false)
-            storeHooks.auth.setUser(null)
+            authHooks.setUser(null)
 
             jest.advanceTimersByTime(SIGN_IN_SNACKBAR_SHOW_DELAY + 1000)
         })
@@ -70,13 +75,15 @@ describe("<SignInSnackbar />", () => {
     test("with login user", () => {
         // Parpare the environment
         let storeHooks = {} as ReturnType<typeof StoreContainer.useContainer>
+        let authHooks = {} as ReturnType<typeof AuthContainer.useContainer>
         renderWithCallback(<SignInSnackbar />, () => {
             storeHooks = StoreContainer.useContainer()
+            authHooks = AuthContainer.useContainer()
         })
         act(() => {
             storeHooks.state.setLoadingData(false)
             storeHooks.state.setLoadingUser(false)
-            storeHooks.auth.setUser({} as User)
+            authHooks.setUser({} as User)
 
             jest.advanceTimersByTime(SIGN_IN_SNACKBAR_SHOW_DELAY + 1000)
         })

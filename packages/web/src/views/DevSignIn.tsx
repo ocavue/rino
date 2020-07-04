@@ -1,7 +1,7 @@
 import { useRouter } from "next/router"
 import React from "react"
 
-import { signInTestUser } from "src/controller"
+import { signInTestUser } from "src/controller/auth/actions"
 import Alert from "src/views/Alert"
 
 export default function DevSignIn() {

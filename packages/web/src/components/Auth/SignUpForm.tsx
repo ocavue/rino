@@ -9,7 +9,7 @@ import {
     SubmitButton,
     UsernameTextField,
 } from "src/components/Auth/Auth"
-import { createUserWithEmailAndPassword } from "src/controller"
+import { createUserWithEmailAndPassword } from "src/controller/auth/actions"
 
 type SignUpFormProps = {
     progressing: boolean

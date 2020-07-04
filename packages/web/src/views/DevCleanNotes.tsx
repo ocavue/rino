@@ -1,7 +1,8 @@
 import { useRouter } from "next/router"
 import React from "react"
 
-import { EditContainer, getCurrentUser } from "src/controller"
+import { EditContainer } from "src/controller"
+import { getCurrentUser } from "src/controller/auth/actions"
 import Alert from "src/views/Alert"
 
 export default function DevCleanNotes() {

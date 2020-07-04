@@ -3,6 +3,7 @@ import React, { useMemo } from "react"
 
 import { AppbarIconButton } from "src/components/AppbarIconButton"
 import { EditContainer } from "src/controller"
+import { AuthContainer } from "src/controller/auth/hook"
 import { StoreContainer } from "src/store"
 
 import { SearchBar } from "./SearchBar"
@@ -12,9 +13,9 @@ export const NoteHeader: React.FC = () => {
     const classes = useHeaderStyles()
 
     const {
-        auth: { user },
         state: { loading },
     } = StoreContainer.useContainer()
+    const { user } = AuthContainer.useContainer()
 
     const {
         createServerNote,

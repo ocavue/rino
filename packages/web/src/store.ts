@@ -1,13 +1,7 @@
 import { useMemo, useState } from "react"
 import { createContainer } from "unstated-next"
 
-import { getCurrentUser, theme, User } from "src/controller"
-
-const useAuth = () => {
-    const [user, setUser] = useState<User | null>(getCurrentUser())
-    const email: string | null = useMemo(() => (user ? user.email : null), [user])
-    return { user, email, setUser }
-}
+import { theme } from "src/controller"
 
 const useTheme = () => {
     const [isDarkTheme, setDarkTheme] = useState(theme.getTheme() === "dark")
@@ -58,7 +52,6 @@ const useUiState = () => {
 
 const useStore = () => {
     return {
-        auth: useAuth(),
         state: { ...useUiState(), ...useNetworkState() },
     }
 }

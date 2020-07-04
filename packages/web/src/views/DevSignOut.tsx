@@ -1,7 +1,8 @@
 import { useRouter } from "next/router"
 import React from "react"
 
-import { signOut } from "src/controller"
+import { signOut } from "src/controller/auth/actions"
+import { AuthContainer } from "src/controller/auth/hook"
 import { StoreContainer } from "src/store"
 import Alert from "src/views/Alert"
 
@@ -9,8 +10,8 @@ export default function DevSignOut() {
     const router = useRouter()
     const {
         state: { loadingData, loadingUser, loading },
-        auth: { user },
     } = StoreContainer.useContainer()
+    const { user } = AuthContainer.useContainer()
 
     React.useEffect(() => {
         console.log(`useEffect:`, { loadingData, loadingUser, loading, user: !!user })

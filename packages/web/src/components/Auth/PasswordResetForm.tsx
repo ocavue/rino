@@ -2,7 +2,7 @@ import { FirebaseError } from "firebase"
 import React, { useMemo } from "react"
 
 import { AuthForm, SubmitButton, UsernameTextField } from "src/components/Auth/Auth"
-import { sendPasswordResetEmail } from "src/controller"
+import { sendPasswordResetEmail } from "src/controller/auth/actions"
 
 type PasswordReset = {
     email: string

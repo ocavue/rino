@@ -9,7 +9,7 @@ import {
     SubmitButton,
     UsernameTextField,
 } from "src/components/Auth/Auth"
-import { signInWithEmailAndPassword } from "src/controller"
+import { signInWithEmailAndPassword } from "src/controller/auth/actions"
 
 type SignInFormProps = {
     progressing: boolean
