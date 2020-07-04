@@ -5,7 +5,7 @@ import { EditContainer } from "src/controller"
 import { getCurrentUser } from "src/controller/auth/actions"
 import Alert from "src/views/Alert"
 
-export default function DevCleanNotes() {
+function DevCleanNotesConsumer() {
     const router = useRouter()
     const { removeAllNotes } = EditContainer.useContainer()
 
@@ -18,4 +18,12 @@ export default function DevCleanNotes() {
     }, [removeAllNotes, router])
 
     return <Alert title="clean notes" message="development" />
+}
+
+export default function DevCleanNotes() {
+    return (
+        <EditContainer.Provider>
+            <DevCleanNotesConsumer />
+        </EditContainer.Provider>
+    )
 }
