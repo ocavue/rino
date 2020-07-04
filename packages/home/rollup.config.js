@@ -31,9 +31,7 @@ export default {
         postcss({
             plugins: [],
         }),
-        typescript({
-            useTsconfigDeclarationDir: true,
-        }),
+        typescript(),
         image(),
         !isProd &&
             html({
