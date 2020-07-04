@@ -3,8 +3,8 @@ import clsx from "clsx"
 import React from "react"
 
 import { MAX_DRAWER_WIDTH } from "src/constants"
+import { WorksapceStateContainer } from "src/controller/workspace-state/hook"
 import { useIsMobile } from "src/hooks"
-import { StoreContainer } from "src/store"
 
 import { ActivityBody } from "./ActivityBody"
 import { ActivityHeader } from "./ActivityHeader"
@@ -39,9 +39,7 @@ const useStyles = m.makeStyles((theme: m.Theme) => {
 })
 
 export const Drawer: React.FC = () => {
-    const {
-        state: { drawerActivity, setDrawerActivity },
-    } = StoreContainer.useContainer()
+    const { drawerActivity, setDrawerActivity } = WorksapceStateContainer.useContainer()
 
     const isMobile = useIsMobile()
     const classes = useStyles()

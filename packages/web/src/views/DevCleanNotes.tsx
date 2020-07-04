@@ -1,10 +1,11 @@
 import { useRouter } from "next/router"
 import React from "react"
 
-import { EditContainer, getCurrentUser } from "src/controller"
+import { getCurrentUser } from "src/controller/auth/actions"
+import { EditContainer } from "src/controller/edit"
 import Alert from "src/views/Alert"
 
-export default function DevCleanNotes() {
+function DevCleanNotesConsumer() {
     const router = useRouter()
     const { removeAllNotes } = EditContainer.useContainer()
 
@@ -17,4 +18,12 @@ export default function DevCleanNotes() {
     }, [removeAllNotes, router])
 
     return <Alert title="clean notes" message="development" />
+}
+
+export default function DevCleanNotes() {
+    return (
+        <EditContainer.Provider>
+            <DevCleanNotesConsumer />
+        </EditContainer.Provider>
+    )
 }

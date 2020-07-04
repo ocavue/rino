@@ -1,9 +1,9 @@
 import { List } from "@material-ui/core"
 import React from "react"
 
-import { Note } from "src/controller"
+import { Note } from "src/controller/edit"
+import { WorksapceStateContainer } from "src/controller/workspace-state/hook"
 import { useIsMobile } from "src/hooks"
-import { StoreContainer } from "src/store"
 
 import { NoteListItem } from "./NoteListItem"
 import { useBodyStyles } from "./style"
@@ -14,9 +14,7 @@ export const NoteList: React.FC<{
     setNoteKey: React.Dispatch<React.SetStateAction<string | null>>
 }> = ({ visibleNotes, noteKey, setNoteKey }) => {
     const classes = useBodyStyles()
-    const {
-        state: { setDrawerActivity },
-    } = StoreContainer.useContainer()
+    const { setDrawerActivity } = WorksapceStateContainer.useContainer()
 
     const isMobile = useIsMobile()
 

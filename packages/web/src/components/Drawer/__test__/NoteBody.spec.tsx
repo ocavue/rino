@@ -2,8 +2,9 @@ import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles"
 import { act, fireEvent, render, screen, waitFor } from "@testing-library/react"
 import React from "react"
 
-import { EditContainer, Note, NoteType } from "src/controller"
-import { StoreContainer } from "src/store"
+import { AuthContainer } from "src/controller/auth/hook"
+import { EditContainer, Note, NoteType } from "src/controller/edit"
+import { WorksapceStateContainer } from "src/controller/workspace-state/hook"
 import { TestHook } from "tests/react-test-utils"
 
 import { NoteBody } from "../NoteBody"
@@ -11,35 +12,41 @@ import { NoteBody } from "../NoteBody"
 function renderWithCallback(component: React.ReactNode, callback: () => any) {
     return render(
         <ThemeProvider theme={createMuiTheme()}>
-            <StoreContainer.Provider>
+            <WorksapceStateContainer.Provider>
                 <EditContainer.Provider>
-                    {component}
-                    <TestHook callback={callback} />
+                    <AuthContainer.Provider>
+                        {component}
+                        <TestHook callback={callback} />
+                    </AuthContainer.Provider>
                 </EditContainer.Provider>
-            </StoreContainer.Provider>
+            </WorksapceStateContainer.Provider>
         </ThemeProvider>,
     )
 }
 
 test("<NoteBody />", async () => {
-    let storeHooks = {} as ReturnType<typeof StoreContainer.useContainer>
+    let workHooks = {} as ReturnType<typeof WorksapceStateContainer.useContainer>
     let editHooks = {} as ReturnType<typeof EditContainer.useContainer>
+    let authHooks = {} as ReturnType<typeof AuthContainer.useContainer>
 
     renderWithCallback(<NoteBody />, () => {
-        storeHooks = StoreContainer.useContainer()
+        workHooks = WorksapceStateContainer.useContainer()
         editHooks = EditContainer.useContainer()
+        authHooks = AuthContainer.useContainer()
     })
 
-    expect(storeHooks.state.loading).toBeTrue()
+    expect(authHooks.loadingUser).toBeTrue()
+    expect(workHooks.loadingData).toBeTrue()
     screen.getByTestId("drawer-note-body-loading")
 
     act(() => {
-        storeHooks.state.setLoadingUser(false)
-        storeHooks.state.setLoadingData(false)
+        authHooks.setLoadingUser(false)
+        workHooks.setLoadingData(false)
     })
 
     // Set loading to false
-    expect(storeHooks.state.loading).toBeFalse()
+    expect(authHooks.loadingUser).toBeFalse()
+    expect(workHooks.loadingData).toBeFalse()
     screen.getByTestId("sidebar-notes") // TODO: rename sidebar to drawer
     expect(editHooks.notes).toHaveLength(0)
     expect(screen.queryByTestId("sidebar-notes-list-item")).toBeNull()
@@ -50,7 +57,7 @@ test("<NoteBody />", async () => {
             Note.new({ type: NoteType.Local, content: "AAAA" }),
             Note.new({ type: NoteType.Local, content: "BBBB" }),
         ])
-        storeHooks.state.setLoadingData(false)
+        workHooks.setLoadingData(false)
     })
     expect(editHooks.notes).toHaveLength(2)
     expect(screen.getAllByTestId("sidebar-notes-list-item-local")).toHaveLength(2)

@@ -4,7 +4,7 @@ import NextLink from "next/link"
 import React from "react"
 
 import { SIGN_IN_SNACKBAR_SHOW_DELAY } from "src/constants"
-import { StoreContainer } from "src/store"
+import { AuthContainer } from "src/controller/auth/hook"
 
 type SnackbarState = "off" | "full" | "dense"
 
@@ -119,10 +119,7 @@ const FullSignInSnackbar: React.FC<{
 }
 
 export const SignInSnackbar: React.FC = () => {
-    const {
-        state: { loadingUser },
-        auth: { user },
-    } = StoreContainer.useContainer()
+    const { user, loadingUser } = AuthContainer.useContainer()
 
     const [state, setState] = React.useState<SnackbarState>("off")
 

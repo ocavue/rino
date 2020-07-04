@@ -2,7 +2,7 @@ import * as icons from "@material-ui/icons"
 import React from "react"
 
 import { AppbarIconButton } from "src/components/AppbarIconButton"
-import { StoreContainer } from "src/store"
+import { WorksapceStateContainer } from "src/controller/workspace-state/hook"
 
 import { AboutDialog } from "../AboutDialog"
 import { SettingsMenu } from "./SettingsMenu"
@@ -10,9 +10,7 @@ import { useHeaderStyles } from "./style"
 
 export const ActivityHeader: React.FC = () => {
     const classes = useHeaderStyles()
-    const {
-        state: { connected },
-    } = StoreContainer.useContainer()
+    const { connected } = WorksapceStateContainer.useContainer()
 
     const [anchor, setAnchor] = React.useState<null | HTMLElement>(null)
     const [openAboutDialog, setOpenAboutDialog] = React.useState(false)

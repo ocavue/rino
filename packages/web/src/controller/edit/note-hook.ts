@@ -3,7 +3,7 @@ import { sortBy } from "lodash"
 import { useCallback, useMemo, useState } from "react"
 
 import { docs } from "../docs"
-import { notesCollection } from "../firebase"
+import { notesCollection } from "../firebase/app"
 import { Note, NoteType } from "./note"
 
 export type Notes = Note[]

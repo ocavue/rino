@@ -1,8 +1,8 @@
 import { Menu, MenuItem } from "@material-ui/core"
 import React from "react"
 
-import { EditContainer } from "src/controller"
-import { StoreContainer } from "src/store"
+import { EditContainer } from "src/controller/edit"
+import { WorksapceStateContainer } from "src/controller/workspace-state/hook"
 
 export type NoteMenuOptions = {
     noteKey: string | null
@@ -17,9 +17,7 @@ export const NoteMenu: React.FC<NoteMenuOptions> = ({
     handleMenuClose,
     anchorPosition,
 }) => {
-    const {
-        state: { setDrawerActivity },
-    } = StoreContainer.useContainer()
+    const { setDrawerActivity } = WorksapceStateContainer.useContainer()
 
     const { deleteNote } = EditContainer.useContainer()
 

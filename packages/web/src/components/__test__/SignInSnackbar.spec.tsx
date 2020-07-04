@@ -2,8 +2,9 @@ import { act, fireEvent, render, screen } from "@testing-library/react"
 import React from "react"
 
 import { SIGN_IN_SNACKBAR_SHOW_DELAY } from "src/constants"
-import { EditContainer, User } from "src/controller"
-import { StoreContainer } from "src/store"
+import { AuthContainer } from "src/controller/auth/hook"
+import { EditContainer, User } from "src/controller/edit"
+import { WorksapceStateContainer } from "src/controller/workspace-state/hook"
 import { mockNextLink, TestHook } from "tests/react-test-utils"
 
 import { SignInSnackbar } from "../SignInSnackbar"
@@ -14,13 +15,14 @@ jest.mock("next/link", () => mockNextLink)
 function renderWithCallback(component: React.ReactNode, callback: () => any) {
     return render(
         <div>
-            <StoreContainer.Provider>
+            <WorksapceStateContainer.Provider>
                 <EditContainer.Provider>
-                    {component}
-                    <TestHook callback={callback} />
+                    <AuthContainer.Provider>
+                        {component}
+                        <TestHook callback={callback} />
+                    </AuthContainer.Provider>
                 </EditContainer.Provider>
-            </StoreContainer.Provider>
-            ,
+            </WorksapceStateContainer.Provider>
         </div>,
     )
 }
@@ -28,14 +30,16 @@ function renderWithCallback(component: React.ReactNode, callback: () => any) {
 describe("<SignInSnackbar />", () => {
     test("without login user", () => {
         // Parpare the environment
-        let storeHooks = {} as ReturnType<typeof StoreContainer.useContainer>
+        let workHooks = {} as ReturnType<typeof WorksapceStateContainer.useContainer>
+        let authHooks = {} as ReturnType<typeof AuthContainer.useContainer>
         renderWithCallback(<SignInSnackbar />, () => {
-            storeHooks = StoreContainer.useContainer()
+            workHooks = WorksapceStateContainer.useContainer()
+            authHooks = AuthContainer.useContainer()
         })
         act(() => {
-            storeHooks.state.setLoadingData(false)
-            storeHooks.state.setLoadingUser(false)
-            storeHooks.auth.setUser(null)
+            workHooks.setLoadingData(false)
+            authHooks.setLoadingUser(false)
+            authHooks.setUser(null)
 
             jest.advanceTimersByTime(SIGN_IN_SNACKBAR_SHOW_DELAY + 1000)
         })
@@ -69,14 +73,16 @@ describe("<SignInSnackbar />", () => {
 
     test("with login user", () => {
         // Parpare the environment
-        let storeHooks = {} as ReturnType<typeof StoreContainer.useContainer>
+        let workHooks = {} as ReturnType<typeof WorksapceStateContainer.useContainer>
+        let authHooks = {} as ReturnType<typeof AuthContainer.useContainer>
         renderWithCallback(<SignInSnackbar />, () => {
-            storeHooks = StoreContainer.useContainer()
+            workHooks = WorksapceStateContainer.useContainer()
+            authHooks = AuthContainer.useContainer()
         })
         act(() => {
-            storeHooks.state.setLoadingData(false)
-            storeHooks.state.setLoadingUser(false)
-            storeHooks.auth.setUser({} as User)
+            workHooks.setLoadingData(false)
+            authHooks.setLoadingUser(false)
+            authHooks.setUser({} as User)
 
             jest.advanceTimersByTime(SIGN_IN_SNACKBAR_SHOW_DELAY + 1000)
         })

@@ -1,6 +1,6 @@
 import { testUser } from "src/controller/config"
-
-import { firebaseApp, User } from "./firebase"
+import { firebaseApp } from "src/controller/firebase/app"
+import { User } from "src/controller/firebase/firebase-types"
 
 async function closurePromiseWrapper<T>(closurePromise: Promise<T>): Promise<T> {
     // `firebase.auth` use Closure library's Promise implementation, so that I can only

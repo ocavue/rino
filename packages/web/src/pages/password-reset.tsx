@@ -1,3 +1,3 @@
-import { DynamicPage } from "src/utils"
+import PasswordReset from "src/views/PasswordReset"
 
-export default DynamicPage("PasswordReset", () => import("src/views/PasswordReset"))
+export default PasswordReset

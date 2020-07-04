@@ -1,65 +1,16 @@
 import { CssBaseline } from "@material-ui/core"
 import { createMuiTheme } from "@material-ui/core"
 import { ThemeProvider } from "@material-ui/core/styles"
-import React, { useEffect, useMemo } from "react"
+import React from "react"
 
-import {
-    EditContainer,
-    getCurrentUser,
-    onAuthStateChanged,
-    registerConnectionEvent,
-} from "src/controller"
-import { StoreContainer } from "src/store"
+import { ThemeContainer } from "src/controller/theme/hook"
+import { WorksapceStateContainer } from "src/controller/workspace-state/hook"
 
-const ContainerConsumer: React.FC = (props) => {
-    const {
-        state: { isDarkTheme, setConnected, setLoadingData, setLoadingUser },
-        auth: { user, setUser },
-    } = StoreContainer.useContainer()
+const lightTheme = createMuiTheme({ palette: { type: "light" } })
+const darkTheme = createMuiTheme({ palette: { type: "dark", primary: { main: "#5599d6" } } })
 
-    const { fetchNotes, resetNotes } = EditContainer.useContainer()
-
-    useEffect(() => {
-        const unsubscribe = registerConnectionEvent((connected) => setConnected(connected))
-        return () => unsubscribe()
-    }, [setConnected])
-
-    useEffect(() => {
-        const unsubscribe = onAuthStateChanged((user) => {
-            const currentUser = getCurrentUser()
-            if (currentUser?.uid !== user?.uid) {
-                console.warn(
-                    `getCurrentUser return ${currentUser} but onAuthStateChanged call ${user}`,
-                )
-            }
-            setUser(user)
-            setLoadingUser(false)
-            window.localStorage.setItem("__rino_dev_auth_state", user ? "yes" : "no")
-        })
-        return () => unsubscribe()
-    }, [setLoadingUser, setUser])
-
-    useEffect(() => {
-        const loadData = async () => {
-            setLoadingData(true)
-            try {
-                if (user) {
-                    await fetchNotes(user.uid)
-                } else {
-                    resetNotes()
-                }
-            } finally {
-                setLoadingData(false)
-            }
-        }
-        void loadData()
-    }, [fetchNotes, resetNotes, setLoadingData, user])
-
-    const lightTheme = useMemo(() => createMuiTheme({ palette: { type: "light" } }), [])
-    const darkTheme = useMemo(
-        () => createMuiTheme({ palette: { type: "dark", primary: { main: "#5599d6" } } }),
-        [],
-    )
+const ThemeConsumer: React.FC = (props) => {
+    const { isDarkTheme } = ThemeContainer.useContainer()
 
     return (
         <ThemeProvider theme={isDarkTheme ? darkTheme : lightTheme}>
@@ -71,11 +22,11 @@ const ContainerConsumer: React.FC = (props) => {
 
 const App: React.FC = (props) => {
     return (
-        <StoreContainer.Provider>
-            <EditContainer.Provider>
-                <ContainerConsumer>{props.children}</ContainerConsumer>
-            </EditContainer.Provider>
-        </StoreContainer.Provider>
+        <ThemeContainer.Provider>
+            <WorksapceStateContainer.Provider>
+                <ThemeConsumer>{props.children}</ThemeConsumer>
+            </WorksapceStateContainer.Provider>
+        </ThemeContainer.Provider>
     )
 }
 

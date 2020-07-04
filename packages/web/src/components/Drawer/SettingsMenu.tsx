@@ -1,18 +1,17 @@
 import { Divider, ListItemText, Menu, MenuItem } from "@material-ui/core"
 import React from "react"
 
-import { signOut } from "src/controller"
-import { StoreContainer } from "src/store"
+import { signOut } from "src/controller/auth/actions"
+import { AuthContainer } from "src/controller/auth/hook"
+import { ThemeContainer } from "src/controller/theme/hook"
 
 const SettingsMenu: React.FC<{
     anchor: HTMLElement | null
     setAnchor: (val: HTMLElement | null) => void
     setOpenAboutDialog: (val: boolean) => void
 }> = ({ anchor, setAnchor, setOpenAboutDialog }) => {
-    const {
-        state: { toggleTheme },
-        auth: { email },
-    } = StoreContainer.useContainer()
+    const { toggleTheme } = ThemeContainer.useContainer()
+    const { email } = AuthContainer.useContainer()
 
     const handleMenuClose = () => {
         setAnchor(null)

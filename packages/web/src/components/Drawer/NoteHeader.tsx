@@ -2,8 +2,9 @@ import * as icons from "@material-ui/icons"
 import React, { useMemo } from "react"
 
 import { AppbarIconButton } from "src/components/AppbarIconButton"
-import { EditContainer } from "src/controller"
-import { StoreContainer } from "src/store"
+import { AuthContainer } from "src/controller/auth/hook"
+import { EditContainer } from "src/controller/edit"
+import { WorksapceStateContainer } from "src/controller/workspace-state/hook"
 
 import { SearchBar } from "./SearchBar"
 import { useHeaderStyles } from "./style"
@@ -11,10 +12,8 @@ import { useHeaderStyles } from "./style"
 export const NoteHeader: React.FC = () => {
     const classes = useHeaderStyles()
 
-    const {
-        auth: { user },
-        state: { loading },
-    } = StoreContainer.useContainer()
+    const { loadingData } = WorksapceStateContainer.useContainer()
+    const { user, loadingUser } = AuthContainer.useContainer()
 
     const {
         createServerNote,
@@ -24,10 +23,10 @@ export const NoteHeader: React.FC = () => {
         setSearchQuery,
     } = EditContainer.useContainer()
 
-    const disableCreateBtn = useMemo(() => loading || collection.role === "trash", [
-        loading,
-        collection,
-    ])
+    const disableCreateBtn = useMemo(
+        () => loadingData || loadingUser || collection.role === "trash",
+        [loadingData, loadingUser, collection],
+    )
 
     const onClickCreateBtn = () => {
         // Exit search if a new note is been added so that the new note will show in the drawer note list

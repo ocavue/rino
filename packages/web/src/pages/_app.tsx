@@ -20,11 +20,13 @@ export default function Root<T>({
     pageProps: T
 }) {
     return (
-        <App>
+        <>
             <Head>
                 <title>Rino</title>
             </Head>
-            <Component {...pageProps} />
-        </App>
+            <App>
+                <Component {...pageProps} />
+            </App>
+        </>
     )
 }
