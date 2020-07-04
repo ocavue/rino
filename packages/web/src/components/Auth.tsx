@@ -109,6 +109,9 @@ const StyledButton = withStyles(
             textTransform: "none",
             marginTop: 16,
             marginBottom: 24,
+            height: 56,
+            fontSize: "1.1rem",
+            fontWeight: 500,
         },
     }),
 )(Button)

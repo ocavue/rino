@@ -14,7 +14,7 @@ describe("before sign-in", function () {
         await goto("/")
         const url = new URL(page.url())
         const expectedSignInUrls = [url.origin + "/sign-in", url.origin + "/sign-in/"]
-        await click("landing_signin_btn")
+        await click("homepage_signin_btn")
         await retry(() => expectedSignInUrls.includes(page.url()))
     })
 
@@ -22,7 +22,7 @@ describe("before sign-in", function () {
         await goto("/")
         const url = new URL(page.url())
         const expectedSignInUrls = [url.origin + "/sign-up", url.origin + "/sign-up/"]
-        await click("landing_signup_btn")
+        await click("homepage_signup_btn")
         await retry(() => expectedSignInUrls.includes(page.url()))
     })
 })
