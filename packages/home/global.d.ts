@@ -1,4 +1,4 @@
-// image files will be transform to base64 string by `@rollup/plugin-image`
+// image files will be transformed to base64 string by `@rollup/plugin-image`
 declare module "*.svg" {
     const value: string
     export = value
