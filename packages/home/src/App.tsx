@@ -16,7 +16,7 @@ export default function App() {
     const [mobileMenuActivity, setMobileMenuActivity] = React.useState(false)
 
     return (
-        <div className="relative bg-white">
+        <div className="relative bg-white" data-testid="homepage_root">
             <div className="max-w-7xl mx-auto px-4 sm:px-6">
                 <Appbar>
                     <AppbarLogo />

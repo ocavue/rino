@@ -28,5 +28,9 @@ module.exports = {
 
     testSequencer: "./tests/jest-sequencer.js",
 
-    projects: ["./packages/web/jest.config.js", "./packages/web/jest.e2e.config.js"],
+    projects: [
+        "./packages/home/jest.config.js",
+        "./packages/web/jest.config.js",
+        "./packages/web/jest.e2e.config.js",
+    ],
 }
