@@ -6,7 +6,7 @@ const FeatureBlock: React.FC<{
     svg: React.ReactNode
 }> = ({ title, desc, svg }) => (
     <li>
-        <div className="flex">
+        <div className="flex" style={{ minHeight: "56px" }}>
             <div className="flex-shrink-0">
                 <div className="flex items-center justify-center h-12 w-12 rounded-md bg-blue-500 text-white">
                     {svg}
