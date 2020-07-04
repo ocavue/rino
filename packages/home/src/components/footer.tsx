@@ -1,7 +1,7 @@
 import React from "react"
 
 const Link: React.FC<{ href: string; text: string }> = ({ href, text }) => (
-    <a target="_blank" rel="noreferrer" href={href} className="mx-4 text-gray-500 underline">
+    <a target="_blank" rel="noreferrer" href={href} className="mx-4 text-gray-600 underline">
         {text}
     </a>
 )

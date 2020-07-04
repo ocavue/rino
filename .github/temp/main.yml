@@ -34,11 +34,18 @@ jobs:
 
       - &step_install_deps
         name: Install Dependencies
-        if: steps.step_cache_deps.outputs.cache-hit != 'true' # Skipping steps based on cache-hit
+        # Reinstall node modules even if `cache-hit` is `true` because we need to build symlinks for Yarn workspace
         run: |
           yarn install --frozen-lockfile
-          yarn run web firebase setup:emulators:firestore
+          echo "[DEBUG] CACHE_HIT: $CACHE_HIT"
+          if [ $CACHE_HIT != 'true' ]
+          then
+            echo "[DEBUG] installing"
+            yarn run web firebase setup:emulators:firestore
+          fi
           ls -lrth ~/.cache/firebase/emulators/
+        env:
+          CACHE_HIT: ${{ steps.step_cache_deps.outputs.cache-hit }}
 
       - &step_config_firebase
         name: Configrate firebase
@@ -104,7 +111,7 @@ jobs:
         uses: codecov/codecov-action@v1
         with:
           file: ./coverage/coverage-final.json
-          fail_ci_if_error: true # Specify if CI pipeline should fail when Codecov runs into errors during upload. Defaults to false
+          fail_ci_if_error: ${{ github.ref != 'refs/heads/master' }} # Specify if CI pipeline should fail when Codecov runs into errors during upload. Defaults to false
 
   Lint:
     runs-on: ubuntu-18.04

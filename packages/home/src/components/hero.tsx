@@ -5,6 +5,6 @@ import snapshot from "../../../../art/snapshot_mac.png"
 
 export const Hero: React.FC = () => (
     <div className="mt-10">
-        <img src={snapshot} />
+        <img src={snapshot} alt="Snapshot" />
     </div>
 )

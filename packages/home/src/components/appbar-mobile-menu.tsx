@@ -42,6 +42,7 @@ export const MobileMenu: React.FC<{
                                 <button
                                     className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 transition duration-150 ease-in-out hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500"
                                     type="button"
+                                    aria-label="Close"
                                     onClick={() => setActivity(false)}
                                     data-testid="homepage_appbar_mobile_menu_btn_close"
                                 >
