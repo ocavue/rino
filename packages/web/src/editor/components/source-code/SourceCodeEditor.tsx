@@ -16,6 +16,9 @@ const InnerEditor: FC<{ className: string }> = ({ className }) => {
     const context = useRemirrorContext()
     const rootProps = context.getRootProps()
 
+    // workaround for remirror
+    if (Object.prototype.hasOwnProperty.call(rootProps, "css")) delete rootProps["css"]
+
     return <div {...rootProps} className={className} />
 }
 
