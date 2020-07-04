@@ -3,6 +3,7 @@ import React, { useMemo } from "react"
 
 import { AuthForm, SubmitButton, UsernameTextField } from "src/components/Auth/Auth"
 import { sendPasswordResetEmail } from "src/controller/auth/actions"
+import { AuthContainer } from "src/controller/auth/hook"
 
 type PasswordReset = {
     email: string
@@ -43,15 +44,17 @@ export default function PasswordReset({
         event.preventDefault()
     }
     return (
-        <AuthForm onSubmit={handleSubmit} data-testid="auth_password_reset_form">
-            <UsernameTextField
-                disabled={progressing}
-                onChange={(e) => setEmail(e.target.value)}
-                inputProps={{ "data-testid": "auth_password_reset_username_textfield" }}
-            />
-            <SubmitButton disabled={disableSubmit} data-testid="auth_password_reset_submit">
-                Next
-            </SubmitButton>
-        </AuthForm>
+        <AuthContainer.Provider>
+            <AuthForm onSubmit={handleSubmit} data-testid="auth_password_reset_form">
+                <UsernameTextField
+                    disabled={progressing}
+                    onChange={(e) => setEmail(e.target.value)}
+                    inputProps={{ "data-testid": "auth_password_reset_username_textfield" }}
+                />
+                <SubmitButton disabled={disableSubmit} data-testid="auth_password_reset_submit">
+                    Next
+                </SubmitButton>
+            </AuthForm>
+        </AuthContainer.Provider>
     )
 }

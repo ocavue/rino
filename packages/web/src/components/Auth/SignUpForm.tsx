@@ -10,6 +10,7 @@ import {
     UsernameTextField,
 } from "src/components/Auth/Auth"
 import { createUserWithEmailAndPassword } from "src/controller/auth/actions"
+import { AuthContainer } from "src/controller/auth/hook"
 
 type SignUpFormProps = {
     progressing: boolean
@@ -41,29 +42,31 @@ export default function SignUpForm({ progressing, setProgressing, setError }: Si
     }
 
     return (
-        <AuthForm onSubmit={handleSubmit} data-testid="auth_signup_form">
-            <UsernameTextField
-                disabled={progressing}
-                onChange={(e) => setEmail(e.target.value)}
-                inputProps={{ "data-testid": "auth_signup_username_textfield" }}
-            />
-            <PasswordTextField
-                disabled={progressing}
-                onChange={(e) => setPassword(e.target.value)}
-                inputProps={{ "data-testid": "auth_signup_password_textfield" }}
-            />
+        <AuthContainer.Provider>
+            <AuthForm onSubmit={handleSubmit} data-testid="auth_signup_form">
+                <UsernameTextField
+                    disabled={progressing}
+                    onChange={(e) => setEmail(e.target.value)}
+                    inputProps={{ "data-testid": "auth_signup_username_textfield" }}
+                />
+                <PasswordTextField
+                    disabled={progressing}
+                    onChange={(e) => setPassword(e.target.value)}
+                    inputProps={{ "data-testid": "auth_signup_password_textfield" }}
+                />
 
-            <SubmitButton disabled={disableSubmit} data-testid="auth_signup_submit">
-                Sign Up
-            </SubmitButton>
-            <Grid container>
-                <Grid item xs></Grid>
-                <Grid item>
-                    <Link href="#" variant="body2">
-                        Already have an account? Sign in
-                    </Link>
+                <SubmitButton disabled={disableSubmit} data-testid="auth_signup_submit">
+                    Sign Up
+                </SubmitButton>
+                <Grid container>
+                    <Grid item xs></Grid>
+                    <Grid item>
+                        <Link href="#" variant="body2">
+                            Already have an account? Sign in
+                        </Link>
+                    </Grid>
                 </Grid>
-            </Grid>
-        </AuthForm>
+            </AuthForm>
+        </AuthContainer.Provider>
     )
 }
