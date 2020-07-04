@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 
 import { Logo } from "./appbar-logo"
 
@@ -9,7 +9,7 @@ export const MobileMenu: React.FC<{
     const [animationClassName, setAnimationClassName] = useState("")
     const [hidden, setHidden] = useState(true)
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (activity) {
             setHidden(false)
             setTimeout(() => {
@@ -26,7 +26,7 @@ export const MobileMenu: React.FC<{
     return (
         <div
             className={
-                "absolute top-0 inset-x-0 p-2 transition transform origin-top-right md:hidden rino-mobile-menu " +
+                "absolute top-0 inset-x-0 p-2 origin-top-right md:hidden rino-mobile-menu " +
                 animationClassName
             }
             hidden={hidden}
