@@ -9,13 +9,12 @@ import Alert from "src/views/Alert"
 export default function DevSignOut() {
     const router = useRouter()
     const {
-        state: { loadingData, loadingUser, loading },
+        state: { loadingData },
     } = StoreContainer.useContainer()
-    const { user } = AuthContainer.useContainer()
+    const { user, loadingUser } = AuthContainer.useContainer()
 
     React.useEffect(() => {
-        console.log(`useEffect:`, { loadingData, loadingUser, loading, user: !!user })
-        if (loading) return () => {}
+        if (loadingUser || loadingData) return () => {}
         const timeout = setTimeout(() => {
             console.log(`running timeout function ${timeout}: before sign-out`)
             void signOut().then(() => {
@@ -33,6 +32,6 @@ export default function DevSignOut() {
             clearTimeout(timeout)
         }
         return unsubscribe
-    }, [router, loading, loadingData, loadingUser, user])
+    }, [router, loadingData, loadingUser, user])
     return <Alert title="sign out" message="development" />
 }

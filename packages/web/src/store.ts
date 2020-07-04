@@ -14,12 +14,9 @@ const useTheme = () => {
 }
 
 const useLoading = () => {
-    const [loadingUser, setLoadingUser] = useState(true)
     const [loadingData, setLoadingData] = useState(true)
 
     return {
-        loadingUser,
-        setLoadingUser,
         loadingData,
         setLoadingData,
     }

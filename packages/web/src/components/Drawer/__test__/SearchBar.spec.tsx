@@ -3,6 +3,7 @@ import { act, fireEvent, render, screen, within } from "@testing-library/react"
 import React from "react"
 
 import { EditContainer, Note, NoteType } from "src/controller"
+import { AuthContainer } from "src/controller/auth/hook"
 import { StoreContainer } from "src/store"
 import { TestHook } from "tests/react-test-utils"
 
@@ -13,8 +14,10 @@ function renderWithCallback(component: React.ReactNode, callback: () => any) {
         <ThemeProvider theme={createMuiTheme()}>
             <StoreContainer.Provider>
                 <EditContainer.Provider>
-                    {component}
-                    <TestHook callback={callback} />
+                    <AuthContainer.Provider>
+                        {component}
+                        <TestHook callback={callback} />
+                    </AuthContainer.Provider>
                 </EditContainer.Provider>
             </StoreContainer.Provider>
         </ThemeProvider>,
@@ -24,18 +27,20 @@ function renderWithCallback(component: React.ReactNode, callback: () => any) {
 test("<SearchBar />", () => {
     let storeHooks = {} as ReturnType<typeof StoreContainer.useContainer>
     let editHooks = {} as ReturnType<typeof EditContainer.useContainer>
+    let authHooks = {} as ReturnType<typeof AuthContainer.useContainer>
 
     renderWithCallback(<SearchBar />, () => {
         storeHooks = StoreContainer.useContainer()
         editHooks = EditContainer.useContainer()
+        authHooks = AuthContainer.useContainer()
     })
 
     // Set loading to false
     act(() => {
-        storeHooks.state.setLoadingUser(false)
+        authHooks.setLoadingUser(false)
         storeHooks.state.setLoadingData(false)
     })
-    expect(storeHooks.state.loadingUser).toBeFalse()
+    expect(authHooks.loadingUser).toBeFalse()
     expect(storeHooks.state.loadingData).toBeFalse()
 
     // Insert some notes

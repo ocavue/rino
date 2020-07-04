@@ -3,6 +3,7 @@ import { act, fireEvent, render, screen, waitFor } from "@testing-library/react"
 import React from "react"
 
 import { EditContainer, Note, NoteType } from "src/controller"
+import { AuthContainer } from "src/controller/auth/hook"
 import { StoreContainer } from "src/store"
 import { TestHook } from "tests/react-test-utils"
 
@@ -13,8 +14,10 @@ function renderWithCallback(component: React.ReactNode, callback: () => any) {
         <ThemeProvider theme={createMuiTheme()}>
             <StoreContainer.Provider>
                 <EditContainer.Provider>
-                    {component}
-                    <TestHook callback={callback} />
+                    <AuthContainer.Provider>
+                        {component}
+                        <TestHook callback={callback} />
+                    </AuthContainer.Provider>
                 </EditContainer.Provider>
             </StoreContainer.Provider>
         </ThemeProvider>,
@@ -24,23 +27,25 @@ function renderWithCallback(component: React.ReactNode, callback: () => any) {
 test("<NoteBody />", async () => {
     let storeHooks = {} as ReturnType<typeof StoreContainer.useContainer>
     let editHooks = {} as ReturnType<typeof EditContainer.useContainer>
+    let authHooks = {} as ReturnType<typeof AuthContainer.useContainer>
 
     renderWithCallback(<NoteBody />, () => {
         storeHooks = StoreContainer.useContainer()
         editHooks = EditContainer.useContainer()
+        authHooks = AuthContainer.useContainer()
     })
 
-    expect(storeHooks.state.loadingUser).toBeTrue()
+    expect(authHooks.loadingUser).toBeTrue()
     expect(storeHooks.state.loadingData).toBeTrue()
     screen.getByTestId("drawer-note-body-loading")
 
     act(() => {
-        storeHooks.state.setLoadingUser(false)
+        authHooks.setLoadingUser(false)
         storeHooks.state.setLoadingData(false)
     })
 
     // Set loading to false
-    expect(storeHooks.state.loadingUser).toBeFalse()
+    expect(authHooks.loadingUser).toBeFalse()
     expect(storeHooks.state.loadingData).toBeFalse()
     screen.getByTestId("sidebar-notes") // TODO: rename sidebar to drawer
     expect(editHooks.notes).toHaveLength(0)

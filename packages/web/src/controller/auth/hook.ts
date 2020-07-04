@@ -8,7 +8,8 @@ import { getCurrentUser } from "./actions"
 function useAuth() {
     const [user, setUser] = useState<User | null>(getCurrentUser())
     const email: string | null = useMemo(() => (user ? user.email : null), [user])
-    return { user, email, setUser }
+    const [loadingUser, setLoadingUser] = useState(true)
+    return { user, setUser, email, loadingUser, setLoadingUser }
 }
 
 export const AuthContainer = createContainer(useAuth)

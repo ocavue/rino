@@ -10,9 +10,9 @@ import { StoreContainer } from "src/store"
 
 const ContainerConsumer: React.FC = (props) => {
     const {
-        state: { isDarkTheme, setConnected, setLoadingData, setLoadingUser },
+        state: { isDarkTheme, setConnected, setLoadingData },
     } = StoreContainer.useContainer()
-    const { user, setUser } = AuthContainer.useContainer()
+    const { user, setUser, setLoadingUser } = AuthContainer.useContainer()
 
     const { fetchNotes, resetNotes } = EditContainer.useContainer()
 

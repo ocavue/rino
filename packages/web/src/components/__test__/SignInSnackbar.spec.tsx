@@ -39,7 +39,7 @@ describe("<SignInSnackbar />", () => {
         })
         act(() => {
             storeHooks.state.setLoadingData(false)
-            storeHooks.state.setLoadingUser(false)
+            authHooks.setLoadingUser(false)
             authHooks.setUser(null)
 
             jest.advanceTimersByTime(SIGN_IN_SNACKBAR_SHOW_DELAY + 1000)
@@ -82,7 +82,7 @@ describe("<SignInSnackbar />", () => {
         })
         act(() => {
             storeHooks.state.setLoadingData(false)
-            storeHooks.state.setLoadingUser(false)
+            authHooks.setLoadingUser(false)
             authHooks.setUser({} as User)
 
             jest.advanceTimersByTime(SIGN_IN_SNACKBAR_SHOW_DELAY + 1000)

@@ -13,9 +13,9 @@ export const NoteHeader: React.FC = () => {
     const classes = useHeaderStyles()
 
     const {
-        state: { loadingData, loadingUser },
+        state: { loadingData },
     } = StoreContainer.useContainer()
-    const { user } = AuthContainer.useContainer()
+    const { user, loadingUser } = AuthContainer.useContainer()
 
     const {
         createServerNote,
