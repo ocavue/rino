@@ -8,16 +8,19 @@ import postcss from "rollup-plugin-postcss"
 import serve from "rollup-plugin-serve"
 import typescript from "rollup-plugin-typescript2"
 
+import pkg from "./package.json"
+
 const isProd = process.env.NODE_ENV === "production"
 const extensions = [".js", ".ts", ".tsx"]
 
 export default {
     input: isProd ? "src/Homepage.tsx" : "src/index.tsx",
     output: {
-        file: isProd ? "dist/Homepage.js" : "dist/index.js",
+        file: isProd ? pkg.module : "dist/index.js",
         format: "esm",
         sourcemap: true,
     },
+    external: isProd ? Object.keys(pkg.dependencies) : [],
     plugins: [
         replace({
             "process.env.NODE_ENV": JSON.stringify(isProd ? "production" : "development"),
