@@ -1,7 +1,7 @@
 import { render, screen, waitFor } from "@testing-library/react"
 import React from "react"
 
-import App from "../App"
+import App from "../Homepage"
 
 test("loads and displays greeting", async () => {
     render(<App />)

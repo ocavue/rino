@@ -12,7 +12,7 @@ import { Footer } from "./components/footer"
 import { Headline } from "./components/headline"
 import { Hero } from "./components/hero"
 
-export default function App() {
+export default function Homepage() {
     const [mobileMenuActivity, setMobileMenuActivity] = React.useState(false)
 
     return (

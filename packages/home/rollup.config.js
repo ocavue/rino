@@ -12,9 +12,9 @@ const isProd = process.env.NODE_ENV === "production"
 const extensions = [".js", ".ts", ".tsx"]
 
 export default {
-    input: isProd ? "src/App.tsx" : "src/index.tsx",
+    input: isProd ? "src/Homepage.tsx" : "src/index.tsx",
     output: {
-        file: isProd ? "dist/App.js" : "dist/index.js",
+        file: isProd ? "dist/Homepage.js" : "dist/index.js",
         format: "esm",
         sourcemap: true,
     },
