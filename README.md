@@ -1,24 +1,13 @@
-<div align="center"><img src="https://github.com/ocavue/rino/blob/master/packages/web/public/img/icons/android-chrome-192x192.png?raw=true" alt="Logo" height="192" width="192"></div>
+<div align="center"><a href="https://rino.app"><img src="https://github.com/ocavue/rino/blob/master/packages/web/public/img/icons/android-chrome-192x192.png?raw=true" alt="Logo" height="192" width="192"></a></div>
 
-# 🦏 Rino - Yet another Markdown editor
+# Rino - A better way to write Markdown
 
 [![Version](https://img.shields.io/github/v/tag/ocavue/rino?label=version)](https://github.com/ocavue/rino/releases)
 [![codecov](https://codecov.io/gh/ocavue/rino/branch/master/graph/badge.svg)](https://codecov.io/gh/ocavue/rino)
 ![GitHub Actions](https://github.com/ocavue/rino/workflows/GitHub%20Actions/badge.svg)
 
-Try Rino: <https://rino.app>
 
-## Features
-
-- What You See is What You Get
-- Support **Windows**, **macOS**, **iOS** and **Android**
-- Work online and offline
-- Install into your desktop with **PWA**
-- Open source
-
-## Contributing
-
-- [How to develop from source](https://github.com/ocavue/rino/wiki/Development)
+This mono repository stores all source code for Rino. Learn more about Rino at [https://rino.app](https://rino.app).
 
 ## License
 
