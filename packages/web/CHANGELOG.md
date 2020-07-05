@@ -1,5 +1,11 @@
 # @rino.app/web
 
+## 0.12.2
+
+### Patch Changes
+
+-   9bf3bf7: Fix the position of some buttons
+
 ## 0.12.1
 
 ### Patch Changes
