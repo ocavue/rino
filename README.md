@@ -7,9 +7,6 @@
 ![GitHub Actions](https://github.com/ocavue/rino/workflows/GitHub%20Actions/badge.svg)
 
 
-[![Snapshot](https://raw.githubusercontent.com/ocavue/rino/master/art/snapshot_mac.png?raw=true)](https://rino.app)
-
-
 This mono repository stores all source code for Rino. Learn more about Rino at [https://rino.app](https://rino.app).
 
 ## License
