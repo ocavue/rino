@@ -62,7 +62,7 @@ export default function SignUpForm({ progressing, setProgressing, setError }: Si
                 <Grid container>
                     <Grid item xs></Grid>
                     <Grid item>
-                        <Link href="#" variant="body2">
+                        <Link href="/sing-in" variant="body2">
                             Already have an account? Sign in
                         </Link>
                     </Grid>
