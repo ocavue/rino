@@ -1,5 +1,11 @@
 # @rino.app/web
 
+## 0.12.1
+
+### Patch Changes
+
+-   10bba75: Optimize page load time
+
 ## 0.12.0
 
 ### Minor Changes
