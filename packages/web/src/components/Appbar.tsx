@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme: Theme) => {
             display: "flex",
             flexDirection: "row",
             justifyContent: "space-between",
-            alignItems: "flex-end",
+            alignItems: "center",
             height: APPBAR_HEIGHT,
             transition: theme.transitions.create(["margin", "width"], {
                 easing: theme.transitions.easing.sharp,

@@ -24,8 +24,18 @@ export default function PasswordReset({
 }: PasswordResetProps) {
     const disableSubmit = useMemo(() => !email || progressing, [email, progressing])
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault()
         setProgressing(true)
         setError("")
+
+        // Mock the logic in testing because Firebase will complain "We have blocked all requests from this device due to unusual activity. Try again later."
+        if (process.env.NODE_ENV === "development" || process.env.REACT_APP_TESTING) {
+            if (email === process.env["REACT_APP_TEST_USERNAME"]) {
+                setProgressed(true)
+                setProgressing(false)
+                return
+            }
+        }
         sendPasswordResetEmail(email)
             .then(() => {
                 setProgressed(true)
@@ -41,7 +51,6 @@ export default function PasswordReset({
                 }
                 setProgressing(false)
             })
-        event.preventDefault()
     }
     return (
         <AuthContainer.Provider>
