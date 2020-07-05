@@ -5,7 +5,7 @@ import { AuthForm, SubmitButton, UsernameTextField } from "src/components/Auth/A
 import { sendPasswordResetEmail } from "src/controller/auth/actions"
 import { AuthContainer } from "src/controller/auth/hook"
 
-type PasswordReset = {
+type PasswordResetProps = {
     email: string
     setEmail: (val: string) => void
     progressing: boolean
@@ -21,7 +21,7 @@ export default function PasswordReset({
     setProgressing,
     setProgressed,
     setError,
-}: PasswordReset) {
+}: PasswordResetProps) {
     const disableSubmit = useMemo(() => !email || progressing, [email, progressing])
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         setProgressing(true)
