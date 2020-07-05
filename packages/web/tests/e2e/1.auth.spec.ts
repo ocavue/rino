@@ -92,12 +92,12 @@ describe("Sign-up", () => {
 
 describe("Password reset", () => {
     async function resetPassword(email: string, password: string, submitByEnter = false) {
-        // Before sign-up
+        // Before password-reset
         await goto("/password-reset")
         await wait("auth_password_reset_form")
         await wait("auth_error", { hidden: true })
 
-        // sign-up
+        // password-reset
         await type("auth_password_reset_username_textfield", email, false)
         await sleep(10)
         if (submitByEnter) {
@@ -107,9 +107,20 @@ describe("Password reset", () => {
         }
     }
 
+    test.only("with vaild email", async () => {
+        await resetPassword(username, "abcdefg123!", true)
+        expect(await getInnerText("auth_password_reset_result")).toEqual(
+            `We've progressed an email to ${username}. Click the link in the email to reset your password.`,
+        )
+
+        await resetPassword(username, "abcdefg123!", false)
+        expect(await getInnerText("auth_password_reset_result")).toEqual(
+            `We've progressed an email to ${username}. Click the link in the email to reset your password.`,
+        )
+    })
+
     test("with invaild email", async () => {
-        await resetPassword(invaildEmail, "abcdefg")
-        await wait("auth_password_reset_form")
+        await resetPassword(invaildEmail, "abcdefg123!")
         expect(await getInnerText("auth_error")).toEqual(
             "Error: The email address is badly formatted.",
         )
