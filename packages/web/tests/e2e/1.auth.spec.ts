@@ -107,7 +107,7 @@ describe("Password reset", () => {
         }
     }
 
-    test.only("with vaild email", async () => {
+    test("with vaild email", async () => {
         await resetPassword(username, "abcdefg123!", true)
         expect(await getInnerText("auth_password_reset_result")).toEqual(
             `We've progressed an email to ${username}. Click the link in the email to reset your password.`,
