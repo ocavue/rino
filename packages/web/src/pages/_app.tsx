@@ -8,9 +8,7 @@ import "../../src/editor/theme/github.scss"
 import Head from "next/head"
 import React from "react"
 
-import { DynamicPage } from "src/utils"
-
-const App = DynamicPage("App", () => import("../views/App"))
+import App from "src/views/App"
 
 export default function Root<T>({
     Component,

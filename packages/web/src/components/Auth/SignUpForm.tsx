@@ -17,6 +17,7 @@ type SignUpFormProps = {
     setProgressing: (val: boolean) => void
     setError: (val: string) => void
 }
+
 export default function SignUpForm({ progressing, setProgressing, setError }: SignUpFormProps) {
     const router = useRouter()
     const [email, setEmail] = useState("")

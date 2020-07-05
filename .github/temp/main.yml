@@ -38,7 +38,7 @@ jobs:
         run: |
           yarn install --frozen-lockfile
           echo "[DEBUG] CACHE_HIT: $CACHE_HIT"
-          if [ $CACHE_HIT != 'true' ]
+          if [ "$CACHE_HIT" != "true" ]
           then
             echo "[DEBUG] installing"
             yarn run web firebase setup:emulators:firestore
