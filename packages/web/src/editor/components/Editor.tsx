@@ -69,7 +69,7 @@ export const Editor: React.FC<EditorProps> = ({ autoFocus, note, setNoteContent 
         theme.palette.type === "light" ? "markdown-body--light" : "markdown-body--dark",
     )
 
-    if (mode === "source-code")
+    if (mode === "source-code" || true)
         return (
             <SourceCodeEditor
                 className={className}

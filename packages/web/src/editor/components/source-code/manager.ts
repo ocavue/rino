@@ -1,27 +1,28 @@
-import { ExtensionManager, InferFlexibleExtensionList, SchemaFromExtensions } from "@remirror/core"
-import { baseExtensions } from "@remirror/core-extensions"
+import { CorePreset } from 'remirror/preset/core';
+import { useManager } from 'remirror/react';
+import { BoldExtension } from 'remirror/extension/bold';
+import { ItalicExtension } from 'remirror/extension/italic';
+import { UnderlineExtension } from 'remirror/extension/underline';
+
+
 import { CodeBlockExtension } from "@remirror/extension-code-block"
-import { useMemo } from "react"
 import markdown from "refractor/lang/markdown"
 
-const sourceCodeExtensions = [
-    ...baseExtensions,
-    {
-        priority: 1,
-        extension: new CodeBlockExtension({
-            defaultLanguage: "markdown",
-            supportedLanguages: [markdown],
-            toggleType: "codeBlock",
-        }),
-    },
-]
 
-export type SourceCodeExtensions = InferFlexibleExtensionList<typeof sourceCodeExtensions>
-export type SourceCodeManager = ExtensionManager<SourceCodeExtensions>
-export type SourceCodeSchema = SchemaFromExtensions<SourceCodeExtensions>
+// export type SourceCodeExtensions = InferFlexibleExtensionList<typeof sourceCodeExtensions>
+// export type SourceCodeManager = ExtensionManager<SourceCodeExtensions>
+// export type SourceCodeSchema = SchemaFromExtensions<SourceCodeExtensions>
 
 export function useSourceCodeManager() {
-    return useMemo(() => {
-        return ExtensionManager.create(sourceCodeExtensions)
-    }, [])
+    return useManager([
+        new CorePreset({}),
+        new BoldExtension({}),
+        new ItalicExtension(),
+        new UnderlineExtension(),
+        new CodeBlockExtension({
+            defaultLanguage: "markdown",
+            // toggleType: "codeBlock",
+            supportedLanguages: [markdown],
+        })
+    ])
 }

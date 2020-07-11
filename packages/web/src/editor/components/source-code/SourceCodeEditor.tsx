@@ -1,7 +1,7 @@
 import { ProsemirrorNode } from "@remirror/core"
-import { RemirrorEventListener, RemirrorProvider, useRemirrorContext } from "@remirror/react"
 import { debounce } from "lodash"
-import React, { FC, useEffect, useMemo, useRef } from "react"
+import React, { FC, useEffect, useMemo, useRef, useCallback } from "react"
+import { RemirrorProvider, useManager, useRemirror, useExtensionCreator } from 'remirror/react';
 
 import { DevTools } from "../DevTools"
 import { EditorProps } from "../types"
@@ -13,13 +13,21 @@ import {
 } from "./manager"
 
 const InnerEditor: FC<{ className: string }> = ({ className }) => {
-    const context = useRemirrorContext()
-    const rootProps = context.getRootProps()
+    const { getRootProps, active, commands } = useRemirror();
 
-    // workaround for remirror
-    if (Object.prototype.hasOwnProperty.call(rootProps, "css")) delete rootProps["css"]
+    const toggleBold = useCallback(() => {
+      commands.toggleBold();
+    }, [commands]);
 
-    return <div {...rootProps} className={className} />
+
+    return (
+        <div className={className}>
+          <div {...getRootProps()} />
+          <button onClick={toggleBold} style={{ fontWeight: active.bold() ? 'bold' : undefined }}>
+            Bold
+          </button>
+        </div>
+      );
 }
 
 type Doc = ProsemirrorNode<SourceCodeSchema>
