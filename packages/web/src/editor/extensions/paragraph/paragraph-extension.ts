@@ -1,4 +1,4 @@
-import { ParagraphExtension } from "@remirror/core-extensions"
+import { ParagraphExtension } from "@remirror/extension-paragraph"
 
 import { ParserRuleType } from "src/editor/transform/parser-type"
 import { NodeSerializerOptions } from "src/editor/transform/serializer"
