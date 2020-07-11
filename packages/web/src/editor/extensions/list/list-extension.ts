@@ -1,17 +1,12 @@
-import {
-    convertCommand,
-    ExtensionManagerNodeTypeParams,
-    isElementDOMNode,
-    NodeExtension,
-    NodeExtensionSpec,
-    SchemaFromExtensions,
-} from "@remirror/core"
+import { convertCommand, NodeExtension, NodeExtensionSpec } from "@remirror/core"
+import { isElementDomNode } from "@remirror/core-utils"
 import Token from "markdown-it/lib/token"
 import { InputRule, wrappingInputRule } from "prosemirror-inputrules"
 import { Node as ProsemirrorNode, Schema } from "prosemirror-model"
 import { liftListItem, sinkListItem } from "prosemirror-schema-list"
 import { EditorState } from "prosemirror-state"
 import { EditorView, NodeView } from "prosemirror-view"
+import { SchemaFromExtensionUnion } from "remirror/core"
 
 import { ParserRuleType } from "src/editor/transform/parser-type"
 import { NodeSerializerOptions } from "src/editor/transform/serializer"
@@ -53,7 +48,7 @@ export class RinoListItemExtension extends NodeExtension {
         return "rinoListItem" as const
     }
 
-    get schema(): NodeExtensionSpec {
+    createNodeSpec(): NodeExtensionSpec {
         return {
             content: "rinoCheckbox? paragraph block*",
             defining: true,
@@ -64,7 +59,9 @@ export class RinoListItemExtension extends NodeExtension {
         }
     }
 
-    public keys({ type, schema }: ExtensionManagerNodeTypeParams) {
+    createKeymap = () => {
+        const schema = this.store.schema
+        const type = this.type
         return {
             Enter: convertCommand(
                 splitListItem(schema.nodes.paragraph, schema.nodes.rinoCheckbox, type),
@@ -101,7 +98,7 @@ export class RinoOrderedListExtension extends NodeExtension {
         return "rinoOrderedList" as const
     }
 
-    get schema(): NodeExtensionSpec {
+    createNodeSpec(): NodeExtensionSpec {
         return {
             content: "rinoListItem+",
             group: "block",
@@ -116,11 +113,11 @@ export class RinoOrderedListExtension extends NodeExtension {
         }
     }
 
-    public inputRules({ type }: ExtensionManagerNodeTypeParams) {
+    createInputRules = (): InputRule[] => {
         return [
             wrappingInputRule(
                 /^(\d+)\.\s$/,
-                type,
+                this.type,
                 (match: string[]) => ({ order: +match[1] }),
                 (match: string[], node: ProsemirrorNode) =>
                     node.childCount + (node.attrs.order as number) == +match[1],
@@ -156,7 +153,7 @@ export class RinoBulletListExtension extends NodeExtension {
         return "rinoBulletList" as const
     }
 
-    get schema(): NodeExtensionSpec {
+    createNodeSpec(): NodeExtensionSpec {
         return {
             content: "rinoListItem+",
             group: "block",
@@ -171,8 +168,8 @@ export class RinoBulletListExtension extends NodeExtension {
         }
     }
 
-    public inputRules({ type }: ExtensionManagerNodeTypeParams) {
-        return [wrappingInputRule(/^\s*([-+*])\s$/, type)]
+    createInputRules = (): InputRule[] => {
+        return [wrappingInputRule(/^\s*([-+*])\s$/, this.type)]
     }
 
     public fromMarkdown() {
@@ -189,7 +186,7 @@ export class RinoBulletListExtension extends NodeExtension {
     public toMarkdown({
         state,
         node,
-    }: NodeSerializerOptions<SchemaFromExtensions<RinoBulletListExtension>>) {
+    }: NodeSerializerOptions<SchemaFromExtensionUnion<RinoBulletListExtension>>) {
         state.renderList(node, "  ", () => ((node.attrs.bullet as string) || "*") + " ")
     }
 }
@@ -199,7 +196,7 @@ export class RinoCheckboxExtension extends NodeExtension {
         return "rinoCheckbox" as const
     }
 
-    get schema(): NodeExtensionSpec {
+    createNodeSpec(): NodeExtensionSpec {
         return {
             defining: true,
             selectable: false,
@@ -210,7 +207,7 @@ export class RinoCheckboxExtension extends NodeExtension {
                 {
                     tag: "input[type=checkbox]",
                     getAttrs: (dom) =>
-                        isElementDOMNode(dom) ? { checked: dom.hasAttribute("checked") } : {},
+                        isElementDomNode(dom) ? { checked: dom.hasAttribute("checked") } : {},
                 },
             ],
             toDOM(node) {
@@ -221,9 +218,9 @@ export class RinoCheckboxExtension extends NodeExtension {
         }
     }
 
-    public inputRules({ type }: ExtensionManagerNodeTypeParams) {
+    createInputRules = (): InputRule[] => {
         return [
-            new InputRule(/^\[([ |x])\] $/, function (state: EditorState, match, start, end) {
+            new InputRule(/^\[([ |x])\] $/, (state: EditorState, match, start, end) => {
                 const $from = state.selection.$from
                 if (
                     $from.depth >= 3 &&
@@ -233,7 +230,9 @@ export class RinoCheckboxExtension extends NodeExtension {
                 ) {
                     const attrs = { checked: match[1] === "x" }
                     const listItemPos = $from.before(-1)
-                    return state.tr.delete(start, end).insert(listItemPos + 1, type.create(attrs))
+                    return state.tr
+                        .delete(start, end)
+                        .insert(listItemPos + 1, this.type.create(attrs))
                 }
                 return null
             }),
