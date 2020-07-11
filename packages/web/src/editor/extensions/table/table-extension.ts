@@ -1,5 +1,5 @@
-import { ExtensionManagerNodeTypeParams, KeyBindings } from "@remirror/core"
-import { TableCellExtension, TableExtension, TableRowExtension } from "@remirror/extension-tables"
+import { KeyBindings } from "@remirror/core"
+import { TableCellExtension, TableExtension, TableRowExtension } from "@remirror/preset-table"
 import { Fragment, Node as ProsemirroNode } from "prosemirror-model"
 import { TextSelection } from "prosemirror-state"
 
@@ -20,7 +20,9 @@ enum TABLE_ALIGEN {
 export class RinoTableExtension extends TableExtension {
     readonly name = "table"
 
-    public keys({ type, schema }: ExtensionManagerNodeTypeParams): KeyBindings {
+    createKeymap = (): KeyBindings => {
+        const schema = this.store.schema
+
         return buildBlockEnterKeymapBindings(
             /^\|((?:[^\|]+\|){2,})\s*$/,
             ({ match }) => {
@@ -55,15 +57,6 @@ export class RinoTableExtension extends TableExtension {
                 }
             },
         )
-    }
-
-    public helpers(params: ExtensionManagerNodeTypeParams) {
-        return {
-            selectedTableCell: (): ProsemirroNode | null => {
-                const state = params.getState()
-                return selectedTableCell(state)
-            },
-        }
     }
 
     public fromMarkdown() {
@@ -171,8 +164,16 @@ export class RinoTableRowExtension extends TableRowExtension {
 export class RinoTableCellExtension extends TableCellExtension {
     readonly name = "tableCell"
 
-    public plugin() {
+    createPlugin = () => {
         return createTableHeigthlightPlugin()
+    }
+
+    createHelpers = () => {
+        return {
+            selectedTableCell: (): ProsemirroNode | null => {
+                return selectedTableCell(this.store.getState())
+            },
+        }
     }
 
     public fromMarkdown() {
