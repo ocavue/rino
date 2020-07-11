@@ -10,14 +10,16 @@ const setup = () => {
         view,
         add,
         nodes: { doc, p },
-        attrMarks: { mdCodeSpace, mdCodeText, mdText, mdMark },
+        attributeMarks: { mdCodeSpace, mdCodeText, mdText, mdMark },
         manager,
         schema,
-    } = renderEditor({
-        plainNodes: [new RinoParagraphExtension(), new RinoTextExtension()],
-        attrMarks: rinoMarkExtensions,
-        others: [new RinoInlineDecorationExtension(), new RinoInlineMarkExtension(true)],
-    })
+    } = renderEditor([
+        ...rinoMarkExtensions,
+        new RinoInlineDecorationExtension(),
+        new RinoInlineMarkExtension(true),
+        new RinoParagraphExtension(),
+        new RinoTextExtension(),
+    ])
 
     return {
         manager,

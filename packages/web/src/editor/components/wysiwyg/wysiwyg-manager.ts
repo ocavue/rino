@@ -1,13 +1,22 @@
-import { ExtensionManager } from "@remirror/core"
-import { useMemo } from "react"
+import { RemirrorManager } from "@remirror/core"
+import { useEffect, useRef } from "react"
 
-import { WysiwygExtensions, wysiwygExtensions } from "./wysiwyg-extension"
+import { createWysiwygCombined } from "./wysiwyg-extension"
 
-export type WysiwygManager = ExtensionManager<WysiwygExtensions>
+export function useWysiwygManager() {
+    const manager = useRef(RemirrorManager.create(createWysiwygCombined())).current
 
-export function createWysiwygManager(): WysiwygManager {
-    return ExtensionManager.create(wysiwygExtensions)
+    useEffect(() => {
+        return () => {
+            manager.destroy()
+        }
+    }, [manager])
+
+    return manager
 }
-export function useWysiwygManager(): WysiwygManager {
-    return useMemo(createWysiwygManager, [])
-}
+
+export type WysiwygManager = ReturnType<typeof useWysiwygManager>
+export type WysiwygSchema = WysiwygManager["schema"]
+export type WysiwygExtensions = WysiwygManager["extensions"]
+export type WysiwygExtension = WysiwygManager["extensions"][number]
+export type WysiwygCombined = WysiwygManager["combined"][number]

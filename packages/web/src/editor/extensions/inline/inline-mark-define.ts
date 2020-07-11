@@ -11,10 +11,11 @@ const endpointAttrs = {
 
 const RinoMarkExtensionClasses = [
     class MetaKey extends MarkExtension {
+        static disableExtraAttributes = true
         get name() {
             return "mdMark" as const
         }
-        get schema(): MarkExtensionSpec {
+        createMarkSpec(): MarkExtensionSpec {
             return {
                 inclusive: false,
                 attrs: endpointAttrs,
@@ -24,10 +25,11 @@ const RinoMarkExtensionClasses = [
     },
 
     class PlainText extends MarkExtension {
+        static disableExtraAttributes = true
         get name() {
             return "mdText" as const
         }
-        get schema(): MarkExtensionSpec {
+        createMarkSpec(): MarkExtensionSpec {
             return {
                 attrs: endpointAttrs,
                 toDOM: (mark, inline) => ["span", 0],
@@ -36,10 +38,11 @@ const RinoMarkExtensionClasses = [
     },
 
     class Emphasis extends MarkExtension {
+        static disableExtraAttributes = true
         get name() {
             return "mdEm" as const
         }
-        get schema(): MarkExtensionSpec {
+        createMarkSpec(): MarkExtensionSpec {
             return {
                 attrs: commonAttrs,
                 toDOM: (mark, inline) => ["em", 0],
@@ -48,10 +51,11 @@ const RinoMarkExtensionClasses = [
     },
 
     class Strong extends MarkExtension {
+        static disableExtraAttributes = true
         get name() {
             return "mdStrong" as const
         }
-        get schema(): MarkExtensionSpec {
+        createMarkSpec(): MarkExtensionSpec {
             return {
                 attrs: commonAttrs,
                 toDOM: (mark, inline) => ["strong", 0],
@@ -60,10 +64,11 @@ const RinoMarkExtensionClasses = [
     },
 
     class CodeText extends MarkExtension {
+        static disableExtraAttributes = true
         get name() {
             return "mdCodeText" as const
         }
-        get schema(): MarkExtensionSpec {
+        createMarkSpec(): MarkExtensionSpec {
             return {
                 attrs: commonAttrs,
                 toDOM: (mark, inline) => ["code", 0],
@@ -72,10 +77,11 @@ const RinoMarkExtensionClasses = [
     },
 
     class CodeSapce extends MarkExtension {
+        static disableExtraAttributes = true
         get name() {
             return "mdCodeSpace" as const
         }
-        get schema(): MarkExtensionSpec {
+        createMarkSpec(): MarkExtensionSpec {
             return {
                 attrs: commonAttrs,
                 toDOM: (mark, inline) => ["span", 0],
@@ -84,10 +90,11 @@ const RinoMarkExtensionClasses = [
     },
 
     class Delete extends MarkExtension {
+        static disableExtraAttributes = true
         get name() {
             return "mdDel" as const
         }
-        get schema(): MarkExtensionSpec {
+        createMarkSpec(): MarkExtensionSpec {
             return {
                 attrs: commonAttrs,
                 toDOM: (mark, inline) => ["del", 0],
@@ -96,10 +103,11 @@ const RinoMarkExtensionClasses = [
     },
 
     class LinkText extends MarkExtension {
+        static disableExtraAttributes = true
         get name() {
             return "mdLinkText" as const
         }
-        get schema(): MarkExtensionSpec {
+        createMarkSpec(): MarkExtensionSpec {
             return {
                 attrs: {
                     ...commonAttrs,
@@ -124,10 +132,11 @@ const RinoMarkExtensionClasses = [
     },
 
     class LinkUri extends MarkExtension {
+        static disableExtraAttributes = true
         get name() {
             return "mdLinkUri" as const
         }
-        get schema(): MarkExtensionSpec {
+        createMarkSpec(): MarkExtensionSpec {
             return {
                 spanning: false,
                 attrs: commonAttrs,
@@ -137,10 +146,11 @@ const RinoMarkExtensionClasses = [
     },
 
     class ImgText extends MarkExtension {
+        static disableExtraAttributes = true
         get name() {
             return "mdImgText" as const
         }
-        get schema(): MarkExtensionSpec {
+        createMarkSpec(): MarkExtensionSpec {
             return {
                 spanning: false,
                 attrs: commonAttrs,
@@ -150,10 +160,11 @@ const RinoMarkExtensionClasses = [
     },
 
     class ImgUri extends MarkExtension {
+        static disableExtraAttributes = true
         get name() {
             return "mdImgUri" as const
         }
-        get schema(): MarkExtensionSpec {
+        createMarkSpec(): MarkExtensionSpec {
             return {
                 spanning: false,
                 attrs: {
@@ -164,7 +175,7 @@ const RinoMarkExtensionClasses = [
                 },
             }
         }
-        public nodeView(): NodeViewMethod {
+        createNodeViews = (): NodeViewMethod => {
             return (mark, view): NodeView => {
                 const innerContainer = document.createElement("span")
 

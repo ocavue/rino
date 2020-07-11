@@ -1,6 +1,8 @@
-import { createWysiwygManager } from "src/editor"
+import { RemirrorManager } from "@remirror/core"
+
 import { dedent } from "src/utils"
 
+import { createWysiwygCombined } from "../wysiwyg-extension"
 import { buildMarkdownParser } from "../wysiwyg-markdown"
 
 describe("parser token support", () => {
@@ -24,7 +26,7 @@ describe("parser token support", () => {
 
     // eslint-disable-next-line
     const tests = require("commonmark-spec").tests as CommonMarkTestCase[]
-    const parser = buildMarkdownParser(createWysiwygManager())
+    const parser = buildMarkdownParser(RemirrorManager.create(createWysiwygCombined()))
 
     for (const t of tests) {
         test(`CommonMark spec test case ${t.number}`, () => {

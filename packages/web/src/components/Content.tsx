@@ -5,7 +5,7 @@ import React from "react"
 import { MAX_DRAWER_WIDTH } from "src/constants"
 import { EditContainer } from "src/controller/edit"
 import { WorksapceStateContainer } from "src/controller/workspace-state/hook"
-import { Editor } from "src/editor/components"
+import { Editor } from "src/editor"
 
 import { Welcome } from "./Welcome"
 
@@ -20,6 +20,7 @@ const useStyles = makeStyles((theme: Theme) => {
             }),
 
             width: "100%",
+            height: "100vh",
             minHeight: "100vh",
 
             display: "flex",

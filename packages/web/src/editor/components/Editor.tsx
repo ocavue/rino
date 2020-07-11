@@ -5,7 +5,8 @@ import React, { useEffect, useRef, useState } from "react"
 
 import { MAX_EDITOR_WIDTH } from "src/constants"
 import { Note } from "src/controller/edit"
-import { SourceCodeEditor, WysiwygEditor } from "src/editor"
+import { WysiwygEditor } from "src/editor/components//wysiwyg/WysiwygEditor"
+import { SourceCodeEditor } from "src/editor/components/source-code/SourceCodeEditor"
 import { metaKey } from "src/utils"
 
 const useStyles = makeStyles((theme: Theme) => {

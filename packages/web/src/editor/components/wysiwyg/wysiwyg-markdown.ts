@@ -1,53 +1,38 @@
-import { AnyExtension, ExtensionManager, FlexibleExtension, isExtension } from "@remirror/core"
+import { AnyCombinedUnion, isExtension, RemirrorManager } from "@remirror/core"
 
 import { MarkdownParser } from "src/editor/transform/parser"
 import { ParserRule } from "src/editor/transform/parser-type"
 import { MarkdownSerializer, NodeSerializerSpecs } from "src/editor/transform/serializer"
 import { MarkdownNodeExtension } from "src/editor/utils"
 
-function isMarkdownNodeExtension(extension: FlexibleExtension): extension is MarkdownNodeExtension {
+function isMarkdownNodeExtension(extension: any): extension is MarkdownNodeExtension {
     return !!(
         isExtension(extension) &&
-        (extension as MarkdownNodeExtension).fromMarkdown &&
-        (extension as MarkdownNodeExtension).toMarkdown
+        ((extension as unknown) as MarkdownNodeExtension).fromMarkdown &&
+        ((extension as unknown) as MarkdownNodeExtension).toMarkdown
     )
 }
 
-function filterMarkdownNodeExtensions<Extension extends AnyExtension>(
-    manage: ExtensionManager<Extension>,
-): MarkdownNodeExtension[] {
-    const markdownNodeExtensions: MarkdownNodeExtension[] = []
-    for (const extension of manage.extensions) {
+export function buildMarkdownParser<Combined extends AnyCombinedUnion>(
+    manager: RemirrorManager<Combined>,
+) {
+    const parserRules: ParserRule[] = []
+    for (const extension of manager.extensions) {
         if (isMarkdownNodeExtension(extension)) {
-            markdownNodeExtensions.push(extension)
+            parserRules.push(...extension.fromMarkdown())
         }
     }
-    return markdownNodeExtensions
-}
-
-export function buildMarkdownParser<Extension extends AnyExtension>(
-    manager: ExtensionManager<Extension>,
-) {
-    const parserRules = filterMarkdownNodeExtensions(manager).reduce(
-        (tokens, extension): ParserRule[] => [...tokens, ...extension.fromMarkdown()],
-        [] as ParserRule[],
-    )
-
     return new MarkdownParser(manager.schema, parserRules)
 }
 
-export function buildMarkdownSerializer<Extension extends AnyExtension>(
-    manager: ExtensionManager<Extension>,
+export function buildMarkdownSerializer<Combined extends AnyCombinedUnion>(
+    manager: RemirrorManager<Combined>,
 ) {
-    const specs: NodeSerializerSpecs = filterMarkdownNodeExtensions(manager).reduce(
-        (specs, extension): NodeSerializerSpecs => {
-            return {
-                [extension.name]: extension.toMarkdown,
-                ...specs,
-            }
-        },
-        {} as NodeSerializerSpecs,
-    )
-
+    const specs: NodeSerializerSpecs = {}
+    for (const extension of manager.extensions) {
+        if (isMarkdownNodeExtension(extension)) {
+            specs[extension.name] = extension.toMarkdown
+        }
+    }
     return new MarkdownSerializer(specs)
 }

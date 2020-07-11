@@ -12,10 +12,7 @@ const setup = () => {
         nodes: { doc, p },
         manager,
         schema,
-    } = renderEditor({
-        plainNodes: [new RinoTextExtension(), new RinoParagraphExtension()],
-        others: [],
-    })
+    } = renderEditor([new RinoTextExtension(), new RinoParagraphExtension()])
 
     return {
         manager,

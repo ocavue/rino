@@ -1,4 +1,4 @@
-import { TextExtension } from "@remirror/core"
+import { TextExtension } from "@remirror/extension-text"
 import Token from "markdown-it/lib/token"
 
 import { ParserRuleType } from "src/editor/transform/parser-type"

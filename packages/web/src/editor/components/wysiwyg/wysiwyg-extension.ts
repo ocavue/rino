@@ -1,5 +1,5 @@
-import { InferFlexibleExtensionList, SchemaFromExtensions } from "@remirror/core"
-import { baseExtensions } from "@remirror/core-extensions"
+import { ReactComponentExtension } from "@remirror/extension-react-component"
+import { CorePreset } from "@remirror/preset-core"
 
 import {
     RinoBlockquoteExtension,
@@ -17,64 +17,58 @@ import {
     RinoParagraphExtension,
     RinoTableCellExtension,
     RinoTableExtension,
+    RinoTableHeaderExtension,
     RinoTableRowExtension,
     RinoTextExtension,
 } from "src/editor/extensions"
 import { MarkdownNodeExtension } from "src/editor/utils"
 
-/**
- * Replace ParagraphExtension as RinoParagraphExtension in baseExtensions.
- */
-const rinoBaseExtensions = baseExtensions.map((e) => {
-    if (e.extension.name === "paragraph")
-        return {
-            extension: new RinoParagraphExtension(),
-            priority: e.priority,
-        }
-    else if (e.extension.name === "text")
-        return {
-            extension: new RinoTextExtension(),
-            priority: e.priority,
-        }
-    else
-        return {
-            extension: e.extension,
-            priority: e.priority,
-        }
-})
-
-const rinoMarkdownNodeExtensions = [
-    new RinoHardBreakExtension(),
-    new RinoHorizontalRuleExtension(),
-    new RinoCodeBlockExtension(),
-    new RinoBlockquoteExtension(),
-    new RinoHeadingExtension(),
-    new RinoCheckboxExtension(),
-    new RinoListItemExtension(),
-    new RinoBulletListExtension(),
-    new RinoOrderedListExtension(),
-    new RinoTableExtension(),
-    new RinoTableRowExtension(),
-    new RinoTableCellExtension(),
-]
-
-/* istanbul ignore if */
-if (process.env.NODE_ENV === "test") {
-    // By doing this, TypeScript can find extensions with wrong `MarkdownNodeExtension` implementation.
-    // Notice that the variable `rinoMarkdownNodeExtensions` should NOT be type `MarkdownNodeExtension[]` since we want TypeScript
-    // to know the actual shapes of `WysiwygExtensions`, `WysiwygSchema` and `WysiwygManager`.
-    const f = (x: MarkdownNodeExtension[]) => {}
-    f(rinoMarkdownNodeExtensions)
+export class RinoCorePreset extends CorePreset {
+    createExtensions() {
+        const extensions = super.createExtensions()
+        return extensions.map((e) => {
+            if (e.name === "paragraph") return new RinoParagraphExtension()
+            else if (e.name === "text") return new RinoTextExtension()
+            else return e
+        })
+    }
 }
 
-export const wysiwygExtensions = [
-    ...rinoBaseExtensions,
-    ...rinoMarkExtensions,
-    ...rinoMarkdownNodeExtensions,
+export function createWysiwygCombined() {
+    const rinoMarkdownNodeExtensions = [
+        new RinoHardBreakExtension(),
+        new RinoHorizontalRuleExtension(),
+        new RinoCodeBlockExtension(),
+        new RinoBlockquoteExtension(),
+        new RinoHeadingExtension({}),
+        new RinoCheckboxExtension(),
+        new RinoListItemExtension(),
+        new RinoBulletListExtension(),
+        new RinoOrderedListExtension(),
+        new RinoTableExtension(),
+        new RinoTableRowExtension(),
+        new RinoTableCellExtension(),
+        new RinoTableHeaderExtension(),
+    ]
 
-    new RinoInlineMarkExtension(),
-    new RinoInlineDecorationExtension(),
-]
+    // By doing this, TypeScript can find extensions with wrong `MarkdownNodeExtension` implementation.
+    // Notice that the variable `rinoMarkdownNodeExtensions` should NOT be type `MarkdownNodeExtension[]`
+    // since we want TypeScript to know the actual shapes of `WysiwygExtensions`, `WysiwygSchema` and
+    // `WysiwygManager`.
+    //
+    /* istanbul ignore if */
+    if (process.env.NODE_ENV === "test") {
+        const f = (x: MarkdownNodeExtension[]) => {}
+        f(rinoMarkdownNodeExtensions)
+    }
 
-export type WysiwygExtensions = InferFlexibleExtensionList<typeof wysiwygExtensions>
-export type WysiwygSchema = SchemaFromExtensions<WysiwygExtensions>
+    return [
+        new RinoCorePreset({}),
+        ...rinoMarkExtensions,
+        ...rinoMarkdownNodeExtensions,
+
+        new ReactComponentExtension({}),
+        new RinoInlineMarkExtension(),
+        new RinoInlineDecorationExtension(),
+    ]
+}

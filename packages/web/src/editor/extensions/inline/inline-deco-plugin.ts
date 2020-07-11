@@ -1,4 +1,4 @@
-import { Extension } from "@remirror/core"
+import { PlainExtension } from "@remirror/core"
 import { Node as ProsemirrorNode } from "prosemirror-model"
 import { EditorState, Plugin } from "prosemirror-state"
 import { Decoration, DecorationSet } from "prosemirror-view"
@@ -118,12 +118,12 @@ function createDecorationPlugin() {
     return plugin
 }
 
-export class RinoInlineDecorationExtension extends Extension {
+export class RinoInlineDecorationExtension extends PlainExtension {
     get name() {
         return "inlineDecoration" as const
     }
 
-    public plugin() {
+    createPlugin() {
         return createDecorationPlugin()
     }
 }

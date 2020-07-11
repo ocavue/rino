@@ -1,12 +1,9 @@
-import { BlockquoteExtension } from "@remirror/core-extensions"
+import { BlockquoteExtension } from "@remirror/extension-blockquote"
 
 import { ParserRuleType } from "src/editor/transform/parser-type"
 import { NodeSerializerOptions } from "src/editor/transform/serializer"
 
 export class RinoBlockquoteExtension extends BlockquoteExtension {
-    public styles() {
-        return ""
-    }
     public fromMarkdown() {
         return [
             {
