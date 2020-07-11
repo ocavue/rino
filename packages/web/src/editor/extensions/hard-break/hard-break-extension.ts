@@ -1,12 +1,6 @@
-import {
-    chainCommands,
-    convertCommand,
-    ExtensionManagerNodeTypeParams,
-    KeyBindings,
-} from "@remirror/core"
-import { HardBreakExtension } from "@remirror/core-extensions"
+import { chainCommands, convertCommand, KeyBindings } from "@remirror/core"
+import { HardBreakExtension } from "@remirror/extension-hard-break"
 import { baseKeymap, exitCode } from "prosemirror-commands"
-import { EditorState } from "prosemirror-state"
 
 import { NodeSerializerOptions } from "src/editor/transform/serializer"
 
@@ -23,21 +17,24 @@ export class RinoHardBreakExtension extends HardBreakExtension {
             }
     }
 
-    public keys({ type }: ExtensionManagerNodeTypeParams): KeyBindings {
-        const command = chainCommands(convertCommand(exitCode), ({ state, dispatch }) => {
-            const $from = (state as EditorState).selection.$from
+    createKeymap = () => {
+        const command = chainCommands(convertCommand(exitCode), (params) => {
+            const $from = params.state.selection.$from
             const canReplace = $from
                 .node($from.depth)
-                .canReplaceWith($from.index($from.depth), $from.indexAfter($from.depth), type)
+                .canReplaceWith($from.index($from.depth), $from.indexAfter($from.depth), this.type)
 
             if (canReplace) {
+                const { dispatch } = params
                 if (dispatch) {
-                    dispatch(state.tr.replaceSelectionWith(type.create()).scrollIntoView())
+                    dispatch(
+                        params.state.tr.replaceSelectionWith(this.type.create()).scrollIntoView(),
+                    )
                 }
                 return true
             } else {
                 // If the parent doesn't allow HardBreak type (Heading for example), then failback to `Enter` command
-                return convertCommand(baseKeymap["Enter"])({ state, dispatch })
+                return convertCommand(baseKeymap["Enter"])(params)
             }
         })
 

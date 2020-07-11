@@ -1,11 +1,10 @@
 import {
+    ApplySchemaAttributes,
     convertCommand,
-    ExtensionManagerNodeTypeParams,
     findParentNodeOfType,
     KeyBindings,
-    NodeExtensionSpec,
 } from "@remirror/core"
-import { HeadingExtension } from "@remirror/core-extensions"
+import { HeadingExtension } from "@remirror/extension-heading"
 import Token from "markdown-it/lib/token"
 import { setBlockType } from "prosemirror-commands"
 import { Schema } from "prosemirror-model"
@@ -14,14 +13,14 @@ import { ParserRuleType } from "src/editor/transform/parser-type"
 import { NodeSerializerOptions } from "src/editor/transform/serializer"
 
 export class RinoHeadingExtension extends HeadingExtension {
-    get schema(): NodeExtensionSpec {
+    createNodeSpec(extra: ApplySchemaAttributes) {
         return {
-            ...super.schema,
+            ...super.createNodeSpec(extra),
             content: "text*", // Disallow hard breaks in headings
         }
     }
 
-    public keys({ type }: ExtensionManagerNodeTypeParams): KeyBindings {
+    createKeymap = () => {
         const keys: KeyBindings = {
             Backspace: ({ state, dispatch }) => {
                 const { selection } = state
@@ -32,7 +31,7 @@ export class RinoHeadingExtension extends HeadingExtension {
                     return false
                 }
 
-                const parent = findParentNodeOfType({ types: type, selection })
+                const parent = findParentNodeOfType({ types: this.type, selection })
                 if (parent?.start !== selection.from) {
                     return false
                 }
@@ -50,7 +49,7 @@ export class RinoHeadingExtension extends HeadingExtension {
         }
 
         this.options.levels.forEach((level) => {
-            keys[`mod-${level}`] = convertCommand(setBlockType(type, { level }))
+            keys[`mod-${level}`] = convertCommand(setBlockType(this.type, { level }))
         })
 
         return keys
