@@ -1,10 +1,6 @@
-import { ExtensionManagerNodeTypeParams, KeyBindings } from "@remirror/core"
-import {
-    codeBlockDefaultOptions,
-    CodeBlockExtension,
-    getLanguage,
-} from "@remirror/extension-code-block"
+import { CodeBlockExtension, CodeBlockOptions, getLanguage } from "@remirror/extension-code-block"
 import Token from "markdown-it/lib/token"
+import { DefaultExtensionOptions } from "remirror/core"
 
 import { InlineDecorateType } from "src/editor/extensions"
 import { ParserRuleType } from "src/editor/transform/parser-type"
@@ -13,32 +9,32 @@ import { buildBlockEnterKeymapBindings } from "src/editor/utils"
 
 import { supportedLanguages } from "./code-block-languages"
 
-export const defaultRinoCodeBlockExtensionOptions = {
-    ...codeBlockDefaultOptions,
-    supportedLanguages: supportedLanguages,
-    defaultLanguage: "",
-    extraAttrs: [
-        { name: "userInputLanguage", default: "" },
-        { name: "inlineDecorateType", default: InlineDecorateType.Ignore },
-        { name: "codeBlockType", default: "fenced" },
-    ],
-}
-
 export class RinoCodeBlockExtension extends CodeBlockExtension {
-    get defaultOptions() {
-        return { ...defaultRinoCodeBlockExtensionOptions }
+    static readonly defaultOptions: DefaultExtensionOptions<CodeBlockOptions> = {
+        ...CodeBlockExtension.defaultOptions,
+        supportedLanguages: supportedLanguages,
+        extraAttributes: {
+            userInputLanguage: {
+                default: "",
+            },
+            inlineDecorateType: {
+                default: InlineDecorateType.Ignore,
+            },
+            codeBlockType: {
+                default: "fenced",
+            },
+        },
     }
 
-    public keys(params: ExtensionManagerNodeTypeParams): KeyBindings {
+    createKeymap = () => {
         return {
-            ...super.keys(params),
+            ...super.createKeymap(),
             ...buildBlockEnterKeymapBindings(/^```([a-zA-Z]*)?$/, ({ match }) => {
                 const userInputLanguage = match[1] || ""
-                return params.type.create({
+                return this.type.create({
                     language: getLanguage({
                         language: userInputLanguage,
                         fallback: this.options.defaultLanguage,
-                        supportedLanguages: this.options.supportedLanguages,
                     }),
                     userInputLanguage,
                 })
@@ -64,9 +60,7 @@ export class RinoCodeBlockExtension extends CodeBlockExtension {
                     return {
                         language: getLanguage({
                             language: userInputLanguage,
-                            fallback: defaultRinoCodeBlockExtensionOptions.defaultLanguage,
-                            supportedLanguages:
-                                defaultRinoCodeBlockExtensionOptions.supportedLanguages,
+                            fallback: this.options.defaultLanguage,
                         }),
                         userInputLanguage,
                         codeBlockType: "fenced",

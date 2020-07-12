@@ -1,4 +1,4 @@
-import { chainCommands, convertCommand, KeyBindings } from "@remirror/core"
+import { chainCommands, convertCommand } from "@remirror/core"
 import { HardBreakExtension } from "@remirror/extension-hard-break"
 import { baseKeymap, exitCode } from "prosemirror-commands"
 
