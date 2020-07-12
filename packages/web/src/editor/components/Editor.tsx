@@ -5,7 +5,8 @@ import React, { useEffect, useRef, useState } from "react"
 
 import { MAX_EDITOR_WIDTH } from "src/constants"
 import { Note } from "src/controller/edit"
-import {  SourceCodeEditor } from "src/editor/components/source-code/SourceCodeEditor"
+import { WysiwygEditor } from "src/editor/components//wysiwyg/WysiwygEditor"
+import { SourceCodeEditor } from "src/editor/components/source-code/SourceCodeEditor"
 import { metaKey } from "src/utils"
 
 const useStyles = makeStyles((theme: Theme) => {
@@ -69,7 +70,7 @@ export const Editor: React.FC<EditorProps> = ({ autoFocus, note, setNoteContent 
         theme.palette.type === "light" ? "markdown-body--light" : "markdown-body--dark",
     )
 
-    if (mode === "source-code" || true)
+    if (mode === "source-code")
         return (
             <SourceCodeEditor
                 className={className}
@@ -79,16 +80,16 @@ export const Editor: React.FC<EditorProps> = ({ autoFocus, note, setNoteContent 
                 setContent={setNoteContent}
             />
         )
-    // else if (mode === "wysiwyg")
-    //     return (
-    //         <WysiwygEditor
-    //             className={className}
-    //             autoFocus={autoFocus}
-    //             editable={!note.deleted}
-    //             content={initialContent.current}
-    //             setContent={setNoteContent}
-    //         />
-    //     )
+    else if (mode === "wysiwyg")
+        return (
+            <WysiwygEditor
+                className={className}
+                autoFocus={autoFocus}
+                editable={!note.deleted}
+                content={initialContent.current}
+                setContent={setNoteContent}
+            />
+        )
     else return null
 }
 

@@ -1,7 +1,7 @@
 import { ProsemirrorNode, RemirrorEventListener } from "@remirror/core"
 import { debounce } from "lodash"
-import React, { FC, useCallback, useEffect, useMemo, useRef } from "react"
-import { RemirrorProvider, useManager, useRemirror } from "remirror/react"
+import React, { FC, useEffect, useMemo, useRef } from "react"
+import { RemirrorProvider, useRemirror } from "remirror/react"
 
 import { DevTools } from "../DevTools"
 import { EditorProps } from "../types"

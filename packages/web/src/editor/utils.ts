@@ -1,10 +1,11 @@
 import {
     convertCommand,
     DispatchFunction,
+    EmptyShape,
     KeyBindings,
     NodeExtension,
-    NodeExtensionOptions,
     ProsemirrorNode,
+    ValidOptions,
 } from "@remirror/core"
 import { NodeRange, Schema } from "prosemirror-model"
 import { EditorState, TextSelection, Transaction } from "prosemirror-state"
@@ -12,9 +13,7 @@ import { EditorState, TextSelection, Transaction } from "prosemirror-state"
 import { ParserRule } from "src/editor/transform/parser-type"
 import { NodeSerializerSpec } from "src/editor/transform/serializer"
 
-export abstract class MarkdownNodeExtension<
-    T extends NodeExtensionOptions = any
-> extends NodeExtension<T> {
+export abstract class MarkdownNodeExtension {
     abstract fromMarkdown: () => readonly ParserRule[]
     abstract toMarkdown: NodeSerializerSpec
 }
