@@ -1,13 +1,10 @@
-import { CorePreset } from '@remirror/preset-core';
-import { useManager } from '@remirror/react';
-import { BoldExtension } from '@remirror/extension-bold';
-import { ItalicExtension } from '@remirror/extension-italic';
-import { UnderlineExtension } from '@remirror/extension-underline';
-
-
+import { BoldExtension } from "@remirror/extension-bold"
 import { CodeBlockExtension } from "@remirror/extension-code-block"
+import { ItalicExtension } from "@remirror/extension-italic"
+import { UnderlineExtension } from "@remirror/extension-underline"
+import { CorePreset } from "@remirror/preset-core"
+import { useManager } from "@remirror/react"
 import markdown from "refractor/lang/markdown"
-
 
 export function useSourceCodeManager() {
     return useManager([
@@ -19,10 +16,11 @@ export function useSourceCodeManager() {
             defaultLanguage: "markdown",
             // toggleType: "codeBlock",
             supportedLanguages: [markdown],
-        })
+        }),
     ])
 }
 
 export type SourceCodeManager = ReturnType<typeof useSourceCodeManager>
-export type SourceCodeSchema = SourceCodeManager['schema']
-export type SourceCodeExtensions  = SourceCodeManager['extensions']
+export type SourceCodeSchema = SourceCodeManager["schema"]
+export type SourceCodeExtensions = SourceCodeManager["extensions"]
+export type SourceCodeExtension = SourceCodeManager["extensions"][number]
