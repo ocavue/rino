@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
 
-import { Logo } from "./appbar-logo"
+import { AppbarLogo } from "./appbar-logo"
 
 export const MobileMenu: React.FC<{
     activity: boolean
@@ -36,7 +36,7 @@ export const MobileMenu: React.FC<{
                 <div className="rounded-lg shadow-xs bg-white divide-y-2 divide-gray-50">
                     <div className="pt-5 pb-6 px-5 space-y-6">
                         <div className="flex items-center justify-between">
-                            <Logo />
+                            <AppbarLogo />
                             <span className="flex-1" />
                             <div>
                                 <button
