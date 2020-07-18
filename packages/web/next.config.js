@@ -4,7 +4,6 @@ const path = require("path")
 const execSync = require("child_process").execSync
 const dotenv = require("dotenv")
 
-// const TsconfigPathsPlugin = require("tsconfig-paths-webpack-plugin")
 const withOffline = require("next-offline")
 const withImages = require("next-images")
 const withBundleAnalyzer = require("@next/bundle-analyzer")({
