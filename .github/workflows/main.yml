@@ -108,9 +108,10 @@
           "name": "Build static files",
           "env": {
             "REACT_APP_TEST_USERNAME": "${{ secrets.REACT_APP_TEST_USERNAME }}",
-            "REACT_APP_TEST_PASSWORD": "${{ secrets.REACT_APP_TEST_PASSWORD }}"
+            "REACT_APP_TEST_PASSWORD": "${{ secrets.REACT_APP_TEST_PASSWORD }}",
+            "REACT_APP_TESTING": 1
           },
-          "run": "export REACT_APP_TESTING=1\nexport FIREBASE_DATABASE_EMULATOR_HOST=\"localhost:$(scripts/simple_jq.js ./packages/web/firebase.json .emulators.database.port)\"\nexport FIRESTORE_EMULATOR_HOST=\"localhost:$(scripts/simple_jq.js ./packages/web/firebase.json .emulators.firestore.port)\"\necho \"firebase environment variables:\" $FIREBASE_DATABASE_EMULATOR_HOST $FIRESTORE_EMULATOR_HOST\nyarn run build:all\n"
+          "run": "export FIREBASE_DATABASE_EMULATOR_HOST=\"localhost:$(scripts/simple_jq.js ./packages/web/firebase.json .emulators.database.port)\"\nexport FIRESTORE_EMULATOR_HOST=\"localhost:$(scripts/simple_jq.js ./packages/web/firebase.json .emulators.firestore.port)\"\necho \"firebase environment variables:\" $FIREBASE_DATABASE_EMULATOR_HOST $FIRESTORE_EMULATOR_HOST\nyarn run build:all\n"
         },
         {
           "name": "Run tests",
@@ -119,7 +120,7 @@
             "REACT_APP_TEST_USERNAME": "${{ secrets.REACT_APP_TEST_USERNAME }}",
             "REACT_APP_TEST_PASSWORD": "${{ secrets.REACT_APP_TEST_PASSWORD }}"
           },
-          "run": "yarn run firebase emulators:exec --only firestore \"\n  ./scripts/http-server.js > /dev/null &\n  yarn run test --coverage\n\"\n"
+          "run": "yarn run firebase emulators:exec --only firestore \"\n  yarn run web start > /dev/null &\n  yarn run test --coverage\n\"\n"
         },
         {
           "name": "Upload coverage information to codecov",
