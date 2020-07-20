@@ -14,7 +14,7 @@ const isProd = process.env.NODE_ENV === "production"
 const extensions = [".js", ".ts", ".tsx"]
 
 export default {
-    input: isProd ? "src/Homepage.tsx" : "src/index.tsx",
+    input: isProd ? "src/Homepage.tsx" : "src/entrypoint.tsx",
     output: {
         file: isProd ? pkg.module : "dist/index.js",
         format: "esm",
