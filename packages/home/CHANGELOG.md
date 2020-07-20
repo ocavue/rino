@@ -1,5 +1,11 @@
 # @rino.app/home
 
+## 0.2.0
+
+### Minor Changes
+
+-   cf46d3a: Optimize the hero image
+
 ## 0.1.1
 
 ### Patch Changes
