@@ -55,7 +55,7 @@ const useTextButtonStyles = makeStyles(
             display: "inline-flex",
             alignItems: "center",
             justifyContent: "center",
-            fontWeight: 500,
+            fontWeight: 600,
             fontSize: "1rem",
             lineHeight: "1.5rem",
             paddingTop: ".5rem",
