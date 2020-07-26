@@ -21,7 +21,7 @@ const useStyles = makeStyles(
         text: {
             lineHeight: "1.5rem",
             fontWeight: 500,
-            color: colors.gray600,
+            color: colors.gray700,
             transitionProperty: "color",
             transitionTimingFunction: "cubic-bezier(0.4, 0, 0.2, 1)",
             transitionDuration: "150ms",
