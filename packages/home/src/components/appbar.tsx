@@ -1,7 +1,27 @@
+import { createStyles, makeStyles } from "@material-ui/styles"
 import React from "react"
 
-export const Appbar: React.FC = ({ children }) => (
-    <div className="flex justify-between items-center border-b-2 border-gray-100 py-6 md:justify-start md:space-x-10">
-        {children}
-    </div>
+import { colors } from "../styles/color"
+
+const useStyles = makeStyles(
+    createStyles({
+        appbar: {
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+
+            borderBottomWidth: "2px",
+            borderBottomColor: colors.gray100,
+            borderBottomStyle: "solid",
+
+            paddingTop: "1.5rem",
+            paddingBottom: "1.5rem",
+        },
+    }),
 )
+
+export const Appbar: React.FC = ({ children }) => {
+    const classes = useStyles()
+
+    return <div className={classes.appbar}>{children}</div>
+}
