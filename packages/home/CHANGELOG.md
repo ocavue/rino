@@ -1,5 +1,11 @@
 # @rino.app/home
 
+## 0.2.1
+
+### Patch Changes
+
+-   8a5bb10: Update the homepage style
+
 ## 0.2.0
 
 ### Minor Changes
