@@ -4,7 +4,7 @@ import React from "react"
 import snapshot from "../static/snapshot_mac.png"
 
 export const Hero: React.FC = () => (
-    <div className="mt-10">
+    <div style={{ marginTop: "2.5rem" }}>
         <img src={snapshot} alt="Snapshot" />
     </div>
 )

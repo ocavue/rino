@@ -1,5 +1,6 @@
-import "./index.css"
+import "./remedy.css"
 
+import { createStyles, makeStyles } from "@material-ui/styles"
 import React from "react"
 
 import { Appbar } from "./components/appbar"
@@ -12,15 +13,65 @@ import { Features } from "./components/features"
 import { Footer } from "./components/footer"
 import { Headline } from "./components/headline"
 import { Hero } from "./components/hero"
+import { breakpoints } from "./styles/breakpoint"
+
+const useStyles = makeStyles(
+    createStyles({
+        root: {
+            position: "relative",
+            backgroundColor: "#ffffff",
+            fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
+
+            "& ol,ul": {
+                listStyle: "none",
+                margin: 0,
+                padding: 0,
+            },
+
+            /**
+             * Reset links to optimize for opt-in styling instead of
+             * opt-out.
+             */
+            "& a": {
+                textDecoration: "inherit",
+            },
+
+            "& button": {
+                border: "none",
+                backgroundColor: "transparent",
+            },
+        },
+        container: {
+            maxWidth: "80rem",
+            marginLeft: "auto",
+            marginRight: "auto",
+            paddingLeft: "1rem",
+            paddingRight: "1rem",
+
+            [breakpoints.up.sm]: {
+                paddingLeft: "1.5rem",
+                paddingRight: "1.5rem",
+            },
+        },
+        appbar: {
+            display: "flex",
+            justifyContent: "flex-start",
+            alignItems: "center",
+            flex: "0",
+        },
+    }),
+)
 
 export default function Homepage() {
+    const classes = useStyles()
+
     const [mobileMenuActivity, setMobileMenuActivity] = React.useState(false)
 
     return (
-        <div className="relative bg-white" data-testid="homepage_root">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6">
+        <div className={classes.root} data-testid="homepage_root">
+            <div className={classes.container}>
                 <Appbar>
-                    <a className="lg:w-0 lg:flex-1 items-center justify-start flex flex-1" href="#">
+                    <a className={classes.appbar} href="#">
                         <AppbarLogo />
                     </a>
                     <AppbarAuth />

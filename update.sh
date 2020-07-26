@@ -1,0 +1,1 @@
+ls -d packages/home/src/components/* | xargs -L 1 python3 update.py
