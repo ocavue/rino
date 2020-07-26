@@ -50,7 +50,6 @@ const useIconButtonStyles = makeStyles(
 const useTextButtonStyles = makeStyles(
     createStyles({
         btn: {
-            backgroundColor: "rgba(28,100,242,var(--bg-opacity))",
             borderRadius: ".375rem",
             borderWidth: "0px",
             display: "inline-flex",
@@ -70,24 +69,22 @@ const useTextButtonStyles = makeStyles(
         },
         primary: {
             color: "#ffffff",
-            background: colors.blue500,
+            background: colors.blue700,
             "&:hover": {
-                background: colors.blue400,
+                background: colors.blue600,
             },
             "&:focus": {
-                background: colors.blue400,
+                background: colors.blue600,
                 outline: 0,
                 boxShadow: "0 0 0 2px rgba(164, 202, 254, 0.45)",
             },
         },
         secondary: {
-            color: colors.gray500,
+            color: colors.gray700,
             "&:hover": {
-                color: colors.gray600,
                 backgroundColor: colors.gray100,
             },
             "&:focus": {
-                color: colors.gray600,
                 backgroundColor: colors.gray100,
                 outline: 0,
                 boxShadow: "0 0 0 2px rgba(164, 202, 254, 0.45)",

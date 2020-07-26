@@ -10,7 +10,7 @@ const Link: React.FC<{ href: string; text: string }> = ({ href, text }) => (
         style={{
             marginLeft: "1rem",
             marginRight: "1rem",
-            color: colors.gray600,
+            color: colors.gray700,
         }}
     >
         {text}

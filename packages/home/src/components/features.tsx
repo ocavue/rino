@@ -64,7 +64,7 @@ const FeatureBlock: React.FC<{
                         height: "3rem",
                         width: "3rem",
                         borderRadius: "0.375rem",
-                        backgroundColor: colors.blue500,
+                        backgroundColor: colors.blue700,
                         color: "#ffffff",
                     }}
                 >
