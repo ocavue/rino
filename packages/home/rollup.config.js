@@ -32,7 +32,7 @@ export default {
             include: /node_modules/,
         }),
         postcss({
-            minimize: false,
+            minimize: isProd,
         }),
         typescript(),
         image(),
