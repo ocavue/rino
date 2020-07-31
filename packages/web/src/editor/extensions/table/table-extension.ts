@@ -1,5 +1,11 @@
-import { ExtensionManagerNodeTypeParams, KeyBindings } from "@remirror/core"
-import { TableCellExtension, TableExtension, TableRowExtension } from "@remirror/extension-tables"
+import { ApplySchemaAttributes, KeyBindings } from "@remirror/core"
+import {
+    TableCellExtension,
+    TableExtension,
+    TableHeaderCellExtension,
+    TableRowExtension,
+} from "@remirror/preset-table"
+import { TableSchemaSpec } from "@remirror/preset-table/dist/declarations/src/table-utils"
 import { Fragment, Node as ProsemirroNode } from "prosemirror-model"
 import { TextSelection } from "prosemirror-state"
 
@@ -20,7 +26,9 @@ enum TABLE_ALIGEN {
 export class RinoTableExtension extends TableExtension {
     readonly name = "table"
 
-    public keys({ type, schema }: ExtensionManagerNodeTypeParams): KeyBindings {
+    createKeymap = (): KeyBindings => {
+        const schema = this.store.schema
+
         return buildBlockEnterKeymapBindings(
             /^\|((?:[^\|]+\|){2,})\s*$/,
             ({ match }) => {
@@ -55,15 +63,6 @@ export class RinoTableExtension extends TableExtension {
                 }
             },
         )
-    }
-
-    public helpers(params: ExtensionManagerNodeTypeParams) {
-        return {
-            selectedTableCell: (): ProsemirroNode | null => {
-                const state = params.getState()
-                return selectedTableCell(state)
-            },
-        }
     }
 
     public fromMarkdown() {
@@ -168,11 +167,36 @@ export class RinoTableRowExtension extends TableRowExtension {
     public toMarkdown() {}
 }
 
+export class RinoTableHeaderExtension extends TableHeaderCellExtension {
+    readonly name = "tableHeaderCell"
+
+    public fromMarkdown() {
+        return [] as const
+    }
+
+    public toMarkdown() {}
+}
+
 export class RinoTableCellExtension extends TableCellExtension {
     readonly name = "tableCell"
 
-    public plugin() {
+    createNodeSpec(extra: ApplySchemaAttributes): TableSchemaSpec {
+        return {
+            ...super.createNodeSpec(extra),
+            content: "inline*",
+        }
+    }
+
+    createPlugin() {
         return createTableHeigthlightPlugin()
+    }
+
+    createHelpers() {
+        return {
+            selectedTableCell: (): ProsemirroNode | null => {
+                return selectedTableCell(this.store.getState())
+            },
+        }
     }
 
     public fromMarkdown() {

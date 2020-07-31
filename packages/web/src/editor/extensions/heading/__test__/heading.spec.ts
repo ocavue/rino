@@ -1,31 +1,22 @@
-import { BaseKeymapExtension } from "@remirror/core-extensions"
 import { renderEditor } from "jest-remirror"
 
+import { RinoCorePreset } from "src/editor/components"
 import { buildMarkdownParser } from "src/editor/components/wysiwyg/wysiwyg-markdown"
-import {
-    RinoHardBreakExtension,
-    RinoHeadingExtension,
-    RinoParagraphExtension,
-    RinoTextExtension,
-} from "src/editor/extensions"
+import { RinoHardBreakExtension, RinoHeadingExtension } from "src/editor/extensions"
 
 const setup = () => {
     const {
         view,
         add,
         nodes: { doc, p },
-        attrNodes: { heading },
+        attributeNodes: { heading },
         manager,
         schema,
-    } = renderEditor({
-        plainNodes: [
-            new RinoParagraphExtension(),
-            new RinoTextExtension(),
-            new RinoHardBreakExtension(),
-        ],
-        attrNodes: [new RinoHeadingExtension()],
-        others: [new BaseKeymapExtension()],
-    })
+    } = renderEditor([
+        new RinoHardBreakExtension(),
+        new RinoHeadingExtension({}),
+        new RinoCorePreset({}),
+    ])
 
     const [h1, h2, h3, h4, h5, h6] = [
         heading({ level: 1 }),

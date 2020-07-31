@@ -10,19 +10,21 @@ import { dedent } from "src/utils"
 
 import { RinoCodeBlockExtension } from ".."
 
+const defaultLanguage = "markup"
+
 const setup = () => {
     const {
         view,
         add,
         nodes: { doc, p },
-        attrNodes: { codeBlock },
+        attributeNodes: { codeBlock },
         manager,
         schema,
-    } = renderEditor({
-        plainNodes: [new RinoParagraphExtension(), new RinoTextExtension()],
-        attrNodes: [new RinoCodeBlockExtension()],
-        others: [],
-    })
+    } = renderEditor([
+        new RinoParagraphExtension(),
+        new RinoTextExtension(),
+        new RinoCodeBlockExtension(),
+    ])
 
     return {
         manager,
@@ -45,9 +47,11 @@ describe("fromMarkdown", () => {
                 parser.parse(["    markdown", "    code", "    block"].join("\n")),
             ).toEqualRemirrorDocument(
                 doc(
-                    codeBlock({ language: "", userInputLanguage: "", codeBlockType: "indented" })(
-                        "markdown\ncode\nblock",
-                    ),
+                    codeBlock({
+                        language: "",
+                        userInputLanguage: "",
+                        codeBlockType: "indented",
+                    })("markdown\ncode\nblock"),
                 ),
             )
         })
@@ -81,7 +85,7 @@ describe("fromMarkdown", () => {
             ).toEqualRemirrorDocument(
                 doc(
                     codeBlock({
-                        language: "",
+                        language: defaultLanguage,
                         userInputLanguage: "unknow",
                         codeBlockType: "fenced",
                     })("bla bla bla bla"),
@@ -94,9 +98,11 @@ describe("fromMarkdown", () => {
                 parser.parse(["```", "echo 'hello world!'", "```"].join("\n")),
             ).toEqualRemirrorDocument(
                 doc(
-                    codeBlock({ language: "", userInputLanguage: "", codeBlockType: "fenced" })(
-                        "echo 'hello world!'",
-                    ),
+                    codeBlock({
+                        language: defaultLanguage,
+                        userInputLanguage: "",
+                        codeBlockType: "fenced",
+                    })("echo 'hello world!'"),
                 ),
             )
         })
@@ -113,7 +119,7 @@ describe("toMarkdown", () => {
                 serializer.serialize(
                     doc(
                         codeBlock({
-                            language: "",
+                            language: defaultLanguage,
                             userInputLanguage: "",
                             codeBlockType: "indented",
                         })("markdown"),
@@ -126,7 +132,7 @@ describe("toMarkdown", () => {
                 serializer.serialize(
                     doc(
                         codeBlock({
-                            language: "",
+                            language: defaultLanguage,
                             userInputLanguage: "",
                             codeBlockType: "indented",
                         })("markdown\n"),
@@ -139,7 +145,7 @@ describe("toMarkdown", () => {
                 serializer.serialize(
                     doc(
                         codeBlock({
-                            language: "",
+                            language: defaultLanguage,
                             userInputLanguage: "",
                             codeBlockType: "indented",
                         })("markdown\nmarkdown\nmarkdown"),
@@ -152,7 +158,7 @@ describe("toMarkdown", () => {
                 serializer.serialize(
                     doc(
                         codeBlock({
-                            language: "",
+                            language: defaultLanguage,
                             userInputLanguage: "",
                             codeBlockType: "indented",
                         })("markdown\nmarkdown\nmarkdown\n"),
@@ -168,7 +174,7 @@ describe("toMarkdown", () => {
                 serializer.serialize(
                     doc(
                         codeBlock({
-                            language: "",
+                            language: defaultLanguage,
                             userInputLanguage: "",
                             codeBlockType: "fenced",
                         })("markdown"),
@@ -181,7 +187,7 @@ describe("toMarkdown", () => {
                 serializer.serialize(
                     doc(
                         codeBlock({
-                            language: "",
+                            language: defaultLanguage,
                             userInputLanguage: "",
                             codeBlockType: "fenced",
                         })("markdown\n"),
@@ -194,7 +200,7 @@ describe("toMarkdown", () => {
                 serializer.serialize(
                     doc(
                         codeBlock({
-                            language: "",
+                            language: defaultLanguage,
                             userInputLanguage: "",
                             codeBlockType: "fenced",
                         })("markdown\n\n"),
@@ -211,12 +217,12 @@ describe("toMarkdown", () => {
                             p("p0"),
                             p("p1"),
                             codeBlock({
-                                language: "",
+                                language: defaultLanguage,
                                 userInputLanguage: "",
                                 codeBlockType: "fenced",
                             })("code"),
                             codeBlock({
-                                language: "",
+                                language: defaultLanguage,
                                 userInputLanguage: "",
                                 codeBlockType: "indented",
                             })("code"),

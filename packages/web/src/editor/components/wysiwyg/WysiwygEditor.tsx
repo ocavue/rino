@@ -1,25 +1,31 @@
-import { ProsemirrorNode } from "@remirror/core"
-import { RemirrorEventListener, RemirrorProvider, useRemirrorContext } from "@remirror/react"
+import { ProsemirrorNode, RemirrorEventListener } from "@remirror/core"
+import { RemirrorProvider, useRemirror } from "@remirror/react"
 import { debounce } from "lodash"
 import React, { FC, useEffect, useMemo, useRef, useState } from "react"
 
 import { isTestEnv } from "src/utils"
 
 import { DevTools } from "../DevTools"
+import { ErrorBoundary } from "../ErrorBoundary"
 import { EditorProps } from "../types"
 import { TableMenu } from "./TableMenu"
-import { WysiwygExtensions, WysiwygSchema } from "./wysiwyg-extension"
-import { useWysiwygManager, WysiwygManager } from "./wysiwyg-manager"
+import {
+    useWysiwygManager,
+    WysiwygCombined,
+    WysiwygManager,
+    WysiwygSchema,
+} from "./wysiwyg-manager"
 import { buildMarkdownParser, buildMarkdownSerializer } from "./wysiwyg-markdown"
 
 const InnerEditor: FC<{ className: string }> = ({ className }) => {
-    const context = useRemirrorContext()
-    const rootProps = context.getRootProps()
-
-    // workaround for remirror
-    if (Object.prototype.hasOwnProperty.call(rootProps, "css")) delete rootProps["css"]
-
-    return <div {...rootProps} className={className} />
+    const { getRootProps, commands, helpers } = useRemirror<WysiwygCombined>()
+    return (
+        <>
+            <TableMenu commands={commands} helpers={helpers} />
+            <div {...getRootProps()} className={className} />
+            <DevTools />
+        </>
+    )
 }
 
 type Doc = ProsemirrorNode<WysiwygSchema>
@@ -63,7 +69,7 @@ export const WysiwygEditor: FC<EditorProps> = ({
             }
         }
         const saveContentWithDelay = debounce(saveContent, 500)
-        const onChange: RemirrorEventListener<WysiwygExtensions> = ({ state }) => {
+        const onChange: RemirrorEventListener<WysiwygCombined> = ({ state }) => {
             docRef.current = state.doc
             saveContentWithDelay()
         }
@@ -97,20 +103,18 @@ export const WysiwygEditor: FC<EditorProps> = ({
         )
     }
     return (
-        <RemirrorProvider
-            manager={manager}
-            autoFocus={autoFocus}
-            initialContent={initialNode}
-            onChange={onChange}
-            editable={editable}
-            attributes={{ "data-testid": "wysiwyg-mode-textarea" }}
-        >
-            <>
+        <ErrorBoundary>
+            <RemirrorProvider
+                manager={manager}
+                autoFocus={autoFocus}
+                initialContent={initialNode}
+                onChange={onChange}
+                editable={editable}
+                attributes={{ "data-testid": "wysiwyg-mode-textarea" }}
+            >
                 <InnerEditor className={className} />
-                <TableMenu />
-                <DevTools />
-            </>
-        </RemirrorProvider>
+            </RemirrorProvider>
+        </ErrorBoundary>
     )
 }
 

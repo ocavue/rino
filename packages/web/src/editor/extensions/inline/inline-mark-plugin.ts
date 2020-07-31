@@ -1,10 +1,10 @@
-import { Extension } from "@remirror/core"
+import { PlainExtension } from "@remirror/core"
 import { Mark, Node, Schema } from "prosemirror-model"
 import { Plugin } from "prosemirror-state"
 import { Mappable } from "prosemirror-transform"
 import { EditorView } from "prosemirror-view"
 
-import { WysiwygSchema } from "src/editor"
+import { WysiwygSchema } from "src/editor/components/wysiwyg/wysiwyg-manager"
 import { InlineLexer } from "src/editor/extensions/inline/inline-lexer"
 import { iterNode, iterNodeRange } from "src/editor/utils"
 
@@ -238,7 +238,7 @@ const createInlineMarkPlugin = (testing = false) => {
     return plugin
 }
 
-export class RinoInlineMarkExtension extends Extension {
+export class RinoInlineMarkExtension extends PlainExtension {
     #testing: boolean
 
     public constructor(testing = false) {
@@ -250,13 +250,13 @@ export class RinoInlineMarkExtension extends Extension {
         return "inlineMark" as const
     }
 
-    public keys() {
+    createKeymap() {
         return {
             // "Mod-b": toggleMark(type),
         }
     }
 
-    public plugin() {
+    createPlugin() {
         return createInlineMarkPlugin(this.#testing)
     }
 }

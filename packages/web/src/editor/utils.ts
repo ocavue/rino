@@ -1,20 +1,11 @@
-import {
-    convertCommand,
-    DispatchFunction,
-    KeyBindings,
-    NodeExtension,
-    NodeExtensionOptions,
-    ProsemirrorNode,
-} from "@remirror/core"
-import { NodeRange, Schema } from "prosemirror-model"
+import { convertCommand, DispatchFunction, KeyBindings, ProsemirrorNode } from "@remirror/core"
+import { Fragment, NodeRange, Schema } from "prosemirror-model"
 import { EditorState, TextSelection, Transaction } from "prosemirror-state"
 
 import { ParserRule } from "src/editor/transform/parser-type"
 import { NodeSerializerSpec } from "src/editor/transform/serializer"
 
-export abstract class MarkdownNodeExtension<
-    T extends NodeExtensionOptions = any
-> extends NodeExtension<T> {
+export abstract class MarkdownNodeExtension {
     abstract fromMarkdown: () => readonly ParserRule[]
     abstract toMarkdown: NodeSerializerSpec
 }
@@ -52,8 +43,12 @@ export function buildBlockEnterKeymapBindings<Node extends ProsemirrorNode>(
             const node = getNode({ match, start, end })
 
             // Ensure that the replacement is available
-            if (!$start.node(-1).canReplaceWith($start.index(-1), $start.indexAfter(-1), node.type))
+            const parent = $start.node(-1)
+            const replaceFromIndex = $start.index(-1)
+            const replaceToIndex = $start.indexAfter(-1)
+            if (!parent.canReplace(replaceFromIndex, replaceToIndex, Fragment.from(node))) {
                 return false
+            }
 
             let tr: Transaction = state.tr
 

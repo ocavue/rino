@@ -1,4 +1,4 @@
-import { HorizontalRuleExtension } from "@remirror/core-extensions"
+import { HorizontalRuleExtension } from "@remirror/extension-horizontal-rule"
 
 import { ParserRuleType } from "src/editor/transform/parser-type"
 import { NodeSerializerOptions } from "src/editor/transform/serializer"

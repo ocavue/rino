@@ -1,12 +1,11 @@
-import { EditorSchema, fromHTML, toHTML } from "@remirror/core"
+import { EditorSchema, fromHtml, toHtml } from "@remirror/core"
 import { renderEditor, TaggedProsemirrorNode } from "jest-remirror"
 
 import {
     buildMarkdownParser,
     buildMarkdownSerializer,
 } from "src/editor/components/wysiwyg/wysiwyg-markdown"
-import { RinoHardBreakExtension, RinoParagraphExtension } from "src/editor/extensions"
-import { RinoTextExtension } from "src/editor/extensions"
+import { RinoHardBreakExtension } from "src/editor/extensions"
 import { dedent } from "src/utils"
 
 import {
@@ -15,6 +14,8 @@ import {
     RinoListItemExtension,
     RinoOrderedListExtension,
 } from ".."
+import { RinoParagraphExtension } from "../../paragraph"
+import { RinoTextExtension } from "../../text"
 
 const html = String.raw
 
@@ -23,23 +24,26 @@ function simplifyHTML(html: string) {
 }
 
 const setup = () => {
-    const result = renderEditor({
-        plainNodes: [
-            new RinoParagraphExtension(),
-            new RinoTextExtension(),
-            new RinoOrderedListExtension(),
-            new RinoBulletListExtension(),
-            new RinoListItemExtension(),
-            new RinoHardBreakExtension(),
-        ],
-        attrNodes: [new RinoCheckboxExtension()],
-        others: [],
+    const combineds = [
+        new RinoOrderedListExtension(),
+        new RinoBulletListExtension(),
+        new RinoListItemExtension(),
+        new RinoHardBreakExtension(),
+        new RinoCheckboxExtension(),
+        new RinoParagraphExtension(),
+        new RinoTextExtension({}),
+    ]
+    const result = renderEditor(combineds, {
+        core: {
+            // Remove `gapCursor` from `CorePreset` since it will cache the click event and cause some error.
+            excludeExtensions: ["gapCursor", "paragraph", "text"],
+        },
     })
     const {
         view,
         add,
         nodes: { doc, p, rinoListItem, rinoOrderedList, rinoBulletList, hardBreak },
-        attrNodes: { rinoCheckbox },
+        attributeNodes: { rinoCheckbox },
         manager,
         schema,
     } = result
@@ -76,10 +80,10 @@ describe("schema", () => {
         html: string,
     ) {
         test("dump to html", () => {
-            expect(toHTML({ node, schema })).toBe(html)
+            expect(toHtml({ node, schema })).toBe(html)
         })
         test("parse from html", () => {
-            expect(fromHTML({ content: html, schema })).toEqualProsemirrorNode(doc(node))
+            expect(fromHtml({ content: html, schema })).toEqualProsemirrorNode(doc(node))
         })
     }
 

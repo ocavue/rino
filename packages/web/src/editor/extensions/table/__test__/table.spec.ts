@@ -1,14 +1,18 @@
 import { renderEditor } from "jest-remirror"
 
+import { RinoCorePreset } from "src/editor/components"
 import {
     buildMarkdownParser,
     buildMarkdownSerializer,
 } from "src/editor/components/wysiwyg/wysiwyg-markdown"
-import { RinoParagraphExtension } from "src/editor/extensions"
-import { RinoTextExtension } from "src/editor/extensions"
 import { dedent } from "src/utils"
 
-import { RinoTableCellExtension, RinoTableExtension, RinoTableRowExtension } from ".."
+import {
+    RinoTableCellExtension,
+    RinoTableExtension,
+    RinoTableHeaderExtension,
+    RinoTableRowExtension,
+} from ".."
 
 const setup = () => {
     const {
@@ -17,16 +21,13 @@ const setup = () => {
         nodes: { doc, p, table, tableRow, tableCell },
         manager,
         schema,
-    } = renderEditor({
-        plainNodes: [
-            new RinoTableExtension(),
-            new RinoTableRowExtension(),
-            new RinoTableCellExtension(),
-            new RinoParagraphExtension(),
-            new RinoTextExtension(),
-        ],
-        others: [],
-    })
+    } = renderEditor([
+        new RinoTableExtension(),
+        new RinoTableRowExtension(),
+        new RinoTableCellExtension(),
+        new RinoTableHeaderExtension(),
+        new RinoCorePreset({}),
+    ])
 
     const buildRegularTable = (rows: string[][]) => {
         // Esnure that all rows have same length

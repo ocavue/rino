@@ -1,12 +1,8 @@
-import { BaseKeymapExtension } from "@remirror/core-extensions"
 import { renderEditor } from "jest-remirror"
 
+import { RinoCorePreset } from "src/editor/components"
 import { buildMarkdownSerializer } from "src/editor/components/wysiwyg/wysiwyg-markdown"
-import {
-    RinoHardBreakExtension,
-    RinoParagraphExtension,
-    RinoTextExtension,
-} from "src/editor/extensions"
+import { RinoHardBreakExtension } from "src/editor/extensions"
 
 const setup = () => {
     const {
@@ -15,14 +11,7 @@ const setup = () => {
         nodes: { doc, p, hardBreak },
         manager,
         schema,
-    } = renderEditor({
-        plainNodes: [
-            new RinoParagraphExtension(),
-            new RinoTextExtension(),
-            new RinoHardBreakExtension(),
-        ],
-        others: [new BaseKeymapExtension()],
-    })
+    } = renderEditor([new RinoHardBreakExtension(), new RinoCorePreset({})])
 
     return {
         manager,

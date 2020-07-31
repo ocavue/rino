@@ -1,9 +1,5 @@
-import { ExtensionManagerNodeTypeParams, KeyBindings } from "@remirror/core"
-import {
-    codeBlockDefaultOptions,
-    CodeBlockExtension,
-    getLanguage,
-} from "@remirror/extension-code-block"
+import { DefaultExtensionOptions } from "@remirror/core"
+import { CodeBlockExtension, CodeBlockOptions, getLanguage } from "@remirror/extension-code-block"
 import Token from "markdown-it/lib/token"
 
 import { InlineDecorateType } from "src/editor/extensions"
@@ -13,41 +9,40 @@ import { buildBlockEnterKeymapBindings } from "src/editor/utils"
 
 import { supportedLanguages } from "./code-block-languages"
 
-export const defaultRinoCodeBlockExtensionOptions = {
-    ...codeBlockDefaultOptions,
-    supportedLanguages: supportedLanguages,
-    defaultLanguage: "",
-    extraAttrs: [
-        { name: "userInputLanguage", default: "" },
-        { name: "inlineDecorateType", default: InlineDecorateType.Ignore },
-        { name: "codeBlockType", default: "fenced" },
-    ],
-}
-
 export class RinoCodeBlockExtension extends CodeBlockExtension {
-    get defaultOptions() {
-        return { ...defaultRinoCodeBlockExtensionOptions }
+    static readonly defaultOptions: DefaultExtensionOptions<CodeBlockOptions> = {
+        ...CodeBlockExtension.defaultOptions,
+        defaultLanguage: "markup",
+        supportedLanguages: supportedLanguages,
+        extraAttributes: {
+            userInputLanguage: {
+                default: "",
+            },
+            inlineDecorateType: {
+                default: InlineDecorateType.Ignore,
+            },
+            codeBlockType: {
+                default: "fenced",
+            },
+        },
     }
 
-    public keys(params: ExtensionManagerNodeTypeParams): KeyBindings {
-        return {
-            ...super.keys(params),
-            ...buildBlockEnterKeymapBindings(/^```([a-zA-Z]*)?$/, ({ match }) => {
-                const userInputLanguage = match[1] || ""
-                return params.type.create({
-                    language: getLanguage({
-                        language: userInputLanguage,
-                        fallback: this.options.defaultLanguage,
-                        supportedLanguages: this.options.supportedLanguages,
-                    }),
-                    userInputLanguage,
-                })
-            }),
-        }
+    createKeymap() {
+        const type = this.type
+        const options = this.options
+
+        return buildBlockEnterKeymapBindings(/^```([a-zA-Z0-9-+#]*)$/, ({ match }) => {
+            const userInputLanguage = match[1] || ""
+            const language = getLanguage({
+                language: userInputLanguage,
+                fallback: options.defaultLanguage,
+            })
+            return type.create({ userInputLanguage, language })
+        })
     }
 
     // Override the default input rules from remirror
-    public inputRules() {
+    createInputRules() {
         return []
     }
 
@@ -64,9 +59,7 @@ export class RinoCodeBlockExtension extends CodeBlockExtension {
                     return {
                         language: getLanguage({
                             language: userInputLanguage,
-                            fallback: defaultRinoCodeBlockExtensionOptions.defaultLanguage,
-                            supportedLanguages:
-                                defaultRinoCodeBlockExtensionOptions.supportedLanguages,
+                            fallback: this.options.defaultLanguage,
                         }),
                         userInputLanguage,
                         codeBlockType: "fenced",

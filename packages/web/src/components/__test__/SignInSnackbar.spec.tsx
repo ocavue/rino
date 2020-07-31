@@ -3,7 +3,7 @@ import React from "react"
 
 import { SIGN_IN_SNACKBAR_SHOW_DELAY } from "src/constants"
 import { AuthContainer } from "src/controller/auth/hook"
-import { EditContainer, User } from "src/controller/edit"
+import { User } from "src/controller/firebase/firebase-types"
 import { WorksapceStateContainer } from "src/controller/workspace-state/hook"
 import { mockNextLink, TestHook } from "tests/react-test-utils"
 
@@ -16,12 +16,10 @@ function renderWithCallback(component: React.ReactNode, callback: () => any) {
     return render(
         <div>
             <WorksapceStateContainer.Provider>
-                <EditContainer.Provider>
-                    <AuthContainer.Provider>
-                        {component}
-                        <TestHook callback={callback} />
-                    </AuthContainer.Provider>
-                </EditContainer.Provider>
+                <AuthContainer.Provider>
+                    {component}
+                    <TestHook callback={callback} />
+                </AuthContainer.Provider>
             </WorksapceStateContainer.Provider>
         </div>,
     )

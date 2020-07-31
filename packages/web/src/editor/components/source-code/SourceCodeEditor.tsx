@@ -1,25 +1,20 @@
-import { ProsemirrorNode } from "@remirror/core"
-import { RemirrorEventListener, RemirrorProvider, useRemirrorContext } from "@remirror/react"
+import { ProsemirrorNode, RemirrorEventListener } from "@remirror/core"
+import { RemirrorProvider, useRemirror } from "@remirror/react"
 import { debounce } from "lodash"
 import React, { FC, useEffect, useMemo, useRef } from "react"
 
 import { DevTools } from "../DevTools"
 import { EditorProps } from "../types"
 import {
-    SourceCodeExtensions,
+    SourceCodeExtension,
     SourceCodeManager,
     SourceCodeSchema,
     useSourceCodeManager,
 } from "./manager"
 
 const InnerEditor: FC<{ className: string }> = ({ className }) => {
-    const context = useRemirrorContext()
-    const rootProps = context.getRootProps()
-
-    // workaround for remirror
-    if (Object.prototype.hasOwnProperty.call(rootProps, "css")) delete rootProps["css"]
-
-    return <div {...rootProps} className={className} />
+    const { getRootProps } = useRemirror()
+    return <div {...getRootProps()} className={className} />
 }
 
 type Doc = ProsemirrorNode<SourceCodeSchema>
@@ -51,7 +46,7 @@ export const SourceCodeEditor: FC<EditorProps> = ({
             if (doc) setContent(getContent(doc))
         }
         const saveContentWithDelay = debounce(saveContent, 500)
-        const onChange: RemirrorEventListener<SourceCodeExtensions> = ({ state }) => {
+        const onChange: RemirrorEventListener<SourceCodeExtension> = ({ state }) => {
             docRef.current = state.doc
             saveContentWithDelay()
         }
