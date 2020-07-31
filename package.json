@@ -46,6 +46,10 @@
         },
         "packageRules": [
             {
+                "packagePatterns": [".*remirror.*", "jest-prosemirror"],
+                "groupName": "remirror packages"
+            },
+            {
                 "depTypeList": [
                     "dependencies",
                     "devDependencies"
@@ -54,6 +58,7 @@
                     "patch",
                     "minor"
                 ],
+                "excludePackagePatterns": [".*remirror.*", "jest-prosemirror"],
                 "groupName": "dependencies (non-major)"
             }
         ],
