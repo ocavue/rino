@@ -1,5 +1,11 @@
 # @rino.app/web
 
+## 0.13.0
+
+### Minor Changes
+
+-   6d08a2c: Update to the latest version of Remirror.
+
 ## 0.12.2
 
 ### Patch Changes
