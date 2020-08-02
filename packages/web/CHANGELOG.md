@@ -1,5 +1,11 @@
 # @rino.app/web
 
+## 0.13.1
+
+### Patch Changes
+
+-   de5a989: Fix a 404 link.
+
 ## 0.13.0
 
 ### Minor Changes
