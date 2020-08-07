@@ -4,7 +4,7 @@
 
 ### Patch Changes
 
--   de5a989: Fix a 404 link.
+-   bf7afaf: Fix a 404 link.
 
 ## 0.13.0
 
