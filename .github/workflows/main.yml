@@ -1,405 +1,160 @@
-{
-  "name": "CI",
-  "on": "push",
-  "env": {
-    "NEXT_TELEMETRY_DISABLED": 1
-  },
-  "jobs": {
-    "Build": {
-      "runs-on": "ubuntu-18.04",
-      "steps": [
-        {
-          "name": "Checkout code repository",
-          "uses": "actions/checkout@v2"
-        },
-        {
-          "name": "Setup node.js",
-          "uses": "actions/setup-node@v1",
-          "with": {
-            "node-version": 12
-          }
-        },
-        {
-          "id": "step_cache_deps",
-          "name": "Cache dependencies",
-          "uses": "actions/cache@master",
-          "with": {
-            "path": "node_modules\n*/*/node_modules\n~/.cache/firebase\n",
-            "key": "${{ runner.os }}-deps-${{ hashFiles('**/yarn.lock') }}"
-          }
-        },
-        {
-          "name": "Install Dependencies",
-          "run": "yarn install --frozen-lockfile\necho \"[DEBUG] CACHE_HIT: $CACHE_HIT\"\nif [ \"$CACHE_HIT\" != \"true\" ]\nthen\n  echo \"[DEBUG] installing\"\n  yarn run web firebase setup:emulators:firestore\nfi\nls -lrth ~/.cache/firebase/emulators/\n",
-          "env": {
-            "CACHE_HIT": "${{ steps.step_cache_deps.outputs.cache-hit }}"
-          }
-        },
-        {
-          "name": "Configrate firebase",
-          "env": {
-            "FIREBASE_CLIENT_JSON": "${{ secrets.FIREBASE_CLIENT_JSON }}",
-            "FIREBASE_TOKEN": "${{ secrets.FIREBASE_TOKEN }}"
-          },
-          "run": "echo \"${FIREBASE_CLIENT_JSON}\" > ./packages/web/config/firebase.client.json\nexport FIREBASE_PROJECT_ID=$(scripts/simple_jq.js ./packages/web/config/firebase.client.json .projectId)\nyarn run web firebase use --add $FIREBASE_PROJECT_ID\n"
-        },
-        {
-          "name": "Build",
-          "run": "yarn run build:all\n"
-        },
-        {
-          "name": "Upload dist",
-          "uses": "actions/upload-artifact@v2",
-          "with": {
-            "name": "dist",
-            "path": "./packages/web/dist"
-          }
-        }
-      ]
-    },
-    "Test": {
-      "runs-on": "ubuntu-18.04",
-      "steps": [
-        {
-          "name": "Checkout code repository",
-          "uses": "actions/checkout@v2"
-        },
-        {
-          "name": "Setup node.js",
-          "uses": "actions/setup-node@v1",
-          "with": {
-            "node-version": 12
-          }
-        },
-        {
-          "id": "step_cache_deps",
-          "name": "Cache dependencies",
-          "uses": "actions/cache@master",
-          "with": {
-            "path": "node_modules\n*/*/node_modules\n~/.cache/firebase\n",
-            "key": "${{ runner.os }}-deps-${{ hashFiles('**/yarn.lock') }}"
-          }
-        },
-        {
-          "name": "Install Dependencies",
-          "run": "yarn install --frozen-lockfile\necho \"[DEBUG] CACHE_HIT: $CACHE_HIT\"\nif [ \"$CACHE_HIT\" != \"true\" ]\nthen\n  echo \"[DEBUG] installing\"\n  yarn run web firebase setup:emulators:firestore\nfi\nls -lrth ~/.cache/firebase/emulators/\n",
-          "env": {
-            "CACHE_HIT": "${{ steps.step_cache_deps.outputs.cache-hit }}"
-          }
-        },
-        {
-          "name": "Configrate firebase",
-          "env": {
-            "FIREBASE_CLIENT_JSON": "${{ secrets.FIREBASE_CLIENT_JSON }}",
-            "FIREBASE_TOKEN": "${{ secrets.FIREBASE_TOKEN }}"
-          },
-          "run": "echo \"${FIREBASE_CLIENT_JSON}\" > ./packages/web/config/firebase.client.json\nexport FIREBASE_PROJECT_ID=$(scripts/simple_jq.js ./packages/web/config/firebase.client.json .projectId)\nyarn run web firebase use --add $FIREBASE_PROJECT_ID\n"
-        },
-        {
-          "id": "step_cache_next",
-          "name": "Cache next.js build bundles",
-          "uses": "actions/cache@master",
-          "with": {
-            "path": "./.next/cache",
-            "key": "${{ runner.os }}-next-${{ hashFiles('**/yarn.lock') }}"
-          }
-        },
-        {
-          "name": "Build static files",
-          "env": {
-            "REACT_APP_TEST_USERNAME": "${{ secrets.REACT_APP_TEST_USERNAME }}",
-            "REACT_APP_TEST_PASSWORD": "${{ secrets.REACT_APP_TEST_PASSWORD }}",
-            "REACT_APP_TESTING": 1
-          },
-          "run": "export FIREBASE_DATABASE_EMULATOR_HOST=\"localhost:$(scripts/simple_jq.js ./packages/web/firebase.json .emulators.database.port)\"\nexport FIRESTORE_EMULATOR_HOST=\"localhost:$(scripts/simple_jq.js ./packages/web/firebase.json .emulators.firestore.port)\"\necho \"firebase environment variables:\" $FIREBASE_DATABASE_EMULATOR_HOST $FIRESTORE_EMULATOR_HOST\nyarn run build:all\n"
-        },
-        {
-          "name": "Run tests",
-          "env": {
-            "FIREBASE_TOKEN": "${{ secrets.FIREBASE_TOKEN }}",
-            "REACT_APP_TEST_USERNAME": "${{ secrets.REACT_APP_TEST_USERNAME }}",
-            "REACT_APP_TEST_PASSWORD": "${{ secrets.REACT_APP_TEST_PASSWORD }}"
-          },
-          "run": "yarn run firebase emulators:exec --only firestore \"\n  yarn run web start > /dev/null &\n  yarn run test --coverage\n\"\n"
-        },
-        {
-          "name": "Upload coverage information to codecov",
-          "uses": "codecov/codecov-action@v1",
-          "with": {
-            "file": "./coverage/coverage-final.json",
-            "fail_ci_if_error": "${{ github.ref != 'refs/heads/master' }}"
-          }
-        }
-      ]
-    },
-    "Lint": {
-      "runs-on": "ubuntu-18.04",
-      "steps": [
-        {
-          "name": "Checkout code repository",
-          "uses": "actions/checkout@v2"
-        },
-        {
-          "name": "Setup node.js",
-          "uses": "actions/setup-node@v1",
-          "with": {
-            "node-version": 12
-          }
-        },
-        {
-          "id": "step_cache_deps",
-          "name": "Cache dependencies",
-          "uses": "actions/cache@master",
-          "with": {
-            "path": "node_modules\n*/*/node_modules\n~/.cache/firebase\n",
-            "key": "${{ runner.os }}-deps-${{ hashFiles('**/yarn.lock') }}"
-          }
-        },
-        {
-          "name": "Install Dependencies",
-          "run": "yarn install --frozen-lockfile\necho \"[DEBUG] CACHE_HIT: $CACHE_HIT\"\nif [ \"$CACHE_HIT\" != \"true\" ]\nthen\n  echo \"[DEBUG] installing\"\n  yarn run web firebase setup:emulators:firestore\nfi\nls -lrth ~/.cache/firebase/emulators/\n",
-          "env": {
-            "CACHE_HIT": "${{ steps.step_cache_deps.outputs.cache-hit }}"
-          }
-        },
-        {
-          "name": "Lint",
-          "run": "yarn run lint ."
-        },
-        {
-          "name": "Check actions configration",
-          "run": "hash1=$(sha1sum .github/workflows/main.yml)\n./node_modules/.bin/js-yaml .github/temp/main.yml > .github/workflows/main.yml\nhash2=$(sha1sum .github/workflows/main.yml)\necho \"$hash1\" \"$hash2\"\nif [ \"$hash1\" != \"$hash2\" ]; then exit 1; fi\n"
-        }
-      ]
-    },
-    "Lighthouse": {
-      "runs-on": "ubuntu-18.04",
-      "needs": "build",
-      "steps": [
-        {
-          "name": "Checkout code repository",
-          "uses": "actions/checkout@v2"
-        },
-        {
-          "name": "Setup node.js",
-          "uses": "actions/setup-node@v1",
-          "with": {
-            "node-version": 12
-          }
-        },
-        {
-          "id": "step_cache_deps",
-          "name": "Cache dependencies",
-          "uses": "actions/cache@master",
-          "with": {
-            "path": "node_modules\n*/*/node_modules\n~/.cache/firebase\n",
-            "key": "${{ runner.os }}-deps-${{ hashFiles('**/yarn.lock') }}"
-          }
-        },
-        {
-          "name": "Install Dependencies",
-          "run": "yarn install --frozen-lockfile\necho \"[DEBUG] CACHE_HIT: $CACHE_HIT\"\nif [ \"$CACHE_HIT\" != \"true\" ]\nthen\n  echo \"[DEBUG] installing\"\n  yarn run web firebase setup:emulators:firestore\nfi\nls -lrth ~/.cache/firebase/emulators/\n",
-          "env": {
-            "CACHE_HIT": "${{ steps.step_cache_deps.outputs.cache-hit }}"
-          }
-        },
-        {
-          "name": "Download dist",
-          "uses": "actions/download-artifact@v2",
-          "with": {
-            "name": "dist",
-            "path": "./packages/web/dist"
-          }
-        },
-        {
-          "name": "Run lighthouse",
-          "env": {
-            "GITHUB_TOKEN": "${{ secrets.GITHUB_TOKEN }}",
-            "LHCI_GITHUB_APP_TOKEN": "${{ secrets.LHCI_GITHUB_APP_TOKEN }}"
-          },
-          "run": "yarn run lhci autorun"
-        }
-      ]
-    },
-    "Netlify": {
-      "runs-on": "ubuntu-18.04",
-      "needs": "build",
-      "steps": [
-        {
-          "name": "Checkout code repository",
-          "uses": "actions/checkout@v2"
-        },
-        {
-          "name": "Setup node.js",
-          "uses": "actions/setup-node@v1",
-          "with": {
-            "node-version": 12
-          }
-        },
-        {
-          "id": "step_cache_deps",
-          "name": "Cache dependencies",
-          "uses": "actions/cache@master",
-          "with": {
-            "path": "node_modules\n*/*/node_modules\n~/.cache/firebase\n",
-            "key": "${{ runner.os }}-deps-${{ hashFiles('**/yarn.lock') }}"
-          }
-        },
-        {
-          "name": "Install Dependencies",
-          "run": "yarn install --frozen-lockfile\necho \"[DEBUG] CACHE_HIT: $CACHE_HIT\"\nif [ \"$CACHE_HIT\" != \"true\" ]\nthen\n  echo \"[DEBUG] installing\"\n  yarn run web firebase setup:emulators:firestore\nfi\nls -lrth ~/.cache/firebase/emulators/\n",
-          "env": {
-            "CACHE_HIT": "${{ steps.step_cache_deps.outputs.cache-hit }}"
-          }
-        },
-        {
-          "name": "Download dist",
-          "uses": "actions/download-artifact@v2",
-          "with": {
-            "name": "dist",
-            "path": "./packages/web/dist"
-          }
-        },
-        {
-          "name": "Deploy to Netlify",
-          "uses": "nwtgck/actions-netlify@v1.1",
-          "env": {
-            "NETLIFY_AUTH_TOKEN": "${{ secrets.NETLIFY_AUTH_TOKEN }}",
-            "NETLIFY_SITE_ID": "${{ secrets.NETLIFY_SITE_ID }}"
-          },
-          "with": {
-            "publish-dir": "./packages/web/dist",
-            "github-token": "${{ secrets.GITHUB_TOKEN }}",
-            "deploy-message": "Deploy from GitHub Actions (SHA: ${{ github.sha }}; Ref: ${{github.ref }})",
-            "enable-commit-comment": false,
-            "enable-pull-request-comment": true,
-            "overwrites-pull-request-comment": true
-          }
-        }
-      ]
-    },
-    "Changesets": {
-      "runs-on": "ubuntu-18.04",
-      "needs": [
-        "Build",
-        "Test",
-        "Lint",
-        "Lighthouse",
-        "Netlify"
-      ],
-      "if": "github.ref == 'refs/heads/master'",
-      "steps": [
-        {
-          "name": "Checkout code repository",
-          "uses": "actions/checkout@v2"
-        },
-        {
-          "name": "Setup node.js",
-          "uses": "actions/setup-node@v1",
-          "with": {
-            "node-version": 12
-          }
-        },
-        {
-          "id": "step_cache_deps",
-          "name": "Cache dependencies",
-          "uses": "actions/cache@master",
-          "with": {
-            "path": "node_modules\n*/*/node_modules\n~/.cache/firebase\n",
-            "key": "${{ runner.os }}-deps-${{ hashFiles('**/yarn.lock') }}"
-          }
-        },
-        {
-          "name": "Install Dependencies",
-          "run": "yarn install --frozen-lockfile\necho \"[DEBUG] CACHE_HIT: $CACHE_HIT\"\nif [ \"$CACHE_HIT\" != \"true\" ]\nthen\n  echo \"[DEBUG] installing\"\n  yarn run web firebase setup:emulators:firestore\nfi\nls -lrth ~/.cache/firebase/emulators/\n",
-          "env": {
-            "CACHE_HIT": "${{ steps.step_cache_deps.outputs.cache-hit }}"
-          }
-        },
-        {
-          "id": "step_changesets",
-          "name": "Create release pull request or publish to npm",
-          "uses": "changesets/action@master",
-          "with": {
-            "publish": "yarn run changeset publish",
-            "commit": "chore(changesets): release a new version",
-            "title": "chore(changesets): release a new version"
-          },
-          "env": {
-            "GITHUB_TOKEN": "${{ secrets.GITHUB_TOKEN }}",
-            "NPM_TOKEN": "${{ secrets.NPM_TOKEN }}"
-          }
-        },
-        {
-          "name": "Print outputs for debug",
-          "run": "echo \"changeset_outputs_published: [$changeset_outputs_published]\"\n",
-          "env": {
-            "changeset_outputs_published": "${{ steps.step_changesets.outputs.published }}"
-          }
-        }
-      ],
-      "outputs": {
-        "published": "${{ steps.step_changesets.outputs.published }}"
-      }
-    },
-    "Firebase": {
-      "runs-on": "ubuntu-18.04",
-      "needs": [
-        "Changesets"
-      ],
-      "if": "github.ref == 'refs/heads/master' && ( needs.Changesets.outputs.published == 'true' || contains(github.event.head_commit.message, 'force-publish') )",
-      "steps": [
-        {
-          "name": "Checkout code repository",
-          "uses": "actions/checkout@v2"
-        },
-        {
-          "name": "Setup node.js",
-          "uses": "actions/setup-node@v1",
-          "with": {
-            "node-version": 12
-          }
-        },
-        {
-          "id": "step_cache_deps",
-          "name": "Cache dependencies",
-          "uses": "actions/cache@master",
-          "with": {
-            "path": "node_modules\n*/*/node_modules\n~/.cache/firebase\n",
-            "key": "${{ runner.os }}-deps-${{ hashFiles('**/yarn.lock') }}"
-          }
-        },
-        {
-          "name": "Install Dependencies",
-          "run": "yarn install --frozen-lockfile\necho \"[DEBUG] CACHE_HIT: $CACHE_HIT\"\nif [ \"$CACHE_HIT\" != \"true\" ]\nthen\n  echo \"[DEBUG] installing\"\n  yarn run web firebase setup:emulators:firestore\nfi\nls -lrth ~/.cache/firebase/emulators/\n",
-          "env": {
-            "CACHE_HIT": "${{ steps.step_cache_deps.outputs.cache-hit }}"
-          }
-        },
-        {
-          "name": "Download dist",
-          "uses": "actions/download-artifact@v2",
-          "with": {
-            "name": "dist",
-            "path": "./packages/web/dist"
-          }
-        },
-        {
-          "name": "Configrate firebase",
-          "env": {
-            "FIREBASE_CLIENT_JSON": "${{ secrets.FIREBASE_CLIENT_JSON }}",
-            "FIREBASE_TOKEN": "${{ secrets.FIREBASE_TOKEN }}"
-          },
-          "run": "echo \"${FIREBASE_CLIENT_JSON}\" > ./packages/web/config/firebase.client.json\nexport FIREBASE_PROJECT_ID=$(scripts/simple_jq.js ./packages/web/config/firebase.client.json .projectId)\nyarn run web firebase use --add $FIREBASE_PROJECT_ID\n"
-        },
-        {
-          "name": "Deploy to Firebase",
-          "env": {
-            "FIREBASE_TOKEN": "${{ secrets.FIREBASE_TOKEN }}"
-          },
-          "run": "yarn run web firebase deploy\n"
-        }
-      ]
-    }
-  }
-}
+name: CI
+
+on: push
+
+env:
+  NEXT_TELEMETRY_DISABLED: 1 # https://nextjs.org/telemetry
+
+jobs:
+  Build:
+    runs-on: ubuntu-18.04
+    steps:
+
+      - uses: actions/checkout@v2
+
+      - uses: ./.github/actions/setup
+
+      - name: Build
+        run: |
+          yarn run build:all
+
+      - uses: ./.github/actions/dist-upload
+
+  Test:
+    runs-on: ubuntu-18.04
+    steps:
+
+      - uses: actions/checkout@v2
+
+      - uses: ./.github/actions/setup
+
+      - name: Build static files
+        env:
+          REACT_APP_TEST_USERNAME: ${{ secrets.REACT_APP_TEST_USERNAME }}
+          REACT_APP_TEST_PASSWORD: ${{ secrets.REACT_APP_TEST_PASSWORD }}
+          REACT_APP_TESTING: 1
+        run: |
+          export FIREBASE_DATABASE_EMULATOR_HOST="localhost:$(scripts/simple_jq.js ./packages/web/firebase.json .emulators.database.port)"
+          export FIRESTORE_EMULATOR_HOST="localhost:$(scripts/simple_jq.js ./packages/web/firebase.json .emulators.firestore.port)"
+          echo "firebase environment variables:" $FIREBASE_DATABASE_EMULATOR_HOST $FIRESTORE_EMULATOR_HOST
+          yarn run build:all
+
+      - name: Run tests
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }} # https://firebase.google.com/docs/cli#cli-ci-systems
+          REACT_APP_TEST_USERNAME: ${{ secrets.REACT_APP_TEST_USERNAME }}
+          REACT_APP_TEST_PASSWORD: ${{ secrets.REACT_APP_TEST_PASSWORD }}
+        run: |
+          yarn run firebase emulators:exec --only firestore "
+            yarn run web start > /dev/null &
+            yarn run test --coverage
+          "
+
+      - name: Upload coverage information to codecov
+        uses: codecov/codecov-action@v1
+        with:
+          file: ./coverage/coverage-final.json
+          fail_ci_if_error: ${{ github.ref != 'refs/heads/master' }} # Specify if CI pipeline should fail when Codecov runs into errors during upload. Defaults to false
+
+  Lint:
+    runs-on: ubuntu-18.04
+    steps:
+
+      - uses: actions/checkout@v2
+
+      - uses: ./.github/actions/setup
+
+      - name: Lint
+        run: yarn run lint .
+
+
+  # TODO: Send Lighthouse result to commit/PR
+  Lighthouse:
+    runs-on: ubuntu-18.04
+    needs: build
+    steps:
+
+      - uses: actions/checkout@v2
+
+      - uses: ./.github/actions/setup
+
+      - uses: ./.github/actions/dist-download
+
+      - name: Run lighthouse
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }} # Install this GitHub App and get the token: https://github.com/apps/lighthouse-ci
+        run: yarn run lhci autorun
+
+  # TODO: Send Netlify URL to commit/PR
+  Netlify: # Development deployment
+    runs-on: ubuntu-18.04
+    needs: build
+    steps:
+
+      - uses: actions/checkout@v2
+
+      - uses: ./.github/actions/setup
+
+      - uses: ./.github/actions/dist-download
+
+      - name: Deploy to Netlify
+        uses: nwtgck/actions-netlify@v1.1
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+        with:
+          publish-dir: './packages/web/dist'
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          deploy-message: "Deploy from GitHub Actions (SHA: ${{ github.sha }}; Ref: ${{github.ref }})"
+          enable-commit-comment: false
+          enable-pull-request-comment: true
+          overwrites-pull-request-comment: true
+
+  Changesets:
+    runs-on: ubuntu-18.04
+    needs: [Build, Test, Lint, Lighthouse, Netlify]
+    if: github.ref == 'refs/heads/master'
+    steps:
+
+      - uses: actions/checkout@v2
+
+      - uses: ./.github/actions/setup
+
+      - id: step_changesets
+        name: Create release pull request or publish to npm
+        uses: changesets/action@master
+        with:
+          publish: yarn run changeset publish
+          commit: "chore(changesets): release a new version"
+          title: "chore(changesets): release a new version"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Print outputs for debug
+        run: |
+          echo "changeset_outputs_published: [$changeset_outputs_published]"
+        env:
+          changeset_outputs_published: ${{ steps.step_changesets.outputs.published }}
+
+    outputs:
+      published: ${{ steps.step_changesets.outputs.published }}
+
+  Firebase:
+    runs-on: ubuntu-18.04
+    needs: [Changesets]
+    if: github.ref == 'refs/heads/master' && ( needs.Changesets.outputs.published == 'true' || contains(github.event.head_commit.message, 'force-publish') )
+    steps:
+
+      - uses: actions/checkout@v2
+
+      - uses: ./.github/actions/setup
+
+      - uses: ./.github/actions/dist-download
+
+      - name: Deploy to Firebase
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+        run: |
+          yarn run web firebase deploy

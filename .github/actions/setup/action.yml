@@ -1,0 +1,43 @@
+runs:
+  using: "composite"
+  steps:
+
+  - name: Setup node.js
+    uses: actions/setup-node@v1
+    with:
+      node-version: 12
+
+  - id: step_cache_deps
+    name: Cache dependencies
+    uses: actions/cache@master
+    with:
+      # Note this example uses the new multi-paths feature and is only available at master
+      # https://github.com/actions/cache/blob/f00dedfa6c708c51f4e4296f092458a4a891bddd/examples.md#node---lerna
+      path: |
+        node_modules
+        */*/node_modules
+        ~/.cache/firebase
+      key: ${{ runner.os }}-deps-${{ hashFiles('**/yarn.lock') }}
+
+  - name: Install Dependencies
+    # Reinstall node modules even if `cache-hit` is `true` because we need to build symlinks for Yarn workspace
+    run: |
+      yarn install --frozen-lockfile
+      echo "[DEBUG] CACHE_HIT: $CACHE_HIT"
+      if [ "$CACHE_HIT" != "true" ]
+      then
+        echo "[DEBUG] installing"
+        yarn run web firebase setup:emulators:firestore
+      fi
+      ls -lrth ~/.cache/firebase/emulators/
+    env:
+      CACHE_HIT: ${{ steps.step_cache_deps.outputs.cache-hit }}
+
+  - name: Configrate firebase
+    env:
+      FIREBASE_CLIENT_JSON: ${{ secrets.FIREBASE_CLIENT_JSON }}
+      FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }} # https://firebase.google.com/docs/cli#cli-ci-systems
+    run: |
+      echo "${FIREBASE_CLIENT_JSON}" > ./packages/web/config/firebase.client.json
+      export FIREBASE_PROJECT_ID=$(scripts/simple_jq.js ./packages/web/config/firebase.client.json .projectId)
+      yarn run web firebase use --add $FIREBASE_PROJECT_ID

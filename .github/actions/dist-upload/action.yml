@@ -1,0 +1,9 @@
+runs:
+  using: "composite"
+  steps:
+
+  - name: Upload dist
+    uses: actions/upload-artifact@v2
+    with:
+      name: dist
+      path: ./packages/web/dist
