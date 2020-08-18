@@ -20,6 +20,7 @@ export default function Root<T>({
     return (
         <>
             <Head>
+                <meta name="viewport" content="initial-scale=1.0, width=device-width" />
                 <title>Rino</title>
             </Head>
             <App>
