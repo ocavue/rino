@@ -2,7 +2,6 @@
 const fs = require("fs")
 const path = require("path")
 const execSync = require("child_process").execSync
-const dotenv = require("dotenv")
 
 const withOffline = require("next-offline")
 const withImages = require("next-images")
@@ -13,7 +12,6 @@ const withBundleAnalyzer = require("@next/bundle-analyzer")({
 const envs = (() => {
     const allEnvs = {
         ...process.env,
-        ...(fs.existsSync(".env") ? dotenv.parse(fs.readFileSync(".env")) : {}),
         REACT_APP_VERSION: JSON.parse(fs.readFileSync("./package.json")).version,
         REACT_APP_COMMIT: `${execSync("git rev-parse --short HEAD")}`.trim(),
     }
@@ -32,7 +30,7 @@ const envs = (() => {
 
 const nextConfig = {
     // Next config
-    exportTrailingSlash: true,
+    trailingSlash: true,
     devIndicators: {
         // Disable Next.js's prerender icon in the right bottom corner
         // of the screen.
