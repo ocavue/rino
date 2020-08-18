@@ -42,6 +42,8 @@ const rule: Core.RuleCore = (state: StateCore) => {
 }
 
 // A markdown-it plugin for selectable list checkbox
-export default (md: MarkdownIt) => {
+function MarkdownItListCheckbox(md: MarkdownIt) {
     md.core.ruler.push("markdown-it-list-checkbox", rule)
 }
+
+export default MarkdownItListCheckbox
