@@ -8,6 +8,7 @@
         "lint": "eslint --ignore-path .gitignore --ext '.js,.jsx,.ts,.tsx'",
         "test": "jest --runInBand",
         "build:all": "yarn run home build && yarn run web build && yarn run web export",
+        "postinstall": "./scripts/post-install.sh",
         "home": "yarn workspace @rino.app/home",
         "web": "yarn workspace @rino.app/web"
     },
