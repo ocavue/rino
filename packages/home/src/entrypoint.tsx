@@ -3,6 +3,10 @@
 import React from "react"
 import ReactDOM from "react-dom"
 
+import snapshot from "./assets/share/snapshot-mac.png"
 import Homepage from "./Homepage"
 
-ReactDOM.render(<Homepage />, document.getElementById("app"))
+ReactDOM.render(
+    <Homepage hero={{ imageProps: { src: snapshot } }} />,
+    document.getElementById("app"),
+)

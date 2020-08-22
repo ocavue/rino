@@ -1,10 +1,11 @@
-import React from "react"
+import React, { ImgHTMLAttributes } from "react"
 
-// Import a large image as base64 string is a bad practice!
-import snapshot from "../static/snapshot_mac.png"
+export type HeroProps = {
+    imageProps: ImgHTMLAttributes<HTMLImageElement>
+}
 
-export const Hero: React.FC = () => (
+export const Hero: React.FC<HeroProps> = ({ imageProps }) => (
     <div style={{ marginTop: "2.5rem" }}>
-        <img src={snapshot} alt="Snapshot" />
+        <img {...imageProps} alt="Snapshot" style={{ width: "100%" }} />
     </div>
 )

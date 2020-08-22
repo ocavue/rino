@@ -1,10 +1,8 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 const fs = require("fs")
-const path = require("path")
 const execSync = require("child_process").execSync
 
 const withOffline = require("next-offline")
-const withImages = require("next-images")
 const withBundleAnalyzer = require("@next/bundle-analyzer")({
     enabled: process.env.ANALYZE === "true",
 })
@@ -37,17 +35,31 @@ const nextConfig = {
         autoPrerender: false,
     },
     webpack: (config, options) => {
-        config.module.rules.push({
-            test: /\.(md|txt)$/i,
-            use: ["raw-loader"],
-        })
+        config.module.rules.push(
+            {
+                test: /\.(md|txt)$/i,
+                use: ["raw-loader"],
+            },
+            {
+                test: /\.(jpe?g|png|webp)$/i,
+                use: [
+                    {
+                        loader: "responsive-loader",
+                        options: {
+                            adapter: require("responsive-loader/sharp"),
+                            sizes: [320, 640, 960, 1200, 2400],
+                            placeholder: false,
+                            esModule: true,
+                            outputPath: "static/images/_responsive/",
+                            publicPath: "_next/static/images/_responsive/",
+                        },
+                    },
+                ],
+            },
+        )
         return config
     },
     env: envs,
-
-    // next-images config
-    esModule: true,
-    exclude: path.resolve(__dirname, "src/assets/svg/"),
 }
 
-module.exports = withBundleAnalyzer(withOffline(withImages(nextConfig)))
+module.exports = withBundleAnalyzer(withOffline(nextConfig))

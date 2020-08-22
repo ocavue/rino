@@ -12,7 +12,7 @@ import { CTA } from "./components/cta"
 import { Features } from "./components/features"
 import { Footer } from "./components/footer"
 import { Headline } from "./components/headline"
-import { Hero } from "./components/hero"
+import { Hero, HeroProps } from "./components/hero"
 import { breakpoints } from "./styles/breakpoint"
 
 const useStyles = makeStyles(
@@ -62,7 +62,11 @@ const useStyles = makeStyles(
     }),
 )
 
-export default function Homepage() {
+export type HomepageProps = {
+    hero: HeroProps
+}
+
+export default function Homepage(props: HomepageProps) {
     const classes = useStyles()
 
     const [mobileMenuActivity, setMobileMenuActivity] = React.useState(false)
@@ -79,7 +83,7 @@ export default function Homepage() {
                     <MobileMenu activity={mobileMenuActivity} setActivity={setMobileMenuActivity} />
                 </Appbar>
                 <Headline />
-                <Hero />
+                <Hero {...props.hero} />
                 <Features />
                 <CTA />
             </div>

@@ -14,37 +14,36 @@ declare module "*.svg" {
     export = value
 }
 
+// other image files will be transformed to objects by webpack `responsive-loader`
+type ResponsiveLoaderImage = {
+    images: Array<{
+        path: string
+        width: number
+        height: number
+    }>
+    width: number
+    height: number
+    placeholder: string
+    src: string
+    srcSet: string
+}
+
 declare module "*.jpeg" {
-    const value: string
+    const value: ResponsiveLoaderImage
     export = value
 }
 
 declare module "*.jpg" {
-    const value: string
+    const value: ResponsiveLoaderImage
     export = value
 }
 
 declare module "*.png" {
-    const value: string
-    export = value
-}
-
-declare module "*.gif" {
-    const value: string
-    export = value
-}
-
-declare module "*.ico" {
-    const value: string
+    const value: ResponsiveLoaderImage
     export = value
 }
 
 declare module "*.webp" {
-    const value: string
-    export = value
-}
-
-declare module "*.jp2" {
-    const value: string
+    const value: ResponsiveLoaderImage
     export = value
 }
