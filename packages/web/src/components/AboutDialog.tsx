@@ -21,7 +21,7 @@ export const AboutDialog: React.FC<{
             <Box height="24px" />
             <DialogTitle>
                 <Typography align="center">
-                    <img src={logo} width="128px" height="128px" />
+                    <img src={logo.src} srcSet={logo.srcSet} width="128px" height="128px" />
                 </Typography>
                 <Typography align="center">Rino</Typography>
             </DialogTitle>
