@@ -47,7 +47,7 @@ const nextConfig = {
                         loader: "responsive-loader",
                         options: {
                             adapter: require("responsive-loader/sharp"),
-                            sizes: [320, 640, 1024, 2400],
+                            sizes: [320, 640, 960, 1200, 1800, 2400],
                             placeholder: true,
                             esModule: true,
                             outputPath: "static/images/_responsive/",
