@@ -4,8 +4,8 @@ set -e
 
 cd $(dirname $0)/..
 
-source="public/share"
-targets="packages/web/public/share packages/home/public/share"
+source="assets/share"
+targets="packages/web/src/assets/share packages/home/src/assets/share"
 
 for target in $targets
 do

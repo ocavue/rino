@@ -1,7 +1,7 @@
 import Homepage from "@rino.app/home"
 import React from "react"
 
-import snapshot from "../../public/share/snapshot-mac-1317x762.png"
+import snapshot from "../assets/share/snapshot-mac.png"
 
 console.log("snapshot:", snapshot)
 
