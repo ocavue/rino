@@ -20,3 +20,6 @@ ci:
       # Check this link for the method to get all unused javascript code: https://web.dev/remove-unused-code/
       # Check this link to follow the progress of tree-shakeable Firebase library: https://github.com/firebase/firebase-js-sdk/issues/2241
       unused-javascript: ["warn", { maxLength: 9 }]
+
+      # `@firebase/firestore/dict/index.cjs.js` has `unload` listeners.
+      no-unload-listeners: "warn"
