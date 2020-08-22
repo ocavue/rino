@@ -1,5 +1,11 @@
 # @rino.app/home
 
+## 0.3.0
+
+### Minor Changes
+
+-   7d6bf66: Speed up the website by removing the inline base64 image.
+
 ## 0.2.1
 
 ### Patch Changes
