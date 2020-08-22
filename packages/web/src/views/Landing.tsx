@@ -3,8 +3,6 @@ import React from "react"
 
 import snapshot from "../assets/share/snapshot-mac.png"
 
-console.log("snapshot:", snapshot)
-
 export default function Landing() {
     return (
         <Homepage
