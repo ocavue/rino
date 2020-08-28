@@ -7,8 +7,8 @@ import Alert from "src/views/Alert"
 
 function DevSignInConsumer() {
     const router = useRouter()
-    const query = new URLSearchParams(window.location.search)
     React.useEffect(() => {
+        const query = new URLSearchParams(window.location.search)
         const effect = async () => {
             await signInTestUser()
             const redirect = query.get("redirect") || "/"
@@ -20,7 +20,7 @@ function DevSignInConsumer() {
             void effect()
         }, 2000)
         return () => clearTimeout(timeout)
-    }, [router, query])
+    }, [router])
     return <Alert title="sign in" message="development" />
 }
 
