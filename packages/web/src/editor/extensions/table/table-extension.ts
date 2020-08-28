@@ -24,7 +24,9 @@ enum TABLE_ALIGEN {
 }
 
 export class RinoTableExtension extends TableExtension {
-    readonly name = "table"
+    get name() {
+        return "table" as const
+    }
 
     createKeymap = (): KeyBindings => {
         const schema = this.store.schema
@@ -151,7 +153,9 @@ export class RinoTableExtension extends TableExtension {
 }
 
 export class RinoTableRowExtension extends TableRowExtension {
-    readonly name = "tableRow"
+    get name() {
+        return "tableRow" as const
+    }
 
     public fromMarkdown() {
         return [
@@ -168,7 +172,9 @@ export class RinoTableRowExtension extends TableRowExtension {
 }
 
 export class RinoTableHeaderExtension extends TableHeaderCellExtension {
-    readonly name = "tableHeaderCell"
+    get name() {
+        return "tableHeaderCell" as const
+    }
 
     public fromMarkdown() {
         return [] as const
@@ -178,7 +184,9 @@ export class RinoTableHeaderExtension extends TableHeaderCellExtension {
 }
 
 export class RinoTableCellExtension extends TableCellExtension {
-    readonly name = "tableCell"
+    get name() {
+        return "tableCell" as const
+    }
 
     createNodeSpec(extra: ApplySchemaAttributes): TableSchemaSpec {
         return {
