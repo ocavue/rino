@@ -9,6 +9,7 @@ module.exports = {
 
     // A map from regular expressions to module names that allow to stub out resources with a single module
     moduleNameMapper: {
+        "\\.svg$": `${__dirname}/__mocks__/svgrMock.js`, // I used `__dirname` instead of `<rootDir>` here because `<rootDir>` will be the path of sub-package root.
         "^src/(.*)$": "<rootDir>/src/$1",
         "^tests/(.*)$": "<rootDir>/tests/$1",
     },

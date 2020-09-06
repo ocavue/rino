@@ -12,8 +12,8 @@ const useStyles = makeStyles(
             alignItems: "center",
         },
         logo: {
-            height: "2.5rem",
-            width: "auto",
+            height: "48px",
+            width: "48px",
             [breakpoints.up.sm]: {
                 height: "3rem",
             },

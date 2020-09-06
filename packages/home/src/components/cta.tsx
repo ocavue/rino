@@ -1,6 +1,7 @@
 import { createStyles, makeStyles } from "@material-ui/styles"
 import React from "react"
 
+import { useAuthLinks } from "../hooks"
 import { colors } from "../styles/color"
 import { Button } from "./button"
 import { Logo } from "./logo"
@@ -32,12 +33,14 @@ const useStyles = makeStyles(
 // call-to-action
 export const CTA: React.FC = () => {
     const classes = useStyles()
+    const { signUpLink } = useAuthLinks()
+
     return (
         <div className={classes.cta}>
             <Logo className={classes.logo} />
             <h2 className={classes.header}>Get started with Rino</h2>
             <Button
-                href="/sign-up"
+                href={signUpLink}
                 testid="homepage_signup_btn"
                 ariaLabel="create_an_account"
                 primary
