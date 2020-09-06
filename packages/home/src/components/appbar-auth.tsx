@@ -1,6 +1,7 @@
 import { createStyles, makeStyles } from "@material-ui/styles"
 import React from "react"
 
+import { useAuthLinks } from "../hooks"
 import { breakpoints } from "../styles/breakpoint"
 import { Button } from "./button"
 
@@ -21,13 +22,14 @@ const useStyles = makeStyles(
 
 export const AppbarAuth: React.FC = () => {
     const classes = useStyles()
+    const { signInLink, signUpLink } = useAuthLinks()
     return (
         <div className={classes.appbarAuth}>
-            <Button href="/sign-in" testid="homepage_signin_btn" ariaLabel="Sign in">
+            <Button href={signInLink} testid="homepage_signin_btn" ariaLabel="Sign in">
                 Sign in
             </Button>
             <span style={{ width: "8px" }} />
-            <Button href="/sign-up" testid="homepage_signup_btn" ariaLabel="Sign up" primary>
+            <Button href={signUpLink} testid="homepage_signup_btn" ariaLabel="Sign up" primary>
                 Sign up
             </Button>
         </div>

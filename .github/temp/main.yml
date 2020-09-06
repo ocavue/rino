@@ -17,7 +17,7 @@ jobs:
         name: Setup node.js
         uses: actions/setup-node@v1
         with:
-          node-version: 12
+          node-version: 14
 
       - &step_cache_deps
         id: step_cache_deps
@@ -30,13 +30,15 @@ jobs:
             node_modules
             */*/node_modules
             ~/.cache/firebase
-          key: ${{ runner.os }}-deps-${{ hashFiles('**/yarn.lock') }}
+          key: ${{ runner.os }}-deps-v3-${{ hashFiles('yarn.lock') }}
 
       - &step_install_deps
         name: Install Dependencies
         # Reinstall node modules even if `cache-hit` is `true` because we need to build symlinks for Yarn workspace
         run: |
+          date
           yarn install --frozen-lockfile
+          date
           echo "[DEBUG] CACHE_HIT: $CACHE_HIT"
           if [ "$CACHE_HIT" != "true" ]
           then
@@ -44,6 +46,8 @@ jobs:
             yarn run web firebase setup:emulators:firestore
           fi
           ls -lrth ~/.cache/firebase/emulators/
+          date
+          yarn run build:pkg
         env:
           CACHE_HIT: ${{ steps.step_cache_deps.outputs.cache-hit }}
 
@@ -65,7 +69,9 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: dist
-          path: ./packages/web/dist
+          path: &artifact_paths |
+            ./packages/web/dist
+            ./packages/home/dist
 
   Test:
     runs-on: ubuntu-18.04
@@ -75,15 +81,6 @@ jobs:
       - *step_cache_deps
       - *step_install_deps
       - *step_config_firebase
-
-      - &step_cache_next
-        id: step_cache_next
-        name: Cache next.js build bundles
-        uses: actions/cache@master
-        with:
-          # https://err.sh/next.js/no-cache
-          path: ./.next/cache
-          key: ${{ runner.os }}-next-${{ hashFiles('**/yarn.lock') }}
 
       - name: Build static files
         env:
@@ -115,11 +112,15 @@ jobs:
 
   Lint:
     runs-on: ubuntu-18.04
+    needs: build
     steps:
       - *step_checkout
       - *step_setup_node
       - *step_cache_deps
       - *step_install_deps
+
+      - name: Check files
+        run: ls ./packages/**/dist/
 
       - name: Lint
         run: yarn run lint .
@@ -141,13 +142,12 @@ jobs:
       - *step_setup_node
       - *step_cache_deps
       - *step_install_deps
-
       - &step_download_dist
         name: Download dist
         uses: actions/download-artifact@v2
         with:
           name: dist
-          path: ./packages/web/dist
+          path: *artifact_paths
 
       - name: Run lighthouse
         env:
@@ -155,8 +155,7 @@ jobs:
           LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }} # Install this GitHub App and get the token: https://github.com/apps/lighthouse-ci
         run: yarn run lhci autorun
 
-  # TODO: Send Netlify URL to commit/PR
-  Netlify: # Development deployment
+  Preview: # Preview deployment
     runs-on: ubuntu-18.04
     needs: build
     steps:
@@ -166,22 +165,26 @@ jobs:
       - *step_install_deps
       - *step_download_dist
 
-      - name: Deploy to Netlify
-        uses: nwtgck/actions-netlify@v1.1
-        env:
-          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
-          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
-        with:
-          publish-dir: './packages/web/dist'
+      - name: Deploy @rino.app/home to Vercel
+        uses: ocavue/vercel-action@master
+        with: &vercel_args
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          deploy-message: "Deploy from GitHub Actions (SHA: ${{ github.sha }}; Ref: ${{github.ref }})"
-          enable-commit-comment: false
-          enable-pull-request-comment: true
-          overwrites-pull-request-comment: true
+          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID_HOME }}
+          alias-domains: rino-home-{{BRANCH}}.ocavue.vercel.app
+          # vercel-args: '--prod'
+
+      - name: Deploy @rino.app/web to Vercel
+        uses: ocavue/vercel-action@master
+        with:
+          <<: *vercel_args
+          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID_WEB }}
+          alias-domains: rino-web-{{BRANCH}}.ocavue.vercel.app
 
   Changesets:
     runs-on: ubuntu-18.04
-    needs: [Build, Test, Lint, Lighthouse, Netlify]
+    needs: [Build, Test, Lint, Lighthouse, Preview]
     if: github.ref == 'refs/heads/master'
     steps:
       - *step_checkout

@@ -1,7 +1,7 @@
-import Homepage from "@rino.app/home"
 import React from "react"
 
 import snapshot from "../assets/share/snapshot-mac.png"
+import { Homepage } from "../components/homepage"
 
 export default function Landing() {
     return (

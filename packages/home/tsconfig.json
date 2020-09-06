@@ -1,28 +1,20 @@
 {
-  "compilerOptions": {
-    "target": "esnext",
-    "module": "esnext",
-    "moduleResolution": "node",
-    "jsx": "react",
-    "lib": [
-      "dom",
-      "esnext"
-    ],
-    "strict": true,
-    "noEmit": true,
-    "allowJs": true,
-    "declaration": true,
-    "declarationDir": "dist",
-    "sourceMap": true,
-    "skipLibCheck": true,
-    "esModuleInterop": true
-  },
+  "extends": "../../tsconfig.base.json",
   "include": [
     "src/**/*",
     "global.d.ts"
   ],
+  "compilerOptions": {
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve"
+  },
   "exclude": [
-    "node_modules",
-    "dist"
+    "node_modules"
   ]
 }

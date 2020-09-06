@@ -16,7 +16,7 @@
           "name": "Setup node.js",
           "uses": "actions/setup-node@v1",
           "with": {
-            "node-version": 12
+            "node-version": 14
           }
         },
         {
@@ -25,12 +25,12 @@
           "uses": "actions/cache@master",
           "with": {
             "path": "node_modules\n*/*/node_modules\n~/.cache/firebase\n",
-            "key": "${{ runner.os }}-deps-${{ hashFiles('**/yarn.lock') }}"
+            "key": "${{ runner.os }}-deps-v3-${{ hashFiles('yarn.lock') }}"
           }
         },
         {
           "name": "Install Dependencies",
-          "run": "yarn install --frozen-lockfile\necho \"[DEBUG] CACHE_HIT: $CACHE_HIT\"\nif [ \"$CACHE_HIT\" != \"true\" ]\nthen\n  echo \"[DEBUG] installing\"\n  yarn run web firebase setup:emulators:firestore\nfi\nls -lrth ~/.cache/firebase/emulators/\n",
+          "run": "date\nyarn install --frozen-lockfile\ndate\necho \"[DEBUG] CACHE_HIT: $CACHE_HIT\"\nif [ \"$CACHE_HIT\" != \"true\" ]\nthen\n  echo \"[DEBUG] installing\"\n  yarn run web firebase setup:emulators:firestore\nfi\nls -lrth ~/.cache/firebase/emulators/\ndate\nyarn run build:pkg\n",
           "env": {
             "CACHE_HIT": "${{ steps.step_cache_deps.outputs.cache-hit }}"
           }
@@ -52,7 +52,7 @@
           "uses": "actions/upload-artifact@v2",
           "with": {
             "name": "dist",
-            "path": "./packages/web/dist"
+            "path": "./packages/web/dist\n./packages/home/dist\n"
           }
         }
       ]
@@ -68,7 +68,7 @@
           "name": "Setup node.js",
           "uses": "actions/setup-node@v1",
           "with": {
-            "node-version": 12
+            "node-version": 14
           }
         },
         {
@@ -77,12 +77,12 @@
           "uses": "actions/cache@master",
           "with": {
             "path": "node_modules\n*/*/node_modules\n~/.cache/firebase\n",
-            "key": "${{ runner.os }}-deps-${{ hashFiles('**/yarn.lock') }}"
+            "key": "${{ runner.os }}-deps-v3-${{ hashFiles('yarn.lock') }}"
           }
         },
         {
           "name": "Install Dependencies",
-          "run": "yarn install --frozen-lockfile\necho \"[DEBUG] CACHE_HIT: $CACHE_HIT\"\nif [ \"$CACHE_HIT\" != \"true\" ]\nthen\n  echo \"[DEBUG] installing\"\n  yarn run web firebase setup:emulators:firestore\nfi\nls -lrth ~/.cache/firebase/emulators/\n",
+          "run": "date\nyarn install --frozen-lockfile\ndate\necho \"[DEBUG] CACHE_HIT: $CACHE_HIT\"\nif [ \"$CACHE_HIT\" != \"true\" ]\nthen\n  echo \"[DEBUG] installing\"\n  yarn run web firebase setup:emulators:firestore\nfi\nls -lrth ~/.cache/firebase/emulators/\ndate\nyarn run build:pkg\n",
           "env": {
             "CACHE_HIT": "${{ steps.step_cache_deps.outputs.cache-hit }}"
           }
@@ -94,15 +94,6 @@
             "FIREBASE_TOKEN": "${{ secrets.FIREBASE_TOKEN }}"
           },
           "run": "echo \"${FIREBASE_CLIENT_JSON}\" > ./packages/web/config/firebase.client.json\nexport FIREBASE_PROJECT_ID=$(scripts/simple_jq.js ./packages/web/config/firebase.client.json .projectId)\nyarn run web firebase use --add $FIREBASE_PROJECT_ID\n"
-        },
-        {
-          "id": "step_cache_next",
-          "name": "Cache next.js build bundles",
-          "uses": "actions/cache@master",
-          "with": {
-            "path": "./.next/cache",
-            "key": "${{ runner.os }}-next-${{ hashFiles('**/yarn.lock') }}"
-          }
         },
         {
           "name": "Build static files",
@@ -134,6 +125,7 @@
     },
     "Lint": {
       "runs-on": "ubuntu-18.04",
+      "needs": "build",
       "steps": [
         {
           "name": "Checkout code repository",
@@ -143,7 +135,7 @@
           "name": "Setup node.js",
           "uses": "actions/setup-node@v1",
           "with": {
-            "node-version": 12
+            "node-version": 14
           }
         },
         {
@@ -152,15 +144,19 @@
           "uses": "actions/cache@master",
           "with": {
             "path": "node_modules\n*/*/node_modules\n~/.cache/firebase\n",
-            "key": "${{ runner.os }}-deps-${{ hashFiles('**/yarn.lock') }}"
+            "key": "${{ runner.os }}-deps-v3-${{ hashFiles('yarn.lock') }}"
           }
         },
         {
           "name": "Install Dependencies",
-          "run": "yarn install --frozen-lockfile\necho \"[DEBUG] CACHE_HIT: $CACHE_HIT\"\nif [ \"$CACHE_HIT\" != \"true\" ]\nthen\n  echo \"[DEBUG] installing\"\n  yarn run web firebase setup:emulators:firestore\nfi\nls -lrth ~/.cache/firebase/emulators/\n",
+          "run": "date\nyarn install --frozen-lockfile\ndate\necho \"[DEBUG] CACHE_HIT: $CACHE_HIT\"\nif [ \"$CACHE_HIT\" != \"true\" ]\nthen\n  echo \"[DEBUG] installing\"\n  yarn run web firebase setup:emulators:firestore\nfi\nls -lrth ~/.cache/firebase/emulators/\ndate\nyarn run build:pkg\n",
           "env": {
             "CACHE_HIT": "${{ steps.step_cache_deps.outputs.cache-hit }}"
           }
+        },
+        {
+          "name": "Check files",
+          "run": "ls ./packages/**/dist/"
         },
         {
           "name": "Lint",
@@ -184,7 +180,7 @@
           "name": "Setup node.js",
           "uses": "actions/setup-node@v1",
           "with": {
-            "node-version": 12
+            "node-version": 14
           }
         },
         {
@@ -193,12 +189,12 @@
           "uses": "actions/cache@master",
           "with": {
             "path": "node_modules\n*/*/node_modules\n~/.cache/firebase\n",
-            "key": "${{ runner.os }}-deps-${{ hashFiles('**/yarn.lock') }}"
+            "key": "${{ runner.os }}-deps-v3-${{ hashFiles('yarn.lock') }}"
           }
         },
         {
           "name": "Install Dependencies",
-          "run": "yarn install --frozen-lockfile\necho \"[DEBUG] CACHE_HIT: $CACHE_HIT\"\nif [ \"$CACHE_HIT\" != \"true\" ]\nthen\n  echo \"[DEBUG] installing\"\n  yarn run web firebase setup:emulators:firestore\nfi\nls -lrth ~/.cache/firebase/emulators/\n",
+          "run": "date\nyarn install --frozen-lockfile\ndate\necho \"[DEBUG] CACHE_HIT: $CACHE_HIT\"\nif [ \"$CACHE_HIT\" != \"true\" ]\nthen\n  echo \"[DEBUG] installing\"\n  yarn run web firebase setup:emulators:firestore\nfi\nls -lrth ~/.cache/firebase/emulators/\ndate\nyarn run build:pkg\n",
           "env": {
             "CACHE_HIT": "${{ steps.step_cache_deps.outputs.cache-hit }}"
           }
@@ -208,7 +204,7 @@
           "uses": "actions/download-artifact@v2",
           "with": {
             "name": "dist",
-            "path": "./packages/web/dist"
+            "path": "./packages/web/dist\n./packages/home/dist\n"
           }
         },
         {
@@ -221,7 +217,7 @@
         }
       ]
     },
-    "Netlify": {
+    "Preview": {
       "runs-on": "ubuntu-18.04",
       "needs": "build",
       "steps": [
@@ -233,7 +229,7 @@
           "name": "Setup node.js",
           "uses": "actions/setup-node@v1",
           "with": {
-            "node-version": 12
+            "node-version": 14
           }
         },
         {
@@ -242,12 +238,12 @@
           "uses": "actions/cache@master",
           "with": {
             "path": "node_modules\n*/*/node_modules\n~/.cache/firebase\n",
-            "key": "${{ runner.os }}-deps-${{ hashFiles('**/yarn.lock') }}"
+            "key": "${{ runner.os }}-deps-v3-${{ hashFiles('yarn.lock') }}"
           }
         },
         {
           "name": "Install Dependencies",
-          "run": "yarn install --frozen-lockfile\necho \"[DEBUG] CACHE_HIT: $CACHE_HIT\"\nif [ \"$CACHE_HIT\" != \"true\" ]\nthen\n  echo \"[DEBUG] installing\"\n  yarn run web firebase setup:emulators:firestore\nfi\nls -lrth ~/.cache/firebase/emulators/\n",
+          "run": "date\nyarn install --frozen-lockfile\ndate\necho \"[DEBUG] CACHE_HIT: $CACHE_HIT\"\nif [ \"$CACHE_HIT\" != \"true\" ]\nthen\n  echo \"[DEBUG] installing\"\n  yarn run web firebase setup:emulators:firestore\nfi\nls -lrth ~/.cache/firebase/emulators/\ndate\nyarn run build:pkg\n",
           "env": {
             "CACHE_HIT": "${{ steps.step_cache_deps.outputs.cache-hit }}"
           }
@@ -257,23 +253,29 @@
           "uses": "actions/download-artifact@v2",
           "with": {
             "name": "dist",
-            "path": "./packages/web/dist"
+            "path": "./packages/web/dist\n./packages/home/dist\n"
           }
         },
         {
-          "name": "Deploy to Netlify",
-          "uses": "nwtgck/actions-netlify@v1.1",
-          "env": {
-            "NETLIFY_AUTH_TOKEN": "${{ secrets.NETLIFY_AUTH_TOKEN }}",
-            "NETLIFY_SITE_ID": "${{ secrets.NETLIFY_SITE_ID }}"
-          },
+          "name": "Deploy @rino.app/home to Vercel",
+          "uses": "ocavue/vercel-action@master",
           "with": {
-            "publish-dir": "./packages/web/dist",
+            "vercel-token": "${{ secrets.VERCEL_TOKEN }}",
             "github-token": "${{ secrets.GITHUB_TOKEN }}",
-            "deploy-message": "Deploy from GitHub Actions (SHA: ${{ github.sha }}; Ref: ${{github.ref }})",
-            "enable-commit-comment": false,
-            "enable-pull-request-comment": true,
-            "overwrites-pull-request-comment": true
+            "vercel-org-id": "${{ secrets.VERCEL_ORG_ID }}",
+            "vercel-project-id": "${{ secrets.VERCEL_PROJECT_ID_HOME }}",
+            "alias-domains": "rino-home-{{BRANCH}}.ocavue.vercel.app"
+          }
+        },
+        {
+          "name": "Deploy @rino.app/web to Vercel",
+          "uses": "ocavue/vercel-action@master",
+          "with": {
+            "vercel-token": "${{ secrets.VERCEL_TOKEN }}",
+            "github-token": "${{ secrets.GITHUB_TOKEN }}",
+            "vercel-org-id": "${{ secrets.VERCEL_ORG_ID }}",
+            "vercel-project-id": "${{ secrets.VERCEL_PROJECT_ID_WEB }}",
+            "alias-domains": "rino-web-{{BRANCH}}.ocavue.vercel.app"
           }
         }
       ]
@@ -285,7 +287,7 @@
         "Test",
         "Lint",
         "Lighthouse",
-        "Netlify"
+        "Preview"
       ],
       "if": "github.ref == 'refs/heads/master'",
       "steps": [
@@ -297,7 +299,7 @@
           "name": "Setup node.js",
           "uses": "actions/setup-node@v1",
           "with": {
-            "node-version": 12
+            "node-version": 14
           }
         },
         {
@@ -306,12 +308,12 @@
           "uses": "actions/cache@master",
           "with": {
             "path": "node_modules\n*/*/node_modules\n~/.cache/firebase\n",
-            "key": "${{ runner.os }}-deps-${{ hashFiles('**/yarn.lock') }}"
+            "key": "${{ runner.os }}-deps-v3-${{ hashFiles('yarn.lock') }}"
           }
         },
         {
           "name": "Install Dependencies",
-          "run": "yarn install --frozen-lockfile\necho \"[DEBUG] CACHE_HIT: $CACHE_HIT\"\nif [ \"$CACHE_HIT\" != \"true\" ]\nthen\n  echo \"[DEBUG] installing\"\n  yarn run web firebase setup:emulators:firestore\nfi\nls -lrth ~/.cache/firebase/emulators/\n",
+          "run": "date\nyarn install --frozen-lockfile\ndate\necho \"[DEBUG] CACHE_HIT: $CACHE_HIT\"\nif [ \"$CACHE_HIT\" != \"true\" ]\nthen\n  echo \"[DEBUG] installing\"\n  yarn run web firebase setup:emulators:firestore\nfi\nls -lrth ~/.cache/firebase/emulators/\ndate\nyarn run build:pkg\n",
           "env": {
             "CACHE_HIT": "${{ steps.step_cache_deps.outputs.cache-hit }}"
           }
@@ -357,7 +359,7 @@
           "name": "Setup node.js",
           "uses": "actions/setup-node@v1",
           "with": {
-            "node-version": 12
+            "node-version": 14
           }
         },
         {
@@ -366,12 +368,12 @@
           "uses": "actions/cache@master",
           "with": {
             "path": "node_modules\n*/*/node_modules\n~/.cache/firebase\n",
-            "key": "${{ runner.os }}-deps-${{ hashFiles('**/yarn.lock') }}"
+            "key": "${{ runner.os }}-deps-v3-${{ hashFiles('yarn.lock') }}"
           }
         },
         {
           "name": "Install Dependencies",
-          "run": "yarn install --frozen-lockfile\necho \"[DEBUG] CACHE_HIT: $CACHE_HIT\"\nif [ \"$CACHE_HIT\" != \"true\" ]\nthen\n  echo \"[DEBUG] installing\"\n  yarn run web firebase setup:emulators:firestore\nfi\nls -lrth ~/.cache/firebase/emulators/\n",
+          "run": "date\nyarn install --frozen-lockfile\ndate\necho \"[DEBUG] CACHE_HIT: $CACHE_HIT\"\nif [ \"$CACHE_HIT\" != \"true\" ]\nthen\n  echo \"[DEBUG] installing\"\n  yarn run web firebase setup:emulators:firestore\nfi\nls -lrth ~/.cache/firebase/emulators/\ndate\nyarn run build:pkg\n",
           "env": {
             "CACHE_HIT": "${{ steps.step_cache_deps.outputs.cache-hit }}"
           }
@@ -381,7 +383,7 @@
           "uses": "actions/download-artifact@v2",
           "with": {
             "name": "dist",
-            "path": "./packages/web/dist"
+            "path": "./packages/web/dist\n./packages/home/dist\n"
           }
         },
         {

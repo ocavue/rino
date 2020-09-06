@@ -1,19 +1,17 @@
-import "./remedy.css"
-
 import { createStyles, makeStyles } from "@material-ui/styles"
 import React from "react"
 
-import { Appbar } from "./components/appbar"
-import { AppbarAuth } from "./components/appbar-auth"
-import { AppbarLogo } from "./components/appbar-logo"
-import { MobileMenu } from "./components/appbar-mobile-menu"
-import { AppbarMore } from "./components/appbar-more"
-import { CTA } from "./components/cta"
-import { Features } from "./components/features"
-import { Footer } from "./components/footer"
-import { Headline } from "./components/headline"
-import { Hero, HeroProps } from "./components/hero"
-import { breakpoints } from "./styles/breakpoint"
+import { breakpoints } from "../styles/breakpoint"
+import { Appbar } from "./appbar"
+import { AppbarAuth } from "./appbar-auth"
+import { AppbarLogo } from "./appbar-logo"
+import { MobileMenu } from "./appbar-mobile-menu"
+import { AppbarMore } from "./appbar-more"
+import { CTA } from "./cta"
+import { Features } from "./features"
+import { Footer } from "./footer"
+import { Headline } from "./headline"
+import { Hero, HeroProps } from "./hero"
 
 const useStyles = makeStyles(
     createStyles({
@@ -62,11 +60,11 @@ const useStyles = makeStyles(
     }),
 )
 
-export type HomepageProps = {
+type HomepageProps = {
     hero: HeroProps
 }
 
-export default function Homepage(props: HomepageProps) {
+export function Homepage(props: HomepageProps) {
     const classes = useStyles()
 
     const [mobileMenuActivity, setMobileMenuActivity] = React.useState(false)

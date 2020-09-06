@@ -1,6 +1,7 @@
 import { createStyles, makeStyles } from "@material-ui/styles"
 import React, { useEffect, useState } from "react"
 
+import { useAuthLinks } from "../hooks"
 import { breakpoints } from "../styles/breakpoint"
 import { colors } from "../styles/color"
 import { AppbarLogo } from "./appbar-logo"
@@ -67,6 +68,8 @@ export const MobileMenu: React.FC<{
         }
     }, [activity, classes])
 
+    const { signInLink, signUpLink } = useAuthLinks()
+
     return (
         <div
             className={animationClassName + " " + classes.root}
@@ -124,7 +127,7 @@ export const MobileMenu: React.FC<{
                         }}
                     >
                         <Button
-                            href="/sign-up"
+                            href={signUpLink}
                             ariaLabel="Sign up"
                             testid=""
                             primary
@@ -144,7 +147,7 @@ export const MobileMenu: React.FC<{
                             }}
                         >
                             Already have an account?{" "}
-                            <a className={classes.signIn} href="/sign-in">
+                            <a className={classes.signIn} href={signInLink}>
                                 Sign in
                             </a>
                         </p>

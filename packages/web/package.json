@@ -5,9 +5,8 @@
     "scripts": {
         "dev": "next dev",
         "start": "next start",
-        "build": "next build",
-        "build:analyze": "ANALYZE=true next build",
-        "export": "next export -o dist"
+        "build": "next build && next export -o dist",
+        "build:analyze": "ANALYZE=true next build"
     },
     "devDependencies": {
         "@babel/core": "^7.11.6",
@@ -29,7 +28,7 @@
         "@remirror/preset-core": "^1.0.0-next.31",
         "@remirror/preset-table": "^1.0.0-next.31",
         "@remirror/react": "^1.0.0-next.31",
-        "@rino.app/home": "^0.3.0",
+        "@rino.app/common": "^0.1.0",
         "@testing-library/react": "^11.0.2",
         "@types/jest-environment-puppeteer": "^4.3.2",
         "@types/lodash": "^4.14.161",
