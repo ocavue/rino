@@ -112,7 +112,6 @@ jobs:
 
   Lint:
     runs-on: ubuntu-18.04
-    needs: build
     steps:
       - *step_checkout
       - *step_setup_node
