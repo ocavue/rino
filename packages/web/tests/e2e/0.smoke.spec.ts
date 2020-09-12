@@ -1,5 +1,5 @@
 import { login } from "./actions"
-import { click, goto, retry, wait } from "./utils"
+import { goto, wait } from "./utils"
 
 beforeAll(async () => {
     await goto("/")
@@ -7,23 +7,7 @@ beforeAll(async () => {
 
 describe("before sign-in", function () {
     test("landing page", async () => {
-        await wait("homepage_root")
-    })
-
-    test("click sign-in button", async () => {
-        await goto("/")
-        const url = new URL(page.url())
-        const expectedSignInUrls = [url.origin + "/sign-in", url.origin + "/sign-in/"]
-        await click("homepage_signin_btn")
-        await retry(() => expectedSignInUrls.includes(page.url()))
-    })
-
-    test("click sign-up button", async () => {
-        await goto("/")
-        const url = new URL(page.url())
-        const expectedSignInUrls = [url.origin + "/sign-up", url.origin + "/sign-up/"]
-        await click("homepage_signup_btn")
-        await retry(() => expectedSignInUrls.includes(page.url()))
+        await wait("workspace")
     })
 })
 
