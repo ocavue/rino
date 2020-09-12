@@ -1,0 +1,17 @@
+{
+    "version": 2,
+    "routes": [
+        {
+            "src": ".*",
+            "dest": "/api/static.go",
+            "methods": [
+                "GET"
+            ]
+        }
+    ],
+    "functions": {
+        "api/static.go": {
+            "includeFiles": "dist/**"
+        }
+    }
+}

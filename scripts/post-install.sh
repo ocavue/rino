@@ -4,7 +4,6 @@ set -e
 
 cd $(dirname $0)/..
 
-#### build symbolic links
 function lnsf {
     source_dir="$(pwd)/$1"
     target_dir="$(pwd)/$2"
@@ -19,10 +18,17 @@ function lnsf {
     NO_COLOR='\033[0m'
     echo -e "${DARK_GRAY}${source_dir} <- ${target_dir}${NO_COLOR}"
 }
+
+#### build symbolic links for assets
 for package_name in "web" "home"; do
     lnsf "assets/share" "packages/${package_name}/src/assets/share"
     lnsf "assets/share" "packages/${package_name}/public/share"
     cp assets/favicon.ico packages/${package_name}/public/favicon.ico
+done
+
+#### build symbolic links for serverless function
+for package_name in "web" "home"; do
+    lnsf "packages/next/api" "packages/${package_name}/api"
 done
 
 #### build packages
