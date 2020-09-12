@@ -9,7 +9,7 @@ declare module "*.txt" {
     export = value
 }
 
-// .svg files will be transformed to React components by `babel-plugin-inline-react-svg`
+// .svg files will be transformed to React components by `@svgr/webpack`
 declare module "*.svg" {
     const value: React.FC<{ alt?: string; width?: string; height?: string }>
     export = value
