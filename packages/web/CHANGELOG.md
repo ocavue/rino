@@ -1,5 +1,11 @@
 # @rino.app/web
 
+## 0.13.2
+
+### Patch Changes
+
+-   c3aaad2: Fix the unexpected 404 page.
+
 ## 0.13.1
 
 ### Patch Changes
