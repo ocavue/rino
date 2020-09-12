@@ -3,7 +3,7 @@ import Document, { DocumentContext } from "next/document"
 import { Head, Html, Main, NextScript } from "next/document"
 import React from "react"
 
-export function getNextDocument(host: string, hasManifest: boolean) {
+export function getNextDocument({ host, hasManifest }: { host: string; hasManifest: boolean }) {
     const image = `${host}/share/img/icons/android-chrome-512x512.png`
     const description = "WYSIWYG Markdown Editor"
 

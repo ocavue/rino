@@ -3,7 +3,7 @@ import Document from "next/document"
 
 class MyDocument extends Document {
     render() {
-        return getNextDocument("https://rino.app", true)
+        return getNextDocument({ host: "https://rino.app", hasManifest: false })
     }
 }
 
