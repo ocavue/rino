@@ -3,8 +3,8 @@ import Document, { DocumentContext } from "next/document"
 import { Head, Html, Main, NextScript } from "next/document"
 import React from "react"
 
-export function getNextDocument(host: string) {
-    const image = `${host}/img/icons/android-chrome-512x512.png`
+export function getNextDocument(host: string, hasManifest: boolean) {
+    const image = `${host}/share/img/icons/android-chrome-512x512.png`
     const description = "WYSIWYG Markdown Editor"
 
     return (
@@ -14,7 +14,7 @@ export function getNextDocument(host: string) {
                 <meta name="description" content={description} />
 
                 {/* PWA */}
-                    <link rel="manifest" href="/manifest.json" />
+                    {hasManifest && <link rel="manifest" href="/manifest.json" />}
                     {/*
                     > Always specify the theme color using the meta tag. Even though it can also be declared in the web app manifest file:
                     > - Browsers only acknowledge the value from the web app manifest file once the user has added the page to their home screen.
@@ -25,9 +25,9 @@ export function getNextDocument(host: string) {
                     <meta name="theme-color" content="#e6eaed"></meta>
 
                 {/* Apple https://developer.apple.com/library/archive/documentation/AppleApplications/Reference/SafariWebContent/ConfiguringWebApplications/ConfiguringWebApplications.html */}
-                    <link rel="apple-touch-icon" href="/img/icons/apple-touch-icon-192x192.png" sizes="192x192"></link>
-                    <link rel="apple-touch-icon" href="/img/icons/apple-touch-icon-180x180.png" sizes="180x180"></link>
-                    <link rel="apple-touch-icon" href="/img/icons/apple-touch-icon-152x152.png" sizes="152x152"></link>
+                    <link rel="apple-touch-icon" href="/share/img/icons/apple-touch-icon-192x192.png" sizes="192x192"></link>
+                    <link rel="apple-touch-icon" href="/share/img/icons/apple-touch-icon-180x180.png" sizes="180x180"></link>
+                    <link rel="apple-touch-icon" href="/share/img/icons/apple-touch-icon-152x152.png" sizes="152x152"></link>
                     <meta name="apple-mobile-web-app-capable" content="yes"></meta>
 
                 {/* Mircosoft */}
