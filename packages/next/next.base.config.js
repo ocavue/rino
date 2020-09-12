@@ -63,8 +63,9 @@ function getNextConfig() {
                                 svgoConfig: {
                                     plugins: [
                                         {
-                                            // SVGO will remove the svg attribute `viewBox` by default, which will
-                                            // stop me from resizing the image by setting `width` and `height`.
+                                            // SVGO will remove the svg attribute `viewBox` by default,
+                                            // which will stop me from resizing the image by setting
+                                            // `width` and `height`.
                                             removeViewBox: false,
                                         },
                                     ],
