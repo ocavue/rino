@@ -5,7 +5,7 @@ import "../../../../node_modules/prosemirror-view/style/prosemirror.css"
 import "../../src/style/develop.css"
 import "../../src/editor/theme/github.scss"
 
-import Head from "next/head"
+import { BaseApp } from "@rino.app/next/dist/app"
 import React from "react"
 
 import App from "src/views/App"
@@ -18,14 +18,10 @@ export default function Root<T>({
     pageProps: T
 }) {
     return (
-        <>
-            <Head>
-                <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-                <title>Rino</title>
-            </Head>
+        <BaseApp>
             <App>
                 <Component {...pageProps} />
             </App>
-        </>
+        </BaseApp>
     )
 }

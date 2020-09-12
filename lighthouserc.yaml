@@ -2,13 +2,13 @@
 
 ci:
   collect:
-    staticDistDir: ./packages/web/dist
+    staticDistDir: ./packages/home/dist
     url:
       - http://localhost/index.html
       - http://localhost/404.html
-      - http://localhost/sign-in/index.html
-      - http://localhost/sign-up/index.html
-      - http://localhost/password-reset/index.html
+      # - http://localhost/sign-in/index.html
+      # - http://localhost/sign-up/index.html
+      # - http://localhost/password-reset/index.html
 
   upload:
     target: temporary-public-storage
@@ -27,3 +27,12 @@ ci:
 
       # I don't know how to fix this.
       uses-responsive-images: "warn"
+
+      errors-in-console: warn
+      installable-manifest: warn
+      maskable-icon: warn
+      offline-start-url: warn
+      service-worker: warn
+      splash-screen: warn
+      themed-omnibox: warn
+      works-offline: warn

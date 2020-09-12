@@ -17,9 +17,9 @@ function DevSignOutConsumer() {
                     console.log("before router.push()")
                     void router.push("/")
                     console.log("after router.push()")
-                }, 0)
+                }, 500)
             })
-        }, 5000)
+        }, 1000)
         console.log(`created timeout ${timeout}`)
         const unsubscribe = () => {
             console.log(`clearing timeout ${timeout}`)
