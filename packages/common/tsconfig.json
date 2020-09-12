@@ -3,10 +3,9 @@
     "compilerOptions": {
         "outDir": "dist",
         "declarationDir": "dist",
-        // I need to transpile the module to ES5 when building because Next.js will exclude everything inside `node_modules` from babel transpiling.
+        // I need to transpile the module to CommonJS when building because Next.js will exclude everything inside `node_modules` from babel transpiling.
         // Check https://github.com/vercel/next.js/issues/706 for more information.
         "module": "CommonJS",
-        "target": "ES5",
     },
     "include": [
         "./src/**/*"
