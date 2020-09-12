@@ -1,13 +1,11 @@
 import { expectSidebarClosed, expectSidebarOpened, login, signOut } from "../actions"
-import { click, wait, waitAnimation } from "../utils"
+import { click, waitAnimation } from "../utils"
 
 describe("Open/close Sidebar", () => {
     beforeAll(async () => await jestPuppeteer.resetBrowser())
 
     describe("Before sign in", () => {
         test("Step 1", () => waitAnimation(signOut()))
-        test("Step 2", () =>
-            waitAnimation(wait("appbar-btn-menu", { hidden: true, visible: false })))
     })
 
     describe("After sign in", () => {
