@@ -292,7 +292,8 @@
             "github-token": "${{ secrets.GITHUB_TOKEN }}",
             "vercel-org-id": "${{ secrets.VERCEL_ORG_ID }}",
             "vercel-project-id": "${{ secrets.VERCEL_PROJECT_ID_HOME }}",
-            "alias-domains": "rino-home-{{BRANCH}}.ocavue.vercel.app"
+            "alias-domains": "rino-home-{{BRANCH}}.ocavue.vercel.app",
+            "vercel-args": "--meta TYPE=PREVIEW"
           }
         },
         {
@@ -304,7 +305,8 @@
             "github-token": "${{ secrets.GITHUB_TOKEN }}",
             "vercel-org-id": "${{ secrets.VERCEL_ORG_ID }}",
             "vercel-project-id": "${{ secrets.VERCEL_PROJECT_ID_WEB }}",
-            "alias-domains": "rino-web-{{BRANCH}}.ocavue.vercel.app"
+            "alias-domains": "rino-web-{{BRANCH}}.ocavue.vercel.app",
+            "vercel-args": "--meta TYPE=PREVIEW"
           }
         }
       ]
@@ -373,7 +375,7 @@
         "published": "${{ steps.step_changesets.outputs.published }}"
       }
     },
-    "Firebase": {
+    "Deployment": {
       "runs-on": "ubuntu-18.04",
       "needs": [
         "Changesets"
@@ -448,7 +450,7 @@
             "vercel-org-id": "${{ secrets.VERCEL_ORG_ID }}",
             "vercel-project-id": "${{ secrets.VERCEL_PROJECT_ID_HOME }}",
             "alias-domains": "rino-home-{{BRANCH}}.ocavue.vercel.app",
-            "vercel-args": "--prod"
+            "vercel-args": "--prod --meta TYPE=PRODUCTION"
           }
         }
       ]

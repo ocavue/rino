@@ -185,6 +185,7 @@ jobs:
           vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
           vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID_HOME }}
           alias-domains: rino-home-{{BRANCH}}.ocavue.vercel.app
+          vercel-args: '--meta TYPE=PREVIEW'
 
       - name: Deploy @rino.app/web to Vercel
         uses: *vercel_action
@@ -223,7 +224,7 @@ jobs:
     outputs:
       published: ${{ steps.step_changesets.outputs.published }}
 
-  Firebase:
+  Deployment: # Production deployment
     runs-on: ubuntu-18.04
     needs: [Changesets]
     if: github.ref == 'refs/heads/master' && ( needs.Changesets.outputs.published == 'true' || contains(github.event.head_commit.message, 'force-publish') )
@@ -247,4 +248,4 @@ jobs:
         with:
           <<: *vercel_args
           vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID_HOME }}
-          vercel-args: '--prod'
+          vercel-args: '--prod --meta TYPE=PRODUCTION'
