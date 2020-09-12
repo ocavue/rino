@@ -2,4 +2,4 @@
 "@rino.app/home": minor
 ---
 
-Independent deployment.
+Deploy the homepage on a separate subdomain.
