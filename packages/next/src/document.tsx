@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 import { ServerStyleSheets } from "@material-ui/styles"
 import Document, { DocumentContext } from "next/document"
 import { Head, Html, Main, NextScript } from "next/document"

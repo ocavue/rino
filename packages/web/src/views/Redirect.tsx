@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 import { getHomeHostName } from "@rino.app/common"
 import React from "react"
 
