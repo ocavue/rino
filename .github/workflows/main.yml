@@ -376,8 +376,9 @@
     "Firebase": {
       "runs-on": "ubuntu-18.04",
       "needs": [
-        "Build"
+        "Changesets"
       ],
+      "if": "github.ref == 'refs/heads/master' && ( needs.Changesets.outputs.published == 'true' || contains(github.event.head_commit.message, 'force-publish') )",
       "steps": [
         {
           "name": "Checkout code repository",
@@ -429,6 +430,13 @@
             "FIREBASE_TOKEN": "${{ secrets.FIREBASE_TOKEN }}"
           },
           "run": "echo \"${FIREBASE_CLIENT_JSON}\" > ./packages/web/config/firebase.client.json\nexport FIREBASE_PROJECT_ID=$(scripts/simple_jq.js ./packages/web/config/firebase.client.json .projectId)\nyarn run web firebase use --add $FIREBASE_PROJECT_ID\n"
+        },
+        {
+          "name": "Deploy @rino.app/web to Firebase",
+          "env": {
+            "FIREBASE_TOKEN": "${{ secrets.FIREBASE_TOKEN }}"
+          },
+          "run": "yarn run web firebase deploy\n"
         },
         {
           "name": "Deploy @rino.app/home to Vercel",

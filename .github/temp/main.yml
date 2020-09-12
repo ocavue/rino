@@ -225,8 +225,8 @@ jobs:
 
   Firebase:
     runs-on: ubuntu-18.04
-    needs: [Build]
-    # if: github.ref == 'refs/heads/master' && ( needs.Changesets.outputs.published == 'true' || contains(github.event.head_commit.message, 'force-publish') )
+    needs: [Changesets]
+    if: github.ref == 'refs/heads/master' && ( needs.Changesets.outputs.published == 'true' || contains(github.event.head_commit.message, 'force-publish') )
     steps:
       - *step_checkout
       - *step_setup_node
@@ -236,11 +236,11 @@ jobs:
       - *step_download_home_dist
       - *step_config_firebase
 
-      # - name: Deploy @rino.app/web to Firebase
-      #   env:
-      #     FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
-      #   run: |
-      #     yarn run web firebase deploy
+      - name: Deploy @rino.app/web to Firebase
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+        run: |
+          yarn run web firebase deploy
 
       - name: Deploy @rino.app/home to Vercel
         uses: *vercel_action
