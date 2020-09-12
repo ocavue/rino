@@ -1,6 +1,6 @@
 
 # This scrript can clean useless deployment in Vercel. You may need to run this script multiple times since
-# it can only delete limit deployments one time.
+# it can only delete limit deployments.
 
 set -ex
 
