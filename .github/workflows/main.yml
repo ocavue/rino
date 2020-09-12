@@ -452,6 +452,19 @@
             "alias-domains": "rino-home-{{BRANCH}}.ocavue.vercel.app",
             "vercel-args": "--prod --meta TYPE=PRODUCTION"
           }
+        },
+        {
+          "name": "Deploy @rino.app/web to Vercel",
+          "uses": "amondnet/vercel-action@f79b066724a2ac14b8944244a625146e5d6006c3",
+          "with": {
+            "github-comment": false,
+            "vercel-token": "${{ secrets.VERCEL_TOKEN }}",
+            "github-token": "${{ secrets.GITHUB_TOKEN }}",
+            "vercel-org-id": "${{ secrets.VERCEL_ORG_ID }}",
+            "vercel-project-id": "${{ secrets.VERCEL_PROJECT_ID_WEB }}",
+            "alias-domains": "rino-home-{{BRANCH}}.ocavue.vercel.app",
+            "vercel-args": "--prod --meta TYPE=PRODUCTION"
+          }
         }
       ]
     }
