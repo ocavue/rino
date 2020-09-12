@@ -177,7 +177,7 @@ jobs:
       - *step_download_home_dist
 
       - name: Deploy @rino.app/home to Vercel
-        uses: ocavue/vercel-action@master
+        uses: &vercel_action amondnet/vercel-action@f79b066724a2ac14b8944244a625146e5d6006c3
         with: &vercel_args
           github-comment: false
           vercel-token: ${{ secrets.VERCEL_TOKEN }}
@@ -187,7 +187,7 @@ jobs:
           alias-domains: rino-home-{{BRANCH}}.ocavue.vercel.app
 
       - name: Deploy @rino.app/web to Vercel
-        uses: ocavue/vercel-action@master
+        uses: *vercel_action
         with:
           <<: *vercel_args
           vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID_WEB }}
@@ -243,7 +243,7 @@ jobs:
       #     yarn run web firebase deploy
 
       - name: Deploy @rino.app/home to Vercel
-        uses: ocavue/vercel-action@master
+        uses: *vercel_action
         with:
           <<: *vercel_args
           vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID_HOME }}
