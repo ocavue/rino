@@ -1,5 +1,11 @@
 # @rino.app/home
 
+## 0.4.0
+
+### Minor Changes
+
+-   6b0c095: Deploy the homepage on a separate subdomain.
+
 ## 0.3.0
 
 ### Minor Changes
