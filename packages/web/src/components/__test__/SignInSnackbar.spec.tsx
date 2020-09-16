@@ -43,27 +43,27 @@ describe("<SignInSnackbar />", () => {
         })
 
         // Show the "full" bar at the begin
-        expect(screen.queryByTestId("full-sign-in-snack-bar")).not.toBeNull()
-        expect(screen.queryByTestId("dense-sign-in-snack-bar")).toBeNull()
+        expect(screen.queryByTestId("full_sign_in_snack_bar")).not.toBeNull()
+        expect(screen.queryByTestId("dense_sign_in_snack_bar")).toBeNull()
 
         // Show the "dense" bar after clicking the close button
-        fireEvent.click(screen.getByTestId("full-sign-in-snack-bar-close-button"))
+        fireEvent.click(screen.getByTestId("full_sign_in_snack_bar_close_button"))
         act(() => {
             jest.runAllTimers()
         })
-        expect(screen.queryByTestId("full-sign-in-snack-bar")).toBeNull()
-        expect(screen.queryByTestId("dense-sign-in-snack-bar")).not.toBeNull()
+        expect(screen.queryByTestId("full_sign_in_snack_bar")).toBeNull()
+        expect(screen.queryByTestId("dense_sign_in_snack_bar")).not.toBeNull()
 
         // Show the "full" bar after clicking the sign-in button
-        fireEvent.click(screen.getByTestId("dense-sign-in-snack-bar-button"))
+        fireEvent.click(screen.getByTestId("dense_sign_in_snack_bar_button"))
         act(() => {
             jest.runAllTimers()
         })
-        expect(screen.queryByTestId("full-sign-in-snack-bar")).not.toBeNull()
-        expect(screen.queryByTestId("dense-sign-in-snack-bar")).toBeNull()
+        expect(screen.queryByTestId("full_sign_in_snack_bar")).not.toBeNull()
+        expect(screen.queryByTestId("dense_sign_in_snack_bar")).toBeNull()
 
         // Jump to the sign-in page
-        fireEvent.click(screen.getByTestId("full-sign-in-snack-bar-sign-up-button"))
+        fireEvent.click(screen.getByTestId("full_sign_in_snack_bar_sign_up_button"))
         act(() => {
             jest.runAllTimers()
         })
@@ -86,7 +86,7 @@ describe("<SignInSnackbar />", () => {
         })
 
         // Don't show the snackbar
-        expect(screen.queryByTestId("full-sign-in-snack-bar")).toBeNull()
-        expect(screen.queryByTestId("dense-sign-in-snack-bar")).toBeNull()
+        expect(screen.queryByTestId("full_sign_in_snack_bar")).toBeNull()
+        expect(screen.queryByTestId("dense_sign_in_snack_bar")).toBeNull()
     })
 })

@@ -35,7 +35,7 @@ describe("Drawer type (persistent / temporary)", function () {
             // Exepect the drawer is persistent
             await waitAnimation(page.setViewport({ width, height }))
             await expectSidebarClosed()
-            await waitAnimation(click("appbar-btn-menu"))
+            await waitAnimation(click("appbar_btn_menu"))
             await expectSidebarOpened()
             await waitAnimation(clickSidebarNoteListItem())
             await expectSidebarClosed()
@@ -50,7 +50,7 @@ describe("Drawer type (persistent / temporary)", function () {
 
     test("Toggle the drawer", async () => {
         await expectSidebarClosed()
-        await waitAnimation(click("appbar-btn-menu"))
+        await waitAnimation(click("appbar_btn_menu"))
         await expectSidebarOpened()
     })
 
@@ -83,7 +83,7 @@ describe("Drawer width", function () {
         await waitAnimation(page.setViewport({ width: clientWidth, height }))
         await waitAnimation(page.reload())
         await expectSidebarClosed()
-        await waitAnimation(click("appbar-btn-menu"))
+        await waitAnimation(click("appbar_btn_menu"))
         await expectSidebarOpened()
         const dimensions = await getDimensions("sidebar")
         expect(dimensions.width).toBeWithin(clientWidth - 49, clientWidth - 47)
@@ -92,7 +92,7 @@ describe("Drawer width", function () {
         await waitAnimation(page.setViewport({ width: MOBILE_BREAK_POINT - 10, height }))
         await waitAnimation(page.reload())
         await expectSidebarClosed()
-        await waitAnimation(click("appbar-btn-menu"))
+        await waitAnimation(click("appbar_btn_menu"))
         await expectSidebarOpened()
         const dimensions = await getDimensions("sidebar")
         expect(dimensions.width).toBeWithin(MAX_DRAWER_WIDTH - 1, MAX_DRAWER_WIDTH + 1)

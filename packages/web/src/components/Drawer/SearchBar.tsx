@@ -15,7 +15,7 @@ export const SearchBar = () => {
     return (
         <TextField
             id="drawer-search-notes"
-            data-testid="drawer-search-notes"
+            data-testid="drawer_search_notes"
             type="search"
             color="primary"
             fullWidth

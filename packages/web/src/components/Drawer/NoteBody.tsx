@@ -25,14 +25,14 @@ export const NoteBody: React.FC = () => {
                 alignItems="center"
                 justifyContent="center"
                 height="100%"
-                data-testid="drawer-note-body-loading"
+                data-testid="drawer_note_body_loading"
             >
                 <CircularProgress />
             </Box>
         )
     } else if (notesNotFound) {
         return (
-            <Box pt={3} mx="auto" color="text.hint" data-testid="drawer-note-body-note-not-fount">
+            <Box pt={3} mx="auto" color="text.hint" data-testid="drawer_note_body_note_not_fount">
                 <h3>No results found.</h3>
             </Box>
         )

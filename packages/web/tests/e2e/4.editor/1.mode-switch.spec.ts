@@ -3,12 +3,12 @@ import { pressKey, wait } from "../utils"
 
 describe("Mode switch", function () {
     const expectWysiwygMode = async () => {
-        await wait("wysiwyg-mode-textarea")
-        await wait("source-code-mode-textarea", { hidden: true })
+        await wait("wysiwyg_mode_textarea")
+        await wait("source_code_mode_textarea", { hidden: true })
     }
     const expectSourceCodeMode = async () => {
-        await wait("source-code-mode-textarea")
-        await wait("wysiwyg-mode-textarea", { hidden: true })
+        await wait("source_code_mode_textarea")
+        await wait("wysiwyg_mode_textarea", { hidden: true })
     }
     const pressHotkey = async () => {
         await page.click(".ProseMirror")

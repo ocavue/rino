@@ -34,9 +34,9 @@ export const NoteMenu: React.FC<NoteMenuOptions> = ({
             onClose={handleMenuClose}
             anchorPosition={anchorPosition || undefined}
             anchorReference={anchorPosition ? "anchorPosition" : undefined}
-            data-testid="note-menu"
+            data-testid="note_menu"
         >
-            <MenuItem onClick={onClickDeleteBtn} data-testid="note-menu-item-delete">
+            <MenuItem onClick={onClickDeleteBtn} data-testid="note_menu_item_delete">
                 Delete
             </MenuItem>
         </Menu>

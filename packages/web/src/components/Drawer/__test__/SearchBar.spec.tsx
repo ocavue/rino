@@ -58,7 +58,7 @@ test("<SearchBar />", () => {
     expect(editHooks.searchedNotes).toHaveLength(0)
 
     // Parpare
-    const searchBar = screen.getByTestId("drawer-search-notes")
+    const searchBar = screen.getByTestId("drawer_search_notes")
     const searchBarInput = within(searchBar).getByPlaceholderText("Search Notes")
 
     // Search exist notes

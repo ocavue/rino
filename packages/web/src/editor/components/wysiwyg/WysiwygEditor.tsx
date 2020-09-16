@@ -93,7 +93,7 @@ export const WysiwygEditor: FC<EditorProps> = ({
         // it will show an error overlay window in development mode when `componentDidCatch` been called.
         console.error(error)
         return (
-            <div data-testid="wysiwyg-mode-error">
+            <div data-testid="wysiwyg_mode_error">
                 <h1>
                     <br />
                     Something went wrong.
@@ -110,7 +110,7 @@ export const WysiwygEditor: FC<EditorProps> = ({
                 initialContent={initialNode}
                 onChange={onChange}
                 editable={editable}
-                attributes={{ "data-testid": "wysiwyg-mode-textarea" }}
+                attributes={{ "data-testid": "wysiwyg_mode_textarea" }}
             >
                 <InnerEditor className={className} />
             </RemirrorProvider>

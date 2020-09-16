@@ -42,7 +42,7 @@ export const NoteListItem: React.FC<{ note: Note; onClick: () => void; selected:
                 selected={selected}
                 divider={true}
                 data-testid={
-                    note.local ? "sidebar-notes-list-item-local" : "sidebar-notes-list-item"
+                    note.local ? "sidebar_notes_list_item_local" : "sidebar_notes_list_item"
                 }
                 onContextMenu={handleMenuOpen}
             >

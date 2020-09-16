@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme: Theme) => {
 const Alert: React.FC<{ title: string; message: string }> = ({ title, message, children }) => {
     const classes = useStyles()
     return (
-        <Center data-testid={`alert-${title}`}>
+        <Center data-testid={`alert_${title}`}>
             <Box display="flex" alignItems="center">
                 <h1 className={classes.title}>{title}</h1>
                 <Divider orientation="vertical" light={true} classes={{ root: classes.divider }} />

@@ -50,7 +50,7 @@ const DenseSignInSnackbar: React.FC<{
         <Snackbar
             open={open}
             anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
-            data-testid="dense-sign-in-snack-bar"
+            data-testid="dense_sign_in_snack_bar"
             ContentProps={{
                 classes: { root: classes.denseContentRoot, action: classes.denseContentAction },
             }}
@@ -60,7 +60,7 @@ const DenseSignInSnackbar: React.FC<{
                     <Button
                         component="a"
                         size="small"
-                        data-testid="dense-sign-in-snack-bar-button"
+                        data-testid="dense_sign_in_snack_bar_button"
                         onClick={expand}
                         classes={{ root: classes.button }}
                     >
@@ -85,7 +85,7 @@ const FullSignInSnackbar: React.FC<{
         <Snackbar
             open={open}
             anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
-            data-testid="full-sign-in-snack-bar"
+            data-testid="full_sign_in_snack_bar"
             message="You are in anonymity mode. All changes will not be saved."
             ContentProps={{
                 classes: { root: classes.fullContentRoot },
@@ -96,7 +96,7 @@ const FullSignInSnackbar: React.FC<{
                         <Button
                             component="a"
                             size="small"
-                            data-testid="full-sign-in-snack-bar-sign-up-button"
+                            data-testid="full_sign_in_snack_bar_sign_up_button"
                             classes={{ root: classes.button }}
                         >
                             Sign Up
@@ -108,7 +108,7 @@ const FullSignInSnackbar: React.FC<{
                         color="inherit"
                         onClick={close}
                         size="small"
-                        data-testid="full-sign-in-snack-bar-close-button"
+                        data-testid="full_sign_in_snack_bar_close_button"
                     >
                         <CloseIcon fontSize="small" />
                     </IconButton>
