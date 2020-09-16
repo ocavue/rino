@@ -7,6 +7,20 @@ function getCurrentHostName() {
     }
 }
 
+function getHomeHostFromAppHost(appHost: string) {
+    const defaultHost = "www.rino.app"
+
+    if (appHost == "rino.app") return defaultHost
+
+    let matched = /^(rino-app)(.*\.com)$/.exec(appHost)
+    if (matched) return "rino-home" + matched[2]
+
+    matched = /^(rino-app)(.*\.app)$/.exec(appHost)
+    if (matched) return "rino-home" + matched[2]
+
+    return defaultHost
+}
+
 export function getHomeHostName(options?: { protocol?: boolean }) {
     let host = "www.rino.app"
     try {
@@ -38,3 +52,6 @@ export function getWebAppHostName(options?: { protocol?: boolean }) {
         return host
     }
 }
+
+export function setSignInState(isSignedIn: boolean) {}
+export function getSignInState(): boolean {}
