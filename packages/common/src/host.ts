@@ -1,9 +1,9 @@
-function getCurrentHostName() {
+export function getCurrentHostName() {
     // TODO: SSR environment has not `window`
     if (typeof window !== "undefined") {
         return window?.location?.hostname
     } else {
-        return null
+        return ""
     }
 }
 

@@ -1,11 +1,22 @@
-export function setCookie(name: string, value: string, days?: number): void {
+export function setCookie(
+    name: string,
+    value: string,
+    option?: { days?: number; domain?: string },
+): void {
     let expires = ""
-    if (days) {
+    if (option?.days) {
         const date = new Date()
-        date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000)
+        date.setTime(date.getTime() + option.days * 24 * 60 * 60 * 1000)
         expires = "; expires=" + date.toUTCString()
     }
-    document.cookie = name + "=" + (value || "") + expires + "; path=/"
+
+    let domain = ""
+    if (option?.domain) {
+        domain = "; domain=" + option?.domain
+    }
+
+    const cookie = `${name}=${value}${expires}${domain}; path=/`
+    document.cookie = cookie
 }
 
 export function getCookie(name: string): string | null {
