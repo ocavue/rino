@@ -5,7 +5,7 @@ import { ParserRule } from "src/editor/transform/parser-type"
 import { MarkdownSerializer, NodeSerializerSpecs } from "src/editor/transform/serializer"
 import { MarkdownNodeExtension } from "src/editor/utils"
 
-function isMarkdownNodeExtension(extension: any): extension is MarkdownNodeExtension {
+function isMarkdownNodeExtension(extension: unknown): extension is MarkdownNodeExtension {
     return !!(
         isExtension(extension) &&
         ((extension as unknown) as MarkdownNodeExtension).fromMarkdown &&
