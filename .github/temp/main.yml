@@ -228,7 +228,7 @@ jobs:
   Deployment: # Production deployment
     runs-on: ubuntu-18.04
     needs: [Changesets]
-    if: github.ref == 'refs/heads/master' && ( needs.Changesets.outputs.published == 'true' || contains(github.event.head_commit.message, 'force-publish') )
+    if: github.ref == 'refs/heads/master' && ( needs.Changesets.outputs.published == 'true' || contains(github.event.head_commit.message, '[force-deploy]') )
     steps:
       - *step_checkout
       - *step_setup_node
