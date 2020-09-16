@@ -57,7 +57,7 @@ const CollectionList: React.FC<{
             {collections.map((collection) => (
                 <CollectionListItem
                     key={collection.key}
-                    testid={`drawer-collection-item-${collection.key}`}
+                    testid={`drawer_collection_item_${collection.key}`}
                     selected={collection.key === collectionKey}
                     collection={collection}
                     onClick={() => setCollectionKey(collection.key)}

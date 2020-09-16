@@ -9,9 +9,9 @@ describe("ProsemirrorView constructor error", () => {
 
     test("Make the alert message", async () => {
         await switchMode() // Switch to source code mode
-        await type("source-code-mode-textarea", "HOOK:FAILED_TO_INIT_PROSEMIRROR_VIEW")
+        await type("source_code_mode_textarea", "HOOK:FAILED_TO_INIT_PROSEMIRROR_VIEW")
         await switchMode() // Switch back to wysiwyg code mode
-        const error = await getInnerText("wysiwyg-mode-error")
+        const error = await getInnerText("wysiwyg_mode_error")
         expect(error).toContain("Something went wrong.\n\nError: Found error hook for testing")
     })
 
@@ -22,11 +22,11 @@ describe("ProsemirrorView constructor error", () => {
     })
 
     test("Fix text in the source code mode", async () => {
-        await type("source-code-mode-textarea", "something")
+        await type("source_code_mode_textarea", "something")
     })
 
     test("Switch back to wysiwyg mode", async () => {
         await switchMode()
-        await wait("wysiwyg-mode-error", { hidden: true })
+        await wait("wysiwyg_mode_error", { hidden: true })
     })
 })

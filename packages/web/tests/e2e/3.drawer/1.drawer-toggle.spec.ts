@@ -11,9 +11,9 @@ describe("Open/close Sidebar", () => {
     describe("After sign in", () => {
         test("Step 1", () => waitAnimation(login()))
         test("Step 2", () => expectSidebarOpened())
-        test("Step 3", () => waitAnimation(click("appbar-btn-menu")))
+        test("Step 3", () => waitAnimation(click("appbar_btn_menu")))
         test("Step 4", () => expectSidebarClosed())
-        test("Step 5", () => waitAnimation(click("appbar-btn-menu")))
+        test("Step 5", () => waitAnimation(click("appbar_btn_menu")))
         test("Step 6", () => expectSidebarOpened())
     })
 })

@@ -30,23 +30,23 @@ export async function signOut() {
 }
 
 export async function createNote() {
-    await click("sidebar-notes-btn-create-note")
+    await click("sidebar_notes_btn_create_note")
 }
 
 export async function createEmptyNote() {
     await createNote()
-    await focus("wysiwyg-mode-textarea")
+    await focus("wysiwyg_mode_textarea")
     range(5).map(async () => await pressKey("Backspace"))
 }
 
 export async function deleteNote() {
-    await click("appbar-btn-dots")
+    await click("appbar_btn_dots")
     await sleep(50)
-    await click("note-menu-item-delete")
+    await click("note_menu_item_delete")
 }
 
 export async function clickSidebarNoteListItem() {
-    await click("sidebar-notes-list-item")
+    await click("sidebar_notes_list_item")
 }
 
 export async function cleanNotes() {

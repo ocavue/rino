@@ -86,12 +86,12 @@ export async function getTextAreaValue(testid: string) {
 }
 
 export const [wysiwygEditorSelector, sourceCodeEditorSelector] = [
-    testidSelector("wysiwyg-mode-textarea"),
-    testidSelector("source-code-mode-textarea"),
+    testidSelector("wysiwyg_mode-textarea"),
+    testidSelector("source_code-mode-textarea"),
 ]
 
 export async function getSourceCodeModeText() {
-    return await getInnerText("source-code-mode-textarea")
+    return await getInnerText("source_code_mode_textarea")
 }
 
 export async function waitAnimation<T>(promise: Promise<T>, ms = 500): Promise<T> {

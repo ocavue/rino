@@ -13,7 +13,7 @@ describe("Firebase operation", () => {
     })
 
     test("Editor note", async () => {
-        await type("wysiwyg-mode-textarea", "Something")
+        await type("wysiwyg_mode_textarea", "Something")
         await sleep(microseconds)
     })
 

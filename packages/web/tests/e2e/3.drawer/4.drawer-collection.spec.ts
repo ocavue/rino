@@ -8,7 +8,7 @@ describe("After login", function () {
     })
 
     test("Show collection", async () => {
-        await wait("drawer-collection-item-key:inbox")
-        await wait("drawer-collection-item-key:trash")
+        await wait("drawer_collection_item_key:inbox")
+        await wait("drawer_collection_item_key:trash")
     })
 })

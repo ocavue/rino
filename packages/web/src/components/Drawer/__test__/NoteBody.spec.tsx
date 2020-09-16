@@ -37,7 +37,7 @@ test("<NoteBody />", async () => {
 
     expect(authHooks.loadingUser).toBeTrue()
     expect(workHooks.loadingData).toBeTrue()
-    screen.getByTestId("drawer-note-body-loading")
+    screen.getByTestId("drawer_note_body_loading")
 
     act(() => {
         authHooks.setLoadingUser(false)
@@ -47,9 +47,9 @@ test("<NoteBody />", async () => {
     // Set loading to false
     expect(authHooks.loadingUser).toBeFalse()
     expect(workHooks.loadingData).toBeFalse()
-    screen.getByTestId("sidebar-notes") // TODO: rename sidebar to drawer
+    screen.getByTestId("sidebar_notes") // TODO: rename sidebar to drawer
     expect(editHooks.notes).toHaveLength(0)
-    expect(screen.queryByTestId("sidebar-notes-list-item")).toBeNull()
+    expect(screen.queryByTestId("sidebar_notes_list_item")).toBeNull()
 
     // Insert some notes
     act(() => {
@@ -60,20 +60,20 @@ test("<NoteBody />", async () => {
         workHooks.setLoadingData(false)
     })
     expect(editHooks.notes).toHaveLength(2)
-    expect(screen.getAllByTestId("sidebar-notes-list-item-local")).toHaveLength(2)
+    expect(screen.getAllByTestId("sidebar_notes_list_item_local")).toHaveLength(2)
 
     // Search not exist notes
     act(() => editHooks.setSearchQuery("CCCC"))
     expect(editHooks.searchQuery).toEqual("CCCC")
     expect(editHooks.searchedNotes).toHaveLength(0)
-    expect(screen.queryAllByTestId("sidebar-notes-list-item-local")).toHaveLength(0)
-    screen.getByTestId("drawer-note-body-note-not-fount")
+    expect(screen.queryAllByTestId("sidebar_notes_list_item_local")).toHaveLength(0)
+    screen.getByTestId("drawer_note_body_note_not_fount")
 
     // Search exist notes
     act(() => editHooks.setSearchQuery("AAAA"))
     expect(editHooks.searchQuery).toEqual("AAAA")
     expect(editHooks.searchedNotes).toHaveLength(1)
-    expect(screen.getAllByTestId("sidebar-notes-list-item-local")).toHaveLength(1)
+    expect(screen.getAllByTestId("sidebar_notes_list_item_local")).toHaveLength(1)
 
     // Empty search query
     act(() => editHooks.setSearchQuery(""))
@@ -81,14 +81,14 @@ test("<NoteBody />", async () => {
     // `searchedNotes` should be an empty array but `searchedNotes` shouldn't be empty
     expect(editHooks.searchedNotes).toHaveLength(0)
     expect(editHooks.visibleNotes).toHaveLength(2)
-    expect(screen.getAllByTestId("sidebar-notes-list-item-local")).toHaveLength(2)
+    expect(screen.getAllByTestId("sidebar_notes_list_item_local")).toHaveLength(2)
 
     // Show the list item context menu
-    expect(screen.queryAllByTestId("note-menu")).toHaveLength(0)
-    fireEvent.contextMenu(screen.getAllByTestId("sidebar-notes-list-item-local")[0])
-    expect(screen.queryAllByTestId("note-menu")).toHaveLength(1)
+    expect(screen.queryAllByTestId("note_menu")).toHaveLength(0)
+    fireEvent.contextMenu(screen.getAllByTestId("sidebar_notes_list_item_local")[0])
+    expect(screen.queryAllByTestId("note_menu")).toHaveLength(1)
 
     // Hide the list item context menu
-    fireEvent.click(screen.getByTestId("note-menu-item-delete"))
-    await waitFor(() => expect(screen.queryAllByTestId("note-menu")).toHaveLength(0))
+    fireEvent.click(screen.getByTestId("note_menu_item_delete"))
+    await waitFor(() => expect(screen.queryAllByTestId("note_menu")).toHaveLength(0))
 })

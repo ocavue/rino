@@ -27,7 +27,7 @@ export const ActivityHeader: React.FC = () => {
             <AppbarIconButton
                 className={classes.drawerHeaderButton}
                 onClick={handleSettingsBtnClick}
-                data-testid="sidebar-btn-settings"
+                data-testid="sidebar_btn_settings"
             >
                 <icons.SettingsOutlined />
             </AppbarIconButton>

@@ -44,16 +44,16 @@ const SettingsMenu: React.FC<{
             anchorEl={anchor}
             open={Boolean(anchor)}
             onClose={handleMenuClose}
-            data-testid="sidebar-settings-menu"
+            data-testid="sidebar_settings_menu"
         >
-            <MenuItem onClick={onClickToggleThem} data-testid="sidebar-settings-menu-item-theme">
+            <MenuItem onClick={onClickToggleThem} data-testid="sidebar_settings_menu_item_theme">
                 Toggle Theme
             </MenuItem>
-            <MenuItem onClick={onClickAbout} data-testid="sidebar-settings-menu-item-about">
+            <MenuItem onClick={onClickAbout} data-testid="sidebar_settings_menu_item_about">
                 About Rino
             </MenuItem>
             <Divider />
-            <MenuItem onClick={onClickSignOut} data-testid="sidebar-settings-menu-item-sign-out">
+            <MenuItem onClick={onClickSignOut} data-testid="sidebar_settings_menu_item_sign_out">
                 <ListItemText primary="Sign out" secondary={email} />
             </MenuItem>
         </Menu>

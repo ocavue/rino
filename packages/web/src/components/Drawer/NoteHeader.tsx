@@ -43,7 +43,7 @@ export const NoteHeader: React.FC = () => {
                 className={classes.drawerHeaderButton}
                 onClick={onClickCreateBtn}
                 disabled={disableCreateBtn}
-                data-testid={`sidebar-notes-btn-create-note${disableCreateBtn ? "-disabled" : ""}`}
+                data-testid={`sidebar_notes_btn_create_note${disableCreateBtn ? "_disabled" : ""}`}
             >
                 <icons.Add />
             </AppbarIconButton>

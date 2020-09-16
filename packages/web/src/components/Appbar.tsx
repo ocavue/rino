@@ -79,7 +79,7 @@ export const Appbar: React.FC = () => {
                 aria-label="open drawer"
                 onClick={toggleDrawerActivity}
                 className={clsx(classes.menuButton, classes.menuButtonLeft)}
-                data-testid="appbar-btn-menu"
+                data-testid="appbar_btn_menu"
             >
                 <icons.Menu />
             </AppbarIconButton>
@@ -88,7 +88,7 @@ export const Appbar: React.FC = () => {
                     aria-label="open drawer"
                     onClick={handleMenuBtnClick}
                     className={clsx(classes.menuButton, classes.menuButtonRight)}
-                    data-testid="appbar-btn-dots"
+                    data-testid="appbar_btn_dots"
                 >
                     <icons.MoreVert />
                 </AppbarIconButton>

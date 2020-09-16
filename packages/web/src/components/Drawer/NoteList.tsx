@@ -24,7 +24,7 @@ export const NoteList: React.FC<{
     }
 
     return (
-        <List className={classes.drawerBody} data-testid="sidebar-notes">
+        <List className={classes.drawerBody} data-testid="sidebar_notes">
             {visibleNotes.map((note) => (
                 <NoteListItem
                     key={note.key}
