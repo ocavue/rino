@@ -12,7 +12,7 @@ import { SignInSnackbar } from "../SignInSnackbar"
 jest.useFakeTimers()
 jest.mock("next/link", () => mockNextLink)
 
-function renderWithCallback(component: React.ReactNode, callback: () => any) {
+function renderWithCallback(component: React.ReactNode, callback: () => unknown) {
     return render(
         <div>
             <WorksapceStateContainer.Provider>

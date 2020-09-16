@@ -9,7 +9,7 @@ import { TestHook } from "tests/react-test-utils"
 
 import { SearchBar } from "../SearchBar"
 
-function renderWithCallback(component: React.ReactNode, callback: () => any) {
+function renderWithCallback(component: React.ReactNode, callback: () => unknown) {
     return render(
         <ThemeProvider theme={createMuiTheme()}>
             <WorksapceStateContainer.Provider>
