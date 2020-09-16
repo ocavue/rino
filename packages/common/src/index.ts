@@ -1,3 +1,3 @@
 export * from "./host"
-export * from "./cookies"
+export * from "./cookie"
 export * from "./auth"
