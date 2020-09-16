@@ -86,7 +86,7 @@ export async function getTextAreaValue(testid: string) {
 }
 
 export const [wysiwygEditorSelector, sourceCodeEditorSelector] = [
-    testidSelector("wysiwyg_mode-textarea"),
+    testidSelector("wysiwyg_mode_textarea"),
     testidSelector("source_code-mode-textarea"),
 ]
 
