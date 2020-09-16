@@ -9,7 +9,7 @@ parserOptions:
   ecmaFeatures:
     jsx: true
 extends:
-  # https://github.com/typescript-eslint/typescript-eslint/tree/v2.25.0/packages/eslint-plugin#recommended-configs
+  # https://github.com/typescript-eslint/typescript-eslint/tree/v4.1.1/packages/eslint-plugin#recommended-configs
   - "eslint:recommended" # the set of rules which are recommended for all projects by the ESLint Team
   - "plugin:@typescript-eslint/recommended" # recommended rules for typescript
   - "plugin:@typescript-eslint/recommended-requiring-type-checking" # provide lint rules with access to type information
@@ -21,9 +21,11 @@ extends:
   - "plugin:react-hooks/recommended"
 
   # runs Prettier as an ESLint rule
+  # https://github.com/prettier/eslint-plugin-prettier
   - "plugin:prettier/recommended"
 
   # turns off all ELLint rules that are unnecessary or might conflict with Prettier
+  # https://github.com/prettier/eslint-config-prettier
   - "prettier"
   - "prettier/@typescript-eslint" # for @typescript-eslint/eslint-plugin
   - "prettier/react" # for eslint-plugin-react
