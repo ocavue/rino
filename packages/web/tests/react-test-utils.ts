@@ -14,6 +14,6 @@ export const TestHook = <T>({ callback }: { callback: () => T }) => {
  * ```
  *
  */
-export function mockNextLink({ children }: any) {
+export function mockNextLink({ children }: { children: unknown }) {
     return children
 }

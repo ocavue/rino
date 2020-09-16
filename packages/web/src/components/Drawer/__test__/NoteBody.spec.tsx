@@ -9,7 +9,7 @@ import { TestHook } from "tests/react-test-utils"
 
 import { NoteBody } from "../NoteBody"
 
-function renderWithCallback(component: React.ReactNode, callback: () => any) {
+function renderWithCallback(component: React.ReactNode, callback: () => unknown) {
     return render(
         <ThemeProvider theme={createMuiTheme()}>
             <WorksapceStateContainer.Provider>

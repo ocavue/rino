@@ -101,7 +101,7 @@ export function splitListItem(
         } else {
             const nextType = $to.pos === $from.end() ? listItem.contentMatchAt(0).defaultType : null
             let tr = state.tr.delete($from.pos, $to.pos)
-            const types: any = nextType && [null, { type: nextType }]
+            const types = nextType && [null, { type: nextType }]
             if (!canSplit(tr.doc, $from.pos, 2, types)) return false
             tr = tr.split($from.pos, 2, types)
             if (checkbox) {
