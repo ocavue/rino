@@ -72,7 +72,7 @@ export const SourceCodeEditor: FC<EditorProps> = ({
             initialContent={initialNode}
             onChange={onChange}
             editable={editable}
-            attributes={{ "data-testid": "source-code-mode-textarea" }}
+            attributes={{ "data-testid": "source_code_mode_textarea" }}
         >
             <>
                 <InnerEditor className={className} />

@@ -110,7 +110,7 @@ export const WysiwygEditor: FC<EditorProps> = ({
                 initialContent={initialNode}
                 onChange={onChange}
                 editable={editable}
-                attributes={{ "data-testid": "wysiwyg-mode-textarea" }}
+                attributes={{ "data-testid": "wysiwyg_mode_textarea" }}
             >
                 <InnerEditor className={className} />
             </RemirrorProvider>
