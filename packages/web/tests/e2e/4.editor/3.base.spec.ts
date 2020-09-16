@@ -17,7 +17,7 @@ afterAll(async () => {
 })
 
 async function type(text: string, pressEnter = true) {
-    await typeByTestid("wysiwyg-mode-textarea", text, pressEnter)
+    await typeByTestid("wysiwyg_mode_textarea", text, pressEnter)
 }
 
 describe("Source code text", () => {
