@@ -10,7 +10,7 @@ export function setSignInState(signedIn: boolean): void {
 
 export function getSignInState(): boolean {
     const cookieValue: boolean = cookies.getCookie(COOKIE_KEY) === "yes"
-    const storageValue: boolean = window.localStorage.getItem("__rino_dev_auth_state") == "yes"
+    const storageValue: boolean = window.localStorage.getItem(LOCAL_STORAGE_KEY) == "yes"
 
     if (cookieValue && storageValue) {
         return true
