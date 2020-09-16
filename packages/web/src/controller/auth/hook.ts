@@ -1,3 +1,4 @@
+import { setSignInState } from "@rino.app/common"
 import { useEffect, useMemo, useState } from "react"
 import { createContainer } from "unstated-next"
 
@@ -22,7 +23,7 @@ function useAuth() {
             }
             setUser(user)
             setLoadingUser(false)
-            window.localStorage.setItem("__rino_dev_auth_state", user ? "yes" : "no")
+            setSignInState(!!user)
         })
         return () => unsubscribe()
     }, [setLoadingUser, setUser])
