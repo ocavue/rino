@@ -14,13 +14,5 @@ export function setSignInState(signedIn: boolean): void {
 export function getSignInState(): boolean {
     const cookieFlag: boolean = cookies.getCookie(COOKIE_KEY) === "yes"
     const storageFlag: boolean = window.localStorage.getItem(LOCAL_STORAGE_KEY) == "yes"
-
-    if (cookieFlag && storageFlag) {
-        return true
-    } else if (cookieFlag || storageFlag) {
-        setSignInState(true)
-        return true
-    } else {
-        return false
-    }
+    return cookieFlag || storageFlag
 }
