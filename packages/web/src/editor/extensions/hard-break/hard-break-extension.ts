@@ -18,7 +18,7 @@ export class RinoHardBreakExtension extends HardBreakExtension {
     }
 
     createKeymap() {
-        const type = this.type as NodeType<any>
+        const type = this.type as NodeType<any> // workaround for the generic typescript
         const command = chainCommands(convertCommand(exitCode), (params) => {
             const $from = params.state.selection.$from
             const canReplace = $from
