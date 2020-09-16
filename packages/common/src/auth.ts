@@ -5,19 +5,19 @@ const COOKIE_KEY = "__rino_sign_in_state_cookie"
 const LOCAL_STORAGE_KEY = "__rino_dev_auth_state"
 
 export function setSignInState(signedIn: boolean): void {
-    cookies.setCookie(COOKIE_KEY, signedIn ? "yes" : "no", {
-        domain: getCurrentHostName(),
-    })
-    window.localStorage.setItem(LOCAL_STORAGE_KEY, signedIn ? "yes" : "no")
+    const value = signedIn ? "yes" : "no"
+    const domain = "." + getCurrentHostName()
+    cookies.setCookie(COOKIE_KEY, value, { domain })
+    window.localStorage.setItem(LOCAL_STORAGE_KEY, value)
 }
 
 export function getSignInState(): boolean {
-    const cookieValue: boolean = cookies.getCookie(COOKIE_KEY) === "yes"
-    const storageValue: boolean = window.localStorage.getItem(LOCAL_STORAGE_KEY) == "yes"
+    const cookieFlag: boolean = cookies.getCookie(COOKIE_KEY) === "yes"
+    const storageFlag: boolean = window.localStorage.getItem(LOCAL_STORAGE_KEY) == "yes"
 
-    if (cookieValue && storageValue) {
+    if (cookieFlag && storageFlag) {
         return true
-    } else if (cookieValue || storageValue) {
+    } else if (cookieFlag || storageFlag) {
         setSignInState(true)
         return true
     } else {
