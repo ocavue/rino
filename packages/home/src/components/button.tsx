@@ -1,5 +1,5 @@
 import { createStyles, makeStyles } from "@material-ui/styles"
-import React from "react"
+import React, { useState } from "react"
 
 import { colors } from "../styles/color"
 
@@ -15,6 +15,7 @@ type ButtonProps = {
     primary?: boolean
     fullWidth?: boolean
     shadow?: boolean
+    animation?: boolean
 } & React.AnchorHTMLAttributes<HTMLAnchorElement>
 
 const useIconButtonStyles = makeStyles(
@@ -63,9 +64,10 @@ const useTextButtonStyles = makeStyles(
             paddingLeft: "1rem",
             paddingRight: "1rem",
             whiteSpace: "nowrap",
-            transitionProperty: "background-color,border-color,color",
+            transitionProperty: "background-color,border-color,color,opacity,transform",
             transitionTimingFunction: "cubic-bezier(.4,0,.2,1)",
             transitionDuration: ".15s",
+            willChange: "opacity, transform",
         },
         primary: {
             color: "#ffffff",
@@ -96,6 +98,14 @@ const useTextButtonStyles = makeStyles(
         shadow: {
             boxShadow: "0 1px 2px 0 rgba(0, 0, 0, 0.05)",
         },
+        show: {
+            opacity: 1,
+            transform: "scale(1)",
+        },
+        hide: {
+            opacity: 0,
+            transform: "scale(0.95)",
+        },
     }),
 )
 
@@ -106,18 +116,27 @@ export const Button: React.FC<ButtonProps> = ({
     children,
     fullWidth,
     shadow,
+    animation,
     ...extra
 }) => {
     const classes = useTextButtonStyles()
+    const [show, setShow] = useState(false)
+    React.useEffect(() => {
+        setTimeout(() => setShow(true), 0)
+    }, [classes])
+
     let className = `${classes.btn} ${primary ? classes.primary : classes.secondary}`
+
     if (fullWidth) {
-        className += " "
-        className += classes.full
+        className += " " + classes.full
     }
     if (shadow) {
-        className += " "
-        className += classes.shadow
+        className += " " + classes.shadow
     }
+    if (animation) {
+        className += " " + (show ? classes.show : classes.hide)
+    }
+
     return (
         <a
             {...extra}
