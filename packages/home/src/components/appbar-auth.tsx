@@ -26,18 +26,24 @@ const SignInAndSignUp: React.FC<{ signInLink: string; signUpLink: string }> = ({
     signUpLink,
 }) => (
     <>
-        <Button href={signInLink} testid="homepage_signin_btn" ariaLabel="Sign in">
+        <Button animation href={signInLink} testid="homepage_signin_btn" ariaLabel="Sign in">
             Sign in
         </Button>
         <span style={{ width: "8px" }} />
-        <Button href={signUpLink} testid="homepage_signup_btn" ariaLabel="Sign up" primary>
+        <Button
+            animation
+            href={signUpLink}
+            testid="homepage_signup_btn"
+            ariaLabel="Sign up"
+            primary
+        >
             Sign up
         </Button>
     </>
 )
 
 const GoToTheApp: React.FC<{ appLink: string }> = ({ appLink }) => (
-    <Button href={appLink} testid="homepage_app_btn" ariaLabel="Go to the app" primary>
+    <Button animation href={appLink} testid="homepage_app_btn" ariaLabel="Go to the app" primary>
         Go to the App
     </Button>
 )
