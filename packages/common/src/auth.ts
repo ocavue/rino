@@ -12,6 +12,10 @@ export function setSignInState(signedIn: boolean): void {
 }
 
 export function getSignInState(): boolean {
+    if (typeof window === "undefined") {
+        return false // For SSR mode
+    }
+
     const cookieFlag: boolean = cookies.getCookie(COOKIE_KEY) === "yes"
     const storageFlag: boolean = window.localStorage.getItem(LOCAL_STORAGE_KEY) == "yes"
     return cookieFlag || storageFlag

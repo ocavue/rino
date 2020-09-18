@@ -7,6 +7,7 @@ export function useAuthLinks() {
         return {
             signInLink: `${host}/sign-in`,
             signUpLink: `${host}/sign-up`,
+            appLink: host,
         }
     }, [])
 }
