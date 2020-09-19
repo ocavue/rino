@@ -2,12 +2,12 @@
 
 # Rino - A better way to write Markdown
 
-[![Version](https://img.shields.io/github/v/tag/ocavue/rino?label=version)](https://github.com/ocavue/rino/releases)
+[![Version](https://img.shields.io/npm/v/@rino.app/web?label=version)](https://github.com/ocavue/rino/blob/master/packages/web/CHANGELOG.md)
 [![codecov](https://codecov.io/gh/ocavue/rino/branch/master/graph/badge.svg)](https://codecov.io/gh/ocavue/rino)
 ![GitHub Actions](https://github.com/ocavue/rino/workflows/GitHub%20Actions/badge.svg)
 
 
-This mono repository stores all source code for Rino. Learn more about Rino at [https://rino.app](https://rino.app).
+This mono repository stores all source code for Rino. Learn more about Rino at [https://www.rino.app](https://www.rino.app).
 
 ## License
 
