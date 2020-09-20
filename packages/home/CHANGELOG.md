@@ -1,5 +1,11 @@
 # @rino.app/home
 
+## 0.4.1
+
+### Patch Changes
+
+-   f252ebb: Update the document.
+
 ## 0.4.0
 
 ### Minor Changes
