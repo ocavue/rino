@@ -1,11 +1,11 @@
-import { EditorState, Plugin } from "prosemirror-state"
+import { EditorState } from "prosemirror-state"
 import { selectionCell } from "prosemirror-tables"
 import { Decoration, DecorationSet } from "prosemirror-view"
 
 import { selectedTableCell } from "./table-helper"
 
 export const createTableHeigthlightPlugin = () => {
-    return new Plugin({
+    return {
         props: {
             decorations: (state: EditorState) => {
                 const cell = selectedTableCell(state)
@@ -27,5 +27,5 @@ export const createTableHeigthlightPlugin = () => {
                 ])
             },
         },
-    })
+    }
 }
