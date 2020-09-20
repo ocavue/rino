@@ -1,6 +1,6 @@
 import { PlainExtension } from "@remirror/core"
 import { Node as ProsemirrorNode } from "prosemirror-model"
-import { EditorState, Plugin } from "prosemirror-state"
+import { EditorState } from "prosemirror-state"
 import { Decoration, DecorationSet } from "prosemirror-view"
 
 import { isAutoHideMark } from "./inline-mark-define"
@@ -76,7 +76,7 @@ function findVisibleMarks(
 }
 
 function createDecorationPlugin() {
-    const plugin = new Plugin({
+    const pluginSpec = {
         props: {
             decorations: (state: EditorState) => {
                 const $pos = state.selection.$anchor
@@ -114,8 +114,8 @@ function createDecorationPlugin() {
                 )
             },
         },
-    })
-    return plugin
+    }
+    return pluginSpec
 }
 
 export class RinoInlineDecorationExtension extends PlainExtension {
