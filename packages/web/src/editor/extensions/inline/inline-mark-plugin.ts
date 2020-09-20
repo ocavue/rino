@@ -203,7 +203,7 @@ const createInlineMarkPlugin = (testing = false) => {
               }, 50)
           }
 
-    const plugin = new Plugin({
+    const pluginSpec = {
         state: {
             init: (config, state) => {},
             apply: () => {},
@@ -233,12 +233,13 @@ const createInlineMarkPlugin = (testing = false) => {
             }, 0)
             return {}
         },
-    })
+    }
 
-    return plugin
+    return pluginSpec
 }
 
 export class RinoInlineMarkExtension extends PlainExtension {
+    // The editor will not "debounce" when `#testing` is true. Used in unit tests.
     #testing: boolean
 
     public constructor(testing = false) {
