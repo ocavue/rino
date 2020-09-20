@@ -1,6 +1,5 @@
 import { PlainExtension } from "@remirror/core"
 import { Mark, Node, Schema } from "prosemirror-model"
-import { Plugin } from "prosemirror-state"
 import { Mappable } from "prosemirror-transform"
 import { EditorView } from "prosemirror-view"
 
