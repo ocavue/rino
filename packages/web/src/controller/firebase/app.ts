@@ -32,23 +32,30 @@ export const firebaseApp: firebase.app.App = (() => {
           })
 
     // Enable offline firestore.
-    // When running unit tests, since JSDOM doesn't support `LocalStorage`, firebase cann't enable persistence.
-    if (process.env.NODE_ENV !== "test") {
-        app.firestore()
-            .enablePersistence({ synchronizeTabs: true })
-            .catch((error: firebase.functions.HttpsError) => {
-                console.error(error)
-                if (error.code === "failed-precondition") {
-                    // Multiple tabs open, persistence can only be enabled
-                    // in one tab at a a time.
-                    // ...
-                } else if (error.code === "unimplemented") {
-                    // The current browser does not support all of the
-                    // features required to enable persistence
-                    // ...
+
+    app.firestore()
+        .enablePersistence({ synchronizeTabs: true })
+        .catch((error: firebase.functions.HttpsError) => {
+            if (error.code === "failed-precondition") {
+                console.warn("failed-precondition")
+                // Multiple tabs open, persistence can only be enabled
+                // in one tab at a a time.
+                // ...
+
+                // TODO: add notice for users (like what Gmail does)
+            } else if (error.code === "unimplemented") {
+                // The current browser does not support all of the
+                // features required to enable persistence
+                // ...
+
+                // When running unit tests, since JSDOM doesn't support `LocalStorage`, firebase cann't enable persistence.
+                if (process.env.NODE_ENV !== "test") {
+                    console.error(error)
                 }
-            })
-    }
+            } else {
+                console.error(error)
+            }
+        })
 
     return app
 })()
