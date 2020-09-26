@@ -1,6 +1,6 @@
 import { Draft, produce } from "immer"
 import { sortBy } from "lodash"
-import { useCallback, useMemo, useState } from "react"
+import { useCallback, useMemo, useRef, useState } from "react"
 
 import { docs } from "../docs"
 import { notesCollection } from "../firebase/app"
@@ -19,10 +19,26 @@ type NoteKey = ReturnType<typeof useNoteKey>[0]
 type SetNoteKey = ReturnType<typeof useNoteKey>[1]
 
 function useFetchNotes(setNotes: SetNotes) {
+    const isFirstFetchRef = useRef(true)
     return useCallback(
         async function fetchNotes(uid: string) {
-            const query = await notesCollection.where("uid", "==", uid).get()
-            const originNotes = query.docs.map((snapshot) => Note.new({ uid, snapshot }))
+            const isFirstFetch = isFirstFetchRef.current
+            const query = notesCollection.where("uid", "==", uid)
+            const snapshot = await (async () => {
+                if (isFirstFetch) {
+                    isFirstFetchRef.current = false
+                    const snapshot = await query.get({ source: "cache" })
+                    // If the cache is empty, try to fetch the data from the server
+                    if (snapshot.docs.length === 0) {
+                        return await query.get()
+                    } else {
+                        return snapshot
+                    }
+                } else {
+                    return await query.get()
+                }
+            })()
+            const originNotes = snapshot.docs.map((snapshot) => Note.new({ uid, snapshot }))
             const sortedNotes = sortBy(originNotes, (note) => [note.createTime, note.id]).reverse()
             setNotes(sortedNotes)
         },
