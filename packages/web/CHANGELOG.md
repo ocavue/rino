@@ -1,5 +1,11 @@
 # @rino.app/web
 
+## 0.14.0
+
+### Minor Changes
+
+-   3b57927: Improve the data fetching speed.
+
 ## 0.13.3
 
 ### Patch Changes
