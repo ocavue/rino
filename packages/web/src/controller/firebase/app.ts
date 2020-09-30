@@ -36,14 +36,14 @@ export const firebaseApp: firebase.app.App = (() => {
     app.firestore()
         .enablePersistence({ synchronizeTabs: true })
         .catch((error: firebase.functions.HttpsError) => {
-            if (error.code === "failed-precondition") {
+            if (error?.code === "failed-precondition") {
                 console.warn("failed-precondition")
                 // Multiple tabs open, persistence can only be enabled
                 // in one tab at a a time.
                 // ...
 
                 // TODO: add notice for users (like what Gmail does)
-            } else if (error.code === "unimplemented") {
+            } else if (error?.code === "unimplemented") {
                 // The current browser does not support all of the
                 // features required to enable persistence
                 // ...

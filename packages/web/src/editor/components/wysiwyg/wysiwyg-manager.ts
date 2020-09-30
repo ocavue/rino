@@ -1,11 +1,9 @@
-import { RemirrorManager } from "@remirror/core"
-import { useRef } from "react"
+import { useManager } from "@remirror/react"
 
 import { createWysiwygCombined } from "./wysiwyg-extension"
 
 export function useWysiwygManager() {
-    const manager = useRef(RemirrorManager.create(createWysiwygCombined())).current
-    return manager
+    return useManager(createWysiwygCombined)
 }
 
 export type WysiwygManager = ReturnType<typeof useWysiwygManager>
