@@ -1,54 +1,46 @@
+const PREVIEW_URL_RE = /^(rino-)(web|home|server)(-(?:[^.]*).ocavue.vercel.app)$/
+
 export function getCurrentHostName() {
-    // TODO: SSR environment has not `window`
     if (typeof window !== "undefined") {
+        // for SSR environment
         return window?.location?.hostname
     } else {
         return ""
     }
 }
 
-// function getHomeHostFromAppHost(appHost: string) {
-//     const defaultHost = "www.rino.app"
+export function getHomeHostName(currentHostName?: string) {
+    const prefix = "https://"
+    const defaultHost = "www.rino.app"
 
-//     if (appHost == "rino.app") return defaultHost
-
-//     let matched = /^(rino-app)(.*\.com)$/.exec(appHost)
-//     if (matched) return "rino-home" + matched[2]
-
-//     matched = /^(rino-app)(.*\.app)$/.exec(appHost)
-//     if (matched) return "rino-home" + matched[2]
-
-//     return defaultHost
-// }
-
-export function getHomeHostName(options?: { protocol?: boolean }) {
-    let host = "www.rino.app"
     try {
-        const current = getCurrentHostName()
-        if (current === "rino.app") host = "www.rino.app"
+        const current = currentHostName || getCurrentHostName()
+        if (current === "rino.app") {
+            return prefix + defaultHost
+        } else {
+            return prefix + current.replace(PREVIEW_URL_RE, "$1home$3")
+        }
     } catch (error) {
-        console.warn(error)
+        console.error(error)
     }
 
-    if (options?.protocol) {
-        return "https://" + host
-    } else {
-        return host
-    }
+    return defaultHost
 }
 
-export function getWebAppHostName(options?: { protocol?: boolean }) {
-    let host = "rino.app"
+export function getWebAppHostName(currentHostName?: string) {
+    const prefix = "https://"
+    const defaultHost = "rino.app"
+
     try {
-        const current = getCurrentHostName()
-        if (current === "www.rino.app") host = "rino.app"
+        const current = currentHostName || getCurrentHostName()
+        if (current === "www.rino.app") {
+            return prefix + defaultHost
+        } else {
+            return prefix + current.replace(PREVIEW_URL_RE, "$1web$3")
+        }
     } catch (error) {
-        console.warn(error)
+        console.error(error)
     }
 
-    if (options?.protocol) {
-        return "https://" + host
-    } else {
-        return host
-    }
+    return defaultHost
 }

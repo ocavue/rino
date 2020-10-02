@@ -4,9 +4,12 @@
 
 set -ex
 
-vercel ls rino-home | egrep -o 'rino-home-[a-zA-Z0-9]+.vercel.app' > /tmp/clean_vercel_deployment.txt
-vercel ls rino-web | egrep -o 'rino-web-[a-zA-Z0-9]+.vercel.app' >> /tmp/clean_vercel_deployment.txt
+echo "" > /tmp/clean_vercel_deployment.txt
+
+for project_name in "rino-home" "rino-web" "rino-server"; do
+    vercel ls $project_name | egrep -o "$project_name-[a-zA-Z0-9]+.vercel.app" >> /tmp/clean_vercel_deployment.txt
+done
 
 cat /tmp/clean_vercel_deployment.txt
 
-vercel remove --yes --safe $(cat /tmp/clean_vercel_deployment.txt | paste -sd ' ' -)
+vercel remove --yes --safe $(cat /tmp/clean_vercel_deployment.txt | head -n 20 | paste -sd ' ' -)

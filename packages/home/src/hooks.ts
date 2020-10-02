@@ -3,7 +3,7 @@ import { useMemo } from "react"
 
 export function useAuthLinks() {
     return useMemo(() => {
-        const host = getWebAppHostName({ protocol: true })
+        const host = getWebAppHostName()
         return {
             signInLink: `${host}/sign-in`,
             signUpLink: `${host}/sign-up`,
