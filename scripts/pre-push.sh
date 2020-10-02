@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
-branch=$(git rev-parse --abbrev-ref HEAD)
-
 GREEN='\033[0;32m'
 NO_COLOR='\033[0m'
+
+branch=$(git rev-parse --abbrev-ref HEAD)
 
 # https://stackoverflow.com/a/63286099
 slugify () {
