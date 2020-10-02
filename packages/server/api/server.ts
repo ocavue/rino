@@ -58,8 +58,8 @@ function isSignedIn(req: NowRequest): boolean {
 
 /*
 Target:
-    1. Fast
-    2. Deploy less frequent (Vercel only give 160 function deployments pre month)
+    1. as fast as possible
+    2. deploy less frequent (Vercel only has 160 function deployments per month for a free account)
 */
 export default function (req: NowRequest, res: NowResponse) {
     if (req.headers.host === HOME_HOST) {
