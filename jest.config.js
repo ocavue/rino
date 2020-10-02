@@ -32,5 +32,6 @@ module.exports = {
         "./packages/home/jest.config.js",
         "./packages/web/jest.config.js",
         "./packages/web/jest.e2e.config.js",
+        "./packages/common/jest.config.js",
     ],
 }

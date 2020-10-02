@@ -9,12 +9,12 @@ export function getCurrentHostName() {
     }
 }
 
-export function getHomeHostName(options?: { protocol?: boolean }) {
+export function getHomeHostName(options?: { protocol?: boolean; currentHostName?: string }) {
     const prefix = options?.protocol ? "https://" : ""
     const productionHost = "www.rino.app"
 
     try {
-        const current = getCurrentHostName()
+        const current = options?.currentHostName || getCurrentHostName()
         if (current === "rino.app") {
             return prefix + productionHost
         } else {
@@ -27,12 +27,12 @@ export function getHomeHostName(options?: { protocol?: boolean }) {
     return "www.rino.app"
 }
 
-export function getWebAppHostName(options?: { protocol?: boolean }) {
+export function getWebAppHostName(options?: { protocol?: boolean; currentHostName?: string }) {
     const prefix = options?.protocol ? "https://" : ""
     const productionHost = "rino.app"
 
     try {
-        const current = getCurrentHostName()
+        const current = options?.currentHostName || getCurrentHostName()
         if (current === "www.rino.app") {
             return prefix + productionHost
         } else {
