@@ -7,6 +7,4 @@ module.exports = {
     ...baseConfig,
 
     displayName: { name: "COMMON:UNIT", color: "magentaBright" },
-
-    coveragePathIgnorePatterns: ["<rootDir>/src/*.ts", "/node_modules/"],
 }
