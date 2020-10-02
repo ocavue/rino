@@ -33,12 +33,17 @@ function serveProxy(req: NowRequest, res: NowResponse, proxyHost: string) {
                 res.setHeader(key, value)
             }
         }
-        res.setHeader("cache-control", "s-maxage=600, stale-while-revalidate")
         res.setHeader("x-serverless", `packages/server ${new Date()}`)
 
         // Set status code like 404
         if (sourceResponse.statusCode) {
             res.status(sourceResponse.statusCode)
+        }
+
+        if (sourceResponse.statusCode === 404) {
+            res.setHeader("cache-control", "no-cache")
+        } else {
+            res.setHeader("cache-control", "s-maxage=600, stale-while-revalidate")
         }
 
         sourceResponse.on("data", (d) => {
