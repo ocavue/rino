@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "functions": {
+    "api/server.ts": {
+      "includeFiles": "files/**"
+    }
+  },
+  "routes": [{
+    "src": "/.*",
+    "dest": "api/server.ts"
+  }]
+}

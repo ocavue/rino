@@ -293,7 +293,8 @@
             "vercel-org-id": "${{ secrets.VERCEL_ORG_ID }}",
             "vercel-project-id": "${{ secrets.VERCEL_PROJECT_ID_HOME }}",
             "alias-domains": "rino-home-{{BRANCH}}.ocavue.vercel.app",
-            "vercel-args": "--meta TYPE=PREVIEW"
+            "vercel-args": "--meta TYPE=PREVIEW",
+            "working-directory": "./packages/home/"
           }
         },
         {
@@ -306,7 +307,8 @@
             "vercel-org-id": "${{ secrets.VERCEL_ORG_ID }}",
             "vercel-project-id": "${{ secrets.VERCEL_PROJECT_ID_WEB }}",
             "alias-domains": "rino-web-{{BRANCH}}.ocavue.vercel.app",
-            "vercel-args": "--meta TYPE=PREVIEW"
+            "vercel-args": "--meta TYPE=PREVIEW",
+            "working-directory": "./packages/web/"
           }
         }
       ]
@@ -450,7 +452,8 @@
             "vercel-org-id": "${{ secrets.VERCEL_ORG_ID }}",
             "vercel-project-id": "${{ secrets.VERCEL_PROJECT_ID_HOME }}",
             "alias-domains": "rino-home-{{BRANCH}}.ocavue.vercel.app",
-            "vercel-args": "--prod --meta TYPE=PRODUCTION"
+            "vercel-args": "--prod --meta TYPE=PRODUCTION",
+            "working-directory": "./packages/home/"
           }
         },
         {
@@ -463,7 +466,26 @@
             "vercel-org-id": "${{ secrets.VERCEL_ORG_ID }}",
             "vercel-project-id": "${{ secrets.VERCEL_PROJECT_ID_WEB }}",
             "alias-domains": "rino-home-{{BRANCH}}.ocavue.vercel.app",
-            "vercel-args": "--prod --meta TYPE=PRODUCTION"
+            "vercel-args": "--prod --meta TYPE=PRODUCTION",
+            "working-directory": "./packages/web/"
+          }
+        },
+        {
+          "name": "Prepare HTML files",
+          "run": "bash ./scripts/prepare-server-files.sh"
+        },
+        {
+          "name": "Deploy @rino.app/server to Vercel",
+          "uses": "amondnet/vercel-action@f79b066724a2ac14b8944244a625146e5d6006c3",
+          "with": {
+            "github-comment": false,
+            "vercel-token": "${{ secrets.VERCEL_TOKEN }}",
+            "github-token": "${{ secrets.GITHUB_TOKEN }}",
+            "vercel-org-id": "${{ secrets.VERCEL_ORG_ID }}",
+            "vercel-project-id": "${{ secrets.VERCEL_PROJECT_ID_SERVER }}",
+            "alias-domains": "rino-server-{{BRANCH}}.ocavue.vercel.app",
+            "vercel-args": "--prod --meta TYPE=PRODUCTION",
+            "working-directory": "./packages/server/"
           }
         }
       ]
