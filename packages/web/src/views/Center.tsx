@@ -17,7 +17,7 @@ const Center: React.FC = (props) => {
             }}
             {...props}
         />
-    )re
+    )
 }
 
 export default Center
