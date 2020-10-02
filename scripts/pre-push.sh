@@ -10,4 +10,7 @@ slugify () {
     echo "$1" | iconv -c -t ascii//TRANSLIT | sed -E 's/[~^]+//g' | sed -E 's/[^a-zA-Z0-9]+/-/g' | sed -E 's/^-+|-+$//g' | tr A-Z a-z
 }
 
-echo -e "${NO_COLOR}You can visit ${GREEN}https://rino-server-$(slugify ${branch}).ocavue.vercel.app${NO_COLOR} to check the preview deployment (It may task some minutes)"
+echo -e "${NO_COLOR}You can visit the liks below to check the preview deployments (It may task some minutes to deploy)"
+echo -e " - ${GREEN}https://rino-web-$(slugify ${branch}).ocavue.vercel.app${NO_COLOR}"
+echo -e " - ${GREEN}https://rino-home-$(slugify ${branch}).ocavue.vercel.app${NO_COLOR}"
+
