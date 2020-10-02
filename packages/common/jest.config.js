@@ -8,8 +8,5 @@ module.exports = {
 
     displayName: { name: "COMMON:UNIT", color: "magentaBright" },
 
-    // The glob patterns Jest uses to detect test files
-    testMatch: ["**/__test__/**/*.spec.(js|ts|jsx|tsx)"],
-
-    coveragePathIgnorePatterns: ["<rootDir>/src/index.tsx", "/node_modules/"],
+    coveragePathIgnorePatterns: ["<rootDir>/src/*.ts", "/node_modules/"],
 }
