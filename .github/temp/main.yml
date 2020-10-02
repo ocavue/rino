@@ -186,6 +186,7 @@ jobs:
           vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID_HOME }}
           alias-domains: rino-home-{{BRANCH}}.ocavue.vercel.app
           vercel-args: '--meta TYPE=PREVIEW'
+          working-directory: './packages/home/'
 
       - name: Deploy @rino.app/web to Vercel
         uses: *vercel_action
@@ -194,6 +195,7 @@ jobs:
           vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID_WEB }}
           alias-domains: rino-web-{{BRANCH}}.ocavue.vercel.app
           vercel-args: '--meta TYPE=PREVIEW'
+          working-directory: './packages/web/'
 
   Changesets:
     runs-on: ubuntu-18.04
@@ -250,6 +252,7 @@ jobs:
           <<: *vercel_args
           vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID_HOME }}
           vercel-args: '--prod --meta TYPE=PRODUCTION'
+          working-directory: './packages/home/'
 
       - name: Deploy @rino.app/web to Vercel
         uses: *vercel_action
@@ -257,3 +260,16 @@ jobs:
           <<: *vercel_args
           vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID_WEB }}
           vercel-args: '--prod --meta TYPE=PRODUCTION'
+          working-directory: './packages/web/'
+
+      - name: Prepare HTML files
+        run: bash ./scripts/prepare-server-files.sh
+
+      - name: Deploy @rino.app/server to Vercel
+        uses: *vercel_action
+        with:
+          <<: *vercel_args
+          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID_SERVER }}
+          alias-domains: rino-server-{{BRANCH}}.ocavue.vercel.app
+          vercel-args: '--prod --meta TYPE=PRODUCTION'
+          working-directory: './packages/server/'
