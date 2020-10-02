@@ -9,14 +9,14 @@ export function getCurrentHostName() {
     }
 }
 
-export function getHomeHostName(options?: { protocol?: boolean; currentHostName?: string }) {
-    const prefix = options?.protocol ? "https://" : ""
-    const productionHost = "www.rino.app"
+export function getHomeHostName(currentHostName?: string) {
+    const prefix = "https://"
+    const defaultHost = "www.rino.app"
 
     try {
-        const current = options?.currentHostName || getCurrentHostName()
+        const current = currentHostName || getCurrentHostName()
         if (current === "rino.app") {
-            return prefix + productionHost
+            return prefix + defaultHost
         } else {
             return prefix + current.replace(PREVIEW_URL_RE, "$1home$3")
         }
@@ -24,17 +24,17 @@ export function getHomeHostName(options?: { protocol?: boolean; currentHostName?
         console.error(error)
     }
 
-    return "www.rino.app"
+    return defaultHost
 }
 
-export function getWebAppHostName(options?: { protocol?: boolean; currentHostName?: string }) {
-    const prefix = options?.protocol ? "https://" : ""
-    const productionHost = "rino.app"
+export function getWebAppHostName(currentHostName?: string) {
+    const prefix = "https://"
+    const defaultHost = "rino.app"
 
     try {
-        const current = options?.currentHostName || getCurrentHostName()
+        const current = currentHostName || getCurrentHostName()
         if (current === "www.rino.app") {
-            return prefix + productionHost
+            return prefix + defaultHost
         } else {
             return prefix + current.replace(PREVIEW_URL_RE, "$1web$3")
         }
@@ -42,5 +42,5 @@ export function getWebAppHostName(options?: { protocol?: boolean; currentHostNam
         console.error(error)
     }
 
-    return "rino.app"
+    return defaultHost
 }
