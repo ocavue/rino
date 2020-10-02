@@ -1,3 +1,5 @@
+/* istanbul ignore file */
+
 import { NowRequest, NowResponse } from "@vercel/node"
 import * as fs from "fs"
 import { IncomingMessage } from "http"
