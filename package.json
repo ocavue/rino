@@ -7,8 +7,8 @@
     "scripts": {
         "lint": "eslint --ignore-path .gitignore --ext '.js,.jsx,.ts,.tsx'",
         "test": "jest --runInBand",
-        "build:pkg": "yarn run common build && yarn run next build",
-        "build:all": "yarn run common build && yarn run next build && yarn run home build && yarn run web build",
+        "build:pkg": "yarn run common build && yarn run next build && yarn editor build",
+        "build:all": "yarn run common build && yarn run next build && yarn editor build && yarn run home build && yarn run web build",
         "postinstall": "./scripts/post-install.sh",
         "server": "yarn workspace @rino.app/server",
         "common": "yarn workspace @rino.app/common",
