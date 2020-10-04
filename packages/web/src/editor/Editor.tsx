@@ -1,12 +1,11 @@
 import { createStyles, makeStyles, Theme } from "@material-ui/core"
 import { useTheme } from "@material-ui/core/styles"
+import { SourceCodeEditor, WysiwygEditor } from "@rino.app/editor/src/editor/components"
 import clsx from "clsx"
 import React, { useEffect, useRef, useState } from "react"
 
 import { MAX_EDITOR_WIDTH } from "src/constants"
 import { Note } from "src/controller/edit"
-import { WysiwygEditor } from "src/editor/components//wysiwyg/WysiwygEditor"
-import { SourceCodeEditor } from "src/editor/components/source-code/SourceCodeEditor"
 import { metaKey } from "src/utils"
 
 const useStyles = makeStyles((theme: Theme) => {
