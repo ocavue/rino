@@ -7,8 +7,42 @@
     "module": "dist/index.js",
     "types": "dist/index.d.ts",
     "scripts": {
-        "build": "babel src --out-dir dist --extensions .ts,.tsx --presets @babel/preset-typescript --plugins @babel/plugin-proposal-class-properties",
+        "build": "babel src --out-dir dist --extensions .ts,.tsx",
         "//": "I have to use babel instead of tsc here because tsc has TS4094 error: https://github.com/microsoft/TypeScript/issues/17293"
+    },
+    "babel": {
+        "plugins": [
+            [
+                "module-resolver",
+                {
+                    "root": [
+                        "."
+                    ],
+                    "alias": {
+                        "src": "./src"
+                    }
+                }
+            ],
+            [
+                "@babel/plugin-proposal-class-properties"
+            ],
+            [
+                "@babel/plugin-transform-react-jsx"
+            ]
+        ],
+        "presets": [
+            [
+                "@babel/preset-env"
+
+            ],
+            [
+                "@babel/preset-typescript",
+                {
+                    "allExtensions": true,
+                    "isTSX": true
+                }
+            ]
+        ]
     },
     "dependencies": {
         "@remirror/core": "^1.0.0-next.44",
@@ -50,8 +84,10 @@
         "@babel/cli": "^7.11.6",
         "@babel/core": "^7.11.6",
         "@babel/plugin-proposal-class-properties": "^7.10.4",
+        "@babel/plugin-transform-react-jsx": "^7.10.4",
         "@babel/preset-typescript": "^7.10.4",
         "@types/jest-environment-puppeteer": "^4.4.0",
+        "babel-plugin-module-resolver": "^4.0.0",
         "commonmark-spec": "^0.29.0",
         "jest-remirror": "^1.0.0-next.44"
     }
