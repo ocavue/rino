@@ -1,4 +1,4 @@
-import { dedent } from "src/utils"
+import { dedent } from "@rino.app/common"
 
 import { createNote, login, switchMode } from "../actions"
 import { getSourceCodeModeText, pressKey, type as typeByTestid } from "../utils"

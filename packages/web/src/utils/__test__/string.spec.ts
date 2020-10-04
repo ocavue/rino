@@ -1,4 +1,4 @@
-import { dedent } from "src/utils"
+import { dedent } from "@rino.app/common"
 
 describe("uitls", function () {
     test("dedent", function () {

@@ -6,7 +6,7 @@ import {
     buildMarkdownSerializer,
 } from "src/editor/components/wysiwyg/wysiwyg-markdown"
 import { RinoHardBreakExtension } from "src/editor/extensions"
-import { dedent } from "src/utils"
+import { dedent } from "@rino.app/common"
 
 import {
     RinoBulletListExtension,

@@ -1,3 +1,4 @@
+import { dedent } from "@rino.app/common"
 import { renderEditor } from "jest-remirror"
 
 import { RinoCorePreset } from "src/editor/components"
@@ -5,7 +6,6 @@ import {
     buildMarkdownParser,
     buildMarkdownSerializer,
 } from "src/editor/components/wysiwyg/wysiwyg-markdown"
-import { dedent } from "src/utils"
 
 import {
     RinoTableCellExtension,

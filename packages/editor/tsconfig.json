@@ -8,6 +8,13 @@
         "module": "CommonJS",
         "baseUrl": ".",
         "jsx": "react",
+        "lib": [
+            "esnext",
+            "dom",
+            "dom.iterable"
+        ],
+        "skipLibCheck": true,
+        "esModuleInterop": true,
     },
     "include": [
         "./src/**/*"
