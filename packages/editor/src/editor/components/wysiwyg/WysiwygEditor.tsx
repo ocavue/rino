@@ -1,9 +1,8 @@
 import { ProsemirrorNode, RemirrorEventListener } from "@remirror/core"
 import { RemirrorProvider, useRemirror } from "@remirror/react"
+import { isTestEnv } from "@rino.app/common"
 import { debounce } from "lodash"
 import React, { FC, useEffect, useMemo, useRef, useState } from "react"
-
-import { isTestEnv } from "src/utils"
 
 import { DevTools } from "../DevTools"
 import { ErrorBoundary } from "../ErrorBoundary"

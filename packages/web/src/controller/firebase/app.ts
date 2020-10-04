@@ -4,9 +4,8 @@ import "firebase/auth"
 import "firebase/database"
 import "firebase/firestore"
 
+import { isTestEnv } from "@rino.app/common"
 import firebase from "firebase/app"
-
-import { isTestEnv } from "src/utils"
 
 import { firebaseConfig } from "../config"
 
