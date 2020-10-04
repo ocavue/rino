@@ -20,8 +20,8 @@ import {
     RinoTableHeaderExtension,
     RinoTableRowExtension,
     RinoTextExtension,
-} from "src/editor/extensions"
-import { MarkdownNodeExtension } from "src/editor/utils"
+} from "../../extensions"
+import { MarkdownNodeExtension } from "../../utils"
 
 export class RinoCorePreset extends CorePreset {
     createExtensions() {

@@ -7,7 +7,7 @@
     "module": "dist/index.js",
     "types": "dist/index.d.ts",
     "scripts": {
-        "build": "babel src --out-dir dist --extensions .ts --presets @babel/preset-typescript --plugins @babel/plugin-proposal-class-properties",
+        "build": "babel src --out-dir dist --extensions .ts,.tsx --presets @babel/preset-typescript --plugins @babel/plugin-proposal-class-properties",
         "//": "I have to use babel instead of tsc here because tsc has TS4094 error: https://github.com/microsoft/TypeScript/issues/17293"
     },
     "dependencies": {
