@@ -40,10 +40,10 @@ export const WysiwygEditor: FC<EditorProps> = ({
     const docRef = useRef<Doc>()
     const [error, setError] = useState<Error | null>(null)
 
-    const { initialNode, onChange, saveContent } = useMemo(() => {
+    const { initialContent, onChange, saveContent } = useMemo(() => {
         const parser = buildMarkdownParser(manager)
         const serializer = buildMarkdownSerializer(manager)
-        const initialNode = (() => {
+        const initialContent = (() => {
             try {
                 if (isTestEnv()) {
                     if (content.trim() === "HOOK:FAILED_TO_INIT_PROSEMIRROR_VIEW") {
@@ -73,7 +73,7 @@ export const WysiwygEditor: FC<EditorProps> = ({
             saveContentWithDelay()
         }
         return {
-            initialNode,
+            initialContent,
             onChange,
             saveContent,
         }
@@ -106,7 +106,7 @@ export const WysiwygEditor: FC<EditorProps> = ({
             <RemirrorProvider
                 manager={manager}
                 autoFocus={autoFocus}
-                initialContent={initialNode}
+                initialContent={initialContent}
                 onChange={onChange}
                 editable={editable}
                 attributes={{ "data-testid": "wysiwyg_mode_textarea" }}

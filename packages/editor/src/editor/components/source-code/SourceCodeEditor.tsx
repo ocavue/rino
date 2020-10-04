@@ -29,9 +29,9 @@ export const SourceCodeEditor: FC<EditorProps> = ({
     const manager: SourceCodeManager = useSourceCodeManager()
     const docRef = useRef<Doc>()
 
-    const { initialNode, onChange, saveContent } = useMemo(() => {
+    const { initialContent, onChange, saveContent } = useMemo(() => {
         const schema = manager.schema
-        const initialNode = schema.nodes.doc.create(
+        const initialContent = schema.nodes.doc.create(
             {},
             schema.nodes.codeBlock.create(
                 { language: "markdown" },
@@ -51,7 +51,7 @@ export const SourceCodeEditor: FC<EditorProps> = ({
             saveContentWithDelay()
         }
         return {
-            initialNode,
+            initialContent,
             onChange,
             saveContent,
         }
@@ -69,7 +69,7 @@ export const SourceCodeEditor: FC<EditorProps> = ({
         <RemirrorProvider
             manager={manager}
             autoFocus={autoFocus}
-            initialContent={initialNode}
+            initialContent={initialContent}
             onChange={onChange}
             editable={editable}
             attributes={{ "data-testid": "source_code_mode_textarea" }}
