@@ -24,3 +24,17 @@ export function dedent(text: string) {
     }
     return lines.map((line) => (line.length > 0 ? line.slice(minWhitespace) : line)).join("\n")
 }
+
+export function all(items: unknown[]) {
+    for (const item of items) {
+        if (!item) return false
+    }
+    return true
+}
+
+export function any(items: unknown[]) {
+    for (const item of items) {
+        if (item) return true
+    }
+    return false
+}

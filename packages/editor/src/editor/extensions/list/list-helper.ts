@@ -1,9 +1,8 @@
+import { all } from "@rino.app/common"
 import { range } from "lodash"
 import { Fragment, Node, NodeType, Slice } from "prosemirror-model"
 import { EditorState, NodeSelection, Selection, Transaction } from "prosemirror-state"
 import { canSplit } from "prosemirror-transform"
-
-import { all } from "src/utils"
 
 class AssertError extends Error {}
 

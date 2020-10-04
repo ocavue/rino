@@ -3,6 +3,7 @@
     "compilerOptions": {
         "outDir": "dist",
         "declarationDir": "dist",
+        "target": "es6",
         // I need to transpile the module to CommonJS when building because Next.js will exclude everything inside `node_modules` from babel transpiling.
         // Check https://github.com/vercel/next.js/issues/706 for more information.
         "module": "CommonJS",
@@ -15,6 +16,10 @@
         ],
         "skipLibCheck": true,
         "esModuleInterop": true,
+        "strict": false,
+        "moduleResolution": "node",
+        "resolveJsonModule": true,
+        "noEmit": false
     },
     "include": [
         "./src/**/*"
