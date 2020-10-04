@@ -1,6 +1,6 @@
 import { createStyles, makeStyles, Theme } from "@material-ui/core"
 import { useTheme } from "@material-ui/core/styles"
-import { SourceCodeEditor, WysiwygEditor } from "@rino.app/editor/src/editor/components"
+import { SourceCodeEditor, WysiwygEditor } from "@rino.app/editor/dist/editor/components"
 import clsx from "clsx"
 import React, { useEffect, useRef, useState } from "react"
 

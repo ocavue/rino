@@ -3,7 +3,7 @@
 import "../../../../node_modules/prosemirror-tables/style/tables.css"
 import "../../../../node_modules/prosemirror-view/style/prosemirror.css"
 import "../../src/style/develop.css"
-import "../../src/editor/theme/github.scss"
+import "@rino.app/editor/src/editor/theme/github.scss"
 
 import { BaseApp } from "@rino.app/next/dist/app"
 import React from "react"
