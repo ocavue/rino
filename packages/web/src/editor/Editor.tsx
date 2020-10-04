@@ -6,6 +6,7 @@ import React, { useEffect, useRef, useState } from "react"
 
 import { MAX_EDITOR_WIDTH } from "src/constants"
 import { Note } from "src/controller/edit"
+import { WorksapceStateContainer } from "src/controller/workspace-state/hook"
 import { metaKey } from "src/utils"
 
 const useStyles = makeStyles((theme: Theme) => {
@@ -33,6 +34,10 @@ type EditorProps = {
     autoFocus: boolean
     note: Note
     setNoteContent: (content: string) => void
+}
+
+function useDrawerActivity() {
+    return { drawerActivity: WorksapceStateContainer.useContainer().drawerActivity }
 }
 
 export const Editor: React.FC<EditorProps> = ({ autoFocus, note, setNoteContent }) => {
@@ -87,6 +92,7 @@ export const Editor: React.FC<EditorProps> = ({ autoFocus, note, setNoteContent 
                 editable={!note.deleted}
                 content={initialContent.current}
                 setContent={setNoteContent}
+                useDrawerActivity={useDrawerActivity}
             />
         )
     else return null

@@ -5,3 +5,5 @@ export type EditorProps = {
     content: string
     setContent: (value: string) => void
 }
+
+export type UseDrawerActivity = () => { drawerActivity: boolean }

@@ -4,8 +4,7 @@ import { MAX_DRAWER_WIDTH } from "@rino.app/common/src/constants"
 import clsx from "clsx"
 import React, { useMemo } from "react"
 
-import { WorksapceStateContainer } from "src/controller/workspace-state/hook"
-
+import { UseDrawerActivity } from "../types"
 import * as svg from "./TableMenuSvg"
 import { WysiwygCombined } from "./wysiwyg-manager"
 
@@ -43,10 +42,11 @@ const useStyles = makeStyles((theme: Theme) => {
 export const TableMenu: React.FC<{
     commands: CommandsFromCombined<WysiwygCombined>
     helpers: HelpersFromCombined<WysiwygCombined>
-}> = ({ commands, helpers }) => {
+    useDrawerActivity: UseDrawerActivity
+}> = ({ commands, helpers, useDrawerActivity }) => {
     const showTableMenu = !!helpers.selectedTableCell()
 
-    const { drawerActivity } = WorksapceStateContainer.useContainer()
+    const { drawerActivity } = useDrawerActivity()
 
     const classes = useStyles()
 

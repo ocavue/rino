@@ -6,7 +6,7 @@ import React, { FC, useEffect, useMemo, useRef, useState } from "react"
 
 import { DevTools } from "../DevTools"
 import { ErrorBoundary } from "../ErrorBoundary"
-import { EditorProps } from "../types"
+import { EditorProps, UseDrawerActivity } from "../types"
 import { TableMenu } from "./TableMenu"
 import {
     useWysiwygManager,
@@ -16,11 +16,18 @@ import {
 } from "./wysiwyg-manager"
 import { buildMarkdownParser, buildMarkdownSerializer } from "./wysiwyg-markdown"
 
-const InnerEditor: FC<{ className: string }> = ({ className }) => {
+const InnerEditor: FC<{ className: string; useDrawerActivity: UseDrawerActivity }> = ({
+    className,
+    useDrawerActivity,
+}) => {
     const { getRootProps, commands, helpers } = useRemirror<WysiwygCombined>()
     return (
         <>
-            <TableMenu commands={commands} helpers={helpers} />
+            <TableMenu
+                commands={commands}
+                helpers={helpers}
+                useDrawerActivity={useDrawerActivity}
+            />
             <div {...getRootProps()} className={className} />
             <DevTools />
         </>
@@ -29,12 +36,13 @@ const InnerEditor: FC<{ className: string }> = ({ className }) => {
 
 type Doc = ProsemirrorNode<WysiwygSchema>
 
-export const WysiwygEditor: FC<EditorProps> = ({
+export const WysiwygEditor: FC<EditorProps & { useDrawerActivity: UseDrawerActivity }> = ({
     className,
     autoFocus,
     editable,
     content,
     setContent,
+    useDrawerActivity,
 }) => {
     const manager: WysiwygManager = useWysiwygManager()
     const docRef = useRef<Doc>()
@@ -111,7 +119,7 @@ export const WysiwygEditor: FC<EditorProps> = ({
                 editable={editable}
                 attributes={{ "data-testid": "wysiwyg_mode_textarea" }}
             >
-                <InnerEditor className={className} />
+                <InnerEditor className={className} useDrawerActivity={useDrawerActivity} />
             </RemirrorProvider>
         </ErrorBoundary>
     )
