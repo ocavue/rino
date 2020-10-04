@@ -1,6 +1,6 @@
 // UI
+export { MAX_DRAWER_WIDTH } from "@rino.app/common/src/constants"
 export const MOBILE_BREAK_POINT = 960
-export const MAX_DRAWER_WIDTH = 400
 export const APPBAR_ICON_BUTTON_SIZE = 40
 export const APPBAR_ICON_SIZE = 24
 export const APPBAR_ICON_BUTTON_MARGIN = 12

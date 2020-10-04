@@ -1,9 +1,9 @@
 import { createStyles, IconButton, makeStyles, Paper, Snackbar, Theme } from "@material-ui/core"
 import { CommandsFromCombined, CommandShape, HelpersFromCombined } from "@remirror/core"
+import { MAX_DRAWER_WIDTH } from "@rino.app/common/src/constants"
 import clsx from "clsx"
 import React, { useMemo } from "react"
 
-import { MAX_DRAWER_WIDTH } from "src/constants"
 import { WorksapceStateContainer } from "src/controller/workspace-state/hook"
 
 import * as svg from "./TableMenuSvg"
