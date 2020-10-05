@@ -129,7 +129,7 @@ jobs:
         with:
           message: |
             **Hello world**
-          allow-repeats: true
+          allow-repeats: false
 
       - name: Lint
         run: yarn run lint .
