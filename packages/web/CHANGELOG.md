@@ -1,5 +1,11 @@
 # @rino.app/web
 
+## 0.14.1
+
+### Patch Changes
+
+-   ea6c417: Fix the automatically signing out problem.
+
 ## 0.14.0
 
 ### Minor Changes
