@@ -1,4 +1,5 @@
 import { EditorSchema, fromHtml, toHtml } from "@remirror/core"
+import { dedent } from "@rino.app/common"
 import { renderEditor, TaggedProsemirrorNode } from "jest-remirror"
 
 import {
@@ -6,7 +7,6 @@ import {
     buildMarkdownSerializer,
 } from "src/editor/components/wysiwyg/wysiwyg-markdown"
 import { RinoHardBreakExtension } from "src/editor/extensions"
-import { dedent } from "@rino.app/common"
 
 import {
     RinoBulletListExtension,

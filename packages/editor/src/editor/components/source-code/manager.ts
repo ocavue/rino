@@ -1,4 +1,3 @@
-// @ts-ignore
 import { CodeBlockExtension } from "@remirror/extension-code-block"
 import { CorePreset } from "@remirror/preset-core"
 import { useManager } from "@remirror/react"
