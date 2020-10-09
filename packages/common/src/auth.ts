@@ -7,7 +7,7 @@ const LOCAL_STORAGE_KEY = "__rino_dev_auth_state"
 export function setSignInState(signedIn: boolean): void {
     const value = signedIn ? "yes" : "no"
     const domain = "." + getCurrentHostName()
-    cookies.setCookie(COOKIE_KEY, value, { domain })
+    cookies.setCookie(COOKIE_KEY, value, { domain, days: 3650 })
     window.localStorage.setItem(LOCAL_STORAGE_KEY, value)
 }
 
