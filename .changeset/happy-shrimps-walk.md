@@ -3,4 +3,4 @@
 ---
 
 
-Fix automatically signing out problems.
+Fix the automatically signing out problem.
