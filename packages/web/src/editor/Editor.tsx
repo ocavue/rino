@@ -2,7 +2,7 @@ import { createStyles, makeStyles, Theme } from "@material-ui/core"
 import { useTheme } from "@material-ui/core/styles"
 import { SourceCodeEditor, WysiwygEditor } from "@rino.app/editor/dist/editor/components"
 import clsx from "clsx"
-import React, { useEffect, useRef, useState } from "react"
+import React, { useEffect, useMemo, useRef, useState } from "react"
 
 import { MAX_EDITOR_WIDTH } from "src/constants"
 import { Note } from "src/controller/edit"
@@ -30,58 +30,56 @@ const useStyles = makeStyles((theme: Theme) => {
     })
 })
 
-type EditorProps = {
-    autoFocus: boolean
-    note: Note
-    setNoteContent: (content: string) => void
-}
-
 function useDrawerActivity() {
     return { drawerActivity: WorksapceStateContainer.useContainer().drawerActivity }
 }
 
-export const Editor: React.FC<EditorProps> = ({ autoFocus, note, setNoteContent }) => {
+const CombinedEditor: React.FC<{
+    editable: boolean
+    autoFocus: boolean
+    content: string
+    setContent: (content: string) => void
+}> = ({ editable, autoFocus, content, setContent }) => {
+    console.log("[CombinedEditor] render")
+
+    const theme = useTheme()
     const classes = useStyles()
     const [mode, setMode] = useState<"source-code" | "wysiwyg" | null>("wysiwyg")
-    const initialContent = useRef<string>(note.content)
+    const initialContent = useRef<string>(content)
+
+    const className = useMemo(() => {
+        return clsx(
+            classes.editor,
+            "markdown-body",
+            theme.palette.type === "light" ? "markdown-body--light" : "markdown-body--dark",
+        )
+    }, [classes, theme])
 
     useEffect(() => {
         const handleKeydown = (event: KeyboardEvent) => {
             if (event[metaKey] && event.code === "Slash") {
                 console.debug(`metaKey + / has been pressed`)
                 const nextMode = mode === "wysiwyg" ? "source-code" : "wysiwyg"
-                // Unmount SourceCodeEditor / WysiwygEditor first, so that it's `componentWillUnmount` will be called.
+                // Unmount SourceCodeEditor / WysiwygEditor first, so that its `componentWillUnmount` will be called.
                 setMode(null)
                 setTimeout(() => {
-                    initialContent.current = note.content
+                    initialContent.current = content
                     setMode(nextMode)
                 }, 0)
             }
         }
         window.addEventListener("keydown", handleKeydown)
         return () => window.removeEventListener("keydown", handleKeydown)
-    }, [mode, note])
-
-    useEffect(() => {
-        console.debug(`Mounting <${Editor.displayName}/>`)
-        return () => console.debug(`Unmounting <${Editor.displayName}/>`)
-    }, [])
-
-    const theme = useTheme()
-    const className = clsx(
-        classes.editor,
-        "markdown-body",
-        theme.palette.type === "light" ? "markdown-body--light" : "markdown-body--dark",
-    )
+    }, [mode, content])
 
     if (mode === "source-code")
         return (
             <SourceCodeEditor
                 className={className}
                 autoFocus={autoFocus}
-                editable={!note.deleted}
+                editable={editable}
                 content={initialContent.current}
-                setContent={setNoteContent}
+                setContent={setContent}
             />
         )
     else if (mode === "wysiwyg")
@@ -89,13 +87,39 @@ export const Editor: React.FC<EditorProps> = ({ autoFocus, note, setNoteContent 
             <WysiwygEditor
                 className={className}
                 autoFocus={autoFocus}
-                editable={!note.deleted}
+                editable={editable}
                 content={initialContent.current}
-                setContent={setNoteContent}
+                setContent={setContent}
                 useDrawerActivity={useDrawerActivity}
             />
         )
     else return null
 }
 
-Editor.displayName = "Editor"
+CombinedEditor.displayName = "CombinedEditor"
+
+export const NoteEditor: React.FC<{
+    autoFocus: boolean
+    note: Note
+    setNoteContent: (content: string) => void
+}> = ({ autoFocus, note, setNoteContent }) => {
+    console.log("[NoteEditor] render")
+
+    useEffect(() => {
+        console.debug(`Mounting <${NoteEditor.displayName}/>`)
+        return () => console.debug(`Unmounting <${NoteEditor.displayName}/>`)
+    }, [])
+
+    return (
+        <CombinedEditor
+            autoFocus={autoFocus}
+            editable={!note.deleted}
+            content={note.content}
+            setContent={setNoteContent}
+        />
+    )
+}
+
+NoteEditor.displayName = "NoteEditor"
+
+export const Editor = NoteEditor
