@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react"
+import React, { useEffect } from "react"
 
 import { Note } from "src/controller/edit"
 
@@ -16,13 +16,11 @@ export const Editor: React.FC<EditorProps> = ({ autoFocus, note, setNoteContent 
         return () => console.debug(`Unmounting <${Editor.displayName}/>`)
     }, [])
 
-    const initialContent = useRef<string>(note.content)
-
     return (
         <CombinedEditor
             autoFocus={autoFocus}
             editable={!note.deleted}
-            content={initialContent.current}
+            content={note.content}
             setContent={setNoteContent}
         />
     )
