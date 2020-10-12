@@ -195,7 +195,9 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }} # Install this GitHub App and get the token: https://github.com/apps/lighthouse-ci
-        run: yarn run lhci autorun
+        run: |
+          yarn run lhci autorun --config lighthouserc.yaml
+          yarn run lhci autorun --config lighthouserc-home.yaml
 
   Changesets:
     runs-on: ubuntu-18.04
