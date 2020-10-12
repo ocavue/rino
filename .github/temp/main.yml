@@ -158,7 +158,7 @@ jobs:
       - id: step_branch
         name: get preview link for @rino.app/web
         run: |
-          echo "::set-output name=branch::$(bash scripts/get_slugify_branch.sh)"
+          echo "::set-output name=branch::$(node scripts/slugify-branch.js)"
 
       - name: Deploy @rino.app/home to Vercel
         uses: &vercel_action amondnet/vercel-action@f79b066724a2ac14b8944244a625146e5d6006c3
@@ -181,21 +181,16 @@ jobs:
           vercel-args: '--meta TYPE=PREVIEW'
           working-directory: './packages/web/'
 
-      - name: Modify lighthouserc.yaml
-        run: |
-          echo "============ BEFORE: ============"
-          cat lighthouserc.yaml
-          sed -i "s/master/$SLUGIFY_BRANCH/g" lighthouserc.yaml
-          echo "============  AFTER: ============"
-          cat lighthouserc.yaml
-        env:
-          SLUGIFY_BRANCH: ${{ steps.step_branch.outputs.branch }}
+      - name: Generate configrations for Lighthouse CI
+        run: node scripts/generate-lighthouserc.js
 
       - name: Run lighthouse
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }} # Install this GitHub App and get the token: https://github.com/apps/lighthouse-ci
-        run: yarn run lhci autorun
+        run: |
+          yarn run lhci autorun --config .lighthouserc.web.json
+          yarn run lhci autorun --config .lighthouserc.home.json
 
   Changesets:
     runs-on: ubuntu-18.04
