@@ -39,7 +39,7 @@ const homeConfig = {
     ci: {
         collect: {
             startServerCommand: "echo 'nothing to do'",
-            url: [`https://rino-home-${slugifyBranch}.ocavue.vercel.app/sign-in`],
+            url: [`https://rino-home-${slugifyBranch}.ocavue.vercel.app/`],
         },
         upload: {
             target: "temporary-public-storage",
