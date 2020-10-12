@@ -11,6 +11,7 @@ const webConfig = {
             url: [
                 `https://rino-web-${slugifyBranch}.ocavue.vercel.app/sign-in`,
                 `https://rino-web-${slugifyBranch}.ocavue.vercel.app/sign-up`,
+                `https://rino-web-${slugifyBranch}.ocavue.vercel.app/password-reset`,
             ],
         },
         upload: {
@@ -45,20 +46,8 @@ const homeConfig = {
             target: "temporary-public-storage",
         },
         assert: {
-            preset: "lighthouse:recommended",
-            assertions: {
-                "unused-javascript": ["warn", { maxLength: 9 }],
-                "no-unload-listeners": "warn",
-                "uses-responsive-images": "warn",
-
-                "installable-manifest": "warn",
-                "maskable-icon": "warn",
-                "offline-start-url": "warn",
-                "service-worker": "warn",
-                "splash-screen": "warn",
-                "themed-omnibox": "warn",
-                "works-offline": "warn",
-            },
+            preset: "lighthouse:no-pwa",
+            assertions: {},
         },
     },
 }
