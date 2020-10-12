@@ -10,4 +10,4 @@ const slugify = branch
 if (require.main === module) {
     console.log(slugify)
 }
-exports = branch
+exports.slugify = slugify

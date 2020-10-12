@@ -2,7 +2,7 @@
 
 const fs = require("fs")
 const path = require("path")
-const slugifyBranch = require("./slugify-branch")
+const slugifyBranch = require("./slugify-branch").slugify
 
 const webConfig = {
     ci: {
