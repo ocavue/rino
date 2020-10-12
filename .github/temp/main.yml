@@ -134,8 +134,7 @@ jobs:
           echo "$hash1" "$hash2"
           if [ "$hash1" != "$hash2" ]; then exit 1; fi
 
-  # TODO: Send Lighthouse result to commit/PR
-  Lighthouse:
+  Preview: # Preview deployment
     runs-on: ubuntu-18.04
     needs: build
     steps:
@@ -156,25 +155,10 @@ jobs:
           name: home_dist
           path: ./packages/home/dist
 
-      - name: Check files
-        run: ls ./packages/**/dist/
-
-      - name: Run lighthouse
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }} # Install this GitHub App and get the token: https://github.com/apps/lighthouse-ci
-        run: yarn run lhci autorun
-
-  Preview: # Preview deployment
-    runs-on: ubuntu-18.04
-    needs: build
-    steps:
-      - *step_checkout
-      - *step_setup_node
-      - *step_cache_deps
-      - *step_install_deps
-      - *step_download_web_dist
-      - *step_download_home_dist
+      - id: step_branch
+        name: get preview link for @rino.app/web
+        run: |
+          echo "::set-output name=branch::$(bash scripts/get_slugify_branch.sh)"
 
       - name: Deploy @rino.app/home to Vercel
         uses: &vercel_action amondnet/vercel-action@f79b066724a2ac14b8944244a625146e5d6006c3
@@ -184,7 +168,7 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
           vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID_HOME }}
-          alias-domains: rino-home-{{BRANCH}}.ocavue.vercel.app
+          alias-domains: rino-home-${{ steps.step_branch.outputs.branch }}.ocavue.vercel.app
           vercel-args: '--meta TYPE=PREVIEW'
           working-directory: './packages/home/'
 
@@ -193,13 +177,29 @@ jobs:
         with:
           <<: *vercel_args
           vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID_WEB }}
-          alias-domains: rino-web-{{BRANCH}}.ocavue.vercel.app
+          alias-domains: rino-web-${{ steps.step_branch.outputs.branch }}.ocavue.vercel.app
           vercel-args: '--meta TYPE=PREVIEW'
           working-directory: './packages/web/'
 
+      - name: Modify lighthouserc.yaml
+        run: |
+          echo "============ BEFORE: ============"
+          cat lighthouserc.yaml
+          sed -i "s/master/$SLUGIFY_BRANCH/g" lighthouserc.yaml
+          echo "============  AFTER: ============"
+          cat lighthouserc.yaml
+        env:
+          SLUGIFY_BRANCH: ${{ steps.step_branch.outputs.branch }}
+
+      - name: Run lighthouse
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }} # Install this GitHub App and get the token: https://github.com/apps/lighthouse-ci
+        run: yarn run lhci autorun
+
   Changesets:
     runs-on: ubuntu-18.04
-    needs: [Build, Test, Lint, Lighthouse, Preview]
+    needs: [Build, Test, Lint, Preview]
     if: github.ref == 'refs/heads/master'
     steps:
       - *step_checkout

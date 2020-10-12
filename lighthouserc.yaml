@@ -2,13 +2,12 @@
 
 ci:
   collect:
-    staticDistDir: ./packages/home/dist
+    startServerCommand: "echo 'nothing to do'"
     url:
-      - http://localhost/index.html
-      - http://localhost/404.html
-      # - http://localhost/sign-in/index.html
-      # - http://localhost/sign-up/index.html
-      # - http://localhost/password-reset/index.html
+      # These links below will be replaced when running CI
+      - https://rino-web-master.ocavue.vercel.app/sign-in
+      - https://rino-web-master.ocavue.vercel.app/sign-up
+      - https://rino-home-master.ocavue.vercel.app
 
   upload:
     target: temporary-public-storage

@@ -175,67 +175,6 @@
         }
       ]
     },
-    "Lighthouse": {
-      "runs-on": "ubuntu-18.04",
-      "needs": "build",
-      "steps": [
-        {
-          "name": "Checkout code repository",
-          "uses": "actions/checkout@v2"
-        },
-        {
-          "name": "Setup node.js",
-          "uses": "actions/setup-node@v1",
-          "with": {
-            "node-version": 12
-          }
-        },
-        {
-          "id": "step_cache_deps",
-          "name": "Cache dependencies",
-          "uses": "actions/cache@master",
-          "with": {
-            "path": "node_modules\n*/*/node_modules\n~/.cache/firebase\n",
-            "key": "${{ runner.os }}-deps-v4-${{ hashFiles('yarn.lock') }}"
-          }
-        },
-        {
-          "name": "Install Dependencies",
-          "run": "date\nyarn install --frozen-lockfile\ndate\necho \"[DEBUG] CACHE_HIT: $CACHE_HIT\"\nif [ \"$CACHE_HIT\" != \"true\" ]\nthen\n  echo \"[DEBUG] installing\"\n  yarn run web firebase setup:emulators:firestore\nfi\nls -lrth ~/.cache/firebase/emulators/\n",
-          "env": {
-            "CACHE_HIT": "${{ steps.step_cache_deps.outputs.cache-hit }}"
-          }
-        },
-        {
-          "name": "Download dist (web)",
-          "uses": "actions/download-artifact@v2",
-          "with": {
-            "name": "web_dist",
-            "path": "./packages/web/dist"
-          }
-        },
-        {
-          "name": "Download dist (home)",
-          "uses": "actions/download-artifact@v2",
-          "with": {
-            "name": "home_dist",
-            "path": "./packages/home/dist"
-          }
-        },
-        {
-          "name": "Check files",
-          "run": "ls ./packages/**/dist/"
-        },
-        {
-          "name": "Run lighthouse",
-          "env": {
-            "GITHUB_TOKEN": "${{ secrets.GITHUB_TOKEN }}",
-            "LHCI_GITHUB_APP_TOKEN": "${{ secrets.LHCI_GITHUB_APP_TOKEN }}"
-          },
-          "run": "yarn run lhci autorun"
-        }
-      ]
-    },
     "Preview": {
       "runs-on": "ubuntu-18.04",
       "needs": "build",
@@ -284,6 +223,11 @@
           }
         },
         {
+          "id": "step_branch",
+          "name": "get preview link for @rino.app/web",
+          "run": "echo \"::set-output name=branch::$(bash scripts/get_slugify_branch.sh)\"\n"
+        },
+        {
           "name": "Deploy @rino.app/home to Vercel",
           "uses": "amondnet/vercel-action@f79b066724a2ac14b8944244a625146e5d6006c3",
           "with": {
@@ -292,7 +236,7 @@
             "github-token": "${{ secrets.GITHUB_TOKEN }}",
             "vercel-org-id": "${{ secrets.VERCEL_ORG_ID }}",
             "vercel-project-id": "${{ secrets.VERCEL_PROJECT_ID_HOME }}",
-            "alias-domains": "rino-home-{{BRANCH}}.ocavue.vercel.app",
+            "alias-domains": "rino-home-${{ steps.step_branch.outputs.branch }}.ocavue.vercel.app",
             "vercel-args": "--meta TYPE=PREVIEW",
             "working-directory": "./packages/home/"
           }
@@ -306,10 +250,25 @@
             "github-token": "${{ secrets.GITHUB_TOKEN }}",
             "vercel-org-id": "${{ secrets.VERCEL_ORG_ID }}",
             "vercel-project-id": "${{ secrets.VERCEL_PROJECT_ID_WEB }}",
-            "alias-domains": "rino-web-{{BRANCH}}.ocavue.vercel.app",
+            "alias-domains": "rino-web-${{ steps.step_branch.outputs.branch }}.ocavue.vercel.app",
             "vercel-args": "--meta TYPE=PREVIEW",
             "working-directory": "./packages/web/"
           }
+        },
+        {
+          "name": "Modify lighthouserc.yaml",
+          "run": "echo \"============ BEFORE: ============\"\ncat lighthouserc.yaml\nsed -i \"s/master/$SLUGIFY_BRANCH/g\" lighthouserc.yaml\necho \"============  AFTER: ============\"\ncat lighthouserc.yaml\n",
+          "env": {
+            "SLUGIFY_BRANCH": "${{ steps.step_branch.outputs.branch }}"
+          }
+        },
+        {
+          "name": "Run lighthouse",
+          "env": {
+            "GITHUB_TOKEN": "${{ secrets.GITHUB_TOKEN }}",
+            "LHCI_GITHUB_APP_TOKEN": "${{ secrets.LHCI_GITHUB_APP_TOKEN }}"
+          },
+          "run": "yarn run lhci autorun"
         }
       ]
     },
@@ -319,7 +278,6 @@
         "Build",
         "Test",
         "Lint",
-        "Lighthouse",
         "Preview"
       ],
       "if": "github.ref == 'refs/heads/master'",
@@ -451,7 +409,7 @@
             "github-token": "${{ secrets.GITHUB_TOKEN }}",
             "vercel-org-id": "${{ secrets.VERCEL_ORG_ID }}",
             "vercel-project-id": "${{ secrets.VERCEL_PROJECT_ID_HOME }}",
-            "alias-domains": "rino-home-{{BRANCH}}.ocavue.vercel.app",
+            "alias-domains": "rino-home-${{ steps.step_branch.outputs.branch }}.ocavue.vercel.app",
             "vercel-args": "--prod --meta TYPE=PRODUCTION",
             "working-directory": "./packages/home/"
           }
@@ -465,7 +423,7 @@
             "github-token": "${{ secrets.GITHUB_TOKEN }}",
             "vercel-org-id": "${{ secrets.VERCEL_ORG_ID }}",
             "vercel-project-id": "${{ secrets.VERCEL_PROJECT_ID_WEB }}",
-            "alias-domains": "rino-home-{{BRANCH}}.ocavue.vercel.app",
+            "alias-domains": "rino-home-${{ steps.step_branch.outputs.branch }}.ocavue.vercel.app",
             "vercel-args": "--prod --meta TYPE=PRODUCTION",
             "working-directory": "./packages/web/"
           }
