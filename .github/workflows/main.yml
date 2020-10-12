@@ -225,7 +225,7 @@
         {
           "id": "step_branch",
           "name": "get preview link for @rino.app/web",
-          "run": "echo \"::set-output name=branch::$(bash scripts/get_slugify_branch.sh)\"\n"
+          "run": "echo \"::set-output name=branch::$(node scripts/slugify-branch.js)\"\n"
         },
         {
           "name": "Deploy @rino.app/home to Vercel",
@@ -256,11 +256,8 @@
           }
         },
         {
-          "name": "Modify lighthouserc.yaml",
-          "run": "echo \"============ BEFORE: ============\"\ncat lighthouserc.yaml\nsed -i \"s/master/$SLUGIFY_BRANCH/g\" lighthouserc.yaml\necho \"============  AFTER: ============\"\ncat lighthouserc.yaml\n",
-          "env": {
-            "SLUGIFY_BRANCH": "${{ steps.step_branch.outputs.branch }}"
-          }
+          "name": "Generate configrations for Lighthouse CI",
+          "run": "node scripts/generate-lighthouserc.js"
         },
         {
           "name": "Run lighthouse",
@@ -268,7 +265,7 @@
             "GITHUB_TOKEN": "${{ secrets.GITHUB_TOKEN }}",
             "LHCI_GITHUB_APP_TOKEN": "${{ secrets.LHCI_GITHUB_APP_TOKEN }}"
           },
-          "run": "yarn run lhci autorun --config lighthouserc.yaml\nyarn run lhci autorun --config lighthouserc-home.yaml\n"
+          "run": "yarn run lhci autorun --config .lighthouserc.web.json\nyarn run lhci autorun --config .lighthouserc.home.json\n"
         }
       ]
     },
