@@ -1,5 +1,11 @@
 # @rino.app/web
 
+## 0.14.2
+
+### Patch Changes
+
+-   2db5ff9: Fix PWA.
+
 ## 0.14.1
 
 ### Patch Changes
