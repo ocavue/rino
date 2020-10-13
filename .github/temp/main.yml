@@ -156,7 +156,7 @@ jobs:
           path: ./packages/home/dist
 
       - id: step_branch
-        name: get preview link for @rino.app/web
+        name: Get the branch name
         run: |
           echo "::set-output name=branch::$(node scripts/slugify-branch.js)"
 
