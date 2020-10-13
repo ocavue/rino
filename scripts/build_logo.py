@@ -3,20 +3,7 @@ Generate logo icons for different platforms.
 
 All output filenames are copied from vue-cli v3.
 
-Prepare:
-
-    Open `rino/art/Logo.xd` with Adobe XD. Export artboards
-    as SVG and PNG format into `rino/art/tmp/`.
-
-Install:
-
-    cd rino
-    python3 -m venv .venv
-    pip3 install pillow
-
-Build:
-
-    .venv/bin/python3 scripts/build_logo.py
+Check the usage in `art/README.md`
 """
 
 import shutil
@@ -32,7 +19,7 @@ def get_input_path(filename):
 
 
 def get_output_icons_path(filename):
-    return path.join(ROOT_PATH, "public", "img", "icons", filename)
+    return path.join(ROOT_PATH, "assets", "share", "img", "icons", filename)
 
 
 def resize_image(in_path, out_path, size):
@@ -67,7 +54,7 @@ def main():
 
     # Build .ico file
     in_path = get_input_path("favicon.png")
-    out_path = path.join(ROOT_PATH, "public", "favicon.ico")
+    out_path = path.join(ROOT_PATH, "assets", "favicon.ico")
     img = Image.open(in_path)
     assert img.size >= (256, 256)
     # Pillow will save multiple resolutions with different sizes into .ico file by default,
@@ -77,7 +64,7 @@ def main():
 
     # Build src/assets/logo.png
     in_path = get_input_path("Circle.png")
-    out_path = path.join(ROOT_PATH, "src", "assets", "logo.png")
+    out_path = path.join(ROOT_PATH, "packages", "web", "src", "assets", "logo.png")
     resize_image(in_path, out_path, 256)
 
 
