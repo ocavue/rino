@@ -245,6 +245,7 @@ jobs:
         uses: *vercel_action
         with:
           <<: *vercel_args
+          alias-domains: rino-home-master.ocavue.vercel.app
           vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID_HOME }}
           vercel-args: '--prod --meta TYPE=PRODUCTION'
           working-directory: './packages/home/'
@@ -253,6 +254,7 @@ jobs:
         uses: *vercel_action
         with:
           <<: *vercel_args
+          alias-domains: rino-web-master.ocavue.vercel.app
           vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID_WEB }}
           vercel-args: '--prod --meta TYPE=PRODUCTION'
           working-directory: './packages/web/'

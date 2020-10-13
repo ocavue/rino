@@ -406,7 +406,7 @@
             "github-token": "${{ secrets.GITHUB_TOKEN }}",
             "vercel-org-id": "${{ secrets.VERCEL_ORG_ID }}",
             "vercel-project-id": "${{ secrets.VERCEL_PROJECT_ID_HOME }}",
-            "alias-domains": "rino-home-${{ steps.step_branch.outputs.branch }}.ocavue.vercel.app",
+            "alias-domains": "rino-home-master.ocavue.vercel.app",
             "vercel-args": "--prod --meta TYPE=PRODUCTION",
             "working-directory": "./packages/home/"
           }
@@ -420,7 +420,7 @@
             "github-token": "${{ secrets.GITHUB_TOKEN }}",
             "vercel-org-id": "${{ secrets.VERCEL_ORG_ID }}",
             "vercel-project-id": "${{ secrets.VERCEL_PROJECT_ID_WEB }}",
-            "alias-domains": "rino-home-${{ steps.step_branch.outputs.branch }}.ocavue.vercel.app",
+            "alias-domains": "rino-web-master.ocavue.vercel.app",
             "vercel-args": "--prod --meta TYPE=PRODUCTION",
             "working-directory": "./packages/web/"
           }
