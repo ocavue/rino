@@ -31,6 +31,8 @@ const webConfig = {
 
                 // I don't know how to fix this.
                 "uses-responsive-images": "warn",
+
+                "non-composited-animations": "warn",
             },
         },
     },
