@@ -1,5 +1,11 @@
 # @rino.app/home
 
+## 0.4.2
+
+### Patch Changes
+
+-   1b9596a: Fix the sign-in/sign-up buttons in the homepage.
+
 ## 0.4.1
 
 ### Patch Changes
