@@ -4,6 +4,10 @@ import { useEffect, useMemo, useState } from "react"
 type AuthInfo =
     | {
           isSSR: true
+          signInLink: ""
+          signUpLink: ""
+          appLink: ""
+          isSignedIn: null
       }
     | {
           isSSR: false
@@ -24,15 +28,19 @@ export function useAuthInfo(): AuthInfo {
         if (isSignedIn === null) {
             return {
                 isSSR: true,
+                signInLink: "",
+                signUpLink: "",
+                appLink: "",
+                isSignedIn: null,
             } as const
         } else {
             const host = getWebAppHostName()
             return {
+                isSSR: false,
                 signInLink: `${host}/sign-in`,
                 signUpLink: `${host}/sign-up`,
                 appLink: host,
                 isSignedIn,
-                isSSR: false,
             } as const
         }
     }, [isSignedIn])

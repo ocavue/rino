@@ -127,7 +127,7 @@ export const MobileMenu: React.FC<{
                         }}
                     >
                         <Button
-                            href={authInfo.isSSR ? "" : authInfo.signUpLink}
+                            href={authInfo.signUpLink}
                             ariaLabel="Sign up"
                             testid=""
                             primary
@@ -147,10 +147,7 @@ export const MobileMenu: React.FC<{
                             }}
                         >
                             Already have an account?{" "}
-                            <a
-                                className={classes.signIn}
-                                href={authInfo.isSSR ? "" : authInfo.signUpLink}
-                            >
+                            <a className={classes.signIn} href={authInfo.signUpLink}>
                                 Sign in
                             </a>
                         </p>
