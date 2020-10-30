@@ -1,8 +1,7 @@
 import { createStyles, makeStyles } from "@material-ui/styles"
-import { getSignInState } from "@rino.app/common"
 import React from "react"
 
-import { useAuthLinks } from "../hooks"
+import { useAuthInfo } from "../hooks"
 import { breakpoints } from "../styles/breakpoint"
 import { Button } from "./button"
 
@@ -50,21 +49,17 @@ const GoToTheApp: React.FC<{ appLink: string }> = ({ appLink }) => (
 
 export const AppbarAuth: React.FC = () => {
     const classes = useStyles()
-    const { signInLink, signUpLink, appLink } = useAuthLinks()
 
-    const [signedIn, setSignedIn] = React.useState<boolean | null>(null)
-
-    React.useEffect(() => {
-        setSignedIn(getSignInState())
-    }, [])
+    const authInfo = useAuthInfo()
 
     let child = null
-    if (signedIn === true) {
-        child = <GoToTheApp appLink={appLink} />
-    } else if (signedIn === false) {
-        child = <SignInAndSignUp signInLink={signInLink} signUpLink={signUpLink} />
-    } else {
-        child = null // Show nothing in SSR
+    if (!authInfo.isSSR) {
+        const { signInLink, signUpLink, appLink, isSignedIn } = authInfo
+        if (isSignedIn) {
+            child = <GoToTheApp appLink={appLink} />
+        } else {
+            child = <SignInAndSignUp signInLink={signInLink} signUpLink={signUpLink} />
+        }
     }
 
     return <div className={classes.appbarAuth}>{child}</div>
