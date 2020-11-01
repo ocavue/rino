@@ -147,7 +147,7 @@ export const MobileMenu: React.FC<{
                             }}
                         >
                             Already have an account?{" "}
-                            <a className={classes.signIn} href={authInfo.signUpLink}>
+                            <a className={classes.signIn} href={authInfo.signInLink}>
                                 Sign in
                             </a>
                         </p>
