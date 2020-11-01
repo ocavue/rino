@@ -1,5 +1,5 @@
 import { Grid, Link } from "@material-ui/core"
-import { FirebaseError } from "firebase"
+import firebase from "firebase"
 import { useRouter } from "next/router"
 import React, { useMemo, useState } from "react"
 
@@ -34,7 +34,7 @@ export default function SignInForm({ progressing, setProgressing, setError }: Si
             .then(() => {
                 return router.push("/")
             })
-            .catch((error: FirebaseError) => {
+            .catch((error: firebase.FirebaseError) => {
                 console.error(error)
 
                 if (error?.code === "auth/user-not-found") {
