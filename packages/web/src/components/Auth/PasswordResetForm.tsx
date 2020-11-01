@@ -1,4 +1,4 @@
-import { FirebaseError } from "firebase"
+import firebase from "firebase"
 import React, { useMemo } from "react"
 
 import { AuthForm, SubmitButton, UsernameTextField } from "src/components/Auth/Auth"
@@ -41,7 +41,7 @@ export default function PasswordReset({
                 setProgressed(true)
                 setProgressing(false)
             })
-            .catch((error: FirebaseError) => {
+            .catch((error: firebase.FirebaseError) => {
                 console.error(error)
 
                 if (error?.code === "auth/user-not-found") {
