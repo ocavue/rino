@@ -13,5 +13,7 @@ module.exports = {
 
         // `null` disables the default viewport. So the viewport size is always equal to the window inner size
         defaultViewport: null,
+
+        executablePath: process.env.PUPPETEER_EXECUTABLE_PATH || undefined,
     },
 }

@@ -73,10 +73,6 @@
   padding: 0;
 }
 
-.markdown-body * {
-  box-sizing: border-box;
-}
-
 .markdown-body input {
   font-family: inherit;
   font-size: inherit;
@@ -503,4 +499,10 @@
 }
 .markdown-body--dark {
   caret-color: #ffffff;
+}
+
+
+.markdown-body .CodeMirror {
+  padding: 12px;
+  border-radius: 8px;
 }

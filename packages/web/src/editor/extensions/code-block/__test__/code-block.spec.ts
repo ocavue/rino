@@ -10,14 +10,14 @@ import { dedent } from "src/utils"
 
 import { RinoCodeBlockExtension } from ".."
 
-const defaultLanguage = "markup"
+const defaultLanguage = ""
 
 const setup = () => {
     const {
         view,
         add,
         nodes: { doc, p },
-        attributeNodes: { codeBlock },
+        attributeNodes: { codeMirror },
         manager,
         schema,
     } = renderEditor([
@@ -33,7 +33,8 @@ const setup = () => {
         add,
         doc,
         p,
-        codeBlock,
+        codeMirror,
+        codeBlock: codeMirror,
     }
 }
 
@@ -85,7 +86,7 @@ describe("fromMarkdown", () => {
             ).toEqualRemirrorDocument(
                 doc(
                     codeBlock({
-                        language: defaultLanguage,
+                        language: "unknow",
                         userInputLanguage: "unknow",
                         codeBlockType: "fenced",
                     })("bla bla bla bla"),
@@ -99,7 +100,7 @@ describe("fromMarkdown", () => {
             ).toEqualRemirrorDocument(
                 doc(
                     codeBlock({
-                        language: defaultLanguage,
+                        language: "",
                         userInputLanguage: "",
                         codeBlockType: "fenced",
                     })("echo 'hello world!'"),
