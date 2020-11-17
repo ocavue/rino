@@ -161,7 +161,7 @@ jobs:
           echo "::set-output name=branch::$(node scripts/slugify-branch.js)"
 
       - name: Deploy @rino.app/home to Vercel
-        uses: &vercel_action amondnet/vercel-action@f79b066724a2ac14b8944244a625146e5d6006c3
+        uses: &vercel_action amondnet/vercel-action@d4e0a9f55bfc7ee4d87dd69541f2c93c8e4e8ae6
         with: &vercel_args
           github-comment: false
           vercel-token: ${{ secrets.VERCEL_TOKEN }}
