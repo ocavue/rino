@@ -8,14 +8,14 @@ import {
 import { RinoHardBreakExtension } from "src/editor/extensions"
 import { dedent } from "src/utils"
 
+import { RinoParagraphExtension } from "../../paragraph"
+import { RinoTextExtension } from "../../text"
 import {
     RinoBulletListExtension,
     RinoCheckboxExtension,
     RinoListItemExtension,
     RinoOrderedListExtension,
 } from ".."
-import { RinoParagraphExtension } from "../../paragraph"
-import { RinoTextExtension } from "../../text"
 
 const html = String.raw
 
