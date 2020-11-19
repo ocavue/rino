@@ -50,8 +50,8 @@ rules:
 
   # use `simple-import-sort` to sort import
   "sort-imports": "off"
-  "simple-import-sort/sort":
-    - "error"
+  "simple-import-sort/imports":
+    - "warn"
     - groups: [
       # Side effect imports.
       ["^\\u0000"],
