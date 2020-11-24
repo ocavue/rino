@@ -4,6 +4,14 @@ const fs = require("fs")
 const path = require("path")
 const slugifyBranch = require("./slugify-branch").slugify
 
+const commonAssertions = {
+    // Preview deployments doesn't allow search engines to index them intentionally.
+    "is-crawlable": "warn",
+
+    // I don't know how to fix this.
+    "uses-responsive-images": "warn",
+}
+
 const webConfig = {
     ci: {
         collect: {
@@ -20,17 +28,16 @@ const webConfig = {
         assert: {
             preset: "lighthouse:recommended",
             assertions: {
+                ...commonAssertions,
+
                 // Currently there are 9 javascript bundle files who has a large part of unused code. Firebase contributes most part of them.
                 // Check this link for the method to get all unused javascript code: https://web.dev/remove-unused-code/
                 // Check this link to follow the progress of tree-shakeable Firebase library: https://github.com/firebase/firebase-js-sdk/issues/2241
-                "unused-javascript": ["warn", { maxLength: 9 }],
+                "unused-javascript": ["warn"],
 
                 // `@firebase/firestore/dict/index.cjs.js` has `unload` listeners.
                 // https://developers.google.com/web/updates/2018/07/page-lifecycle-api#the-unload-event
                 "no-unload-listeners": "warn",
-
-                // I don't know how to fix this.
-                "uses-responsive-images": "warn",
 
                 "non-composited-animations": "warn",
             },
@@ -50,8 +57,7 @@ const homeConfig = {
         assert: {
             preset: "lighthouse:no-pwa",
             assertions: {
-                // I don't know how to fix this.
-                "uses-responsive-images": "warn",
+                ...commonAssertions,
             },
         },
     },
