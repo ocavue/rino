@@ -10,8 +10,7 @@ describe("ProsemirrorView constructor error", () => {
     test("Make the alert message", async () => {
         await switchMode() // Switch to source code mode
 
-        // for unknow reason, codemirror will ignore some first letters, so I add some spaces.
-        await type("source_code_mode_textarea", "           HOOK:FAILED_TO_INIT_PROSEMIRROR_VIEW")
+        await type("source_code_mode_textarea", "HOOK:FAILED_TO_INIT_PROSEMIRROR_VIEW")
         await switchMode() // Switch back to wysiwyg code mode
         const error = await getInnerText("wysiwyg_mode_error")
         expect(error).toContain("Something went wrong.\n\nError: Found error hook for testing")
