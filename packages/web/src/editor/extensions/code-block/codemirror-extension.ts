@@ -35,6 +35,12 @@ export class RinoCodeBlockExtension extends CodeMirrorExtension {
             theme: "nord",
             lineWrapping: true,
             scrollbarStyle: null,
+
+            // By setting an editor's `height` style to `auto` and giving the `viewportMargin` a
+            // value of `Infinity`, CodeMirror can be made to automatically resize to fit its
+            // content.
+            // https://codemirror.net/demo/resize.html
+            viewportMargin: Infinity,
         },
         extraAttributes: {
             userInputLanguage: {
