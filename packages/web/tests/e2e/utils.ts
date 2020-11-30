@@ -99,7 +99,6 @@ export const [wysiwygEditorSelector, sourceCodeEditorSelector] = [
 ]
 
 export async function getSourceCodeModeText() {
-    await sleep(1 * 1000)
     let text = await getInnerText("source_code_mode_textarea")
     text = text.replaceAll("\u200b", "") // Replace unicode ZERO WIDTH SPACE
     console.log("[getSourceCodeModeText]", text)
