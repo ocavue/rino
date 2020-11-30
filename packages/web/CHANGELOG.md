@@ -4,7 +4,7 @@
 
 ### Minor Changes
 
--   bf5f015: Use CodeMirror as the new code editor.
+-   31b1fd7: Use CodeMirror as the new code editor.
 
 ## 0.14.2
 
