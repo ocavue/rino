@@ -50,7 +50,7 @@ export async function click(testid: string, options?: ClickOptions) {
 }
 
 export async function sleep(ms: number) {
-    return await page.waitFor(ms)
+    return await page.waitForTimeout(ms)
 }
 
 async function typeWithSelector(selector: string, text: string, pressEnter = true) {
