@@ -1,7 +1,7 @@
 import { readFileSync } from "fs"
 
-import { cleanNotes, createNote, login, switchMode } from "../actions"
-import { getSourceCodeModeText, pressKey, type as typeByTestid } from "../utils"
+import { cleanNotes, createNote, switchMode } from "../actions"
+import { getSourceCodeModeText, goto, type as typeByTestid } from "../utils"
 
 function readText(filename: string) {
     return readFileSync(`${__dirname}/${filename}`, "utf-8")
@@ -9,7 +9,7 @@ function readText(filename: string) {
 
 beforeAll(async () => {
     await jestPuppeteer.resetBrowser()
-    await login()
+    goto("/")
 })
 
 afterAll(async () => {
@@ -41,14 +41,6 @@ describe("Source code text", () => {
         await type("###### h6")
     })
 
-    test("Code block", async () => {
-        await type("```")
-        await type("code")
-        await type("code", false)
-        await pressKey("Shift", "Enter")
-        await type("")
-    })
-
     test("Ordered list", async () => {
         await type("1. First")
         await type("Second")
@@ -78,7 +70,8 @@ describe("Source code text", () => {
     test("Check result", async () => {
         await switchMode() // Switch to the source code mode
         const received = await getSourceCodeModeText()
-        expect(received).toBe(readText("0.txt"))
+        const expected = readText("0.txt")
+        expect(received).toBe(expected)
         await switchMode() // Switch back to the WYSIWYG mode
     })
 })

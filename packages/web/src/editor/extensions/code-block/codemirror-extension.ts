@@ -1,19 +1,47 @@
-import { DefaultExtensionOptions } from "@remirror/core"
-import { CodeBlockExtension, CodeBlockOptions, getLanguage } from "@remirror/extension-code-block"
+import "codemirror/mode/cmake/cmake"
+import "codemirror/mode/css/css"
+import "codemirror/mode/dart/dart"
+import "codemirror/mode/diff/diff"
+import "codemirror/mode/django/django"
+import "codemirror/mode/dockerfile/dockerfile"
+import "codemirror/mode/gfm/gfm"
+import "codemirror/mode/go/go"
+import "codemirror/mode/htmlmixed/htmlmixed"
+import "codemirror/mode/javascript/javascript"
+import "codemirror/mode/jsx/jsx"
+import "codemirror/mode/markdown/markdown"
+import "codemirror/mode/python/python"
+import "codemirror/mode/ruby/ruby"
+import "codemirror/mode/rust/rust"
+import "codemirror/mode/sass/sass"
+import "codemirror/mode/shell/shell"
+import "codemirror/mode/sql/sql"
+import "codemirror/mode/toml/toml"
+import "codemirror/mode/yaml/yaml"
+
+import { DefaultExtensionOptions, KeyBindings } from "@remirror/core"
+import { CodeMirrorExtension, CodeMirrorExtensionOptions } from "@remirror/extension-codemirror5"
 import Token from "markdown-it/lib/token"
 
-import { InlineDecorateType } from "src/editor/extensions"
 import { ParserRuleType } from "src/editor/transform/parser-type"
 import { NodeSerializerOptions } from "src/editor/transform/serializer"
 import { buildBlockEnterKeymapBindings } from "src/editor/utils"
 
-import { supportedLanguages } from "./code-block-languages"
+import { InlineDecorateType } from "../inline"
 
-export class RinoCodeBlockExtension extends CodeBlockExtension {
-    static readonly defaultOptions: DefaultExtensionOptions<CodeBlockOptions> = {
-        ...CodeBlockExtension.defaultOptions,
-        defaultLanguage: "markup",
-        supportedLanguages: supportedLanguages,
+export class RinoCodeBlockExtension extends CodeMirrorExtension {
+    static readonly defaultOptions: DefaultExtensionOptions<CodeMirrorExtensionOptions> = {
+        defaultCodeMirrorConfig: {
+            theme: "nord",
+            lineWrapping: true,
+            scrollbarStyle: null,
+
+            // By setting an editor's `height` style to `auto` and giving the `viewportMargin` a
+            // value of `Infinity`, CodeMirror can be made to automatically resize to fit its
+            // content.
+            // https://codemirror.net/demo/resize.html
+            viewportMargin: Infinity,
+        },
         extraAttributes: {
             userInputLanguage: {
                 default: "",
@@ -27,23 +55,17 @@ export class RinoCodeBlockExtension extends CodeBlockExtension {
         },
     }
 
-    createKeymap() {
+    createKeymap(): KeyBindings {
         const type = this.type
-        const options = this.options
 
         return buildBlockEnterKeymapBindings(/^```([a-zA-Z0-9-+#]*)$/, ({ match }) => {
-            const userInputLanguage = match[1] || ""
-            const language = getLanguage({
+            const userInputLanguage = match[1] || "text/plain"
+            return type.create({
                 language: userInputLanguage,
-                fallback: options.defaultLanguage,
+                userInputLanguage,
+                codeBlockType: "fenced",
             })
-            return type.create({ userInputLanguage, language })
         })
-    }
-
-    // Override the default input rules from remirror
-    createInputRules() {
-        return []
     }
 
     public fromMarkdown() {
@@ -57,10 +79,7 @@ export class RinoCodeBlockExtension extends CodeBlockExtension {
                 getAttrs: (tok: Token) => {
                     const userInputLanguage = tok.info
                     return {
-                        language: getLanguage({
-                            language: userInputLanguage,
-                            fallback: this.options.defaultLanguage,
-                        }),
+                        language: userInputLanguage,
                         userInputLanguage,
                         codeBlockType: "fenced",
                     }

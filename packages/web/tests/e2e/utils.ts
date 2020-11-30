@@ -50,13 +50,21 @@ export async function click(testid: string, options?: ClickOptions) {
 }
 
 export async function sleep(ms: number) {
-    return await page.waitFor(ms)
+    return await page.waitForTimeout(ms)
+}
+
+async function typeWithSelector(selector: string, text: string, pressEnter = true) {
+    await page.waitForSelector(selector, { timeout: 1000 })
+    await page.type(selector, text, { delay: 5 })
+    if (pressEnter) await pressKey("Enter")
 }
 
 export async function type(testid: string, text: string, pressEnter = true) {
-    await wait(testid)
-    await page.type(testidSelector(testid), text, { delay: 5 })
-    if (pressEnter) await pressKey("Enter")
+    return typeWithSelector(testidSelector(testid), text, pressEnter)
+}
+
+export async function typeCodeMirror(testid: string, text: string, pressEnter = true) {
+    return typeWithSelector(testidSelector(testid) + " .CodeMirror textarea", text, pressEnter)
 }
 
 export async function getOne(testid: string) {
@@ -91,7 +99,10 @@ export const [wysiwygEditorSelector, sourceCodeEditorSelector] = [
 ]
 
 export async function getSourceCodeModeText() {
-    return await getInnerText("source_code_mode_textarea")
+    let text = await getInnerText("source_code_mode_textarea")
+    text = text.replace(/[\u200B]/g, "") // Remove Unicode ZERO WIDTH SPACE
+    text = text.replace(/[\u00A0]/g, " ") // Replace Unicode NO-BREAK SPACE
+    return text
 }
 
 export async function waitAnimation<T>(promise: Promise<T>, ms = 500): Promise<T> {

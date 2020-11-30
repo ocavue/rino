@@ -2,6 +2,8 @@
 // https://github.com/zeit/next.js/blob/v9.2.0/errors/css-global.md
 import "../../../../node_modules/prosemirror-tables/style/tables.css"
 import "../../../../node_modules/prosemirror-view/style/prosemirror.css"
+import "../../../../node_modules/codemirror/lib/codemirror.css"
+import "../../../../node_modules/codemirror/theme/nord.css"
 import "../../src/style/develop.css"
 import "../../src/editor/theme/github.scss"
 

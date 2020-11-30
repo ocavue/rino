@@ -17,7 +17,7 @@ jobs:
         name: Setup node.js
         uses: actions/setup-node@v1
         with:
-          node-version: 12
+          node-version: 14
 
       - &step_cache_deps
         id: step_cache_deps
@@ -30,7 +30,7 @@ jobs:
             node_modules
             */*/node_modules
             ~/.cache/firebase
-          key: ${{ runner.os }}-deps-v4-${{ hashFiles('yarn.lock') }}
+          key: ${{ runner.os }}-deps-v5-${{ hashFiles('yarn.lock') }}
 
       - &step_install_deps
         name: Install Dependencies

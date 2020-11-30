@@ -33,10 +33,7 @@ export const SourceCodeEditor: FC<EditorProps> = ({
         const schema = manager.schema
         const initialNode = schema.nodes.doc.create(
             {},
-            schema.nodes.codeBlock.create(
-                { language: "markdown" },
-                content ? schema.text(content) : undefined,
-            ),
+            schema.nodes.codeMirror.create({}, content ? schema.text(content) : undefined),
         )
         const getContent = (doc: Doc) => {
             return doc.textContent
