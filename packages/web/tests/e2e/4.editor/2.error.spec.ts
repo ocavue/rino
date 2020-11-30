@@ -1,5 +1,5 @@
 import { createEmptyNote, switchMode } from "../actions"
-import { getInnerText, getSourceCodeModeText, goto, type, wait } from "../utils"
+import { getInnerText, getSourceCodeModeText, goto, typeCodeMirror, wait } from "../utils"
 
 describe("ProsemirrorView constructor error", () => {
     test("Prepare", async () => {
@@ -10,7 +10,7 @@ describe("ProsemirrorView constructor error", () => {
     test("Make the alert message", async () => {
         await switchMode() // Switch to source code mode
 
-        await type("source_code_mode_textarea", "HOOK:FAILED_TO_INIT_PROSEMIRROR_VIEW")
+        await typeCodeMirror("source_code_mode_textarea", "HOOK:FAILED_TO_INIT_PROSEMIRROR_VIEW")
         await switchMode() // Switch back to wysiwyg code mode
         const error = await getInnerText("wysiwyg_mode_error")
         expect(error).toContain("Something went wrong.\n\nError: Found error hook for testing")
@@ -23,7 +23,7 @@ describe("ProsemirrorView constructor error", () => {
     })
 
     test("Fix text in the source code mode", async () => {
-        await type("source_code_mode_textarea", "something")
+        await typeCodeMirror("source_code_mode_textarea", "something")
     })
 
     test("Switch back to wysiwyg mode", async () => {
