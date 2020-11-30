@@ -1,5 +1,11 @@
 # @rino.app/web
 
+## 0.15.0
+
+### Minor Changes
+
+-   bf5f015: Use CodeMirror as the new code editor.
+
 ## 0.14.2
 
 ### Patch Changes
