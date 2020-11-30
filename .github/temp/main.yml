@@ -136,7 +136,7 @@ jobs:
 
   Preview: # Preview deployment
     runs-on: ubuntu-18.04
-    needs: build
+    needs: [Build]
     steps:
       - *step_checkout
       - *step_setup_node

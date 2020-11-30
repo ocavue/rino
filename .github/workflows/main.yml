@@ -177,7 +177,9 @@
     },
     "Preview": {
       "runs-on": "ubuntu-18.04",
-      "needs": "build",
+      "needs": [
+        "Build"
+      ],
       "steps": [
         {
           "name": "Checkout code repository",
