@@ -109,16 +109,7 @@ const useTextButtonStyles = makeStyles(
     }),
 )
 
-export const Button: React.FC<ButtonProps> = ({
-    ariaLabel,
-    testid,
-    primary,
-    children,
-    fullWidth,
-    shadow,
-    animation,
-    ...extra
-}) => {
+export const Button: React.FC<ButtonProps> = ({ ariaLabel, testid, primary, children, fullWidth, shadow, animation, ...extra }) => {
     const classes = useTextButtonStyles()
     const [show, setShow] = useState(false)
     React.useEffect(() => {
@@ -138,13 +129,7 @@ export const Button: React.FC<ButtonProps> = ({
     }
 
     return (
-        <a
-            {...extra}
-            className={className}
-            type="button"
-            aria-label={ariaLabel}
-            data-testid={testid}
-        >
+        <a {...extra} className={className} type="button" aria-label={ariaLabel} data-testid={testid}>
             {children}
         </a>
     )
@@ -153,13 +138,7 @@ export const Button: React.FC<ButtonProps> = ({
 export const IconButton: React.FC<IconButtonProps> = ({ onClick, ariaLabel, testid, children }) => {
     const classes = useIconButtonStyles()
     return (
-        <button
-            className={classes.btn}
-            type="button"
-            aria-label={ariaLabel}
-            onClick={onClick}
-            data-testid={testid}
-        >
+        <button className={classes.btn} type="button" aria-label={ariaLabel} onClick={onClick} data-testid={testid}>
             {children}
         </button>
     )
@@ -168,18 +147,8 @@ export const IconButton: React.FC<IconButtonProps> = ({ onClick, ariaLabel, test
 export const CloseIconButton: React.FC<IconButtonProps> = (props) => {
     return (
         <IconButton {...props}>
-            <svg
-                style={{ height: "1.5rem", width: "1.5rem" }}
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-            >
-                <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M6 18L18 6M6 6l12 12"
-                ></path>
+            <svg style={{ height: "1.5rem", width: "1.5rem" }} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path>
             </svg>
         </IconButton>
     )
@@ -188,18 +157,8 @@ export const CloseIconButton: React.FC<IconButtonProps> = (props) => {
 export const MoreIconButton: React.FC<IconButtonProps> = (props) => {
     return (
         <IconButton {...props}>
-            <svg
-                style={{ height: "1.5rem", width: "1.5rem" }}
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-            >
-                <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M4 6h16M4 12h16M4 18h16"
-                ></path>
+            <svg style={{ height: "1.5rem", width: "1.5rem" }} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16"></path>
             </svg>
         </IconButton>
     )

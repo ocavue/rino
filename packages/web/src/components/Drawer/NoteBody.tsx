@@ -20,13 +20,7 @@ export const NoteBody: React.FC = () => {
 
     if (loading) {
         return (
-            <Box
-                display="flex"
-                alignItems="center"
-                justifyContent="center"
-                height="100%"
-                data-testid="drawer_note_body_loading"
-            >
+            <Box display="flex" alignItems="center" justifyContent="center" height="100%" data-testid="drawer_note_body_loading">
                 <CircularProgress />
             </Box>
         )

@@ -3,12 +3,7 @@ import firebase from "firebase"
 import { useRouter } from "next/router"
 import React, { useMemo, useState } from "react"
 
-import {
-    AuthForm,
-    PasswordTextField,
-    SubmitButton,
-    UsernameTextField,
-} from "src/components/Auth/Auth"
+import { AuthForm, PasswordTextField, SubmitButton, UsernameTextField } from "src/components/Auth/Auth"
 import { createUserWithEmailAndPassword } from "src/controller/auth/actions"
 import { AuthContainer } from "src/controller/auth/hook"
 
@@ -22,11 +17,7 @@ export default function SignUpForm({ progressing, setProgressing, setError }: Si
     const router = useRouter()
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
-    const disableSubmit = useMemo(() => !email || !password || progressing, [
-        email,
-        password,
-        progressing,
-    ])
+    const disableSubmit = useMemo(() => !email || !password || progressing, [email, password, progressing])
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         setProgressing(true)
         setError("")

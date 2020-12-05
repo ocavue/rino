@@ -48,20 +48,8 @@ export const Content: React.FC = () => {
     const { setNoteContent, note } = EditContainer.useContainer()
 
     return (
-        <main
-            className={clsx(classes.content, { [classes.contentShift]: drawerActivity })}
-            data-testid="main"
-        >
-            {note ? (
-                <Editor
-                    note={note}
-                    setNoteContent={setNoteContent}
-                    autoFocus={false}
-                    key={note.key}
-                />
-            ) : (
-                <Welcome />
-            )}
+        <main className={clsx(classes.content, { [classes.contentShift]: drawerActivity })} data-testid="main">
+            {note ? <Editor note={note} setNoteContent={setNoteContent} autoFocus={false} key={note.key} /> : <Welcome />}
         </main>
     )
 }

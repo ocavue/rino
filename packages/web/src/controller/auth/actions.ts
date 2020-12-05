@@ -13,9 +13,7 @@ async function closurePromiseWrapper<T>(closurePromise: Promise<T>): Promise<T> 
 }
 
 export async function signInWithEmailAndPassword(email: string, password: string) {
-    return await closurePromiseWrapper(
-        firebaseApp.auth().signInWithEmailAndPassword(email, password),
-    )
+    return await closurePromiseWrapper(firebaseApp.auth().signInWithEmailAndPassword(email, password))
 }
 
 export async function signInTestUser() {
@@ -39,9 +37,7 @@ export function getCurrentUser() {
 }
 
 export async function createUserWithEmailAndPassword(email: string, password: string) {
-    return await closurePromiseWrapper(
-        firebaseApp.auth().createUserWithEmailAndPassword(email, password),
-    )
+    return await closurePromiseWrapper(firebaseApp.auth().createUserWithEmailAndPassword(email, password))
 }
 
 export async function sendPasswordResetEmail(email: string) {

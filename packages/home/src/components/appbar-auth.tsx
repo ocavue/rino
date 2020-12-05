@@ -20,22 +20,13 @@ const useStyles = makeStyles(
     }),
 )
 
-const SignInAndSignUp: React.FC<{ signInLink: string; signUpLink: string }> = ({
-    signInLink,
-    signUpLink,
-}) => (
+const SignInAndSignUp: React.FC<{ signInLink: string; signUpLink: string }> = ({ signInLink, signUpLink }) => (
     <>
         <Button animation href={signInLink} testid="homepage_signin_btn" ariaLabel="Sign in">
             Sign in
         </Button>
         <span style={{ width: "8px" }} />
-        <Button
-            animation
-            href={signUpLink}
-            testid="homepage_signup_btn"
-            ariaLabel="Sign up"
-            primary
-        >
+        <Button animation href={signUpLink} testid="homepage_signup_btn" ariaLabel="Sign up" primary>
             Sign up
         </Button>
     </>

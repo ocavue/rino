@@ -13,9 +13,7 @@ const WEB_HOST = "rino.app"
 const HOME_HOST = "www.rino.app"
 
 function isIndexPage(req: IncomingMessage) {
-    return (
-        req.url === "/" || req.url === "" || req.url === "/index.html" || req.url === "index.html"
-    )
+    return req.url === "/" || req.url === "" || req.url === "/index.html" || req.url === "index.html"
 }
 
 function serveHTML(res: NowResponse, filePath: string) {

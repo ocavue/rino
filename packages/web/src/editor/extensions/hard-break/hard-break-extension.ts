@@ -21,16 +21,12 @@ export class RinoHardBreakExtension extends HardBreakExtension {
         const type = this.type as NodeType<any> // workaround for the generic typescript
         const command = chainCommands(convertCommand(exitCode), (params) => {
             const $from = params.state.selection.$from
-            const canReplace = $from
-                .node($from.depth)
-                .canReplaceWith($from.index($from.depth), $from.indexAfter($from.depth), type)
+            const canReplace = $from.node($from.depth).canReplaceWith($from.index($from.depth), $from.indexAfter($from.depth), type)
 
             if (canReplace) {
                 const { dispatch } = params
                 if (dispatch) {
-                    dispatch(
-                        params.state.tr.replaceSelectionWith(this.type.create()).scrollIntoView(),
-                    )
+                    dispatch(params.state.tr.replaceSelectionWith(this.type.create()).scrollIntoView())
                 }
                 return true
             } else {

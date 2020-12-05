@@ -12,11 +12,7 @@ function getEnvs() {
     }
     const exported = {}
     for (const key of Object.keys(allEnvs)) {
-        if (
-            key === "FIREBASE_DATABASE_EMULATOR_HOST" ||
-            key === "FIRESTORE_EMULATOR_HOST" ||
-            key.startsWith("REACT_APP")
-        ) {
+        if (key === "FIREBASE_DATABASE_EMULATOR_HOST" || key === "FIRESTORE_EMULATOR_HOST" || key.startsWith("REACT_APP")) {
             exported[key] = allEnvs[key]
         }
     }

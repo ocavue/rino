@@ -36,9 +36,7 @@ class ListItemView implements NodeView {
         const shouldHasClass = node.firstChild?.type === this.schema.nodes.rinoCheckbox
 
         if (hasClass !== shouldHasClass) {
-            shouldHasClass
-                ? this.contentDOM.classList.add(className)
-                : this.contentDOM.classList.remove(className)
+            shouldHasClass ? this.contentDOM.classList.add(className) : this.contentDOM.classList.remove(className)
         }
     }
 }
@@ -65,9 +63,7 @@ export class RinoListItemExtension extends NodeExtension {
         const schema = this.store.schema
         const type = this.type
         return {
-            Enter: convertCommand(
-                splitListItem(schema.nodes.paragraph, schema.nodes.rinoCheckbox, type),
-            ),
+            Enter: convertCommand(splitListItem(schema.nodes.paragraph, schema.nodes.rinoCheckbox, type)),
             "Mod-[": convertCommand(liftListItem(type)),
             "Mod-]": convertCommand(sinkListItem(type)),
         }
@@ -123,8 +119,7 @@ export class RinoOrderedListExtension extends NodeExtension {
                 /^(\d+)\.\s$/,
                 this.type,
                 (match: string[]) => ({ order: +match[1] }),
-                (match: string[], node: ProsemirrorNode) =>
-                    node.childCount + (node.attrs.order as number) == +match[1],
+                (match: string[], node: ProsemirrorNode) => node.childCount + (node.attrs.order as number) == +match[1],
             ),
         ]
     }
@@ -189,10 +184,7 @@ export class RinoBulletListExtension extends NodeExtension {
         ] as const
     }
 
-    public toMarkdown({
-        state,
-        node,
-    }: NodeSerializerOptions<SchemaFromExtensionUnion<RinoBulletListExtension>>) {
+    public toMarkdown({ state, node }: NodeSerializerOptions<SchemaFromExtensionUnion<RinoBulletListExtension>>) {
         state.renderList(node, "  ", () => ((node.attrs.bullet as string) || "*") + " ")
     }
 }
@@ -214,8 +206,7 @@ export class RinoCheckboxExtension extends NodeExtension {
             parseDOM: [
                 {
                     tag: "input[type=checkbox]",
-                    getAttrs: (dom) =>
-                        isElementDomNode(dom) ? { checked: dom.hasAttribute("checked") } : {},
+                    getAttrs: (dom) => (isElementDomNode(dom) ? { checked: dom.hasAttribute("checked") } : {}),
                 },
             ],
             toDOM(node) {
@@ -238,9 +229,7 @@ export class RinoCheckboxExtension extends NodeExtension {
                 ) {
                     const attrs = { checked: match[1] === "x" }
                     const listItemPos = $from.before(-1)
-                    return state.tr
-                        .delete(start, end)
-                        .insert(listItemPos + 1, this.type.create(attrs))
+                    return state.tr.delete(start, end).insert(listItemPos + 1, this.type.create(attrs))
                 }
                 return null
             }),
@@ -275,11 +264,7 @@ export class RinoCheckboxExtension extends NodeExtension {
         > re-rendered (over which you don’t have control, without a node view), that’ll annoyingly
         > mess with focus and cursor position inside the field.
         */
-        return (
-            node: ProsemirrorNode,
-            view: EditorView,
-            getPos: boolean | (() => number),
-        ): NodeView => {
+        return (node: ProsemirrorNode, view: EditorView, getPos: boolean | (() => number)): NodeView => {
             let checked = !!node.attrs.checked
             const dom = document.createElement("input")
             dom.setAttribute("type", "checkbox")

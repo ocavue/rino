@@ -1,10 +1,5 @@
 import { ApplySchemaAttributes, KeyBindings } from "@remirror/core"
-import {
-    TableCellExtension,
-    TableExtension,
-    TableHeaderCellExtension,
-    TableRowExtension,
-} from "@remirror/preset-table"
+import { TableCellExtension, TableExtension, TableHeaderCellExtension, TableRowExtension } from "@remirror/preset-table"
 import { TableSchemaSpec } from "@remirror/preset-table/dist/declarations/src/table-utils"
 import { Fragment, Node as ProsemirroNode } from "prosemirror-model"
 import { TextSelection } from "prosemirror-state"

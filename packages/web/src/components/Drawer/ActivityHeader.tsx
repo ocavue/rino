@@ -24,18 +24,10 @@ export const ActivityHeader: React.FC = () => {
             <AppbarIconButton className={classes.drawerHeaderButton}>
                 {connected ? <icons.CloudOutlined /> : <icons.CloudOffOutlined />}
             </AppbarIconButton>
-            <AppbarIconButton
-                className={classes.drawerHeaderButton}
-                onClick={handleSettingsBtnClick}
-                data-testid="sidebar_btn_settings"
-            >
+            <AppbarIconButton className={classes.drawerHeaderButton} onClick={handleSettingsBtnClick} data-testid="sidebar_btn_settings">
                 <icons.SettingsOutlined />
             </AppbarIconButton>
-            <SettingsMenu
-                anchor={anchor}
-                setAnchor={setAnchor}
-                setOpenAboutDialog={setOpenAboutDialog}
-            />
+            <SettingsMenu anchor={anchor} setAnchor={setAnchor} setOpenAboutDialog={setOpenAboutDialog} />
             <AboutDialog open={openAboutDialog} setOpen={setOpenAboutDialog}></AboutDialog>
         </div>
     )

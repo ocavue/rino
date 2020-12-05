@@ -1,11 +1,4 @@
-import {
-    Box,
-    Dialog,
-    DialogContent,
-    DialogContentText,
-    DialogTitle,
-    Typography,
-} from "@material-ui/core"
+import { Box, Dialog, DialogContent, DialogContentText, DialogTitle, Typography } from "@material-ui/core"
 import React from "react"
 
 import logo from "src/assets/logo.png"
@@ -29,9 +22,7 @@ export const AboutDialog: React.FC<{
                 <DialogContentText align="center">
                     <span data-testid="about_dialog_version">Version {version}</span>
                     <br />
-                    <span data-testid="about_dialog_copyright">
-                        Copyright © 2020 Ocavue. All rights reserved.
-                    </span>
+                    <span data-testid="about_dialog_copyright">Copyright © 2020 Ocavue. All rights reserved.</span>
                 </DialogContentText>
             </DialogContent>
         </Dialog>

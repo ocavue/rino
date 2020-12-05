@@ -1,9 +1,6 @@
 import { renderEditor } from "jest-remirror"
 
-import {
-    buildMarkdownParser,
-    buildMarkdownSerializer,
-} from "src/editor/components/wysiwyg/wysiwyg-markdown"
+import { buildMarkdownParser, buildMarkdownSerializer } from "src/editor/components/wysiwyg/wysiwyg-markdown"
 import { RinoParagraphExtension } from "src/editor/extensions"
 import { RinoTextExtension } from "src/editor/extensions"
 import { dedent } from "src/utils"
@@ -20,11 +17,7 @@ const setup = () => {
         attributeNodes: { codeMirror },
         manager,
         schema,
-    } = renderEditor([
-        new RinoParagraphExtension(),
-        new RinoTextExtension(),
-        new RinoCodeBlockExtension(),
-    ])
+    } = renderEditor([new RinoParagraphExtension(), new RinoTextExtension(), new RinoCodeBlockExtension()])
 
     return {
         manager,
@@ -44,9 +37,7 @@ describe("fromMarkdown", () => {
 
     describe("Indented code blocks", () => {
         test("indented code blocks", () => {
-            expect(
-                parser.parse(["    markdown", "    code", "    block"].join("\n")),
-            ).toEqualRemirrorDocument(
+            expect(parser.parse(["    markdown", "    code", "    block"].join("\n"))).toEqualRemirrorDocument(
                 doc(
                     codeBlock({
                         language: "",
@@ -60,15 +51,7 @@ describe("fromMarkdown", () => {
     describe("Fenced code blocks", () => {
         test("python language", () => {
             expect(
-                parser.parse(
-                    [
-                        "```python",
-                        "print('hello world!')",
-                        "print('hello world!')",
-                        "print('hello world!')",
-                        "```",
-                    ].join("\n"),
-                ),
+                parser.parse(["```python", "print('hello world!')", "print('hello world!')", "print('hello world!')", "```"].join("\n")),
             ).toEqualRemirrorDocument(
                 doc(
                     codeBlock({
@@ -81,9 +64,7 @@ describe("fromMarkdown", () => {
         })
 
         test("unknow language", () => {
-            expect(
-                parser.parse(["```unknow", "bla bla bla bla", "```"].join("\n")),
-            ).toEqualRemirrorDocument(
+            expect(parser.parse(["```unknow", "bla bla bla bla", "```"].join("\n"))).toEqualRemirrorDocument(
                 doc(
                     codeBlock({
                         language: "unknow",
@@ -95,9 +76,7 @@ describe("fromMarkdown", () => {
         })
 
         test("empty language", () => {
-            expect(
-                parser.parse(["```", "echo 'hello world!'", "```"].join("\n")),
-            ).toEqualRemirrorDocument(
+            expect(parser.parse(["```", "echo 'hello world!'", "```"].join("\n"))).toEqualRemirrorDocument(
                 doc(
                     codeBlock({
                         language: "",

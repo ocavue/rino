@@ -13,9 +13,7 @@ function isMarkdownNodeExtension(extension: unknown): extension is MarkdownNodeE
     )
 }
 
-export function buildMarkdownParser<Combined extends AnyCombinedUnion>(
-    manager: RemirrorManager<Combined>,
-) {
+export function buildMarkdownParser<Combined extends AnyCombinedUnion>(manager: RemirrorManager<Combined>) {
     const parserRules: ParserRule[] = []
     for (const extension of manager.extensions) {
         if (isMarkdownNodeExtension(extension)) {
@@ -25,9 +23,7 @@ export function buildMarkdownParser<Combined extends AnyCombinedUnion>(
     return new MarkdownParser(manager.schema, parserRules)
 }
 
-export function buildMarkdownSerializer<Combined extends AnyCombinedUnion>(
-    manager: RemirrorManager<Combined>,
-) {
+export function buildMarkdownSerializer<Combined extends AnyCombinedUnion>(manager: RemirrorManager<Combined>) {
     const specs: NodeSerializerSpecs = {}
     for (const extension of manager.extensions) {
         if (isMarkdownNodeExtension(extension)) {

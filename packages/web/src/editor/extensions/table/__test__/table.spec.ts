@@ -1,18 +1,10 @@
 import { renderEditor } from "jest-remirror"
 
 import { RinoCorePreset } from "src/editor/components"
-import {
-    buildMarkdownParser,
-    buildMarkdownSerializer,
-} from "src/editor/components/wysiwyg/wysiwyg-markdown"
+import { buildMarkdownParser, buildMarkdownSerializer } from "src/editor/components/wysiwyg/wysiwyg-markdown"
 import { dedent } from "src/utils"
 
-import {
-    RinoTableCellExtension,
-    RinoTableExtension,
-    RinoTableHeaderExtension,
-    RinoTableRowExtension,
-} from ".."
+import { RinoTableCellExtension, RinoTableExtension, RinoTableHeaderExtension, RinoTableRowExtension } from ".."
 
 const setup = () => {
     const {
@@ -298,23 +290,13 @@ describe("inputRules", () => {
             .press("Enter")
             .callback((content) => {
                 expect(content.state.doc).toEqualRemirrorDocument(
-                    doc(
-                        table(
-                            tableRow(tableCell("1"), tableCell("2")),
-                            tableRow(tableCell(""), tableCell("")),
-                        ),
-                    ),
+                    doc(table(tableRow(tableCell("1"), tableCell("2")), tableRow(tableCell(""), tableCell("")))),
                 )
             })
             .insertText("INSERT")
             .callback((content) => {
                 expect(content.state.doc).toEqualRemirrorDocument(
-                    doc(
-                        table(
-                            tableRow(tableCell("1"), tableCell("2")),
-                            tableRow(tableCell("INSERT"), tableCell("")),
-                        ),
-                    ),
+                    doc(table(tableRow(tableCell("1"), tableCell("2")), tableRow(tableCell("INSERT"), tableCell("")))),
                 )
             })
     })

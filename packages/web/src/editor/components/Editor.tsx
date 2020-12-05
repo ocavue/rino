@@ -64,11 +64,7 @@ export const Editor: React.FC<EditorProps> = ({ autoFocus, note, setNoteContent 
     // }, [])
 
     const theme = useTheme()
-    const className = clsx(
-        classes.editor,
-        "markdown-body",
-        theme.palette.type === "light" ? "markdown-body--light" : "markdown-body--dark",
-    )
+    const className = clsx(classes.editor, "markdown-body", theme.palette.type === "light" ? "markdown-body--light" : "markdown-body--dark")
 
     if (mode === "source-code")
         return (

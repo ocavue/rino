@@ -1,21 +1,13 @@
 import { EditorSchema, fromHtml, toHtml } from "@remirror/core"
 import { renderEditor, TaggedProsemirrorNode } from "jest-remirror"
 
-import {
-    buildMarkdownParser,
-    buildMarkdownSerializer,
-} from "src/editor/components/wysiwyg/wysiwyg-markdown"
+import { buildMarkdownParser, buildMarkdownSerializer } from "src/editor/components/wysiwyg/wysiwyg-markdown"
 import { RinoHardBreakExtension } from "src/editor/extensions"
 import { dedent } from "src/utils"
 
 import { RinoParagraphExtension } from "../../paragraph"
 import { RinoTextExtension } from "../../text"
-import {
-    RinoBulletListExtension,
-    RinoCheckboxExtension,
-    RinoListItemExtension,
-    RinoOrderedListExtension,
-} from ".."
+import { RinoBulletListExtension, RinoCheckboxExtension, RinoListItemExtension, RinoOrderedListExtension } from ".."
 
 const html = String.raw
 
@@ -64,21 +56,9 @@ const setup = () => {
 }
 
 describe("schema", () => {
-    const {
-        doc,
-        schema,
-        p,
-        rinoOrderedList,
-        rinoBulletList,
-        rinoListItem,
-        rinoCheckbox,
-        hardBreak,
-    } = setup()
+    const { doc, schema, p, rinoOrderedList, rinoBulletList, rinoListItem, rinoCheckbox, hardBreak } = setup()
 
-    function testHtmlTransformation<S extends EditorSchema>(
-        node: TaggedProsemirrorNode<S>,
-        html: string,
-    ) {
+    function testHtmlTransformation<S extends EditorSchema>(node: TaggedProsemirrorNode<S>, html: string) {
         test("dump to html", () => {
             expect(toHtml({ node, schema })).toBe(html)
         })
@@ -89,38 +69,16 @@ describe("schema", () => {
 
     describe("single-line", () => {
         describe("bullet list", () => {
-            const node = rinoBulletList(
-                rinoListItem(p("111")),
-                rinoListItem(p("222")),
-                rinoListItem(p("333")),
-                rinoListItem(p("444")),
-            )
+            const node = rinoBulletList(rinoListItem(p("111")), rinoListItem(p("222")), rinoListItem(p("333")), rinoListItem(p("444")))
 
-            const html =
-                `<ul>` +
-                `<li><p>111</p></li>` +
-                `<li><p>222</p></li>` +
-                `<li><p>333</p></li>` +
-                `<li><p>444</p></li>` +
-                `</ul>`
+            const html = `<ul>` + `<li><p>111</p></li>` + `<li><p>222</p></li>` + `<li><p>333</p></li>` + `<li><p>444</p></li>` + `</ul>`
 
             testHtmlTransformation(node, html)
         })
         describe("ordered list", () => {
-            const node = rinoOrderedList(
-                rinoListItem(p("111")),
-                rinoListItem(p("222")),
-                rinoListItem(p("333")),
-                rinoListItem(p("444")),
-            )
+            const node = rinoOrderedList(rinoListItem(p("111")), rinoListItem(p("222")), rinoListItem(p("333")), rinoListItem(p("444")))
 
-            const html =
-                `<ol>` +
-                `<li><p>111</p></li>` +
-                `<li><p>222</p></li>` +
-                `<li><p>333</p></li>` +
-                `<li><p>444</p></li>` +
-                `</ol>`
+            const html = `<ol>` + `<li><p>111</p></li>` + `<li><p>222</p></li>` + `<li><p>333</p></li>` + `<li><p>444</p></li>` + `</ol>`
 
             testHtmlTransformation(node, html)
         })
@@ -150,10 +108,7 @@ describe("schema", () => {
     describe("multiple-line", () => {
         describe("bullet list", () => {
             testHtmlTransformation(
-                rinoBulletList(
-                    rinoListItem(p("1.a", hardBreak(), "1.b")),
-                    rinoListItem(p("2.a", hardBreak(), "2.b")),
-                ),
+                rinoBulletList(rinoListItem(p("1.a", hardBreak(), "1.b")), rinoListItem(p("2.a", hardBreak(), "2.b"))),
                 // prettier-ignore
                 simplifyHTML(html`
                     <ul>
@@ -168,10 +123,7 @@ describe("schema", () => {
         })
         describe("ordered list", () => {
             testHtmlTransformation(
-                rinoOrderedList(
-                    rinoListItem(p("1.a", hardBreak(), "1.b")),
-                    rinoListItem(p("2.a", hardBreak(), "2.b")),
-                ),
+                rinoOrderedList(rinoListItem(p("1.a", hardBreak(), "1.b")), rinoListItem(p("2.a", hardBreak(), "2.b"))),
                 // prettier-ignore
                 simplifyHTML(html`
                     <ol>
@@ -188,10 +140,7 @@ describe("schema", () => {
             const checked = rinoCheckbox({ checked: true })()
             const uncheck = rinoCheckbox()()
             testHtmlTransformation(
-                rinoOrderedList(
-                    rinoListItem(checked, p("1.a", hardBreak(), "1.b")),
-                    rinoListItem(uncheck, p("2.a", hardBreak(), "2.b")),
-                ),
+                rinoOrderedList(rinoListItem(checked, p("1.a", hardBreak(), "1.b")), rinoListItem(uncheck, p("2.a", hardBreak(), "2.b"))),
                 // prettier-ignore
                 simplifyHTML(html`
                     <ol>
@@ -266,15 +215,7 @@ describe("fromMarkdown", () => {
                     `,
                 ),
             ),
-        ).toEqualRemirrorDocument(
-            doc(
-                rinoOrderedList(
-                    rinoListItem(p("111")),
-                    rinoListItem(p("222")),
-                    rinoListItem(p("333")),
-                ),
-            ),
-        )
+        ).toEqualRemirrorDocument(doc(rinoOrderedList(rinoListItem(p("111")), rinoListItem(p("222")), rinoListItem(p("333")))))
     })
 
     test("ordered list with mess umber", () => {
@@ -288,15 +229,7 @@ describe("fromMarkdown", () => {
                     `,
                 ),
             ),
-        ).toEqualRemirrorDocument(
-            doc(
-                rinoOrderedList(
-                    rinoListItem(p("111")),
-                    rinoListItem(p("222")),
-                    rinoListItem(p("333")),
-                ),
-            ),
-        )
+        ).toEqualRemirrorDocument(doc(rinoOrderedList(rinoListItem(p("111")), rinoListItem(p("222")), rinoListItem(p("333")))))
     })
 
     test("bullet list with '-'", () => {
@@ -310,15 +243,7 @@ describe("fromMarkdown", () => {
                     `,
                 ),
             ),
-        ).toEqualRemirrorDocument(
-            doc(
-                rinoBulletList(
-                    rinoListItem(p("111")),
-                    rinoListItem(p("222")),
-                    rinoListItem(p("333")),
-                ),
-            ),
-        )
+        ).toEqualRemirrorDocument(doc(rinoBulletList(rinoListItem(p("111")), rinoListItem(p("222")), rinoListItem(p("333")))))
     })
 
     test("bullet list with '*'", () => {
@@ -332,15 +257,7 @@ describe("fromMarkdown", () => {
                     `,
                 ),
             ),
-        ).toEqualRemirrorDocument(
-            doc(
-                rinoBulletList(
-                    rinoListItem(p("111")),
-                    rinoListItem(p("222")),
-                    rinoListItem(p("333")),
-                ),
-            ),
-        )
+        ).toEqualRemirrorDocument(doc(rinoBulletList(rinoListItem(p("111")), rinoListItem(p("222")), rinoListItem(p("333")))))
     })
 
     test("checkbox list", () => {
@@ -408,32 +325,16 @@ describe("toMarkdown", () => {
     const serializer = buildMarkdownSerializer(manager)
 
     test("ol", () => {
-        expect(
-            serializer.serialize(
-                doc(
-                    rinoOrderedList(
-                        rinoListItem(p("111")),
-                        rinoListItem(p("222")),
-                        rinoListItem(p("333")),
-                    ),
-                ),
-            ),
-        ).toEqual("1. 111\n" + "2. 222\n" + "3. 333\n")
+        expect(serializer.serialize(doc(rinoOrderedList(rinoListItem(p("111")), rinoListItem(p("222")), rinoListItem(p("333")))))).toEqual(
+            "1. 111\n" + "2. 222\n" + "3. 333\n",
+        )
         // Append a new line at the end
     })
 
     test("ul", () => {
-        expect(
-            serializer.serialize(
-                doc(
-                    rinoBulletList(
-                        rinoListItem(p("111")),
-                        rinoListItem(p("222")),
-                        rinoListItem(p("333")),
-                    ),
-                ),
-            ),
-        ).toEqual("* 111\n" + "* 222\n" + "* 333\n")
+        expect(serializer.serialize(doc(rinoBulletList(rinoListItem(p("111")), rinoListItem(p("222")), rinoListItem(p("333")))))).toEqual(
+            "* 111\n" + "* 222\n" + "* 333\n",
+        )
     })
 
     test("checbox", () => {
@@ -455,22 +356,8 @@ describe("toMarkdown", () => {
             serializer.serialize(
                 doc(
                     rinoOrderedList(
-                        rinoListItem(
-                            p("1"),
-                            rinoOrderedList(
-                                rinoListItem(p("1.1")),
-                                rinoListItem(p("1.2")),
-                                rinoListItem(p("1.3")),
-                            ),
-                        ),
-                        rinoListItem(
-                            p("2"),
-                            rinoBulletList(
-                                rinoListItem(p("2.1")),
-                                rinoListItem(p("2.2")),
-                                rinoListItem(p("2.3")),
-                            ),
-                        ),
+                        rinoListItem(p("1"), rinoOrderedList(rinoListItem(p("1.1")), rinoListItem(p("1.2")), rinoListItem(p("1.3")))),
+                        rinoListItem(p("2"), rinoBulletList(rinoListItem(p("2.1")), rinoListItem(p("2.2")), rinoListItem(p("2.3")))),
                         rinoListItem(
                             p("3"),
                             rinoBulletList(
@@ -515,15 +402,11 @@ describe("inputRules", () => {
             })
             .insertText(" ")
             .callback((content) => {
-                expect(content.state.doc).toEqualRemirrorDocument(
-                    doc(rinoOrderedList(rinoListItem(p("")))),
-                )
+                expect(content.state.doc).toEqualRemirrorDocument(doc(rinoOrderedList(rinoListItem(p("")))))
             })
             .insertText("INSERT")
             .callback((content) => {
-                expect(content.state.doc).toEqualRemirrorDocument(
-                    doc(rinoOrderedList(rinoListItem(p("INSERT")))),
-                )
+                expect(content.state.doc).toEqualRemirrorDocument(doc(rinoOrderedList(rinoListItem(p("INSERT")))))
             })
     })
 
@@ -534,15 +417,11 @@ describe("inputRules", () => {
             })
             .insertText(" ")
             .callback((content) => {
-                expect(content.state.doc).toEqualRemirrorDocument(
-                    doc(rinoBulletList(rinoListItem(p("")))),
-                )
+                expect(content.state.doc).toEqualRemirrorDocument(doc(rinoBulletList(rinoListItem(p("")))))
             })
             .insertText("INSERT")
             .callback((content) => {
-                expect(content.state.doc).toEqualRemirrorDocument(
-                    doc(rinoBulletList(rinoListItem(p("INSERT")))),
-                )
+                expect(content.state.doc).toEqualRemirrorDocument(doc(rinoBulletList(rinoListItem(p("INSERT")))))
             })
     })
 
@@ -554,34 +433,22 @@ describe("inputRules", () => {
                 })
                 .insertText(" ")
                 .callback((content) => {
-                    expect(content.state.doc).toEqualRemirrorDocument(
-                        doc(rinoBulletList(rinoListItem(p("")))),
-                    )
+                    expect(content.state.doc).toEqualRemirrorDocument(doc(rinoBulletList(rinoListItem(p("")))))
                 })
                 .insertText(checked ? "[x]" : "[ ]")
                 .callback((content) => {
-                    expect(content.state.doc).toEqualRemirrorDocument(
-                        doc(rinoBulletList(rinoListItem(p(checked ? "[x]" : "[ ]")))),
-                    )
+                    expect(content.state.doc).toEqualRemirrorDocument(doc(rinoBulletList(rinoListItem(p(checked ? "[x]" : "[ ]")))))
                 })
                 .insertText(" ")
                 .callback((content) => {
                     expect(content.state.doc).toEqualRemirrorDocument(
-                        doc(
-                            rinoBulletList(
-                                rinoListItem(rinoCheckbox({ checked: checked })(), p("")),
-                            ),
-                        ),
+                        doc(rinoBulletList(rinoListItem(rinoCheckbox({ checked: checked })(), p("")))),
                     )
                 })
                 .insertText("INSERT")
                 .callback((content) => {
                     expect(content.state.doc).toEqualRemirrorDocument(
-                        doc(
-                            rinoBulletList(
-                                rinoListItem(rinoCheckbox({ checked: checked })(), p("INSERT")),
-                            ),
-                        ),
+                        doc(rinoBulletList(rinoListItem(rinoCheckbox({ checked: checked })(), p("INSERT")))),
                     )
                 })
         })
@@ -647,25 +514,13 @@ describe("shortcuts", () => {
                 .press("Enter")
                 .callback((content) => {
                     expect(content.state.doc).toEqualRemirrorDocument(
-                        doc(
-                            rinoOrderedList(
-                                rinoListItem(p("12")),
-                                rinoListItem(p("34")),
-                                rinoListItem(p("56")),
-                            ),
-                        ),
+                        doc(rinoOrderedList(rinoListItem(p("12")), rinoListItem(p("34")), rinoListItem(p("56")))),
                     )
                 })
                 .insertText("INSERT")
                 .callback((content) => {
                     expect(content.state.doc).toEqualRemirrorDocument(
-                        doc(
-                            rinoOrderedList(
-                                rinoListItem(p("12")),
-                                rinoListItem(p("INSERT34")),
-                                rinoListItem(p("56")),
-                            ),
-                        ),
+                        doc(rinoOrderedList(rinoListItem(p("12")), rinoListItem(p("INSERT34")), rinoListItem(p("56")))),
                     )
                 })
         })
@@ -675,25 +530,13 @@ describe("shortcuts", () => {
                 .press("Enter")
                 .callback((content) => {
                     expect(content.state.doc).toEqualRemirrorDocument(
-                        doc(
-                            rinoBulletList(
-                                rinoListItem(p("12")),
-                                rinoListItem(p("34")),
-                                rinoListItem(p("56")),
-                            ),
-                        ),
+                        doc(rinoBulletList(rinoListItem(p("12")), rinoListItem(p("34")), rinoListItem(p("56")))),
                     )
                 })
                 .insertText("INSERT")
                 .callback((content) => {
                     expect(content.state.doc).toEqualRemirrorDocument(
-                        doc(
-                            rinoBulletList(
-                                rinoListItem(p("12")),
-                                rinoListItem(p("INSERT34")),
-                                rinoListItem(p("56")),
-                            ),
-                        ),
+                        doc(rinoBulletList(rinoListItem(p("12")), rinoListItem(p("INSERT34")), rinoListItem(p("56")))),
                     )
                 })
         })
@@ -751,9 +594,7 @@ describe("shortcuts", () => {
                             rinoListItem(
                                 rinoCheckbox({ checked: true })(),
                                 p("12"),
-                                rinoBulletList(
-                                    rinoListItem(rinoCheckbox({ checked: true })(), p("56")),
-                                ),
+                                rinoBulletList(rinoListItem(rinoCheckbox({ checked: true })(), p("56"))),
                             ),
                         ),
                     ),
@@ -767,9 +608,7 @@ describe("shortcuts", () => {
                             rinoListItem(
                                 rinoCheckbox({ checked: true })(),
                                 p("12"),
-                                rinoBulletList(
-                                    rinoListItem(rinoCheckbox({ checked: true })(), p("56INSERT")),
-                                ),
+                                rinoBulletList(rinoListItem(rinoCheckbox({ checked: true })(), p("56INSERT"))),
                             ),
                         ),
                     ),
@@ -784,9 +623,7 @@ describe("shortcuts", () => {
                     rinoListItem(
                         rinoCheckbox({ checked: true })(),
                         p("12"),
-                        rinoBulletList(
-                            rinoListItem(rinoCheckbox({ checked: true })(), p("56<cursor>")),
-                        ),
+                        rinoBulletList(rinoListItem(rinoCheckbox({ checked: true })(), p("56<cursor>"))),
                     ),
                 ),
             ),

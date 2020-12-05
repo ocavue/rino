@@ -11,12 +11,7 @@ export type NoteMenuOptions = {
     anchorPosition?: { top: number; left: number }
 }
 
-export const NoteMenu: React.FC<NoteMenuOptions> = ({
-    noteKey,
-    anchorEl,
-    handleMenuClose,
-    anchorPosition,
-}) => {
+export const NoteMenu: React.FC<NoteMenuOptions> = ({ noteKey, anchorEl, handleMenuClose, anchorPosition }) => {
     const { setDrawerActivity } = WorksapceStateContainer.useContainer()
 
     const { deleteNote } = EditContainer.useContainer()

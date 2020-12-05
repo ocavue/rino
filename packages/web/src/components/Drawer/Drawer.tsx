@@ -68,12 +68,7 @@ export const Drawer: React.FC = () => {
     )
 
     return (
-        <nav
-            className={clsx(
-                { "drawer--open": drawerActivity },
-                { "drawer--close": !drawerActivity },
-            )}
-        >
+        <nav className={clsx({ "drawer--open": drawerActivity }, { "drawer--close": !drawerActivity })}>
             <m.Hidden mdUp implementation="js">
                 <m.Drawer
                     variant="temporary"

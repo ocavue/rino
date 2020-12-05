@@ -53,10 +53,7 @@ test("<NoteBody />", async () => {
 
     // Insert some notes
     act(() => {
-        editHooks.resetNotes([
-            Note.new({ type: NoteType.Local, content: "AAAA" }),
-            Note.new({ type: NoteType.Local, content: "BBBB" }),
-        ])
+        editHooks.resetNotes([Note.new({ type: NoteType.Local, content: "AAAA" }), Note.new({ type: NoteType.Local, content: "BBBB" })])
         workHooks.setLoadingData(false)
     })
     expect(editHooks.notes).toHaveLength(2)

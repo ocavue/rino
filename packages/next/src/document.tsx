@@ -53,10 +53,7 @@ export function getNextDocument({ host, hasManifest }: { host: string; hasManife
             </Head>
             <body>
                 <noscript>
-                    <strong>
-                        We're sorry but Rino doesn't work properly without JavaScript enabled.
-                        Please enable it to continue.
-                    </strong>
+                    <strong>We're sorry but Rino doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
                 </noscript>
                 <Main />
                 <NextScript />

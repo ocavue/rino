@@ -5,12 +5,7 @@ import React, { FC, useEffect, useMemo, useRef } from "react"
 
 import { DevTools } from "../DevTools"
 import { EditorProps } from "../types"
-import {
-    SourceCodeExtension,
-    SourceCodeManager,
-    SourceCodeSchema,
-    useSourceCodeManager,
-} from "./manager"
+import { SourceCodeExtension, SourceCodeManager, SourceCodeSchema, useSourceCodeManager } from "./manager"
 
 const InnerEditor: FC<{ className: string }> = ({ className }) => {
     const { getRootProps } = useRemirror()
@@ -19,22 +14,13 @@ const InnerEditor: FC<{ className: string }> = ({ className }) => {
 
 type Doc = ProsemirrorNode<SourceCodeSchema>
 
-export const SourceCodeEditor: FC<EditorProps> = ({
-    className,
-    content,
-    editable,
-    autoFocus,
-    setContent,
-}) => {
+export const SourceCodeEditor: FC<EditorProps> = ({ className, content, editable, autoFocus, setContent }) => {
     const manager: SourceCodeManager = useSourceCodeManager()
     const docRef = useRef<Doc>()
 
     const { initialNode, onChange, saveContent } = useMemo(() => {
         const schema = manager.schema
-        const initialNode = schema.nodes.doc.create(
-            {},
-            schema.nodes.codeMirror.create({}, content ? schema.text(content) : undefined),
-        )
+        const initialNode = schema.nodes.doc.create({}, schema.nodes.codeMirror.create({}, content ? schema.text(content) : undefined))
         const getContent = (doc: Doc) => {
             return doc.textContent
         }
