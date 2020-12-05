@@ -37,7 +37,7 @@ jobs:
         # Reinstall node modules even if `cache-hit` is `true` because we need to build symlinks for Yarn workspace
         run: |
           date
-          yarn install --frozen-lockfile
+          yarn install --immutable
           date
           echo "[DEBUG] CACHE_HIT: $CACHE_HIT"
           if [ "$CACHE_HIT" != "true" ]
