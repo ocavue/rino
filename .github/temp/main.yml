@@ -101,7 +101,7 @@ jobs:
           REACT_APP_TEST_USERNAME: ${{ secrets.REACT_APP_TEST_USERNAME }}
           REACT_APP_TEST_PASSWORD: ${{ secrets.REACT_APP_TEST_PASSWORD }}
         run: |
-          yarn run web firebase emulators:exec --only firestore "
+          ./node_modules/.bin/firebase emulators:exec --only firestore "
             yarn run web start > /dev/null &
             yarn run test --coverage
           "
