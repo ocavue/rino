@@ -129,6 +129,18 @@ function flatInlineCode(mdastToken: mdast.InlineCode, depth: number): InlineToke
     ]
 }
 
+function flatImage(mdastToken: mdast.Image, depth: number): InlineTokenV2[] {
+    return [
+        {
+            marks: ["mdImgUri"],
+            attrs: { depth, first: true, last: true, href: mdastToken.url },
+            start: mdastToken.position.start.offset,
+            end: mdastToken.position.end.offset,
+            text: "",
+        },
+    ]
+}
+
 function flatLink(mdastToken: mdast.Link, depth: number): InlineTokenV2[] {
     const inlineTokens: InlineTokenV2[] = [
         // match "<" for autolinks or "[" for links
@@ -201,7 +213,7 @@ function flatPhrasingContent(mdastToken: mdast.PhrasingContent, depth: number): 
         case "break":
             return []
         case "image":
-            return []
+            return flatImage(mdastToken, depth)
         case "imageReference":
             return []
         case "footnote":
