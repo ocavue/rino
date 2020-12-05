@@ -30,6 +30,7 @@ jobs:
             node_modules
             */*/node_modules
             ~/.cache/firebase
+            .yarn/cache
           key: ${{ runner.os }}-deps-v5-${{ hashFiles('yarn.lock') }}
 
       - &step_install_deps
@@ -37,7 +38,7 @@ jobs:
         # Reinstall node modules even if `cache-hit` is `true` because we need to build symlinks for Yarn workspace
         run: |
           date
-          yarn install --frozen-lockfile
+          yarn install --immutable
           date
           echo "[DEBUG] CACHE_HIT: $CACHE_HIT"
           if [ "$CACHE_HIT" != "true" ]
@@ -101,7 +102,7 @@ jobs:
           REACT_APP_TEST_USERNAME: ${{ secrets.REACT_APP_TEST_USERNAME }}
           REACT_APP_TEST_PASSWORD: ${{ secrets.REACT_APP_TEST_PASSWORD }}
         run: |
-          yarn run firebase emulators:exec --only firestore "
+          ./node_modules/.bin/firebase emulators:exec --only firestore "
             yarn run web start > /dev/null &
             yarn run test --coverage
           "

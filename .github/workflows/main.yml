@@ -24,13 +24,13 @@
           "name": "Cache dependencies",
           "uses": "actions/cache@master",
           "with": {
-            "path": "node_modules\n*/*/node_modules\n~/.cache/firebase\n",
+            "path": "node_modules\n*/*/node_modules\n~/.cache/firebase\n.yarn/cache\n",
             "key": "${{ runner.os }}-deps-v5-${{ hashFiles('yarn.lock') }}"
           }
         },
         {
           "name": "Install Dependencies",
-          "run": "date\nyarn install --frozen-lockfile\ndate\necho \"[DEBUG] CACHE_HIT: $CACHE_HIT\"\nif [ \"$CACHE_HIT\" != \"true\" ]\nthen\n  echo \"[DEBUG] installing\"\n  yarn run web firebase setup:emulators:firestore\nfi\nls -lrth ~/.cache/firebase/emulators/\n",
+          "run": "date\nyarn install --immutable\ndate\necho \"[DEBUG] CACHE_HIT: $CACHE_HIT\"\nif [ \"$CACHE_HIT\" != \"true\" ]\nthen\n  echo \"[DEBUG] installing\"\n  yarn run web firebase setup:emulators:firestore\nfi\nls -lrth ~/.cache/firebase/emulators/\n",
           "env": {
             "CACHE_HIT": "${{ steps.step_cache_deps.outputs.cache-hit }}"
           }
@@ -84,13 +84,13 @@
           "name": "Cache dependencies",
           "uses": "actions/cache@master",
           "with": {
-            "path": "node_modules\n*/*/node_modules\n~/.cache/firebase\n",
+            "path": "node_modules\n*/*/node_modules\n~/.cache/firebase\n.yarn/cache\n",
             "key": "${{ runner.os }}-deps-v5-${{ hashFiles('yarn.lock') }}"
           }
         },
         {
           "name": "Install Dependencies",
-          "run": "date\nyarn install --frozen-lockfile\ndate\necho \"[DEBUG] CACHE_HIT: $CACHE_HIT\"\nif [ \"$CACHE_HIT\" != \"true\" ]\nthen\n  echo \"[DEBUG] installing\"\n  yarn run web firebase setup:emulators:firestore\nfi\nls -lrth ~/.cache/firebase/emulators/\n",
+          "run": "date\nyarn install --immutable\ndate\necho \"[DEBUG] CACHE_HIT: $CACHE_HIT\"\nif [ \"$CACHE_HIT\" != \"true\" ]\nthen\n  echo \"[DEBUG] installing\"\n  yarn run web firebase setup:emulators:firestore\nfi\nls -lrth ~/.cache/firebase/emulators/\n",
           "env": {
             "CACHE_HIT": "${{ steps.step_cache_deps.outputs.cache-hit }}"
           }
@@ -119,7 +119,7 @@
             "REACT_APP_TEST_USERNAME": "${{ secrets.REACT_APP_TEST_USERNAME }}",
             "REACT_APP_TEST_PASSWORD": "${{ secrets.REACT_APP_TEST_PASSWORD }}"
           },
-          "run": "yarn run firebase emulators:exec --only firestore \"\n  yarn run web start > /dev/null &\n  yarn run test --coverage\n\"\n"
+          "run": "./node_modules/.bin/firebase emulators:exec --only firestore \"\n  yarn run web start > /dev/null &\n  yarn run test --coverage\n\"\n"
         },
         {
           "name": "Upload coverage information to codecov",
@@ -150,13 +150,13 @@
           "name": "Cache dependencies",
           "uses": "actions/cache@master",
           "with": {
-            "path": "node_modules\n*/*/node_modules\n~/.cache/firebase\n",
+            "path": "node_modules\n*/*/node_modules\n~/.cache/firebase\n.yarn/cache\n",
             "key": "${{ runner.os }}-deps-v5-${{ hashFiles('yarn.lock') }}"
           }
         },
         {
           "name": "Install Dependencies",
-          "run": "date\nyarn install --frozen-lockfile\ndate\necho \"[DEBUG] CACHE_HIT: $CACHE_HIT\"\nif [ \"$CACHE_HIT\" != \"true\" ]\nthen\n  echo \"[DEBUG] installing\"\n  yarn run web firebase setup:emulators:firestore\nfi\nls -lrth ~/.cache/firebase/emulators/\n",
+          "run": "date\nyarn install --immutable\ndate\necho \"[DEBUG] CACHE_HIT: $CACHE_HIT\"\nif [ \"$CACHE_HIT\" != \"true\" ]\nthen\n  echo \"[DEBUG] installing\"\n  yarn run web firebase setup:emulators:firestore\nfi\nls -lrth ~/.cache/firebase/emulators/\n",
           "env": {
             "CACHE_HIT": "${{ steps.step_cache_deps.outputs.cache-hit }}"
           }
@@ -197,13 +197,13 @@
           "name": "Cache dependencies",
           "uses": "actions/cache@master",
           "with": {
-            "path": "node_modules\n*/*/node_modules\n~/.cache/firebase\n",
+            "path": "node_modules\n*/*/node_modules\n~/.cache/firebase\n.yarn/cache\n",
             "key": "${{ runner.os }}-deps-v5-${{ hashFiles('yarn.lock') }}"
           }
         },
         {
           "name": "Install Dependencies",
-          "run": "date\nyarn install --frozen-lockfile\ndate\necho \"[DEBUG] CACHE_HIT: $CACHE_HIT\"\nif [ \"$CACHE_HIT\" != \"true\" ]\nthen\n  echo \"[DEBUG] installing\"\n  yarn run web firebase setup:emulators:firestore\nfi\nls -lrth ~/.cache/firebase/emulators/\n",
+          "run": "date\nyarn install --immutable\ndate\necho \"[DEBUG] CACHE_HIT: $CACHE_HIT\"\nif [ \"$CACHE_HIT\" != \"true\" ]\nthen\n  echo \"[DEBUG] installing\"\n  yarn run web firebase setup:emulators:firestore\nfi\nls -lrth ~/.cache/firebase/emulators/\n",
           "env": {
             "CACHE_HIT": "${{ steps.step_cache_deps.outputs.cache-hit }}"
           }
@@ -297,13 +297,13 @@
           "name": "Cache dependencies",
           "uses": "actions/cache@master",
           "with": {
-            "path": "node_modules\n*/*/node_modules\n~/.cache/firebase\n",
+            "path": "node_modules\n*/*/node_modules\n~/.cache/firebase\n.yarn/cache\n",
             "key": "${{ runner.os }}-deps-v5-${{ hashFiles('yarn.lock') }}"
           }
         },
         {
           "name": "Install Dependencies",
-          "run": "date\nyarn install --frozen-lockfile\ndate\necho \"[DEBUG] CACHE_HIT: $CACHE_HIT\"\nif [ \"$CACHE_HIT\" != \"true\" ]\nthen\n  echo \"[DEBUG] installing\"\n  yarn run web firebase setup:emulators:firestore\nfi\nls -lrth ~/.cache/firebase/emulators/\n",
+          "run": "date\nyarn install --immutable\ndate\necho \"[DEBUG] CACHE_HIT: $CACHE_HIT\"\nif [ \"$CACHE_HIT\" != \"true\" ]\nthen\n  echo \"[DEBUG] installing\"\n  yarn run web firebase setup:emulators:firestore\nfi\nls -lrth ~/.cache/firebase/emulators/\n",
           "env": {
             "CACHE_HIT": "${{ steps.step_cache_deps.outputs.cache-hit }}"
           }
@@ -357,13 +357,13 @@
           "name": "Cache dependencies",
           "uses": "actions/cache@master",
           "with": {
-            "path": "node_modules\n*/*/node_modules\n~/.cache/firebase\n",
+            "path": "node_modules\n*/*/node_modules\n~/.cache/firebase\n.yarn/cache\n",
             "key": "${{ runner.os }}-deps-v5-${{ hashFiles('yarn.lock') }}"
           }
         },
         {
           "name": "Install Dependencies",
-          "run": "date\nyarn install --frozen-lockfile\ndate\necho \"[DEBUG] CACHE_HIT: $CACHE_HIT\"\nif [ \"$CACHE_HIT\" != \"true\" ]\nthen\n  echo \"[DEBUG] installing\"\n  yarn run web firebase setup:emulators:firestore\nfi\nls -lrth ~/.cache/firebase/emulators/\n",
+          "run": "date\nyarn install --immutable\ndate\necho \"[DEBUG] CACHE_HIT: $CACHE_HIT\"\nif [ \"$CACHE_HIT\" != \"true\" ]\nthen\n  echo \"[DEBUG] installing\"\n  yarn run web firebase setup:emulators:firestore\nfi\nls -lrth ~/.cache/firebase/emulators/\n",
           "env": {
             "CACHE_HIT": "${{ steps.step_cache_deps.outputs.cache-hit }}"
           }

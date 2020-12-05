@@ -6,6 +6,11 @@ packages/*/public/share
 nohup.out
 .venv
 
+# yarn https://yarnpkg.com/getting-started/qa#which-files-should-be-gitignored
+.yarn/*
+!.yarn/releases
+.pnp.*
+
 # config
 **/config/*
 !firestore.indexes.json
