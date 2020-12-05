@@ -16,8 +16,8 @@ export default DynamicPage("Index", () => {
     if (isSignedInOrInDevelopment()) {
         return import("src/views/Workspace")
     } else {
-        // This is weird because the server should return a 302 response and the client don't need
-        // to do the redirect job. (TODO)
+        // In the production website, the server should return a 302 response and the client don't need to do the redirect job. This is only
+        // for preview deployments.
         return import("src/views/Redirect")
     }
 })
