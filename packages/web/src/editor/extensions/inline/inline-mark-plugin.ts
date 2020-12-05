@@ -149,8 +149,6 @@ function applyMarksToNode<S extends WysiwygSchema>(
             return
         }
 
-        console.debug("[applyMarksToNode] steps:", steps)
-
         // TODO: I'm not sure the performance different between the two methods below.
         if (steps.length < maxMarkStep) {
             for (const step of steps) {
