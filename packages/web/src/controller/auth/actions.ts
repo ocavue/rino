@@ -19,7 +19,9 @@ export async function signInWithEmailAndPassword(email: string, password: string
 }
 
 export async function signInTestUser() {
-    console.debug(`Sign in with '${testUser.username}' '${testUser.password}'`)
+    if (!testUser.password) {
+        console.warn(`Sign in with '${testUser.username}' '${testUser.password}'`)
+    }
     return await signInWithEmailAndPassword(testUser.username, testUser.password)
 }
 

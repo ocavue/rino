@@ -58,10 +58,10 @@ export const Editor: React.FC<EditorProps> = ({ autoFocus, note, setNoteContent 
         return () => window.removeEventListener("keydown", handleKeydown)
     }, [mode, note])
 
-    useEffect(() => {
-        console.debug(`Mounting <${Editor.displayName}/>`)
-        return () => console.debug(`Unmounting <${Editor.displayName}/>`)
-    }, [])
+    // useEffect(() => {
+    //     console.debug(`Mounting <${Editor.displayName}/>`)
+    //     return () => console.debug(`Unmounting <${Editor.displayName}/>`)
+    // }, [])
 
     const theme = useTheme()
     const className = clsx(

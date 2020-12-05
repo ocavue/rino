@@ -108,8 +108,6 @@ function parseNode<S extends WysiwygSchema>(
         })
     }
 
-    console.debug("[parseNode] steps:", steps)
-
     return steps
 }
 
