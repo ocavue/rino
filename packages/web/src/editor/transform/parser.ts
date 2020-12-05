@@ -108,11 +108,7 @@ function withoutTrailingNewline(str: string): string {
     return str.endsWith("\n") ? str.slice(0, str.length - 1) : str
 }
 
-function buildBlockTokenHandler(
-    parserRule: BlockParserRule,
-    handlers: TokenHandlers,
-    schema: Schema,
-): void {
+function buildBlockTokenHandler(parserRule: BlockParserRule, handlers: TokenHandlers, schema: Schema): void {
     const nodeType: NodeType = schema.nodes[parserRule.node]
     if (nodeType === undefined) {
         throw new RangeError(`Can't find block type '${parserRule.node}'`)

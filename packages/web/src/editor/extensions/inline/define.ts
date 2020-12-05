@@ -239,7 +239,7 @@ export enum InlineDecorateType {
     Ignore = "IGNORE",
 }
 
-export interface InlineTokenV2 {
+export interface InlineToken {
     marks: RinoMarkName[]
 
     text: string

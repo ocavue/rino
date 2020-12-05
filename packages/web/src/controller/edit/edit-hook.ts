@@ -20,13 +20,7 @@ function useEditHook() {
         createLocalNote,
     } = useNote()
 
-    const {
-        collection,
-        collections,
-        collectionKey,
-        initCollections,
-        setCollectionKey: _setCollectionKey,
-    } = useCollection()
+    const { collection, collections, collectionKey, initCollections, setCollectionKey: _setCollectionKey } = useCollection()
 
     const setCollectionKey = useCallback(
         // Don't select any note after switching collection

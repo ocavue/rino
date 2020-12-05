@@ -1,19 +1,7 @@
-import {
-    createStyles,
-    List,
-    ListItem,
-    ListItemIcon,
-    ListItemText,
-    makeStyles,
-} from "@material-ui/core"
+import { createStyles, List, ListItem, ListItemIcon, ListItemText, makeStyles } from "@material-ui/core"
 import React from "react"
 
-import {
-    Collection,
-    collectionIconMap,
-    CollectionIconName,
-    EditContainer,
-} from "src/controller/edit"
+import { Collection, collectionIconMap, CollectionIconName, EditContainer } from "src/controller/edit"
 
 const useStyles = makeStyles(() => {
     return createStyles({
@@ -70,11 +58,5 @@ const CollectionList: React.FC<{
 export const CollectionTree: React.FC = () => {
     const { collections, collectionKey, setCollectionKey } = EditContainer.useContainer()
 
-    return (
-        <CollectionList
-            collections={collections}
-            collectionKey={collectionKey}
-            setCollectionKey={setCollectionKey}
-        />
-    )
+    return <CollectionList collections={collections} collectionKey={collectionKey} setCollectionKey={setCollectionKey} />
 }

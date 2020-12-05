@@ -111,14 +111,7 @@ const StyledButton = withStyles(
     }),
 )(Button)
 export const SubmitButton: React.FC<ButtonProps> = (props) => (
-    <StyledButton
-        type="submit"
-        fullWidth
-        variant="contained"
-        color="primary"
-        size="large"
-        {...props}
-    />
+    <StyledButton type="submit" fullWidth variant="contained" color="primary" size="large" {...props} />
 )
 
 type OnSubmit = (event: React.FormEvent<HTMLFormElement>) => void

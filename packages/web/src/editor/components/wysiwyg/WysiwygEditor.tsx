@@ -9,12 +9,7 @@ import { DevTools } from "../DevTools"
 import { ErrorBoundary } from "../ErrorBoundary"
 import { EditorProps } from "../types"
 import { TableMenu } from "./TableMenu"
-import {
-    useWysiwygManager,
-    WysiwygCombined,
-    WysiwygManager,
-    WysiwygSchema,
-} from "./wysiwyg-manager"
+import { useWysiwygManager, WysiwygCombined, WysiwygManager, WysiwygSchema } from "./wysiwyg-manager"
 import { buildMarkdownParser, buildMarkdownSerializer } from "./wysiwyg-markdown"
 
 const InnerEditor: FC<{ className: string }> = ({ className }) => {
@@ -30,13 +25,7 @@ const InnerEditor: FC<{ className: string }> = ({ className }) => {
 
 type Doc = ProsemirrorNode<WysiwygSchema>
 
-export const WysiwygEditor: FC<EditorProps> = ({
-    className,
-    autoFocus,
-    editable,
-    content,
-    setContent,
-}) => {
+export const WysiwygEditor: FC<EditorProps> = ({ className, autoFocus, editable, content, setContent }) => {
     const manager: WysiwygManager = useWysiwygManager()
     const docRef = useRef<Doc>()
     const [error, setError] = useState<Error | null>(null)

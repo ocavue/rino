@@ -4,10 +4,7 @@ import { useManager } from "@remirror/react"
 import { RinoCodeBlockExtension } from "src/editor/extensions"
 
 export function useSourceCodeManager() {
-    return useManager([
-        new CorePreset({}),
-        new RinoCodeBlockExtension({ defaultCodeMirrorConfig: { mode: "text/x-markdown" } }),
-    ])
+    return useManager([new CorePreset({}), new RinoCodeBlockExtension({ defaultCodeMirrorConfig: { mode: "text/x-markdown" } })])
 }
 
 export type SourceCodeManager = ReturnType<typeof useSourceCodeManager>

@@ -13,11 +13,7 @@ function assert(result: boolean, msg = "") {
 
 // Build a command that splits a non-empty textblock at the top level
 // of a list item by also splitting that list item.
-export function splitListItem(
-    paragraphType: NodeType,
-    rinoCheckboxType: NodeType,
-    rinoListItemType: NodeType,
-) {
+export function splitListItem(paragraphType: NodeType, rinoCheckboxType: NodeType, rinoListItemType: NodeType) {
     return function (state: EditorState, dispatch?: (tr: Transaction) => void): boolean {
         const { $from, $to, node } = state.selection as NodeSelection
         if ((node && node.isBlock) || $from.depth < 2 || !$from.sameParent($to)) return false
@@ -25,11 +21,7 @@ export function splitListItem(
         const parent: Node = $from.parent // $from.parent === $from.node(0) === $from.node($from.depth)
         const listItem: Node = $from.node(-1)
         if (listItem.type != rinoListItemType) return false
-        // TODO: typescript 3.7: listItem.firstChild?.type
-        const checkbox: Node | null =
-            listItem.firstChild && listItem.firstChild.type === rinoCheckboxType
-                ? listItem.firstChild
-                : null
+        const checkbox: Node | null = listItem.firstChild?.type == rinoCheckboxType ? listItem.firstChild : null
 
         if (parent.content.size === 0) {
             let tr = state.tr
@@ -53,21 +45,12 @@ export function splitListItem(
                 if (dispatch) {
                     const oldList: Node = $from.node(-2)
                     const listType = oldList.type
-                    assert(
-                        ["rinoOrderedList", "rinoBulletList"].includes(oldList.type.name),
-                        oldList.type.name,
-                    )
+                    assert(["rinoOrderedList", "rinoBulletList"].includes(oldList.type.name), oldList.type.name)
                     const listItemIndex = $from.index(-2)
-                    const newListItems1 = range(0, listItemIndex).map((index) =>
-                        oldList.child(index),
-                    )
+                    const newListItems1 = range(0, listItemIndex).map((index) => oldList.child(index))
 
                     // A note about lodash's `range` function: `range(1, 0)` will return `[1]`. I must use `range(1, 0, 1)` to return `[]`.
-                    const newListItems2 = range(
-                        listItemIndex + 1,
-                        oldList.childCount,
-                        1,
-                    ).map((index) => oldList.child(index))
+                    const newListItems2 = range(listItemIndex + 1, oldList.childCount, 1).map((index) => oldList.child(index))
 
                     assert(all(newListItems1.map((node) => node.type.name === "rinoListItem")))
                     assert(all(newListItems2.map((node) => node.type.name === "rinoListItem")))
@@ -76,17 +59,12 @@ export function splitListItem(
                         `newListItems1: ${newListItems1.length}; newListItems2: ${newListItems2.length}; oldList: ${oldList.childCount}`,
                     )
 
-                    const newList1 = newListItems1.length
-                        ? listType.createChecked(null, newListItems1)
-                        : undefined
-                    const newList2 = newListItems2.length
-                        ? listType.create(null, newListItems2)
-                        : undefined
+                    const newList1 = newListItems1.length ? listType.createChecked(null, newListItems1) : undefined
+                    const newList2 = newListItems2.length ? listType.create(null, newListItems2) : undefined
                     const newParagraph = paragraphType.create(null)
 
                     const nodes: Node[] = []
-                    for (const node of [newList1, newParagraph, newList2])
-                        if (node) nodes.push(node)
+                    for (const node of [newList1, newParagraph, newList2]) if (node) nodes.push(node)
                     const wrap = Fragment.fromArray(nodes)
                     const slice = new Slice(wrap, 0, 0)
                     tr = tr.replace($from.before(-2), $from.after(-2), slice)

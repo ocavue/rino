@@ -17,9 +17,7 @@ function useAuth() {
         const unsubscribe = onAuthStateChanged((user) => {
             const currentUser = getCurrentUser()
             if (currentUser?.uid !== user?.uid) {
-                console.warn(
-                    `getCurrentUser return ${currentUser} but onAuthStateChanged call ${user}`,
-                )
+                console.warn(`getCurrentUser return ${currentUser} but onAuthStateChanged call ${user}`)
             }
             setUser(user)
             setLoadingUser(false)

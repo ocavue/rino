@@ -61,13 +61,7 @@ export const TableMenu: React.FC<{
         ]
         return options.map(([id, SvgComponent, action]) => {
             return (
-                <IconButton
-                    key={id}
-                    id={id}
-                    data-testid={id}
-                    onClick={action}
-                    className={classes.menuButton}
-                >
+                <IconButton key={id} id={id} data-testid={id} onClick={action} className={classes.menuButton}>
                     <SvgComponent />
                 </IconButton>
             )

@@ -6,12 +6,7 @@ const firebaseConfig = require("../config/firebase.client.json")
 
 function initializeApp() {
     if (!process.env.GOOGLE_APPLICATION_CREDENTIALS) {
-        process.env.GOOGLE_APPLICATION_CREDENTIALS = path.resolve(
-            __dirname,
-            "..",
-            "config",
-            "firebase.admin.json",
-        )
+        process.env.GOOGLE_APPLICATION_CREDENTIALS = path.resolve(__dirname, "..", "config", "firebase.admin.json")
     }
     console.log(`GOOGLE_APPLICATION_CREDENTIALS: ${process.env.GOOGLE_APPLICATION_CREDENTIALS}`)
     const HTTP_PROXY = process.env.HTTP_PROXY || process.env.http_proxy

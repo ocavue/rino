@@ -31,8 +31,7 @@ export default function PasswordReset() {
         return (
             <AuthLayout title="Check your email" error="" progressing={false}>
                 <Typography variant="body1" data-testid="auth_password_reset_result">
-                    We've progressed an email to <strong>{email}</strong>. Click the link in the
-                    email to reset your password.
+                    We've progressed an email to <strong>{email}</strong>. Click the link in the email to reset your password.
                 </Typography>
                 <Grid container>
                     <Grid item>

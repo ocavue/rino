@@ -33,12 +33,7 @@ function getTextAttrs(textNode: ProsemirrorNode | undefined | null): TextAttrs {
  *
  * @returns The (absolute) position pairs of all visible marks
  */
-function findVisibleMarks(
-    textBlock: ProsemirrorNode,
-    cursorPos: number,
-    textIndex: number,
-    includeBefore: boolean,
-): [number, number][] {
+function findVisibleMarks(textBlock: ProsemirrorNode, cursorPos: number, textIndex: number, includeBefore: boolean): [number, number][] {
     const posPairs: [number, number][] = []
 
     // Find all visible marks after the cursor.
@@ -100,12 +95,7 @@ function createDecorationPlugin() {
                     const tokenDepth = getTextAttrs(textNode).depth
                     if (!tokenDepth) return
 
-                    posPairs = findVisibleMarks(
-                        textBlock,
-                        $pos.pos - $pos.textOffset,
-                        $pos.index($pos.depth),
-                        false,
-                    )
+                    posPairs = findVisibleMarks(textBlock, $pos.pos - $pos.textOffset, $pos.index($pos.depth), false)
                 }
 
                 return DecorationSet.create(

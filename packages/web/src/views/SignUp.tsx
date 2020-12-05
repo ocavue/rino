@@ -11,11 +11,7 @@ export default function SignUp() {
 
     return (
         <AuthLayout title="Sign up to Rino" error={error} progressing={progressing}>
-            <SignUpForm
-                progressing={progressing}
-                setProgressing={setProgressing}
-                setError={setError}
-            />
+            <SignUpForm progressing={progressing} setProgressing={setProgressing} setError={setError} />
         </AuthLayout>
     )
 }

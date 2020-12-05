@@ -44,10 +44,7 @@ export function useCollection() {
             }),
         )
     }, [])
-    const collections = useMemo(() => [inboxCollection, trashCollection], [
-        inboxCollection,
-        trashCollection,
-    ])
+    const collections = useMemo(() => [inboxCollection, trashCollection], [inboxCollection, trashCollection])
 
     return {
         collection,

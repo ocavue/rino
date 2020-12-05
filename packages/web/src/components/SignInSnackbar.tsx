@@ -29,10 +29,7 @@ const useStyles = makeStyles((theme: Theme) => {
         button: {
             // When using a light theme, the snackbar's background color is dark by default, so
             // we choice a light color for the button in this case.
-            color:
-                theme.palette.type === "light"
-                    ? theme.palette.secondary.light
-                    : theme.palette.secondary.dark,
+            color: theme.palette.type === "light" ? theme.palette.secondary.light : theme.palette.secondary.dark,
         },
     })
 })

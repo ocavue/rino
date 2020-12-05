@@ -12,11 +12,7 @@ const setup = () => {
         attributeNodes: { heading },
         manager,
         schema,
-    } = renderEditor([
-        new RinoHardBreakExtension(),
-        new RinoHeadingExtension({}),
-        new RinoCorePreset({}),
-    ])
+    } = renderEditor([new RinoHardBreakExtension(), new RinoHeadingExtension({}), new RinoCorePreset({})])
 
     const [h1, h2, h3, h4, h5, h6] = [
         heading({ level: 1 }),

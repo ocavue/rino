@@ -14,10 +14,7 @@ export function dedent(text: string) {
         if (line.length > 0) {
             const match = /^(\s*).*$/.exec(line)
             if (match) {
-                minWhitespace =
-                    minWhitespace === -1
-                        ? match[1].length
-                        : Math.min(minWhitespace, match[1].length)
+                minWhitespace = minWhitespace === -1 ? match[1].length : Math.min(minWhitespace, match[1].length)
             } else {
                 return text
             }

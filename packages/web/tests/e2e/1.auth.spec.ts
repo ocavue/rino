@@ -37,9 +37,7 @@ describe("Sign-in", () => {
     test("with invaild email", async () => {
         await signIn(invaildEmail, "abcdefg")
         await wait("auth_signin_form")
-        expect(await getInnerText("auth_error")).toEqual(
-            "Error: The email address is badly formatted.",
-        )
+        expect(await getInnerText("auth_error")).toEqual("Error: The email address is badly formatted.")
     })
 
     test("with clicking submit button", async () => {
@@ -76,17 +74,13 @@ describe("Sign-up", () => {
     test("with invaild email", async () => {
         await signUp(invaildEmail, "abcdefg")
         await wait("auth_signup_form")
-        expect(await getInnerText("auth_error")).toEqual(
-            "Error: The email address is badly formatted.",
-        )
+        expect(await getInnerText("auth_error")).toEqual("Error: The email address is badly formatted.")
     })
 
     test("with used email", async () => {
         await signUp(username, "abcdefg")
         await wait("auth_signup_form")
-        expect(await getInnerText("auth_error")).toEqual(
-            "Error: The email address is already in use by another account.",
-        )
+        expect(await getInnerText("auth_error")).toEqual("Error: The email address is already in use by another account.")
     })
 })
 
@@ -121,8 +115,6 @@ describe("Password reset", () => {
 
     test("with invaild email", async () => {
         await resetPassword(invaildEmail, "abcdefg123!")
-        expect(await getInnerText("auth_error")).toEqual(
-            "Error: The email address is badly formatted.",
-        )
+        expect(await getInnerText("auth_error")).toEqual("Error: The email address is badly formatted.")
     })
 })

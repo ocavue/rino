@@ -39,12 +39,7 @@ export const CTA: React.FC = () => {
         <div className={classes.cta}>
             <Logo className={classes.logo} />
             <h2 className={classes.header}>Get started with Rino</h2>
-            <Button
-                href={authInfo.signUpLink}
-                testid="homepage_signup_btn"
-                ariaLabel="create_an_account"
-                primary
-            >
+            <Button href={authInfo.signUpLink} testid="homepage_signup_btn" ariaLabel="create_an_account" primary>
                 Create an account
             </Button>
         </div>

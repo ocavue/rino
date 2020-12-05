@@ -58,11 +58,7 @@ function parseTextBlock(schema: Schema, node: Node<Schema>, startPos: number): M
         while (children.length) {
             const { node: childNode, from: receivedFrom, to: receivedTo } = children[0]
 
-            if (
-                receivedFrom === expectedFrom &&
-                receivedTo === expectedTo &&
-                Mark.sameSet(childNode.marks, expectedMarks)
-            ) {
+            if (receivedFrom === expectedFrom && receivedTo === expectedTo && Mark.sameSet(childNode.marks, expectedMarks)) {
                 // Successfully found a expected inline node. Don't need to create a step in this case.
                 needStep = false
                 children.shift()
@@ -90,11 +86,7 @@ function parseTextBlock(schema: Schema, node: Node<Schema>, startPos: number): M
     return steps
 }
 
-function parseNode<S extends WysiwygSchema>(
-    schema: S,
-    node: Node<S>,
-    startPos: number,
-): MarkStep<S>[] {
+function parseNode<S extends WysiwygSchema>(schema: S, node: Node<S>, startPos: number): MarkStep<S>[] {
     if (node.attrs.inlineDecorateType === InlineDecorateType.Ignore) {
         return []
     }
@@ -130,11 +122,7 @@ const unchangedMappable: Mappable = {
  * @param node The Prosemirror node to parse
  * @param startPos The (absolute) position at the start of the node
  */
-function applyMarksToNode<S extends WysiwygSchema>(
-    view: EditorView<S>,
-    node: Node<S>,
-    startPos: number,
-) {
+function applyMarksToNode<S extends WysiwygSchema>(view: EditorView<S>, node: Node<S>, startPos: number) {
     const tr = view.state.tr
 
     if (!node.isTextblock) {

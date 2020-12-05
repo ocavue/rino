@@ -13,11 +13,7 @@ const useStyles = makeStyles((theme: Theme) => {
     })
 })
 
-export const NoteListItem: React.FC<{ note: Note; onClick: () => void; selected: boolean }> = ({
-    note,
-    onClick,
-    selected,
-}) => {
+export const NoteListItem: React.FC<{ note: Note; onClick: () => void; selected: boolean }> = ({ note, onClick, selected }) => {
     const classes = useStyles()
 
     const [menuProps, setMenuProps] = useState<{
@@ -41,9 +37,7 @@ export const NoteListItem: React.FC<{ note: Note; onClick: () => void; selected:
                 onClick={onClick}
                 selected={selected}
                 divider={true}
-                data-testid={
-                    note.local ? "sidebar_notes_list_item_local" : "sidebar_notes_list_item"
-                }
+                data-testid={note.local ? "sidebar_notes_list_item_local" : "sidebar_notes_list_item"}
                 onContextMenu={handleMenuOpen}
             >
                 <ListItemText

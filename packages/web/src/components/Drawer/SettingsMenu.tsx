@@ -39,13 +39,7 @@ const SettingsMenu: React.FC<{
     }
 
     return (
-        <Menu
-            keepMounted
-            anchorEl={anchor}
-            open={Boolean(anchor)}
-            onClose={handleMenuClose}
-            data-testid="sidebar_settings_menu"
-        >
+        <Menu keepMounted anchorEl={anchor} open={Boolean(anchor)} onClose={handleMenuClose} data-testid="sidebar_settings_menu">
             <MenuItem onClick={onClickToggleThem} data-testid="sidebar_settings_menu_item_theme">
                 Toggle Theme
             </MenuItem>

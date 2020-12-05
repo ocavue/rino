@@ -143,11 +143,7 @@ export const Features: React.FC = () => {
             <div style={{ marginTop: "2.5rem" }}>
                 <ul className={classes.blockContainer}>
                     <FeatureBlock title="What you see is what you get" desc="" svg={wysiwygSvg} />
-                    <FeatureBlock
-                        title="Sync across all your devices"
-                        desc=""
-                        svg={cloudUploadSvg}
-                    />
+                    <FeatureBlock title="Sync across all your devices" desc="" svg={cloudUploadSvg} />
                     <FeatureBlock title="Work offline" desc="" svg={offlineSvg} />
                     <FeatureBlock title="Free and open source" desc="" svg={githubSvg} />
                 </ul>

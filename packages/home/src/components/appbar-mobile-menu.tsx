@@ -71,11 +71,7 @@ export const MobileMenu: React.FC<{
     const authInfo = useAuthInfo()
 
     return (
-        <div
-            className={animationClassName + " " + classes.root}
-            hidden={hidden}
-            data-testid="homepage_appbar_mobile_menu"
-        >
+        <div className={animationClassName + " " + classes.root} hidden={hidden} data-testid="homepage_appbar_mobile_menu">
             <div
                 style={{
                     borderRadius: "0.5rem",
@@ -126,14 +122,7 @@ export const MobileMenu: React.FC<{
                             paddingRight: "1.25rem",
                         }}
                     >
-                        <Button
-                            href={authInfo.signUpLink}
-                            ariaLabel="Sign up"
-                            testid=""
-                            primary
-                            shadow
-                            fullWidth
-                        >
+                        <Button href={authInfo.signUpLink} ariaLabel="Sign up" testid="" primary shadow fullWidth>
                             Sign up
                         </Button>
                         <p

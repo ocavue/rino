@@ -14,14 +14,7 @@ type PasswordResetProps = {
     setError: (val: string) => void
 }
 
-export default function PasswordReset({
-    email,
-    setEmail,
-    progressing,
-    setProgressing,
-    setProgressed,
-    setError,
-}: PasswordResetProps) {
+export default function PasswordReset({ email, setEmail, progressing, setProgressing, setProgressed, setError }: PasswordResetProps) {
     const disableSubmit = useMemo(() => !email || progressing, [email, progressing])
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault()

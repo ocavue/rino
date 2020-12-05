@@ -12,13 +12,7 @@ import React from "react"
 
 import App from "src/views/App"
 
-export default function Root<T>({
-    Component,
-    pageProps,
-}: {
-    Component: React.FC<T>
-    pageProps: T
-}) {
+export default function Root<T>({ Component, pageProps }: { Component: React.FC<T>; pageProps: T }) {
     return (
         <BaseApp>
             <App>

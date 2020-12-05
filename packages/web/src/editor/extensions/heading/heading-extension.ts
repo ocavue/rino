@@ -1,9 +1,4 @@
-import {
-    ApplySchemaAttributes,
-    convertCommand,
-    findParentNodeOfType,
-    KeyBindings,
-} from "@remirror/core"
+import { ApplySchemaAttributes, convertCommand, findParentNodeOfType, KeyBindings } from "@remirror/core"
 import { HeadingExtension } from "@remirror/extension-heading"
 import Token from "markdown-it/lib/token"
 import { setBlockType } from "prosemirror-commands"
@@ -36,11 +31,7 @@ export class RinoHeadingExtension extends HeadingExtension {
                     return false
                 }
 
-                const tr = state.tr.setBlockType(
-                    parent.start,
-                    parent.start,
-                    (state.schema as Schema).nodes.paragraph,
-                )
+                const tr = state.tr.setBlockType(parent.start, parent.start, (state.schema as Schema).nodes.paragraph)
                 if (dispatch) {
                     dispatch(tr)
                 }

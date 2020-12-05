@@ -122,10 +122,7 @@ export async function getDimensions(testid: string) {
     }, element)
 }
 
-export async function retry(
-    fn: () => Promise<boolean> | boolean,
-    timeout = 5000,
-): Promise<boolean> {
+export async function retry(fn: () => Promise<boolean> | boolean, timeout = 5000): Promise<boolean> {
     const maxTime = Date.now() + timeout
     while (Date.now() <= maxTime) {
         const promiseOrBoolean = fn()
@@ -138,10 +135,7 @@ export async function retry(
 
 type Shape = string | { [selector: string]: Shape[] }
 export async function expectWysiwygHtml(shapes: Shape[]) {
-    type Selectors = Record<
-        string,
-        { exists: boolean; childrenNumber: number | null; childrenTags?: string[] }
-    >
+    type Selectors = Record<string, { exists: boolean; childrenNumber: number | null; childrenTags?: string[] }>
 
     function buildExpectedSelectors(selector: string, shapes: Shape[]) {
         const selectors: Selectors = {}
@@ -174,10 +168,7 @@ export async function expectWysiwygHtml(shapes: Shape[]) {
             const element = document.querySelector(selector)
             if (!element) {
                 info.exists = false
-            } else if (
-                info.childrenNumber !== null &&
-                info.childrenNumber !== element.children.length
-            ) {
+            } else if (info.childrenNumber !== null && info.childrenNumber !== element.children.length) {
                 info.childrenNumber = element.children.length
                 info.childrenTags = Array(element.children.length)
                     .fill(0)
