@@ -69,7 +69,6 @@ export function Homepage(props: HomepageProps) {
 
     const [mobileMenuActivity, setMobileMenuActivity] = React.useState(false)
 
-
     return (
         <div className={classes.root} data-testid="homepage_root">
             <div className={classes.container}>
