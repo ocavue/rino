@@ -30,6 +30,7 @@ jobs:
             node_modules
             */*/node_modules
             ~/.cache/firebase
+            .yarn/cache
           key: ${{ runner.os }}-deps-v5-${{ hashFiles('yarn.lock') }}
 
       - &step_install_deps
