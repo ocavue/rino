@@ -1,5 +1,11 @@
 # @rino.app/web
 
+## 0.16.0
+
+### Minor Changes
+
+-   9e7185b: Use micromark to parse inline markdown text.
+
 ## 0.15.0
 
 ### Minor Changes
