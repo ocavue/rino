@@ -1,5 +1,4 @@
 import { createStyles, makeStyles } from "@material-ui/styles"
-import { getSignInState } from "@rino.app/common"
 import React from "react"
 
 import { breakpoints } from "../styles/breakpoint"
@@ -70,11 +69,6 @@ export function Homepage(props: HomepageProps) {
 
     const [mobileMenuActivity, setMobileMenuActivity] = React.useState(false)
 
-    if (typeof window !== "undefined") {
-        // client-side-only code
-        // TODO: use https://github.com/vercel/next.js/issues/2473#issuecomment-587551234
-        console.log(`sign in state: ${getSignInState()}`)
-    }
 
     return (
         <div className={classes.root} data-testid="homepage_root">
