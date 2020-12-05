@@ -3,22 +3,22 @@ import { Node as ProsemirrorNode } from "prosemirror-model"
 import { EditorState } from "prosemirror-state"
 import { Decoration, DecorationSet } from "prosemirror-view"
 
-import { isAutoHideMark } from "./inline-mark-define"
+import { isAutoHideMark, RinnMarkAttrs } from "./define"
 
-interface TextInfo {
-    depth?: number
-    start?: boolean
-    end?: boolean
-    name?: string
-}
+type TextAttrs = Partial<RinnMarkAttrs & { isAutoHideMark?: boolean }>
 
 /**
  * Read a text node and return information from its mark
  */
-function getTextInfo(textNode: ProsemirrorNode | undefined | null): TextInfo {
-    // A text node should contain one or zero mark
-    const mark = textNode?.marks?.[0]
-    return mark ? { ...mark.attrs, name: mark.type.name } : {}
+function getTextAttrs(textNode: ProsemirrorNode | undefined | null): TextAttrs {
+    const attrs: TextAttrs = {}
+    for (const mark of textNode?.marks || []) {
+        if (isAutoHideMark(mark.type.name)) {
+            attrs.isAutoHideMark = true
+        }
+        Object.assign(attrs, mark.attrs)
+    }
+    return attrs
 }
 
 /**
@@ -45,17 +45,17 @@ function findVisibleMarks(
     let textStartPos = cursorPos
     for (let i = textIndex; i < textBlock.content.childCount; i++) {
         const textNode = textBlock.content.child(i)
-        const info = getTextInfo(textNode)
-        if (isAutoHideMark(info.name)) {
+        const info = getTextAttrs(textNode)
+        if (info.isAutoHideMark) {
             posPairs.push([textStartPos, textStartPos + textNode.nodeSize])
         }
         textStartPos += textNode.nodeSize
         // Break the loop if match a top level end token
-        if (info.depth === 1 && info.end) break
+        if (info.depth === 1 && info.last) break
     }
 
-    const infoAfterCursor = getTextInfo(textBlock.maybeChild(textIndex))
-    if (infoAfterCursor.depth === 1 && infoAfterCursor.start && !includeBefore) {
+    const infoAfterCursor = getTextAttrs(textBlock.maybeChild(textIndex))
+    if (infoAfterCursor.depth === 1 && infoAfterCursor.first && !includeBefore) {
         return posPairs
     }
 
@@ -63,13 +63,13 @@ function findVisibleMarks(
     let textEndPos = cursorPos
     for (let i = textIndex - 1; i >= 0; i--) {
         const textNode = textBlock.content.child(i)
-        const info = getTextInfo(textNode)
-        if (isAutoHideMark(info.name)) {
+        const info = getTextAttrs(textNode)
+        if (info.isAutoHideMark) {
             posPairs.push([textEndPos - textNode.nodeSize, textEndPos])
         }
         textEndPos -= textNode.nodeSize
         // Break the loop if match a top level start token
-        if (info.depth === 1 && info.start) break
+        if (info.depth === 1 && info.first) break
     }
 
     return posPairs
@@ -97,7 +97,7 @@ function createDecorationPlugin() {
                     const textNode = textBlock.content.maybeChild(textNodeIndex)
                     if (!textNode) return
 
-                    const tokenDepth = getTextInfo(textNode).depth
+                    const tokenDepth = getTextAttrs(textNode).depth
                     if (!tokenDepth) return
 
                     posPairs = findVisibleMarks(

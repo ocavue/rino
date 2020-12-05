@@ -6,14 +6,22 @@
         "typescriptreact",
     ],
     "editor.codeActionsOnSave": {
-        "source.fixAll.eslint": true
+        "source.fixAll.eslint": true,
     },
     "editor.defaultFormatter": "dbaeumer.vscode-eslint",
     "editor.rulers": [100],
     "typescript.tsdk": "node_modules/typescript/lib",
     "python.pythonPath": ".venv/bin/python",
-    "eslint.enable": true,
     "eslint.codeActionsOnSave.mode": "problems",
     "eslint.format.enable": true,
-    "eslint.run": "onType",
+    "eslint.run": "onSave",
+    "[json]": {
+        "editor.defaultFormatter": "vscode.json-language-features"
+    },
+    "[javascript]": {
+        "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+    },
+    "[typescript]": {
+        "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+    },
 }
