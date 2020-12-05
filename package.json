@@ -43,9 +43,6 @@
             "config:base",
             ":semanticCommitTypeAll(chore)"
         ],
-        "postUpdateOptions": [
-            "yarnDedupeFewer"
-        ],
         "lockFileMaintenance": {
             "enabled": true,
             "extends": "schedule:monthly"
@@ -69,7 +66,6 @@
             "webpack",
             "node"
         ],
-        "prHourlyLimit": 1,
         "rangeStrategy": "bump"
     },
     "husky": {
