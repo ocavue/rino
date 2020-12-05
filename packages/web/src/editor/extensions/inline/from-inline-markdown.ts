@@ -3,7 +3,7 @@ import fromMarkdown from "mdast-util-from-markdown"
 import mdastStrikethrough from "mdast-util-gfm-strikethrough"
 import micromarkStrikethrough from "micromark-extension-gfm-strikethrough"
 
-import { InlineTokenV2, RinoMarkName } from "./define"
+import { InlineToken, RinoMarkName } from "./define"
 
 function fixMarkNames(marks: RinoMarkName[]): RinoMarkName[] {
     if (marks.length <= 1) return marks
@@ -13,7 +13,7 @@ function fixMarkNames(marks: RinoMarkName[]): RinoMarkName[] {
     return marks
 }
 
-function flatText(mdastToken: mdast.Text, depth: number): InlineTokenV2[] {
+function flatText(mdastToken: mdast.Text, depth: number): InlineToken[] {
     return [
         {
             marks: ["mdText"],
@@ -25,8 +25,8 @@ function flatText(mdastToken: mdast.Text, depth: number): InlineTokenV2[] {
     ]
 }
 
-function flatStrong(mdastToken: mdast.Strong, depth: number): InlineTokenV2[] {
-    const inlineTokens: InlineTokenV2[] = [
+function flatStrong(mdastToken: mdast.Strong, depth: number): InlineToken[] {
+    const inlineTokens: InlineToken[] = [
         {
             marks: ["mdMark"],
             attrs: { depth, first: true },
@@ -51,8 +51,8 @@ function flatStrong(mdastToken: mdast.Strong, depth: number): InlineTokenV2[] {
     return inlineTokens
 }
 
-function flatEmphasis(mdastToken: mdast.Emphasis, depth: number): InlineTokenV2[] {
-    const inlineTokens: InlineTokenV2[] = [
+function flatEmphasis(mdastToken: mdast.Emphasis, depth: number): InlineToken[] {
+    const inlineTokens: InlineToken[] = [
         {
             marks: ["mdMark"],
             attrs: { depth, first: true },
@@ -77,8 +77,8 @@ function flatEmphasis(mdastToken: mdast.Emphasis, depth: number): InlineTokenV2[
     return inlineTokens
 }
 
-function flatDelete(mdastToken: mdast.Delete, depth: number): InlineTokenV2[] {
-    const inlineTokens: InlineTokenV2[] = [
+function flatDelete(mdastToken: mdast.Delete, depth: number): InlineToken[] {
+    const inlineTokens: InlineToken[] = [
         {
             marks: ["mdMark"],
             attrs: { depth, first: true },
@@ -103,7 +103,7 @@ function flatDelete(mdastToken: mdast.Delete, depth: number): InlineTokenV2[] {
     return inlineTokens
 }
 
-function flatInlineCode(mdastToken: mdast.InlineCode, depth: number): InlineTokenV2[] {
+function flatInlineCode(mdastToken: mdast.InlineCode, depth: number): InlineToken[] {
     return [
         {
             marks: ["mdMark"],
@@ -129,7 +129,7 @@ function flatInlineCode(mdastToken: mdast.InlineCode, depth: number): InlineToke
     ]
 }
 
-function flatImage(mdastToken: mdast.Image, depth: number): InlineTokenV2[] {
+function flatImage(mdastToken: mdast.Image, depth: number): InlineToken[] {
     return [
         {
             marks: ["mdImgUri"],
@@ -141,8 +141,8 @@ function flatImage(mdastToken: mdast.Image, depth: number): InlineTokenV2[] {
     ]
 }
 
-function flatLink(mdastToken: mdast.Link, depth: number): InlineTokenV2[] {
-    const inlineTokens: InlineTokenV2[] = [
+function flatLink(mdastToken: mdast.Link, depth: number): InlineToken[] {
+    const inlineTokens: InlineToken[] = [
         // match "<" for autolinks or "[" for links
         {
             marks: ["mdMark"],
@@ -195,7 +195,7 @@ function flatLink(mdastToken: mdast.Link, depth: number): InlineTokenV2[] {
 }
 
 // Make a tree structural mdast `PhrasingContent` object into a flat `InlineToken` array.
-function flatPhrasingContent(mdastToken: mdast.PhrasingContent, depth: number): InlineTokenV2[] {
+function flatPhrasingContent(mdastToken: mdast.PhrasingContent, depth: number): InlineToken[] {
     console.assert(depth >= 1)
     switch (mdastToken.type) {
         case "text":
@@ -269,8 +269,8 @@ function parseInlineMarkdown(text: string): mdast.PhrasingContent[] {
     return []
 }
 
-export function fromInlineMarkdown(text: string): InlineTokenV2[] {
-    const inlineTokens: InlineTokenV2[] = []
+export function fromInlineMarkdown(text: string): InlineToken[] {
+    const inlineTokens: InlineToken[] = []
     for (const phrasingContent of parseInlineMarkdown(text)) {
         for (const inlineToken of flatPhrasingContent(phrasingContent, 1)) {
             if (inlineToken.end - inlineToken.start === 0) {
