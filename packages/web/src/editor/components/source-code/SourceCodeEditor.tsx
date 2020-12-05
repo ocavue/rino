@@ -55,9 +55,9 @@ export const SourceCodeEditor: FC<EditorProps> = ({
     }, [manager.schema, content, setContent])
 
     useEffect(() => {
-        console.debug(`Mounting <${SourceCodeEditor.displayName}/>`)
+        // console.debug(`Mounting <${SourceCodeEditor.displayName}/>`)
         return () => {
-            console.debug(`Unmounting <${SourceCodeEditor.displayName}/>`)
+            // console.debug(`Unmounting <${SourceCodeEditor.displayName}/>`)
             saveContent()
         }
     }, [saveContent])

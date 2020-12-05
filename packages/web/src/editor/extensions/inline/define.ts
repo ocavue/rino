@@ -5,8 +5,8 @@ const commonAttrs = {
 }
 const endpointAttrs = {
     depth: { default: 0 },
-    start: { default: false },
-    end: { default: false },
+    first: { default: false },
+    last: { default: false },
 }
 
 const RinoMarkExtensionClasses = [
@@ -207,3 +207,47 @@ export function isAutoHideMark(name?: string): boolean {
 export const rinoMarkExtensions = RinoMarkExtensionClasses.map((Ext) => new Ext())
 export type RinoMarkExtension = typeof rinoMarkExtensions[number]
 export type RinoMarkName = RinoMarkExtension["name"]
+export type RinnMarkAttrs = {
+    depth: number
+
+    /**
+     * At the current depth, if this token the first or last token of a serial of tokens.
+     * example:
+     *      input:
+     *          Text**strong**[lable](https://example.com)
+     *      output:
+     *          | text                | first | last |
+     *          | ------------------- | ----- | ---- |
+     *          | text                | True  | True |
+     *          | **                  | True  |      |
+     *          | strong              |       |      |
+     *          | **                  |       | True |
+     *          | [                   | True  |      |
+     *          | label               |       |      |
+     *          | ]                   |       |      |
+     *          | (                   |       |      |
+     *          | https://example.com |       |      |
+     *          | )                   |       | True |
+     */
+    first?: true
+    last?: true
+
+    href?: string
+}
+
+export enum InlineDecorateType {
+    Ignore = "IGNORE",
+}
+
+export interface InlineTokenV2 {
+    marks: RinoMarkName[]
+
+    text: string
+
+    // start position
+    start: number
+    // end position
+    end: number
+
+    attrs: RinnMarkAttrs
+}

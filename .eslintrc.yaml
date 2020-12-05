@@ -39,6 +39,7 @@ env:
   node: true
 rules:
   "no-useless-escape": "off"
+  "no-console": ["error", { allow: ["warn", "error", "log", "assert"] }]
 
   "react/prop-types": [1, { skipUndeclared: true }]
   "react/no-unescaped-entities": "off"

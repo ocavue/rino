@@ -128,7 +128,7 @@ class FirebaseNote extends BaseNote {
     }
     async upload(ignoreDeleting = false) {
         if (this.deleting && !ignoreDeleting) return
-        console.debug(`Uploading note ${this.id}`)
+        console.log(`Uploading note ${this.id}`)
         const ref = await this.referencePromise
         await ref.update({
             content: this.content,
@@ -139,7 +139,7 @@ class FirebaseNote extends BaseNote {
     }
     async delete(option: DeleteOption) {
         if (this.deleting) return
-        console.debug(`Deleting note ${this.id}. options:`, option)
+        console.log(`Deleting note ${this.id}. options:`, option)
         this.deleting = true
         if (option.type === "hard") {
             const ref = await this.referencePromise

@@ -44,7 +44,7 @@ export const Editor: React.FC<EditorProps> = ({ autoFocus, note, setNoteContent 
     useEffect(() => {
         const handleKeydown = (event: KeyboardEvent) => {
             if (event[metaKey] && event.code === "Slash") {
-                console.debug(`metaKey + / has been pressed`)
+                // console.debug(`metaKey + / has been pressed`)
                 const nextMode = mode === "wysiwyg" ? "source-code" : "wysiwyg"
                 // Unmount SourceCodeEditor / WysiwygEditor first, so that it's `componentWillUnmount` will be called.
                 setMode(null)
@@ -58,10 +58,10 @@ export const Editor: React.FC<EditorProps> = ({ autoFocus, note, setNoteContent 
         return () => window.removeEventListener("keydown", handleKeydown)
     }, [mode, note])
 
-    useEffect(() => {
-        console.debug(`Mounting <${Editor.displayName}/>`)
-        return () => console.debug(`Unmounting <${Editor.displayName}/>`)
-    }, [])
+    // useEffect(() => {
+    //     console.debug(`Mounting <${Editor.displayName}/>`)
+    //     return () => console.debug(`Unmounting <${Editor.displayName}/>`)
+    // }, [])
 
     const theme = useTheme()
     const className = clsx(

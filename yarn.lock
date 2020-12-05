@@ -3632,6 +3632,9 @@ __metadata:
     jest-remirror: ^1.0.0-next.58
     lodash: ^4.17.20
     markdown-it: ^12.0.2
+    mdast-util-from-markdown: "ocavue/mdast-util-from-markdown#92b577611b2fb66eb33082cc9f827d6f777a4038"
+    mdast-util-gfm-strikethrough: ^0.2.2
+    micromark-extension-gfm-strikethrough: ^0.6.2
     next: ^10.0.3
     prosemirror-commands: ^1.1.4
     prosemirror-dropcursor: ^1.3.2
@@ -4153,6 +4156,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/mdast@npm:^3.0.0":
+  version: 3.0.3
+  resolution: "@types/mdast@npm:3.0.3"
+  dependencies:
+    "@types/unist": "*"
+  checksum: d271df999e2b7144ef96a79bff75f22573d06d6c26ead8e190f59d4578da0b10af7c707f1453449bae6ba5c2dccfae8becf9f7a84a4bb30bc2a43fbc49607754
+  languageName: node
+  linkType: hard
+
 "@types/mdurl@npm:*":
   version: 1.0.2
   resolution: "@types/mdurl@npm:1.0.2"
@@ -4505,6 +4517,13 @@ __metadata:
   version: 2.1.0
   resolution: "@types/throttle-debounce@npm:2.1.0"
   checksum: 5a72e6dc41ea0aa69382664c442a18cda211660a9cfd577ef1806b8cb5af91211f0b4a06215c63e3552dea249f61295af5539899bb2f4d8aeabb828f0f7eddff
+  languageName: node
+  linkType: hard
+
+"@types/unist@npm:*, @types/unist@npm:^2.0.0":
+  version: 2.0.3
+  resolution: "@types/unist@npm:2.0.3"
+  checksum: 42e0dc4ac75a27c4bb91a3f8e82edfd8819cacb6edda08bdfb436700ea01a587faa30017fde744b0a0b33825f5e37686398c1eb5b664cabc3a72a6b3757f85a5
   languageName: node
   linkType: hard
 
@@ -6445,6 +6464,27 @@ __metadata:
   languageName: node
   linkType: hard
 
+"character-entities-legacy@npm:^1.0.0":
+  version: 1.1.4
+  resolution: "character-entities-legacy@npm:1.1.4"
+  checksum: bb1e426146681405edaaf349ac045533c8a2540958c824e90b7c2286bdbf1a4706c0b524983f5e0f2bee776bdf29cadb1240af60c02d192b24e3e227f2c84bca
+  languageName: node
+  linkType: hard
+
+"character-entities@npm:^1.0.0":
+  version: 1.2.4
+  resolution: "character-entities@npm:1.2.4"
+  checksum: 6ca8a790a2c18f5cda36a75d6b8fdf8c818b215c46daa87c1d2bd8062d4dee54685ddcff578cdd777b852b72539fdfcc60ee681037684a8209004db7d867c705
+  languageName: node
+  linkType: hard
+
+"character-reference-invalid@npm:^1.0.0":
+  version: 1.1.4
+  resolution: "character-reference-invalid@npm:1.1.4"
+  checksum: 82d8ce7828536cc7e097594a0414c09a70356312f4e9dfe88af7fe8c3b14efea8e4cf16fae0bcbb95d76fdf5ef6b44a42f75d0998aa7894558cf1affa2a66b3a
+  languageName: node
+  linkType: hard
+
 "chardet@npm:^0.7.0":
   version: 0.7.0
   resolution: "chardet@npm:0.7.0"
@@ -7835,6 +7875,18 @@ __metadata:
   dependencies:
     ms: ^2.1.1
   checksum: 619feb53b115f1a8341365b8aa58a8757e6632738587d4b61b25627b74891211cb20e31fdbea37fec766e575a60cf456f7a02d6f9eddfdcef80caa6a4b0fc042
+  languageName: node
+  linkType: hard
+
+"debug@npm:^4.0.0":
+  version: 4.3.1
+  resolution: "debug@npm:4.3.1"
+  dependencies:
+    ms: 2.1.2
+  peerDependenciesMeta:
+    supports-color:
+      optional: true
+  checksum: 0d41ba5177510e8b388dfd7df143ab0f9312e4abdaba312595461511dac88e9ef8101939d33b4e6d37e10341af6a5301082e4d7d6f3deb4d57bc05fc7d296fad
   languageName: node
   linkType: hard
 
@@ -11242,6 +11294,23 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
+"is-alphabetical@npm:^1.0.0":
+  version: 1.0.4
+  resolution: "is-alphabetical@npm:1.0.4"
+  checksum: a4a2afcf65788695c1b14755e6bf890ba5991d6789d4b6ea3c8bd7ba8c7a2dce1da37dc62e8b19b397ca3f927d60203df792e79b9a5c35c69f488a782f96e3b5
+  languageName: node
+  linkType: hard
+
+"is-alphanumerical@npm:^1.0.0":
+  version: 1.0.4
+  resolution: "is-alphanumerical@npm:1.0.4"
+  dependencies:
+    is-alphabetical: ^1.0.0
+    is-decimal: ^1.0.0
+  checksum: d97ec38a74117d147f7feaa46e43f2fdd6075a6650d8b5c44357e7854462068525c9a8cc079943b9e06fb8e182d0262b5f38cf9c79a4138f12f069a52ec1e56b
+  languageName: node
+  linkType: hard
+
 "is-arrayish@npm:^0.2.1":
   version: 0.2.1
   resolution: "is-arrayish@npm:0.2.1"
@@ -11330,6 +11399,13 @@ fsevents@^1.2.7:
   version: 1.0.2
   resolution: "is-date-object@npm:1.0.2"
   checksum: 0e322699464a99da638c8a583b74dfb791732b6bc9c102bc0b7ac6303d83c86b9935f19b8d2ed4de52092241190c8826b099cb31972dea49a99b755293c0b1cf
+  languageName: node
+  linkType: hard
+
+"is-decimal@npm:^1.0.0":
+  version: 1.0.4
+  resolution: "is-decimal@npm:1.0.4"
+  checksum: 57a0e1a87f01538ac21997202ac694f0572abf50488c54a4154014517f07d88394a61195c1ee32bdf69014e535b946e9e3869eece6818baea5827171d38a23f9
   languageName: node
   linkType: hard
 
@@ -11439,6 +11515,13 @@ fsevents@^1.2.7:
   dependencies:
     is-extglob: ^2.1.1
   checksum: 98cd4f715f0fb81da34aa6c8be4a5ef02d8cfac3ebc885153012abc2a0410df5a572f9d0393134fcba9192c7a845da96142c5f74a3c02787efe178ed798615e6
+  languageName: node
+  linkType: hard
+
+"is-hexadecimal@npm:^1.0.0":
+  version: 1.0.4
+  resolution: "is-hexadecimal@npm:1.0.4"
+  checksum: 653c1d0115196e97ed20177393cff833fbdfdbed3d28abdffbfd0fe50b9c62bf7e76ee56a9a47fec84f30ca0d40256fd065a71a65b0ed32fc77650b39c8c9295
   languageName: node
   linkType: hard
 
@@ -13614,6 +13697,13 @@ jest-environment-node@>=24 && <=26:
   languageName: node
   linkType: hard
 
+"longest-streak@npm:^2.0.0":
+  version: 2.0.4
+  resolution: "longest-streak@npm:2.0.4"
+  checksum: ba5ebac14700c0a5f88a312be789b651c35bfed84bd5e2b4f04ac0898add697c36ede401d0b17dfaac0956171027b61ad49ad866ac949ae1d36f9e4ced60cbe1
+  languageName: node
+  linkType: hard
+
 "lookup-closest-locale@npm:6.0.4":
   version: 6.0.4
   resolution: "lookup-closest-locale@npm:6.0.4"
@@ -13860,6 +13950,55 @@ jest-environment-node@>=24 && <=26:
   languageName: node
   linkType: hard
 
+"mdast-util-from-markdown@ocavue/mdast-util-from-markdown#92b577611b2fb66eb33082cc9f827d6f777a4038":
+  version: 0.8.1
+  resolution: "mdast-util-from-markdown@https://github.com/ocavue/mdast-util-from-markdown.git#commit=92b577611b2fb66eb33082cc9f827d6f777a4038"
+  dependencies:
+    "@types/mdast": ^3.0.0
+    mdast-util-to-string: ^1.0.0
+    micromark: ~2.10.0
+    parse-entities: ^2.0.0
+  checksum: 09b423269df03b6c2a654ea8f928ba927f6a48df213a6ff8a433a8a1037dfc1b9299cde98e84ab63e2d0a580640488d05db66296756120f6f5392197f2126d58
+  languageName: node
+  linkType: hard
+
+"mdast-util-gfm-strikethrough@npm:^0.2.2":
+  version: 0.2.2
+  resolution: "mdast-util-gfm-strikethrough@npm:0.2.2"
+  dependencies:
+    mdast-util-to-markdown: ^0.5.0
+  checksum: 40954359053fa62420a0e7515b748b2b4780fb8ad4cd751f048c818c68b90638acd468d52746a46c09dec7695e3ccd6e3870b9d1513dd2c29af80b60e886ca5f
+  languageName: node
+  linkType: hard
+
+"mdast-util-to-markdown@npm:^0.5.0":
+  version: 0.5.4
+  resolution: "mdast-util-to-markdown@npm:0.5.4"
+  dependencies:
+    "@types/unist": ^2.0.0
+    longest-streak: ^2.0.0
+    mdast-util-to-string: ^2.0.0
+    parse-entities: ^2.0.0
+    repeat-string: ^1.0.0
+    zwitch: ^1.0.0
+  checksum: 5224d69dbf7abe7bdcc2808f6542e7beb702a53b6514a4b688e527956a9cc8d65a3c7cece2540f0fbac8d868f892a9a4ba7339dbfcbd8cd02372ce1154ff81e8
+  languageName: node
+  linkType: hard
+
+"mdast-util-to-string@npm:^1.0.0":
+  version: 1.1.0
+  resolution: "mdast-util-to-string@npm:1.1.0"
+  checksum: 0d5ebe2cb573ac817436a0cb0310f7a46c69a742de2de728451fd6293e4825a7894c2112b2651c4c6dcaccb6f545eade1ea58c0e08dcf4a1ddadb636f2fcd52c
+  languageName: node
+  linkType: hard
+
+"mdast-util-to-string@npm:^2.0.0":
+  version: 2.0.0
+  resolution: "mdast-util-to-string@npm:2.0.0"
+  checksum: cd5d5e3a8421adcbdc90620c74b35c5c037211252807e855f9ca7b953dd94ecdab27a1094c8ac9033b7558f0aec2ab190a43bfa8c25a8cd5e11be89162092e1a
+  languageName: node
+  linkType: hard
+
 "mdn-data@npm:2.0.4":
   version: 2.0.4
   resolution: "mdn-data@npm:2.0.4"
@@ -14004,6 +14143,25 @@ jest-environment-node@>=24 && <=26:
   version: 1.1.2
   resolution: "methods@npm:1.1.2"
   checksum: 450e4ea0fd4a0f3de8c0593d753c7d6c8f2ee49766f5ef35c68cc2ac41699d5e295b7d6330fc2b7271b8569a07857e3eb0b5df0599a353c5808265b4b5066168
+  languageName: node
+  linkType: hard
+
+"micromark-extension-gfm-strikethrough@npm:^0.6.2":
+  version: 0.6.2
+  resolution: "micromark-extension-gfm-strikethrough@npm:0.6.2"
+  dependencies:
+    micromark: ~2.10.0
+  checksum: 30e5f6e046d90117f2004287633e9cc116a1ba78001e111fa4e8a4d17d9073e94e22618ed9a8f49ffa2124aa32cdb87684d102a43abf148070c589b650f65a1b
+  languageName: node
+  linkType: hard
+
+"micromark@npm:~2.10.0":
+  version: 2.10.1
+  resolution: "micromark@npm:2.10.1"
+  dependencies:
+    debug: ^4.0.0
+    parse-entities: ^2.0.0
+  checksum: 26c2148b6f8a3aad591506d2c971c5ecd420fa1231e1fce9f19b997a53675c40e2a95f5f96da0e80cff34db7f4eed00c061fbd38a03545b4a54ff7e55b37d40c
   languageName: node
   linkType: hard
 
@@ -15360,6 +15518,20 @@ jest-environment-node@>=24 && <=26:
   version: 1.0.1
   resolution: "parse-cache-control@npm:1.0.1"
   checksum: 2a3e5bc32adb707a1a1784b44e01d54d894bfad894aaede2e293f9c374fe735ef852164d94b615e513ceccf0638c4e175c774056a308d47e9e38221cd90523aa
+  languageName: node
+  linkType: hard
+
+"parse-entities@npm:^2.0.0":
+  version: 2.0.0
+  resolution: "parse-entities@npm:2.0.0"
+  dependencies:
+    character-entities: ^1.0.0
+    character-entities-legacy: ^1.0.0
+    character-reference-invalid: ^1.0.0
+    is-alphanumerical: ^1.0.0
+    is-decimal: ^1.0.0
+    is-hexadecimal: ^1.0.0
+  checksum: 6a9213216b8c3c18def20beac67a6618d190830fdb5f5b49bec876894404b75e2cd4af4b6913fded084c5572a21042edaf2cf2e991f408c7097901fb8d85c31e
   languageName: node
   linkType: hard
 
@@ -16926,7 +17098,7 @@ jest-environment-node@>=24 && <=26:
   languageName: node
   linkType: hard
 
-"repeat-string@npm:^1.6.1":
+"repeat-string@npm:^1.0.0, repeat-string@npm:^1.6.1":
   version: 1.6.1
   resolution: "repeat-string@npm:1.6.1"
   checksum: 99c431ba7bef7a5d39819d562ebca89206368b45f73213677a3b562e25b5dd272d9e6a2ca8105001df14b6fc8cc71f0b10258c86e16cf8a256318fac1ddc8a77
@@ -20891,5 +21063,12 @@ typescript@^4.1.2:
     compress-commons: ^2.1.1
     readable-stream: ^3.4.0
   checksum: 1c47329dfd7293d31abb72a327ceed456d422b069ac3f5243f95c0f3d9aa2dea80ab1337978001410f8a356a5fe6bfc12699faa2ab3fa06f94af5536edfc0a9a
+  languageName: node
+  linkType: hard
+
+"zwitch@npm:^1.0.0":
+  version: 1.0.5
+  resolution: "zwitch@npm:1.0.5"
+  checksum: 5005166809cfe1f87a75aa8186a606414482c9c7fccff523a621a94ea4b22c7e60599c0cf47669df9946c4a1dea342ebf5d512cbeeacd567814382fee122a3a0
   languageName: node
   linkType: hard

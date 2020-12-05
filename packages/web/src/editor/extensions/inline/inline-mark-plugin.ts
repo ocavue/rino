@@ -4,11 +4,11 @@ import { Mappable } from "prosemirror-transform"
 import { EditorView } from "prosemirror-view"
 
 import { WysiwygSchema } from "src/editor/components/wysiwyg/wysiwyg-manager"
-import { InlineLexer } from "src/editor/extensions/inline/inline-lexer"
 import { iterNode, iterNodeRange } from "src/editor/utils"
 
-import { InlineDecorateType } from "./inline-types"
-const inlineLexer = new InlineLexer()
+import { InlineDecorateType } from "./define"
+import { fromInlineMarkdown } from "./from-inline-markdown"
+
 const maxMarkStep = 10
 
 // https://spec.commonmark.org/0.29/#ascii-punctuation-character
@@ -36,8 +36,7 @@ function parseTextBlock(schema: Schema, node: Node<Schema>, startPos: number): M
         return []
     }
     const steps: MarkStep[] = []
-    const tokens = inlineLexer.scan(node.textContent, 1)
-    let markStartPos = 0 // The start position of next mark, relative to the parent text block node
+    const tokens = fromInlineMarkdown(node.textContent)
 
     // Since `node` is a text block node, all its children are inline nodes (text node for example).
     // `children` is in ascending order on child position.
@@ -48,22 +47,21 @@ function parseTextBlock(schema: Schema, node: Node<Schema>, startPos: number): M
     }))
 
     for (const token of tokens) {
-        const [expectedFrom, expectedTo] = [markStartPos, markStartPos + token.text.length]
-        const expectedMarks: Mark[] = token.marks.map((name) =>
-            schema.marks[name].create(token.attrs),
-        )
-        markStartPos += token.text.length
-
+        const expectedFrom = token.start
+        const expectedTo = token.end
+        const expectedMarks = token.marks.map((markName) => {
+            return schema.marks[markName].create(token.attrs)
+        })
         let needStep = true
 
         // Try to find an exited text node who match the expected mark
         while (children.length) {
-            const { node: child, from: receivedFrom, to: receivedTo } = children[0]
+            const { node: childNode, from: receivedFrom, to: receivedTo } = children[0]
 
             if (
                 receivedFrom === expectedFrom &&
                 receivedTo === expectedTo &&
-                Mark.sameSet(child.marks, expectedMarks)
+                Mark.sameSet(childNode.marks, expectedMarks)
             ) {
                 // Successfully found a expected inline node. Don't need to create a step in this case.
                 needStep = false
@@ -80,15 +78,15 @@ function parseTextBlock(schema: Schema, node: Node<Schema>, startPos: number): M
             }
         }
 
-        if (needStep)
+        if (needStep) {
             steps.push({
                 start: startPos + expectedFrom,
                 end: startPos + expectedTo,
                 marks: expectedMarks,
                 text: token.text,
             })
+        }
     }
-
     return steps
 }
 
@@ -109,6 +107,7 @@ function parseNode<S extends WysiwygSchema>(
             steps.push(...parseNode(schema, child, startPos + offset + 1))
         })
     }
+
     return steps
 }
 

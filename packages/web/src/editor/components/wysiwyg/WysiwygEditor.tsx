@@ -81,9 +81,9 @@ export const WysiwygEditor: FC<EditorProps> = ({
     }, [manager, content, setContent])
 
     useEffect(() => {
-        console.debug(`Mounting <${WysiwygEditor.displayName}/>`)
+        // console.debug(`Mounting <${WysiwygEditor.displayName}/>`)
         return () => {
-            console.debug(`Unmounting <${WysiwygEditor.displayName}/>`)
+            // console.debug(`Unmounting <${WysiwygEditor.displayName}/>`)
             saveContent()
         }
     }, [saveContent])

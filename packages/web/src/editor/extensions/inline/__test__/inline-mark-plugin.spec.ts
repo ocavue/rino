@@ -49,11 +49,11 @@ describe("Mark transform", () => {
                     expect(content.state.doc).toEqualRemirrorDocument(
                         doc(
                             p(
-                                mdText({ depth: 1, start: true, end: true })("text"),
-                                mdMark({ depth: 1, start: true })("`"),
+                                mdText({ depth: 1, first: true, last: true })("text"),
+                                mdMark({ depth: 1, first: true })("`"),
                                 mdCodeText({ depth: 1 })("code"),
-                                mdMark({ depth: 1, end: true })("`"),
-                                mdText({ depth: 1, start: true, end: true })("text "),
+                                mdMark({ depth: 1, last: true })("`"),
+                                mdText({ depth: 1, first: true, last: true })("text "),
                             ),
                         ),
                     )
