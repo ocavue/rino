@@ -3620,7 +3620,7 @@ __metadata:
     jest-remirror: ^1.0.0-next.58
     lodash: ^4.17.20
     markdown-it: ^12.0.3
-    mdast-util-from-markdown: "ocavue/mdast-util-from-markdown#0.8.1-fork"
+    mdast-util-from-markdown: "ocavue/mdast-util-from-markdown#0.7.1"
     mdast-util-gfm-strikethrough: ^0.2.2
     micromark-extension-gfm-strikethrough: ^0.6.2
     next: ^10.0.3
@@ -4144,15 +4144,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/mdast@npm:^3.0.0":
-  version: 3.0.3
-  resolution: "@types/mdast@npm:3.0.3"
-  dependencies:
-    "@types/unist": "*"
-  checksum: d271df999e2b7144ef96a79bff75f22573d06d6c26ead8e190f59d4578da0b10af7c707f1453449bae6ba5c2dccfae8becf9f7a84a4bb30bc2a43fbc49607754
-  languageName: node
-  linkType: hard
-
 "@types/mdurl@npm:*":
   version: 1.0.2
   resolution: "@types/mdurl@npm:1.0.2"
@@ -4508,7 +4499,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/unist@npm:*, @types/unist@npm:^2.0.0":
+"@types/unist@npm:^2.0.0":
   version: 2.0.3
   resolution: "@types/unist@npm:2.0.3"
   checksum: 42e0dc4ac75a27c4bb91a3f8e82edfd8819cacb6edda08bdfb436700ea01a587faa30017fde744b0a0b33825f5e37686398c1eb5b664cabc3a72a6b3757f85a5
@@ -13862,15 +13853,14 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
-"mdast-util-from-markdown@ocavue/mdast-util-from-markdown#0.8.1-fork":
-  version: 0.8.1
-  resolution: "mdast-util-from-markdown@https://github.com/ocavue/mdast-util-from-markdown.git#commit=92b577611b2fb66eb33082cc9f827d6f777a4038"
+"mdast-util-from-markdown@ocavue/mdast-util-from-markdown#0.7.1":
+  version: 0.7.1
+  resolution: "mdast-util-from-markdown@https://github.com/ocavue/mdast-util-from-markdown.git#commit=3d85619ea45480ccb0b42c16ae0c13f3e251a3e0"
   dependencies:
-    "@types/mdast": ^3.0.0
     mdast-util-to-string: ^1.0.0
-    micromark: ~2.10.0
+    micromark: ~2.9.0
     parse-entities: ^2.0.0
-  checksum: 09b423269df03b6c2a654ea8f928ba927f6a48df213a6ff8a433a8a1037dfc1b9299cde98e84ab63e2d0a580640488d05db66296756120f6f5392197f2126d58
+  checksum: c8581e565a38fbcd5d039a9b7796b78918b932c85682f80e41c5d419a399f9f778d6618da7ca0acd5b9d2172ef500f246557f92fca3196b51370421d00f2e0c5
   languageName: node
   linkType: hard
 
@@ -14074,6 +14064,16 @@ fsevents@^1.2.7:
     debug: ^4.0.0
     parse-entities: ^2.0.0
   checksum: 26c2148b6f8a3aad591506d2c971c5ecd420fa1231e1fce9f19b997a53675c40e2a95f5f96da0e80cff34db7f4eed00c061fbd38a03545b4a54ff7e55b37d40c
+  languageName: node
+  linkType: hard
+
+"micromark@npm:~2.9.0":
+  version: 2.9.2
+  resolution: "micromark@npm:2.9.2"
+  dependencies:
+    debug: ^4.0.0
+    parse-entities: ^2.0.0
+  checksum: c09cea5201138fe51519d2482563cf509e31c68afb961a262e6c0b8ed96a710a4e26c7956d4822a92ff2a151b80739ca968fea90517a5b72f64764eef30517a6
   languageName: node
   linkType: hard
 
