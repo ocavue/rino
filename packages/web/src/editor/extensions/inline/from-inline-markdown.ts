@@ -248,8 +248,6 @@ const phrasingContentTypes: Record<PhrasingContentType, true> = {
     linkReference: true,
 }
 
-// This function uses a fork version of `mdast-util-from-markdown` with some hacking techniques from
-// https://github.com/remarkjs/remark/issues/552#issuecomment-723877183.
 function parseInlineMarkdown(text: string): mdast.PhrasingContent[] {
     try {
         const disabledConstructs = [
