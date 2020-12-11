@@ -248,21 +248,39 @@ const phrasingContentTypes: Record<PhrasingContentType, true> = {
     linkReference: true,
 }
 
-// This function uses a fork version of `mdast-util-from-markdown` with some hacking techniques from
-// https://github.com/remarkjs/remark/issues/552#issuecomment-723877183.
 function parseInlineMarkdown(text: string): mdast.PhrasingContent[] {
     try {
+        const disabledConstructs = [
+            "blockQuote",
+            "characterEscape",
+            "characterReference",
+            "codeFenced",
+            "codeIndented",
+            "definition",
+            "headingAtx",
+            "htmlFlow",
+            "htmlText",
+            "list",
+            "thematicBreak",
+        ]
         const root: mdast.Root = fromMarkdown(text, {
-            extensions: [micromarkStrikethrough({ singleTilde: false })],
+            extensions: [{ disable: { null: disabledConstructs } }, micromarkStrikethrough({ singleTilde: false })],
             mdastExtensions: [mdastStrikethrough.fromMarkdown],
         })
-        const children: any[] = root.children
-        for (const child of children) {
+        if (root.children.length !== 1) {
+            throw Error(`root.children has ${root.children.length} children`)
+        }
+        const paragraph = root.children[0]
+        if (paragraph.type !== "paragraph") {
+            throw Error(`unknow child type ${paragraph.type}`)
+        }
+
+        for (const child of paragraph.children) {
             if (!phrasingContentTypes[child.type]) {
                 throw Error(`got unknow phrasingContent token: ${JSON.stringify(child)}`)
             }
         }
-        return children
+        return paragraph.children
     } catch (error) {
         console.warn(`failed to parse inline markdown text ${JSON.stringify(text)}: ${error}`)
     }
