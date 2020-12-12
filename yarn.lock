@@ -3715,6 +3715,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@size-limit/file@npm:^4.9.1":
+  version: 4.9.1
+  resolution: "@size-limit/file@npm:4.9.1"
+  dependencies:
+    semver: 7.3.4
+  peerDependencies:
+    size-limit: 4.9.1
+  checksum: 645426440fe483e5a8fd91ff3491762abfe24b32604f2632bd3f13ceeb97d97dd818928c2e300d46176f50876f4780dfcf11c2862ad843110dd4756f3db3a674
+  languageName: node
+  linkType: hard
+
 "@surma/rollup-plugin-off-main-thread@npm:^1.1.1":
   version: 1.4.1
   resolution: "@surma/rollup-plugin-off-main-thread@npm:1.4.1"
@@ -6186,7 +6197,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"bytes@npm:3.1.0":
+"bytes@npm:3.1.0, bytes@npm:^3.1.0":
   version: 3.1.0
   resolution: "bytes@npm:3.1.0"
   checksum: c3f64645ef37922c8194fef88a052de2a28101882dfdf8a225493888c4941a26ea15164957e7492e5c5e3a8e98ee6276f4834efacb68e2d8ad4d91f903250b6c
@@ -6487,7 +6498,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"chokidar@npm:3.4.3, chokidar@npm:>=2.0.0 <4.0.0, chokidar@npm:^3.0.2, chokidar@npm:^3.4.1":
+"chokidar@npm:3.4.3, chokidar@npm:>=2.0.0 <4.0.0, chokidar@npm:^3.0.2, chokidar@npm:^3.4.1, chokidar@npm:^3.4.3":
   version: 3.4.3
   resolution: "chokidar@npm:3.4.3"
   dependencies:
@@ -6570,6 +6581,13 @@ __metadata:
   version: 2.0.0
   resolution: "ci-info@npm:2.0.0"
   checksum: 553fe83c085fce5e19e20f85b993f24a463e6f805803837a8868607bb68b1300567868694a5dff1beca6c54926a4c0be1cc9ef0c35f810653d590bf64183f6a0
+  languageName: node
+  linkType: hard
+
+"ci-job-number@npm:^1.2.2":
+  version: 1.2.2
+  resolution: "ci-job-number@npm:1.2.2"
+  checksum: 092d2d1b07081377a9fddf688a1e734f985dcffdc899c22bdc5f4cad6a059c9e7cccdd8ea9f9217689353181a3d783cf2cb1118648615772d1da790ce2c3aa42
   languageName: node
   linkType: hard
 
@@ -6668,6 +6686,13 @@ __metadata:
   version: 2.4.0
   resolution: "cli-spinners@npm:2.4.0"
   checksum: c32291dbcc98363ab22486084354a46e6fd7b9471d0b1c89a5cba1a62a96233f6519cca0ab21a16884f78fe034a7038597eb61e56f3fe11a592c6c2495925600
+  languageName: node
+  linkType: hard
+
+"cli-spinners@npm:^2.4.0":
+  version: 2.5.0
+  resolution: "cli-spinners@npm:2.5.0"
+  checksum: a275c3588179de0a07579742e1fedb508caa6840516761dac1f8544886d4aa025fc2d536323ac9c325624349203010e149ca8b0028be239fc45ed3a1c1252677
   languageName: node
   linkType: hard
 
@@ -11490,6 +11515,13 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
+"is-interactive@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "is-interactive@npm:1.0.0"
+  checksum: d79b435e5134ccd60dfe035117b1cddd5c5100e90b2d33428adfe1667e26f0114cc1bc7b3ff84a1b107de8ef27f155e3ecc3bb08c0e502a15c66300b4a45d9e5
+  languageName: node
+  linkType: hard
+
 "is-module@npm:^1.0.0":
   version: 1.0.0
   resolution: "is-module@npm:1.0.0"
@@ -13159,6 +13191,13 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
+"lilconfig@npm:^2.0.1":
+  version: 2.0.2
+  resolution: "lilconfig@npm:2.0.2"
+  checksum: f1e2588a14717caed14e8220d7b69f096566b30ba65aa3586815e68c2b0b2c409ff81c5ab14eeb3455f16c291c57b608ac34a869cfebacff4bbe288010bed857
+  languageName: node
+  linkType: hard
+
 "linaria@npm:^2.0.0":
   version: 2.0.0
   resolution: "linaria@npm:2.0.0"
@@ -13586,6 +13625,15 @@ fsevents@^1.2.7:
   dependencies:
     chalk: ^2.0.1
   checksum: e2dfd255f3e3080134055597fb67bd67798d65383488683ed90f0376f7264dd21028f30d4c3a0686251dcfc4dc71172e8061cef21e89c6deabb8b375450d5166
+  languageName: node
+  linkType: hard
+
+"log-symbols@npm:^4.0.0":
+  version: 4.0.0
+  resolution: "log-symbols@npm:4.0.0"
+  dependencies:
+    chalk: ^4.0.0
+  checksum: 2cbdb0427d1853f2bd36645bff42aaca200902284f28aadacb3c0fa4c8c43fe6bfb71b5d61ab08b67063d066d7c55b8bf5fbb43b03e4a150dbcdd643e9cd1dbf
   languageName: node
   linkType: hard
 
@@ -15158,6 +15206,22 @@ fsevents@^1.2.7:
     strip-ansi: ^5.2.0
     wcwidth: ^1.0.1
   checksum: 19f5b615ce39e4b06160896623e6271372c308cd68ffbb122bd2cddcc116a0272bdfc799c54d1d005638a560d44662eda4f7c5b45bd30f2253784fac9f18c000
+  languageName: node
+  linkType: hard
+
+"ora@npm:^5.1.0":
+  version: 5.1.0
+  resolution: "ora@npm:5.1.0"
+  dependencies:
+    chalk: ^4.1.0
+    cli-cursor: ^3.1.0
+    cli-spinners: ^2.4.0
+    is-interactive: ^1.0.0
+    log-symbols: ^4.0.0
+    mute-stream: 0.0.8
+    strip-ansi: ^6.0.0
+    wcwidth: ^1.0.1
+  checksum: 53aad8d2996056eebb8f68ae874d101d079c05a8251ab281734b37c0252955c82f758d649b5757e54f867bbc98549545dd88b061033487af0b598d4da92d1a82
   languageName: node
   linkType: hard
 
@@ -17241,6 +17305,7 @@ fsevents@^1.2.7:
   dependencies:
     "@changesets/cli": ^2.12.0
     "@lhci/cli": ^0.6.1
+    "@size-limit/file": ^4.9.1
     "@types/expect-puppeteer": ^4.4.5
     "@types/jest": ^26.0.16
     "@types/node": ^14.14.10
@@ -17258,6 +17323,7 @@ fsevents@^1.2.7:
     jest: ^26.6.3
     jest-transform-stub: ^2.0.0
     prettier: ^2.2.1
+    size-limit: ^4.9.1
     typescript: ^4.1.2
   languageName: unknown
   linkType: soft
@@ -17622,6 +17688,17 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
+"semver@npm:7.3.4":
+  version: 7.3.4
+  resolution: "semver@npm:7.3.4"
+  dependencies:
+    lru-cache: ^6.0.0
+  bin:
+    semver: bin/semver.js
+  checksum: f2c7f9aeb976d1484b2f39aa7afc8332a1d21fd32ca4a6fbf650e1423455ebf3e7029f6e2e7ba0cd71935b85942521f1ec25b6cc2c031b953c8ca4ff2d7a823d
+  languageName: node
+  linkType: hard
+
 "semver@npm:^6.0.0, semver@npm:^6.2.0, semver@npm:^6.3.0":
   version: 6.3.0
   resolution: "semver@npm:6.3.0"
@@ -17895,6 +17972,24 @@ fsevents@^1.2.7:
   version: 1.0.5
   resolution: "sisteransi@npm:1.0.5"
   checksum: 6554debe10fa4c6a7e8d58531313fdb61c39bb435ba420f8d7a01d8aaffecc654cca846b586e33f3c904350e24f229d5bbd8069abdb583c93252849a0f73e933
+  languageName: node
+  linkType: hard
+
+"size-limit@npm:^4.9.1":
+  version: 4.9.1
+  resolution: "size-limit@npm:4.9.1"
+  dependencies:
+    bytes: ^3.1.0
+    chokidar: ^3.4.3
+    ci-job-number: ^1.2.2
+    colorette: ^1.2.1
+    globby: ^11.0.1
+    lilconfig: ^2.0.1
+    ora: ^5.1.0
+    read-pkg-up: ^7.0.1
+  bin:
+    size-limit: bin.js
+  checksum: f6b194fd15e8a4297ee4e1f91d9ea2e66946776f4cc4b691d99d1e8ccbe3fd86d3285660bbe4ec4fee47d1e63de8181b75cffa36cd86e258b779c6cea9fb6a44
   languageName: node
   linkType: hard
 
