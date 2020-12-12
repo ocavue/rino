@@ -1,5 +1,6 @@
-import { getNextDocument, getNextDocumentInitialProps } from "@rino.app/next/dist/document"
 import Document from "next/document"
+
+import { getNextDocument, getNextDocumentInitialProps } from "@rino.app/next/dist/document"
 
 class MyDocument extends Document {
     render() {

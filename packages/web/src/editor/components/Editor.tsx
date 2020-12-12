@@ -3,11 +3,16 @@ import { useTheme } from "@material-ui/core/styles"
 import clsx from "clsx"
 import React, { useEffect, useRef, useState } from "react"
 
+import { SourceCodeEditor, WysiwygEditor } from "@rino.app/editor"
+
 import { MAX_EDITOR_WIDTH } from "src/constants"
+import { MAX_DRAWER_WIDTH } from "src/constants"
 import { Note } from "src/controller/edit"
-import { WysiwygEditor } from "src/editor/components//wysiwyg/WysiwygEditor"
-import { SourceCodeEditor } from "src/editor/components/source-code/SourceCodeEditor"
+import { WorksapceStateContainer } from "src/controller/workspace-state/hook"
+import { isTestEnv } from "src/utils"
 import { metaKey } from "src/utils"
+
+import { tableMenuSvgs } from "./table-menu-svg"
 
 const useStyles = makeStyles((theme: Theme) => {
     return createStyles({
@@ -84,6 +89,10 @@ export const Editor: React.FC<EditorProps> = ({ autoFocus, note, setNoteContent 
                 editable={!note.deleted}
                 content={initialContent.current}
                 setContent={setNoteContent}
+                tableMenuSvgs={tableMenuSvgs}
+                maxDrawerWidth={MAX_DRAWER_WIDTH}
+                DrawerActivityContainer={WorksapceStateContainer}
+                isTestEnv={isTestEnv()}
             />
         )
     else return null

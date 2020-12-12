@@ -1,4 +1,4 @@
-import { getSignInState } from "@rino.app/common"
+import { getSignInState } from "@rino.app/common/dist/auth"
 
 import { DynamicPage } from "src/utils"
 
