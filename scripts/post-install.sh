@@ -4,6 +4,23 @@ set -e
 
 cd $(dirname $0)/..
 
+#### setup firebase config
+
+firebase_config_path="packages/web/config/firebase.client.json"
+if [ ! -f "$firebase_config_path" ]; then
+    echo "$firebase_config_path does not exist."
+    echo '{
+        "apiKey": "",
+        "authDomain": "",
+        "databaseURL": "",
+        "projectId": "",
+        "storageBucket": "",
+        "messagingSenderId": "",
+        "appId": "",
+        "measurementId": ""
+    }' > $firebase_config_path
+fi
+
 #### build symbolic links
 function lnsf {
     source_dir="$(pwd)/$1"
