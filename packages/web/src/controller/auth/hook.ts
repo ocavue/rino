@@ -1,6 +1,7 @@
-import { setSignInState } from "@rino.app/common"
 import { useEffect, useMemo, useState } from "react"
 import { createContainer } from "unstated-next"
+
+import { setSignInState } from "@rino.app/common/dist/auth"
 
 import { User } from "src/controller/firebase/firebase-types"
 

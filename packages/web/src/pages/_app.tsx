@@ -4,11 +4,12 @@ import "../../../../node_modules/prosemirror-tables/style/tables.css"
 import "../../../../node_modules/prosemirror-view/style/prosemirror.css"
 import "../../../../node_modules/codemirror/lib/codemirror.css"
 import "../../../../node_modules/codemirror/theme/nord.css"
+import "../../../../node_modules/@rino.app/editor/theme/github.scss"
 import "../../src/style/develop.css"
-import "../../src/editor/theme/github.scss"
+
+import React from "react"
 
 import { BaseApp } from "@rino.app/next/dist/app"
-import React from "react"
 
 import App from "src/views/App"
 

@@ -7,10 +7,11 @@
     "scripts": {
         "lint": "eslint --ignore-path .gitignore --ext '.js,.jsx,.ts,.tsx'",
         "test": "jest --runInBand",
-        "build:pkg": "scripts/build-package.sh common next",
-        "build:all": "scripts/build-package.sh common next home web",
+        "build:pkg": "scripts/build-package.sh common next editor",
+        "build:all": "scripts/build-package.sh common next editor home web",
         "postinstall": "./scripts/post-install.sh",
         "server": "yarn workspace @rino.app/server",
+        "editor": "yarn workspace @rino.app/editor",
         "common": "yarn workspace @rino.app/common",
         "next": "yarn workspace @rino.app/next",
         "home": "yarn workspace @rino.app/home",
@@ -77,6 +78,10 @@
         }
     },
     "size-limit": [
+        {
+            "name": "editor",
+            "path": "packages/editor/dist/**/*.{js,css,html}"
+        },
         {
             "name": "web",
             "path": "packages/web/dist/**/*.{js,css,html}"

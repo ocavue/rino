@@ -1,6 +1,1 @@
-export * from "./wysiwyg/wysiwyg-manager"
-export * from "./wysiwyg/wysiwyg-extension"
-export * from "./wysiwyg/WysiwygEditor"
-export * from "./source-code/manager"
-export * from "./source-code/SourceCodeEditor"
 export * from "./Editor"

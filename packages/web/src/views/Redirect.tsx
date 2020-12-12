@@ -1,6 +1,7 @@
 /* istanbul ignore file */
-import { getHomeHostName } from "@rino.app/common"
 import React from "react"
+
+import { getHomeHostName } from "@rino.app/common/dist/host"
 
 import Center from "./Center"
 
