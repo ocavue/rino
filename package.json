@@ -7,8 +7,8 @@
     "scripts": {
         "lint": "eslint --ignore-path .gitignore --ext '.js,.jsx,.ts,.tsx'",
         "test": "jest --runInBand",
-        "build:pkg": "yarn run common build && yarn run next build",
-        "build:all": "yarn run common build && yarn run next build && yarn run home build && yarn run web build",
+        "build:pkg": "scripts/build-package.sh common next",
+        "build:all": "scripts/build-package.sh common next home web",
         "postinstall": "./scripts/post-install.sh",
         "server": "yarn workspace @rino.app/server",
         "common": "yarn workspace @rino.app/common",
@@ -76,6 +76,16 @@
             "pre-commit": "./scripts/pre-commit.sh"
         }
     },
+    "size-limit": [
+        {
+            "name": "web",
+            "path": "packages/web/dist/**/*.{js,css,html}"
+        },
+        {
+            "name": "home",
+            "path": "packages/home/dist/**/*.{js,css,html}"
+        }
+    ],
     "//": [
         "jest-puppeteer: Requires Jest v22+ TypeScript users should additionally install `@types/puppeteer`, `@types/jest-environment-puppeteer` and `@types/expect-puppeteer`"
     ]
