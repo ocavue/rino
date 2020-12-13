@@ -2,12 +2,11 @@ import { ProsemirrorNode, RemirrorEventListener } from "@remirror/core"
 import { RemirrorProvider, useRemirror } from "@remirror/react"
 import { debounce } from "lodash"
 import React, { FC, useEffect, useMemo, useRef, useState } from "react"
-import { Container } from "unstated-next"
 
 import { DevTools } from "../DevTools"
 import { ErrorBoundary } from "../ErrorBoundary"
 import { TableMenuSvgs } from "../table-menu/svg"
-import { EditorProps } from "../types"
+import { DrawerActivityContainer, EditorProps } from "../types"
 import { TableMenu } from "./TableMenu"
 import { WysiwygCombined } from "./wysiwyg-extension"
 import { useWysiwygManager, WysiwygManager, WysiwygSchema } from "./wysiwyg-manager"
@@ -17,7 +16,7 @@ const InnerEditor: FC<{
     className: string
     tableMenuSvgs: TableMenuSvgs
     maxDrawerWidth: number
-    DrawerActivityContainer: Container<{ drawerActivity: boolean }>
+    DrawerActivityContainer: DrawerActivityContainer
 }> = ({ className, tableMenuSvgs, maxDrawerWidth, DrawerActivityContainer }) => {
     const { getRootProps, commands, helpers } = useRemirror<WysiwygCombined>()
     return (
@@ -40,7 +39,7 @@ type Doc = ProsemirrorNode<WysiwygSchema>
 type WysiwygEditorProps = EditorProps & {
     tableMenuSvgs: TableMenuSvgs
     maxDrawerWidth: number
-    DrawerActivityContainer: Container<{ drawerActivity: boolean }>
+    DrawerActivityContainer: DrawerActivityContainer
     isTestEnv: boolean
 }
 

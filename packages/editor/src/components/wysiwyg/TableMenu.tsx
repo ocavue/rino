@@ -2,9 +2,9 @@ import { createStyles, IconButton, makeStyles, Paper, Snackbar, Theme } from "@m
 import { CommandsFromCombined, CommandShape, HelpersFromCombined } from "@remirror/core"
 import clsx from "clsx"
 import React, { useMemo } from "react"
-import { Container } from "unstated-next"
 
 import { TableMenuSvgs } from "../table-menu/svg"
+import { DrawerActivityContainer } from "../types"
 import { WysiwygCombined } from "./wysiwyg-extension"
 
 type StylesProps = { maxDrawerWidth: number }
@@ -45,7 +45,7 @@ export type TableMenuProps = {
     helpers: HelpersFromCombined<WysiwygCombined>
     svgs: TableMenuSvgs
     maxDrawerWidth: number
-    DrawerActivityContainer: Container<{ drawerActivity: boolean }>
+    DrawerActivityContainer: DrawerActivityContainer
 }
 
 export const TableMenu: React.FC<TableMenuProps> = ({ commands, helpers, svgs, maxDrawerWidth, DrawerActivityContainer }) => {

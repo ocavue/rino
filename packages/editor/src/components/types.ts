@@ -1,3 +1,5 @@
+import { Container } from "unstated-next"
+
 export type EditorProps = {
     className: string
     autoFocus: boolean
@@ -5,3 +7,5 @@ export type EditorProps = {
     content: string
     setContent: (value: string) => void
 }
+
+export type DrawerActivityContainer = Container<{ drawerActivity: boolean }>

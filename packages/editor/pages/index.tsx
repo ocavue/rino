@@ -1,5 +1,17 @@
+import dynamic from "next/dynamic"
 import React from "react"
 
+const Loading = () => {
+    return <p>loading</p>
+}
+
 export default function Index() {
-    return <h6> this is INDEX2 </h6>
+    const DynamicEditor = dynamic(import("../view/EditorWrapper"), { ssr: false, loading: Loading })
+
+    return (
+        <>
+            <h6>this page is only for development</h6>
+            <DynamicEditor />
+        </>
+    )
 }
