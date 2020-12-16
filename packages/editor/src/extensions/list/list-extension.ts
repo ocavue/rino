@@ -8,7 +8,6 @@ import { EditorState } from "prosemirror-state"
 import { EditorView, NodeView } from "prosemirror-view"
 
 import { NodeSerializerOptions, ParserRuleType } from "../../transform"
-
 import { splitListItem } from "./list-helper"
 
 class ListItemView implements NodeView {

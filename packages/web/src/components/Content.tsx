@@ -2,10 +2,10 @@ import { createStyles, makeStyles, Theme } from "@material-ui/core"
 import clsx from "clsx"
 import React from "react"
 
+import { NoteEditor } from "src/components/NoteEditor"
 import { MAX_DRAWER_WIDTH } from "src/constants"
 import { EditContainer } from "src/controller/edit"
 import { WorksapceStateContainer } from "src/controller/workspace-state/hook"
-import { Editor } from "src/editor"
 
 import { Welcome } from "./Welcome"
 
@@ -49,7 +49,7 @@ export const Content: React.FC = () => {
 
     return (
         <main className={clsx(classes.content, { [classes.contentShift]: drawerActivity })} data-testid="main">
-            {note ? <Editor note={note} setNoteContent={setNoteContent} autoFocus={false} key={note.key} /> : <Welcome />}
+            {note ? <NoteEditor note={note} setNoteContent={setNoteContent} autoFocus={false} key={note.key} /> : <Welcome />}
         </main>
     )
 }

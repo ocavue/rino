@@ -2,12 +2,11 @@ import { ProsemirrorNode, RemirrorEventListener } from "@remirror/core"
 import { RemirrorProvider, useRemirror } from "@remirror/react"
 import { debounce } from "lodash"
 import React, { FC, useEffect, useMemo, useRef, useState } from "react"
-import { Container } from "unstated-next"
 
 import { DevTools } from "../DevTools"
 import { ErrorBoundary } from "../ErrorBoundary"
 import { TableMenuSvgs } from "../table-menu/svg"
-import { EditorProps } from "../types"
+import { DrawerActivityContainer, EditorProps } from "../types"
 import { TableMenu } from "./TableMenu"
 import { WysiwygCombined } from "./wysiwyg-extension"
 import { useWysiwygManager, WysiwygManager, WysiwygSchema } from "./wysiwyg-manager"
@@ -17,8 +16,8 @@ const InnerEditor: FC<{
     className: string
     tableMenuSvgs: TableMenuSvgs
     maxDrawerWidth: number
-    DrawerActivityContainer: Container<{ drawerActivity: boolean }>
-}> = ({ className, tableMenuSvgs, maxDrawerWidth, DrawerActivityContainer }) => {
+    drawerActivityContainer: DrawerActivityContainer
+}> = ({ className, tableMenuSvgs, maxDrawerWidth, drawerActivityContainer }) => {
     const { getRootProps, commands, helpers } = useRemirror<WysiwygCombined>()
     return (
         <>
@@ -27,7 +26,7 @@ const InnerEditor: FC<{
                 helpers={helpers}
                 svgs={tableMenuSvgs}
                 maxDrawerWidth={maxDrawerWidth}
-                DrawerActivityContainer={DrawerActivityContainer}
+                drawerActivityContainer={drawerActivityContainer}
             />
             <div {...getRootProps()} className={className} />
             <DevTools />
@@ -40,7 +39,7 @@ type Doc = ProsemirrorNode<WysiwygSchema>
 type WysiwygEditorProps = EditorProps & {
     tableMenuSvgs: TableMenuSvgs
     maxDrawerWidth: number
-    DrawerActivityContainer: Container<{ drawerActivity: boolean }>
+    drawerActivityContainer: DrawerActivityContainer
     isTestEnv: boolean
 }
 
@@ -52,7 +51,7 @@ export const WysiwygEditor: FC<WysiwygEditorProps> = ({
     setContent,
     tableMenuSvgs,
     maxDrawerWidth,
-    DrawerActivityContainer,
+    drawerActivityContainer,
     isTestEnv,
 }) => {
     const manager: WysiwygManager = useWysiwygManager()
@@ -134,7 +133,7 @@ export const WysiwygEditor: FC<WysiwygEditorProps> = ({
                     className={className}
                     tableMenuSvgs={tableMenuSvgs}
                     maxDrawerWidth={maxDrawerWidth}
-                    DrawerActivityContainer={DrawerActivityContainer}
+                    drawerActivityContainer={drawerActivityContainer}
                 />
             </RemirrorProvider>
         </ErrorBoundary>
