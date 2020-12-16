@@ -45,13 +45,13 @@ export type TableMenuProps = {
     helpers: HelpersFromCombined<WysiwygCombined>
     svgs: TableMenuSvgs
     maxDrawerWidth: number
-    DrawerActivityContainer: DrawerActivityContainer
+    drawerActivityContainer: DrawerActivityContainer
 }
 
-export const TableMenu: React.FC<TableMenuProps> = ({ commands, helpers, svgs, maxDrawerWidth, DrawerActivityContainer }) => {
+export const TableMenu: React.FC<TableMenuProps> = ({ commands, helpers, svgs, maxDrawerWidth, drawerActivityContainer }) => {
     const showTableMenu = !!helpers.selectedTableCell()
 
-    const { drawerActivity } = DrawerActivityContainer.useContainer()
+    const { drawerActivity } = drawerActivityContainer.useContainer()
 
     const classes = useStyles({ maxDrawerWidth })
 

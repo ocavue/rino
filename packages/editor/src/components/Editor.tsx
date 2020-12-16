@@ -19,7 +19,7 @@ type EditorProps = {
     isDarkMode: boolean
     extraClassName: string
     maxDrawerWidth: number
-    DrawerActivityContainer: DrawerActivityContainer // TODO: remove the var to camlCase
+    drawerActivityContainer: DrawerActivityContainer
     isTestEnv: boolean
     tableMenuSvgs: TableMenuSvgs
 }
@@ -31,7 +31,7 @@ export const Editor: React.FC<EditorProps> = ({
     isDarkMode,
     extraClassName,
     maxDrawerWidth,
-    DrawerActivityContainer,
+    drawerActivityContainer,
     isTestEnv,
     tableMenuSvgs,
 }) => {
@@ -77,7 +77,7 @@ export const Editor: React.FC<EditorProps> = ({
                 setContent={setNoteContent}
                 tableMenuSvgs={tableMenuSvgs}
                 maxDrawerWidth={maxDrawerWidth}
-                DrawerActivityContainer={DrawerActivityContainer}
+                drawerActivityContainer={drawerActivityContainer}
                 isTestEnv={isTestEnv}
             />
         )
