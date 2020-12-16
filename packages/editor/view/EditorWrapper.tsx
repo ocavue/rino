@@ -12,7 +12,7 @@ const useDrawerActivityState = () => {
     }
 }
 
-const DrawerActivityContainer = createContainer(useDrawerActivityState)
+const drawerActivityContainer = createContainer(useDrawerActivityState)
 
 const EmptyComponent = () => null
 
@@ -30,7 +30,7 @@ const EditorWrapper = () => {
     const setNoteContent = useCallback((content: string) => setNote({ content, deleted: false }), [])
 
     return (
-        <DrawerActivityContainer.Provider>
+        <drawerActivityContainer.Provider>
             <Editor
                 autoFocus={true}
                 note={note}
@@ -39,10 +39,10 @@ const EditorWrapper = () => {
                 maxDrawerWidth={100}
                 isTestEnv={true}
                 isDarkMode={true}
-                DrawerActivityContainer={DrawerActivityContainer}
+                drawerActivityContainer={drawerActivityContainer}
                 tableMenuSvgs={tableMenuSvgs}
             />
-        </DrawerActivityContainer.Provider>
+        </drawerActivityContainer.Provider>
     )
 }
 

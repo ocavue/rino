@@ -57,7 +57,7 @@ export const NoteEditor: React.FC<EditorProps> = ({ autoFocus, note, setNoteCont
             isDarkMode={theme.palette.type === "dark"}
             maxDrawerWidth={MAX_DRAWER_WIDTH}
             isTestEnv={isTestEnv()}
-            DrawerActivityContainer={WorksapceStateContainer}
+            drawerActivityContainer={WorksapceStateContainer}
             tableMenuSvgs={tableMenuSvgs}
         />
     )
