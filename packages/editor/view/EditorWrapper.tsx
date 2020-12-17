@@ -38,7 +38,7 @@ const EditorWrapper = () => {
                 extraClassName={""}
                 maxDrawerWidth={100}
                 isTestEnv={true}
-                isDarkMode={true}
+                isDarkMode={false}
                 drawerActivityContainer={drawerActivityContainer}
                 tableMenuSvgs={tableMenuSvgs}
             />
