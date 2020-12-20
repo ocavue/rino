@@ -30,6 +30,7 @@ jobs:
             node_modules
             */*/node_modules
             ~/.cache/firebase
+            ~/.cache/ms-playwright
             .yarn/cache
           key: ${{ runner.os }}-deps-v5-${{ hashFiles('yarn.lock') }}
 
