@@ -1,8 +1,6 @@
 // This file stores all shared Jest config for each packages
 
 module.exports = {
-    verbose: true,
-
     // A map from regular expressions to paths to transformers
     transform: {
         ".*\\.ts(x)?$": "babel-jest",
