@@ -22,14 +22,13 @@ jobs:
       - &step_cache_deps
         id: step_cache_deps
         name: Cache dependencies
-        uses: actions/cache@master
+        uses: actions/cache@v2
         with:
-          # Note this example uses the new multi-paths feature and is only available at master
-          # https://github.com/actions/cache/blob/f00dedfa6c708c51f4e4296f092458a4a891bddd/examples.md#node---lerna
           path: |
             node_modules
             */*/node_modules
             ~/.cache/firebase
+            ~/.cache/ms-playwright
             .yarn/cache
           key: ${{ runner.os }}-deps-v5-${{ hashFiles('yarn.lock') }}
 
