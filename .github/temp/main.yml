@@ -12,6 +12,9 @@ jobs:
       - &step_checkout
         name: Checkout code repository
         uses: actions/checkout@v2
+        with:
+          # This makes Actions fetch all Git history so that Changesets can generate changelogs with the correct commits
+          fetch-depth: 0
 
       - &step_setup_node
         name: Setup node.js
