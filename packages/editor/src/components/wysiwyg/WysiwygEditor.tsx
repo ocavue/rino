@@ -5,7 +5,6 @@ import React, { FC, useEffect, useMemo, useRef, useState } from "react"
 
 import { DevTools } from "../DevTools"
 import { ErrorBoundary } from "../ErrorBoundary"
-import { TableMenuSvgs } from "../table-menu/svg"
 import { DrawerActivityContainer, EditorProps } from "../types"
 import { TableMenu } from "./TableMenu"
 import { WysiwygCombined } from "./wysiwyg-extension"
@@ -14,17 +13,15 @@ import { buildMarkdownParser, buildMarkdownSerializer } from "./wysiwyg-markdown
 
 const InnerEditor: FC<{
     className: string
-    tableMenuSvgs: TableMenuSvgs
     maxDrawerWidth: number
     drawerActivityContainer: DrawerActivityContainer
-}> = ({ className, tableMenuSvgs, maxDrawerWidth, drawerActivityContainer }) => {
+}> = ({ className, maxDrawerWidth, drawerActivityContainer }) => {
     const { getRootProps, commands, helpers } = useRemirror<WysiwygCombined>()
     return (
         <>
             <TableMenu
                 commands={commands}
                 helpers={helpers}
-                svgs={tableMenuSvgs}
                 maxDrawerWidth={maxDrawerWidth}
                 drawerActivityContainer={drawerActivityContainer}
             />
@@ -37,7 +34,6 @@ const InnerEditor: FC<{
 type Doc = ProsemirrorNode<WysiwygSchema>
 
 type WysiwygEditorProps = EditorProps & {
-    tableMenuSvgs: TableMenuSvgs
     maxDrawerWidth: number
     drawerActivityContainer: DrawerActivityContainer
     isTestEnv: boolean
@@ -49,7 +45,6 @@ export const WysiwygEditor: FC<WysiwygEditorProps> = ({
     editable,
     content,
     setContent,
-    tableMenuSvgs,
     maxDrawerWidth,
     drawerActivityContainer,
     isTestEnv,
@@ -129,12 +124,7 @@ export const WysiwygEditor: FC<WysiwygEditorProps> = ({
                 editable={editable}
                 attributes={{ "data-testid": "wysiwyg_mode_textarea" }}
             >
-                <InnerEditor
-                    className={className}
-                    tableMenuSvgs={tableMenuSvgs}
-                    maxDrawerWidth={maxDrawerWidth}
-                    drawerActivityContainer={drawerActivityContainer}
-                />
+                <InnerEditor className={className} maxDrawerWidth={maxDrawerWidth} drawerActivityContainer={drawerActivityContainer} />
             </RemirrorProvider>
         </ErrorBoundary>
     )

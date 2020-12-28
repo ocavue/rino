@@ -3,7 +3,7 @@ import { CommandsFromCombined, CommandShape, HelpersFromCombined } from "@remirr
 import clsx from "clsx"
 import React, { useMemo } from "react"
 
-import { TableMenuSvgs } from "../table-menu/svg"
+import { tableMenuSvgs as svgs } from "../table-menu/svg"
 import { DrawerActivityContainer } from "../types"
 import { WysiwygCombined } from "./wysiwyg-extension"
 
@@ -43,12 +43,11 @@ const useStyles = makeStyles<Theme, StylesProps>((theme: Theme) => {
 export type TableMenuProps = {
     commands: CommandsFromCombined<WysiwygCombined>
     helpers: HelpersFromCombined<WysiwygCombined>
-    svgs: TableMenuSvgs
     maxDrawerWidth: number
     drawerActivityContainer: DrawerActivityContainer
 }
 
-export const TableMenu: React.FC<TableMenuProps> = ({ commands, helpers, svgs, maxDrawerWidth, drawerActivityContainer }) => {
+export const TableMenu: React.FC<TableMenuProps> = ({ commands, helpers, maxDrawerWidth, drawerActivityContainer }) => {
     const showTableMenu = !!helpers.selectedTableCell()
 
     const { drawerActivity } = drawerActivityContainer.useContainer()
@@ -71,7 +70,7 @@ export const TableMenu: React.FC<TableMenuProps> = ({ commands, helpers, svgs, m
                 </IconButton>
             )
         })
-    }, [commands, classes, svgs])
+    }, [commands, classes])
 
     return (
         <Snackbar
