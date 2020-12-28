@@ -3,7 +3,6 @@ import React, { useEffect, useRef, useState } from "react"
 import { metaKey } from "@rino.app/common/dist/util"
 
 import { SourceCodeEditor } from "./source-code"
-import { TableMenuSvgs } from "./table-menu/svg"
 import { DrawerActivityContainer } from "./types"
 import { WysiwygEditor } from "./wysiwyg"
 
@@ -21,7 +20,6 @@ type EditorProps = {
     maxDrawerWidth: number
     drawerActivityContainer: DrawerActivityContainer
     isTestEnv: boolean
-    tableMenuSvgs: TableMenuSvgs
 }
 
 export const Editor: React.FC<EditorProps> = ({
@@ -33,7 +31,6 @@ export const Editor: React.FC<EditorProps> = ({
     maxDrawerWidth,
     drawerActivityContainer,
     isTestEnv,
-    tableMenuSvgs,
 }) => {
     const [mode, setMode] = useState<"source-code" | "wysiwyg" | null>("wysiwyg")
     const initialContent = useRef<string>(note.content)
@@ -75,7 +72,6 @@ export const Editor: React.FC<EditorProps> = ({
                 editable={!note.deleted}
                 content={initialContent.current}
                 setContent={setNoteContent}
-                tableMenuSvgs={tableMenuSvgs}
                 maxDrawerWidth={maxDrawerWidth}
                 drawerActivityContainer={drawerActivityContainer}
                 isTestEnv={isTestEnv}

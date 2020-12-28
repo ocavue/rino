@@ -9,8 +9,6 @@ import { Note } from "src/controller/edit"
 import { WorksapceStateContainer } from "src/controller/workspace-state/hook"
 import { isTestEnv } from "src/utils"
 
-import { tableMenuSvgs } from "./table-menu-svg"
-
 type StylesProps = {
     maxEditorWidth: number
 }
@@ -58,7 +56,6 @@ export const NoteEditor: React.FC<EditorProps> = ({ autoFocus, note, setNoteCont
             maxDrawerWidth={MAX_DRAWER_WIDTH}
             isTestEnv={isTestEnv()}
             drawerActivityContainer={WorksapceStateContainer}
-            tableMenuSvgs={tableMenuSvgs}
         />
     )
 }
