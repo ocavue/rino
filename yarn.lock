@@ -3871,6 +3871,25 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@svgr/cli@npm:^5.5.0":
+  version: 5.5.0
+  resolution: "@svgr/cli@npm:5.5.0"
+  dependencies:
+    "@svgr/core": ^5.5.0
+    "@svgr/plugin-jsx": ^5.5.0
+    "@svgr/plugin-prettier": ^5.5.0
+    "@svgr/plugin-svgo": ^5.5.0
+    camelcase: ^6.2.0
+    chalk: ^4.1.0
+    commander: ^6.2.0
+    dashify: ^2.0.0
+    glob: ^7.1.4
+  bin:
+    svgr: bin/svgr
+  checksum: 380cd303b2d88b1ab171d2b77834a8231b64ed8adac852063dacc0f6b4face956297ef66f33a3bb8693196fe673f17982d0244dfa2413e488d23a255907f7d47
+  languageName: node
+  linkType: hard
+
 "@svgr/core@npm:^5.5.0":
   version: 5.5.0
   resolution: "@svgr/core@npm:5.5.0"
@@ -3900,6 +3919,16 @@ __metadata:
     "@svgr/hast-util-to-babel-ast": ^5.5.0
     svg-parser: ^2.0.2
   checksum: 8ed36eefe1cfda76a373aa483567ccf9e35514dcbb69dbc15f74388f9172731cce7d5e959c5a9a2d758e3bc8b22c5ecfa3fd3cd85350cd954dc0f6516f865eda
+  languageName: node
+  linkType: hard
+
+"@svgr/plugin-prettier@npm:^5.5.0":
+  version: 5.5.0
+  resolution: "@svgr/plugin-prettier@npm:5.5.0"
+  dependencies:
+    deepmerge: ^4.2.2
+    prettier: ^2.1.2
+  checksum: a7398221681d22dc04260e16a661458132735ef22e5d3a6fe79b22f2045773f28ee9da23722b6796ce59ad4f0939103d8e62a423d0a7bbeb227ce75483fc8661
   languageName: node
   linkType: hard
 
@@ -7904,6 +7933,13 @@ __metadata:
   dependencies:
     assert-plus: ^1.0.0
   checksum: 5959409ee42dc4bdbf3fa384b801ece580ca336658bb0342ffab0099b3fc6bf9b3e239e1b82dcc4fcaeee315353e08f2eae47b0928a6a579391598c44958afa1
+  languageName: node
+  linkType: hard
+
+"dashify@npm:^2.0.0":
+  version: 2.0.0
+  resolution: "dashify@npm:2.0.0"
+  checksum: ee6a1e538dabe0bf2b08f58b907f4235505bab23ad193d53b8e5894d7de0a9050868ceab9cd1c5b9aa8c2a6381e4e69752728d321e9839ef136d1d31baba721c
   languageName: node
   linkType: hard
 
@@ -16239,7 +16275,7 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
-"prettier@npm:^2.2.1":
+"prettier@npm:^2.1.2, prettier@npm:^2.2.1":
   version: 2.2.1
   resolution: "prettier@npm:2.2.1"
   bin:
@@ -17619,6 +17655,7 @@ fsevents@^1.2.7:
     "@changesets/cli": ^2.12.0
     "@lhci/cli": ^0.6.1
     "@size-limit/file": ^4.9.1
+    "@svgr/cli": ^5.5.0
     "@types/expect-puppeteer": ^4.4.5
     "@types/jest": ^26.0.19
     "@types/node": ^14.14.16
