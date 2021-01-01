@@ -1,5 +1,11 @@
 # @rino.app/web
 
+## 0.16.1
+
+### Patch Changes
+
+-   f148fd1: Update the copyright and Happy New Year!
+
 ## 0.16.0
 
 ### Minor Changes
