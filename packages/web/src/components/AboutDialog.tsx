@@ -22,7 +22,7 @@ export const AboutDialog: React.FC<{
                 <DialogContentText align="center">
                     <span data-testid="about_dialog_version">Version {version}</span>
                     <br />
-                    <span data-testid="about_dialog_copyright">Copyright © 2020 Ocavue. All rights reserved.</span>
+                    <span data-testid="about_dialog_copyright">Copyright © 2021 Ocavue. All rights reserved.</span>
                 </DialogContentText>
             </DialogContent>
         </Dialog>
