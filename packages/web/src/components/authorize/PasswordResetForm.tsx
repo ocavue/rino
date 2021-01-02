@@ -1,9 +1,9 @@
 import firebase from "firebase"
 import React, { useMemo } from "react"
 
-import AuthForm from "src/components/auth/AuthForm"
-import SubmitButton from "src/components/auth/SubmitButton"
-import UsernameTextField from "src/components/auth/UsernameTextField"
+import AuthForm from "src/components/authorize/AuthForm"
+import SubmitButton from "src/components/authorize/SubmitButton"
+import UsernameTextField from "src/components/authorize/UsernameTextField"
 import { sendPasswordResetEmail } from "src/controller/auth/actions"
 import { AuthContainer } from "src/controller/auth/hook"
 

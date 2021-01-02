@@ -2,9 +2,9 @@ import { Grid, Link, Typography } from "@material-ui/core"
 import dynamic from "next/dynamic"
 import React, { useState } from "react"
 
-import AuthLayout from "src/components/auth/AuthLayout"
+import AuthLayout from "src/components/authorize/AuthLayout"
 
-const PasswordResetForm = dynamic(() => import("../components/auth/PasswordResetForm"), {
+const PasswordResetForm = dynamic(() => import("../components/authorize/PasswordResetForm"), {
     ssr: false,
 })
 
