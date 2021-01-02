@@ -106,7 +106,7 @@ jobs:
         run: |
           ./node_modules/.bin/firebase emulators:exec --only firestore "
             yarn run web start > /dev/null &
-            yarn run test --coverage
+            yarn run test packages/web/tests/e2e/4.editor/2.error.spec.ts --coverage
           "
 
       - name: Upload coverage information to codecov
