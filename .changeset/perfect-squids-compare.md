@@ -2,4 +2,4 @@
 "@rino.app/web": patch
 ---
 
-Fix the editor width.
+Fix the problem that the editing area is too small.
