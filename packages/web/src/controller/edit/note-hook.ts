@@ -20,16 +20,16 @@ type SetNoteKey = ReturnType<typeof useNoteKey>[1]
 
 function useFetchNotes(setNotes: SetNotes) {
     const isFirstFetchRef = useRef(true)
-    return useCallback(
-        async function fetchNotes(uid: string) {
+    const fetchNotesFromServerOrCache = useCallback(
+        async function fetchNotesFromServerOrCache(uid: string) {
             const isFirstFetch = isFirstFetchRef.current
             const query = notesCollection.where("uid", "==", uid)
             const snapshot = await (async () => {
                 if (isFirstFetch) {
                     isFirstFetchRef.current = false
                     const snapshot = await query.get({ source: "cache" })
-                    // If the cache is empty, try to fetch the data from the server
                     if (snapshot.docs.length === 0) {
+                        // If the cache is empty, try to fetch the data from the server
                         return await query.get()
                     } else {
                         return snapshot
@@ -41,9 +41,21 @@ function useFetchNotes(setNotes: SetNotes) {
             const originNotes = snapshot.docs.map((snapshot) => Note.new({ uid, snapshot }))
             const sortedNotes = sortBy(originNotes, (note) => [note.createTime, note.id]).reverse()
             setNotes(sortedNotes)
+
+            return { fromCache: snapshot.metadata.fromCache }
         },
         [setNotes],
     )
+    const fetchNotes = useCallback(
+        async function fetchNotes(uid: string) {
+            const { fromCache } = await fetchNotesFromServerOrCache(uid)
+            if (fromCache) {
+                void fetchNotesFromServerOrCache(uid)
+            }
+        },
+        [fetchNotesFromServerOrCache],
+    )
+    return fetchNotes
 }
 
 function useSetNoteContent(noteKey: NoteKey, setNotes: SetNotes) {
