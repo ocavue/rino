@@ -1,5 +1,12 @@
 # @rino.app/web
 
+## 0.16.2
+
+### Patch Changes
+
+-   0eab78b: Fix the problem that the editing area is too small.
+-   4ffc8da: Fix the problem of notes syncing across devices.
+
 ## 0.16.1
 
 ### Patch Changes
