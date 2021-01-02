@@ -2,7 +2,7 @@ import React from "react"
 
 import Center from "./Center"
 
-  function Loading() {
+function Loading() {
     return (
         <Center>
             {/* This component will be rendered before the css so we specify the font family inline here.*/}

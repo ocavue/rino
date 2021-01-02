@@ -7,7 +7,7 @@ import { EditContainer, Note, NoteType } from "src/controller/edit"
 import { WorksapceStateContainer } from "src/controller/workspace-state/hook"
 import { TestHook } from "tests/react-test-utils"
 
-import  NoteBody  from "../NoteBody"
+import NoteBody from "../NoteBody"
 
 function renderWithCallback(component: React.ReactNode, callback: () => unknown) {
     return render(
