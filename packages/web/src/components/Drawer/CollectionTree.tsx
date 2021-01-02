@@ -55,8 +55,10 @@ const CollectionList: React.FC<{
     )
 }
 
-export const CollectionTree: React.FC = () => {
+const CollectionTree: React.FC = () => {
     const { collections, collectionKey, setCollectionKey } = EditContainer.useContainer()
 
     return <CollectionList collections={collections} collectionKey={collectionKey} setCollectionKey={setCollectionKey} />
 }
+
+export default CollectionTree

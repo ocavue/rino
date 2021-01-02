@@ -1,9 +1,9 @@
 import dynamic from "next/dynamic"
 import React, { useState } from "react"
 
-import { AuthLayout } from "src/components/Auth/Auth"
+import AuthLayout from "src/components/auth/AuthLayout"
 
-const SignInForm = dynamic(() => import("../components/Auth/SignInForm"), { ssr: false })
+const SignInForm = dynamic(() => import("../components/auth/SignInForm"), { ssr: false })
 
 export default function SignIn() {
     const [progressing, setProgressing] = useState(false)

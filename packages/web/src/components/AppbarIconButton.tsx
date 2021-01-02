@@ -2,7 +2,7 @@ import { createStyles, IconButton, withStyles } from "@material-ui/core"
 
 import { APPBAR_ICON_BUTTON_SIZE, APPBAR_ICON_SIZE } from "src/constants"
 
-export const AppbarIconButton = withStyles(
+const AppbarIconButton = withStyles(
     createStyles({
         root: {
             width: APPBAR_ICON_BUTTON_SIZE,
@@ -11,3 +11,5 @@ export const AppbarIconButton = withStyles(
         },
     }),
 )(IconButton)
+
+export default AppbarIconButton

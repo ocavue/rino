@@ -10,4 +10,4 @@ if (process.env.NODE_ENV === "development") {
     }
 }
 
-export { DevTools }
+export default DevTools

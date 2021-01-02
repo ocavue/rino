@@ -115,7 +115,7 @@ const FullSignInSnackbar: React.FC<{
     )
 }
 
-export const SignInSnackbar: React.FC = () => {
+const SignInSnackbar: React.FC = () => {
     const { user, loadingUser } = AuthContainer.useContainer()
 
     const [state, setState] = React.useState<SnackbarState>("off")
@@ -134,3 +134,5 @@ export const SignInSnackbar: React.FC = () => {
         </>
     )
 }
+
+export default SignInSnackbar

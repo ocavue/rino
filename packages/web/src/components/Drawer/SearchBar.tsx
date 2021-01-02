@@ -3,7 +3,7 @@ import React from "react"
 
 import { EditContainer } from "src/controller/edit"
 
-export const SearchBar = () => {
+const SearchBar = () => {
     const { setSearchQuery } = EditContainer.useContainer()
     const onChange = React.useCallback(
         (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -28,3 +28,5 @@ export const SearchBar = () => {
         />
     )
 }
+
+export default SearchBar

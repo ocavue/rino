@@ -4,8 +4,8 @@ import * as icons from "@material-ui/icons"
 import clsx from "clsx"
 import React from "react"
 
-import { AppbarIconButton } from "src/components/AppbarIconButton"
-import { NoteMenu } from "src/components/NoteMenu"
+import AppbarIconButton from "src/components/AppbarIconButton"
+import NoteMenu from "src/components/NoteMenu"
 import { APPBAR_HEIGHT, APPBAR_ICON_BUTTON_MARGIN, MAX_DRAWER_WIDTH } from "src/constants"
 import { EditContainer } from "src/controller/edit"
 import { WorksapceStateContainer } from "src/controller/workspace-state/hook"
@@ -52,7 +52,7 @@ const useStyles = makeStyles((theme: Theme) => {
     })
 })
 
-export const Appbar: React.FC = () => {
+const Appbar: React.FC = () => {
     const { drawerActivity, setDrawerActivity } = WorksapceStateContainer.useContainer()
     const { noteKey } = EditContainer.useContainer()
 
@@ -97,3 +97,5 @@ export const Appbar: React.FC = () => {
         </AppBar>
     )
 }
+
+export default Appbar

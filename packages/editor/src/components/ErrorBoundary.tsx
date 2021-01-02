@@ -1,7 +1,7 @@
+/* istanbul ignore file */
 import React from "react"
 
-/* istanbul ignore next */
-export class ErrorBoundary extends React.Component<unknown, { hasError: boolean }> {
+class ErrorBoundary extends React.Component<unknown, { hasError: boolean }> {
     constructor(props) {
         super(props)
         this.state = { hasError: false }
@@ -26,3 +26,5 @@ export class ErrorBoundary extends React.Component<unknown, { hasError: boolean 
         return this.props.children
     }
 }
+
+export default ErrorBoundary

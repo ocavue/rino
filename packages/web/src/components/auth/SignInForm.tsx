@@ -3,7 +3,10 @@ import firebase from "firebase"
 import { useRouter } from "next/router"
 import React, { useMemo, useState } from "react"
 
-import { AuthForm, PasswordTextField, SubmitButton, UsernameTextField } from "src/components/Auth/Auth"
+import AuthForm from "src/components/auth/AuthForm"
+import PasswordTextField from "src/components/auth/PasswordTextField"
+import SubmitButton from "src/components/auth/SubmitButton"
+import UsernameTextField from "src/components/auth/UsernameTextField"
 import { signInWithEmailAndPassword } from "src/controller/auth/actions"
 import { AuthContainer } from "src/controller/auth/hook"
 

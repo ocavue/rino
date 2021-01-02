@@ -5,9 +5,9 @@ import { AuthContainer } from "src/controller/auth/hook"
 import { EditContainer } from "src/controller/edit"
 import { WorksapceStateContainer } from "src/controller/workspace-state/hook"
 
-import { NoteList } from "./NoteList"
+import NoteList from "./NoteList"
 
-export const NoteBody: React.FC = () => {
+const NoteBody: React.FC = () => {
     const { loadingData } = WorksapceStateContainer.useContainer()
     const { loadingUser } = AuthContainer.useContainer()
 
@@ -34,3 +34,5 @@ export const NoteBody: React.FC = () => {
         return <NoteList visibleNotes={visibleNotes} noteKey={noteKey} setNoteKey={setNoteKey} />
     }
 }
+
+export default NoteBody

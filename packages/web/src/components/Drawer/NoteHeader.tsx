@@ -1,15 +1,15 @@
 import * as icons from "@material-ui/icons"
 import React, { useMemo } from "react"
 
-import { AppbarIconButton } from "src/components/AppbarIconButton"
+import AppbarIconButton from "src/components/AppbarIconButton"
 import { AuthContainer } from "src/controller/auth/hook"
 import { EditContainer } from "src/controller/edit"
 import { WorksapceStateContainer } from "src/controller/workspace-state/hook"
 
-import { SearchBar } from "./SearchBar"
+import SearchBar from "./SearchBar"
 import { useHeaderStyles } from "./style"
 
-export const NoteHeader: React.FC = () => {
+const NoteHeader: React.FC = () => {
     const classes = useHeaderStyles()
 
     const { loadingData } = WorksapceStateContainer.useContainer()
@@ -45,3 +45,5 @@ export const NoteHeader: React.FC = () => {
         </div>
     )
 }
+
+export default NoteHeader

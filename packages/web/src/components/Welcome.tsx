@@ -15,7 +15,7 @@ const useStyles = m.makeStyles((theme: m.Theme) => {
     })
 })
 
-export function Welcome() {
+function Welcome() {
     const classes = useStyles()
     return (
         <>
@@ -25,3 +25,5 @@ export function Welcome() {
         </>
     )
 }
+
+export default Welcome

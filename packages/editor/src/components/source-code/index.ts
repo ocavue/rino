@@ -1,2 +1,4 @@
 export * from "./manager"
-export * from "./SourceCodeEditor"
+
+import SourceCodeEditor from "./SourceCodeEditor"
+export { SourceCodeEditor }
