@@ -5,10 +5,10 @@ import { Note } from "src/controller/edit"
 import { WorksapceStateContainer } from "src/controller/workspace-state/hook"
 import { useIsMobile } from "src/hooks"
 
-import { NoteListItem } from "./NoteListItem"
+import NoteListItem from "./NoteListItem"
 import { useBodyStyles } from "./style"
 
-export const NoteList: React.FC<{
+const NoteList: React.FC<{
     visibleNotes: Note[]
     noteKey: string | null
     setNoteKey: React.Dispatch<React.SetStateAction<string | null>>
@@ -31,3 +31,5 @@ export const NoteList: React.FC<{
         </List>
     )
 }
+
+export default NoteList

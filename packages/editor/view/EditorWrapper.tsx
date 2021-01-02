@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from "react"
 import { createContainer } from "unstated-next"
 
-import { Editor } from "../src/components/Editor"
+import Editor from "../src/components/Editor"
 
 const useDrawerActivityState = () => {
     const [drawerActivity, setDrawerActivity] = useState(true)

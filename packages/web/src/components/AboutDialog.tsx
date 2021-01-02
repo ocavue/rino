@@ -4,7 +4,7 @@ import React from "react"
 import logo from "src/assets/logo.png"
 import { version } from "src/controller/config"
 
-export const AboutDialog: React.FC<{
+const AboutDialog: React.FC<{
     open: boolean
     setOpen: (open: boolean) => void
 }> = ({ open, setOpen }) => {
@@ -28,3 +28,5 @@ export const AboutDialog: React.FC<{
         </Dialog>
     )
 }
+
+export default AboutDialog

@@ -7,7 +7,7 @@ import { User } from "src/controller/firebase/firebase-types"
 import { WorksapceStateContainer } from "src/controller/workspace-state/hook"
 import { mockNextLink, TestHook } from "tests/react-test-utils"
 
-import { SignInSnackbar } from "../SignInSnackbar"
+import SignInSnackbar from "../SignInSnackbar"
 
 jest.useFakeTimers()
 jest.mock("next/link", () => mockNextLink)

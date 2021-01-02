@@ -47,7 +47,7 @@ export type TableMenuProps = {
     drawerActivityContainer: DrawerActivityContainer
 }
 
-export const TableMenu: React.FC<TableMenuProps> = ({ commands, helpers, maxDrawerWidth, drawerActivityContainer }) => {
+const TableMenu: React.FC<TableMenuProps> = ({ commands, helpers, maxDrawerWidth, drawerActivityContainer }) => {
     const showTableMenu = !!helpers.selectedTableCell()
 
     const { drawerActivity } = drawerActivityContainer.useContainer()
@@ -88,3 +88,5 @@ export const TableMenu: React.FC<TableMenuProps> = ({ commands, helpers, maxDraw
         </Snackbar>
     )
 }
+
+export default TableMenu

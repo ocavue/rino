@@ -3,10 +3,10 @@ import { RemirrorProvider, useRemirror } from "@remirror/react"
 import { debounce } from "lodash"
 import React, { FC, useEffect, useMemo, useRef, useState } from "react"
 
-import { DevTools } from "../DevTools"
-import { ErrorBoundary } from "../ErrorBoundary"
+import DevTools from "../DevTools"
+import ErrorBoundary from "../ErrorBoundary"
 import { DrawerActivityContainer, EditorProps } from "../types"
-import { TableMenu } from "./TableMenu"
+import TableMenu from "./TableMenu"
 import { WysiwygCombined } from "./wysiwyg-extension"
 import { useWysiwygManager, WysiwygManager, WysiwygSchema } from "./wysiwyg-manager"
 import { buildMarkdownParser, buildMarkdownSerializer } from "./wysiwyg-markdown"
@@ -39,7 +39,7 @@ type WysiwygEditorProps = EditorProps & {
     isTestEnv: boolean
 }
 
-export const WysiwygEditor: FC<WysiwygEditorProps> = ({
+const WysiwygEditor: FC<WysiwygEditorProps> = ({
     className,
     autoFocus,
     editable,
@@ -131,3 +131,5 @@ export const WysiwygEditor: FC<WysiwygEditorProps> = ({
 }
 
 WysiwygEditor.displayName = "WysiwygEditor"
+
+export default WysiwygEditor

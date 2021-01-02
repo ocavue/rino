@@ -1,14 +1,14 @@
 import * as icons from "@material-ui/icons"
 import React from "react"
 
-import { AppbarIconButton } from "src/components/AppbarIconButton"
+import AppbarIconButton from "src/components/AppbarIconButton"
 import { WorksapceStateContainer } from "src/controller/workspace-state/hook"
 
-import { AboutDialog } from "../AboutDialog"
-import { SettingsMenu } from "./SettingsMenu"
+import AboutDialog from "../AboutDialog"
+import SettingsMenu from "./SettingsMenu"
 import { useHeaderStyles } from "./style"
 
-export const ActivityHeader: React.FC = () => {
+const ActivityHeader: React.FC = () => {
     const classes = useHeaderStyles()
     const { connected } = WorksapceStateContainer.useContainer()
 
@@ -32,3 +32,5 @@ export const ActivityHeader: React.FC = () => {
         </div>
     )
 }
+
+export default ActivityHeader

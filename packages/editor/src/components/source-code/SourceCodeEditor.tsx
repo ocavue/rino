@@ -3,7 +3,7 @@ import { RemirrorProvider, useRemirror } from "@remirror/react"
 import { debounce } from "lodash"
 import React, { FC, useEffect, useMemo, useRef } from "react"
 
-import { DevTools } from "../DevTools"
+import DevTools from "../DevTools"
 import { EditorProps } from "../types"
 import { SourceCodeExtension, SourceCodeManager, SourceCodeSchema, useSourceCodeManager } from "./manager"
 
@@ -14,7 +14,7 @@ const InnerEditor: FC<{ className: string }> = ({ className }) => {
 
 type Doc = ProsemirrorNode<SourceCodeSchema>
 
-export const SourceCodeEditor: FC<EditorProps> = ({ className, content, editable, autoFocus, setContent }) => {
+const SourceCodeEditor: FC<EditorProps> = ({ className, content, editable, autoFocus, setContent }) => {
     const manager: SourceCodeManager = useSourceCodeManager()
     const docRef = useRef<Doc>()
 
@@ -66,3 +66,5 @@ export const SourceCodeEditor: FC<EditorProps> = ({ className, content, editable
 }
 
 SourceCodeEditor.displayName = "SourceCodeEditor"
+
+export default SourceCodeEditor

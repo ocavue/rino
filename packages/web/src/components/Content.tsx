@@ -2,12 +2,12 @@ import { createStyles, makeStyles, Theme } from "@material-ui/core"
 import clsx from "clsx"
 import React from "react"
 
-import { NoteEditor } from "src/components/NoteEditor"
+import NoteEditor from "src/components/NoteEditor"
 import { MAX_DRAWER_WIDTH } from "src/constants"
 import { EditContainer } from "src/controller/edit"
 import { WorksapceStateContainer } from "src/controller/workspace-state/hook"
 
-import { Welcome } from "./Welcome"
+import Welcome from "./Welcome"
 
 const useStyles = makeStyles((theme: Theme) => {
     const padding = theme.spacing(3)
@@ -40,7 +40,7 @@ const useStyles = makeStyles((theme: Theme) => {
     })
 })
 
-export const Content: React.FC = () => {
+const Content: React.FC = () => {
     const classes = useStyles()
 
     const { drawerActivity } = WorksapceStateContainer.useContainer()
@@ -53,3 +53,4 @@ export const Content: React.FC = () => {
         </main>
     )
 }
+export default Content

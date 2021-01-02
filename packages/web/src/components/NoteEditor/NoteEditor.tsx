@@ -42,7 +42,7 @@ type EditorProps = {
     setNoteContent: (content: string) => void
 }
 
-export const NoteEditor: React.FC<EditorProps> = ({ autoFocus, note, setNoteContent }) => {
+const NoteEditor: React.FC<EditorProps> = ({ autoFocus, note, setNoteContent }) => {
     const classes = useStyles({ maxEditorWidth: MAX_DRAWER_WIDTH })
     const theme = useTheme()
 
@@ -61,3 +61,5 @@ export const NoteEditor: React.FC<EditorProps> = ({ autoFocus, note, setNoteCont
 }
 
 NoteEditor.displayName = "NoteEditor"
+
+export default NoteEditor

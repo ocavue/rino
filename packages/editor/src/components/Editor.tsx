@@ -22,7 +22,7 @@ type EditorProps = {
     isTestEnv: boolean
 }
 
-export const Editor: React.FC<EditorProps> = ({
+const Editor: React.FC<EditorProps> = ({
     autoFocus,
     note,
     setNoteContent,
@@ -79,3 +79,5 @@ export const Editor: React.FC<EditorProps> = ({
         )
     else return null
 }
+
+export default Editor

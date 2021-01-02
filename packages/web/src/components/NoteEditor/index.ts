@@ -1,1 +1,2 @@
-export { NoteEditor } from "./NoteEditor"
+import NoteEditor from "./NoteEditor"
+export default NoteEditor

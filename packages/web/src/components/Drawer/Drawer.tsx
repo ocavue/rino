@@ -6,10 +6,10 @@ import { MAX_DRAWER_WIDTH } from "src/constants"
 import { WorksapceStateContainer } from "src/controller/workspace-state/hook"
 import { useIsMobile } from "src/hooks"
 
-import { ActivityBody } from "./ActivityBody"
-import { ActivityHeader } from "./ActivityHeader"
-import { NoteBody } from "./NoteBody"
-import { NoteHeader } from "./NoteHeader"
+import ActivityBody from "./ActivityBody"
+import ActivityHeader from "./ActivityHeader"
+import NoteBody from "./NoteBody"
+import NoteHeader from "./NoteHeader"
 
 const useStyles = m.makeStyles((theme: m.Theme) => {
     return m.createStyles({
@@ -38,7 +38,7 @@ const useStyles = m.makeStyles((theme: m.Theme) => {
     })
 })
 
-export const Drawer: React.FC = () => {
+const Drawer: React.FC = () => {
     const { drawerActivity, setDrawerActivity } = WorksapceStateContainer.useContainer()
 
     const isMobile = useIsMobile()
@@ -99,3 +99,5 @@ export const Drawer: React.FC = () => {
         </nav>
     )
 }
+
+export default Drawer

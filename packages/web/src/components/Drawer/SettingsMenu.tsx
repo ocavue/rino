@@ -54,4 +54,4 @@ const SettingsMenu: React.FC<{
     )
 }
 
-export { SettingsMenu }
+export default SettingsMenu

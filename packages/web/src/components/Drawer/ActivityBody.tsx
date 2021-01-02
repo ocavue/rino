@@ -1,7 +1,9 @@
 import React from "react"
 
-import { CollectionTree } from "./CollectionTree"
+import CollectionTree from "./CollectionTree"
 
-export const ActivityBody: React.FC = () => {
+const ActivityBody: React.FC = () => {
     return <CollectionTree />
 }
+
+export default ActivityBody

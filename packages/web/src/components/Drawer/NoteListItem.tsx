@@ -1,7 +1,7 @@
 import { createStyles, ListItem, ListItemText, makeStyles, Theme } from "@material-ui/core"
 import React, { useState } from "react"
 
-import { NoteMenu } from "src/components/NoteMenu"
+import NoteMenu  from "src/components/NoteMenu"
 import { Note } from "src/controller/edit"
 
 const useStyles = makeStyles((theme: Theme) => {
@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme: Theme) => {
     })
 })
 
-export const NoteListItem: React.FC<{ note: Note; onClick: () => void; selected: boolean }> = ({ note, onClick, selected }) => {
+const NoteListItem: React.FC<{ note: Note; onClick: () => void; selected: boolean }> = ({ note, onClick, selected }) => {
     const classes = useStyles()
 
     const [menuProps, setMenuProps] = useState<{
@@ -63,3 +63,5 @@ export const NoteListItem: React.FC<{ note: Note; onClick: () => void; selected:
         </>
     )
 }
+
+export default NoteListItem
