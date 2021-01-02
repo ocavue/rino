@@ -3,20 +3,20 @@ import firebase from "firebase"
 import { useRouter } from "next/router"
 import React, { useMemo, useState } from "react"
 
-import AuthForm from "src/components/authorize/AuthForm"
-import PasswordTextField from "src/components/authorize/PasswordTextField"
-import SubmitButton from "src/components/authorize/SubmitButton"
-import UsernameTextField from "src/components/authorize/UsernameTextField"
-import { signInWithEmailAndPassword } from "src/controller/auth/actions"
+import AuthForm from "src/components/auth/AuthForm"
+import PasswordTextField from "src/components/auth/PasswordTextField"
+import SubmitButton from "src/components/auth/SubmitButton"
+import UsernameTextField from "src/components/auth/UsernameTextField"
+import { createUserWithEmailAndPassword } from "src/controller/auth/actions"
 import { AuthContainer } from "src/controller/auth/hook"
 
-type SignInFormProps = {
+type SignUpFormProps = {
     progressing: boolean
     setProgressing: (val: boolean) => void
     setError: (val: string) => void
 }
 
-export default function SignInForm({ progressing, setProgressing, setError }: SignInFormProps) {
+export default function SignUpForm({ progressing, setProgressing, setError }: SignUpFormProps) {
     const router = useRouter()
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
@@ -24,18 +24,13 @@ export default function SignInForm({ progressing, setProgressing, setError }: Si
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         setProgressing(true)
         setError("")
-        signInWithEmailAndPassword(email, password)
+        createUserWithEmailAndPassword(email, password)
             .then(() => {
                 return router.push("/")
             })
             .catch((error: firebase.FirebaseError) => {
                 console.error(error)
-
-                if (error?.code === "auth/user-not-found") {
-                    setError("Couldn't find your Rino account")
-                } else {
-                    setError(String(error))
-                }
+                setError(String(error))
                 setProgressing(false)
             })
         event.preventDefault()
@@ -43,30 +38,26 @@ export default function SignInForm({ progressing, setProgressing, setError }: Si
 
     return (
         <AuthContainer.Provider>
-            <AuthForm onSubmit={handleSubmit} data-testid="auth_signin_form">
+            <AuthForm onSubmit={handleSubmit} data-testid="auth_signup_form">
                 <UsernameTextField
                     disabled={progressing}
                     onChange={(e) => setEmail(e.target.value)}
-                    inputProps={{ "data-testid": "auth_signin_username_textfield" }}
+                    inputProps={{ "data-testid": "auth_signup_username_textfield" }}
                 />
                 <PasswordTextField
                     disabled={progressing}
                     onChange={(e) => setPassword(e.target.value)}
-                    inputProps={{ "data-testid": "auth_signin_password_textfield" }}
+                    inputProps={{ "data-testid": "auth_signup_password_textfield" }}
                 />
 
-                <SubmitButton disabled={disableSubmit} data-testid="auth_signin_submit">
-                    Sign In
+                <SubmitButton disabled={disableSubmit} data-testid="auth_signup_submit">
+                    Sign Up
                 </SubmitButton>
                 <Grid container>
-                    <Grid item xs>
-                        <Link href="/password-reset" variant="body2">
-                            Forgot password?
-                        </Link>
-                    </Grid>
+                    <Grid item xs></Grid>
                     <Grid item>
-                        <Link href="/sign-up" variant="body2">
-                            Sign up for Rino
+                        <Link href="/sign-in" variant="body2">
+                            Already have an account? Sign in
                         </Link>
                     </Grid>
                 </Grid>
