@@ -270,6 +270,23 @@
           }
         },
         {
+          "uses": "jwalton/gh-find-current-pr@v1",
+          "id": "step_find_pr",
+          "with": {
+            "github-token": "${{ secrets.GITHUB_TOKEN }}"
+          },
+          "continue-on-error": true
+        },
+        {
+          "uses": "marocchino/sticky-pull-request-comment@v2",
+          "with": {
+            "GITHUB_TOKEN": "${{ secrets.GITHUB_TOKEN }}",
+            "number": "${{ steps.step_find_pr.outputs.pr }}",
+            "message": "## Preview Deployment\n${{ github.sha }}:\n- https://rino-web-${{ steps.step_branch.outputs.branch }}.ocavue.vercel.app\n- https://rino-home-${{ steps.step_branch.outputs.branch }}.ocavue.vercel.app\n"
+          },
+          "continue-on-error": true
+        },
+        {
           "name": "Generate configrations for Lighthouse CI",
           "run": "node scripts/generate-lighthouserc.js"
         },
