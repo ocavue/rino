@@ -4,7 +4,6 @@ import React, { useEffect } from "react"
 import Appbar from "src/components/Appbar"
 import Content from "src/components/Content"
 import Drawer from "src/components/Drawer"
-import SignInSnackbar from "src/components/SignInSnackbar"
 import { AuthContainer } from "src/controller/auth/hook"
 import { EditContainer } from "src/controller/edit"
 import { registerConnectionEvent } from "src/controller/firebase/app"
@@ -52,7 +51,6 @@ function WorkspaceConsumer() {
             <Appbar />
             <Drawer />
             <Content />
-            <SignInSnackbar />
         </div>
     )
 }
