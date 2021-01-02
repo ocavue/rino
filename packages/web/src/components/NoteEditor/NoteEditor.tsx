@@ -4,7 +4,7 @@ import React from "react"
 
 import { Editor } from "@rino.app/editor"
 
-import { MAX_DRAWER_WIDTH } from "src/constants"
+import { MAX_DRAWER_WIDTH, MAX_EDITOR_WIDTH } from "src/constants"
 import { Note } from "src/controller/edit"
 import { WorksapceStateContainer } from "src/controller/workspace-state/hook"
 import { isTestEnv } from "src/utils"
@@ -43,7 +43,7 @@ type EditorProps = {
 }
 
 const NoteEditor: React.FC<EditorProps> = ({ autoFocus, note, setNoteContent }) => {
-    const classes = useStyles({ maxEditorWidth: MAX_DRAWER_WIDTH })
+    const classes = useStyles({ maxEditorWidth: MAX_EDITOR_WIDTH })
     const theme = useTheme()
 
     return (
