@@ -43,3 +43,7 @@ export function isMac(): boolean {
 }
 
 export const metaKey = isMac() ? "metaKey" : "ctrlKey"
+
+export function sleep(ms: number) {
+    return new Promise((resolve) => setTimeout(resolve, ms))
+}
