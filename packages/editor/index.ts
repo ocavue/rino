@@ -1,1 +1,2 @@
-export { Editor } from "./src/components/Editor"
+import Editor from "./src/components/Editor"
+export { Editor }
