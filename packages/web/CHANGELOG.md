@@ -1,5 +1,11 @@
 # @rino.app/web
 
+## 0.16.3
+
+### Patch Changes
+
+-   d1f4eba: Adjust the editor width.
+
 ## 0.16.2
 
 ### Patch Changes
