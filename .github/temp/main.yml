@@ -226,18 +226,12 @@ jobs:
         name: Create release pull request or publish to npm
         uses: changesets/action@master
         with:
-          publish: yarn run changeset publish
+          version: yarn changeset:version
           commit: "chore(changesets): release a new version"
           title: "chore(changesets): release a new version"
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.CHANGESET_GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-
-      - name: Print outputs for debug
-        run: |
-          echo "changeset_outputs_published: [$changeset_outputs_published]"
-        env:
-          changeset_outputs_published: ${{ steps.step_changesets.outputs.published }}
 
     outputs:
       published: ${{ steps.step_changesets.outputs.published }}
