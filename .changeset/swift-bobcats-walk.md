@@ -2,4 +2,4 @@
 "@rino.app/common": minor
 ---
 
-Support ESM module.
+Support ESM.
