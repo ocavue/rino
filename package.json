@@ -10,6 +10,7 @@
         "build:pkg": "scripts/build-package.sh common next editor",
         "build:all": "scripts/build-package.sh common next editor home web",
         "postinstall": "./scripts/post-install.sh",
+        "changeset:version": "yarn changeset version && yarn install",
         "server": "yarn workspace @rino.app/server",
         "editor": "yarn workspace @rino.app/editor",
         "common": "yarn workspace @rino.app/common",
