@@ -3,10 +3,12 @@
     "version": "0.1.0",
     "private": true,
     "license": "GPL-3.0",
-    "main": "dist/index.js",
-    "module": "dist/index.js",
-    "types": "dist/index.d.ts",
+    "main": "dist/cjs/index.js",
+    "module": "dist/esm/index.js",
+    "types": "dist/esm/index.d.ts",
     "scripts": {
-        "build": "tsc -p ./tsconfig.json"
+        "build:esm": "tsc -p tsconfig.json --target es6 --outDir dist/esm --module es2015",
+        "build:cjs": "tsc -p tsconfig.json --target es6 --outDir dist/cjs --module commonjs",
+        "build": "yarn run build:esm && yarn run build:cjs"
     }
 }

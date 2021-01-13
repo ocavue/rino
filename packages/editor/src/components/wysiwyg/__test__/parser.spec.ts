@@ -1,6 +1,6 @@
 import { RemirrorManager } from "@remirror/core"
 
-import { dedent } from "@rino.app/common/dist/util"
+import { dedent } from "@rino.app/common"
 
 import { createWysiwygCombined } from "../wysiwyg-extension"
 import { buildMarkdownParser } from "../wysiwyg-markdown"

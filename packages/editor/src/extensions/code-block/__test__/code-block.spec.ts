@@ -1,6 +1,6 @@
 import { renderEditor } from "jest-remirror"
 
-import { dedent } from "@rino.app/common/dist/util"
+import { dedent } from "@rino.app/common"
 
 import { buildMarkdownParser, buildMarkdownSerializer } from "../../../components"
 import { RinoParagraphExtension } from "../../paragraph"
