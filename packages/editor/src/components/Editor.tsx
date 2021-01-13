@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react"
 
-import { metaKey } from "@rino.app/common/dist/util"
+import { metaKey } from "@rino.app/common"
 
 import { SourceCodeEditor } from "./source-code"
 import { DrawerActivityContainer } from "./types"

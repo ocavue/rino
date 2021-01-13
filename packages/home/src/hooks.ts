@@ -1,7 +1,6 @@
 import { useEffect, useMemo, useState } from "react"
 
-import { getSignInState } from "@rino.app/common/dist/auth"
-import { getWebAppHostName } from "@rino.app/common/dist/host"
+import { getSignInState, getWebAppHostName } from "@rino.app/common"
 
 type AuthInfo =
     | {

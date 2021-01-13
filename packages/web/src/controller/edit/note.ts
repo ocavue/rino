@@ -1,4 +1,4 @@
-import { generateRandomId } from "src/utils"
+import { generateRandomId } from "@rino.app/common"
 
 import { notesCollection } from "../firebase/app"
 import { DocumentReference, DocumentSnapshot, Timestamp } from "../firebase/firebase-types"
