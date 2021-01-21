@@ -9,8 +9,8 @@ import { WysiwygCombined } from "./wysiwyg-extension"
 
 type StylesProps = { maxDrawerWidth: number }
 
-const useStyles = makeStyles<Theme, StylesProps>((theme: Theme) => {
-    return createStyles((props: StylesProps) => ({
+const useStyles = makeStyles((theme: Theme) => {
+    return createStyles({
         snackbar: {
             zIndex: theme.zIndex.snackbar + 1,
             transition: theme.transitions.create(["left"], {
@@ -21,7 +21,7 @@ const useStyles = makeStyles<Theme, StylesProps>((theme: Theme) => {
         },
         snackbarShift: {
             [theme.breakpoints.up("md")]: {
-                left: `calc(50% + ${props.maxDrawerWidth / 2}px)`,
+                left: (props: StylesProps) => `calc(50% + ${props.maxDrawerWidth / 2}px)`,
             },
         },
         menuPaper: {
@@ -37,7 +37,7 @@ const useStyles = makeStyles<Theme, StylesProps>((theme: Theme) => {
                 fill: theme.palette.text.secondary,
             },
         },
-    }))
+    })
 })
 
 export type TableMenuProps = {
