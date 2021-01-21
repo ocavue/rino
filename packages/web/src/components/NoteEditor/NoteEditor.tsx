@@ -1,4 +1,4 @@
-import { createStyles, makeStyles, Theme } from "@material-ui/core"
+import { createStyles, makeStyles } from "@material-ui/core"
 import { useTheme } from "@material-ui/core/styles"
 import React from "react"
 
@@ -13,14 +13,12 @@ type StylesProps = {
     maxEditorWidth: number
 }
 
-type StylesClassKey = "editor"
-
-const useStyles = makeStyles<Theme, StylesProps, StylesClassKey>((theme: Theme) => {
+const useStyles = makeStyles(() => {
     return createStyles({
-        editor: (props) => ({
+        editor: {
             height: "100%",
             width: "100%",
-            maxWidth: props.maxEditorWidth,
+            maxWidth: (props: StylesProps) => props.maxEditorWidth,
             display: "flex",
             flexDirection: "column",
             justifyContent: "flex-start",
@@ -32,7 +30,7 @@ const useStyles = makeStyles<Theme, StylesProps, StylesClassKey>((theme: Theme) 
                 outline: "none",
                 boxShadow: "none",
             },
-        }),
+        },
     })
 })
 
