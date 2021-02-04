@@ -59,6 +59,17 @@
         },
         "packageRules": [
             {
+                "packagePatterns": [
+                    ".*remirror.*",
+                    "jest-prosemirror"
+                ],
+                "groupName": "remirror packages"
+            },
+            {
+                "excludePackagePatterns": [
+                    ".*remirror.*",
+                    "jest-prosemirror"
+                ],
                 "depTypeList": [
                     "dependencies",
                     "devDependencies"
