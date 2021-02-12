@@ -26,7 +26,6 @@
         "@types/expect-puppeteer": "^4.4.5",
         "@types/jest": "^26.0.20",
         "@types/node": "^14.14.25",
-        "@types/puppeteer": "^5.4.3",
         "@typescript-eslint/eslint-plugin": "^4.14.2",
         "@typescript-eslint/parser": "^4.14.2",
         "eslint": "^7.19.0",
@@ -70,11 +69,7 @@
                     ".*remirror.*",
                     "jest-prosemirror"
                 ],
-                "depTypeList": [
-                    "dependencies",
-                    "devDependencies"
-                ],
-                "updateTypes": [
+                "matchUpdateTypes": [
                     "patch",
                     "minor"
                 ],

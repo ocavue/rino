@@ -113,7 +113,7 @@ jobs:
         uses: codecov/codecov-action@v1
         with:
           file: ./coverage/coverage-final.json
-          fail_ci_if_error: ${{ github.ref != 'refs/heads/master' }} # Specify if CI pipeline should fail when Codecov runs into errors during upload. Defaults to false
+          fail_ci_if_error: false # Specify if CI pipeline should fail when Codecov runs into errors during upload. Defaults to false
 
   Lint:
     runs-on: ubuntu-18.04
