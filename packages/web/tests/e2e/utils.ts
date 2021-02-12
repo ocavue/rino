@@ -1,9 +1,9 @@
 import os from "os"
-import { ClickOptions, Dialog, DirectNavigationOptions, WaitForSelectorOptions } from "puppeteer"
+import { ClickOptions, Dialog, KeyInput, WaitForSelectorOptions } from "puppeteer"
 
 const testidSelector = (testid: string) => `[data-testid="${testid}"]`
 
-export async function goto(url: string, options?: DirectNavigationOptions) {
+export async function goto(url: string, options?: Parameters<typeof page.goto>[1]) {
     url = url.startsWith("/") ? "http://localhost:3000" + url : url
     return await page.goto(url, options)
 }
@@ -33,7 +33,7 @@ const metaKey = (() => {
     }
 })()
 
-export async function pressKey(...keys: string[]) {
+export async function pressKey(...keys: KeyInput[]) {
     for (let key of keys) {
         if (key === "Meta") key = metaKey
         await page.keyboard.down(key)
