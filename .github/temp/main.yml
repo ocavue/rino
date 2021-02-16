@@ -12,9 +12,6 @@ jobs:
       - &step_checkout
         name: Checkout code repository
         uses: actions/checkout@v2
-        with:
-          # This makes Actions fetch all Git history so that Changesets can generate changelogs with the correct commits
-          fetch-depth: 0
 
       - &step_setup_node
         name: Setup node.js
@@ -217,7 +214,15 @@ jobs:
     needs: [Build, Test, Lint, Preview]
     if: github.ref == 'refs/heads/master'
     steps:
-      - *step_checkout
+      - name: Checkout code repository
+        uses: actions/checkout@v2
+        with:
+          # This makes Actions fetch all Git history so that Changesets can generate changelogs with the correct commits
+          fetch-depth: 0
+
+          # Use a custom token instead of the default ${{ secrets.GITHUB_TOKEN }} since Github will not tirgger any CI workflow from ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.CHANGESET_GITHUB_TOKEN }}
+
       - *step_setup_node
       - *step_cache_deps
       - *step_install_deps

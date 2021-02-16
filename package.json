@@ -58,13 +58,15 @@
         },
         "packageRules": [
             {
+                "groupName": "remirror packages",
                 "packagePatterns": [
                     ".*remirror.*",
                     "jest-prosemirror"
                 ],
-                "groupName": "remirror packages"
+                "allowedVersions": "/^.*pr706.*$/"
             },
             {
+                "groupName": "dependencies (non-major)",
                 "excludePackagePatterns": [
                     ".*remirror.*",
                     "jest-prosemirror"
@@ -72,8 +74,7 @@
                 "matchUpdateTypes": [
                     "patch",
                     "minor"
-                ],
-                "groupName": "dependencies (non-major)"
+                ]
             }
         ],
         "ignoreDeps": [
