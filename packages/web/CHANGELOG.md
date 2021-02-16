@@ -1,5 +1,11 @@
 # @rino.app/web
 
+## 0.17.0
+
+### Minor Changes
+
+-   5c85a33: Update remirror to beta.
+
 ## 0.16.3
 
 ### Patch Changes
