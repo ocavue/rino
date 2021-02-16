@@ -232,6 +232,7 @@ jobs:
         uses: changesets/action@master
         with:
           version: yarn changeset:version
+          publish: yarn changeset:publish
           commit: "chore(changesets): release a new version"
           title: "chore(changesets): release a new version"
         env:
