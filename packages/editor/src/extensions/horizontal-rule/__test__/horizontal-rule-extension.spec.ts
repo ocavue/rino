@@ -1,8 +1,8 @@
 import { renderEditor } from "jest-remirror"
 
-import { RinoCorePreset } from "src/components"
-import { buildMarkdownParser, buildMarkdownSerializer } from "src/components/wysiwyg/wysiwyg-markdown"
-import { RinoHorizontalRuleExtension } from "src/extensions"
+import { createRinoCorePreset } from "../../../components"
+import { buildMarkdownParser, buildMarkdownSerializer } from "../../../components/wysiwyg/wysiwyg-markdown"
+import { RinoHorizontalRuleExtension } from "../../../extensions"
 
 const setup = () => {
     const {
@@ -11,7 +11,7 @@ const setup = () => {
         nodes: { doc, p, horizontalRule },
         manager,
         schema,
-    } = renderEditor([new RinoHorizontalRuleExtension(), new RinoCorePreset({})])
+    } = renderEditor([new RinoHorizontalRuleExtension(), ...createRinoCorePreset()])
     return {
         manager,
         view,

@@ -1,4 +1,4 @@
-import { convertCommand, NodeExtension, NodeExtensionSpec, NodeViewMethod, SchemaFromExtensionUnion } from "@remirror/core"
+import { convertCommand, GetSchema, NodeExtension, NodeExtensionSpec, NodeViewMethod } from "@remirror/core"
 import { isElementDomNode } from "@remirror/core-utils"
 import Token from "markdown-it/lib/token"
 import { InputRule, wrappingInputRule } from "prosemirror-inputrules"
@@ -181,7 +181,7 @@ export class RinoBulletListExtension extends NodeExtension {
         ] as const
     }
 
-    public toMarkdown({ state, node }: NodeSerializerOptions<SchemaFromExtensionUnion<RinoBulletListExtension>>) {
+    public toMarkdown({ state, node }: NodeSerializerOptions<GetSchema<RinoBulletListExtension>>) {
         state.renderList(node, "  ", () => ((node.attrs.bullet as string) || "*") + " ")
     }
 }

@@ -1,6 +1,6 @@
 import { renderEditor } from "jest-remirror"
 
-import { RinoCorePreset } from "../../../components"
+import { createRinoCorePreset } from "../../../components"
 import { buildMarkdownSerializer } from "../../../components/wysiwyg/wysiwyg-markdown"
 import { RinoHardBreakExtension } from "../../../extensions"
 
@@ -11,7 +11,7 @@ const setup = () => {
         nodes: { doc, p, hardBreak },
         manager,
         schema,
-    } = renderEditor([new RinoHardBreakExtension(), new RinoCorePreset({})])
+    } = renderEditor([new RinoHardBreakExtension(), ...createRinoCorePreset()])
 
     return {
         manager,

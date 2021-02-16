@@ -1,21 +1,21 @@
 import { ProsemirrorNode, RemirrorEventListener } from "@remirror/core"
-import { RemirrorProvider, useRemirror } from "@remirror/react"
+import { Remirror, useRemirrorContext } from "@remirror/react"
 import { debounce } from "lodash"
 import React, { FC, useEffect, useMemo, useRef } from "react"
 
 import DevTools from "../DevTools"
 import { EditorProps } from "../types"
-import { SourceCodeExtension, SourceCodeManager, SourceCodeSchema, useSourceCodeManager } from "./manager"
+import { SourceCodeExtension, SourceCodeSchema, useSourceCodeRemirror } from "./manager"
 
 const InnerEditor: FC<{ className: string }> = ({ className }) => {
-    const { getRootProps } = useRemirror()
+    const { getRootProps } = useRemirrorContext()
     return <div {...getRootProps()} className={className} />
 }
 
 type Doc = ProsemirrorNode<SourceCodeSchema>
 
 const SourceCodeEditor: FC<EditorProps> = ({ className, content, editable, autoFocus, setContent }) => {
-    const manager: SourceCodeManager = useSourceCodeManager()
+    const { manager } = useSourceCodeRemirror()
     const docRef = useRef<Doc>()
 
     const { initialNode, onChange, saveContent } = useMemo(() => {
@@ -49,7 +49,7 @@ const SourceCodeEditor: FC<EditorProps> = ({ className, content, editable, autoF
     }, [saveContent])
 
     return (
-        <RemirrorProvider
+        <Remirror
             manager={manager}
             autoFocus={autoFocus}
             initialContent={initialNode}
@@ -57,11 +57,9 @@ const SourceCodeEditor: FC<EditorProps> = ({ className, content, editable, autoF
             editable={editable}
             attributes={{ "data-testid": "source_code_mode_textarea" }}
         >
-            <>
-                <InnerEditor className={className} />
-                <DevTools />
-            </>
-        </RemirrorProvider>
+            <InnerEditor className={className} />
+            <DevTools />
+        </Remirror>
     )
 }
 

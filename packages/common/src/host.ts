@@ -1,4 +1,4 @@
-const PREVIEW_URL_RE = /^(rino-)(web|home|server)(-(?:[^.]*).ocavue.vercel.app)$/
+const PREVIEW_URL_RE = /^(rino-)(web|home|server)(-?(?:[^.]*).ocavue.vercel.app)$/
 
 export function getCurrentHostName() {
     if (typeof window !== "undefined") {
@@ -24,7 +24,7 @@ export function getHomeHostName(currentHostName?: string) {
         console.error(error)
     }
 
-    return defaultHost
+    return prefix + defaultHost
 }
 
 export function getWebAppHostName(currentHostName?: string) {
@@ -42,5 +42,5 @@ export function getWebAppHostName(currentHostName?: string) {
         console.error(error)
     }
 
-    return defaultHost
+    return prefix + defaultHost
 }

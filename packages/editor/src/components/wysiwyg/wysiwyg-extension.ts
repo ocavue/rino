@@ -1,5 +1,8 @@
+import type { ParagraphExtension } from "@remirror/extension-paragraph"
 import { ReactComponentExtension } from "@remirror/extension-react-component"
-import { CorePreset } from "@remirror/preset-core"
+import type { TextExtension } from "@remirror/extension-text"
+import { CorePreset, corePreset } from "@remirror/preset-core"
+import CodeMirror from "codemirror"
 
 import {
     RinoBlockquoteExtension,
@@ -18,28 +21,27 @@ import {
     RinoParagraphExtension,
     RinoTableCellExtension,
     RinoTableExtension,
-    RinoTableHeaderExtension,
+    RinoTableHeaderCellExtension,
     RinoTableRowExtension,
     RinoTextExtension,
 } from "../../extensions"
 import { MarkdownNodeExtension } from "../../utils"
 
-export class RinoCorePreset extends CorePreset {
-    createExtensions() {
-        const extensions = super.createExtensions()
-        return extensions.map((e) => {
-            if (e.name === "paragraph") return new RinoParagraphExtension()
-            else if (e.name === "text") return new RinoTextExtension()
-            else return e
-        })
-    }
+export type RinoCorePreset = Exclude<CorePreset, ParagraphExtension | TextExtension> | RinoParagraphExtension | RinoTextExtension
+
+export function createRinoCorePreset(): RinoCorePreset[] {
+    return [
+        ...corePreset({ excludeExtensions: ["paragraph", "text"] }),
+        new RinoParagraphExtension(),
+        new RinoTextExtension(),
+    ] as RinoCorePreset[]
 }
 
 function createRinoMarkdownNodeExtensions() {
     const rinoMarkdownNodeExtensions = [
         new RinoHardBreakExtension(),
         new RinoHorizontalRuleExtension(),
-        new RinoCodeBlockExtension(),
+        new RinoCodeBlockExtension({ CodeMirror }),
         new RinoBlockquoteExtension(),
         new RinoHeadingExtension({}),
         new RinoCheckboxExtension(),
@@ -49,14 +51,14 @@ function createRinoMarkdownNodeExtensions() {
         new RinoTableExtension(),
         new RinoTableRowExtension(),
         new RinoTableCellExtension(),
-        new RinoTableHeaderExtension(),
+        new RinoTableHeaderCellExtension(),
     ]
     return rinoMarkdownNodeExtensions
 }
 
 type RinoMarkdownNodeExtension = ReturnType<typeof createRinoMarkdownNodeExtensions>[number]
 
-export type WysiwygCombined =
+export type WysiwygExtension =
     | RinoCorePreset
     | RinoMarkExtension
     | RinoMarkdownNodeExtension
@@ -64,7 +66,7 @@ export type WysiwygCombined =
     | RinoInlineMarkExtension
     | RinoInlineDecorationExtension
 
-export function createWysiwygCombined(): Array<WysiwygCombined> {
+export function createWysiwygExtension(): Array<WysiwygExtension> {
     const rinoMarkdownNodeExtensions = createRinoMarkdownNodeExtensions()
 
     // By doing this, TypeScript can find extensions with wrong `MarkdownNodeExtension` implementation.
@@ -79,7 +81,7 @@ export function createWysiwygCombined(): Array<WysiwygCombined> {
     }
 
     return [
-        new RinoCorePreset({}),
+        ...createRinoCorePreset(),
         ...rinoMarkExtensions,
         ...rinoMarkdownNodeExtensions,
 

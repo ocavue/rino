@@ -1,11 +1,11 @@
 import { createStyles, IconButton, makeStyles, Paper, Snackbar, Theme } from "@material-ui/core"
-import { CommandsFromCombined, CommandShape, HelpersFromCombined } from "@remirror/core"
+import { CommandsFromExtensions, CommandShape, GetHelpers } from "@remirror/core"
 import clsx from "clsx"
 import React, { useMemo } from "react"
 
 import { tableMenuSvgs as svgs } from "../table-menu/svg"
 import { DrawerActivityContainer } from "../types"
-import { WysiwygCombined } from "./wysiwyg-extension"
+import { WysiwygExtension } from "./wysiwyg-extension"
 
 type StylesProps = { maxDrawerWidth: number }
 
@@ -41,8 +41,8 @@ const useStyles = makeStyles((theme: Theme) => {
 })
 
 export type TableMenuProps = {
-    commands: CommandsFromCombined<WysiwygCombined>
-    helpers: HelpersFromCombined<WysiwygCombined>
+    commands: CommandsFromExtensions<WysiwygExtension>
+    helpers: GetHelpers<WysiwygExtension>
     maxDrawerWidth: number
     drawerActivityContainer: DrawerActivityContainer
 }

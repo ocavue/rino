@@ -1,4 +1,4 @@
-import { ApplySchemaAttributes, convertCommand, findParentNodeOfType, KeyBindings } from "@remirror/core"
+import { ApplySchemaAttributes, convertCommand, findParentNodeOfType, KeyBindings, NodeSpecOverride } from "@remirror/core"
 import { HeadingExtension } from "@remirror/extension-heading"
 import Token from "markdown-it/lib/token"
 import { setBlockType } from "prosemirror-commands"
@@ -7,9 +7,9 @@ import { Schema } from "prosemirror-model"
 import { NodeSerializerOptions, ParserRuleType } from "../../transform"
 
 export class RinoHeadingExtension extends HeadingExtension {
-    createNodeSpec(extra: ApplySchemaAttributes) {
+    createNodeSpec(extra: ApplySchemaAttributes, override: NodeSpecOverride) {
         return {
-            ...super.createNodeSpec(extra),
+            ...super.createNodeSpec(extra, override),
             content: "text*", // Disallow hard breaks in headings
         }
     }

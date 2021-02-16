@@ -1,5 +1,5 @@
 import { ProsemirrorNode, RemirrorEventListener } from "@remirror/core"
-import { RemirrorProvider, useRemirror } from "@remirror/react"
+import { Remirror, useCommands, useHelpers, useRemirrorContext } from "@remirror/react"
 import { debounce } from "lodash"
 import React, { FC, useEffect, useMemo, useRef, useState } from "react"
 
@@ -7,8 +7,8 @@ import DevTools from "../DevTools"
 import ErrorBoundary from "../ErrorBoundary"
 import { DrawerActivityContainer, EditorProps } from "../types"
 import TableMenu from "./TableMenu"
-import { WysiwygCombined } from "./wysiwyg-extension"
-import { useWysiwygManager, WysiwygManager, WysiwygSchema } from "./wysiwyg-manager"
+import { WysiwygExtension } from "./wysiwyg-extension"
+import { useWysiwygRemirror, WysiwygSchema } from "./wysiwyg-manager"
 import { buildMarkdownParser, buildMarkdownSerializer } from "./wysiwyg-markdown"
 
 const InnerEditor: FC<{
@@ -16,7 +16,9 @@ const InnerEditor: FC<{
     maxDrawerWidth: number
     drawerActivityContainer: DrawerActivityContainer
 }> = ({ className, maxDrawerWidth, drawerActivityContainer }) => {
-    const { getRootProps, commands, helpers } = useRemirror<WysiwygCombined>()
+    const commands = useCommands<WysiwygExtension>()
+    const helpers = useHelpers<WysiwygExtension>()
+    const { getRootProps } = useRemirrorContext<WysiwygExtension>()
     return (
         <>
             <TableMenu
@@ -49,7 +51,8 @@ const WysiwygEditor: FC<WysiwygEditorProps> = ({
     drawerActivityContainer,
     isTestEnv,
 }) => {
-    const manager: WysiwygManager = useWysiwygManager()
+    const { manager } = useWysiwygRemirror()
+
     const docRef = useRef<Doc>()
     const [error, setError] = useState<Error | null>(null)
 
@@ -81,7 +84,7 @@ const WysiwygEditor: FC<WysiwygEditorProps> = ({
             }
         }
         const saveContentWithDelay = debounce(saveContent, 500)
-        const onChange: RemirrorEventListener<WysiwygCombined> = ({ state }) => {
+        const onChange: RemirrorEventListener<WysiwygExtension> = ({ state }) => {
             docRef.current = state.doc
             saveContentWithDelay()
         }
@@ -116,7 +119,7 @@ const WysiwygEditor: FC<WysiwygEditorProps> = ({
     }
     return (
         <ErrorBoundary>
-            <RemirrorProvider
+            <Remirror
                 manager={manager}
                 autoFocus={autoFocus}
                 initialContent={initialNode}
@@ -125,7 +128,7 @@ const WysiwygEditor: FC<WysiwygEditorProps> = ({
                 attributes={{ "data-testid": "wysiwyg_mode_textarea" }}
             >
                 <InnerEditor className={className} maxDrawerWidth={maxDrawerWidth} drawerActivityContainer={drawerActivityContainer} />
-            </RemirrorProvider>
+            </Remirror>
         </ErrorBoundary>
     )
 }

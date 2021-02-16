@@ -1,4 +1,4 @@
-import { AnyCombinedUnion, isExtension, RemirrorManager } from "@remirror/core"
+import { AnyExtension, isExtension, RemirrorManager } from "@remirror/core"
 
 import { MarkdownParser, MarkdownSerializer, NodeSerializerSpecs, ParserRule } from "../../transform"
 import { MarkdownNodeExtension } from "../../utils"
@@ -11,7 +11,7 @@ function isMarkdownNodeExtension(extension: unknown): extension is MarkdownNodeE
     )
 }
 
-export function buildMarkdownParser<Combined extends AnyCombinedUnion>(manager: RemirrorManager<Combined>) {
+export function buildMarkdownParser<Extension extends AnyExtension>(manager: RemirrorManager<Extension>) {
     const parserRules: ParserRule[] = []
     for (const extension of manager.extensions) {
         if (isMarkdownNodeExtension(extension)) {
@@ -21,7 +21,7 @@ export function buildMarkdownParser<Combined extends AnyCombinedUnion>(manager: 
     return new MarkdownParser(manager.schema, parserRules)
 }
 
-export function buildMarkdownSerializer<Combined extends AnyCombinedUnion>(manager: RemirrorManager<Combined>) {
+export function buildMarkdownSerializer<Extension extends AnyExtension>(manager: RemirrorManager<Extension>) {
     const specs: NodeSerializerSpecs = {}
     for (const extension of manager.extensions) {
         if (isMarkdownNodeExtension(extension)) {

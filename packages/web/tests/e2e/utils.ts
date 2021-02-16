@@ -204,3 +204,32 @@ export function getDialog(callback: () => Promise<void>, timeout = 1000): Promis
         )
     })
 }
+
+export function debugPrintLog() {
+    page.on("console", (msg) => console.log("console:", msg.text()))
+    page.on("pageerror", (error) => {
+        console.log("pageerror:", error.message)
+    })
+    page.on("response", (response) => {
+        console.log("response:", response.status(), response.url())
+    })
+    page.on("requestfailed", (request) => {
+        console.log("requestfailed:", request.failure().errorText, request.url)
+    })
+}
+
+export async function debugPrintScreenshot() {
+    const screenshot = await page.screenshot({
+        type: "png",
+        encoding: "base64",
+    })
+    console.log("base64 screenshot:\n", screenshot)
+}
+
+export async function debugPrintBodyInnerHTML() {
+    const bodyHandler = await page.$("body")
+    const innerHTML = await bodyHandler.evaluate((body) => {
+        return body.innerHTML
+    })
+    console.log("body.innerHTML:\n", innerHTML)
+}

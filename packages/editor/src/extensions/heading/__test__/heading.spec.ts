@@ -1,6 +1,6 @@
 import { renderEditor } from "jest-remirror"
 
-import { RinoCorePreset } from "../../../components"
+import { createRinoCorePreset } from "../../../components"
 import { buildMarkdownParser } from "../../../components/wysiwyg/wysiwyg-markdown"
 import { RinoHardBreakExtension, RinoHeadingExtension } from "../../../extensions"
 
@@ -12,7 +12,7 @@ const setup = () => {
         attributeNodes: { heading },
         manager,
         schema,
-    } = renderEditor([new RinoHardBreakExtension(), new RinoHeadingExtension({}), new RinoCorePreset({})])
+    } = renderEditor([new RinoHardBreakExtension(), new RinoHeadingExtension({}), ...createRinoCorePreset()])
 
     const [h1, h2, h3, h4, h5, h6] = [
         heading({ level: 1 }),
