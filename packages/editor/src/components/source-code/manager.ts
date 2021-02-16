@@ -1,13 +1,14 @@
-import { CorePreset } from "@remirror/preset-core"
-import { useManager } from "@remirror/react"
+import { useRemirror } from "@remirror/react"
+import CodeMirror from "codemirror"
 
 import { RinoCodeBlockExtension } from "../../extensions"
 
-export function useSourceCodeManager() {
-    return useManager([new CorePreset({}), new RinoCodeBlockExtension({ defaultCodeMirrorConfig: { mode: "text/x-markdown" } })])
+export function useSourceCodeRemirror() {
+    return useRemirror({
+        extensions: () => [new RinoCodeBlockExtension({ CodeMirror, defaultCodeMirrorConfig: { mode: "text/x-markdown" } })],
+    })
 }
 
-export type SourceCodeManager = ReturnType<typeof useSourceCodeManager>
+export type SourceCodeManager = ReturnType<typeof useSourceCodeRemirror>["manager"]
 export type SourceCodeSchema = SourceCodeManager["schema"]
 export type SourceCodeExtension = SourceCodeManager["extensions"][number]
-export type SourceCodeCombined = SourceCodeManager["combined"][number]

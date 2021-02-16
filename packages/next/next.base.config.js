@@ -22,6 +22,7 @@ function getEnvs() {
 function getNextConfig() {
     return {
         // Next config
+        productionBrowserSourceMaps: true,
         trailingSlash: false,
         devIndicators: {
             // Disable Next.js's prerender icon in the right bottom corner

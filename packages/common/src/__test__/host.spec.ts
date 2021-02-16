@@ -8,6 +8,8 @@ test("getHomeHostName", async () => {
         ["???.rino.app", "https://???.rino.app"],
         ["rino-web-my-branch.ocavue.vercel.app", "https://rino-home-my-branch.ocavue.vercel.app"],
         ["rino-home-my-branch.ocavue.vercel.app", "https://rino-home-my-branch.ocavue.vercel.app"],
+        ["rino-web.ocavue.vercel.app", "https://rino-home.ocavue.vercel.app"],
+        ["rino-home.ocavue.vercel.app", "https://rino-home.ocavue.vercel.app"],
     ] as const) {
         expect(getHomeHostName(currentHostName)).toEqual(expectedOutput)
     }
@@ -21,6 +23,8 @@ test("getWebAppHostName", async () => {
         ["???.rino.app", "https://???.rino.app"],
         ["rino-web-my-branch.ocavue.vercel.app", "https://rino-web-my-branch.ocavue.vercel.app"],
         ["rino-home-my-branch.ocavue.vercel.app", "https://rino-web-my-branch.ocavue.vercel.app"],
+        ["rino-web.ocavue.vercel.app", "https://rino-web.ocavue.vercel.app"],
+        ["rino-home.ocavue.vercel.app", "https://rino-web.ocavue.vercel.app"],
     ] as const) {
         expect(getWebAppHostName(currentHostName)).toEqual(expectedOutput)
     }

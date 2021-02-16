@@ -15,8 +15,11 @@ type TokenHandler = (state: MarkdownParseState, tok: Token) => void
 type TokenHandlers = Record<string, TokenHandler>
 
 export class UnknowMarkdownItTokenError extends Error {
-    constructor(public tokenType: string) {
-        super(`MarkdownIt token type '${tokenType}' not supported by Rino Markdown parser`)
+    constructor(public tokenType: string, public supportedTokenTypes: string[]) {
+        super(
+            `MarkdownIt token type '${tokenType}' not supported by Rino Markdown parser. ` +
+                `Supported types are [${supportedTokenTypes.join(", ")}]`,
+        )
         this.tokenType = tokenType
     }
 }
@@ -77,7 +80,7 @@ class MarkdownParseState {
     public parseTokens(toks: Token[]): void {
         for (const tok of toks) {
             const handler = this.tokenHandlers[tok.type]
-            if (!handler) throw new UnknowMarkdownItTokenError(tok.type)
+            if (!handler) throw new UnknowMarkdownItTokenError(tok.type, Object.keys(this.tokenHandlers))
             handler(this, tok)
         }
     }

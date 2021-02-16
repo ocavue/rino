@@ -2,9 +2,9 @@ import { renderEditor } from "jest-remirror"
 
 import { dedent } from "@rino.app/common"
 
-import { RinoCorePreset } from "../../../components"
+import { createRinoCorePreset } from "../../../components"
 import { buildMarkdownParser, buildMarkdownSerializer } from "../../../components/wysiwyg/wysiwyg-markdown"
-import { RinoTableCellExtension, RinoTableExtension, RinoTableHeaderExtension, RinoTableRowExtension } from ".."
+import { RinoTableCellExtension, RinoTableExtension, RinoTableHeaderCellExtension, RinoTableRowExtension } from ".."
 
 const setup = () => {
     const {
@@ -14,11 +14,11 @@ const setup = () => {
         manager,
         schema,
     } = renderEditor([
+        ...createRinoCorePreset(),
         new RinoTableExtension(),
         new RinoTableRowExtension(),
         new RinoTableCellExtension(),
-        new RinoTableHeaderExtension(),
-        new RinoCorePreset({}),
+        new RinoTableHeaderCellExtension(),
     ])
 
     const buildRegularTable = (rows: string[][]) => {

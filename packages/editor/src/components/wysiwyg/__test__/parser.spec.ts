@@ -2,7 +2,7 @@ import { RemirrorManager } from "@remirror/core"
 
 import { dedent } from "@rino.app/common"
 
-import { createWysiwygCombined } from "../wysiwyg-extension"
+import { createWysiwygExtension } from "../wysiwyg-extension"
 import { buildMarkdownParser } from "../wysiwyg-markdown"
 
 describe("parser token support", () => {
@@ -26,7 +26,7 @@ describe("parser token support", () => {
 
     // eslint-disable-next-line
     const tests = require("commonmark-spec").tests as CommonMarkTestCase[]
-    const parser = buildMarkdownParser(RemirrorManager.create(createWysiwygCombined()))
+    const parser = buildMarkdownParser(RemirrorManager.create(createWysiwygExtension()))
 
     for (const t of tests) {
         test(`CommonMark spec test case ${t.number}`, () => {

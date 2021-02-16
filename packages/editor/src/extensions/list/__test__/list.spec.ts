@@ -1,4 +1,4 @@
-import { EditorSchema, fromHtml, toHtml } from "@remirror/core"
+import { EditorSchema, htmlToProsemirrorNode as fromHtml, prosemirrorNodeToHtml as toHtml } from "@remirror/core"
 import { renderEditor, TaggedProsemirrorNode } from "jest-remirror"
 
 import { dedent } from "@rino.app/common"
@@ -60,7 +60,7 @@ describe("schema", () => {
 
     function testHtmlTransformation<S extends EditorSchema>(node: TaggedProsemirrorNode<S>, html: string) {
         test("dump to html", () => {
-            expect(toHtml({ node, schema })).toBe(html)
+            expect(toHtml(node)).toBe(html)
         })
         test("parse from html", () => {
             expect(fromHtml({ content: html, schema })).toEqualProsemirrorNode(doc(node))

@@ -1,6 +1,6 @@
-import { ApplySchemaAttributes, KeyBindings } from "@remirror/core"
-import { TableCellExtension, TableExtension, TableHeaderCellExtension, TableRowExtension } from "@remirror/preset-table"
-import { TableSchemaSpec } from "@remirror/preset-table/dist/declarations/src/table-utils"
+import { ApplySchemaAttributes, KeyBindings, NodeSpecOverride } from "@remirror/core"
+import { TableCellExtension, TableExtension, TableHeaderCellExtension, TableRowExtension } from "@remirror/extension-tables"
+import { TableSchemaSpec } from "@remirror/extension-tables/dist/declarations/src/table-utils"
 import { Fragment, Node as ProsemirroNode } from "prosemirror-model"
 import { TextSelection } from "prosemirror-state"
 
@@ -143,6 +143,10 @@ export class RinoTableExtension extends TableExtension {
 
         state.text(text, false)
     }
+
+    public createExtensions() {
+        return []
+    }
 }
 
 export class RinoTableRowExtension extends TableRowExtension {
@@ -162,9 +166,13 @@ export class RinoTableRowExtension extends TableRowExtension {
     }
 
     public toMarkdown() {}
+
+    public createExtensions() {
+        return []
+    }
 }
 
-export class RinoTableHeaderExtension extends TableHeaderCellExtension {
+export class RinoTableHeaderCellExtension extends TableHeaderCellExtension {
     get name() {
         return "tableHeaderCell" as const
     }
@@ -174,6 +182,10 @@ export class RinoTableHeaderExtension extends TableHeaderCellExtension {
     }
 
     public toMarkdown() {}
+
+    public createExtensions() {
+        return []
+    }
 }
 
 export class RinoTableCellExtension extends TableCellExtension {
@@ -181,9 +193,9 @@ export class RinoTableCellExtension extends TableCellExtension {
         return "tableCell" as const
     }
 
-    createNodeSpec(extra: ApplySchemaAttributes): TableSchemaSpec {
+    createNodeSpec(extra: ApplySchemaAttributes, override: NodeSpecOverride): TableSchemaSpec {
         return {
-            ...super.createNodeSpec(extra),
+            ...super.createNodeSpec(extra, override),
             content: "inline*",
         }
     }
@@ -218,4 +230,8 @@ export class RinoTableCellExtension extends TableCellExtension {
     }
 
     public toMarkdown() {}
+
+    public createExtensions() {
+        return []
+    }
 }
