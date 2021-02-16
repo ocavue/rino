@@ -10,10 +10,7 @@
       "steps": [
         {
           "name": "Checkout code repository",
-          "uses": "actions/checkout@v2",
-          "with": {
-            "fetch-depth": 0
-          }
+          "uses": "actions/checkout@v2"
         },
         {
           "name": "Setup node.js",
@@ -73,10 +70,7 @@
       "steps": [
         {
           "name": "Checkout code repository",
-          "uses": "actions/checkout@v2",
-          "with": {
-            "fetch-depth": 0
-          }
+          "uses": "actions/checkout@v2"
         },
         {
           "name": "Setup node.js",
@@ -142,10 +136,7 @@
       "steps": [
         {
           "name": "Checkout code repository",
-          "uses": "actions/checkout@v2",
-          "with": {
-            "fetch-depth": 0
-          }
+          "uses": "actions/checkout@v2"
         },
         {
           "name": "Setup node.js",
@@ -192,10 +183,7 @@
       "steps": [
         {
           "name": "Checkout code repository",
-          "uses": "actions/checkout@v2",
-          "with": {
-            "fetch-depth": 0
-          }
+          "uses": "actions/checkout@v2"
         },
         {
           "name": "Setup node.js",
@@ -314,7 +302,8 @@
           "name": "Checkout code repository",
           "uses": "actions/checkout@v2",
           "with": {
-            "fetch-depth": 0
+            "fetch-depth": 0,
+            "token": "${{ secrets.CHANGESET_GITHUB_TOKEN }}"
           }
         },
         {
@@ -368,10 +357,7 @@
       "steps": [
         {
           "name": "Checkout code repository",
-          "uses": "actions/checkout@v2",
-          "with": {
-            "fetch-depth": 0
-          }
+          "uses": "actions/checkout@v2"
         },
         {
           "name": "Setup node.js",
