@@ -9,5 +9,8 @@
         "build:esm": "tsc -p tsconfig.json --target es6 --outDir dist/esm --module es2015",
         "build:cjs": "tsc -p tsconfig.json --target es6 --outDir dist/cjs --module commonjs",
         "build": "yarn run build:esm && yarn run build:cjs"
+    },
+    "publishConfig": {
+        "access": "public"
     }
 }
