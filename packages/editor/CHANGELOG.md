@@ -1,5 +1,11 @@
 # @rino.app/editor
 
+## 0.3.1
+
+### Patch Changes
+
+-   1c4cadb: Fix npm publish config.
+
 ## 0.3.0
 
 ### Minor Changes
