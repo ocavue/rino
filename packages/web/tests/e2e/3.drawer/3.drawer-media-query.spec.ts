@@ -7,7 +7,7 @@ const height = 800
 
 describe("Drawer type (persistent / temporary)", function () {
     beforeAll(async () => {
-        await jestPuppeteer.resetBrowser()
+        await jestPlaywright.resetBrowser()
         await login()
         await createNote()
     })
@@ -26,7 +26,7 @@ describe("Drawer type (persistent / temporary)", function () {
             expect(width).toBeLessThan(MOBILE_BREAK_POINT)
 
             // Exepect the drawer is persistent
-            await waitAnimation(page.setViewport({ width, height }))
+            await waitAnimation(page.setViewportSize({ width, height }))
             await expectSidebarClosed()
             await waitAnimation(click("appbar_btn_menu"))
             await expectSidebarOpened()
@@ -37,7 +37,7 @@ describe("Drawer type (persistent / temporary)", function () {
 
     test("Don't open the drawer when window size increase", async () => {
         await expectSidebarClosed()
-        await waitAnimation(page.setViewport({ width: MOBILE_BREAK_POINT + 10, height }))
+        await waitAnimation(page.setViewportSize({ width: MOBILE_BREAK_POINT + 10, height }))
         await expectSidebarClosed()
     })
 
@@ -58,7 +58,7 @@ describe("Drawer type (persistent / temporary)", function () {
             expect(width).toBeGreaterThanOrEqual(MOBILE_BREAK_POINT)
 
             // Exepect the drawer is temporary
-            await waitAnimation(page.setViewport({ width, height }))
+            await waitAnimation(page.setViewportSize({ width, height }))
             await expectSidebarOpened()
             await waitAnimation(clickSidebarNoteListItem())
             await expectSidebarOpened()
@@ -73,7 +73,7 @@ describe("Drawer width", function () {
 
     test("Small screen", async () => {
         const clientWidth = MAX_DRAWER_WIDTH - 100
-        await waitAnimation(page.setViewport({ width: clientWidth, height }))
+        await waitAnimation(page.setViewportSize({ width: clientWidth, height }))
         await waitAnimation(page.reload())
         await expectSidebarClosed()
         await waitAnimation(click("appbar_btn_menu"))
@@ -82,7 +82,7 @@ describe("Drawer width", function () {
         expect(dimensions.width).toBeWithin(clientWidth - 49, clientWidth - 47)
     })
     test("Middle screen", async () => {
-        await waitAnimation(page.setViewport({ width: MOBILE_BREAK_POINT - 10, height }))
+        await waitAnimation(page.setViewportSize({ width: MOBILE_BREAK_POINT - 10, height }))
         await waitAnimation(page.reload())
         await expectSidebarClosed()
         await waitAnimation(click("appbar_btn_menu"))
@@ -91,7 +91,7 @@ describe("Drawer width", function () {
         expect(dimensions.width).toBeWithin(MAX_DRAWER_WIDTH - 1, MAX_DRAWER_WIDTH + 1)
     })
     test("Large screen", async () => {
-        await waitAnimation(page.setViewport({ width: MOBILE_BREAK_POINT + 10, height }))
+        await waitAnimation(page.setViewportSize({ width: MOBILE_BREAK_POINT + 10, height }))
         await waitAnimation(page.reload())
         await expectSidebarOpened()
         const dimensions = await getDimensions("sidebar")

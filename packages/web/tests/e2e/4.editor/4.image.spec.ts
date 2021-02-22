@@ -19,7 +19,7 @@ describe("HTML", () => {
         const imageSelector = `${wysiwygEditorSelector} img`
 
         beforeAll(async () => {
-            await page.waitForSelector(imageSelector, { hidden: true })
+            await page.waitForSelector(imageSelector, { state: "hidden" })
         })
 
         test("Input", async () => {

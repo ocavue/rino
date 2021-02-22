@@ -21,7 +21,7 @@ describe("Sign-in", () => {
         // Before sign-in
         await goto("/sign-in")
         await wait("auth_signin_form")
-        await wait("auth_error", { hidden: true })
+        await wait("auth_error", { state: "hidden" })
 
         // sign-in
         await type("auth_signin_password_textfield", password, false)
@@ -58,7 +58,7 @@ describe("Sign-up", () => {
         // Before sign-up
         await goto("/sign-up")
         await wait("auth_signup_form")
-        await wait("auth_error", { hidden: true })
+        await wait("auth_error", { state: "hidden" })
 
         // sign-up
         await type("auth_signup_password_textfield", password, false)
@@ -89,7 +89,7 @@ describe("Password reset", () => {
         // Before password-reset
         await goto("/password-reset")
         await wait("auth_password_reset_form")
-        await wait("auth_error", { hidden: true })
+        await wait("auth_error", { state: "hidden" })
 
         // password-reset
         await type("auth_password_reset_username_textfield", email, false)

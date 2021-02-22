@@ -21,7 +21,7 @@ describe("Delete user notes", function () {
         await waitAnimation(createNote())
         await waitAnimation(createNote())
         await wait("sidebar_notes_list_item")
-        await wait("sidebar_notes_list_item_local", { visible: false, hidden: true })
+        await wait("sidebar_notes_list_item_local", { visible: false, state: "hidden" })
     })
     test("Delete note A", async () => {
         const notes = await getNoteNumber()

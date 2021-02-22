@@ -110,7 +110,7 @@
             "REACT_APP_TEST_PASSWORD": "${{ secrets.REACT_APP_TEST_PASSWORD }}",
             "REACT_APP_TESTING": 1
           },
-          "run": "export FIREBASE_DATABASE_EMULATOR_HOST=\"localhost:$(scripts/simple_jq.js ./packages/web/firebase.json .emulators.database.port)\"\nexport FIRESTORE_EMULATOR_HOST=\"localhost:$(scripts/simple_jq.js ./packages/web/firebase.json .emulators.firestore.port)\"\necho \"firebase environment variables:\" $FIREBASE_DATABASE_EMULATOR_HOST $FIRESTORE_EMULATOR_HOST\nyarn run build:all\n"
+          "run": "export FIREBASE_DATABASE_EMULATOR_HOST=\"localhost:$(scripts/simple_jq.js ./packages/web/firebase.json .emulators.database.port)\"\nexport FIRESTORE_EMULATOR_HOST=\"localhost:$(scripts/simple_jq.js ./packages/web/firebase.json .emulators.firestore.port)\"\necho \"firebase environment variables:\" $FIREBASE_DATABASE_EMULATOR_HOST $FIRESTORE_EMULATOR_HOST\nyarn run build:all\nyarn run editor build:next\n"
         },
         {
           "name": "Run tests",
@@ -119,7 +119,7 @@
             "REACT_APP_TEST_USERNAME": "${{ secrets.REACT_APP_TEST_USERNAME }}",
             "REACT_APP_TEST_PASSWORD": "${{ secrets.REACT_APP_TEST_PASSWORD }}"
           },
-          "run": "./node_modules/.bin/firebase emulators:exec --only firestore \"\n  yarn run web start > /dev/null &\n  yarn run test --coverage\n\"\n"
+          "run": "./node_modules/.bin/firebase emulators:exec --only firestore \"\n  export DEBUG=pw:api # environment variables for playwright\n  yarn run web start > /dev/null &\n  yarn run editor start > /dev/null &\n  yarn run test --coverage\n\"\n"
         },
         {
           "name": "Upload coverage information to codecov",

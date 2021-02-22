@@ -3,7 +3,7 @@ import { wait } from "../utils"
 
 describe("After login", function () {
     beforeAll(async () => {
-        await jestPuppeteer.resetBrowser()
+        await jestPlaywright.resetBrowser()
         await login()
     })
 

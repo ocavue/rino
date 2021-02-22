@@ -3,7 +3,7 @@ import { getInnerText, getSourceCodeModeText, goto, typeCodeMirror, wait } from 
 
 describe("ProsemirrorView constructor error", () => {
     test("Prepare", async () => {
-        await goto("/")
+        await goto("http://localhost:3000/")
         await createEmptyNote()
     })
 
@@ -28,6 +28,6 @@ describe("ProsemirrorView constructor error", () => {
 
     test("Switch back to wysiwyg mode", async () => {
         await switchMode()
-        await wait("wysiwyg_mode_error", { hidden: true })
+        await wait("wysiwyg_mode_error", { state: "hidden" })
     })
 })

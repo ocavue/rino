@@ -8,7 +8,7 @@ function readText(filename: string) {
 }
 
 beforeAll(async () => {
-    await jestPuppeteer.resetBrowser()
+    await jestPlaywright.resetBrowser()
     goto("/")
 })
 

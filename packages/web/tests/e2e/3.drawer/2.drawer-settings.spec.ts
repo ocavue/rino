@@ -13,17 +13,17 @@ describe("Settings", () => {
     }
     const closeSettingsMenu = async () => {
         await waitAnimation(page.mouse.click(2, 2))
-        await wait(settingsMenu, { hidden: true })
+        await wait(settingsMenu, { state: "hidden" })
     }
     const clickSettingsMenuButton = async (btnTestId: string) => {
         await waitAnimation(click(settingsBtn))
         await waitAnimation(click(btnTestId))
-        await wait(settingsMenu, { hidden: true })
+        await wait(settingsMenu, { state: "hidden" })
     }
 
     describe("Open/close settings menu", () => {
         beforeAll(async () => {
-            await jestPuppeteer.resetBrowser()
+            await jestPlaywright.resetBrowser()
             await login()
         })
 
@@ -40,7 +40,7 @@ describe("Settings", () => {
 
     describe("Sidebar settings sign in/out buttons", () => {
         beforeAll(async () => {
-            await jestPuppeteer.resetBrowser()
+            await jestPlaywright.resetBrowser()
 
             // Parpare for the "clean" test case below
             await login()
@@ -55,11 +55,11 @@ describe("Settings", () => {
         })
         test("Click sign out button", async () => {
             await click(signOutBtn)
-            await wait(settingsMenu, { hidden: true, visible: false })
+            await wait(settingsMenu, { state: "hidden" })
             await expectSignedOut()
         })
         test("Clean notes in the sidebar after signing out", async () => {
-            await wait("sidebar_notes_list_item", { hidden: true, visible: false })
+            await wait("sidebar_notes_list_item", { state: "hidden" })
         })
         test("Signed out", async () => {
             await waitAnimation(signOut(), 1000)
@@ -67,7 +67,7 @@ describe("Settings", () => {
     })
 
     describe("About", function () {
-        beforeAll(async () => await jestPuppeteer.resetBrowser())
+        beforeAll(async () => await jestPlaywright.resetBrowser())
 
         test("Open the dialog", async () => {
             await login()
@@ -90,13 +90,13 @@ describe("Settings", () => {
         test("Close the dialog", async () => {
             await sleep(500)
             await page.mouse.click(2, 2)
-            await wait("about_dialog", { hidden: true })
+            await wait("about_dialog", { state: "hidden" })
         })
     })
 
     describe("Email", function () {
         beforeAll(async () => {
-            await jestPuppeteer.resetBrowser()
+            await jestPlaywright.resetBrowser()
             await login()
         })
 

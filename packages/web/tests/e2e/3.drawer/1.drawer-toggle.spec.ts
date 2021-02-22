@@ -2,7 +2,7 @@ import { expectSidebarClosed, expectSidebarOpened, login, signOut } from "../act
 import { click, waitAnimation } from "../utils"
 
 describe("Open/close Sidebar", () => {
-    beforeAll(async () => await jestPuppeteer.resetBrowser())
+    beforeAll(async () => await jestPlaywright.resetBrowser())
 
     describe("Before sign in", () => {
         test("Step 1", () => waitAnimation(signOut()))

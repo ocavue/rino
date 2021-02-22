@@ -1,7 +1,12 @@
 import os from "os"
-import { ClickOptions, Dialog, KeyInput, WaitForSelectorOptions } from "puppeteer"
+import { Dialog } from "playwright"
+
+type WaitForSelectorOptions = Parameters<typeof page.waitForSelector>[1]
+type ClickOptions = Parameters<typeof page.click>[1]
 
 const testidSelector = (testid: string) => `[data-testid="${testid}"]`
+
+export { testidSelector as testid }
 
 export async function goto(url: string, options?: Parameters<typeof page.goto>[1]) {
     url = url.startsWith("/") ? "http://localhost:3000" + url : url
@@ -9,10 +14,7 @@ export async function goto(url: string, options?: Parameters<typeof page.goto>[1
 }
 
 export async function wait(testid: string, options?: WaitForSelectorOptions) {
-    if (!options?.timeout) {
-        options = { ...options, timeout: 10000 }
-    }
-    return await page.waitForSelector(testidSelector(testid), options)
+    return await page.waitForSelector(testidSelector(testid), { timeout: 10000, ...options })
 }
 
 export async function focus(testid: string) {
@@ -33,7 +35,7 @@ const metaKey = (() => {
     }
 })()
 
-export async function pressKey(...keys: KeyInput[]) {
+export async function pressKey(...keys: string[]) {
     for (let key of keys) {
         if (key === "Meta") key = metaKey
         await page.keyboard.down(key)
@@ -79,7 +81,7 @@ export async function getInnerText(testid: string) {
     await wait(testid)
     const elementHandle = await getOne(testid)
     expect(elementHandle).toBeTruthy()
-    const innerText = await page.evaluate((e: HTMLElement) => e.innerText, elementHandle)
+    const innerText = await elementHandle.evaluate((e: HTMLElement) => e.innerText)
     expect(typeof innerText).toEqual("string")
     return innerText
 }
@@ -88,7 +90,7 @@ export async function getTextAreaValue(testid: string) {
     await wait(testid)
     const textareaHandle = await getOne(testid)
     expect(textareaHandle).toBeTruthy()
-    const value = await page.evaluate((t: HTMLTextAreaElement) => t.value, textareaHandle)
+    const value = await textareaHandle.evaluate((e: HTMLElement) => e.innerText)
     expect(typeof value).toEqual("string")
     return value
 }
@@ -116,10 +118,10 @@ export async function getDimensions(testid: string) {
     await wait(testid)
     const element = await getOne(testid)
     expect(element).toBeTruthy()
-    return await page.evaluate((e: HTMLElement) => {
+    return await element.evaluate((e: HTMLElement) => {
         const { x, y, width, height, top, right, bottom, left } = e.getBoundingClientRect()
         return { x, y, width, height, top, right, bottom, left }
-    }, element)
+    })
 }
 
 export async function retry(fn: () => Promise<boolean> | boolean, timeout = 5000): Promise<boolean> {
@@ -221,9 +223,8 @@ export function debugPrintLog() {
 export async function debugPrintScreenshot() {
     const screenshot = await page.screenshot({
         type: "png",
-        encoding: "base64",
     })
-    console.log("base64 screenshot:\n", screenshot)
+    console.log("base64 screenshot:\n", screenshot.toString("base64"))
 }
 
 export async function debugPrintBodyInnerHTML() {

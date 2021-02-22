@@ -1,6 +1,6 @@
 import { range } from "lodash"
 
-import { click, focus, goto, pressKey, retry, sleep, wait } from "./utils"
+import { click, debugPrintScreenshot, focus, goto, pressKey, retry, sleep, wait } from "./utils"
 
 async function isSignedIn(): Promise<boolean> {
     const state = await page.evaluate(() => localStorage.getItem("__rino_dev_auth_state"))
@@ -60,9 +60,11 @@ export async function switchMode() {
 }
 
 export async function expectSidebarOpened() {
-    return await page.waitForSelector(".drawer--open")
+    await page.waitForTimeout(1000)
+    await debugPrintScreenshot()
+    return await page.waitForSelector(".drawer--open", { timeout: 10000, state: "attached" })
 }
 
 export async function expectSidebarClosed() {
-    return await page.waitForSelector(".drawer--close")
+    return await page.waitForSelector(".drawer--close", { timeout: 10000, state: "attached" })
 }

@@ -12,13 +12,23 @@ module.exports = {
     testMatch: ["<rootDir>/tests/e2e/**/*.spec.(js|ts|jsx|tsx)"],
 
     // A preset that is used as a base for Jest's configuration
-    preset: "jest-puppeteer",
+    preset: "jest-playwright-preset",
 
     // A list of paths to modules that run some code to configure or set up the testing framework before each test
     setupFilesAfterEnv: [
         "jest-extended",
-        "jest-puppeteer-istanbul/lib/setup",
-        "<rootDir>/../../tests/wait-server.js",
+        // "jest-puppeteer-istanbul/lib/setup",
+        // "<rootDir>/../../tests/wait-server.js",
         "<rootDir>/../../tests/load-dotenv.js",
     ],
+
+    testEnvironmentOptions: {
+        "jest-playwright": {
+            launchOptions: {
+                executablePath: process.env.PLAYWRIGHT_CHROME_EXECUTABLE_PATH,
+                headless: true,
+            },
+            collectCoverage: true, // TODO: respect jest's --coverage flag
+        },
+    },
 }
