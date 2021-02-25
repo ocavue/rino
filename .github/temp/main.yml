@@ -103,7 +103,7 @@ jobs:
           REACT_APP_TEST_PASSWORD: ${{ secrets.REACT_APP_TEST_PASSWORD }}
         run: |
           ./node_modules/.bin/firebase emulators:exec --only firestore "
-            export DEBUG=pw:api # environment variables for playwright
+            # export DEBUG=pw:api # environment variables for playwright
             yarn run web start > /dev/null &
             yarn run editor start > /dev/null &
             yarn run test --coverage

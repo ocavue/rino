@@ -119,7 +119,7 @@
             "REACT_APP_TEST_USERNAME": "${{ secrets.REACT_APP_TEST_USERNAME }}",
             "REACT_APP_TEST_PASSWORD": "${{ secrets.REACT_APP_TEST_PASSWORD }}"
           },
-          "run": "./node_modules/.bin/firebase emulators:exec --only firestore \"\n  export DEBUG=pw:api # environment variables for playwright\n  yarn run web start > /dev/null &\n  yarn run editor start > /dev/null &\n  yarn run test --coverage\n\"\n"
+          "run": "./node_modules/.bin/firebase emulators:exec --only firestore \"\n  # export DEBUG=pw:api # environment variables for playwright\n  yarn run web start > /dev/null &\n  yarn run editor start > /dev/null &\n  yarn run test --coverage\n\"\n"
         },
         {
           "name": "Upload coverage information to codecov",

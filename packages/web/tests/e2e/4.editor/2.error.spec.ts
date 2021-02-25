@@ -3,7 +3,7 @@ import { getInnerText, getSourceCodeModeText, goto, typeCodeMirror, wait } from 
 
 describe("ProsemirrorView constructor error", () => {
     test("Prepare", async () => {
-        await goto("http://localhost:3000/")
+        await goto("/")
         await createEmptyNote()
     })
 
