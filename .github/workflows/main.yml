@@ -22,7 +22,7 @@
         {
           "id": "step_cache_deps",
           "name": "Cache dependencies",
-          "uses": "actions/cache@v2",
+          "uses": "actions/cache@v2.1.4",
           "with": {
             "path": "node_modules\n*/*/node_modules\n~/.cache/firebase\n~/.cache/ms-playwright\n.yarn/cache\n",
             "key": "${{ runner.os }}-deps-v5-${{ hashFiles('yarn.lock') }}"
@@ -82,7 +82,7 @@
         {
           "id": "step_cache_deps",
           "name": "Cache dependencies",
-          "uses": "actions/cache@v2",
+          "uses": "actions/cache@v2.1.4",
           "with": {
             "path": "node_modules\n*/*/node_modules\n~/.cache/firebase\n~/.cache/ms-playwright\n.yarn/cache\n",
             "key": "${{ runner.os }}-deps-v5-${{ hashFiles('yarn.lock') }}"
@@ -148,7 +148,7 @@
         {
           "id": "step_cache_deps",
           "name": "Cache dependencies",
-          "uses": "actions/cache@v2",
+          "uses": "actions/cache@v2.1.4",
           "with": {
             "path": "node_modules\n*/*/node_modules\n~/.cache/firebase\n~/.cache/ms-playwright\n.yarn/cache\n",
             "key": "${{ runner.os }}-deps-v5-${{ hashFiles('yarn.lock') }}"
@@ -195,7 +195,7 @@
         {
           "id": "step_cache_deps",
           "name": "Cache dependencies",
-          "uses": "actions/cache@v2",
+          "uses": "actions/cache@v2.1.4",
           "with": {
             "path": "node_modules\n*/*/node_modules\n~/.cache/firebase\n~/.cache/ms-playwright\n.yarn/cache\n",
             "key": "${{ runner.os }}-deps-v5-${{ hashFiles('yarn.lock') }}"
@@ -316,7 +316,7 @@
         {
           "id": "step_cache_deps",
           "name": "Cache dependencies",
-          "uses": "actions/cache@v2",
+          "uses": "actions/cache@v2.1.4",
           "with": {
             "path": "node_modules\n*/*/node_modules\n~/.cache/firebase\n~/.cache/ms-playwright\n.yarn/cache\n",
             "key": "${{ runner.os }}-deps-v5-${{ hashFiles('yarn.lock') }}"
@@ -370,7 +370,7 @@
         {
           "id": "step_cache_deps",
           "name": "Cache dependencies",
-          "uses": "actions/cache@v2",
+          "uses": "actions/cache@v2.1.4",
           "with": {
             "path": "node_modules\n*/*/node_modules\n~/.cache/firebase\n~/.cache/ms-playwright\n.yarn/cache\n",
             "key": "${{ runner.os }}-deps-v5-${{ hashFiles('yarn.lock') }}"
