@@ -23,12 +23,6 @@ extends:
   # runs Prettier as an ESLint rule
   # https://github.com/prettier/eslint-plugin-prettier
   - "plugin:prettier/recommended"
-
-  # turns off all ELLint rules that are unnecessary or might conflict with Prettier
-  # https://github.com/prettier/eslint-config-prettier
-  - "prettier"
-  - "prettier/@typescript-eslint" # for @typescript-eslint/eslint-plugin
-  - "prettier/react" # for eslint-plugin-react
 plugins:
   - "simple-import-sort"
 settings:
@@ -48,6 +42,9 @@ rules:
   "@typescript-eslint/explicit-module-boundary-types": off
   "@typescript-eslint/no-empty-function": off
   "@typescript-eslint/no-explicit-any": off
+
+  # turn on the rules provided by `eslint-plugin-prettier` as `warn` instead of `error`
+  "prettier/prettier": warn
 
   # use `simple-import-sort` to sort import
   "sort-imports": "off"
