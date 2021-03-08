@@ -1,4 +1,5 @@
 import mdast from "mdast"
+import type { Options as FromMarkdownOptions } from "mdast-util-from-markdown"
 import fromMarkdown from "mdast-util-from-markdown"
 import mdastStrikethrough from "mdast-util-gfm-strikethrough"
 import micromarkStrikethrough from "micromark-extension-gfm-strikethrough"
@@ -263,10 +264,11 @@ function parseInlineMarkdown(text: string): mdast.PhrasingContent[] {
             "list",
             "thematicBreak",
         ]
-        const root: mdast.Root = fromMarkdown(text, {
+        const options: FromMarkdownOptions = {
             extensions: [{ disable: { null: disabledConstructs } }, micromarkStrikethrough({ singleTilde: false })],
             mdastExtensions: [mdastStrikethrough.fromMarkdown],
-        })
+        }
+        const root: mdast.Root = fromMarkdown(text, options)
         if (root.children.length !== 1) {
             throw Error(`root.children has ${root.children.length} children`)
         }
