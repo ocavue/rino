@@ -1,3 +1,5 @@
+/* Copyright (c) 2020-present ocavue@gmail.com */
+
 import { Draft, produce } from "immer"
 import { sortBy } from "lodash"
 import { useCallback, useMemo, useState } from "react"

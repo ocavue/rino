@@ -1,3 +1,5 @@
+/* Copyright (c) 2020-present ocavue@gmail.com */
+
 import { createStyles, makeStyles, Theme } from "@material-ui/core"
 
 import { APPBAR_HEIGHT, APPBAR_ICON_BUTTON_MARGIN } from "src/constants"

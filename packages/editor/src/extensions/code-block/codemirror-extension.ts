@@ -1,3 +1,5 @@
+/* Copyright (c) 2020-present ocavue@gmail.com */
+
 import "codemirror/mode/cmake/cmake"
 import "codemirror/mode/css/css"
 import "codemirror/mode/dart/dart"

@@ -1,3 +1,5 @@
+/* Copyright (c) 2020-present ocavue@gmail.com */
+
 import { expectSidebarClosed, expectSidebarOpened, login, signOut } from "../actions"
 import { click, waitAnimation } from "../utils"
 

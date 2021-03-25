@@ -1,3 +1,5 @@
+/* Copyright (c) 2019-present ocavue@gmail.com */
+
 import { goto } from "./utils"
 
 describe("Network environment", () => {

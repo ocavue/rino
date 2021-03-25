@@ -1,3 +1,5 @@
+/* Copyright (c) 2020-present ocavue@gmail.com */
+
 /* istanbul ignore file */
 import Head from "next/head"
 import React from "react"

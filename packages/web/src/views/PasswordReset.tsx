@@ -1,3 +1,5 @@
+/* Copyright (c) 2020-present ocavue@gmail.com */
+
 import { Grid, Link, Typography } from "@material-ui/core"
 import dynamic from "next/dynamic"
 import React, { useState } from "react"

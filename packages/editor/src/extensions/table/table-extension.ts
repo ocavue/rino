@@ -1,3 +1,5 @@
+/* Copyright (c) 2020-present ocavue@gmail.com */
+
 import { ApplySchemaAttributes, KeyBindings, NodeSpecOverride } from "@remirror/core"
 import { TableCellExtension, TableExtension, TableHeaderCellExtension, TableRowExtension } from "@remirror/extension-tables"
 import { TableSchemaSpec } from "@remirror/extension-tables/dist/declarations/src/table-utils"

@@ -1,3 +1,5 @@
+/* Copyright (c) 2020-present ocavue@gmail.com */
+
 import { login } from "./actions"
 import { click, getInnerText, goto, pressKey, sleep, type, wait } from "./utils"
 

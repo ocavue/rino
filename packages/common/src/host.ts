@@ -1,3 +1,5 @@
+/* Copyright (c) 2020-present ocavue@gmail.com */
+
 const PREVIEW_URL_RE = /^(rino-)(web|home|server)(-?(?:[^.]*).ocavue.vercel.app)$/
 
 export function getCurrentHostName() {

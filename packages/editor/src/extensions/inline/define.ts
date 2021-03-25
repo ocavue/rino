@@ -1,3 +1,5 @@
+/* Copyright (c) 2020-present ocavue@gmail.com */
+
 import { MarkExtension, MarkExtensionSpec, NodeView, NodeViewMethod } from "@remirror/core"
 
 const commonAttrs = {

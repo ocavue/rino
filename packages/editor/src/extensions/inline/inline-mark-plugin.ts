@@ -1,3 +1,5 @@
+/* Copyright (c) 2020-present ocavue@gmail.com */
+
 import { PlainExtension } from "@remirror/core"
 import { Mark, Node, Schema } from "prosemirror-model"
 import { Mappable } from "prosemirror-transform"

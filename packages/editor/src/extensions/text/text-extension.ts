@@ -1,3 +1,5 @@
+/* Copyright (c) 2020-present ocavue@gmail.com */
+
 import { TextExtension } from "@remirror/extension-text"
 import Token from "markdown-it/lib/token"
 

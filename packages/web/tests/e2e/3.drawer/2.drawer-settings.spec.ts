@@ -1,3 +1,5 @@
+/* Copyright (c) 2019-present ocavue@gmail.com */
+
 import { createNote, expectSignedIn, expectSignedOut, login, signOut } from "../actions"
 import { click, getInnerText, goto, sleep, wait, waitAnimation } from "../utils"
 

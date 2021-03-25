@@ -1,3 +1,5 @@
+/* Copyright (c) 2020-present ocavue@gmail.com */
+
 import { MAX_DRAWER_WIDTH, MOBILE_BREAK_POINT } from "src/constants"
 
 import { cleanNotes, clickSidebarNoteListItem, createNote, expectSidebarClosed, expectSidebarOpened, login } from "../actions"

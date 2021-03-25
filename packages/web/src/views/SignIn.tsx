@@ -1,3 +1,5 @@
+/* Copyright (c) 2020-present ocavue@gmail.com */
+
 import dynamic from "next/dynamic"
 import React, { useState } from "react"
 

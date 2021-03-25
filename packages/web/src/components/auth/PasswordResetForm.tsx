@@ -1,3 +1,5 @@
+/* Copyright (c) 2020-present ocavue@gmail.com */
+
 import firebase from "firebase"
 import React, { useMemo } from "react"
 

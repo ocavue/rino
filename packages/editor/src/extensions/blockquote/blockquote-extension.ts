@@ -1,3 +1,5 @@
+/* Copyright (c) 2020-present ocavue@gmail.com */
+
 import { BlockquoteExtension } from "@remirror/extension-blockquote"
 
 import { NodeSerializerOptions, ParserRuleType } from "../../transform"

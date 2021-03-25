@@ -1,3 +1,5 @@
+/* Copyright (c) 2020-present ocavue@gmail.com */
+
 import { renderEditor } from "jest-remirror"
 
 import { RinoParagraphExtension } from "../../../extensions"

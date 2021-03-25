@@ -1,3 +1,5 @@
+/* Copyright (c) 2020-present ocavue@gmail.com */
+
 import { fromInlineMarkdown } from "src/extensions/inline/from-inline-markdown"
 
 describe("text", function () {

@@ -1,3 +1,5 @@
+/* Copyright (c) 2020-present ocavue@gmail.com */
+
 import { AnyExtension, isExtension, RemirrorManager } from "@remirror/core"
 
 import { MarkdownParser, MarkdownSerializer, NodeSerializerSpecs, ParserRule } from "../../transform"

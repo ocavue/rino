@@ -1,3 +1,5 @@
+/* Copyright (c) 2020-present ocavue@gmail.com */
+
 import { AppBar, createStyles, makeStyles, Theme } from "@material-ui/core"
 import { fade } from "@material-ui/core/styles/colorManipulator"
 import * as icons from "@material-ui/icons"

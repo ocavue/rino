@@ -1,3 +1,5 @@
+/* Copyright (c) 2020-present ocavue@gmail.com */
+
 import mdast from "mdast"
 import type { Options as FromMarkdownOptions } from "mdast-util-from-markdown"
 import fromMarkdown from "mdast-util-from-markdown"

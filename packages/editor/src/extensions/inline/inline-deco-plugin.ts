@@ -1,3 +1,5 @@
+/* Copyright (c) 2020-present ocavue@gmail.com */
+
 import { PlainExtension } from "@remirror/core"
 import { Node as ProsemirrorNode } from "prosemirror-model"
 import { EditorState } from "prosemirror-state"

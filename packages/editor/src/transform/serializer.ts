@@ -1,3 +1,5 @@
+/* Copyright (c) 2019-present ocavue@gmail.com */
+
 import * as _ from "lodash"
 import { Node, Schema } from "prosemirror-model"
 

@@ -1,3 +1,5 @@
+/* Copyright (c) 2020-present ocavue@gmail.com */
+
 import { chainCommands, convertCommand, NodeType } from "@remirror/core"
 import { HardBreakExtension } from "@remirror/extension-hard-break"
 import { baseKeymap, exitCode } from "prosemirror-commands"

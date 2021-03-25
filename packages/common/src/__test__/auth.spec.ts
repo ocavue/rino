@@ -1,3 +1,5 @@
+/* Copyright (c) 2020-present ocavue@gmail.com */
+
 import { getSignInState, setSignInState } from "../auth"
 
 test("auth", async () => {

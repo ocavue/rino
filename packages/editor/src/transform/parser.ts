@@ -1,3 +1,5 @@
+/* Copyright (c) 2019-present ocavue@gmail.com */
+
 import MarkdownIt from "markdown-it"
 import Token from "markdown-it/lib/token"
 import { Mark, Node, NodeType, Schema } from "prosemirror-model"

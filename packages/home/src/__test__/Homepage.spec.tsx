@@ -1,3 +1,5 @@
+/* Copyright (c) 2020-present ocavue@gmail.com */
+
 import { fireEvent, render, screen, waitFor } from "@testing-library/react"
 import React from "react"
 

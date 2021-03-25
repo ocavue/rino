@@ -1,3 +1,5 @@
+/* Copyright (c) 2020-present ocavue@gmail.com */
+
 import React from "react"
 
 import Svg from "../assets/share/img/icons/safari-pinned-tab.svg"

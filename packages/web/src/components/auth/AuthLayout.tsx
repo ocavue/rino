@@ -1,3 +1,5 @@
+/* Copyright (c) 2021-present ocavue@gmail.com */
+
 import { Container, createStyles, LinearProgress, makeStyles, Theme, Typography } from "@material-ui/core"
 import React from "react"
 

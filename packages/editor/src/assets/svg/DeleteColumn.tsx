@@ -1,3 +1,5 @@
+/* Copyright (c) 2020-present ocavue@gmail.com */
+
 import * as React from "react"
 
 function SvgDeleteColumn(props: React.SVGProps<SVGSVGElement>) {

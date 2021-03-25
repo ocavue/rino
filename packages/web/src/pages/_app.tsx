@@ -1,3 +1,5 @@
+/* Copyright (c) 2020-present ocavue@gmail.com */
+
 // Import Global CSS
 // https://github.com/zeit/next.js/blob/v9.2.0/errors/css-global.md
 import "../../../../node_modules/prosemirror-tables/style/tables.css"

@@ -1,3 +1,5 @@
+/* Copyright (c) 2020-present ocavue@gmail.com */
+
 // .md and .txt files will be transformed to string by webpack `raw-loader`
 declare module "*.md" {
     const value: string

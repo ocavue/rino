@@ -1,3 +1,5 @@
+/* Copyright (c) 2020-present ocavue@gmail.com */
+
 import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles"
 import { act, fireEvent, render, screen, within } from "@testing-library/react"
 import React from "react"

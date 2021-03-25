@@ -1,3 +1,5 @@
+/* Copyright (c) 2020-present ocavue@gmail.com */
+
 import { createStyles, IconButton, makeStyles, Paper, Snackbar, Theme } from "@material-ui/core"
 import { CommandsFromExtensions, CommandShape, GetHelpers } from "@remirror/core"
 import clsx from "clsx"

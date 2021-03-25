@@ -126,6 +126,9 @@ jobs:
       - name: Lint
         run: yarn run lint .
 
+      - name: Lint copyright header
+        run: yarn run lint:copyright-header
+
       - name: Check actions configration
         run: |
           hash1=$(sha1sum .github/workflows/main.yml)

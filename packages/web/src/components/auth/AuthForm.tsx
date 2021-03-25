@@ -1,3 +1,5 @@
+/* Copyright (c) 2021-present ocavue@gmail.com */
+
 import React from "react"
 
 type OnSubmit = (event: React.FormEvent<HTMLFormElement>) => void

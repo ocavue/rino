@@ -1,3 +1,5 @@
+/* Copyright (c) 2020-present ocavue@gmail.com */
+
 import { ParagraphExtension } from "@remirror/extension-paragraph"
 
 import { NodeSerializerOptions, ParserRuleType } from "../../transform"

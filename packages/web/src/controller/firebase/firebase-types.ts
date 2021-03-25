@@ -1,3 +1,5 @@
+/* Copyright (c) 2020-present ocavue@gmail.com */
+
 import firebase from "firebase/app"
 
 export type DocumentReference = firebase.firestore.DocumentReference

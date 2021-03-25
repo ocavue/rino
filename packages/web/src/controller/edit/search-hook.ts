@@ -1,3 +1,5 @@
+/* Copyright (c) 2020-present ocavue@gmail.com */
+
 import React, { useMemo, useState } from "react"
 
 import { Note } from "./note"

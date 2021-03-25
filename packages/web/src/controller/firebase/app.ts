@@ -1,3 +1,5 @@
+/* Copyright (c) 2019-present ocavue@gmail.com */
+
 // Firebase App (the core Firebase SDK) is always required and must be listed first
 // Add the Firebase products that you want to use
 import "firebase/auth"

@@ -1,3 +1,5 @@
+/* Copyright (c) 2019-present ocavue@gmail.com */
+
 import { generateRandomId } from "@rino.app/common"
 
 import { notesCollection } from "../firebase/app"

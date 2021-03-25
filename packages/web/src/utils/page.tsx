@@ -1,3 +1,5 @@
+/* Copyright (c) 2020-present ocavue@gmail.com */
+
 import { NextPage } from "next"
 import dynamic, { Loader } from "next/dynamic"
 import React from "react"

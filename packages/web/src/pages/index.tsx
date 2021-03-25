@@ -1,3 +1,5 @@
+/* Copyright (c) 2020-present ocavue@gmail.com */
+
 import { getSignInState } from "@rino.app/common"
 
 import { DynamicPage } from "src/utils"

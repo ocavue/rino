@@ -1,3 +1,5 @@
+/* Copyright (c) 2020-present ocavue@gmail.com */
+
 /* istanbul ignore file */
 
 import { NowRequest, NowResponse } from "@vercel/node"

@@ -1,3 +1,5 @@
+/* Copyright (c) 2020-present ocavue@gmail.com */
+
 import Token from "markdown-it/lib/token"
 
 type MarkdownItToken = string

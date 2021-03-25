@@ -1,3 +1,5 @@
+/* Copyright (c) 2020-present ocavue@gmail.com */
+
 import { EditorSchema, htmlToProsemirrorNode as fromHtml, prosemirrorNodeToHtml as toHtml } from "@remirror/core"
 import { renderEditor, TaggedProsemirrorNode } from "jest-remirror"
 

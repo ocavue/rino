@@ -1,3 +1,5 @@
+/* Copyright (c) 2020-present ocavue@gmail.com */
+
 /* istanbul ignore file */
 import { ServerStyleSheets } from "@material-ui/styles"
 import Document, { DocumentContext } from "next/document"

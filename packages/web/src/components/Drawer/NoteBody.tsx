@@ -1,3 +1,5 @@
+/* Copyright (c) 2020-present ocavue@gmail.com */
+
 import { Box, CircularProgress } from "@material-ui/core"
 import React, { useMemo } from "react"
 

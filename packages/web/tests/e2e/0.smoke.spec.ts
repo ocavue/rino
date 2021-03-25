@@ -1,3 +1,5 @@
+/* Copyright (c) 2019-present ocavue@gmail.com */
+
 import { login } from "./actions"
 import { goto, wait } from "./utils"
 

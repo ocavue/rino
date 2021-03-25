@@ -1,3 +1,5 @@
+/* Copyright (c) 2020-present ocavue@gmail.com */
+
 import { HorizontalRuleExtension } from "@remirror/extension-horizontal-rule"
 
 import { NodeSerializerOptions, ParserRuleType } from "../../transform"

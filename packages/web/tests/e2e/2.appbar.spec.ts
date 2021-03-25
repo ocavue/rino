@@ -1,3 +1,5 @@
+/* Copyright (c) 2019-present ocavue@gmail.com */
+
 import { cleanNotes, createNote, deleteNote, login } from "./actions"
 import { click, getAll, sleep, wait, waitAnimation } from "./utils"
 

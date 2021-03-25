@@ -1,3 +1,5 @@
+/* Copyright (c) 2019-present ocavue@gmail.com */
+
 import { dedent } from "@rino.app/common"
 
 describe("uitls", function () {

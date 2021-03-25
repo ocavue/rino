@@ -1,3 +1,5 @@
+/* Copyright (c) 2020-present ocavue@gmail.com */
+
 import type { ParagraphExtension } from "@remirror/extension-paragraph"
 import { ReactComponentExtension } from "@remirror/extension-react-component"
 import type { TextExtension } from "@remirror/extension-text"

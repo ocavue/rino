@@ -1,3 +1,5 @@
+/* Copyright (c) 2019-present ocavue@gmail.com */
+
 import { range } from "lodash"
 
 import { click, focus, goto, pressKey, retry, sleep, wait } from "./utils"

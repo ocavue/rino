@@ -1,3 +1,5 @@
+/* Copyright (c) 2020-present ocavue@gmail.com */
+
 import { useRemirror } from "@remirror/react"
 
 import { createWysiwygExtension } from "./wysiwyg-extension"

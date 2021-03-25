@@ -1,3 +1,5 @@
+/* Copyright (c) 2020-present ocavue@gmail.com */
+
 import { Grid, Link } from "@material-ui/core"
 import firebase from "firebase"
 import { useRouter } from "next/router"

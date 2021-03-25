@@ -1,3 +1,5 @@
+/* Copyright (c) 2020-present ocavue@gmail.com */
+
 import { getCookie, setCookie } from "../cookie"
 
 test("cookie", async () => {

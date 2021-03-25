@@ -1,3 +1,5 @@
+/* Copyright (c) 2020-present ocavue@gmail.com */
+
 import { EditorState } from "prosemirror-state"
 import { selectionCell } from "prosemirror-tables"
 import { Decoration, DecorationSet } from "prosemirror-view"

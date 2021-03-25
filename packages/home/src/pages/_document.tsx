@@ -1,3 +1,5 @@
+/* Copyright (c) 2020-present ocavue@gmail.com */
+
 import Document from "next/document"
 
 import { getNextDocument, getNextDocumentInitialProps } from "@rino.app/next/dist/document"

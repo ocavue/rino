@@ -1,3 +1,5 @@
+/* Copyright (c) 2020-present ocavue@gmail.com */
+
 import React from "react"
 
 import snapshot from "../assets/share/snapshot-mac.png"

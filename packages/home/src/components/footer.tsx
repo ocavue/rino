@@ -1,3 +1,5 @@
+/* Copyright (c) 2020-present ocavue@gmail.com */
+
 import React from "react"
 
 import { colors } from "../styles/color"

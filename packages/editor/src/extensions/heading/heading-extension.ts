@@ -1,3 +1,5 @@
+/* Copyright (c) 2020-present ocavue@gmail.com */
+
 import { ApplySchemaAttributes, convertCommand, findParentNodeOfType, KeyBindings, NodeSpecOverride } from "@remirror/core"
 import { HeadingExtension } from "@remirror/extension-heading"
 import Token from "markdown-it/lib/token"

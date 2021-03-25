@@ -7434,7 +7434,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"commander@npm:^3.0.2":
+"commander@npm:^3.0.0, commander@npm:^3.0.2":
   version: 3.0.2
   resolution: "commander@npm:3.0.2"
   checksum: 28071a49d23606c1e31f1f275d2aac9c03833cb3442e04b798ffbcd5f7fb7a1fbfc6b5bc6a69b862df83f475378665623788118d189c254a173248c452bd77a2
@@ -7724,6 +7724,17 @@ __metadata:
   peerDependencies:
     webpack: ^4.0.0 || ^5.0.0
   checksum: 8a85a97cee60fb1cc6829a4d73203d752a7ca57ea235089a6856bd68824cffe95c527e04a7f1f421de7aab8df576dd599581d34b67390ec36fde28fc4472336e
+  languageName: node
+  linkType: hard
+
+"copyright-header@npm:^0.4.6":
+  version: 0.4.6
+  resolution: "copyright-header@npm:0.4.6"
+  dependencies:
+    commander: ^3.0.0
+  bin:
+    copyright-header: build/main/cli.js
+  checksum: ba908184f988f20b62ae8eba0ed0bb961f4ebb23538dfec6fe6f18a69f8bf560ce3f75be14aca97525b7b5eb3abf468467e014686217e300e3c6403f195c31b2
   languageName: node
   linkType: hard
 
@@ -18108,6 +18119,7 @@ fsevents@^1.2.7:
     "@types/node": ^14.14.35
     "@typescript-eslint/eslint-plugin": ^4.18.0
     "@typescript-eslint/parser": ^4.18.0
+    copyright-header: ^0.4.6
     eslint: ^7.22.0
     eslint-config-prettier: ^8.1.0
     eslint-plugin-jest: ^24.3.2

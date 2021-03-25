@@ -1,3 +1,5 @@
+/* Copyright (c) 2020-present ocavue@gmail.com */
+
 import { ProsemirrorNode, RemirrorEventListener } from "@remirror/core"
 import { Remirror, useRemirrorContext } from "@remirror/react"
 import { debounce } from "lodash"

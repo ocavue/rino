@@ -1,3 +1,5 @@
+/* Copyright (c) 2019-present ocavue@gmail.com */
+
 import os from "os"
 import { ClickOptions, Dialog, KeyInput, WaitForSelectorOptions } from "puppeteer"
 

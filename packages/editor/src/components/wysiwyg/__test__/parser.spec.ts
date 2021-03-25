@@ -1,3 +1,5 @@
+/* Copyright (c) 2020-present ocavue@gmail.com */
+
 import { RemirrorManager } from "@remirror/core"
 
 import { dedent } from "@rino.app/common"

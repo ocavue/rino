@@ -1,3 +1,5 @@
+/* Copyright (c) 2019-present ocavue@gmail.com */
+
 import firebaseJson from "../../config/firebase.client.json"
 
 const firebaseConfig: {

@@ -1,3 +1,5 @@
+/* Copyright (c) 2020-present ocavue@gmail.com */
+
 const fs = require("fs")
 const execSync = require("child_process").execSync
 const withBundleAnalyzer = require("@next/bundle-analyzer")({

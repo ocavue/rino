@@ -1,3 +1,5 @@
+/* Copyright (c) 2020-present ocavue@gmail.com */
+
 export * from "./blockquote"
 export * from "./code-block"
 export * from "./hard-break"

@@ -1,3 +1,5 @@
+/* Copyright (c) 2019-present ocavue@gmail.com */
+
 // UI
 export const MOBILE_BREAK_POINT = 960
 export const MAX_DRAWER_WIDTH = 400

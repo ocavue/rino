@@ -1,3 +1,5 @@
+/* Copyright (c) 2020-present ocavue@gmail.com */
+
 import { useEffect, useMemo, useState } from "react"
 import { createContainer } from "unstated-next"
 

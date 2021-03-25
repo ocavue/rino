@@ -1,3 +1,5 @@
+/* Copyright (c) 2020-present ocavue@gmail.com */
+
 // import { ProsemirrorDevTools } from "@remirror/dev"
 import { FC } from "react"
 

@@ -1,3 +1,5 @@
+/* Copyright (c) 2020-present ocavue@gmail.com */
+
 import React, { ImgHTMLAttributes } from "react"
 
 export type HeroProps = {

@@ -1,3 +1,5 @@
+/* Copyright (c) 2020-present ocavue@gmail.com */
+
 export const TestHook = <T>({ callback }: { callback: () => T }) => {
     callback()
     return null

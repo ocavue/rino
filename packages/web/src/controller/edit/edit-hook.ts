@@ -1,3 +1,5 @@
+/* Copyright (c) 2020-present ocavue@gmail.com */
+
 import { SetStateAction, useCallback, useEffect, useMemo } from "react"
 import { createContainer } from "unstated-next"
 

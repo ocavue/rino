@@ -1,3 +1,5 @@
+/* Copyright (c) 2020-present ocavue@gmail.com */
+
 import { Container } from "unstated-next"
 
 export type EditorProps = {

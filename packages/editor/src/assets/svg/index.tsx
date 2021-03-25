@@ -1,3 +1,5 @@
+/* Copyright (c) 2020-present ocavue@gmail.com */
+
 export { default as AddColumnAfter } from "./AddColumnAfter"
 export { default as AddColumnBefore } from "./AddColumnBefore"
 export { default as AddRowAfter } from "./AddRowAfter"

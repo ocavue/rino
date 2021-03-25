@@ -1,3 +1,5 @@
+/* Copyright (c) 2020-present ocavue@gmail.com */
+
 import { cleanNotes, createNote, login } from "../actions"
 import { type as typeByTestid, wysiwygEditorSelector } from "../utils"
 

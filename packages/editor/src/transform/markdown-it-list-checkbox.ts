@@ -1,3 +1,5 @@
+/* Copyright (c) 2019-present ocavue@gmail.com */
+
 import MarkdownIt from "markdown-it"
 import Core from "markdown-it/lib/parser_core"
 import StateCore from "markdown-it/lib/rules_core/state_core"

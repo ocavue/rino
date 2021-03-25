@@ -1,3 +1,5 @@
+/* Copyright (c) 2019-present ocavue@gmail.com */
+
 import { range } from "lodash"
 import { Fragment, Node, NodeType, Slice } from "prosemirror-model"
 import { EditorState, NodeSelection, Selection, Transaction } from "prosemirror-state"

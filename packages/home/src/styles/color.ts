@@ -1,3 +1,5 @@
+/* Copyright (c) 2020-present ocavue@gmail.com */
+
 // Copy from https://tailwindcss.com/docs/text-color/
 export const colors = {
     black: "#000",

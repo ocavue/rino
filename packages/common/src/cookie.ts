@@ -1,3 +1,5 @@
+/* Copyright (c) 2020-present ocavue@gmail.com */
+
 export function setCookie(name: string, value: string, option?: { days?: number; domain?: string }): void {
     let expires = ""
     if (option?.days) {

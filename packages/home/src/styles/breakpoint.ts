@@ -1,3 +1,5 @@
+/* Copyright (c) 2020-present ocavue@gmail.com */
+
 export const breakpoints = {
     up: {
         sm: "@media (min-width: 640px)",

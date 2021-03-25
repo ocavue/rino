@@ -1,3 +1,5 @@
+/* Copyright (c) 2020-present ocavue@gmail.com */
+
 import { Box, Dialog, DialogContent, DialogContentText, DialogTitle, Typography } from "@material-ui/core"
 import React from "react"
 

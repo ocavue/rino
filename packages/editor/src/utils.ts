@@ -1,3 +1,5 @@
+/* Copyright (c) 2019-present ocavue@gmail.com */
+
 import { convertCommand, DispatchFunction, KeyBindings, ProsemirrorNode } from "@remirror/core"
 import { Fragment, NodeRange, Schema } from "prosemirror-model"
 import { EditorState, TextSelection, Transaction } from "prosemirror-state"

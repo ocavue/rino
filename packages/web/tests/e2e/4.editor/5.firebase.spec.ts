@@ -1,3 +1,5 @@
+/* Copyright (c) 2020-present ocavue@gmail.com */
+
 import { createNote, login, switchMode } from "../actions"
 import { sleep, type } from "../utils"
 

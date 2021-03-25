@@ -1,3 +1,5 @@
+/* Copyright (c) 2020-present ocavue@gmail.com */
+
 import { convertCommand, GetSchema, NodeExtension, NodeExtensionSpec, NodeViewMethod } from "@remirror/core"
 import { isElementDomNode } from "@remirror/core-utils"
 import Token from "markdown-it/lib/token"

@@ -1,3 +1,5 @@
+/* Copyright (c) 2019-present ocavue@gmail.com */
+
 import { readFileSync } from "fs"
 
 import { cleanNotes, createNote, switchMode } from "../actions"

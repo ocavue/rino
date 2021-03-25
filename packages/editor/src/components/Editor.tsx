@@ -1,3 +1,5 @@
+/* Copyright (c) 2020-present ocavue@gmail.com */
+
 import React, { useEffect, useRef, useState } from "react"
 
 import { metaKey } from "@rino.app/common"

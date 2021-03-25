@@ -1,3 +1,5 @@
+/* Copyright (c) 2020-present ocavue@gmail.com */
+
 export function all(items: unknown[]) {
     for (const item of items) {
         if (!item) return false

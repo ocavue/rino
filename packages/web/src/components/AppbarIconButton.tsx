@@ -1,3 +1,5 @@
+/* Copyright (c) 2020-present ocavue@gmail.com */
+
 import { createStyles, IconButton, withStyles } from "@material-ui/core"
 
 import { APPBAR_ICON_BUTTON_SIZE, APPBAR_ICON_SIZE } from "src/constants"

@@ -1,3 +1,5 @@
+/* Copyright (c) 2019-present ocavue@gmail.com */
+
 import { clickSidebarNoteListItem, createNote, login } from "../actions"
 import { pressKey, wait } from "../utils"
 

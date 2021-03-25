@@ -1,3 +1,5 @@
+/* Copyright (c) 2019-present ocavue@gmail.com */
+
 import { createEmptyNote, switchMode } from "../actions"
 import { getInnerText, getSourceCodeModeText, goto, typeCodeMirror, wait } from "../utils"
 

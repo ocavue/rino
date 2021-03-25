@@ -1,3 +1,5 @@
+/* Copyright (c) 2019-present ocavue@gmail.com */
+
 import { testUser } from "src/controller/config"
 import { firebaseApp } from "src/controller/firebase/app"
 import { User } from "src/controller/firebase/firebase-types"

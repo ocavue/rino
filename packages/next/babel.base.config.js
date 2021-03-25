@@ -1,3 +1,5 @@
+/* Copyright (c) 2020-present ocavue@gmail.com */
+
 module.exports = function (api) {
     console.log("loading", __filename)
     api.cache(true)
