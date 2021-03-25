@@ -3918,7 +3918,7 @@ __metadata:
     "@types/react-dom": ^17.0.3
     firebase: ^8.3.1
     firebase-admin: ^9.5.0
-    firebase-tools: ^9.6.1
+    firebase-tools: ^9.7.0
     immer: ^8.0.4
     jest: ^26.6.3
     jest-extended: ^0.11.5
@@ -7765,6 +7765,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"cors@npm:^2.8.5":
+  version: 2.8.5
+  resolution: "cors@npm:2.8.5"
+  dependencies:
+    object-assign: ^4
+    vary: ^1
+  checksum: c83e88c15428b87ff55853ec5ce961b650c7aa3de536aadebbeb2334872d86a8be57165a77996f3b746366c950c2d51624a9b76b88fb7f18d178eca051ca1ae2
+  languageName: node
+  linkType: hard
+
 "cosmiconfig@npm:^6.0.0":
   version: 6.0.0
   resolution: "cosmiconfig@npm:6.0.0"
@@ -9248,9 +9258,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-react@npm:^7.23.0":
-  version: 7.23.0
-  resolution: "eslint-plugin-react@npm:7.23.0"
+"eslint-plugin-react@npm:^7.23.1":
+  version: 7.23.1
+  resolution: "eslint-plugin-react@npm:7.23.1"
   dependencies:
     array-includes: ^3.1.3
     array.prototype.flatmap: ^1.2.4
@@ -9266,7 +9276,7 @@ __metadata:
     string.prototype.matchall: ^4.0.4
   peerDependencies:
     eslint: ^3 || ^4 || ^5 || ^6 || ^7
-  checksum: 6b3673dd202459ceb6a105f547daa211a74e02e7ce18ea3627b45a84deb50c1a4109262a854e8ea013fd3c2d5b1c1c2c7ea08dc5ba2756729452d91ac07f3df4
+  checksum: 1c9cfbe6f378d09c620d127c6f6e7708e0f482787a38dbd935b137c70ea65af8d648fda6b2755cd028ebed461628e230038146ab3b10eb9a76f02388ae554565
   languageName: node
   linkType: hard
 
@@ -9555,7 +9565,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"exegesis@npm:^2.0.0":
+"exegesis@npm:^2.0.0, exegesis@npm:^2.5.6":
   version: 2.5.6
   resolution: "exegesis@npm:2.5.6"
   dependencies:
@@ -10156,9 +10166,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"firebase-tools@npm:^9.6.1":
-  version: 9.6.1
-  resolution: "firebase-tools@npm:9.6.1"
+"firebase-tools@npm:^9.7.0":
+  version: 9.7.0
+  resolution: "firebase-tools@npm:9.7.0"
   dependencies:
     "@google-cloud/pubsub": ^2.7.0
     "@types/archiver": ^5.1.0
@@ -10172,10 +10182,12 @@ __metadata:
     cli-table: ^0.3.1
     commander: ^4.0.1
     configstore: ^5.0.1
+    cors: ^2.8.5
     cross-env: ^5.1.3
     cross-spawn: ^7.0.1
     csv-streamify: ^3.0.4
     dotenv: ^6.1.0
+    exegesis: ^2.5.6
     exegesis-express: ^2.0.0
     exit-code: ^1.0.2
     express: ^4.16.4
@@ -10214,10 +10226,11 @@ __metadata:
     update-notifier: ^4.1.0
     uuid: ^3.0.0
     winston: ^3.0.0
+    winston-transport: ^4.4.0
     ws: ^7.2.3
   bin:
     firebase: ./lib/bin/firebase.js
-  checksum: 450252b601cccfb73a69cb0f5620f692134ff175a08df73390a3a40b68abcce81f08dd75baed3100c645313eccab1a84040450cdd79701069032e824e9c53d7a
+  checksum: 0b68384cbf8c24e7b7f6665d83a8bee64cef13292616d9ebd04c5c9b66db241beacefd5e688a40157fd0164acc362e47ba56130470dadbc62d05a01ceca4efbb
   languageName: node
   linkType: hard
 
@@ -15579,7 +15592,7 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
-"object-assign@npm:^4.1.0, object-assign@npm:^4.1.1":
+"object-assign@npm:^4, object-assign@npm:^4.1.0, object-assign@npm:^4.1.1":
   version: 4.1.1
   resolution: "object-assign@npm:4.1.1"
   checksum: 66cf021898fc1b13ea573ea8635fbd5a76533f50cecbc2fcd5eee1e8029af41bcebe7023788b6d0e06cbe4401ecea075d972f78ec74467cdc571a0f1a4d1a081
@@ -16366,9 +16379,9 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
-"playwright@npm:^1.9.2":
-  version: 1.9.2
-  resolution: "playwright@npm:1.9.2"
+"playwright@npm:^1.10.0":
+  version: 1.10.0
+  resolution: "playwright@npm:1.10.0"
   dependencies:
     commander: ^6.1.0
     debug: ^4.1.1
@@ -16385,7 +16398,7 @@ fsevents@^1.2.7:
     ws: ^7.3.1
   bin:
     playwright: lib/cli/cli.js
-  checksum: cbcdd4adc56eb30dfc758392f03424c3fb919f1e2202ac092d9c4761c4860d2c2e6e6cfd0b0752c7cb8f7313cf739ee4b49012bf80f9904b0373a6212af726ec
+  checksum: baf820b982a35a20746a44403fad7c4122262cacfbd14f76498340dcffd606572eb566780ac32178b0b8ca10f20b0daf511fdb040b1135d5d8b638fd4c60597c
   languageName: node
   linkType: hard
 
@@ -18146,14 +18159,14 @@ resolve@^2.0.0-next.3:
     eslint-config-prettier: ^8.1.0
     eslint-plugin-jest: ^24.3.2
     eslint-plugin-prettier: ^3.3.1
-    eslint-plugin-react: ^7.23.0
+    eslint-plugin-react: ^7.23.1
     eslint-plugin-react-hooks: ^4.2.0
     eslint-plugin-simple-import-sort: ^7.0.0
     husky: ^4.3.8
     jest: ^26.6.3
     jest-playwright-preset: ^1.5.1
     jest-transform-stub: ^2.0.0
-    playwright: ^1.9.2
+    playwright: ^1.10.0
     prettier: ^2.2.1
     size-limit: ^4.10.1
     typescript: ^4.2.3
@@ -20939,7 +20952,7 @@ typescript@^4.2.3:
   languageName: node
   linkType: hard
 
-"vary@npm:~1.1.2":
+"vary@npm:^1, vary@npm:~1.1.2":
   version: 1.1.2
   resolution: "vary@npm:1.1.2"
   checksum: 591f059f727ac1ba0d97cb7767f8583a03fcbb07db7be2b7dce838ede520ec0e958a41cb19077054769077fdc49a9b9a2dc391c83426bfee89c054b8cc7404bf
