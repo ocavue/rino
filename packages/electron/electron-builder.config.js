@@ -1,5 +1,10 @@
 // @ts-check
 
+const fs = require("fs")
+const path = require("path")
+
+const packageJson = JSON.parse(fs.readFileSync(path.join(__dirname, "package.json"), { encoding: "utf-8" }))
+
 /**
  * @type {import('electron-builder').Configuration}
  * @see https://www.electron.build/configuration/configuration
@@ -21,6 +26,10 @@ const config = {
     },
 
     publish: ["github"],
+    releaseInfo: {
+        // Match the style of changesets release name
+        releaseName: `${packageJson.name}@${packageJson.version}`,
+    },
 }
 
 module.exports = config
