@@ -408,6 +408,10 @@
           "run": "echo \"${FIREBASE_CLIENT_JSON}\" > ./packages/web/config/firebase.client.json\nexport FIREBASE_PROJECT_ID=$(scripts/simple_jq.js ./packages/web/config/firebase.client.json .projectId)\nyarn run web firebase use --add $FIREBASE_PROJECT_ID\n"
         },
         {
+          "name": "Upload @rino.app/electron to GitHub Release",
+          "run": "yarn run election publish\n"
+        },
+        {
           "name": "Deploy @rino.app/web to Firebase",
           "env": {
             "FIREBASE_TOKEN": "${{ secrets.FIREBASE_TOKEN }}"
