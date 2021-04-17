@@ -1,0 +1,23 @@
+{
+    "extends": "../../../../tsconfig.json",
+    "compilerOptions": {
+        "target": "esnext",
+        "module": "CommonJS",
+        "baseUrl": ".",
+        "lib": [
+            "dom",
+            "esnext",
+        ],
+        "isolatedModules": true,
+        "strict": false,
+        "moduleResolution": "node",
+        "resolveJsonModule": true,
+        "noEmit": false,
+        "outDir": "dist"
+    },
+    "include": [
+        "./*.ts",
+        "./**/*.ts",
+        "../types/electron-api.d.ts",
+    ]
+}

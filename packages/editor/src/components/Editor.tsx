@@ -3,6 +3,7 @@ import React, { useEffect, useRef, useState } from "react"
 import { metaKey } from "@rino.app/common"
 
 import { SourceCodeEditor } from "./source-code"
+import { EDITOR_THEME_GITHUB } from "./theme/github"
 import { DrawerActivityContainer } from "./types"
 import { WysiwygEditor } from "./wysiwyg"
 
@@ -52,7 +53,8 @@ const Editor: React.FC<EditorProps> = ({
         return () => window.removeEventListener("keydown", handleKeydown)
     }, [mode, note])
 
-    const className = `${extraClassName} markdown-body ${isDarkMode ? "markdown-body--dark" : "markdown-body--light"}`
+    const className =
+        `${extraClassName} ${EDITOR_THEME_GITHUB} markdown-body ` + (isDarkMode ? "markdown-body--dark" : "markdown-body--light")
 
     if (mode === "source-code")
         return (

@@ -12,6 +12,7 @@
         "postinstall": "./scripts/post-install.sh",
         "changeset:version": "yarn changeset version && yarn install",
         "changeset:publish": "yarn changeset publish",
+        "electron": "yarn workspace @rino.app/electron",
         "server": "yarn workspace @rino.app/server",
         "editor": "yarn workspace @rino.app/editor",
         "common": "yarn workspace @rino.app/common",
