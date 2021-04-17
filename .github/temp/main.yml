@@ -255,6 +255,10 @@ jobs:
       - *step_download_home_dist
       - *step_config_firebase
 
+      - name: Upload @rino.app/electron to GitHub Release
+        run: |
+          yarn run election publish
+
       - name: Deploy @rino.app/web to Firebase
         env:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
