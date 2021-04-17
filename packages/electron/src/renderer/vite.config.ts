@@ -20,5 +20,6 @@ export default defineConfig({
         rollupOptions: {
             external,
         },
+        chunkSizeWarningLimit: 50_000,
     },
 })
