@@ -1,5 +1,4 @@
-const now = new Date()
-const buildVersion = `${now.getFullYear() - 2000}.${now.getMonth() + 1}.${now.getDate()}`
+// @ts-check
 
 /**
  * @type {import('electron-builder').Configuration}
@@ -12,9 +11,6 @@ const config = {
         buildResources: "resources",
     },
     files: ["src/main/dist/**", "src/renderer/dist/**"],
-    extraMetadata: {
-        version: buildVersion,
-    },
 }
 
 module.exports = config
