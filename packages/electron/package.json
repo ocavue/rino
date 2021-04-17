@@ -13,7 +13,7 @@
         "build:main": "tsc --project src/main/tsconfig.json",
         "build:renderer": "vite build src/renderer",
         "build:electron": "electron-builder build --config electron-builder.config.js --dir --mac",
-        "publish": "electron-builder --publish"
+        "publish": "electron-builder build --config electron-builder.config.js --mac --publish always"
     },
     "devDependencies": {
         "@types/react": "^17.0.0",
@@ -36,6 +36,18 @@
         "unstated-next": "^1.1.0"
     },
     "engines": {
-        "node": ">=v14.16.0"
+        "node": ">= 14"
+    },
+    "files": [
+        "this_file_dose_not_exist"
+    ],
+    "homepage": "https://rino.app",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/ocavue/rino.git",
+        "directory": "packages/web"
+    },
+    "publishConfig": {
+        "access": "public"
     }
 }

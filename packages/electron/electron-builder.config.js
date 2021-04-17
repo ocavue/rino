@@ -11,6 +11,9 @@ const config = {
         buildResources: "resources",
     },
     files: ["src/main/dist/**", "src/renderer/dist/**"],
+    extraMetadata: {
+        name: "Rino",
+    },
 
     mac: {
         // https://developer.apple.com/library/ios/documentation/General/Reference/InfoPlistKeyReference/Articles/LaunchServicesKeys.html#//apple_ref/doc/uid/TP40009250-SW8
