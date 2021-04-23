@@ -64,7 +64,7 @@ jobs:
 
       - name: Build
         run: |
-          yarn run build:all
+          yarn run build:web
 
       - name: Upload dist (web)
         uses: actions/upload-artifact@v2
@@ -96,7 +96,7 @@ jobs:
       #     export FIREBASE_DATABASE_EMULATOR_HOST="localhost:$(scripts/simple_jq.js ./packages/web/firebase.json .emulators.database.port)"
       #     export FIRESTORE_EMULATOR_HOST="localhost:$(scripts/simple_jq.js ./packages/web/firebase.json .emulators.firestore.port)"
       #     echo "firebase environment variables:" $FIREBASE_DATABASE_EMULATOR_HOST $FIRESTORE_EMULATOR_HOST
-      #     yarn run build:all
+      #     yarn run build:web
 
       # - name: Run tests
       #   env:
