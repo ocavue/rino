@@ -7,9 +7,9 @@ cd $(dirname $0)/..
 #### skip postinstall in renovate environment
 if [ -z ${YARN_ENABLE_IMMUTABLE_INSTALLS+x} ]; then
     # YARN_ENABLE_IMMUTABLE_INSTALLS is unset
-	echo "running post-install.sh";
+    echo "running post-install.sh";
 else
-	echo "YARN_ENABLE_IMMUTABLE_INSTALLS is set to '$DEPLOY_ENV'";
+    echo "YARN_ENABLE_IMMUTABLE_INSTALLS is set to '$DEPLOY_ENV'";
     echo "skipping post-install.sh"
     exit 0
 fi
