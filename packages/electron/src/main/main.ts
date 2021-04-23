@@ -1,10 +1,31 @@
 import { app, BrowserWindow } from "electron"
+import logger from "electron-log"
 import { join } from "path"
 import { URL } from "url"
 
 import { env } from "./env"
 
 const gotTheLock = app.requestSingleInstanceLock()
+
+async function setupAutoUpdate() {
+    if (env.PROD) {
+        logger.log("current environment is production")
+
+        await app.whenReady()
+        await new Promise((resolve) => setTimeout(resolve, 1000))
+        try {
+            const { autoUpdater } = await import("electron-updater")
+            autoUpdater.logger = logger
+            logger.log("check updates")
+            const checkResult = await autoUpdater.checkForUpdatesAndNotify()
+            logger.log("check updates result: " + JSON.stringify(checkResult))
+        } catch (e) {
+            logger.error("failed to check updates:", e)
+        }
+    } else {
+        logger.log("current environment is not production")
+    }
+}
 
 if (!gotTheLock) {
     app.quit()
@@ -57,13 +78,8 @@ if (!gotTheLock) {
 
     app.whenReady()
         .then(createWindow)
-        .catch((e) => console.error("Failed create window:", e))
+        .catch((e) => logger.error("Failed create window:", e))
 
     // Auto-updates
-    if (env.PROD) {
-        app.whenReady()
-            .then(() => import("electron-updater"))
-            .then(({ autoUpdater }) => autoUpdater.checkForUpdatesAndNotify())
-            .catch((e) => console.error("Failed check updates:", e))
-    }
+    setupAutoUpdate()
 }
