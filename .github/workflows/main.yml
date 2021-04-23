@@ -299,62 +299,17 @@
       "if": "github.ref == 'refs/heads/master'",
       "steps": [
         {
+          "id": "step_release_please",
           "uses": "GoogleCloudPlatform/release-please-action@v2",
           "with": {
             "token": "${{ secrets.CHANGESET_GITHUB_TOKEN }}",
             "release-type": "node",
             "package-name": "rino"
           }
-        },
-        {
-          "name": "Checkout code repository",
-          "uses": "actions/checkout@v2",
-          "with": {
-            "fetch-depth": 0,
-            "token": "${{ secrets.CHANGESET_GITHUB_TOKEN }}"
-          }
-        },
-        {
-          "name": "Setup node.js",
-          "uses": "actions/setup-node@v2",
-          "with": {
-            "node-version": 14
-          }
-        },
-        {
-          "id": "step_cache_deps",
-          "name": "Cache dependencies",
-          "uses": "actions/cache@v2",
-          "with": {
-            "path": "node_modules\n*/*/node_modules\n~/.cache/firebase\n~/.cache/ms-playwright\n.yarn/cache\n",
-            "key": "${{ runner.os }}-deps-v5-${{ hashFiles('yarn.lock') }}"
-          }
-        },
-        {
-          "name": "Install Dependencies",
-          "run": "date\nyarn install --immutable\ndate\necho \"[DEBUG] CACHE_HIT: $CACHE_HIT\"\nif [ \"$CACHE_HIT\" != \"true\" ]\nthen\n  echo \"[DEBUG] installing\"\n  yarn run web firebase setup:emulators:firestore\nfi\nls -lrth ~/.cache/firebase/emulators/\n",
-          "env": {
-            "CACHE_HIT": "${{ steps.step_cache_deps.outputs.cache-hit }}"
-          }
-        },
-        {
-          "id": "step_changesets",
-          "name": "Create release pull request or publish to npm",
-          "uses": "changesets/action@master",
-          "with": {
-            "version": "yarn changeset:version",
-            "publish": "yarn changeset:publish",
-            "commit": "chore(changesets): release a new version",
-            "title": "chore(changesets): release a new version"
-          },
-          "env": {
-            "GITHUB_TOKEN": "${{ secrets.CHANGESET_GITHUB_TOKEN }}",
-            "NPM_TOKEN": "${{ secrets.NPM_TOKEN }}"
-          }
         }
       ],
       "outputs": {
-        "published": "${{ steps.step_changesets.outputs.published }}"
+        "published": "${{ steps.step_release_please.outputs.release_created }}"
       }
     },
     "Deployment": {
