@@ -1,6 +1,6 @@
 {
     "name": "@rino.app/electron",
-    "version": "0.1.0",
+    "version": "0.1.11",
     "main": "src/main/dist/main.js",
     "author": "ocavue",
     "description": "A better way to write Markdown",
@@ -8,12 +8,13 @@
         "dev": "run-p dev:main dev:renderer dev:electron ",
         "dev:main": "tsc --project src/main/tsconfig.json --watch",
         "dev:renderer": "vite src/renderer",
-        "dev:electron": "wait-on tcp:3002 && wait-on src/main/dist/main.js && NODE_ENV=development electron .",
+        "dev:electron": "wait-on --timeout 60000 tcp:3002 && wait-on --timeout 60000 src/main/dist/main.js && NODE_ENV=development electron .",
         "build": "run-s build:main build:renderer build:electron",
         "build:main": "tsc --project src/main/tsconfig.json",
         "build:renderer": "vite build src/renderer",
-        "build:electron": "electron-builder build --config electron-builder.config.js --dir --mac",
-        "publish": "electron-builder build --config electron-builder.config.js --mac --publish always"
+        "build:electron": "electron-builder --mac --x64 --publish never",
+        "release": "run-s build:main build:renderer release:electron",
+        "release:electron": "electron-builder --mac --x64 --publish always"
     },
     "devDependencies": {
         "@types/react": "^17.0.0",
@@ -29,6 +30,7 @@
     },
     "dependencies": {
         "@rino.app/editor": "^0.3.0",
+        "electron-log": "^4.3.4",
         "electron-updater": "^4.3.8",
         "lodash": "^4.17.21",
         "react": "^17.0.0",
