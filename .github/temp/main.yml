@@ -242,7 +242,7 @@ jobs:
 
       - name: Upload @rino.app/electron to GitHub Release
         run: |
-          yarn run election publish
+          yarn run electron publish
 
       - name: Deploy @rino.app/web to Firebase
         env:
