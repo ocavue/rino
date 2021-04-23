@@ -215,7 +215,7 @@ jobs:
   Release:
     runs-on: ubuntu-18.04
     needs: [Build, Test, Lint, Preview]
-    if: github.ref == 'refs/heads/master'
+    # if: github.ref == 'refs/heads/master'
     steps:
       - id: step_release_please
         uses: GoogleCloudPlatform/release-please-action@v2
@@ -229,7 +229,7 @@ jobs:
   Deployment: # Production deployment
     runs-on: ubuntu-18.04
     needs: [Release]
-    if: github.ref == 'refs/heads/master' && ( needs.Release.outputs.published == 'true' || contains(github.event.head_commit.message, '[force-deploy]') )
+    # if: github.ref == 'refs/heads/master' && ( needs.Release.outputs.published == 'true' || contains(github.event.head_commit.message, '[force-deploy]') )
     steps:
       - *step_checkout
       - *step_setup_node
@@ -249,6 +249,8 @@ jobs:
       - name: Upload @rino.app/electron to GitHub Release
         run: |
           yarn run electron release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       # - name: Deploy @rino.app/web to Firebase
       #   env:

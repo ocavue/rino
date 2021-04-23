@@ -148,7 +148,6 @@
         "Lint",
         "Preview"
       ],
-      "if": "github.ref == 'refs/heads/master'",
       "steps": [
         {
           "id": "step_release_please",
@@ -168,7 +167,6 @@
       "needs": [
         "Release"
       ],
-      "if": "github.ref == 'refs/heads/master' && ( needs.Release.outputs.published == 'true' || contains(github.event.head_commit.message, '[force-deploy]') )",
       "steps": [
         {
           "name": "Checkout code repository",
@@ -227,7 +225,10 @@
         },
         {
           "name": "Upload @rino.app/electron to GitHub Release",
-          "run": "yarn run electron release\n"
+          "run": "yarn run electron release\n",
+          "env": {
+            "GITHUB_TOKEN": "${{ secrets.GITHUB_TOKEN }}"
+          }
         }
       ]
     }
