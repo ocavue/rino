@@ -19,4 +19,4 @@
 
 ### Features
 
-* **electron:** update the release workflow ([#566](https://www.github.com/ocavue/rino/issues/566)) ([588224c](https://www.github.com/ocavue/rino/commit/588224cb43447a2dc5fc994706006f7f1b0110d9))
+* update the release workflow ([#566](https://www.github.com/ocavue/rino/issues/566)) ([588224c](https://www.github.com/ocavue/rino/commit/588224cb43447a2dc5fc994706006f7f1b0110d9))
