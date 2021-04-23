@@ -209,11 +209,18 @@ jobs:
           yarn run lhci autorun --config .lighthouserc.web.json
           yarn run lhci autorun --config .lighthouserc.home.json
 
-  Changesets:
+  Release:
     runs-on: ubuntu-18.04
     needs: [Build, Test, Lint, Preview]
     if: github.ref == 'refs/heads/master'
     steps:
+
+      - uses: GoogleCloudPlatform/release-please-action@v2
+        with:
+          token: ${{ secrets.CHANGESET_GITHUB_TOKEN }}
+          release-type: node
+          package-name: rino
+
       - name: Checkout code repository
         uses: actions/checkout@v2
         with:
@@ -245,7 +252,7 @@ jobs:
   Deployment: # Production deployment
     runs-on: ubuntu-18.04
     needs: [Changesets]
-    if: github.ref == 'refs/heads/master' && ( needs.Changesets.outputs.published == 'true' || contains(github.event.head_commit.message, '[force-deploy]') )
+    if: github.ref == 'refs/heads/master' && ( needs.Release.outputs.published == 'true' || contains(github.event.head_commit.message, '[force-deploy]') )
     steps:
       - *step_checkout
       - *step_setup_node
