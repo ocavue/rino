@@ -21,7 +21,7 @@ const config = {
 
         // Notice that mac dmg can only be built on macOS. https://github.com/electron-userland/electron-builder/issues/811#issuecomment-252558287
         // zip target for macOS is required for Squirrel.Mac.
-        target: ["zip", "dmg"],
+        target: ["zip"],
 
         hardenedRuntime: true,
     },
