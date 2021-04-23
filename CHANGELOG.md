@@ -1,11 +1,8 @@
-# @rino.app/web
+# Changelog
 
-https://github.com/ocavue/rino/blob/master/packages/web/CHANGELOG.md
+## [0.2.0](https://www.github.com/ocavue/rino/compare/v0.1.0...v0.2.0) (2021-04-23)
 
-# @rino.app/home
 
-https://github.com/ocavue/rino/blob/master/packages/home/CHANGELOG.md
+### Features
 
-# @rino.app/editor
-
-https://github.com/ocavue/rino/blob/master/packages/editor/CHANGELOG.md
+* **electron:** update the release workflow ([#566](https://www.github.com/ocavue/rino/issues/566)) ([588224c](https://www.github.com/ocavue/rino/commit/588224cb43447a2dc5fc994706006f7f1b0110d9))
