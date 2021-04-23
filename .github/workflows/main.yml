@@ -17,6 +17,57 @@
         {
           "name": "Checkout code repository",
           "uses": "actions/checkout@v2"
+        },
+        {
+          "name": "Setup node.js",
+          "uses": "actions/setup-node@v2",
+          "with": {
+            "node-version": 14
+          }
+        },
+        {
+          "id": "step_cache_deps",
+          "name": "Cache dependencies",
+          "uses": "actions/cache@v2",
+          "with": {
+            "path": "node_modules\n*/*/node_modules\n~/.cache/firebase\n~/.cache/ms-playwright\n.yarn/cache\n",
+            "key": "${{ runner.os }}-deps-v5-${{ hashFiles('yarn.lock') }}"
+          }
+        },
+        {
+          "name": "Install Dependencies",
+          "run": "date\nyarn install --immutable\ndate\necho \"[DEBUG] CACHE_HIT: $CACHE_HIT\"\nif [ \"$CACHE_HIT\" != \"true\" ]\nthen\n  echo \"[DEBUG] installing\"\n  yarn run web firebase setup:emulators:firestore\nfi\nls -lrth ~/.cache/firebase/emulators/\n",
+          "env": {
+            "CACHE_HIT": "${{ steps.step_cache_deps.outputs.cache-hit }}"
+          }
+        },
+        {
+          "name": "Configrate firebase",
+          "env": {
+            "FIREBASE_CLIENT_JSON": "${{ secrets.FIREBASE_CLIENT_JSON }}",
+            "FIREBASE_TOKEN": "${{ secrets.FIREBASE_TOKEN }}"
+          },
+          "run": "echo \"${FIREBASE_CLIENT_JSON}\" > ./packages/web/config/firebase.client.json\nexport FIREBASE_PROJECT_ID=$(scripts/simple_jq.js ./packages/web/config/firebase.client.json .projectId)\nyarn run web firebase use --add $FIREBASE_PROJECT_ID\n"
+        },
+        {
+          "name": "Build",
+          "run": "yarn run build:all\n"
+        },
+        {
+          "name": "Upload dist (web)",
+          "uses": "actions/upload-artifact@v2",
+          "with": {
+            "name": "web_dist",
+            "path": "./packages/web/dist"
+          }
+        },
+        {
+          "name": "Upload dist (home)",
+          "uses": "actions/upload-artifact@v2",
+          "with": {
+            "name": "home_dist",
+            "path": "./packages/home/dist"
+          }
         }
       ]
     },
@@ -47,6 +98,45 @@
         {
           "name": "Checkout code repository",
           "uses": "actions/checkout@v2"
+        },
+        {
+          "name": "Setup node.js",
+          "uses": "actions/setup-node@v2",
+          "with": {
+            "node-version": 14
+          }
+        },
+        {
+          "id": "step_cache_deps",
+          "name": "Cache dependencies",
+          "uses": "actions/cache@v2",
+          "with": {
+            "path": "node_modules\n*/*/node_modules\n~/.cache/firebase\n~/.cache/ms-playwright\n.yarn/cache\n",
+            "key": "${{ runner.os }}-deps-v5-${{ hashFiles('yarn.lock') }}"
+          }
+        },
+        {
+          "name": "Install Dependencies",
+          "run": "date\nyarn install --immutable\ndate\necho \"[DEBUG] CACHE_HIT: $CACHE_HIT\"\nif [ \"$CACHE_HIT\" != \"true\" ]\nthen\n  echo \"[DEBUG] installing\"\n  yarn run web firebase setup:emulators:firestore\nfi\nls -lrth ~/.cache/firebase/emulators/\n",
+          "env": {
+            "CACHE_HIT": "${{ steps.step_cache_deps.outputs.cache-hit }}"
+          }
+        },
+        {
+          "name": "Download dist (web)",
+          "uses": "actions/download-artifact@v2",
+          "with": {
+            "name": "web_dist",
+            "path": "./packages/web/dist"
+          }
+        },
+        {
+          "name": "Download dist (home)",
+          "uses": "actions/download-artifact@v2",
+          "with": {
+            "name": "home_dist",
+            "path": "./packages/home/dist"
+          }
         }
       ]
     },
@@ -65,8 +155,7 @@
           "uses": "GoogleCloudPlatform/release-please-action@v2",
           "with": {
             "token": "${{ secrets.CHANGESET_GITHUB_TOKEN }}",
-            "release-type": "node",
-            "package-name": "rino"
+            "release-type": "node"
           }
         }
       ],
@@ -84,6 +173,61 @@
         {
           "name": "Checkout code repository",
           "uses": "actions/checkout@v2"
+        },
+        {
+          "name": "Setup node.js",
+          "uses": "actions/setup-node@v2",
+          "with": {
+            "node-version": 14
+          }
+        },
+        {
+          "id": "step_cache_deps",
+          "name": "Cache dependencies",
+          "uses": "actions/cache@v2",
+          "with": {
+            "path": "node_modules\n*/*/node_modules\n~/.cache/firebase\n~/.cache/ms-playwright\n.yarn/cache\n",
+            "key": "${{ runner.os }}-deps-v5-${{ hashFiles('yarn.lock') }}"
+          }
+        },
+        {
+          "name": "Install Dependencies",
+          "run": "date\nyarn install --immutable\ndate\necho \"[DEBUG] CACHE_HIT: $CACHE_HIT\"\nif [ \"$CACHE_HIT\" != \"true\" ]\nthen\n  echo \"[DEBUG] installing\"\n  yarn run web firebase setup:emulators:firestore\nfi\nls -lrth ~/.cache/firebase/emulators/\n",
+          "env": {
+            "CACHE_HIT": "${{ steps.step_cache_deps.outputs.cache-hit }}"
+          }
+        },
+        {
+          "name": "Download dist (web)",
+          "uses": "actions/download-artifact@v2",
+          "with": {
+            "name": "web_dist",
+            "path": "./packages/web/dist"
+          }
+        },
+        {
+          "name": "Download dist (home)",
+          "uses": "actions/download-artifact@v2",
+          "with": {
+            "name": "home_dist",
+            "path": "./packages/home/dist"
+          }
+        },
+        {
+          "name": "Configrate firebase",
+          "env": {
+            "FIREBASE_CLIENT_JSON": "${{ secrets.FIREBASE_CLIENT_JSON }}",
+            "FIREBASE_TOKEN": "${{ secrets.FIREBASE_TOKEN }}"
+          },
+          "run": "echo \"${FIREBASE_CLIENT_JSON}\" > ./packages/web/config/firebase.client.json\nexport FIREBASE_PROJECT_ID=$(scripts/simple_jq.js ./packages/web/config/firebase.client.json .projectId)\nyarn run web firebase use --add $FIREBASE_PROJECT_ID\n"
+        },
+        {
+          "name": "Update package.json",
+          "run": "version=$(jq '.version' ./package.json)\npkgjson=$(jq \".version = $version\" ./packages/electron/package.json)\necho \"$pkgjson\" > ./packages/electron/package.json\ncat ./packages/electron/package.json\n"
+        },
+        {
+          "name": "Upload @rino.app/electron to GitHub Release",
+          "run": "yarn run electron publish\n"
         }
       ]
     }
