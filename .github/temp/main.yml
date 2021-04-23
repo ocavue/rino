@@ -62,9 +62,10 @@ jobs:
           export FIREBASE_PROJECT_ID=$(scripts/simple_jq.js ./packages/web/config/firebase.client.json .projectId)
           yarn run web firebase use --add $FIREBASE_PROJECT_ID
 
-      - name: Build
+      - name: Build web
         run: |
           yarn run build:web
+          yarn run electron build
 
       - name: Upload dist (web)
         uses: actions/upload-artifact@v2
@@ -77,6 +78,27 @@ jobs:
         with:
           name: home_dist
           path: ./packages/home/dist
+
+      - name: Build electron
+        run: |
+          yarn run electron build
+
+      - name: Clean electron dist
+        run: |
+          find -type f ./packages/electron/dist
+
+      - name: Update package.json
+        run: |
+          version=$(jq '.version' ./package.json)
+          pkgjson=$(jq ".version = $version" ./packages/electron/package.json)
+          echo "$pkgjson" > ./packages/electron/package.json
+          cat ./packages/electron/package.json
+
+      - name: Upload dist (electron)
+        uses: actions/upload-artifact@v2
+        with:
+          name: electron_dist
+          path: ./packages/electron/dist
 
   Test:
     runs-on: ubuntu-18.04
@@ -139,24 +161,16 @@ jobs:
 
   Preview: # Preview deployment
     runs-on: ubuntu-18.04
-    needs: [Build]
     steps:
       - *step_checkout
       - *step_setup_node
       - *step_cache_deps
       - *step_install_deps
-      - &step_download_web_dist
-        name: Download dist (web)
-        uses: actions/download-artifact@v2
-        with:
-          name: web_dist
-          path: ./packages/web/dist
-      - &step_download_home_dist
-        name: Download dist (home)
-        uses: actions/download-artifact@v2
-        with:
-          name: home_dist
-          path: ./packages/home/dist
+      - *step_config_firebase
+
+      - name: Build
+        run: |
+          yarn run build:web
 
       # - id: step_branch
       #   name: Get the branch name
@@ -233,24 +247,34 @@ jobs:
     steps:
       - *step_checkout
       - *step_setup_node
-      - *step_cache_deps
-      - *step_install_deps
-      - *step_download_web_dist
-      - *step_download_home_dist
-      - *step_config_firebase
 
-      - name: Update package.json
-        run: |
-          version=$(jq '.version' ./package.json)
-          pkgjson=$(jq ".version = $version" ./packages/electron/package.json)
-          echo "$pkgjson" > ./packages/electron/package.json
-          cat ./packages/electron/package.json
+      - &step_download_web_dist
+        name: Download dist (web)
+        uses: actions/download-artifact@v2
+        with:
+          name: web_dist
+          path: ./packages/web/dist
+      - &step_download_home_dist
+        name: Download dist (home)
+        uses: actions/download-artifact@v2
+        with:
+          name: home_dist
+          path: ./packages/home/dist
+      - &step_download_electron_dist
+        name: Download dist (electron)
+        uses: actions/download-artifact@v2
+        with:
+          name: electron_dist
+          path: ./packages/electron/dist
 
       - name: Upload @rino.app/electron to GitHub Release
-        run: |
-          yarn run electron release
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: ./packages/electron/dist/*
+          tag: v0.3.2 # ${{ github.ref }}
+          overwrite: true
+          file_glob: true
 
       # - name: Deploy @rino.app/web to Firebase
       #   env:
