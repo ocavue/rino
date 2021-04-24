@@ -50,8 +50,8 @@
           "run": "echo \"${FIREBASE_CLIENT_JSON}\" > ./packages/web/config/firebase.client.json\nexport FIREBASE_PROJECT_ID=$(scripts/simple_jq.js ./packages/web/config/firebase.client.json .projectId)\nyarn run web firebase use --add $FIREBASE_PROJECT_ID\n"
         },
         {
-          "name": "Build web",
-          "run": "yarn run build:web\n"
+          "name": "Build website",
+          "run": "yarn run build:website\n"
         },
         {
           "name": "Upload dist (web)",
@@ -149,7 +149,7 @@
         },
         {
           "name": "Build",
-          "run": "yarn run build:web\n"
+          "run": "yarn run build:website\n"
         }
       ]
     },
