@@ -51,7 +51,7 @@
         },
         {
           "name": "Build web",
-          "run": "yarn run build:web\nyarn run electron build\n"
+          "run": "yarn run build:web\n"
         },
         {
           "name": "Upload dist (web)",
@@ -70,16 +70,16 @@
           }
         },
         {
+          "name": "Update package.json",
+          "run": "version=$(jq '.version' ./package.json)\npkgjson=$(jq \".version = $version\" ./packages/electron/package.json)\necho \"$pkgjson\" > ./packages/electron/package.json\ncat ./packages/electron/package.json\n"
+        },
+        {
           "name": "Build electron",
           "run": "yarn run electron build\n"
         },
         {
           "name": "Clean electron dist",
-          "run": "find ./packages/electron/dist -type f\n"
-        },
-        {
-          "name": "Update package.json",
-          "run": "version=$(jq '.version' ./package.json)\npkgjson=$(jq \".version = $version\" ./packages/electron/package.json)\necho \"$pkgjson\" > ./packages/electron/package.json\ncat ./packages/electron/package.json\n"
+          "run": "find ./packages/electron/dist -type f\necho \"================ cleaning ================\"\nrm -rf ./packages/electron/dist/mac\nfind ./packages/electron/dist -type f\n"
         },
         {
           "name": "Upload dist (electron)",

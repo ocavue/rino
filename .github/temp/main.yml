@@ -65,7 +65,6 @@ jobs:
       - name: Build web
         run: |
           yarn run build:web
-          yarn run electron build
 
       - name: Upload dist (web)
         uses: actions/upload-artifact@v2
@@ -79,6 +78,13 @@ jobs:
           name: home_dist
           path: ./packages/home/dist
 
+      - name: Update package.json
+        run: |
+          version=$(jq '.version' ./package.json)
+          pkgjson=$(jq ".version = $version" ./packages/electron/package.json)
+          echo "$pkgjson" > ./packages/electron/package.json
+          cat ./packages/electron/package.json
+
       - name: Build electron
         run: |
           yarn run electron build
@@ -86,13 +92,9 @@ jobs:
       - name: Clean electron dist
         run: |
           find ./packages/electron/dist -type f
-
-      - name: Update package.json
-        run: |
-          version=$(jq '.version' ./package.json)
-          pkgjson=$(jq ".version = $version" ./packages/electron/package.json)
-          echo "$pkgjson" > ./packages/electron/package.json
-          cat ./packages/electron/package.json
+          echo "================ cleaning ================"
+          rm -rf ./packages/electron/dist/mac
+          find ./packages/electron/dist -type f
 
       - name: Upload dist (electron)
         uses: actions/upload-artifact@v2
