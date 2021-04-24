@@ -85,7 +85,7 @@ jobs:
 
       - name: Clean electron dist
         run: |
-          find -type f ./packages/electron/dist
+          find ./packages/electron/dist -type f
 
       - name: Update package.json
         run: |

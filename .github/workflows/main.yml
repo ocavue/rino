@@ -75,7 +75,7 @@
         },
         {
           "name": "Clean electron dist",
-          "run": "find -type f ./packages/electron/dist\n"
+          "run": "find ./packages/electron/dist -type f\n"
         },
         {
           "name": "Update package.json",
