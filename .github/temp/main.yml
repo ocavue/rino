@@ -241,6 +241,7 @@ jobs:
 
     outputs:
       published: ${{ steps.step_release_please.outputs.release_created }}
+      tag_name: ${{ steps.step_release_please.outputs.tag_name }}
 
   Deployment: # Production deployment
     runs-on: ubuntu-18.04
@@ -274,15 +275,15 @@ jobs:
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: ./packages/electron/dist/*
-          tag: v0.3.2 # ${{ github.ref }}
+          tag: ${{ needs.Release.outputs.tag_name }}
           overwrite: true
           file_glob: true
 
-      - name: Deploy @rino.app/web to Firebase
-        env:
-          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
-        run: |
-          yarn run web firebase deploy
+      # - name: Deploy @rino.app/web to Firebase
+      #   env:
+      #     FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+      #   run: |
+      #     yarn run web firebase deploy
 
       - name: Deploy @rino.app/home to Vercel
         uses: *vercel_action
@@ -293,23 +294,23 @@ jobs:
           vercel-args: '--prod --meta TYPE=PRODUCTION'
           working-directory: './packages/home/'
 
-      - name: Deploy @rino.app/web to Vercel
-        uses: *vercel_action
-        with:
-          <<: *vercel_args
-          alias-domains: rino-web-master.ocavue.vercel.app
-          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID_WEB }}
-          vercel-args: '--prod --meta TYPE=PRODUCTION'
-          working-directory: './packages/web/'
+      # - name: Deploy @rino.app/web to Vercel
+      #   uses: *vercel_action
+      #   with:
+      #     <<: *vercel_args
+      #     alias-domains: rino-web-master.ocavue.vercel.app
+      #     vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID_WEB }}
+      #     vercel-args: '--prod --meta TYPE=PRODUCTION'
+      #     working-directory: './packages/web/'
 
       - name: Prepare HTML files
         run: bash ./scripts/prepare-server-files.sh
 
-      - name: Deploy @rino.app/server to Vercel
-        uses: *vercel_action
-        with:
-          <<: *vercel_args
-          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID_SERVER }}
-          alias-domains: rino-server-{{BRANCH}}.ocavue.vercel.app
-          vercel-args: '--prod --meta TYPE=PRODUCTION'
-          working-directory: './packages/server/'
+      # - name: Deploy @rino.app/server to Vercel
+      #   uses: *vercel_action
+      #   with:
+      #     <<: *vercel_args
+      #     vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID_SERVER }}
+      #     alias-domains: rino-server-{{BRANCH}}.ocavue.vercel.app
+      #     vercel-args: '--prod --meta TYPE=PRODUCTION'
+      #     working-directory: './packages/server/'
