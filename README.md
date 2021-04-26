@@ -1,4 +1,4 @@
-<div align="center"><a href="https://rino.app"><img src="https://raw.githubusercontent.com/ocavue/rino/@rino.app/web@0.13.1/packages/web/public/img/icons/android-chrome-192x192.png?raw=true" alt="Logo" height="192" width="192"></a></div>
+<div align="center"><a href="https://rino.app"><img src="https://raw.githubusercontent.com/ocavue/rino/d97fbe26dc79764802e68b045e3a6648faa35228/assets/share/img/icons/android-chrome-512x512.png" alt="Logo" height="192" width="192"></a></div>
 
 # Rino - A better way to write Markdown
 
