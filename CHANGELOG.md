@@ -1,5 +1,12 @@
 # Changelog
 
+### [0.3.3](https://www.github.com/ocavue/rino/compare/v0.3.2...v0.3.3) (2021-04-26)
+
+
+### Bug Fixes
+
+* release an electron version ([#584](https://www.github.com/ocavue/rino/issues/584)) ([9a82c60](https://www.github.com/ocavue/rino/commit/9a82c606b5350fa98ac61cc369881d0756bfc031))
+
 ### [0.3.2](https://www.github.com/ocavue/rino/compare/v0.3.1...v0.3.2) (2021-04-23)
 
 
