@@ -71,7 +71,7 @@
         },
         {
           "name": "Update package.json",
-          "run": "version=$(jq '.version' ./package.json)\npkgjson=$(jq \".version = $version\" ./packages/electron/package.json)\necho \"$pkgjson\" > ./packages/electron/package.json\ncat ./packages/electron/package.json\n"
+          "run": "version=$(cat version.txt)\npkgjson=$(jq \".version = \\\"$version\\\"\" ./packages/electron/package.json)\necho \"$pkgjson\" > ./packages/electron/package.json\ncat ./packages/electron/package.json\n"
         },
         {
           "name": "Build electron",
@@ -168,7 +168,7 @@
           "uses": "GoogleCloudPlatform/release-please-action@v2",
           "with": {
             "token": "${{ secrets.CHANGESET_GITHUB_TOKEN }}",
-            "release-type": "node"
+            "release-type": "simple"
           }
         }
       ],
