@@ -161,6 +161,7 @@
         "Lint",
         "Preview"
       ],
+      "if": "github.ref == 'refs/heads/master'",
       "steps": [
         {
           "id": "step_release_please",
@@ -180,6 +181,7 @@
       "needs": [
         "Release"
       ],
+      "if": "github.ref == 'refs/heads/master' && ( needs.Release.outputs.published == 'true' || contains(github.event.head_commit.message, '[force-deploy]') )",
       "steps": [
         {
           "name": "Checkout code repository",

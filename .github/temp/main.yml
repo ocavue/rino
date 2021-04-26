@@ -231,7 +231,7 @@ jobs:
   Release:
     runs-on: ubuntu-18.04
     needs: [Build, Test, Lint, Preview]
-    # if: github.ref == 'refs/heads/master'
+    if: github.ref == 'refs/heads/master'
     steps:
       - id: step_release_please
         uses: GoogleCloudPlatform/release-please-action@v2
@@ -245,7 +245,7 @@ jobs:
   Deployment: # Production deployment
     runs-on: ubuntu-18.04
     needs: [Release]
-    # if: github.ref == 'refs/heads/master' && ( needs.Release.outputs.published == 'true' || contains(github.event.head_commit.message, '[force-deploy]') )
+    if: github.ref == 'refs/heads/master' && ( needs.Release.outputs.published == 'true' || contains(github.event.head_commit.message, '[force-deploy]') )
     steps:
       - *step_checkout
       - *step_setup_node
