@@ -106,60 +106,60 @@ jobs:
     runs-on: ubuntu-18.04
     steps:
       - *step_checkout
-      # - *step_setup_node
-      # - *step_cache_deps
-      # - *step_install_deps
-      # - *step_config_firebase
+      - *step_setup_node
+      - *step_cache_deps
+      - *step_install_deps
+      - *step_config_firebase
 
-      # - name: Build static files
-      #   env:
-      #     REACT_APP_TEST_USERNAME: ${{ secrets.REACT_APP_TEST_USERNAME }}
-      #     REACT_APP_TEST_PASSWORD: ${{ secrets.REACT_APP_TEST_PASSWORD }}
-      #     REACT_APP_TESTING: 1
-      #   run: |
-      #     export FIREBASE_DATABASE_EMULATOR_HOST="localhost:$(scripts/simple_jq.js ./packages/web/firebase.json .emulators.database.port)"
-      #     export FIRESTORE_EMULATOR_HOST="localhost:$(scripts/simple_jq.js ./packages/web/firebase.json .emulators.firestore.port)"
-      #     echo "firebase environment variables:" $FIREBASE_DATABASE_EMULATOR_HOST $FIRESTORE_EMULATOR_HOST
-      #     yarn run build:website
+      - name: Build static files
+        env:
+          REACT_APP_TEST_USERNAME: ${{ secrets.REACT_APP_TEST_USERNAME }}
+          REACT_APP_TEST_PASSWORD: ${{ secrets.REACT_APP_TEST_PASSWORD }}
+          REACT_APP_TESTING: 1
+        run: |
+          export FIREBASE_DATABASE_EMULATOR_HOST="localhost:$(scripts/simple_jq.js ./packages/web/firebase.json .emulators.database.port)"
+          export FIRESTORE_EMULATOR_HOST="localhost:$(scripts/simple_jq.js ./packages/web/firebase.json .emulators.firestore.port)"
+          echo "firebase environment variables:" $FIREBASE_DATABASE_EMULATOR_HOST $FIRESTORE_EMULATOR_HOST
+          yarn run build:website
 
-      # - name: Run tests
-      #   env:
-      #     FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }} # https://firebase.google.com/docs/cli#cli-ci-systems
-      #     REACT_APP_TEST_USERNAME: ${{ secrets.REACT_APP_TEST_USERNAME }}
-      #     REACT_APP_TEST_PASSWORD: ${{ secrets.REACT_APP_TEST_PASSWORD }}
-      #   run: |
-      #     ./node_modules/.bin/firebase emulators:exec --only firestore "
-      #       yarn run web start > /dev/null &
-      #       yarn run test --coverage
-      #     "
+      - name: Run tests
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }} # https://firebase.google.com/docs/cli#cli-ci-systems
+          REACT_APP_TEST_USERNAME: ${{ secrets.REACT_APP_TEST_USERNAME }}
+          REACT_APP_TEST_PASSWORD: ${{ secrets.REACT_APP_TEST_PASSWORD }}
+        run: |
+          ./node_modules/.bin/firebase emulators:exec --only firestore "
+            yarn run web start > /dev/null &
+            yarn run test --coverage
+          "
 
-      # - name: Upload coverage information to codecov
-      #   uses: codecov/codecov-action@v1
-      #   with:
-      #     file: ./coverage/coverage-final.json
-      #     fail_ci_if_error: false # Specify if CI pipeline should fail when Codecov runs into errors during upload. Defaults to false
+      - name: Upload coverage information to codecov
+        uses: codecov/codecov-action@v1
+        with:
+          file: ./coverage/coverage-final.json
+          fail_ci_if_error: false # Specify if CI pipeline should fail when Codecov runs into errors during upload. Defaults to false
 
   Lint:
     runs-on: ubuntu-18.04
     steps:
       - *step_checkout
-      # - *step_setup_node
-      # - *step_cache_deps
-      # - *step_install_deps
+      - *step_setup_node
+      - *step_cache_deps
+      - *step_install_deps
 
-      # - name: Check files
-      #   run: ls ./packages/**/dist/
+      - name: Check files
+        run: ls ./packages/**/dist/
 
-      # - name: Lint
-      #   run: yarn run lint .
+      - name: Lint
+        run: yarn run lint .
 
-      # - name: Check actions configration
-      #   run: |
-      #     hash1=$(sha1sum .github/workflows/main.yml)
-      #     ./node_modules/.bin/js-yaml .github/temp/main.yml > .github/workflows/main.yml
-      #     hash2=$(sha1sum .github/workflows/main.yml)
-      #     echo "$hash1" "$hash2"
-      #     if [ "$hash1" != "$hash2" ]; then exit 1; fi
+      - name: Check actions configration
+        run: |
+          hash1=$(sha1sum .github/workflows/main.yml)
+          ./node_modules/.bin/js-yaml .github/temp/main.yml > .github/workflows/main.yml
+          hash2=$(sha1sum .github/workflows/main.yml)
+          echo "$hash1" "$hash2"
+          if [ "$hash1" != "$hash2" ]; then exit 1; fi
 
   Preview: # Preview deployment
     runs-on: ubuntu-18.04
@@ -174,59 +174,59 @@ jobs:
         run: |
           yarn run build:website
 
-      # - id: step_branch
-      #   name: Get the branch name
-      #   run: |
-      #     echo "::set-output name=branch::$(node scripts/slugify-branch.js)"
+      - id: step_branch
+        name: Get the branch name
+        run: |
+          echo "::set-output name=branch::$(node scripts/slugify-branch.js)"
 
-      # - name: Deploy @rino.app/home to Vercel
-      #   uses: &vercel_action amondnet/vercel-action@v20
-      #   with: &vercel_args
-      #     github-comment: false
-      #     vercel-token: ${{ secrets.VERCEL_TOKEN }}
-      #     github-token: ${{ secrets.GITHUB_TOKEN }}
-      #     vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
-      #     vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID_HOME }}
-      #     alias-domains: rino-home-${{ steps.step_branch.outputs.branch }}.ocavue.vercel.app
-      #     vercel-args: '--meta TYPE=PREVIEW'
-      #     working-directory: './packages/home/'
+      - name: Deploy @rino.app/home to Vercel
+        uses: &vercel_action amondnet/vercel-action@v20
+        with: &vercel_args
+          github-comment: false
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID_HOME }}
+          alias-domains: rino-home-${{ steps.step_branch.outputs.branch }}.ocavue.vercel.app
+          vercel-args: '--meta TYPE=PREVIEW'
+          working-directory: './packages/home/'
 
-      # - name: Deploy @rino.app/web to Vercel
-      #   uses: *vercel_action
-      #   with:
-      #     <<: *vercel_args
-      #     vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID_WEB }}
-      #     alias-domains: rino-web-${{ steps.step_branch.outputs.branch }}.ocavue.vercel.app
-      #     vercel-args: '--meta TYPE=PREVIEW'
-      #     working-directory: './packages/web/'
+      - name: Deploy @rino.app/web to Vercel
+        uses: *vercel_action
+        with:
+          <<: *vercel_args
+          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID_WEB }}
+          alias-domains: rino-web-${{ steps.step_branch.outputs.branch }}.ocavue.vercel.app
+          vercel-args: '--meta TYPE=PREVIEW'
+          working-directory: './packages/web/'
 
-      # - uses: jwalton/gh-find-current-pr@v1
-      #   id: step_find_pr
-      #   with:
-      #     github-token: ${{ secrets.GITHUB_TOKEN }}
-      #   continue-on-error: true
+      - uses: jwalton/gh-find-current-pr@v1
+        id: step_find_pr
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+        continue-on-error: true
 
-      # - uses: marocchino/sticky-pull-request-comment@v2
-      #   with:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      #     number: ${{ steps.step_find_pr.outputs.pr }}
-      #     message: |
-      #       ## Preview Deployment
-      #       ${{ github.sha }}:
-      #       - https://rino-web-${{ steps.step_branch.outputs.branch }}.ocavue.vercel.app
-      #       - https://rino-home-${{ steps.step_branch.outputs.branch }}.ocavue.vercel.app
-      #   continue-on-error: true
+      - uses: marocchino/sticky-pull-request-comment@v2
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          number: ${{ steps.step_find_pr.outputs.pr }}
+          message: |
+            ## Preview Deployment
+            ${{ github.sha }}:
+            - https://rino-web-${{ steps.step_branch.outputs.branch }}.ocavue.vercel.app
+            - https://rino-home-${{ steps.step_branch.outputs.branch }}.ocavue.vercel.app
+        continue-on-error: true
 
-      # - name: Generate configrations for Lighthouse CI
-      #   run: node scripts/generate-lighthouserc.js
+      - name: Generate configrations for Lighthouse CI
+        run: node scripts/generate-lighthouserc.js
 
-      # - name: Run lighthouse
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      #     LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }} # Install this GitHub App and get the token: https://github.com/apps/lighthouse-ci
-      #   run: |
-      #     yarn run lhci autorun --config .lighthouserc.web.json
-      #     yarn run lhci autorun --config .lighthouserc.home.json
+      - name: Run lighthouse
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }} # Install this GitHub App and get the token: https://github.com/apps/lighthouse-ci
+        run: |
+          yarn run lhci autorun --config .lighthouserc.web.json
+          yarn run lhci autorun --config .lighthouserc.home.json
 
   Release:
     runs-on: ubuntu-18.04
@@ -278,38 +278,38 @@ jobs:
           overwrite: true
           file_glob: true
 
-      # - name: Deploy @rino.app/web to Firebase
-      #   env:
-      #     FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
-      #   run: |
-      #     yarn run web firebase deploy
+      - name: Deploy @rino.app/web to Firebase
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+        run: |
+          yarn run web firebase deploy
 
-      # - name: Deploy @rino.app/home to Vercel
-      #   uses: *vercel_action
-      #   with:
-      #     <<: *vercel_args
-      #     alias-domains: rino-home-master.ocavue.vercel.app
-      #     vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID_HOME }}
-      #     vercel-args: '--prod --meta TYPE=PRODUCTION'
-      #     working-directory: './packages/home/'
+      - name: Deploy @rino.app/home to Vercel
+        uses: *vercel_action
+        with:
+          <<: *vercel_args
+          alias-domains: rino-home-master.ocavue.vercel.app
+          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID_HOME }}
+          vercel-args: '--prod --meta TYPE=PRODUCTION'
+          working-directory: './packages/home/'
 
-      # - name: Deploy @rino.app/web to Vercel
-      #   uses: *vercel_action
-      #   with:
-      #     <<: *vercel_args
-      #     alias-domains: rino-web-master.ocavue.vercel.app
-      #     vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID_WEB }}
-      #     vercel-args: '--prod --meta TYPE=PRODUCTION'
-      #     working-directory: './packages/web/'
+      - name: Deploy @rino.app/web to Vercel
+        uses: *vercel_action
+        with:
+          <<: *vercel_args
+          alias-domains: rino-web-master.ocavue.vercel.app
+          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID_WEB }}
+          vercel-args: '--prod --meta TYPE=PRODUCTION'
+          working-directory: './packages/web/'
 
-      # - name: Prepare HTML files
-      #   run: bash ./scripts/prepare-server-files.sh
+      - name: Prepare HTML files
+        run: bash ./scripts/prepare-server-files.sh
 
-      # - name: Deploy @rino.app/server to Vercel
-      #   uses: *vercel_action
-      #   with:
-      #     <<: *vercel_args
-      #     vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID_SERVER }}
-      #     alias-domains: rino-server-{{BRANCH}}.ocavue.vercel.app
-      #     vercel-args: '--prod --meta TYPE=PRODUCTION'
-      #     working-directory: './packages/server/'
+      - name: Deploy @rino.app/server to Vercel
+        uses: *vercel_action
+        with:
+          <<: *vercel_args
+          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID_SERVER }}
+          alias-domains: rino-server-{{BRANCH}}.ocavue.vercel.app
+          vercel-args: '--prod --meta TYPE=PRODUCTION'
+          working-directory: './packages/server/'
