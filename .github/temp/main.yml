@@ -80,8 +80,8 @@ jobs:
 
       - name: Update package.json
         run: |
-          version=$(jq '.version' ./package.json)
-          pkgjson=$(jq ".version = $version" ./packages/electron/package.json)
+          version=$(cat version.txt)
+          pkgjson=$(jq ".version = \"$version\"" ./packages/electron/package.json)
           echo "$pkgjson" > ./packages/electron/package.json
           cat ./packages/electron/package.json
 
@@ -237,7 +237,7 @@ jobs:
         uses: GoogleCloudPlatform/release-please-action@v2
         with:
           token: ${{ secrets.CHANGESET_GITHUB_TOKEN }}
-          release-type: node
+          release-type: simple
 
     outputs:
       published: ${{ steps.step_release_please.outputs.release_created }}
