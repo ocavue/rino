@@ -283,6 +283,7 @@
         {
           "name": "Deploy @rino.app/home to Vercel",
           "uses": "amondnet/vercel-action@v20",
+          "timeout-minutes": 10,
           "with": {
             "github-comment": false,
             "vercel-token": "${{ secrets.VERCEL_TOKEN }}",
@@ -297,6 +298,7 @@
         {
           "name": "Deploy @rino.app/web to Vercel",
           "uses": "amondnet/vercel-action@v20",
+          "timeout-minutes": 10,
           "with": {
             "github-comment": false,
             "vercel-token": "${{ secrets.VERCEL_TOKEN }}",
