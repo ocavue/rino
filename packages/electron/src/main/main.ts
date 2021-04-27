@@ -5,8 +5,6 @@ import { URL } from "url"
 
 import { env } from "./env"
 
-const gotTheLock = app.requestSingleInstanceLock()
-
 async function setupAutoUpdate() {
     if (env.PROD) {
         logger.log("current environment is production")
@@ -16,9 +14,7 @@ async function setupAutoUpdate() {
         try {
             const { autoUpdater } = await import("electron-updater")
             autoUpdater.logger = logger
-            logger.log("check updates")
-            const checkResult = await autoUpdater.checkForUpdatesAndNotify()
-            logger.log("check updates result: " + JSON.stringify(checkResult))
+            await autoUpdater.checkForUpdatesAndNotify()
         } catch (e) {
             logger.error("failed to check updates:", e)
         }
@@ -27,7 +23,9 @@ async function setupAutoUpdate() {
     }
 }
 
-if (!gotTheLock) {
+const lock = app.requestSingleInstanceLock()
+
+if (!lock) {
     app.quit()
 } else {
     /**
