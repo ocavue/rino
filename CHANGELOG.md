@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.21.0](https://www.github.com/ocavue/rino/compare/v0.20.1...v0.21.0) (2021-04-27)
+
+
+### Features
+
+* create DMG installer for macOS ([#593](https://www.github.com/ocavue/rino/issues/593)) ([5c3c97b](https://www.github.com/ocavue/rino/commit/5c3c97b529992fb4436d073c950bcf39731a44be))
+
 ### [0.20.1](https://www.github.com/ocavue/rino/compare/v0.20.0...v0.20.1) (2021-04-26)
 
 
