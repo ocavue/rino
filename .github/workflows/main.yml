@@ -11,7 +11,7 @@
     "NEXT_TELEMETRY_DISABLED": 1
   },
   "jobs": {
-    "Build": {
+    "Build website": {
       "runs-on": "ubuntu-18.04",
       "steps": [
         {
@@ -31,7 +31,7 @@
           "uses": "actions/cache@v2",
           "with": {
             "path": "node_modules\n*/*/node_modules\n~/.cache/firebase\n~/.cache/ms-playwright\n.yarn/cache\n",
-            "key": "${{ runner.os }}-deps-v5-${{ hashFiles('yarn.lock') }}"
+            "key": "${{ runner.os }}-deps-v6-${{ hashFiles('yarn.lock') }}"
           }
         },
         {
@@ -67,6 +67,38 @@
           "with": {
             "name": "home_dist",
             "path": "./packages/home/dist"
+          }
+        }
+      ]
+    },
+    "Build electron": {
+      "runs-on": "macos-10.15",
+      "steps": [
+        {
+          "name": "Checkout code repository",
+          "uses": "actions/checkout@v2"
+        },
+        {
+          "name": "Setup node.js",
+          "uses": "actions/setup-node@v2",
+          "with": {
+            "node-version": 14
+          }
+        },
+        {
+          "id": "step_cache_deps",
+          "name": "Cache dependencies",
+          "uses": "actions/cache@v2",
+          "with": {
+            "path": "node_modules\n*/*/node_modules\n~/.cache/firebase\n~/.cache/ms-playwright\n.yarn/cache\n",
+            "key": "${{ runner.os }}-deps-v6-${{ hashFiles('yarn.lock') }}"
+          }
+        },
+        {
+          "name": "Install Dependencies",
+          "run": "date\nyarn install --immutable\ndate\necho \"[DEBUG] CACHE_HIT: $CACHE_HIT\"\nif [ \"$CACHE_HIT\" != \"true\" ]\nthen\n  echo \"[DEBUG] installing\"\n  yarn run web firebase setup:emulators:firestore\nfi\nls -lrth ~/.cache/firebase/emulators/\n",
+          "env": {
+            "CACHE_HIT": "${{ steps.step_cache_deps.outputs.cache-hit }}"
           }
         },
         {
@@ -111,7 +143,7 @@
           "uses": "actions/cache@v2",
           "with": {
             "path": "node_modules\n*/*/node_modules\n~/.cache/firebase\n~/.cache/ms-playwright\n.yarn/cache\n",
-            "key": "${{ runner.os }}-deps-v5-${{ hashFiles('yarn.lock') }}"
+            "key": "${{ runner.os }}-deps-v6-${{ hashFiles('yarn.lock') }}"
           }
         },
         {
@@ -177,7 +209,7 @@
           "uses": "actions/cache@v2",
           "with": {
             "path": "node_modules\n*/*/node_modules\n~/.cache/firebase\n~/.cache/ms-playwright\n.yarn/cache\n",
-            "key": "${{ runner.os }}-deps-v5-${{ hashFiles('yarn.lock') }}"
+            "key": "${{ runner.os }}-deps-v6-${{ hashFiles('yarn.lock') }}"
           }
         },
         {
@@ -221,7 +253,7 @@
           "uses": "actions/cache@v2",
           "with": {
             "path": "node_modules\n*/*/node_modules\n~/.cache/firebase\n~/.cache/ms-playwright\n.yarn/cache\n",
-            "key": "${{ runner.os }}-deps-v5-${{ hashFiles('yarn.lock') }}"
+            "key": "${{ runner.os }}-deps-v6-${{ hashFiles('yarn.lock') }}"
           }
         },
         {
@@ -310,7 +342,8 @@
     "Release": {
       "runs-on": "ubuntu-18.04",
       "needs": [
-        "Build",
+        "Build website",
+        "Build electron",
         "Test",
         "Lint",
         "Preview"
