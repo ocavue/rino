@@ -13,9 +13,7 @@
         "build": "run-s build:main build:renderer build:electron",
         "build:main": "tsc --project src/main/tsconfig.json",
         "build:renderer": "vite build src/renderer",
-        "build:electron": "electron-builder --mac --x64 --publish never",
-        "release": "run-s build:main build:renderer release:electron",
-        "release:electron": "electron-builder --mac --x64 --publish always"
+        "build:electron": "electron-builder --mac --x64 --publish never"
     },
     "devDependencies": {
         "@types/react": "^17.0.4",
