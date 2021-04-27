@@ -9,7 +9,7 @@ env:
   NEXT_TELEMETRY_DISABLED: 1 # https://nextjs.org/telemetry
 
 jobs:
-  Build website:
+  build_website:
     runs-on: ubuntu-18.04
     steps:
       - &step_checkout
@@ -78,8 +78,7 @@ jobs:
           name: home_dist
           path: ./packages/home/dist
 
-
-  Build electron:
+  build_electron:
     runs-on: macos-10.15
     steps:
       - *step_checkout
@@ -111,7 +110,7 @@ jobs:
           name: electron_dist
           path: ./packages/electron/dist
 
-  Test:
+  test:
     runs-on: ubuntu-18.04
     steps:
       - *step_checkout
@@ -148,7 +147,7 @@ jobs:
           file: ./coverage/coverage-final.json
           fail_ci_if_error: false # Specify if CI pipeline should fail when Codecov runs into errors during upload. Defaults to false
 
-  Lint:
+  lint:
     runs-on: ubuntu-18.04
     steps:
       - *step_checkout
@@ -170,7 +169,7 @@ jobs:
           echo "$hash1" "$hash2"
           if [ "$hash1" != "$hash2" ]; then exit 1; fi
 
-  Preview: # Preview deployment
+  preview: # Preview deployment
     runs-on: ubuntu-18.04
     steps:
       - *step_checkout
@@ -237,14 +236,14 @@ jobs:
           yarn run lhci autorun --config .lighthouserc.web.json
           yarn run lhci autorun --config .lighthouserc.home.json
 
-  Release:
+  release:
     runs-on: ubuntu-18.04
     needs:
-      - Build website
-      - Build electron
-      - Test
-      - Lint
-      - Preview
+      - build_website
+      - build_electron
+      - test
+      - lint
+      - preview
     if: github.ref == 'refs/heads/master'
     steps:
       - id: step_release_please
@@ -257,10 +256,10 @@ jobs:
       published: ${{ steps.step_release_please.outputs.release_created }}
       tag_name: ${{ steps.step_release_please.outputs.tag_name }}
 
-  Deployment: # Production deployment
+  deployment: # Production deployment
     runs-on: ubuntu-18.04
     needs:
-      - Release
+      - release
     if: github.ref == 'refs/heads/master' && ( needs.Release.outputs.published == 'true' || contains(github.event.head_commit.message, '[force-deploy]') )
     steps:
       - *step_checkout
