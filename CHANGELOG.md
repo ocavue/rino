@@ -1,5 +1,12 @@
 # Changelog
 
+### [0.21.1](https://www.github.com/ocavue/rino/compare/v0.21.0...v0.21.1) (2021-04-27)
+
+
+### Bug Fixes
+
+* remove some useless log ([#596](https://www.github.com/ocavue/rino/issues/596)) ([5f729c1](https://www.github.com/ocavue/rino/commit/5f729c1ef022d8f7e3f31ab1250febbf8fedb322))
+
 ## [0.21.0](https://www.github.com/ocavue/rino/compare/v0.20.1...v0.21.0) (2021-04-27)
 
 
