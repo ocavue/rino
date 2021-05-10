@@ -5,6 +5,8 @@ parserOptions:
   ecmaVersion: 2018 # Allows for the parsing of modern ECMAScript features
   project:
     - "./packages/*/tsconfig.json"
+    - "./packages/*/*/tsconfig.json"
+    - "./packages/electron/src/*/tsconfig.json"
     - "./tsconfig.json"
   ecmaFeatures:
     jsx: true
@@ -93,4 +95,5 @@ ignorePatterns:
   - .next/
   - .dist/
   - dist/
+  - out/
 

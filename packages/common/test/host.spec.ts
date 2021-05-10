@@ -1,4 +1,4 @@
-import { getHomeHostName, getWebAppHostName } from "../host"
+import { getHomeHostName, getWebAppHostName } from "../src/host"
 
 test("getHomeHostName", async () => {
     for (const [currentHostName, expectedOutput] of [

@@ -1,4 +1,4 @@
-import { getSignInState, setSignInState } from "../auth"
+import { getSignInState, setSignInState } from "../src/auth"
 
 test("auth", async () => {
     setSignInState(true)

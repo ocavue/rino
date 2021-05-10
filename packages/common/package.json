@@ -7,11 +7,12 @@
     "module": "dist/esm/index.js",
     "types": "dist/esm/index.d.ts",
     "scripts": {
-        "build:esm": "tsc -p tsconfig.json --target es6 --outDir dist/esm --module es2015",
-        "build:cjs": "tsc -p tsconfig.json --target es6 --outDir dist/cjs --module commonjs",
-        "build": "yarn run build:esm && yarn run build:cjs"
+        "build": "tsc --build src/tsconfig.json && tsc --build src/tsconfig.cjs.json"
     },
     "publishConfig": {
         "access": "public"
+    },
+    "devDependencies": {
+        "typescript": "^4.2.4"
     }
 }

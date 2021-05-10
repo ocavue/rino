@@ -1,0 +1,17 @@
+{
+  "extends": "../../../tsconfig.base.json",
+  "compilerOptions": {
+    "noEmit": false,
+    "composite": true,
+    "outDir": "../dist/esm",
+    "strict": false, // TODO: delete this
+  },
+  "include": [
+    "./"
+  ],
+  "references": [
+    {
+      "path": "../../common/src"
+    }
+  ]
+}

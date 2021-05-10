@@ -1,4 +1,5 @@
 {
+  "extends": "../../../../tsconfig.base.json",
   "compilerOptions": {
     "target": "ESNext",
     "lib": [
@@ -9,27 +10,16 @@
     "types": [
       "vite/client"
     ],
-    "allowJs": false,
-    "skipLibCheck": false,
-    "esModuleInterop": false,
-    "allowSyntheticDefaultImports": true,
-    "strict": true,
-    "forceConsistentCasingInFileNames": true,
-    "module": "ESNext",
-    "moduleResolution": "Node",
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "noEmit": true,
-    "jsx": "react"
+    "jsx": "react",
+    "strict": false, // TODO: remove me
   },
   "include": [
-    "./**/*.ts",
-    "./**/*.tsx",
+    "./",
     "../types/electron-api.d.ts",
   ],
   "references": [
     {
-      "path": "../../../../packages/editor"
+      "path": "../../../../packages/editor/src/tsconfig.json"
     }
   ]
 }

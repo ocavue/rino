@@ -1,21 +1,6 @@
 {
-    "compilerOptions": {
-        "target": "es6",
-        "strict": true,
-        "importHelpers": true,
-        "moduleResolution": "node",
-        "esModuleInterop": true,
-        "allowJs": true,
-        "allowSyntheticDefaultImports": true,
-        "noEmit": true,
-        "forceConsistentCasingInFileNames": true,
-        "skipLibCheck": true
-    },
-    "exclude": [
-        "node_modules",
-        "dist",
-        ".next",
-        "coverage",
-        "out",
-    ],
+    "extends": "./tsconfig.base.json",
+    "include": [
+        "./"
+    ]
 }
