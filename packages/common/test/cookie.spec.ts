@@ -1,4 +1,4 @@
-import { getCookie, setCookie } from "../cookie"
+import { getCookie, setCookie } from "../src/cookie"
 
 test("cookie", async () => {
     setCookie("my-key", "my-value", { days: 30 })

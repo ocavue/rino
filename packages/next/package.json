@@ -7,7 +7,7 @@
     "module": "dist/index.js",
     "types": "dist/index.d.ts",
     "scripts": {
-        "build": "tsc -p ./tsconfig.json"
+        "build": "tsc --build ./src/tsconfig.json"
     },
     "dependencies": {
         "@babel/core": "^7.14.0",

@@ -17,7 +17,7 @@ const setup = () => {
         attributeNodes: { codeMirror },
         manager,
         schema,
-    } = renderEditor([new RinoParagraphExtension(), new RinoTextExtension(), new RinoCodeBlockExtension()])
+    } = renderEditor([new RinoParagraphExtension(), new RinoTextExtension(), new RinoCodeBlockExtension({})])
 
     return {
         manager,

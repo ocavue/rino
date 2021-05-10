@@ -1,22 +1,26 @@
 {
+    "files": [],
     "compilerOptions": {
         "target": "ES2017",
         "module": "ESNext",
         "strict": true,
-        "importHelpers": true,
+        "noEmit": true,
+        "noEmitOnError": true,
         "moduleResolution": "node",
-        "esModuleInterop": true,
         "allowJs": true,
+        "esModuleInterop": true,
         "allowSyntheticDefaultImports": true,
-        "noEmit": false,
-        "sourceMap": true, // Generates `.js.map` file.
-        "declaration": true, // Generates `.d.ts` file.
-        "declarationMap": true, // Generates `.d.ts.map` file. This allow you to jump to `.ts` file instead of `.d.ts` file when doing "Go to Definition" in supported editors.
+        "sourceMap": true, // Generates `.js.map` files.
+        "declaration": true, // Generates `.d.ts` files.
+        "declarationMap": true, // Generates `.d.ts.map` files.
         "forceConsistentCasingInFileNames": true,
-        "skipLibCheck": true
+        "jsx": "react",
     },
     "exclude": [
         "node_modules",
         "dist",
+        ".next",
+        "coverage",
+        "out",
     ],
 }
