@@ -36,7 +36,7 @@
         },
         {
           "name": "Install Dependencies",
-          "run": "date\nyarn install --immutable\ndate\necho \"[DEBUG] CACHE_HIT: $CACHE_HIT\"\nif [ \"$CACHE_HIT\" != \"true\" ]\nthen\n  echo \"[DEBUG] installing\"\n  yarn run web firebase setup:emulators:firestore\nfi\nls -lrth ~/.cache/firebase/emulators/\n",
+          "run": "date\nyarn install --immutable\ndate\necho \"[DEBUG] CACHE_HIT: $CACHE_HIT\"\nif [ \"$CACHE_HIT\" != \"true\" ]\nthen\n  echo \"[DEBUG] installing\"\n  cd packages/web\n  npx ultra firebase setup:emulators:firestore\nfi\nls -lrth ~/.cache/firebase/emulators/\n",
           "env": {
             "CACHE_HIT": "${{ steps.step_cache_deps.outputs.cache-hit }}"
           }
@@ -47,11 +47,11 @@
             "FIREBASE_CLIENT_JSON": "${{ secrets.FIREBASE_CLIENT_JSON }}",
             "FIREBASE_TOKEN": "${{ secrets.FIREBASE_TOKEN }}"
           },
-          "run": "echo \"${FIREBASE_CLIENT_JSON}\" > ./packages/web/config/firebase.client.json\nexport FIREBASE_PROJECT_ID=$(scripts/simple_jq.js ./packages/web/config/firebase.client.json .projectId)\nyarn run web firebase use --add $FIREBASE_PROJECT_ID\n"
+          "run": "echo \"${FIREBASE_CLIENT_JSON}\" > ./packages/web/config/firebase.client.json\nexport FIREBASE_PROJECT_ID=$(scripts/simple_jq.js ./packages/web/config/firebase.client.json .projectId)\ncd packages/web\nnpx ultra firebase use --add $FIREBASE_PROJECT_ID\n"
         },
         {
           "name": "Build website",
-          "run": "yarn run build:website\n"
+          "run": "npx ultra build home\nnpx ultra build web\n"
         },
         {
           "name": "Upload dist (web)",
@@ -96,7 +96,7 @@
         },
         {
           "name": "Install Dependencies",
-          "run": "date\nyarn install --immutable\ndate\necho \"[DEBUG] CACHE_HIT: $CACHE_HIT\"\nif [ \"$CACHE_HIT\" != \"true\" ]\nthen\n  echo \"[DEBUG] installing\"\n  yarn run web firebase setup:emulators:firestore\nfi\nls -lrth ~/.cache/firebase/emulators/\n",
+          "run": "date\nyarn install --immutable\ndate\necho \"[DEBUG] CACHE_HIT: $CACHE_HIT\"\nif [ \"$CACHE_HIT\" != \"true\" ]\nthen\n  echo \"[DEBUG] installing\"\n  cd packages/web\n  npx ultra firebase setup:emulators:firestore\nfi\nls -lrth ~/.cache/firebase/emulators/\n",
           "env": {
             "CACHE_HIT": "${{ steps.step_cache_deps.outputs.cache-hit }}"
           }
@@ -107,7 +107,7 @@
         },
         {
           "name": "Build electron",
-          "run": "yarn run-all:electron build\n"
+          "run": "npx ultra build electron\n"
         },
         {
           "name": "Clean electron dist",
@@ -148,7 +148,7 @@
         },
         {
           "name": "Install Dependencies",
-          "run": "date\nyarn install --immutable\ndate\necho \"[DEBUG] CACHE_HIT: $CACHE_HIT\"\nif [ \"$CACHE_HIT\" != \"true\" ]\nthen\n  echo \"[DEBUG] installing\"\n  yarn run web firebase setup:emulators:firestore\nfi\nls -lrth ~/.cache/firebase/emulators/\n",
+          "run": "date\nyarn install --immutable\ndate\necho \"[DEBUG] CACHE_HIT: $CACHE_HIT\"\nif [ \"$CACHE_HIT\" != \"true\" ]\nthen\n  echo \"[DEBUG] installing\"\n  cd packages/web\n  npx ultra firebase setup:emulators:firestore\nfi\nls -lrth ~/.cache/firebase/emulators/\n",
           "env": {
             "CACHE_HIT": "${{ steps.step_cache_deps.outputs.cache-hit }}"
           }
@@ -159,7 +159,7 @@
             "FIREBASE_CLIENT_JSON": "${{ secrets.FIREBASE_CLIENT_JSON }}",
             "FIREBASE_TOKEN": "${{ secrets.FIREBASE_TOKEN }}"
           },
-          "run": "echo \"${FIREBASE_CLIENT_JSON}\" > ./packages/web/config/firebase.client.json\nexport FIREBASE_PROJECT_ID=$(scripts/simple_jq.js ./packages/web/config/firebase.client.json .projectId)\nyarn run web firebase use --add $FIREBASE_PROJECT_ID\n"
+          "run": "echo \"${FIREBASE_CLIENT_JSON}\" > ./packages/web/config/firebase.client.json\nexport FIREBASE_PROJECT_ID=$(scripts/simple_jq.js ./packages/web/config/firebase.client.json .projectId)\ncd packages/web\nnpx ultra firebase use --add $FIREBASE_PROJECT_ID\n"
         },
         {
           "name": "Build static files",
@@ -168,7 +168,7 @@
             "REACT_APP_TEST_PASSWORD": "${{ secrets.REACT_APP_TEST_PASSWORD }}",
             "REACT_APP_TESTING": 1
           },
-          "run": "export FIREBASE_DATABASE_EMULATOR_HOST=\"localhost:$(scripts/simple_jq.js ./packages/web/firebase.json .emulators.database.port)\"\nexport FIRESTORE_EMULATOR_HOST=\"localhost:$(scripts/simple_jq.js ./packages/web/firebase.json .emulators.firestore.port)\"\necho \"firebase environment variables:\" $FIREBASE_DATABASE_EMULATOR_HOST $FIRESTORE_EMULATOR_HOST\nyarn run build:website\n"
+          "run": "export FIREBASE_DATABASE_EMULATOR_HOST=\"localhost:$(scripts/simple_jq.js ./packages/web/firebase.json .emulators.database.port)\"\nexport FIRESTORE_EMULATOR_HOST=\"localhost:$(scripts/simple_jq.js ./packages/web/firebase.json .emulators.firestore.port)\"\necho \"firebase environment variables:\" $FIREBASE_DATABASE_EMULATOR_HOST $FIRESTORE_EMULATOR_HOST\nnpx ultra build home\nnpx ultra build web\n"
         },
         {
           "name": "Run tests",
@@ -177,7 +177,7 @@
             "REACT_APP_TEST_USERNAME": "${{ secrets.REACT_APP_TEST_USERNAME }}",
             "REACT_APP_TEST_PASSWORD": "${{ secrets.REACT_APP_TEST_PASSWORD }}"
           },
-          "run": "./node_modules/.bin/firebase emulators:exec --only firestore \"\n  yarn run web start > /dev/null &\n  yarn run test --coverage\n\"\n"
+          "run": "./node_modules/.bin/firebase emulators:exec --only firestore \"\n  npx ultra -r --filter @rino.app/web start > /dev/null &\n  npx ultra test --coverage\n\"\n"
         },
         {
           "name": "Upload coverage information to codecov",
@@ -214,7 +214,7 @@
         },
         {
           "name": "Install Dependencies",
-          "run": "date\nyarn install --immutable\ndate\necho \"[DEBUG] CACHE_HIT: $CACHE_HIT\"\nif [ \"$CACHE_HIT\" != \"true\" ]\nthen\n  echo \"[DEBUG] installing\"\n  yarn run web firebase setup:emulators:firestore\nfi\nls -lrth ~/.cache/firebase/emulators/\n",
+          "run": "date\nyarn install --immutable\ndate\necho \"[DEBUG] CACHE_HIT: $CACHE_HIT\"\nif [ \"$CACHE_HIT\" != \"true\" ]\nthen\n  echo \"[DEBUG] installing\"\n  cd packages/web\n  npx ultra firebase setup:emulators:firestore\nfi\nls -lrth ~/.cache/firebase/emulators/\n",
           "env": {
             "CACHE_HIT": "${{ steps.step_cache_deps.outputs.cache-hit }}"
           }
@@ -225,7 +225,7 @@
         },
         {
           "name": "Lint",
-          "run": "yarn run lint ."
+          "run": "npx ultra lint ."
         },
         {
           "name": "Check actions configration",
@@ -258,7 +258,7 @@
         },
         {
           "name": "Install Dependencies",
-          "run": "date\nyarn install --immutable\ndate\necho \"[DEBUG] CACHE_HIT: $CACHE_HIT\"\nif [ \"$CACHE_HIT\" != \"true\" ]\nthen\n  echo \"[DEBUG] installing\"\n  yarn run web firebase setup:emulators:firestore\nfi\nls -lrth ~/.cache/firebase/emulators/\n",
+          "run": "date\nyarn install --immutable\ndate\necho \"[DEBUG] CACHE_HIT: $CACHE_HIT\"\nif [ \"$CACHE_HIT\" != \"true\" ]\nthen\n  echo \"[DEBUG] installing\"\n  cd packages/web\n  npx ultra firebase setup:emulators:firestore\nfi\nls -lrth ~/.cache/firebase/emulators/\n",
           "env": {
             "CACHE_HIT": "${{ steps.step_cache_deps.outputs.cache-hit }}"
           }
@@ -269,11 +269,11 @@
             "FIREBASE_CLIENT_JSON": "${{ secrets.FIREBASE_CLIENT_JSON }}",
             "FIREBASE_TOKEN": "${{ secrets.FIREBASE_TOKEN }}"
           },
-          "run": "echo \"${FIREBASE_CLIENT_JSON}\" > ./packages/web/config/firebase.client.json\nexport FIREBASE_PROJECT_ID=$(scripts/simple_jq.js ./packages/web/config/firebase.client.json .projectId)\nyarn run web firebase use --add $FIREBASE_PROJECT_ID\n"
+          "run": "echo \"${FIREBASE_CLIENT_JSON}\" > ./packages/web/config/firebase.client.json\nexport FIREBASE_PROJECT_ID=$(scripts/simple_jq.js ./packages/web/config/firebase.client.json .projectId)\ncd packages/web\nnpx ultra firebase use --add $FIREBASE_PROJECT_ID\n"
         },
         {
           "name": "Build",
-          "run": "yarn run build:website\n"
+          "run": "npx ultra build web\nnpx ultra build home\n"
         },
         {
           "id": "step_branch",
@@ -337,7 +337,7 @@
             "GITHUB_TOKEN": "${{ secrets.GITHUB_TOKEN }}",
             "LHCI_GITHUB_APP_TOKEN": "${{ secrets.LHCI_GITHUB_APP_TOKEN }}"
           },
-          "run": "yarn run lhci autorun --config .lighthouserc.web.json\nyarn run lhci autorun --config .lighthouserc.home.json\n"
+          "run": "npx ultra lhci autorun --config .lighthouserc.web.json\nnpx ultra lhci autorun --config .lighthouserc.home.json\n"
         }
       ]
     },
