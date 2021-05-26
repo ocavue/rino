@@ -11,6 +11,7 @@
         "build:pkg": "scripts/build-package.sh common next editor",
         "build:website": "scripts/build-package.sh common next editor home web",
         "postinstall": "./scripts/post-install.sh",
+        "workbench": "yarn workspace @rino.app/workbench",
         "electron": "yarn workspace @rino.app/electron",
         "server": "yarn workspace @rino.app/server",
         "editor": "yarn workspace @rino.app/editor",
@@ -42,7 +43,8 @@
         "playwright": "^1.10.0",
         "prettier": "^2.2.1",
         "size-limit": "^4.10.2",
-        "typescript": "^4.2.4"
+        "typescript": "^4.2.4",
+        "wsrun": "^5.2.4"
     },
     "renovate": {
         "extends": [

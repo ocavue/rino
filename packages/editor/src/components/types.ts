@@ -8,4 +8,5 @@ export type EditorProps = {
     setContent: (value: string) => void
 }
 
-export type DrawerActivityContainer = Container<{ drawerActivity: boolean }>
+
+export type DrawerActivityContainer = Pick<Container<{ drawerActivity: boolean }>, "useContainer">
