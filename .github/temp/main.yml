@@ -156,7 +156,7 @@ jobs:
       - *step_install_deps
 
       - name: Check files
-        run: ls ./packages/**/dist/
+        run: ls ./packages/**/dist/ || true
 
       - name: Lint
         run: yarn run lint .
