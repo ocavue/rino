@@ -4643,6 +4643,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/node@npm:^15.3":
+  version: 15.6.1
+  resolution: "@types/node@npm:15.6.1"
+  checksum: 07b3855bc0a1ba2215455a3ef4ed5e88711321b3cdc0ba1ea0286f6facbdf61530970b9fa7eec79eb1d46231f986c21ef3b7c1f1e0c365cf1b887d76b0addb86
+  languageName: node
+  linkType: hard
+
 "@types/normalize-package-data@npm:^2.4.0":
   version: 2.4.0
   resolution: "@types/normalize-package-data@npm:2.4.0"
@@ -7139,6 +7146,16 @@ __metadata:
     ansi-styles: ^4.1.0
     supports-color: ^7.1.0
   checksum: f860285b419f9e925c2db0f45ffa88aa8794c14b80cc5d01ff30930bcfc384996606362706f0829cf557f6d36152a5fb2d227ad63c4bc90e2ec9e9dbed4a3c07
+  languageName: node
+  linkType: hard
+
+"chalk@npm:^4.1.1":
+  version: 4.1.1
+  resolution: "chalk@npm:4.1.1"
+  dependencies:
+    ansi-styles: ^4.1.0
+    supports-color: ^7.1.0
+  checksum: 445c12db7aeed0046500a1e4184d31209a77d165654c885a789c41c8598a6a95bd2392180987cac572c967b93a2a730dda778bb7f87fa06ca63fd8592f8cc59f
   languageName: node
   linkType: hard
 
@@ -18796,6 +18813,7 @@ resolve@^2.0.0-next.3:
     size-limit: ^4.10.2
     typescript: ^4.2.4
     wsrun: ^5.2.4
+    zx: ^1.12.0
   languageName: unknown
   linkType: soft
 
@@ -19364,6 +19382,13 @@ resolve@^2.0.0-next.3:
   version: 0.1.1
   resolution: "shellwords@npm:0.1.1"
   checksum: 3559ff550917ece921d252edf42eb54827540e9676e537137ace236df8f9b78e48c542ae0b3f8876fea0faf5826c97629d5b8cb9ac7dee287260e9804fb8132c
+  languageName: node
+  linkType: hard
+
+"shq@npm:^1.0.2":
+  version: 1.0.2
+  resolution: "shq@npm:1.0.2"
+  checksum: 77c92fa78522c6e90c54ef238b7c883caf7ed84767b1adaab0eadb1e3e417cf672a38f24b5b86c00c2b03368f3413c6728da7d164062f5c2a6f2d7ff5be2c13a
   languageName: node
   linkType: hard
 
@@ -22778,5 +22803,20 @@ typescript@^4.2.4:
   version: 1.0.5
   resolution: "zwitch@npm:1.0.5"
   checksum: 5005166809cfe1f87a75aa8186a606414482c9c7fccff523a621a94ea4b22c7e60599c0cf47669df9946c4a1dea342ebf5d512cbeeacd567814382fee122a3a0
+  languageName: node
+  linkType: hard
+
+"zx@npm:^1.12.0":
+  version: 1.12.0
+  resolution: "zx@npm:1.12.0"
+  dependencies:
+    "@types/node": ^15.3
+    chalk: ^4.1.1
+    node-fetch: ^2.6.1
+    shq: ^1.0.2
+    which: ^2.0.2
+  bin:
+    zx: zx.mjs
+  checksum: 8a25e3632db0b0495b1a8520d1c6fd87cd98dc39f80690199737aa0396429e5510248d2d8c01a96335bea3675c605bc0707fc0956384b583f436c9223ce23677
   languageName: node
   linkType: hard

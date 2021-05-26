@@ -95,7 +95,7 @@ jobs:
 
       - name: Build electron
         run: |
-          yarn run electron build
+          yarn run-all:electron build
 
       - name: Clean electron dist
         run: |
