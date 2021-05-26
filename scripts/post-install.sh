@@ -52,6 +52,3 @@ for package_name in "web" "home"; do
     cp assets/favicon.ico packages/${package_name}/public/favicon.ico
 done
 cp assets/share/img/icons/android-chrome-512x512.png packages/electron/resources/icon.png
-
-#### build packages
-yarn run build:pkg

@@ -7,12 +7,12 @@ import { EDITOR_THEME_GITHUB } from "./theme/github"
 import { DrawerActivityContainer } from "./types"
 import { WysiwygEditor } from "./wysiwyg"
 
-interface Note {
+export interface Note {
     content: string
     deleted: boolean
 }
 
-type EditorProps = {
+export type EditorProps = {
     autoFocus: boolean
     note: Note
     setNoteContent: (content: string) => void

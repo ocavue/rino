@@ -95,7 +95,7 @@ jobs:
 
       - name: Build electron
         run: |
-          yarn run electron build
+          yarn run-all:electron build
 
       - name: Clean electron dist
         run: |
@@ -156,7 +156,7 @@ jobs:
       - *step_install_deps
 
       - name: Check files
-        run: ls ./packages/**/dist/
+        run: ls ./packages/**/dist/ || true
 
       - name: Lint
         run: yarn run lint .
@@ -251,7 +251,7 @@ jobs:
       - id: step_release_please
         uses: GoogleCloudPlatform/release-please-action@v2
         with:
-          token: ${{ secrets.CHANGESET_GITHUB_TOKEN }}
+          token: ${{ secrets.RELEASE_PLEASE_GITHUB_TOKEN }}
           release-type: simple
 
     outputs:
@@ -262,7 +262,7 @@ jobs:
     runs-on: ubuntu-18.04
     needs:
       - release
-    if: github.ref == 'refs/heads/master' && ( needs.Release.outputs.published == 'true' || contains(github.event.head_commit.message, '[force-deploy]') )
+    if: github.ref == 'refs/heads/master' && ( needs.release.outputs.published == 'true' || contains(github.event.head_commit.message, '[force-deploy]') )
     steps:
       - *step_checkout
       - *step_setup_node
@@ -291,7 +291,7 @@ jobs:
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: ./packages/electron/dist/*
-          tag: ${{ needs.Release.outputs.tag_name }}
+          tag: ${{ needs.release.outputs.tag_name }}
           overwrite: true
           file_glob: true
 

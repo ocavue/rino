@@ -1,0 +1,16 @@
+{
+  "extends": "../../../tsconfig.base.json",
+  "compilerOptions": {
+    "noEmit": false,
+    "composite": true,
+    "outDir": "../dist",
+  },
+  "include": [
+    "./"
+  ],
+  "references": [
+    {
+      "path": "../../editor/src/tsconfig.json"
+    }
+  ]
+}
