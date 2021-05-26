@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.22.0](https://www.github.com/ocavue/rino/compare/v0.21.1...v0.22.0) (2021-05-26)
+
+
+### Features
+
+* **workbench:** add basic workbench implementation ([#608](https://www.github.com/ocavue/rino/issues/608)) ([8bc737b](https://www.github.com/ocavue/rino/commit/8bc737b6ba8ca84a15c4425edf06d04fffa522ea))
+
 ### [0.21.1](https://www.github.com/ocavue/rino/compare/v0.21.0...v0.21.1) (2021-04-27)
 
 
