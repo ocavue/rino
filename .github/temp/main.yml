@@ -43,11 +43,12 @@ jobs:
           yarn install --immutable
           date
           echo "[DEBUG] CACHE_HIT: $CACHE_HIT"
+          ln -sf $PWD/node_modules/.bin/ultra /usr/local/bin/ultra
           if [ "$CACHE_HIT" != "true" ]
           then
             echo "[DEBUG] installing"
             cd packages/web
-            npx ultra firebase setup:emulators:firestore
+            ultra firebase setup:emulators:firestore
           fi
           ls -lrth ~/.cache/firebase/emulators/
         env:
@@ -62,12 +63,12 @@ jobs:
           echo "${FIREBASE_CLIENT_JSON}" > ./packages/web/config/firebase.client.json
           export FIREBASE_PROJECT_ID=$(scripts/simple_jq.js ./packages/web/config/firebase.client.json .projectId)
           cd packages/web
-          npx ultra firebase use --add $FIREBASE_PROJECT_ID
+          ultra firebase use --add $FIREBASE_PROJECT_ID
 
       - name: Build website
         run: |
-          npx ultra build home
-          npx ultra build web
+          ultra build home
+          ultra build web
 
       - name: Upload dist (web)
         uses: actions/upload-artifact@v2
@@ -98,7 +99,7 @@ jobs:
 
       - name: Build electron
         run: |
-          npx ultra build electron
+          ultra build electron
 
       - name: Clean electron dist
         run: |
@@ -131,8 +132,8 @@ jobs:
           export FIREBASE_DATABASE_EMULATOR_HOST="localhost:$(scripts/simple_jq.js ./packages/web/firebase.json .emulators.database.port)"
           export FIRESTORE_EMULATOR_HOST="localhost:$(scripts/simple_jq.js ./packages/web/firebase.json .emulators.firestore.port)"
           echo "firebase environment variables:" $FIREBASE_DATABASE_EMULATOR_HOST $FIRESTORE_EMULATOR_HOST
-          npx ultra build home
-          npx ultra build web
+          ultra build home
+          ultra build web
 
       - name: Run tests
         env:
@@ -141,8 +142,8 @@ jobs:
           REACT_APP_TEST_PASSWORD: ${{ secrets.REACT_APP_TEST_PASSWORD }}
         run: |
           ./node_modules/.bin/firebase emulators:exec --only firestore "
-            npx ultra -r --filter @rino.app/web start > /dev/null &
-            npx ultra test --coverage
+            ultra -r --filter @rino.app/web start > /dev/null &
+            ultra test --coverage
           "
 
       - name: Upload coverage information to codecov
@@ -163,7 +164,7 @@ jobs:
         run: ls ./packages/**/dist/ || true
 
       - name: Lint
-        run: npx ultra lint .
+        run: ultra lint .
 
       - name: Check actions configration
         run: |
@@ -184,8 +185,8 @@ jobs:
 
       - name: Build
         run: |
-          npx ultra build web
-          npx ultra build home
+          ultra build web
+          ultra build home
 
       - id: step_branch
         name: Get the branch name
@@ -240,8 +241,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }} # Install this GitHub App and get the token: https://github.com/apps/lighthouse-ci
         run: |
-          npx ultra lhci autorun --config .lighthouserc.web.json
-          npx ultra lhci autorun --config .lighthouserc.home.json
+          ultra lhci autorun --config .lighthouserc.web.json
+          ultra lhci autorun --config .lighthouserc.home.json
 
   release:
     runs-on: ubuntu-18.04
