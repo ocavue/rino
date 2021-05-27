@@ -14,4 +14,4 @@ shift;
 
 set -x
 
-ultra -r --filter "+*$package_name" $@
+ultra --recursive --serial --filter "+*$package_name" $@
