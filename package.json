@@ -8,26 +8,9 @@
     "scripts": {
         "lint": "eslint --ignore-path .gitignore --ext '.js,.jsx,.ts,.tsx'",
         "test": "jest --runInBand",
-        "build:pkg": "scripts/build-package.sh common next editor",
-        "build:website": "scripts/build-package.sh common next editor home web",
         "postinstall": "./scripts/post-install.sh",
-        "run-all": "yarn run wsrun -s -r -p -e -l --report",
-        "workbench": "yarn workspace @rino.app/workbench",
-        "electron": "yarn workspace @rino.app/electron",
-        "server": "yarn workspace @rino.app/server",
-        "editor": "yarn workspace @rino.app/editor",
-        "common": "yarn workspace @rino.app/common",
-        "next": "yarn workspace @rino.app/next",
-        "home": "yarn workspace @rino.app/home",
-        "web": "yarn workspace @rino.app/web",
-        "run-all:workbench": "yarn run run-all -p @rino.app/workbench -c",
-        "run-all:electron": "yarn run run-all -p @rino.app/electron -c",
-        "run-all:common": "yarn run run-all -p @rino.app/common -c",
-        "run-all:editor": "yarn run run-all -p @rino.app/editor -c",
-        "run-all:home": "yarn run run-all -p @rino.app/home -c",
-        "run-all:next": "yarn run run-all -p @rino.app/next -c",
-        "run-all:server": "yarn run run-all -p @rino.app/server -c",
-        "run-all:web": "yarn run run-all -p @rino.app/web -c"
+        "exec": "./scripts/recursive-exec.sh",
+        "build:website": "ultra exec web build && ultra exec home build"
     },
     "devDependencies": {
         "@lhci/cli": "^0.7.2",
@@ -53,8 +36,7 @@
         "prettier": "^2.2.1",
         "size-limit": "^4.10.2",
         "typescript": "^4.2.4",
-        "wsrun": "^5.2.4",
-        "zx": "^1.12.0"
+        "ultra-runner": "^3.10.5"
     },
     "renovate": {
         "extends": [
