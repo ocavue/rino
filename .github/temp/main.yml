@@ -39,16 +39,11 @@ jobs:
         name: Install Dependencies
         # Reinstall node modules even if `cache-hit` is `true` because we need to build symlinks for Yarn workspace
         run: |
-          echo "[DEBUG] PATH:" $PATH
-          echo $PATH | tr ':' '\n' | xargs -L 1 ls -lrthd
-          echo "[DEBUG] whoami" $(whoami)
-          sudo whoami
-
           date
           yarn install --immutable
           date
           echo "[DEBUG] CACHE_HIT: $CACHE_HIT"
-          ln -sf $PWD/node_modules/.bin/ultra /usr/local/bin/ultra
+          sudo ln -sf $PWD/node_modules/.bin/ultra /usr/local/bin/ultra
           if [ "$CACHE_HIT" != "true" ]
           then
             echo "[DEBUG] installing"
