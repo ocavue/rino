@@ -9,7 +9,8 @@
         "lint": "eslint --ignore-path .gitignore --ext '.js,.jsx,.ts,.tsx'",
         "test": "jest --runInBand",
         "postinstall": "./scripts/post-install.sh",
-        "exec": "./scripts/recursive-exec.sh"
+        "exec": "./scripts/recursive-exec.sh",
+        "build:all": "ultra -r build"
     },
     "devDependencies": {
         "@lhci/cli": "^0.7.2",
