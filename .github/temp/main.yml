@@ -99,7 +99,9 @@ jobs:
 
       - name: Build electron
         run: |
-          ultra exec electron build
+          ultra exec editor build
+          cd packages/electron
+          yarn run build
 
       - name: Clean electron dist
         run: |

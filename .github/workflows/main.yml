@@ -107,7 +107,7 @@
         },
         {
           "name": "Build electron",
-          "run": "ultra exec electron build\n"
+          "run": "ultra exec editor build\ncd packages/electron\nyarn run build\n"
         },
         {
           "name": "Clean electron dist",
