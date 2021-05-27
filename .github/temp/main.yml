@@ -67,8 +67,8 @@ jobs:
 
       - name: Build website
         run: |
-          ultra recursive-build home
-          ultra recursive-build web
+          ultra exec home build
+          ultra exec web build
 
       - name: Upload dist (web)
         uses: actions/upload-artifact@v2
@@ -99,7 +99,7 @@ jobs:
 
       - name: Build electron
         run: |
-          ultra recursive-build electron
+          ultra exec electron build
 
       - name: Clean electron dist
         run: |
@@ -132,8 +132,8 @@ jobs:
           export FIREBASE_DATABASE_EMULATOR_HOST="localhost:$(scripts/simple_jq.js ./packages/web/firebase.json .emulators.database.port)"
           export FIRESTORE_EMULATOR_HOST="localhost:$(scripts/simple_jq.js ./packages/web/firebase.json .emulators.firestore.port)"
           echo "firebase environment variables:" $FIREBASE_DATABASE_EMULATOR_HOST $FIRESTORE_EMULATOR_HOST
-          ultra recursive-build home
-          ultra recursive-build web
+          ultra exec home build
+          ultra exec web build
 
       - name: Run tests
         env:
@@ -185,8 +185,8 @@ jobs:
 
       - name: Build
         run: |
-          ultra recursive-build web
-          ultra recursive-build home
+          ultra exec web build
+          ultra exec home build
 
       - id: step_branch
         name: Get the branch name
