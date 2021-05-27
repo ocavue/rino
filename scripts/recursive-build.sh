@@ -7,7 +7,11 @@
 
 set -e
 
+cd $(dirname $0)/..
+
 package_name=$1
 shift;
 
-ultra -r --filter "*$package_name" build $@
+set -x
+
+ultra -r --filter "+*$package_name" build $@
