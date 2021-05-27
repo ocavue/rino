@@ -106,8 +106,12 @@
           "run": "version=$(cat version.txt)\npkgjson=$(jq \".version = \\\"$version\\\"\" ./packages/electron/package.json)\necho \"$pkgjson\" > ./packages/electron/package.json\ncat ./packages/electron/package.json\n"
         },
         {
+          "name": "Build dependencies",
+          "run": "ultra exec editor build\n"
+        },
+        {
           "name": "Build electron",
-          "run": "ultra exec editor build\ncd packages/electron\nyarn run build\n"
+          "run": "cd packages/electron\nyarn run build\n"
         },
         {
           "name": "Clean electron dist",

@@ -97,9 +97,14 @@ jobs:
           echo "$pkgjson" > ./packages/electron/package.json
           cat ./packages/electron/package.json
 
-      - name: Build electron
+      - name: Build dependencies
         run: |
           ultra exec editor build
+
+        # I have to use yarn install of ultra because electron-builder will detect which
+        # package manager I'm using and have differernt behaviors.
+      - name: Build electron
+        run: |
           cd packages/electron
           yarn run build
 
