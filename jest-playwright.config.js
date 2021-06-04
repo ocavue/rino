@@ -17,7 +17,10 @@ const config = {
         waitOnScheme: {
             verbose: false,
             interval: 1000,
-            validateStatus: (status) => 200 <= status && status <= 404,
+            validateStatus: (status) => {
+                // https://github.com/jeffbski/wait-on/issues/78
+                return (200 <= status && status < 300) || status === 404
+            },
         },
         port: 3001,
         usedPortAction: "ignore",
