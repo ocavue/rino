@@ -1,14 +1,13 @@
-import { ProsemirrorNode, RemirrorEventListener } from "@remirror/core"
 import { Remirror, useCommands, useHelpers, useRemirrorContext } from "@remirror/react"
 import { debounce } from "lodash"
-import React, { FC, useEffect, useMemo, useRef, useState } from "react"
+import React, { FC, useCallback, useLayoutEffect, useMemo, useState } from "react"
 
 import DevTools from "../DevTools"
 import ErrorBoundary from "../ErrorBoundary"
 import { DrawerActivityContainer, EditorProps } from "../types"
 import TableMenu from "./TableMenu"
 import { WysiwygExtension } from "./wysiwyg-extension"
-import { useWysiwygRemirror, WysiwygSchema } from "./wysiwyg-manager"
+import { useWysiwygRemirror } from "./wysiwyg-manager"
 import { buildMarkdownParser, buildMarkdownSerializer } from "./wysiwyg-markdown"
 
 const InnerEditor: FC<{
@@ -33,105 +32,93 @@ const InnerEditor: FC<{
     )
 }
 
-type Doc = ProsemirrorNode<WysiwygSchema>
-
 type WysiwygEditorProps = EditorProps & {
     maxDrawerWidth: number
     drawerActivityContainer: DrawerActivityContainer
     isTestEnv: boolean
 }
 
-const WysiwygEditor: FC<WysiwygEditorProps> = ({
-    className,
-    autoFocus,
-    editable,
-    content,
-    setContent,
-    maxDrawerWidth,
-    drawerActivityContainer,
-    isTestEnv,
-}) => {
-    const { manager } = useWysiwygRemirror()
+const WysiwygEditor = React.memo<WysiwygEditorProps>(
+    ({
+        className,
+        autoFocus,
+        editable,
+        initialContent,
+        onContentChange,
+        maxDrawerWidth,
+        drawerActivityContainer,
+        isTestEnv,
+        beforeUnmount,
+    }) => {
+        console.log(`<WysiwygEditor initialContent=${initialContent}>`)
+        const [error, setError] = useState<Error | null>(null)
 
-    const docRef = useRef<Doc>()
-    const [error, setError] = useState<Error | null>(null)
+        const { manager } = useWysiwygRemirror()
 
-    const { initialNode, onChange, saveContent } = useMemo(() => {
-        const parser = buildMarkdownParser(manager)
-        const serializer = buildMarkdownSerializer(manager)
-        const initialNode = (() => {
+        const initialNode = useMemo(() => {
+            const parser = buildMarkdownParser(manager)
             try {
                 if (isTestEnv) {
-                    if (content.trim() === "HOOK:FAILED_TO_INIT_PROSEMIRROR_VIEW") {
+                    if (initialContent.trim() === "HOOK:FAILED_TO_INIT_PROSEMIRROR_VIEW") {
                         throw new Error("Found error hook for testing")
                     }
                 }
-                return parser.parse(content)
+                return parser.parse(initialContent)
             } catch (error) {
                 setError(error)
             }
-        })()
-        const getContent = (doc: Doc) => {
+        }, [manager, isTestEnv, initialContent])
+
+        const serializer = useMemo(() => buildMarkdownSerializer(manager), [manager])
+
+        const saveContent = useCallback(() => {
+            const doc = manager.view?.state?.doc
+            if (!doc) return
             const content = serializer.serialize(doc)
-            return content
-        }
-        const saveContent = () => {
-            try {
-                const doc = docRef.current
-                if (doc) setContent(getContent(doc))
-            } catch (error) {
-                setError(error)
+            onContentChange(content)
+        }, [manager, onContentChange, serializer])
+
+        const saveContentWithDelay = useMemo(() => debounce(saveContent, 500), [saveContent])
+
+        useLayoutEffect(() => {
+            console.debug(`Mounting <${WysiwygEditor.displayName}/>`)
+            return () => {
+                console.debug(`Unmounting <${WysiwygEditor.displayName}/>`)
+                saveContent()
+                beforeUnmount()
             }
-        }
-        const saveContentWithDelay = debounce(saveContent, 500)
-        const onChange: RemirrorEventListener<WysiwygExtension> = ({ state }) => {
-            docRef.current = state.doc
-            saveContentWithDelay()
-        }
-        return {
-            initialNode,
-            onChange,
-            saveContent,
-        }
-    }, [manager, content, setContent, isTestEnv])
+        }, [saveContent, beforeUnmount])
 
-    useEffect(() => {
-        // console.debug(`Mounting <${WysiwygEditor.displayName}/>`)
-        return () => {
-            // console.debug(`Unmounting <${WysiwygEditor.displayName}/>`)
-            saveContent()
+        if (error) {
+            // I didn't use React `componentDidCatch` method because I can't turn off `react-error-overlay` (easily) and
+            // it will show an error overlay window in development mode when `componentDidCatch` been called.
+            console.error(error)
+            return (
+                <div data-testid="wysiwyg_mode_error">
+                    <h1>
+                        <br />
+                        Something went wrong.
+                    </h1>
+                    <p>{`${error}`}</p>
+                </div>
+            )
         }
-    }, [saveContent])
-
-    if (error) {
-        // I didn't use React `componentDidCatch` method because I can't turn off `react-error-overlay` (easily) and
-        // it will show an error overlay window in development mode when `componentDidCatch` been called.
-        console.error(error)
         return (
-            <div data-testid="wysiwyg_mode_error">
-                <h1>
-                    <br />
-                    Something went wrong.
-                </h1>
-                <p>{`${error}`}</p>
-            </div>
+            <ErrorBoundary>
+                <Remirror
+                    manager={manager}
+                    autoFocus={autoFocus}
+                    initialContent={initialNode}
+                    onChange={saveContentWithDelay}
+                    editable={editable}
+                    attributes={{ "data-testid": "wysiwyg_mode_textarea" }}
+                >
+                    <InnerEditor className={className} maxDrawerWidth={maxDrawerWidth} drawerActivityContainer={drawerActivityContainer} />
+                </Remirror>
+            </ErrorBoundary>
         )
-    }
-    return (
-        <ErrorBoundary>
-            <Remirror
-                manager={manager}
-                autoFocus={autoFocus}
-                initialContent={initialNode}
-                onChange={onChange}
-                editable={editable}
-                attributes={{ "data-testid": "wysiwyg_mode_textarea" }}
-            >
-                <InnerEditor className={className} maxDrawerWidth={maxDrawerWidth} drawerActivityContainer={drawerActivityContainer} />
-            </Remirror>
-        </ErrorBoundary>
-    )
-}
+    },
+)
 
 WysiwygEditor.displayName = "WysiwygEditor"
 

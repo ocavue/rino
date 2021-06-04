@@ -9,7 +9,7 @@ module.exports = {
     displayName: { name: "EDITOR:E2E", color: "blackBright" },
 
     // The glob patterns Jest uses to detect test files
-    testMatch: ["<rootDir>/e2e/*.e2e.spec.(js|ts|jsx|tsx)"],
+    testMatch: ["<rootDir>/e2e/*.spec.(js|ts|jsx|tsx)"],
 
     preset: "jest-playwright-preset",
 

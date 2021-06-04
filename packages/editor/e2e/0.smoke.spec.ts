@@ -1,8 +1,10 @@
 import "jest"
 
+import { setupEditor } from "./utils"
+
 describe("Smoke", () => {
     beforeAll(async () => {
-        await page.goto("http://localhost:3001")
+        await setupEditor()
     })
 
     test("header", async () => {
