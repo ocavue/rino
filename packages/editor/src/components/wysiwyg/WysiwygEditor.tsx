@@ -80,10 +80,11 @@ const WysiwygEditor = React.memo<WysiwygEditorProps>(
 
         const saveContentWithDelay = useMemo(() => debounce(saveContent, 500), [saveContent])
 
+        // We use `useLayoutEffect` instead of `useEffect` because we want `beforeUnmount` to be called ASAP
         useLayoutEffect(() => {
-            console.debug(`Mounting <${WysiwygEditor.displayName}/>`)
+            // console.debug(`Mounting <${WysiwygEditor.displayName}/>`)
             return () => {
-                console.debug(`Unmounting <${WysiwygEditor.displayName}/>`)
+                // console.debug(`Unmounting <${WysiwygEditor.displayName}/>`)
                 saveContent()
                 beforeUnmount()
             }

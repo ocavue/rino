@@ -1,11 +1,10 @@
-import { ProsemirrorNode } from "@remirror/core"
 import { Remirror, useRemirrorContext } from "@remirror/react"
 import { debounce } from "lodash"
-import React, { FC, useCallback, useEffect, useLayoutEffect, useMemo } from "react"
+import React, { FC, useCallback, useLayoutEffect, useMemo } from "react"
 
 import DevTools from "../DevTools"
 import { EditorProps } from "../types"
-import { SourceCodeSchema, useSourceCodeRemirror } from "./manager"
+import { useSourceCodeRemirror } from "./manager"
 
 const InnerEditor: FC<{ className: string }> = ({ className }) => {
     const { getRootProps } = useRemirrorContext()
@@ -28,10 +27,11 @@ const SourceCodeEditor: FC<EditorProps> = React.memo<EditorProps>(
 
         const saveContentWithDelay = useMemo(() => debounce(saveContent, 500), [saveContent])
 
+        // We use `useLayoutEffect` instead of `useEffect` because we want `beforeUnmount` to be called ASAP
         useLayoutEffect(() => {
-            console.debug(`Mounting <${SourceCodeEditor.displayName}/>`)
+            // console.debug(`Mounting <${SourceCodeEditor.displayName}/>`)
             return () => {
-                console.debug(`Unmounting <${SourceCodeEditor.displayName}/>`)
+                // console.debug(`Unmounting <${SourceCodeEditor.displayName}/>`)
                 saveContent()
                 beforeUnmount()
             }

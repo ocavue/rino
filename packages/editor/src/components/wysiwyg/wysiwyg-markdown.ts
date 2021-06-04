@@ -6,8 +6,8 @@ import { MarkdownNodeExtension } from "../../utils"
 function isMarkdownNodeExtension(extension: unknown): extension is MarkdownNodeExtension {
     return !!(
         isExtension(extension) &&
-        ((extension as unknown) as MarkdownNodeExtension).fromMarkdown &&
-        ((extension as unknown) as MarkdownNodeExtension).toMarkdown
+        (extension as unknown as MarkdownNodeExtension).fromMarkdown &&
+        (extension as unknown as MarkdownNodeExtension).toMarkdown
     )
 }
 
