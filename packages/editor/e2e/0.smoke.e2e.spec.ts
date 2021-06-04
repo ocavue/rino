@@ -1,6 +1,6 @@
 import "jest"
 
-describe("Settings", () => {
+describe("Smoke", () => {
     beforeAll(async () => {
         await page.goto("http://localhost:3001")
     })

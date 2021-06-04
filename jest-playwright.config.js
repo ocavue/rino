@@ -8,14 +8,16 @@ const config = {
         options: {
             env: {
                 REACT_APP_TESTING: "yes",
+                NODE_ENV: "test",
             },
         },
-        launchTimeout: 60 * 1000,
+        launchTimeout: 20 * 1000,
         debug: true,
         protocol: "http-get",
         waitOnScheme: {
             verbose: false,
             interval: 1000,
+            validateStatus: (status) => 200 <= status && status <= 404,
         },
         port: 3001,
         usedPortAction: "ignore",
