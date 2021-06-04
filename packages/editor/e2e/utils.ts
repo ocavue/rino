@@ -1,7 +1,7 @@
 import os from "os"
 import { Dialog, ElementHandle } from "playwright"
 
-page.setDefaultTimeout(2000)
+page.setDefaultTimeout(5000)
 
 const testidSelector = (testid: string) => `[data-testid="${testid}"]`
 
@@ -67,7 +67,7 @@ export async function sleep(ms: number) {
 
 async function typeWithSelector(selector: string, text: string, pressEnter = true) {
     await page.waitForSelector(selector, { timeout: 1000 })
-    await page.type(selector, text, { delay: 5 })
+    await page.type(selector, text, { delay: 2 })
     if (pressEnter) await pressKey("Enter")
 }
 

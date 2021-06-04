@@ -17,8 +17,8 @@ describe("HTML", () => {
         })
 
         test("Input", async () => {
-            await type("h1")
-            await type("![Image](https://via.placeholder.com/100/)", false)
+            await type("hi")
+            await type("![Image](/assets/placeholder.png)", false)
         })
 
         test("Check", async () => {
