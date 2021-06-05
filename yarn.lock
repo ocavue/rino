@@ -3866,8 +3866,8 @@ __metadata:
     markdown-it: ^12.0.6
     mdast-util-from-markdown: ^0.8.5
     mdast-util-gfm-strikethrough: ^0.2.3
-    micromark-extension-gfm-strikethrough: 0.6.3
-    prosemirror-commands: 1.1.7
+    micromark-extension-gfm-strikethrough: ^0.6.5
+    prosemirror-commands: ^1.1.8
     prosemirror-dropcursor: ^1.3.5
     prosemirror-history: ^1.1.3
     prosemirror-inputrules: ^1.1.3
@@ -15574,12 +15574,12 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
-"micromark-extension-gfm-strikethrough@npm:0.6.3":
-  version: 0.6.3
-  resolution: "micromark-extension-gfm-strikethrough@npm:0.6.3"
+"micromark-extension-gfm-strikethrough@npm:^0.6.5":
+  version: 0.6.5
+  resolution: "micromark-extension-gfm-strikethrough@npm:0.6.5"
   dependencies:
     micromark: ~2.11.0
-  checksum: 78c4a14c63545dc53a7a04933cf7686cfbc92861ef26c8578993c9dfd481fae0c572852f01f5aa58781955cd535259a27e41c24b27fa421995a13cf130526f0e
+  checksum: 3fe1cfa4cc74f30c2ef3b43b2d2ce002b6432b11144c7c3c5a06021a253e10352931fa863cb15f2336412d77ba1de4bd06c6b7a71825cf8aad5ade2b7ef80a00
   languageName: node
   linkType: hard
 
@@ -17715,7 +17715,7 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
-"prosemirror-commands@npm:1.1.7, prosemirror-commands@npm:^1.1.7":
+"prosemirror-commands@npm:^1.1.7":
   version: 1.1.7
   resolution: "prosemirror-commands@npm:1.1.7"
   dependencies:
@@ -17723,6 +17723,17 @@ fsevents@^1.2.7:
     prosemirror-state: ^1.0.0
     prosemirror-transform: ^1.0.0
   checksum: f833354245fa93ed8a07d9a75d1cba1fce9fbdad743446bd47e060273ae2d86ce4f2d0881ac54adb64b35bbea5e2b404e63d5b6abe145853e6cc629b556a5370
+  languageName: node
+  linkType: hard
+
+"prosemirror-commands@npm:^1.1.8":
+  version: 1.1.8
+  resolution: "prosemirror-commands@npm:1.1.8"
+  dependencies:
+    prosemirror-model: ^1.0.0
+    prosemirror-state: ^1.0.0
+    prosemirror-transform: ^1.0.0
+  checksum: 382a3222cc0c17b1ba9e64180ef96ac97b0543214a060f84e8ee536e6346b38b6daa61224b2cb86d6e1e9b34d46692f27375ffb15869b3921fa6a744eb9fdd44
   languageName: node
   linkType: hard
 
