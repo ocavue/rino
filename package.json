@@ -11,7 +11,6 @@
         "postinstall": "./scripts/post-install.sh && husky install",
         "exec": "./scripts/recursive-exec.sh",
         "clean": "rimraf ./packages/*/dist ./packages/*/.next ./packages/*/.ultra.cache.json",
-        "build:website": "ultra clean && ultra exec editor build && ultra exec home build",
         "build:size-limit": "ultra clean && ultra exec editor build && ultra exec home build"
     },
     "devDependencies": {
