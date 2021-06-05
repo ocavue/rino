@@ -11,7 +11,8 @@
         "postinstall": "./scripts/post-install.sh",
         "exec": "./scripts/recursive-exec.sh",
         "clean": "rimraf ./packages/*/dist ./packages/*/.next ./packages/*/.ultra.cache.json",
-        "build:website": "ultra clean && ultra exec home build"
+        "build:website": "ultra clean && ultra exec editor build && ultra exec home build",
+        "build:size-limit": "ultra clean && ultra exec editor build && ultra exec home build"
     },
     "devDependencies": {
         "@lhci/cli": "^0.7.2",
