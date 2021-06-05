@@ -101,11 +101,7 @@
         },
         {
           "name": "Build electron",
-          "run": "cd packages/electron\nmkdir ./dist\ntouch ./dist/debug\nyarn run build\n"
-        },
-        {
-          "name": "Clean electron dist",
-          "run": "cd packages/electron\nfind ./dist -type f\necho '============== cleaning =============='\nyarn run clean\necho '============== cleaned ==============='\nfind ./dist -type f\n"
+          "run": "cd packages/electron\nyarn run build\n"
         },
         {
           "name": "Check electron cache after building",
@@ -212,7 +208,7 @@
           }
         },
         {
-          "name": "Check caceh",
+          "name": "Check cache",
           "run": "whoami\npwd\ncd ~\npwd\nenv | grep ELECTRON\nmkdir -p ~/cache_debug\ntouch ~/cache_debug/debug.txt\nls -lrth ~/cache_*\n"
         },
         {

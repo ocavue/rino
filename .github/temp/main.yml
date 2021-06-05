@@ -101,19 +101,16 @@ jobs:
       - name: Build electron
         run: |
           cd packages/electron
-          mkdir ./dist
-          touch ./dist/debug
           yarn run build
-        # yarn run build:all
 
-      - name: Clean electron dist
-        run: |
-          cd packages/electron
-          find ./dist -type f
-          echo '============== cleaning =============='
-          yarn run clean
-          echo '============== cleaned ==============='
-          find ./dist -type f
+      # - name: Clean electron dist
+      #   run: |
+      #     cd packages/electron
+      #     find ./dist -type f
+      #     echo '============== cleaning =============='
+      #     yarn run clean
+      #     echo '============== cleaned ==============='
+      #     find ./dist -type f
 
       - name: Check electron cache after building
         run: *check_cache
@@ -163,7 +160,7 @@ jobs:
       - *step_cache_deps
       - *step_install_deps
 
-      - name: Check caceh
+      - name: Check cache
         run: *check_cache
 
       - name: Lint
