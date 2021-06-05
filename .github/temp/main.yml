@@ -7,6 +7,8 @@ on:
 
 env:
   NEXT_TELEMETRY_DISABLED: 1 # https://nextjs.org/telemetry
+  ELECTRON_CACHE: /tmp/.cache/electron
+  ELECTRON_BUILDER_CACHE: /tmp/.cache/electron-builder
 
 jobs:
   build_website:
@@ -27,13 +29,18 @@ jobs:
         name: Cache dependencies
         uses: actions/cache@v2
         with:
+          # Playwright downloads the browser binaries in the following directories:
+          # ~/Library/Caches/ms-playwright on MacOS
+          # ~/.cache/ms-playwright on Linux
           path: |
             node_modules
             */*/node_modules
-            ~/.cache/firebase
-            ~/.cache/ms-playwright
             .yarn/cache
-          key: ${{ runner.os }}-deps-v6-${{ hashFiles('yarn.lock') }}
+            ~/Library/Caches/ms-playwright
+            ~/.cache/ms-playwright
+            /tmp/.cache/electron
+            /tmp/.cache/electron-builder
+          key: ${{ runner.os }}-deps-v7-${{ hashFiles('yarn.lock') }}
 
       - &step_install_deps
         name: Install Dependencies
@@ -65,6 +72,11 @@ jobs:
       - *step_cache_deps
       - *step_install_deps
 
+      - name: Check electron cache before building
+        run: |
+          mkdir -p /tmp/.cache
+          find /tmp/.cache -type f
+
       - name: Update package.json
         run: |
           version=$(cat version.txt)
@@ -87,7 +99,15 @@ jobs:
         run: |
           cd packages/electron
           find ./dist -type f
+          echo '============== cleaning =============='
           yarn run clean
+          echo '============== cleaned ==============='
+          find ./dist -type f
+
+      - name: Check electron cache after building
+        run: |
+          mkdir -p /tmp/.cache
+          find /tmp/.cache -type f
 
       - name: Upload dist (electron)
         uses: actions/upload-artifact@v2

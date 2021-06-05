@@ -8,7 +8,9 @@
     }
   },
   "env": {
-    "NEXT_TELEMETRY_DISABLED": 1
+    "NEXT_TELEMETRY_DISABLED": 1,
+    "ELECTRON_CACHE": "/tmp/.cache/electron",
+    "ELECTRON_BUILDER_CACHE": "/tmp/.cache/electron-builder"
   },
   "jobs": {
     "build_website": {
@@ -30,8 +32,8 @@
           "name": "Cache dependencies",
           "uses": "actions/cache@v2",
           "with": {
-            "path": "node_modules\n*/*/node_modules\n~/.cache/firebase\n~/.cache/ms-playwright\n.yarn/cache\n",
-            "key": "${{ runner.os }}-deps-v6-${{ hashFiles('yarn.lock') }}"
+            "path": "node_modules\n*/*/node_modules\n.yarn/cache\n~/Library/Caches/ms-playwright\n~/.cache/ms-playwright\n/tmp/.cache/electron\n/tmp/.cache/electron-builder\n",
+            "key": "${{ runner.os }}-deps-v7-${{ hashFiles('yarn.lock') }}"
           }
         },
         {
@@ -74,8 +76,8 @@
           "name": "Cache dependencies",
           "uses": "actions/cache@v2",
           "with": {
-            "path": "node_modules\n*/*/node_modules\n~/.cache/firebase\n~/.cache/ms-playwright\n.yarn/cache\n",
-            "key": "${{ runner.os }}-deps-v6-${{ hashFiles('yarn.lock') }}"
+            "path": "node_modules\n*/*/node_modules\n.yarn/cache\n~/Library/Caches/ms-playwright\n~/.cache/ms-playwright\n/tmp/.cache/electron\n/tmp/.cache/electron-builder\n",
+            "key": "${{ runner.os }}-deps-v7-${{ hashFiles('yarn.lock') }}"
           }
         },
         {
@@ -84,6 +86,10 @@
           "env": {
             "CACHE_HIT": "${{ steps.step_cache_deps.outputs.cache-hit }}"
           }
+        },
+        {
+          "name": "Check electron cache before building",
+          "run": "mkdir -p /tmp/.cache\nfind /tmp/.cache -type f\n"
         },
         {
           "name": "Update package.json",
@@ -99,7 +105,11 @@
         },
         {
           "name": "Clean electron dist",
-          "run": "cd packages/electron\nfind ./dist -type f\nyarn run clean\n"
+          "run": "cd packages/electron\nfind ./dist -type f\necho '============== cleaning =============='\nyarn run clean\necho '============== cleaned ==============='\nfind ./dist -type f\n"
+        },
+        {
+          "name": "Check electron cache after building",
+          "run": "mkdir -p /tmp/.cache\nfind /tmp/.cache -type f\n"
         },
         {
           "name": "Upload dist (electron)",
@@ -130,8 +140,8 @@
           "name": "Cache dependencies",
           "uses": "actions/cache@v2",
           "with": {
-            "path": "node_modules\n*/*/node_modules\n~/.cache/firebase\n~/.cache/ms-playwright\n.yarn/cache\n",
-            "key": "${{ runner.os }}-deps-v6-${{ hashFiles('yarn.lock') }}"
+            "path": "node_modules\n*/*/node_modules\n.yarn/cache\n~/Library/Caches/ms-playwright\n~/.cache/ms-playwright\n/tmp/.cache/electron\n/tmp/.cache/electron-builder\n",
+            "key": "${{ runner.os }}-deps-v7-${{ hashFiles('yarn.lock') }}"
           }
         },
         {
@@ -188,8 +198,8 @@
           "name": "Cache dependencies",
           "uses": "actions/cache@v2",
           "with": {
-            "path": "node_modules\n*/*/node_modules\n~/.cache/firebase\n~/.cache/ms-playwright\n.yarn/cache\n",
-            "key": "${{ runner.os }}-deps-v6-${{ hashFiles('yarn.lock') }}"
+            "path": "node_modules\n*/*/node_modules\n.yarn/cache\n~/Library/Caches/ms-playwright\n~/.cache/ms-playwright\n/tmp/.cache/electron\n/tmp/.cache/electron-builder\n",
+            "key": "${{ runner.os }}-deps-v7-${{ hashFiles('yarn.lock') }}"
           }
         },
         {
@@ -232,8 +242,8 @@
           "name": "Cache dependencies",
           "uses": "actions/cache@v2",
           "with": {
-            "path": "node_modules\n*/*/node_modules\n~/.cache/firebase\n~/.cache/ms-playwright\n.yarn/cache\n",
-            "key": "${{ runner.os }}-deps-v6-${{ hashFiles('yarn.lock') }}"
+            "path": "node_modules\n*/*/node_modules\n.yarn/cache\n~/Library/Caches/ms-playwright\n~/.cache/ms-playwright\n/tmp/.cache/electron\n/tmp/.cache/electron-builder\n",
+            "key": "${{ runner.os }}-deps-v7-${{ hashFiles('yarn.lock') }}"
           }
         },
         {

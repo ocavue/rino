@@ -14,9 +14,7 @@
         "build": "run-s build:main build:renderer build:electron:default",
         "build:main": "tsc --build ./main/tsconfig.json",
         "build:renderer": "tsc --build ./renderer/tsconfig.json && vite build ./renderer",
-        "build:electron:mac": "electron-builder -p never --mac --universal",
-        "build:electron:win": "electron-builder -p never --win",
-        "build:electron:linux": "electron-builder -p never --linux",
+        "build:electron:all": "electron-builder -p never -mwl --universal",
         "build:electron:default": "electron-builder -p never",
         "clean": "bash -c 'rm -rf ./dist/*/'"
     },
