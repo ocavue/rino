@@ -15,7 +15,7 @@ module.exports = {
     coverageReporters: ["text-summary", "json", "json-summary"],
 
     // Use this configuration option to add custom reporters to Jest
-    reporters: ["default", "jest-puppeteer-istanbul/lib/reporter"],
+    reporters: ["default"],
 
     // An array of file extensions your modules use
     moduleFileExtensions: ["js", "json", "jsx", "ts", "tsx", "node", "vue", "md"],
