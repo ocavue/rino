@@ -3866,8 +3866,8 @@ __metadata:
     markdown-it: ^12.0.6
     mdast-util-from-markdown: ^0.8.5
     mdast-util-gfm-strikethrough: ^0.2.3
-    micromark-extension-gfm-strikethrough: 0.6.3
-    prosemirror-commands: 1.1.7
+    micromark-extension-gfm-strikethrough: ^0.6.5
+    prosemirror-commands: ^1.1.8
     prosemirror-dropcursor: ^1.3.5
     prosemirror-history: ^1.1.3
     prosemirror-inputrules: ^1.1.3
@@ -15574,12 +15574,12 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
-"micromark-extension-gfm-strikethrough@npm:0.6.3":
-  version: 0.6.3
-  resolution: "micromark-extension-gfm-strikethrough@npm:0.6.3"
+"micromark-extension-gfm-strikethrough@npm:^0.6.5":
+  version: 0.6.5
+  resolution: "micromark-extension-gfm-strikethrough@npm:0.6.5"
   dependencies:
     micromark: ~2.11.0
-  checksum: 78c4a14c63545dc53a7a04933cf7686cfbc92861ef26c8578993c9dfd481fae0c572852f01f5aa58781955cd535259a27e41c24b27fa421995a13cf130526f0e
+  checksum: 3fe1cfa4cc74f30c2ef3b43b2d2ce002b6432b11144c7c3c5a06021a253e10352931fa863cb15f2336412d77ba1de4bd06c6b7a71825cf8aad5ade2b7ef80a00
   languageName: node
   linkType: hard
 
@@ -17715,14 +17715,14 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
-"prosemirror-commands@npm:1.1.7, prosemirror-commands@npm:^1.1.7":
-  version: 1.1.7
-  resolution: "prosemirror-commands@npm:1.1.7"
+"prosemirror-commands@npm:^1.1.7, prosemirror-commands@npm:^1.1.8":
+  version: 1.1.8
+  resolution: "prosemirror-commands@npm:1.1.8"
   dependencies:
     prosemirror-model: ^1.0.0
     prosemirror-state: ^1.0.0
     prosemirror-transform: ^1.0.0
-  checksum: f833354245fa93ed8a07d9a75d1cba1fce9fbdad743446bd47e060273ae2d86ce4f2d0881ac54adb64b35bbea5e2b404e63d5b6abe145853e6cc629b556a5370
+  checksum: 382a3222cc0c17b1ba9e64180ef96ac97b0543214a060f84e8ee536e6346b38b6daa61224b2cb86d6e1e9b34d46692f27375ffb15869b3921fa6a744eb9fdd44
   languageName: node
   linkType: hard
 
@@ -21614,7 +21614,7 @@ typescript@3.9.3:
 
 "typescript@patch:typescript@3.9.3#builtin<compat/typescript>":
   version: 3.9.3
-  resolution: "typescript@patch:typescript@npm%3A3.9.3#builtin<compat/typescript>::version=3.9.3&hash=a45b0e"
+  resolution: "typescript@patch:typescript@npm%3A3.9.3#builtin<compat/typescript>::version=3.9.3&hash=ddfc1b"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
@@ -21624,11 +21624,11 @@ typescript@3.9.3:
 
 "typescript@patch:typescript@~4.2.4#builtin<compat/typescript>":
   version: 4.2.4
-  resolution: "typescript@patch:typescript@npm%3A4.2.4#builtin<compat/typescript>::version=4.2.4&hash=a45b0e"
+  resolution: "typescript@patch:typescript@npm%3A4.2.4#builtin<compat/typescript>::version=4.2.4&hash=ddfc1b"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: 3be44317593182e8ce494c114e7ad9b0bb2553a22f3085cc6da4f0a36912c20850daa9be4c898af2ab6fc8b12f430c1c9e46ac715721867cd38643f2350d3ef9
+  checksum: 64658fdf27872904641dcaacf925e6b5a52fb4aa4881a5a726fc78a11b76748423ce9e996dac42313729321061c4dd38a06108014f8d07b222dcff2687037186
   languageName: node
   linkType: hard
 
@@ -22184,25 +22184,7 @@ typescript@~4.2.4:
   languageName: node
   linkType: hard
 
-"vite@npm:^2.3.5":
-  version: 2.3.5
-  resolution: "vite@npm:2.3.5"
-  dependencies:
-    esbuild: ^0.12.5
-    fsevents: ~2.3.1
-    postcss: ^8.2.10
-    resolve: ^1.19.0
-    rollup: ^2.38.5
-  dependenciesMeta:
-    fsevents:
-      optional: true
-  bin:
-    vite: bin/vite.js
-  checksum: abf8c44ef87aae8474d58f1626c7b80396dd6a5bf70d571cf69997a1d82e06b55df3041cecfd5615eeb3fe8c865f75681516f6fd85cbf12cfbeeafacb9612aa5
-  languageName: node
-  linkType: hard
-
-"vite@npm:^2.3.6":
+"vite@npm:^2.3.5, vite@npm:^2.3.6":
   version: 2.3.6
   resolution: "vite@npm:2.3.6"
   dependencies:

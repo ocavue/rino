@@ -84,11 +84,11 @@ describe("shortcut", () => {
         add(doc(h3("<cursor>heading")))
             .press("Enter")
             .callback((content) => {
-                expect(content.state.doc).toEqualRemirrorDocument(doc(p(""), h3("heading")))
+                expect(content.state.doc).toEqualRemirrorDocument(doc(h3(""), h3("heading")))
             })
             .insertText("123")
             .callback((content) => {
-                expect(content.state.doc).toEqualRemirrorDocument(doc(p(""), h3("123heading")))
+                expect(content.state.doc).toEqualRemirrorDocument(doc(h3(""), h3("123heading")))
             })
     })
 

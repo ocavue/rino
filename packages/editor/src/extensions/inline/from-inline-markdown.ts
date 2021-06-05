@@ -265,7 +265,10 @@ function parseInlineMarkdown(text: string): mdast.PhrasingContent[] {
             "thematicBreak",
         ]
         const options: FromMarkdownOptions = {
-            extensions: [{ disable: { null: disabledConstructs } }, micromarkStrikethrough({ singleTilde: false })],
+            extensions: [
+                { disable: { null: disabledConstructs } } as any /* TODO: remove this any */,
+                micromarkStrikethrough({ singleTilde: false }),
+            ],
             mdastExtensions: [mdastStrikethrough.fromMarkdown],
         }
         const root: mdast.Root = fromMarkdown(text, options)
