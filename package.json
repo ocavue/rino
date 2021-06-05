@@ -10,6 +10,7 @@
         "test": "jest --runInBand",
         "postinstall": "./scripts/post-install.sh",
         "exec": "./scripts/recursive-exec.sh",
+        "clean": "rm -rf ./packages/*/dist ./packages/*/.ultra.cache.json || true",
         "build:website": "ultra exec web build && ultra exec home build"
     },
     "devDependencies": {

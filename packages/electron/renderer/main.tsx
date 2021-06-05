@@ -1,7 +1,7 @@
 import React, { FC } from "react"
 import ReactDOM from "react-dom"
 
-import { Workbench } from "../src/index"
+import Workbench from "./Workbench"
 
 const drawerActivityContainer = {
     useContainer: () => ({

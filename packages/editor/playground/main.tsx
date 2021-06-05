@@ -31,16 +31,7 @@ const DefaultEditor: FC = () => {
 
     return (
         <drawerActivityContainer.Provider>
-            <Editor
-                autoFocus={true}
-                note={note}
-                setNoteContent={setNoteContent}
-                extraClassName={""}
-                maxDrawerWidth={100}
-                isTestEnv={true}
-                isDarkMode={false}
-                drawerActivityContainer={drawerActivityContainer}
-            />
+            <Editor note={note} setNoteContent={setNoteContent} drawerActivityContainer={drawerActivityContainer} />
         </drawerActivityContainer.Provider>
     )
 }

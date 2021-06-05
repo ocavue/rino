@@ -1,6 +1,5 @@
 import { app, BrowserWindow } from "electron"
 import logger from "electron-log"
-import { join } from "path"
 import { URL } from "url"
 
 import { env } from "./env"
@@ -39,7 +38,6 @@ if (!lock) {
         mainWindow = new BrowserWindow({
             show: true,
             webPreferences: {
-                preload: join(__dirname, "./preload.js"),
                 enableRemoteModule: true,
             },
         })
@@ -50,7 +48,7 @@ if (!lock) {
          * `file://../renderer/index.html` for production and test
          */
         const pageUrl = (
-            env.MODE === "development" ? "http://localhost:3002" : new URL("../renderer/dist/index.html", "file://" + __dirname).toString()
+            env.MODE === "development" ? "http://localhost:3003" : new URL("../renderer/dist/index.html", "file://" + __dirname).toString()
         ) as string
 
         // if (env.MODE === "development") {
