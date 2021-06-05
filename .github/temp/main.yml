@@ -41,6 +41,8 @@ jobs:
             /tmp/.cache/electron
             /tmp/.cache/electron-builder
           key: ${{ runner.os }}-deps-v7-${{ hashFiles('yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-deps-v7-
 
       - &step_install_deps
         name: Install Dependencies
