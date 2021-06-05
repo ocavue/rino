@@ -81,7 +81,7 @@ jobs:
       - name: Build electron
         run: |
           cd packages/electron
-          yarn run build
+          yarn run build:all
 
       - name: Clean electron dist
         run: |
