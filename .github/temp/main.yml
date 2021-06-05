@@ -28,17 +28,27 @@ jobs:
         uses: actions/cache@v2
         with:
           path: |
-            node_modules
-            */*/node_modules
-            ~/.cache/firebase
-            ~/.cache/ms-playwright
             .yarn/cache
-          key: ${{ runner.os }}-deps-v6-${{ hashFiles('yarn.lock') }}
+            ~/cache_electron
+            ~/cache_electron_builder
+            ~/cache_playwright_browsers
+
+          key: ${{ runner.os }}-deps-v13-${{ hashFiles('yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-deps-v13-
+            ${{ runner.os }}-deps-v12-
 
       - &step_install_deps
         name: Install Dependencies
         # Reinstall node modules even if `cache-hit` is `true` because we need to build symlinks for Yarn workspace
         run: |
+          echo "ELECTRON_CACHE=$HOME/cache_electron" >> $GITHUB_ENV
+          echo "ELECTRON_BUILDER_CACHE=$HOME/cache_electron_builder" >> $GITHUB_ENV
+          echo "PLAYWRIGHT_BROWSERS_PATH=$HOME/cache_playwright_browsers" >> $GITHUB_ENV
+          export ELECTRON_CACHE=$HOME/cache_electron
+          export ELECTRON_BUILDER_CACHE=$HOME/cache_electron_builder
+          export PLAYWRIGHT_BROWSERS_PATH=$HOME/cache_playwright_browsers
+          env | grep CACHE
           date
           yarn install --immutable
           date
@@ -65,6 +75,17 @@ jobs:
       - *step_cache_deps
       - *step_install_deps
 
+      - name: Check electron cache before building
+        run: &check_cache |
+          whoami
+          pwd
+          cd ~
+          pwd
+          env | grep ELECTRON
+          mkdir -p ~/cache_debug
+          touch ~/cache_debug/debug.txt
+          ls -lrth ~/cache_*
+
       - name: Update package.json
         run: |
           version=$(cat version.txt)
@@ -81,14 +102,19 @@ jobs:
       - name: Build electron
         run: |
           cd packages/electron
-          yarn run build
+          yarn run build:all
 
       - name: Clean electron dist
         run: |
-          find ./packages/electron/dist -type f
-          echo "================ cleaning ================"
-          rm -rf ./packages/electron/dist/mac
-          find ./packages/electron/dist -type f
+          cd packages/electron
+          find ./dist -type f
+          echo '============== cleaning =============='
+          yarn run clean
+          echo '============== cleaned ==============='
+          find ./dist -type f
+
+      - name: Check electron cache after building
+        run: *check_cache
 
       - name: Upload dist (electron)
         uses: actions/upload-artifact@v2
@@ -135,8 +161,8 @@ jobs:
       - *step_cache_deps
       - *step_install_deps
 
-      - name: Check files
-        run: ls ./packages/**/dist/ || true
+      - name: Check cache
+        run: *check_cache
 
       - name: Lint
         run: ultra lint .
