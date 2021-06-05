@@ -91,7 +91,7 @@ export async function mustGetOne(testid: string): Promise<ElementHandle<HTMLElem
         }
         await sleep(500)
     }
-    throw new Error("element should not be empty")
+    throw new Error("failed to find element by testid " + JSON.stringify(testid))
 }
 
 export async function getAll(testid: string) {

@@ -5,5 +5,5 @@ import { defineConfig } from "vite"
 export default defineConfig({
     base: "",
     plugins: [reactRefresh()],
-    server: { port: 3002 },
+    server: { port: 3004 },
 })

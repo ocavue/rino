@@ -13,30 +13,30 @@ export interface Note {
 }
 
 export type EditorProps = {
-    autoFocus: boolean
     note: Note
     setNoteContent: (content: string) => void
-    isDarkMode: boolean
-    extraClassName: string
-    maxDrawerWidth: number
     drawerActivityContainer: DrawerActivityContainer
-    isTestEnv: boolean
+    autoFocus?: boolean
+    isDarkMode?: boolean
+    extraClassName?: string
+    maxDrawerWidth?: number
+    isTestEnv?: boolean
 }
 
-const enum Mode {
+enum Mode {
     WYSIWYG = 1,
     SOURCE_CODE = 2,
 }
 
 const Editor: React.FC<EditorProps> = ({
-    autoFocus,
     note,
     setNoteContent,
-    isDarkMode,
-    extraClassName,
-    maxDrawerWidth,
     drawerActivityContainer,
-    isTestEnv,
+    autoFocus = true,
+    isDarkMode = false,
+    extraClassName = "",
+    maxDrawerWidth = 0,
+    isTestEnv = false,
 }) => {
     const [mode, setMode] = useState<Mode>(Mode.WYSIWYG)
     const [isSwitchingMode, setIsSwitchingMode] = useState<boolean>(false)
