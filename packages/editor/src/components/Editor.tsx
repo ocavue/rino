@@ -23,15 +23,6 @@ export type EditorProps = {
     isTestEnv: boolean
 }
 
-export const useTimmer = (): number => {
-    const [time, setTime] = useState(1)
-    useEffect(() => {
-        const timout = setInterval(() => setTime((i) => i + 1), 100)
-        return () => clearInterval(timout)
-    }, [setTime])
-    return time
-}
-
 const enum Mode {
     WYSIWYG = 1,
     SOURCE_CODE = 2,
@@ -62,9 +53,9 @@ const Editor: React.FC<EditorProps> = ({
 
     const beforeUnmount = useCallback(() => {
         setInitialContent(contentRef.current)
-        setMode(mode === Mode.WYSIWYG ? Mode.SOURCE_CODE : Mode.WYSIWYG)
+        setMode((mode) => (mode === Mode.WYSIWYG ? Mode.SOURCE_CODE : Mode.WYSIWYG))
         setIsSwitchingMode(false)
-    }, [mode])
+    }, [])
 
     useEffect(() => {
         const handleKeydown = (event: KeyboardEvent) => {

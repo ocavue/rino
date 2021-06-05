@@ -26,7 +26,6 @@ const DefaultEditor: FC = () => {
 
     const [note, setNote] = useState({ content: isString(content) ? content : "# Title\nhello world", deleted: false })
     const setNoteContent = useCallback((content: string) => {
-        console.log("setNoteContent", content)
         setNote({ content, deleted: false })
     }, [])
 
