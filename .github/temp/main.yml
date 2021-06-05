@@ -40,9 +40,9 @@ jobs:
             ~/.cache/ms-playwright
             /tmp/.cache/electron
             /tmp/.cache/electron-builder
-          key: ${{ runner.os }}-deps-v7-${{ hashFiles('yarn.lock') }}
+          key: ${{ runner.os }}-deps-v8-${{ hashFiles('yarn.lock') }}
           restore-keys: |
-            ${{ runner.os }}-deps-v7-
+            ${{ runner.os }}-deps-v8-
 
       - &step_install_deps
         name: Install Dependencies
@@ -76,8 +76,8 @@ jobs:
 
       - name: Check electron cache before building
         run: |
-          mkdir -p /tmp/.cache
-          find /tmp/.cache -type f
+          mkdir -p /tmp/.cache/electron
+          du -h -d 2 /tmp/.cache
 
       - name: Update package.json
         run: |
@@ -95,7 +95,9 @@ jobs:
       - name: Build electron
         run: |
           cd packages/electron
-          yarn run build
+          mkdir ./dist
+          touch ./dist/debug
+        # yarn run build
         # yarn run build:all
 
       - name: Clean electron dist
@@ -109,8 +111,8 @@ jobs:
 
       - name: Check electron cache after building
         run: |
-          mkdir -p /tmp/.cache
-          find /tmp/.cache -type f
+          mkdir -p /tmp/.cache/electron
+          du -h -d 2 /tmp/.cache
 
       - name: Upload dist (electron)
         uses: actions/upload-artifact@v2
