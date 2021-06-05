@@ -6,4 +6,7 @@ export default defineConfig({
     base: "",
     plugins: [reactRefresh()],
     server: { port: 3004 },
+    build: {
+        chunkSizeWarningLimit: 5000,
+    },
 })

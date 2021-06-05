@@ -7,8 +7,9 @@ on:
 
 env:
   NEXT_TELEMETRY_DISABLED: 1 # https://nextjs.org/telemetry
-  ELECTRON_CACHE: /tmp/.cache/electron
-  ELECTRON_BUILDER_CACHE: /tmp/.cache/electron-builder
+  ELECTRON_CACHE: ${{ format('{0}{1}', env.HOME, 'cache_electron' }}
+  ELECTRON_BUILDER_CACHE: ${{ format('{0}{1}', env.HOME, 'cache_electron_builder' }}
+  PLAYWRIGHT_BROWSERS_PATH: ${{ format('{0}{1}', env.HOME, 'cache_playwright_browsers' }}
 
 jobs:
   build_website:
@@ -29,21 +30,15 @@ jobs:
         name: Cache dependencies
         uses: actions/cache@v2
         with:
-          # Playwright downloads the browser binaries in the following directories:
-          # ~/Library/Caches/ms-playwright on MacOS
-          # ~/.cache/ms-playwright on Linux
           path: |
-            node_modules
-            */*/node_modules
             .yarn/cache
-            ~/Library/Caches/ms-playwright
-            ~/.cache/ms-playwright
-            /tmp/.cache/electron
-            /tmp/.cache/electron-builder
-          key: ${{ runner.os }}-deps-v9-${{ hashFiles('yarn.lock') }}
+            ~/cache_electron
+            ~/cache_electron_builder
+            ~/cache_playwright_browsers
+
+          key: ${{ runner.os }}-deps-v10-${{ hashFiles('yarn.lock') }}
           restore-keys: |
-            ${{ runner.os }}-deps-v9-
-            ${{ runner.os }}-deps-v8-
+            ${{ runner.os }}-deps-v10-
 
       - &step_install_deps
         name: Install Dependencies
@@ -76,9 +71,11 @@ jobs:
       - *step_install_deps
 
       - name: Check electron cache before building
-        run: |
-          mkdir -p /tmp/.cache/electron
-          du -h -d 2 /tmp/.cache
+        run: &check_cache |
+          env | grep ELECTRON
+          mkdir -p ~/cache_debug
+          touch ~/cache_debug/debug.txt
+          ls -lrth ~/cache_*
 
       - name: Update package.json
         run: |
@@ -111,9 +108,7 @@ jobs:
           find ./dist -type f
 
       - name: Check electron cache after building
-        run: |
-          mkdir -p /tmp/.cache/electron
-          du -h -d 2 /tmp/.cache
+        run: *check_cache
 
       - name: Upload dist (electron)
         uses: actions/upload-artifact@v2
@@ -160,8 +155,8 @@ jobs:
       - *step_cache_deps
       - *step_install_deps
 
-      - name: Check files
-        run: ls ./packages/**/dist/ || true
+      - name: Check caceh
+        run: *check_cache
 
       - name: Lint
         run: ultra lint .
