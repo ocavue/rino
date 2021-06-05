@@ -7,9 +7,9 @@ on:
 
 env:
   NEXT_TELEMETRY_DISABLED: 1 # https://nextjs.org/telemetry
-  ELECTRON_CACHE: /home/runner/cache_electron
-  ELECTRON_BUILDER_CACHE: /home/runner/cache_electron_builder
-  PLAYWRIGHT_BROWSERS_PATH: /home/runner/cache_playwright_browsers
+  ELECTRON_CACHE: $GITHUB_WORKSPACE/cache_electron
+  ELECTRON_BUILDER_CACHE: $GITHUB_WORKSPACE/cache_electron_builder
+  PLAYWRIGHT_BROWSERS_PATH: $GITHUB_WORKSPACE/cache_playwright_browsers
 
 jobs:
   build_website:
@@ -32,9 +32,9 @@ jobs:
         with:
           path: |
             .yarn/cache
-            ~/cache_electron
-            ~/cache_electron_builder
-            ~/cache_playwright_browsers
+            ./cache_electron
+            ./cache_electron_builder
+            ./cache_playwright_browsers
 
           key: ${{ runner.os }}-deps-v11-${{ hashFiles('yarn.lock') }}
           restore-keys: |
@@ -73,6 +73,7 @@ jobs:
       - name: Check electron cache before building
         run: &check_cache |
           whoami
+          pwd
           cd ~
           pwd
           env | grep ELECTRON

@@ -9,9 +9,9 @@
   },
   "env": {
     "NEXT_TELEMETRY_DISABLED": 1,
-    "ELECTRON_CACHE": "/home/runner/cache_electron",
-    "ELECTRON_BUILDER_CACHE": "/home/runner/cache_electron_builder",
-    "PLAYWRIGHT_BROWSERS_PATH": "/home/runner/cache_playwright_browsers"
+    "ELECTRON_CACHE": "$GITHUB_WORKSPACE/cache_electron",
+    "ELECTRON_BUILDER_CACHE": "$GITHUB_WORKSPACE/cache_electron_builder",
+    "PLAYWRIGHT_BROWSERS_PATH": "$GITHUB_WORKSPACE/cache_playwright_browsers"
   },
   "jobs": {
     "build_website": {
@@ -33,7 +33,7 @@
           "name": "Cache dependencies",
           "uses": "actions/cache@v2",
           "with": {
-            "path": ".yarn/cache\n~/cache_electron\n~/cache_electron_builder\n~/cache_playwright_browsers\n",
+            "path": ".yarn/cache\n./cache_electron\n./cache_electron_builder\n./cache_playwright_browsers\n",
             "key": "${{ runner.os }}-deps-v11-${{ hashFiles('yarn.lock') }}",
             "restore-keys": "${{ runner.os }}-deps-v11-\n"
           }
@@ -78,7 +78,7 @@
           "name": "Cache dependencies",
           "uses": "actions/cache@v2",
           "with": {
-            "path": ".yarn/cache\n~/cache_electron\n~/cache_electron_builder\n~/cache_playwright_browsers\n",
+            "path": ".yarn/cache\n./cache_electron\n./cache_electron_builder\n./cache_playwright_browsers\n",
             "key": "${{ runner.os }}-deps-v11-${{ hashFiles('yarn.lock') }}",
             "restore-keys": "${{ runner.os }}-deps-v11-\n"
           }
@@ -92,7 +92,7 @@
         },
         {
           "name": "Check electron cache before building",
-          "run": "whoami\ncd ~\npwd\nenv | grep ELECTRON\nmkdir -p ~/cache_debug\ntouch ~/cache_debug/debug.txt\nls -lrth ~/cache_*\n"
+          "run": "whoami\npwd\ncd ~\npwd\nenv | grep ELECTRON\nmkdir -p ~/cache_debug\ntouch ~/cache_debug/debug.txt\nls -lrth ~/cache_*\n"
         },
         {
           "name": "Update package.json",
@@ -112,7 +112,7 @@
         },
         {
           "name": "Check electron cache after building",
-          "run": "whoami\ncd ~\npwd\nenv | grep ELECTRON\nmkdir -p ~/cache_debug\ntouch ~/cache_debug/debug.txt\nls -lrth ~/cache_*\n"
+          "run": "whoami\npwd\ncd ~\npwd\nenv | grep ELECTRON\nmkdir -p ~/cache_debug\ntouch ~/cache_debug/debug.txt\nls -lrth ~/cache_*\n"
         },
         {
           "name": "Upload dist (electron)",
@@ -143,7 +143,7 @@
           "name": "Cache dependencies",
           "uses": "actions/cache@v2",
           "with": {
-            "path": ".yarn/cache\n~/cache_electron\n~/cache_electron_builder\n~/cache_playwright_browsers\n",
+            "path": ".yarn/cache\n./cache_electron\n./cache_electron_builder\n./cache_playwright_browsers\n",
             "key": "${{ runner.os }}-deps-v11-${{ hashFiles('yarn.lock') }}",
             "restore-keys": "${{ runner.os }}-deps-v11-\n"
           }
@@ -202,7 +202,7 @@
           "name": "Cache dependencies",
           "uses": "actions/cache@v2",
           "with": {
-            "path": ".yarn/cache\n~/cache_electron\n~/cache_electron_builder\n~/cache_playwright_browsers\n",
+            "path": ".yarn/cache\n./cache_electron\n./cache_electron_builder\n./cache_playwright_browsers\n",
             "key": "${{ runner.os }}-deps-v11-${{ hashFiles('yarn.lock') }}",
             "restore-keys": "${{ runner.os }}-deps-v11-\n"
           }
@@ -216,7 +216,7 @@
         },
         {
           "name": "Check caceh",
-          "run": "whoami\ncd ~\npwd\nenv | grep ELECTRON\nmkdir -p ~/cache_debug\ntouch ~/cache_debug/debug.txt\nls -lrth ~/cache_*\n"
+          "run": "whoami\npwd\ncd ~\npwd\nenv | grep ELECTRON\nmkdir -p ~/cache_debug\ntouch ~/cache_debug/debug.txt\nls -lrth ~/cache_*\n"
         },
         {
           "name": "Lint",
@@ -247,7 +247,7 @@
           "name": "Cache dependencies",
           "uses": "actions/cache@v2",
           "with": {
-            "path": ".yarn/cache\n~/cache_electron\n~/cache_electron_builder\n~/cache_playwright_browsers\n",
+            "path": ".yarn/cache\n./cache_electron\n./cache_electron_builder\n./cache_playwright_browsers\n",
             "key": "${{ runner.os }}-deps-v11-${{ hashFiles('yarn.lock') }}",
             "restore-keys": "${{ runner.os }}-deps-v11-\n"
           }
