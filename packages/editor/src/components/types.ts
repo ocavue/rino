@@ -4,9 +4,9 @@ export type EditorProps = {
     className: string
     autoFocus: boolean
     editable: boolean
-    content: string
-    setContent: (value: string) => void
+    initialContent: string
+    onContentChange: (content: string) => void
+    beforeUnmount: () => void
 }
-
 
 export type DrawerActivityContainer = Pick<Container<{ drawerActivity: boolean }>, "useContainer">

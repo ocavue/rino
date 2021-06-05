@@ -49,9 +49,9 @@ if (!lock) {
          * Vite dev server for development.
          * `file://../renderer/index.html` for production and test
          */
-        const pageUrl = (env.MODE === "development"
-            ? "http://localhost:3002"
-            : new URL("../renderer/dist/index.html", "file://" + __dirname).toString()) as string
+        const pageUrl = (
+            env.MODE === "development" ? "http://localhost:3002" : new URL("../renderer/dist/index.html", "file://" + __dirname).toString()
+        ) as string
 
         // if (env.MODE === "development") {
         //     mainWindow.webContents.openDevTools()

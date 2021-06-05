@@ -1,24 +1,23 @@
-import { clickSidebarNoteListItem, createNote, login } from "../actions"
-import { pressKey, wait } from "../utils"
+import { pressKey, setupEditor, wait } from "./utils"
 
 describe("Mode switch", function () {
     const expectWysiwygMode = async () => {
         await wait("wysiwyg_mode_textarea")
-        await wait("source_code_mode_textarea", { hidden: true })
+        await wait("source_code_mode_textarea", { state: "hidden" })
     }
     const expectSourceCodeMode = async () => {
         await wait("source_code_mode_textarea")
-        await wait("wysiwyg_mode_textarea", { hidden: true })
+        await wait("wysiwyg_mode_textarea", { state: "hidden" })
     }
     const pressHotkey = async () => {
         await page.click(".ProseMirror")
         await pressKey("Meta", "Slash")
     }
 
+    beforeAll(async () => {
+        await setupEditor()
+    })
     test("Parpare", async () => {
-        await login()
-        await createNote()
-        await clickSidebarNoteListItem()
         await page.click(".ProseMirror")
     })
     test("Default mode", async () => {

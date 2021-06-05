@@ -1,19 +1,8 @@
-import { readFileSync } from "fs"
-
-import { cleanNotes, createNote, switchMode } from "../actions"
-import { getSourceCodeModeText, goto, type as typeByTestid } from "../utils"
-
-function readText(filename: string) {
-    return readFileSync(`${__dirname}/${filename}`, "utf-8")
-}
+import { switchMode } from "./actions"
+import { getSourceCodeModeText, setupEditor, type as typeByTestid } from "./utils"
 
 beforeAll(async () => {
-    await jestPuppeteer.resetBrowser()
-    goto("/")
-})
-
-afterAll(async () => {
-    await cleanNotes()
+    await setupEditor()
 })
 
 async function type(text: string, pressEnter = true) {
@@ -24,7 +13,7 @@ describe("Source code text", () => {
     jest.setTimeout(180000)
 
     test("Create a note", async () => {
-        await createNote()
+        await setupEditor("# ")
         await type("E2E test")
     })
 
@@ -70,8 +59,7 @@ describe("Source code text", () => {
     test("Check result", async () => {
         await switchMode() // Switch to the source code mode
         const received = await getSourceCodeModeText()
-        const expected = readText("0.txt")
-        expect(received).toBe(expected)
+        expect(received).toMatchSnapshot()
         await switchMode() // Switch back to the WYSIWYG mode
     })
 })
