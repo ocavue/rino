@@ -11,7 +11,7 @@
         "postinstall": "./scripts/post-install.sh",
         "exec": "./scripts/recursive-exec.sh",
         "clean": "rm -rf ./packages/*/dist ./packages/*/.ultra.cache.json || true",
-        "build:website": "ultra exec web build && ultra exec home build"
+        "build:website": "ultra clean && ultra exec web build && ultra exec home build"
     },
     "devDependencies": {
         "@lhci/cli": "^0.7.2",
