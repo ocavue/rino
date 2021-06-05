@@ -4,16 +4,6 @@ set -e
 
 cd $(dirname $0)/..
 
-#### skip postinstall in renovate environment
-if [ -z ${YARN_ENABLE_IMMUTABLE_INSTALLS+x} ]; then
-    # YARN_ENABLE_IMMUTABLE_INSTALLS is unset
-    echo "running post-install.sh";
-else
-    echo "YARN_ENABLE_IMMUTABLE_INSTALLS is set to '$DEPLOY_ENV'";
-    echo "skipping post-install.sh"
-    exit 0
-fi
-
 #### build symbolic links
 function lnsf {
     source_dir="$(pwd)/$1"
@@ -25,9 +15,7 @@ function lnsf {
 
     ln -sf $source_dir $target_dir
 
-    DARK_GRAY='\033[0;30m'
-    NO_COLOR='\033[0m'
-    echo -e "${DARK_GRAY}${source_dir} <- ${target_dir}${NO_COLOR}"
+    echo -e "${source_dir} <- ${target_dir}"
 }
 for package_name in "home"; do
     lnsf "assets/share" "packages/${package_name}/src/assets/share"
