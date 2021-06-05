@@ -10,7 +10,7 @@
         "test": "jest --runInBand",
         "postinstall": "./scripts/post-install.sh",
         "exec": "./scripts/recursive-exec.sh",
-        "clean": "rm -rf ./packages/*/dist ./packages/*/.ultra.cache.json || true",
+        "clean": "rimraf ./packages/*/dist ./packages/*/.next ./packages/*/.ultra.cache.json",
         "build:website": "ultra clean && ultra exec web build && ultra exec home build"
     },
     "devDependencies": {
@@ -35,6 +35,7 @@
         "jest-transform-stub": "^2.0.0",
         "playwright": "^1.11.1",
         "prettier": "^2.3.1",
+        "rimraf": "^3.0.2",
         "size-limit": "^4.11.0",
         "typescript": "~4.3.2",
         "ultra-runner": "^3.10.5"
