@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.23.0](https://www.github.com/ocavue/rino/compare/v0.22.0...v0.23.0) (2021-06-05)
+
+
+### Features
+
+* **home:** redesign ([#623](https://www.github.com/ocavue/rino/issues/623)) ([5fb9adb](https://www.github.com/ocavue/rino/commit/5fb9adba9ef37fe92f04aa4d92fd514b3f3cd898))
+
 ## [0.22.0](https://www.github.com/ocavue/rino/compare/v0.21.1...v0.22.0) (2021-05-26)
 
 
