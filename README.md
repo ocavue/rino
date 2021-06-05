@@ -2,7 +2,6 @@
 
 # Rino - A better way to write Markdown
 
-[![Version](https://img.shields.io/npm/v/@rino.app/web?label=version)](https://github.com/ocavue/rino/blob/master/packages/web/CHANGELOG.md)
 [![codecov](https://codecov.io/gh/ocavue/rino/branch/master/graph/badge.svg)](https://codecov.io/gh/ocavue/rino)
 ![GitHub Actions](https://github.com/ocavue/rino/workflows/GitHub%20Actions/badge.svg)
 
