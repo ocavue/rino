@@ -33,8 +33,8 @@
           "uses": "actions/cache@v2",
           "with": {
             "path": "node_modules\n*/*/node_modules\n.yarn/cache\n~/Library/Caches/ms-playwright\n~/.cache/ms-playwright\n/tmp/.cache/electron\n/tmp/.cache/electron-builder\n",
-            "key": "${{ runner.os }}-deps-v8-${{ hashFiles('yarn.lock') }}",
-            "restore-keys": "${{ runner.os }}-deps-v8-\n"
+            "key": "${{ runner.os }}-deps-v9-${{ hashFiles('yarn.lock') }}",
+            "restore-keys": "${{ runner.os }}-deps-v9-\n${{ runner.os }}-deps-v8-\n"
           }
         },
         {
@@ -78,8 +78,8 @@
           "uses": "actions/cache@v2",
           "with": {
             "path": "node_modules\n*/*/node_modules\n.yarn/cache\n~/Library/Caches/ms-playwright\n~/.cache/ms-playwright\n/tmp/.cache/electron\n/tmp/.cache/electron-builder\n",
-            "key": "${{ runner.os }}-deps-v8-${{ hashFiles('yarn.lock') }}",
-            "restore-keys": "${{ runner.os }}-deps-v8-\n"
+            "key": "${{ runner.os }}-deps-v9-${{ hashFiles('yarn.lock') }}",
+            "restore-keys": "${{ runner.os }}-deps-v9-\n${{ runner.os }}-deps-v8-\n"
           }
         },
         {
@@ -103,7 +103,7 @@
         },
         {
           "name": "Build electron",
-          "run": "cd packages/electron\nmkdir ./dist\ntouch ./dist/debug\n"
+          "run": "cd packages/electron\nmkdir ./dist\ntouch ./dist/debug\nyarn run build\n"
         },
         {
           "name": "Clean electron dist",
@@ -143,8 +143,8 @@
           "uses": "actions/cache@v2",
           "with": {
             "path": "node_modules\n*/*/node_modules\n.yarn/cache\n~/Library/Caches/ms-playwright\n~/.cache/ms-playwright\n/tmp/.cache/electron\n/tmp/.cache/electron-builder\n",
-            "key": "${{ runner.os }}-deps-v8-${{ hashFiles('yarn.lock') }}",
-            "restore-keys": "${{ runner.os }}-deps-v8-\n"
+            "key": "${{ runner.os }}-deps-v9-${{ hashFiles('yarn.lock') }}",
+            "restore-keys": "${{ runner.os }}-deps-v9-\n${{ runner.os }}-deps-v8-\n"
           }
         },
         {
@@ -202,8 +202,8 @@
           "uses": "actions/cache@v2",
           "with": {
             "path": "node_modules\n*/*/node_modules\n.yarn/cache\n~/Library/Caches/ms-playwright\n~/.cache/ms-playwright\n/tmp/.cache/electron\n/tmp/.cache/electron-builder\n",
-            "key": "${{ runner.os }}-deps-v8-${{ hashFiles('yarn.lock') }}",
-            "restore-keys": "${{ runner.os }}-deps-v8-\n"
+            "key": "${{ runner.os }}-deps-v9-${{ hashFiles('yarn.lock') }}",
+            "restore-keys": "${{ runner.os }}-deps-v9-\n${{ runner.os }}-deps-v8-\n"
           }
         },
         {
@@ -247,8 +247,8 @@
           "uses": "actions/cache@v2",
           "with": {
             "path": "node_modules\n*/*/node_modules\n.yarn/cache\n~/Library/Caches/ms-playwright\n~/.cache/ms-playwright\n/tmp/.cache/electron\n/tmp/.cache/electron-builder\n",
-            "key": "${{ runner.os }}-deps-v8-${{ hashFiles('yarn.lock') }}",
-            "restore-keys": "${{ runner.os }}-deps-v8-\n"
+            "key": "${{ runner.os }}-deps-v9-${{ hashFiles('yarn.lock') }}",
+            "restore-keys": "${{ runner.os }}-deps-v9-\n${{ runner.os }}-deps-v8-\n"
           }
         },
         {

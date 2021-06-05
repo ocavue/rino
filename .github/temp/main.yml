@@ -40,8 +40,9 @@ jobs:
             ~/.cache/ms-playwright
             /tmp/.cache/electron
             /tmp/.cache/electron-builder
-          key: ${{ runner.os }}-deps-v8-${{ hashFiles('yarn.lock') }}
+          key: ${{ runner.os }}-deps-v9-${{ hashFiles('yarn.lock') }}
           restore-keys: |
+            ${{ runner.os }}-deps-v9-
             ${{ runner.os }}-deps-v8-
 
       - &step_install_deps
@@ -97,7 +98,7 @@ jobs:
           cd packages/electron
           mkdir ./dist
           touch ./dist/debug
-        # yarn run build
+          yarn run build
         # yarn run build:all
 
       - name: Clean electron dist
