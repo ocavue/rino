@@ -99,7 +99,7 @@
         },
         {
           "name": "Clean electron dist",
-          "run": "find ./packages/electron/dist -type f\necho \"================ cleaning ================\"\nrm -rf ./packages/electron/dist/mac\nfind ./packages/electron/dist -type f\n"
+          "run": "cd packages/electron\nyarn run clean\n"
         },
         {
           "name": "Upload dist (electron)",

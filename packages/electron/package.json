@@ -6,14 +6,19 @@
     "author": "ocavue",
     "description": "A better way to write Markdown",
     "scripts": {
-        "dev": "run-p dev:electron dev:main",
+        "dev": "run-p dev:main dev:renderer dev:electron",
         "dev:main": "tsc --build --watch ./main/tsconfig.json",
         "dev:renderer": "tsc --build ./renderer/tsconfig.json && vite ./renderer",
         "dev:electron": "wait-on --timeout 60000 tcp:3004 && wait-on --timeout 60000 ./main/dist/main.js && NODE_ENV=development electron .",
-        "build": "run-s build:main build:electron",
+        "build": "run-s build:main build:renderer build:electron:mac build:electron:win build:electron:linux",
+        "build:default": "run-s build:main build:renderer build:electron:default",
         "build:main": "tsc --build ./main/tsconfig.json",
         "build:renderer": "tsc --build ./renderer/tsconfig.json && vite build ./renderer",
-        "build:electron": "electron-builder --mac --publish never"
+        "build:electron:mac": "electron-builder --mac --universal",
+        "build:electron:win": "electron-builder --win",
+        "build:electron:linux": "electron-builder --linux",
+        "build:electron:default": "electron-builder",
+        "clean": "bash -c 'rm -rf ./dist/*/'"
     },
     "devDependencies": {
         "@types/react": "^17.0.9",

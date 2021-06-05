@@ -85,10 +85,8 @@ jobs:
 
       - name: Clean electron dist
         run: |
-          find ./packages/electron/dist -type f
-          echo "================ cleaning ================"
-          rm -rf ./packages/electron/dist/mac
-          find ./packages/electron/dist -type f
+          cd packages/electron
+          yarn run clean
 
       - name: Upload dist (electron)
         uses: actions/upload-artifact@v2

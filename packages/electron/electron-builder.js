@@ -25,8 +25,6 @@ const config = {
 
         hardenedRuntime: true,
     },
-
-    publish: ["github"],
 }
 
 module.exports = config
