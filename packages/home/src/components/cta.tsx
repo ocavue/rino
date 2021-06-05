@@ -1,47 +1,50 @@
-import { createStyles, makeStyles } from "@material-ui/styles"
+import { Box, Button, createStyles, makeStyles } from "@material-ui/core"
 import React from "react"
 
-import { useAuthInfo } from "../hooks"
 import { colors } from "../styles/color"
-import { Button } from "./button"
-import { Logo } from "./logo"
+import { DOWNLOAD_LINK } from "./links"
 
-const useStyles = makeStyles(
+const useStyles = makeStyles((theme) =>
     createStyles({
         cta: {
-            marginTop: 144,
-            marginBottom: 144,
+            marginTop: 120,
+            marginBottom: 160,
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
         },
-        logo: {
-            height: "6rem",
-            width: "auto",
-        },
         header: {
-            marginTop: 32,
+            marginTop: 64,
             marginBottom: 32,
-            fontSize: "2.25rem",
-            lineHeight: "2.5rem",
             fontWeight: 700,
             color: colors.gray900,
+
+            fontSize: "2.2rem",
+            [theme.breakpoints.up("sm")]: {
+                fontSize: "3rem",
+            },
         },
     }),
 )
 
+const CTAButton: React.FC<{ href: string }> = ({ href, children }) => {
+    return (
+        <Button disabled target="_blank" rel="noopener noreferrer" href={href} size="large" variant="contained" color="primary">
+            {children}
+        </Button>
+    )
+}
+
 // call-to-action
 export const CTA: React.FC = () => {
     const classes = useStyles()
-    const authInfo = useAuthInfo()
 
     return (
         <div className={classes.cta}>
-            <Logo className={classes.logo} />
             <h2 className={classes.header}>Get started with Rino</h2>
-            <Button href={authInfo.signUpLink} testid="homepage_signup_btn" ariaLabel="create_an_account" primary>
-                Create an account
-            </Button>
+            <Box display="flex">
+                <CTAButton href={DOWNLOAD_LINK}>comming soon</CTAButton>
+            </Box>
         </div>
     )
 }

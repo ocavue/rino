@@ -1,5 +1,3 @@
-import "../remedy.css"
-
 import React from "react"
 
 import { BaseApp } from "@rino.app/next/dist/app"

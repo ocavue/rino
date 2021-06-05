@@ -104,13 +104,14 @@ jobs:
       - *step_cache_deps
       - *step_install_deps
 
-      - name: Build static files
+      - name: Build dependencies
         env:
           REACT_APP_TEST_USERNAME: ${{ secrets.REACT_APP_TEST_USERNAME }}
           REACT_APP_TEST_PASSWORD: ${{ secrets.REACT_APP_TEST_PASSWORD }}
           REACT_APP_TESTING: 1
         run: |
-          ultra exec home build
+          ultra exec common build
+          ultra exec next build
 
       - name: Run tests
         env:

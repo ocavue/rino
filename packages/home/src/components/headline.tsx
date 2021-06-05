@@ -1,26 +1,37 @@
-import { createStyles, makeStyles } from "@material-ui/styles"
+import { createStyles, makeStyles } from "@material-ui/core"
 import React from "react"
 
-import { breakpoints } from "../styles/breakpoint"
 import { colors } from "../styles/color"
+import { rootLevelBlock } from "../styles/layout"
 
-const useStyles = makeStyles(
+const useStyles = makeStyles((theme) =>
     createStyles({
         root: {
-            [breakpoints.up.lg]: {
+            ...rootLevelBlock,
+            marginTop: 120,
+            marginBottom: 120,
+
+            [theme.breakpoints.up("sm")]: {
                 textAlign: "center",
             },
-            marginTop: "5rem",
-            marginBottom: "5rem",
         },
         h1: {
-            lineHeight: "1.5",
-            margin: "0",
+            color: theme.palette.primary.main,
+
+            fontSize: "4rem",
+            [theme.breakpoints.up("md")]: {
+                fontSize: "5rem",
+            },
+        },
+        h2: {
             fontWeight: 700,
-            fontSize: "3rem",
-            marginTop: ".5rem",
             color: colors.gray900,
             letterSpacing: "-0.025em",
+
+            fontSize: "2.4rem",
+            [theme.breakpoints.up("md")]: {
+                fontSize: "3rem",
+            },
         },
     }),
 )
@@ -29,7 +40,8 @@ export const Headline: React.FC = () => {
     const classes = useStyles()
     return (
         <div className={classes.root}>
-            <h1 className={classes.h1}>A better way to write Markdown</h1>
+            <h1 className={classes.h1}>Rino</h1>
+            <h2 className={classes.h2}>A better way to write Markdown</h2>
         </div>
     )
 }
