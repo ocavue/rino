@@ -8,11 +8,11 @@
     "scripts": {
         "dev": "run-p dev:electron dev:main",
         "dev:main": "tsc --build --watch ./main/tsconfig.json",
-        "dev:renderer": "vite ./renderer",
+        "dev:renderer": "tsc --build ./renderer/tsconfig.json && vite ./renderer",
         "dev:electron": "wait-on --timeout 60000 tcp:3004 && wait-on --timeout 60000 ./main/dist/main.js && NODE_ENV=development electron .",
         "build": "run-s build:main build:electron",
         "build:main": "tsc --build ./main/tsconfig.json",
-        "build:renderer": "vite build ./renderer",
+        "build:renderer": "tsc --build ./renderer/tsconfig.json && vite build ./renderer",
         "build:electron": "electron-builder --mac --publish never"
     },
     "devDependencies": {
