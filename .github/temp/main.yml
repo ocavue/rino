@@ -118,9 +118,7 @@ jobs:
           REACT_APP_TEST_USERNAME: ${{ secrets.REACT_APP_TEST_USERNAME }}
           REACT_APP_TEST_PASSWORD: ${{ secrets.REACT_APP_TEST_PASSWORD }}
         run: |
-          ./node_modules/.bin/firebase emulators:exec --only firestore "
-            ultra test --coverage
-          "
+          ultra test --coverage
 
       - name: Upload coverage information to codecov
         uses: codecov/codecov-action@v1

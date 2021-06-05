@@ -157,7 +157,7 @@
             "REACT_APP_TEST_USERNAME": "${{ secrets.REACT_APP_TEST_USERNAME }}",
             "REACT_APP_TEST_PASSWORD": "${{ secrets.REACT_APP_TEST_PASSWORD }}"
           },
-          "run": "./node_modules/.bin/firebase emulators:exec --only firestore \"\n  ultra test --coverage\n\"\n"
+          "run": "ultra test --coverage\n"
         },
         {
           "name": "Upload coverage information to codecov",
