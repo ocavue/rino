@@ -8,6 +8,8 @@ module.exports = {
 
     displayName: { name: "HOME:UNIT", color: "blue" },
 
+    testEnvironment: "jsdom",
+
     // The glob patterns Jest uses to detect test files
     testMatch: ["**/__test__/**/*.spec.(js|ts|jsx|tsx)"],
 
