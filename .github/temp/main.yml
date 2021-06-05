@@ -7,9 +7,9 @@ on:
 
 env:
   NEXT_TELEMETRY_DISABLED: 1 # https://nextjs.org/telemetry
-  ELECTRON_CACHE: ${{ env.HOME }}/cache_electron
-  ELECTRON_BUILDER_CACHE: ${{ env.HOME }}/cache_electron_builder
-  PLAYWRIGHT_BROWSERS_PATH: ${{ env.HOME }}/cache_playwright_browsers
+  ELECTRON_CACHE: /home/runner/cache_electron
+  ELECTRON_BUILDER_CACHE: /home/runner/cache_electron_builder
+  PLAYWRIGHT_BROWSERS_PATH: /home/runner/cache_playwright_browsers
 
 jobs:
   build_website:
@@ -36,9 +36,9 @@ jobs:
             ~/cache_electron_builder
             ~/cache_playwright_browsers
 
-          key: ${{ runner.os }}-deps-v10-${{ hashFiles('yarn.lock') }}
+          key: ${{ runner.os }}-deps-v11-${{ hashFiles('yarn.lock') }}
           restore-keys: |
-            ${{ runner.os }}-deps-v10-
+            ${{ runner.os }}-deps-v11-
 
       - &step_install_deps
         name: Install Dependencies
@@ -72,6 +72,9 @@ jobs:
 
       - name: Check electron cache before building
         run: &check_cache |
+          whoami
+          cd ~
+          pwd
           env | grep ELECTRON
           mkdir -p ~/cache_debug
           touch ~/cache_debug/debug.txt
