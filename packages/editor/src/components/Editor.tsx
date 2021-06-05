@@ -23,7 +23,7 @@ export type EditorProps = {
     isTestEnv?: boolean
 }
 
-const enum Mode {
+enum Mode {
     WYSIWYG = 1,
     SOURCE_CODE = 2,
 }

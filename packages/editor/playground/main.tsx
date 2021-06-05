@@ -31,7 +31,7 @@ const DefaultEditor: FC = () => {
 
     return (
         <drawerActivityContainer.Provider>
-            <Editor note={note} setNoteContent={setNoteContent} drawerActivityContainer={drawerActivityContainer} />
+            <Editor note={note} setNoteContent={setNoteContent} drawerActivityContainer={drawerActivityContainer} isTestEnv />
         </drawerActivityContainer.Provider>
     )
 }
