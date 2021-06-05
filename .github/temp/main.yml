@@ -7,9 +7,6 @@ on:
 
 env:
   NEXT_TELEMETRY_DISABLED: 1 # https://nextjs.org/telemetry
-  ELECTRON_CACHE: $GITHUB_WORKSPACE/cache_electron
-  ELECTRON_BUILDER_CACHE: $GITHUB_WORKSPACE/cache_electron_builder
-  PLAYWRIGHT_BROWSERS_PATH: $GITHUB_WORKSPACE/cache_playwright_browsers
 
 jobs:
   build_website:
@@ -32,18 +29,25 @@ jobs:
         with:
           path: |
             .yarn/cache
-            ./cache_electron
-            ./cache_electron_builder
-            ./cache_playwright_browsers
+            ~/cache_electron
+            ~/cache_electron_builder
+            ~/cache_playwright_browsers
 
-          key: ${{ runner.os }}-deps-v11-${{ hashFiles('yarn.lock') }}
+          key: ${{ runner.os }}-deps-v12-${{ hashFiles('yarn.lock') }}
           restore-keys: |
-            ${{ runner.os }}-deps-v11-
+            ${{ runner.os }}-deps-v12-
 
       - &step_install_deps
         name: Install Dependencies
         # Reinstall node modules even if `cache-hit` is `true` because we need to build symlinks for Yarn workspace
         run: |
+          echo "ELECTRON_CACHE=$HOME/cache_electron" >> $GITHUB_ENV
+          echo "ELECTRON_BUILDER_CACHE=$HOME/cache_electron_builder" >> $GITHUB_ENV
+          echo "PLAYWRIGHT_BROWSERS_PATH=$HOME/cache_playwright_browsers" >> $GITHUB_ENV
+          export ELECTRON_CACHE=$HOME/cache_electron
+          export ELECTRON_BUILDER_CACHE=$HOME/cache_electron_builder
+          export PLAYWRIGHT_BROWSERS_PATH=$HOME/cache_playwright_browsers
+          env | grep CACHE
           date
           yarn install --immutable
           date

@@ -8,10 +8,7 @@
     }
   },
   "env": {
-    "NEXT_TELEMETRY_DISABLED": 1,
-    "ELECTRON_CACHE": "$GITHUB_WORKSPACE/cache_electron",
-    "ELECTRON_BUILDER_CACHE": "$GITHUB_WORKSPACE/cache_electron_builder",
-    "PLAYWRIGHT_BROWSERS_PATH": "$GITHUB_WORKSPACE/cache_playwright_browsers"
+    "NEXT_TELEMETRY_DISABLED": 1
   },
   "jobs": {
     "build_website": {
@@ -33,14 +30,14 @@
           "name": "Cache dependencies",
           "uses": "actions/cache@v2",
           "with": {
-            "path": ".yarn/cache\n./cache_electron\n./cache_electron_builder\n./cache_playwright_browsers\n",
-            "key": "${{ runner.os }}-deps-v11-${{ hashFiles('yarn.lock') }}",
-            "restore-keys": "${{ runner.os }}-deps-v11-\n"
+            "path": ".yarn/cache\n~/cache_electron\n~/cache_electron_builder\n~/cache_playwright_browsers\n",
+            "key": "${{ runner.os }}-deps-v12-${{ hashFiles('yarn.lock') }}",
+            "restore-keys": "${{ runner.os }}-deps-v12-\n"
           }
         },
         {
           "name": "Install Dependencies",
-          "run": "date\nyarn install --immutable\ndate\necho \"[DEBUG] CACHE_HIT: $CACHE_HIT\"\nsudo ln -sf $PWD/node_modules/.bin/ultra /usr/local/bin/ultra\n",
+          "run": "echo \"ELECTRON_CACHE=$HOME/cache_electron\" >> $GITHUB_ENV\necho \"ELECTRON_BUILDER_CACHE=$HOME/cache_electron_builder\" >> $GITHUB_ENV\necho \"PLAYWRIGHT_BROWSERS_PATH=$HOME/cache_playwright_browsers\" >> $GITHUB_ENV\nexport ELECTRON_CACHE=$HOME/cache_electron\nexport ELECTRON_BUILDER_CACHE=$HOME/cache_electron_builder\nexport PLAYWRIGHT_BROWSERS_PATH=$HOME/cache_playwright_browsers\nenv | grep CACHE\ndate\nyarn install --immutable\ndate\necho \"[DEBUG] CACHE_HIT: $CACHE_HIT\"\nsudo ln -sf $PWD/node_modules/.bin/ultra /usr/local/bin/ultra\n",
           "env": {
             "CACHE_HIT": "${{ steps.step_cache_deps.outputs.cache-hit }}"
           }
@@ -78,14 +75,14 @@
           "name": "Cache dependencies",
           "uses": "actions/cache@v2",
           "with": {
-            "path": ".yarn/cache\n./cache_electron\n./cache_electron_builder\n./cache_playwright_browsers\n",
-            "key": "${{ runner.os }}-deps-v11-${{ hashFiles('yarn.lock') }}",
-            "restore-keys": "${{ runner.os }}-deps-v11-\n"
+            "path": ".yarn/cache\n~/cache_electron\n~/cache_electron_builder\n~/cache_playwright_browsers\n",
+            "key": "${{ runner.os }}-deps-v12-${{ hashFiles('yarn.lock') }}",
+            "restore-keys": "${{ runner.os }}-deps-v12-\n"
           }
         },
         {
           "name": "Install Dependencies",
-          "run": "date\nyarn install --immutable\ndate\necho \"[DEBUG] CACHE_HIT: $CACHE_HIT\"\nsudo ln -sf $PWD/node_modules/.bin/ultra /usr/local/bin/ultra\n",
+          "run": "echo \"ELECTRON_CACHE=$HOME/cache_electron\" >> $GITHUB_ENV\necho \"ELECTRON_BUILDER_CACHE=$HOME/cache_electron_builder\" >> $GITHUB_ENV\necho \"PLAYWRIGHT_BROWSERS_PATH=$HOME/cache_playwright_browsers\" >> $GITHUB_ENV\nexport ELECTRON_CACHE=$HOME/cache_electron\nexport ELECTRON_BUILDER_CACHE=$HOME/cache_electron_builder\nexport PLAYWRIGHT_BROWSERS_PATH=$HOME/cache_playwright_browsers\nenv | grep CACHE\ndate\nyarn install --immutable\ndate\necho \"[DEBUG] CACHE_HIT: $CACHE_HIT\"\nsudo ln -sf $PWD/node_modules/.bin/ultra /usr/local/bin/ultra\n",
           "env": {
             "CACHE_HIT": "${{ steps.step_cache_deps.outputs.cache-hit }}"
           }
@@ -143,14 +140,14 @@
           "name": "Cache dependencies",
           "uses": "actions/cache@v2",
           "with": {
-            "path": ".yarn/cache\n./cache_electron\n./cache_electron_builder\n./cache_playwright_browsers\n",
-            "key": "${{ runner.os }}-deps-v11-${{ hashFiles('yarn.lock') }}",
-            "restore-keys": "${{ runner.os }}-deps-v11-\n"
+            "path": ".yarn/cache\n~/cache_electron\n~/cache_electron_builder\n~/cache_playwright_browsers\n",
+            "key": "${{ runner.os }}-deps-v12-${{ hashFiles('yarn.lock') }}",
+            "restore-keys": "${{ runner.os }}-deps-v12-\n"
           }
         },
         {
           "name": "Install Dependencies",
-          "run": "date\nyarn install --immutable\ndate\necho \"[DEBUG] CACHE_HIT: $CACHE_HIT\"\nsudo ln -sf $PWD/node_modules/.bin/ultra /usr/local/bin/ultra\n",
+          "run": "echo \"ELECTRON_CACHE=$HOME/cache_electron\" >> $GITHUB_ENV\necho \"ELECTRON_BUILDER_CACHE=$HOME/cache_electron_builder\" >> $GITHUB_ENV\necho \"PLAYWRIGHT_BROWSERS_PATH=$HOME/cache_playwright_browsers\" >> $GITHUB_ENV\nexport ELECTRON_CACHE=$HOME/cache_electron\nexport ELECTRON_BUILDER_CACHE=$HOME/cache_electron_builder\nexport PLAYWRIGHT_BROWSERS_PATH=$HOME/cache_playwright_browsers\nenv | grep CACHE\ndate\nyarn install --immutable\ndate\necho \"[DEBUG] CACHE_HIT: $CACHE_HIT\"\nsudo ln -sf $PWD/node_modules/.bin/ultra /usr/local/bin/ultra\n",
           "env": {
             "CACHE_HIT": "${{ steps.step_cache_deps.outputs.cache-hit }}"
           }
@@ -202,14 +199,14 @@
           "name": "Cache dependencies",
           "uses": "actions/cache@v2",
           "with": {
-            "path": ".yarn/cache\n./cache_electron\n./cache_electron_builder\n./cache_playwright_browsers\n",
-            "key": "${{ runner.os }}-deps-v11-${{ hashFiles('yarn.lock') }}",
-            "restore-keys": "${{ runner.os }}-deps-v11-\n"
+            "path": ".yarn/cache\n~/cache_electron\n~/cache_electron_builder\n~/cache_playwright_browsers\n",
+            "key": "${{ runner.os }}-deps-v12-${{ hashFiles('yarn.lock') }}",
+            "restore-keys": "${{ runner.os }}-deps-v12-\n"
           }
         },
         {
           "name": "Install Dependencies",
-          "run": "date\nyarn install --immutable\ndate\necho \"[DEBUG] CACHE_HIT: $CACHE_HIT\"\nsudo ln -sf $PWD/node_modules/.bin/ultra /usr/local/bin/ultra\n",
+          "run": "echo \"ELECTRON_CACHE=$HOME/cache_electron\" >> $GITHUB_ENV\necho \"ELECTRON_BUILDER_CACHE=$HOME/cache_electron_builder\" >> $GITHUB_ENV\necho \"PLAYWRIGHT_BROWSERS_PATH=$HOME/cache_playwright_browsers\" >> $GITHUB_ENV\nexport ELECTRON_CACHE=$HOME/cache_electron\nexport ELECTRON_BUILDER_CACHE=$HOME/cache_electron_builder\nexport PLAYWRIGHT_BROWSERS_PATH=$HOME/cache_playwright_browsers\nenv | grep CACHE\ndate\nyarn install --immutable\ndate\necho \"[DEBUG] CACHE_HIT: $CACHE_HIT\"\nsudo ln -sf $PWD/node_modules/.bin/ultra /usr/local/bin/ultra\n",
           "env": {
             "CACHE_HIT": "${{ steps.step_cache_deps.outputs.cache-hit }}"
           }
@@ -247,14 +244,14 @@
           "name": "Cache dependencies",
           "uses": "actions/cache@v2",
           "with": {
-            "path": ".yarn/cache\n./cache_electron\n./cache_electron_builder\n./cache_playwright_browsers\n",
-            "key": "${{ runner.os }}-deps-v11-${{ hashFiles('yarn.lock') }}",
-            "restore-keys": "${{ runner.os }}-deps-v11-\n"
+            "path": ".yarn/cache\n~/cache_electron\n~/cache_electron_builder\n~/cache_playwright_browsers\n",
+            "key": "${{ runner.os }}-deps-v12-${{ hashFiles('yarn.lock') }}",
+            "restore-keys": "${{ runner.os }}-deps-v12-\n"
           }
         },
         {
           "name": "Install Dependencies",
-          "run": "date\nyarn install --immutable\ndate\necho \"[DEBUG] CACHE_HIT: $CACHE_HIT\"\nsudo ln -sf $PWD/node_modules/.bin/ultra /usr/local/bin/ultra\n",
+          "run": "echo \"ELECTRON_CACHE=$HOME/cache_electron\" >> $GITHUB_ENV\necho \"ELECTRON_BUILDER_CACHE=$HOME/cache_electron_builder\" >> $GITHUB_ENV\necho \"PLAYWRIGHT_BROWSERS_PATH=$HOME/cache_playwright_browsers\" >> $GITHUB_ENV\nexport ELECTRON_CACHE=$HOME/cache_electron\nexport ELECTRON_BUILDER_CACHE=$HOME/cache_electron_builder\nexport PLAYWRIGHT_BROWSERS_PATH=$HOME/cache_playwright_browsers\nenv | grep CACHE\ndate\nyarn install --immutable\ndate\necho \"[DEBUG] CACHE_HIT: $CACHE_HIT\"\nsudo ln -sf $PWD/node_modules/.bin/ultra /usr/local/bin/ultra\n",
           "env": {
             "CACHE_HIT": "${{ steps.step_cache_deps.outputs.cache-hit }}"
           }
