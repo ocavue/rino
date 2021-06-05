@@ -4,7 +4,7 @@ set -e
 
 cd $(dirname $0)/..
 
-#### build symbolic links
+# create symbolic links
 function lnsf {
     source_dir="$(pwd)/$1"
     target_dir="$(pwd)/$2"

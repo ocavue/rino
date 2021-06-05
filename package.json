@@ -8,10 +8,9 @@
     "scripts": {
         "lint": "eslint --ignore-path .gitignore --ext '.js,.jsx,.ts,.tsx'",
         "test": "jest --runInBand",
-        "postinstall": "./scripts/post-install.sh",
+        "postinstall": "./scripts/post-install.sh && husky install",
         "exec": "./scripts/recursive-exec.sh",
         "clean": "rimraf ./packages/*/dist ./packages/*/.next ./packages/*/.ultra.cache.json",
-        "build:website": "ultra clean && ultra exec editor build && ultra exec home build",
         "build:size-limit": "ultra clean && ultra exec editor build && ultra exec home build"
     },
     "devDependencies": {
@@ -29,7 +28,7 @@
         "eslint-plugin-react": "^7.24.0",
         "eslint-plugin-react-hooks": "^4.2.0",
         "eslint-plugin-simple-import-sort": "^7.0.0",
-        "husky": "^4.3.8",
+        "husky": "^6.0.0",
         "jest": "^26.6.3",
         "jest-playwright-preset": "^1.6.0",
         "jest-transform-stub": "^2.0.0",
@@ -80,11 +79,6 @@
         ],
         "rangeStrategy": "bump",
         "dependencyDashboard": true
-    },
-    "husky": {
-        "hooks": {
-            "pre-commit": "./scripts/pre-commit.sh"
-        }
     },
     "size-limit": [
         {
