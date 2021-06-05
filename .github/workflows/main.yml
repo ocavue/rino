@@ -31,8 +31,8 @@
           "uses": "actions/cache@v2",
           "with": {
             "path": ".yarn/cache\n~/cache_electron\n~/cache_electron_builder\n~/cache_playwright_browsers\n",
-            "key": "${{ runner.os }}-deps-v12-${{ hashFiles('yarn.lock') }}",
-            "restore-keys": "${{ runner.os }}-deps-v12-\n"
+            "key": "${{ runner.os }}-deps-v13-${{ hashFiles('yarn.lock') }}",
+            "restore-keys": "${{ runner.os }}-deps-v13-\n${{ runner.os }}-deps-v12-\n"
           }
         },
         {
@@ -76,8 +76,8 @@
           "uses": "actions/cache@v2",
           "with": {
             "path": ".yarn/cache\n~/cache_electron\n~/cache_electron_builder\n~/cache_playwright_browsers\n",
-            "key": "${{ runner.os }}-deps-v12-${{ hashFiles('yarn.lock') }}",
-            "restore-keys": "${{ runner.os }}-deps-v12-\n"
+            "key": "${{ runner.os }}-deps-v13-${{ hashFiles('yarn.lock') }}",
+            "restore-keys": "${{ runner.os }}-deps-v13-\n${{ runner.os }}-deps-v12-\n"
           }
         },
         {
@@ -101,7 +101,11 @@
         },
         {
           "name": "Build electron",
-          "run": "cd packages/electron\nyarn run build\n"
+          "run": "cd packages/electron\nyarn run build:all\n"
+        },
+        {
+          "name": "Clean electron dist",
+          "run": "cd packages/electron\nfind ./dist -type f\necho '============== cleaning =============='\nyarn run clean\necho '============== cleaned ==============='\nfind ./dist -type f\n"
         },
         {
           "name": "Check electron cache after building",
@@ -137,8 +141,8 @@
           "uses": "actions/cache@v2",
           "with": {
             "path": ".yarn/cache\n~/cache_electron\n~/cache_electron_builder\n~/cache_playwright_browsers\n",
-            "key": "${{ runner.os }}-deps-v12-${{ hashFiles('yarn.lock') }}",
-            "restore-keys": "${{ runner.os }}-deps-v12-\n"
+            "key": "${{ runner.os }}-deps-v13-${{ hashFiles('yarn.lock') }}",
+            "restore-keys": "${{ runner.os }}-deps-v13-\n${{ runner.os }}-deps-v12-\n"
           }
         },
         {
@@ -196,8 +200,8 @@
           "uses": "actions/cache@v2",
           "with": {
             "path": ".yarn/cache\n~/cache_electron\n~/cache_electron_builder\n~/cache_playwright_browsers\n",
-            "key": "${{ runner.os }}-deps-v12-${{ hashFiles('yarn.lock') }}",
-            "restore-keys": "${{ runner.os }}-deps-v12-\n"
+            "key": "${{ runner.os }}-deps-v13-${{ hashFiles('yarn.lock') }}",
+            "restore-keys": "${{ runner.os }}-deps-v13-\n${{ runner.os }}-deps-v12-\n"
           }
         },
         {
@@ -241,8 +245,8 @@
           "uses": "actions/cache@v2",
           "with": {
             "path": ".yarn/cache\n~/cache_electron\n~/cache_electron_builder\n~/cache_playwright_browsers\n",
-            "key": "${{ runner.os }}-deps-v12-${{ hashFiles('yarn.lock') }}",
-            "restore-keys": "${{ runner.os }}-deps-v12-\n"
+            "key": "${{ runner.os }}-deps-v13-${{ hashFiles('yarn.lock') }}",
+            "restore-keys": "${{ runner.os }}-deps-v13-\n${{ runner.os }}-deps-v12-\n"
           }
         },
         {
