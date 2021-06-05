@@ -1,11 +1,10 @@
-import { createStyles, makeStyles } from "@material-ui/styles"
+import { createStyles, makeStyles } from "@material-ui/core"
 import React from "react"
 
-import { breakpoints } from "../styles/breakpoint"
 import { colors } from "../styles/color"
 import { Logo } from "./logo"
 
-const useStyles = makeStyles(
+const useStyles = makeStyles((theme) =>
     createStyles({
         root: {
             display: "flex",
@@ -14,8 +13,12 @@ const useStyles = makeStyles(
         logo: {
             height: "48px",
             width: "48px",
-            [breakpoints.up.sm]: {
-                height: "3rem",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            [theme.breakpoints.up("md")]: {
+                height: "64px",
+                width: "64px",
             },
         },
         text: {
@@ -36,7 +39,7 @@ const useStyles = makeStyles(
                 outline: "0",
                 color: colors.gray900,
             },
-            [breakpoints.up.sm]: {
+            [theme.breakpoints.up("md")]: {
                 paddingLeft: "1.5rem",
                 fontSize: "1.5rem",
             },

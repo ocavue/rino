@@ -1,27 +1,55 @@
-import { createStyles, makeStyles } from "@material-ui/styles"
-import React from "react"
+import { Button, createStyles, Hidden, makeStyles, Toolbar } from "@material-ui/core"
+import React, { FC } from "react"
 
-import { colors } from "../styles/color"
+import { rootLevelBlock } from "../styles/layout"
+import { AppbarLogo } from "./appbar-logo"
+import { DOWNLOAD_LINK, GITHUB_LINK } from "./links"
 
-const useStyles = makeStyles(
+const useStyles = makeStyles((theme) =>
     createStyles({
-        appbar: {
+        root: {},
+        flexGrow: {
+            flexGrow: 1,
+        },
+        navigationContainer: {
             display: "flex",
             justifyContent: "space-between",
             alignItems: "center",
+        },
+        toolbar: {
+            ...rootLevelBlock,
+            padding: theme.spacing(0, 2),
 
-            borderBottomWidth: "2px",
-            borderBottomColor: colors.gray100,
-            borderBottomStyle: "solid",
-
-            paddingTop: "1.5rem",
-            paddingBottom: "1.5rem",
+            height: 80,
+            [theme.breakpoints.up("md")]: {
+                height: 96,
+            },
+        },
+        button: {
+            fontSize: "1.1rem",
         },
     }),
 )
 
-export const Appbar: React.FC = ({ children }) => {
+const Appbar: FC = () => {
     const classes = useStyles()
 
-    return <div className={classes.appbar}>{children}</div>
+    return (
+        <Toolbar disableGutters className={classes.toolbar}>
+            <a href="/" title="rino">
+                <AppbarLogo />
+            </a>
+            <div className={classes.flexGrow} />
+            <Hidden xsDown>
+                <Button target="_blank" rel="noopener noreferrer" className={classes.button} size="large" href={DOWNLOAD_LINK}>
+                    Download
+                </Button>
+                <Button target="_blank" rel="noopener noreferrer" className={classes.button} size="large" href={GITHUB_LINK}>
+                    Github
+                </Button>
+            </Hidden>
+        </Toolbar>
+    )
 }
+
+export { Appbar }

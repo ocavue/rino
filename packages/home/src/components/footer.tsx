@@ -1,6 +1,7 @@
 import React from "react"
 
 import { colors } from "../styles/color"
+import { GITHUB_LINK, MAILTO_LINK, TWITTER_LINK } from "./links"
 
 const Link: React.FC<{ href: string; text: string }> = ({ href, text }) => (
     <a
@@ -21,18 +22,16 @@ export const Footer: React.FC = () => (
     <div
         style={{
             position: "relative",
-            marginTop: "5rem",
             marginBottom: "0",
             paddingTop: "5rem",
             paddingBottom: "5rem",
-            backgroundColor: colors.gray100,
             width: "100%",
             display: "flex",
             justifyContent: "center",
         }}
     >
-        <Link text="Twitter" href="https://twitter.com/rino_editor" />
-        <Link text="Github" href="https://github.com/ocavue/rino" />
-        <Link text="Email" href="mailto:support@rino.app" />
+        <Link text="Twitter" href={TWITTER_LINK} />
+        <Link text="Github" href={GITHUB_LINK} />
+        <Link text="Email" href={MAILTO_LINK} />
     </div>
 )
