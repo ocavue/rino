@@ -36,30 +36,14 @@
         },
         {
           "name": "Install Dependencies",
-          "run": "date\nyarn install --immutable\ndate\necho \"[DEBUG] CACHE_HIT: $CACHE_HIT\"\nsudo ln -sf $PWD/node_modules/.bin/ultra /usr/local/bin/ultra\nif [ \"$CACHE_HIT\" != \"true\" ]\nthen\n  echo \"[DEBUG] installing\"\n  cd packages/web\n  ultra firebase setup:emulators:firestore\nfi\nls -lrth ~/.cache/firebase/emulators/\n",
+          "run": "date\nyarn install --immutable\ndate\necho \"[DEBUG] CACHE_HIT: $CACHE_HIT\"\nsudo ln -sf $PWD/node_modules/.bin/ultra /usr/local/bin/ultra\n",
           "env": {
             "CACHE_HIT": "${{ steps.step_cache_deps.outputs.cache-hit }}"
           }
         },
         {
-          "name": "Configrate firebase",
-          "env": {
-            "FIREBASE_CLIENT_JSON": "${{ secrets.FIREBASE_CLIENT_JSON }}",
-            "FIREBASE_TOKEN": "${{ secrets.FIREBASE_TOKEN }}"
-          },
-          "run": "echo \"${FIREBASE_CLIENT_JSON}\" > ./packages/web/config/firebase.client.json\nexport FIREBASE_PROJECT_ID=$(scripts/simple_jq.js ./packages/web/config/firebase.client.json .projectId)\ncd packages/web\nultra firebase use --add $FIREBASE_PROJECT_ID\n"
-        },
-        {
           "name": "Build website",
-          "run": "ultra exec home build\nultra exec web build\n"
-        },
-        {
-          "name": "Upload dist (web)",
-          "uses": "actions/upload-artifact@v2",
-          "with": {
-            "name": "web_dist",
-            "path": "./packages/web/dist"
-          }
+          "run": "ultra exec home build\n"
         },
         {
           "name": "Upload dist (home)",
@@ -96,7 +80,7 @@
         },
         {
           "name": "Install Dependencies",
-          "run": "date\nyarn install --immutable\ndate\necho \"[DEBUG] CACHE_HIT: $CACHE_HIT\"\nsudo ln -sf $PWD/node_modules/.bin/ultra /usr/local/bin/ultra\nif [ \"$CACHE_HIT\" != \"true\" ]\nthen\n  echo \"[DEBUG] installing\"\n  cd packages/web\n  ultra firebase setup:emulators:firestore\nfi\nls -lrth ~/.cache/firebase/emulators/\n",
+          "run": "date\nyarn install --immutable\ndate\necho \"[DEBUG] CACHE_HIT: $CACHE_HIT\"\nsudo ln -sf $PWD/node_modules/.bin/ultra /usr/local/bin/ultra\n",
           "env": {
             "CACHE_HIT": "${{ steps.step_cache_deps.outputs.cache-hit }}"
           }
@@ -152,18 +136,10 @@
         },
         {
           "name": "Install Dependencies",
-          "run": "date\nyarn install --immutable\ndate\necho \"[DEBUG] CACHE_HIT: $CACHE_HIT\"\nsudo ln -sf $PWD/node_modules/.bin/ultra /usr/local/bin/ultra\nif [ \"$CACHE_HIT\" != \"true\" ]\nthen\n  echo \"[DEBUG] installing\"\n  cd packages/web\n  ultra firebase setup:emulators:firestore\nfi\nls -lrth ~/.cache/firebase/emulators/\n",
+          "run": "date\nyarn install --immutable\ndate\necho \"[DEBUG] CACHE_HIT: $CACHE_HIT\"\nsudo ln -sf $PWD/node_modules/.bin/ultra /usr/local/bin/ultra\n",
           "env": {
             "CACHE_HIT": "${{ steps.step_cache_deps.outputs.cache-hit }}"
           }
-        },
-        {
-          "name": "Configrate firebase",
-          "env": {
-            "FIREBASE_CLIENT_JSON": "${{ secrets.FIREBASE_CLIENT_JSON }}",
-            "FIREBASE_TOKEN": "${{ secrets.FIREBASE_TOKEN }}"
-          },
-          "run": "echo \"${FIREBASE_CLIENT_JSON}\" > ./packages/web/config/firebase.client.json\nexport FIREBASE_PROJECT_ID=$(scripts/simple_jq.js ./packages/web/config/firebase.client.json .projectId)\ncd packages/web\nultra firebase use --add $FIREBASE_PROJECT_ID\n"
         },
         {
           "name": "Build static files",
@@ -172,7 +148,7 @@
             "REACT_APP_TEST_PASSWORD": "${{ secrets.REACT_APP_TEST_PASSWORD }}",
             "REACT_APP_TESTING": 1
           },
-          "run": "export FIREBASE_DATABASE_EMULATOR_HOST=\"localhost:$(scripts/simple_jq.js ./packages/web/firebase.json .emulators.database.port)\"\nexport FIRESTORE_EMULATOR_HOST=\"localhost:$(scripts/simple_jq.js ./packages/web/firebase.json .emulators.firestore.port)\"\necho \"firebase environment variables:\" $FIREBASE_DATABASE_EMULATOR_HOST $FIRESTORE_EMULATOR_HOST\nultra exec home build\nultra exec web build\n"
+          "run": "ultra exec home build\n"
         },
         {
           "name": "Run tests",
@@ -181,7 +157,7 @@
             "REACT_APP_TEST_USERNAME": "${{ secrets.REACT_APP_TEST_USERNAME }}",
             "REACT_APP_TEST_PASSWORD": "${{ secrets.REACT_APP_TEST_PASSWORD }}"
           },
-          "run": "./node_modules/.bin/firebase emulators:exec --only firestore \"\n  ultra -r --filter @rino.app/web start > /dev/null &\n  ultra test --coverage\n\"\n"
+          "run": "./node_modules/.bin/firebase emulators:exec --only firestore \"\n  ultra test --coverage\n\"\n"
         },
         {
           "name": "Upload coverage information to codecov",
@@ -218,7 +194,7 @@
         },
         {
           "name": "Install Dependencies",
-          "run": "date\nyarn install --immutable\ndate\necho \"[DEBUG] CACHE_HIT: $CACHE_HIT\"\nsudo ln -sf $PWD/node_modules/.bin/ultra /usr/local/bin/ultra\nif [ \"$CACHE_HIT\" != \"true\" ]\nthen\n  echo \"[DEBUG] installing\"\n  cd packages/web\n  ultra firebase setup:emulators:firestore\nfi\nls -lrth ~/.cache/firebase/emulators/\n",
+          "run": "date\nyarn install --immutable\ndate\necho \"[DEBUG] CACHE_HIT: $CACHE_HIT\"\nsudo ln -sf $PWD/node_modules/.bin/ultra /usr/local/bin/ultra\n",
           "env": {
             "CACHE_HIT": "${{ steps.step_cache_deps.outputs.cache-hit }}"
           }
@@ -262,22 +238,14 @@
         },
         {
           "name": "Install Dependencies",
-          "run": "date\nyarn install --immutable\ndate\necho \"[DEBUG] CACHE_HIT: $CACHE_HIT\"\nsudo ln -sf $PWD/node_modules/.bin/ultra /usr/local/bin/ultra\nif [ \"$CACHE_HIT\" != \"true\" ]\nthen\n  echo \"[DEBUG] installing\"\n  cd packages/web\n  ultra firebase setup:emulators:firestore\nfi\nls -lrth ~/.cache/firebase/emulators/\n",
+          "run": "date\nyarn install --immutable\ndate\necho \"[DEBUG] CACHE_HIT: $CACHE_HIT\"\nsudo ln -sf $PWD/node_modules/.bin/ultra /usr/local/bin/ultra\n",
           "env": {
             "CACHE_HIT": "${{ steps.step_cache_deps.outputs.cache-hit }}"
           }
         },
         {
-          "name": "Configrate firebase",
-          "env": {
-            "FIREBASE_CLIENT_JSON": "${{ secrets.FIREBASE_CLIENT_JSON }}",
-            "FIREBASE_TOKEN": "${{ secrets.FIREBASE_TOKEN }}"
-          },
-          "run": "echo \"${FIREBASE_CLIENT_JSON}\" > ./packages/web/config/firebase.client.json\nexport FIREBASE_PROJECT_ID=$(scripts/simple_jq.js ./packages/web/config/firebase.client.json .projectId)\ncd packages/web\nultra firebase use --add $FIREBASE_PROJECT_ID\n"
-        },
-        {
           "name": "Build",
-          "run": "ultra exec web build\nultra exec home build\n"
+          "run": "ultra exec home build\n"
         },
         {
           "id": "step_branch",
@@ -300,21 +268,6 @@
           }
         },
         {
-          "name": "Deploy @rino.app/web to Vercel",
-          "uses": "amondnet/vercel-action@v20",
-          "timeout-minutes": 10,
-          "with": {
-            "github-comment": false,
-            "vercel-token": "${{ secrets.VERCEL_TOKEN }}",
-            "github-token": "${{ secrets.GITHUB_TOKEN }}",
-            "vercel-org-id": "${{ secrets.VERCEL_ORG_ID }}",
-            "vercel-project-id": "${{ secrets.VERCEL_PROJECT_ID_WEB }}",
-            "alias-domains": "rino-web-${{ steps.step_branch.outputs.branch }}.ocavue.vercel.app",
-            "vercel-args": "--meta TYPE=PREVIEW",
-            "working-directory": "./packages/web/"
-          }
-        },
-        {
           "uses": "jwalton/gh-find-current-pr@v1",
           "id": "step_find_pr",
           "with": {
@@ -327,7 +280,7 @@
           "with": {
             "GITHUB_TOKEN": "${{ secrets.GITHUB_TOKEN }}",
             "number": "${{ steps.step_find_pr.outputs.pr }}",
-            "message": "## Preview Deployment\n${{ github.sha }}:\n- https://rino-web-${{ steps.step_branch.outputs.branch }}.ocavue.vercel.app\n- https://rino-home-${{ steps.step_branch.outputs.branch }}.ocavue.vercel.app\n"
+            "message": "## Preview Deployment\n${{ github.sha }}:\n- https://rino-home-${{ steps.step_branch.outputs.branch }}.ocavue.vercel.app\n"
           },
           "continue-on-error": true
         },
@@ -341,7 +294,7 @@
             "GITHUB_TOKEN": "${{ secrets.GITHUB_TOKEN }}",
             "LHCI_GITHUB_APP_TOKEN": "${{ secrets.LHCI_GITHUB_APP_TOKEN }}"
           },
-          "run": "ultra lhci autorun --config .lighthouserc.web.json\nultra lhci autorun --config .lighthouserc.home.json\n"
+          "run": "ultra lhci autorun --config .lighthouserc.home.json\n"
         }
       ]
     },
@@ -389,14 +342,6 @@
           }
         },
         {
-          "name": "Download dist (web)",
-          "uses": "actions/download-artifact@v2",
-          "with": {
-            "name": "web_dist",
-            "path": "./packages/web/dist"
-          }
-        },
-        {
           "name": "Download dist (home)",
           "uses": "actions/download-artifact@v2",
           "with": {
@@ -436,10 +381,6 @@
             "vercel-args": "--prod --meta TYPE=PRODUCTION",
             "working-directory": "./packages/home/"
           }
-        },
-        {
-          "name": "Prepare HTML files",
-          "run": "bash ./scripts/prepare-server-files.sh"
         }
       ]
     }

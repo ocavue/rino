@@ -11,7 +11,7 @@ const config = {
                 NODE_ENV: "test",
             },
         },
-        launchTimeout: 20 * 1000,
+        launchTimeout: 120 * 1000,
         debug: true,
         protocol: "http-get",
         waitOnScheme: {

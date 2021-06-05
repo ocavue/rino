@@ -44,37 +44,12 @@ jobs:
           date
           echo "[DEBUG] CACHE_HIT: $CACHE_HIT"
           sudo ln -sf $PWD/node_modules/.bin/ultra /usr/local/bin/ultra
-          if [ "$CACHE_HIT" != "true" ]
-          then
-            echo "[DEBUG] installing"
-            cd packages/web
-            ultra firebase setup:emulators:firestore
-          fi
-          ls -lrth ~/.cache/firebase/emulators/
         env:
           CACHE_HIT: ${{ steps.step_cache_deps.outputs.cache-hit }}
-
-      - &step_config_firebase
-        name: Configrate firebase
-        env:
-          FIREBASE_CLIENT_JSON: ${{ secrets.FIREBASE_CLIENT_JSON }}
-          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }} # https://firebase.google.com/docs/cli#cli-ci-systems
-        run: |
-          echo "${FIREBASE_CLIENT_JSON}" > ./packages/web/config/firebase.client.json
-          export FIREBASE_PROJECT_ID=$(scripts/simple_jq.js ./packages/web/config/firebase.client.json .projectId)
-          cd packages/web
-          ultra firebase use --add $FIREBASE_PROJECT_ID
 
       - name: Build website
         run: |
           ultra exec home build
-          ultra exec web build
-
-      - name: Upload dist (web)
-        uses: actions/upload-artifact@v2
-        with:
-          name: web_dist
-          path: ./packages/web/dist
 
       - name: Upload dist (home)
         uses: actions/upload-artifact@v2
@@ -128,7 +103,6 @@ jobs:
       - *step_setup_node
       - *step_cache_deps
       - *step_install_deps
-      - *step_config_firebase
 
       - name: Build static files
         env:
@@ -136,11 +110,7 @@ jobs:
           REACT_APP_TEST_PASSWORD: ${{ secrets.REACT_APP_TEST_PASSWORD }}
           REACT_APP_TESTING: 1
         run: |
-          export FIREBASE_DATABASE_EMULATOR_HOST="localhost:$(scripts/simple_jq.js ./packages/web/firebase.json .emulators.database.port)"
-          export FIRESTORE_EMULATOR_HOST="localhost:$(scripts/simple_jq.js ./packages/web/firebase.json .emulators.firestore.port)"
-          echo "firebase environment variables:" $FIREBASE_DATABASE_EMULATOR_HOST $FIRESTORE_EMULATOR_HOST
           ultra exec home build
-          ultra exec web build
 
       - name: Run tests
         env:
@@ -149,7 +119,6 @@ jobs:
           REACT_APP_TEST_PASSWORD: ${{ secrets.REACT_APP_TEST_PASSWORD }}
         run: |
           ./node_modules/.bin/firebase emulators:exec --only firestore "
-            ultra -r --filter @rino.app/web start > /dev/null &
             ultra test --coverage
           "
 
@@ -188,11 +157,9 @@ jobs:
       - *step_setup_node
       - *step_cache_deps
       - *step_install_deps
-      - *step_config_firebase
 
       - name: Build
         run: |
-          ultra exec web build
           ultra exec home build
 
       - id: step_branch
@@ -213,16 +180,6 @@ jobs:
           vercel-args: '--meta TYPE=PREVIEW'
           working-directory: './packages/home/'
 
-      - name: Deploy @rino.app/web to Vercel
-        uses: *vercel_action
-        timeout-minutes: 10
-        with:
-          <<: *vercel_args
-          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID_WEB }}
-          alias-domains: rino-web-${{ steps.step_branch.outputs.branch }}.ocavue.vercel.app
-          vercel-args: '--meta TYPE=PREVIEW'
-          working-directory: './packages/web/'
-
       - uses: jwalton/gh-find-current-pr@v1
         id: step_find_pr
         with:
@@ -236,7 +193,6 @@ jobs:
           message: |
             ## Preview Deployment
             ${{ github.sha }}:
-            - https://rino-web-${{ steps.step_branch.outputs.branch }}.ocavue.vercel.app
             - https://rino-home-${{ steps.step_branch.outputs.branch }}.ocavue.vercel.app
         continue-on-error: true
 
@@ -248,7 +204,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }} # Install this GitHub App and get the token: https://github.com/apps/lighthouse-ci
         run: |
-          ultra lhci autorun --config .lighthouserc.web.json
           ultra lhci autorun --config .lighthouserc.home.json
 
   release:
@@ -280,18 +235,13 @@ jobs:
       - *step_checkout
       - *step_setup_node
 
-      - &step_download_web_dist
-        name: Download dist (web)
-        uses: actions/download-artifact@v2
-        with:
-          name: web_dist
-          path: ./packages/web/dist
       - &step_download_home_dist
         name: Download dist (home)
         uses: actions/download-artifact@v2
         with:
           name: home_dist
           path: ./packages/home/dist
+
       - &step_download_electron_dist
         name: Download dist (electron)
         uses: actions/download-artifact@v2
@@ -308,12 +258,6 @@ jobs:
           overwrite: true
           file_glob: true
 
-      # - name: Deploy @rino.app/web to Firebase
-      #   env:
-      #     FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
-      #   run: |
-      #     yarn run web firebase deploy
-
       - name: Deploy @rino.app/home to Vercel
         uses: *vercel_action
         with:
@@ -322,24 +266,3 @@ jobs:
           vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID_HOME }}
           vercel-args: '--prod --meta TYPE=PRODUCTION'
           working-directory: './packages/home/'
-
-      # - name: Deploy @rino.app/web to Vercel
-      #   uses: *vercel_action
-      #   with:
-      #     <<: *vercel_args
-      #     alias-domains: rino-web-master.ocavue.vercel.app
-      #     vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID_WEB }}
-      #     vercel-args: '--prod --meta TYPE=PRODUCTION'
-      #     working-directory: './packages/web/'
-
-      - name: Prepare HTML files
-        run: bash ./scripts/prepare-server-files.sh
-
-      # - name: Deploy @rino.app/server to Vercel
-      #   uses: *vercel_action
-      #   with:
-      #     <<: *vercel_args
-      #     vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID_SERVER }}
-      #     alias-domains: rino-server-{{BRANCH}}.ocavue.vercel.app
-      #     vercel-args: '--prod --meta TYPE=PRODUCTION'
-      #     working-directory: './packages/server/'
