@@ -86,6 +86,7 @@ jobs:
       - name: Clean electron dist
         run: |
           cd packages/electron
+          find ./dist -type f
           yarn run clean
 
       - name: Upload dist (electron)
