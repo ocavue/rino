@@ -7,9 +7,9 @@ on:
 
 env:
   NEXT_TELEMETRY_DISABLED: 1 # https://nextjs.org/telemetry
-  ELECTRON_CACHE: ${{ format('{0}{1}', env.HOME, 'cache_electron' }}
-  ELECTRON_BUILDER_CACHE: ${{ format('{0}{1}', env.HOME, 'cache_electron_builder' }}
-  PLAYWRIGHT_BROWSERS_PATH: ${{ format('{0}{1}', env.HOME, 'cache_playwright_browsers' }}
+  ELECTRON_CACHE: ${{ env.HOME }}/cache_electron
+  ELECTRON_BUILDER_CACHE: ${{ env.HOME }}/cache_electron_builder
+  PLAYWRIGHT_BROWSERS_PATH: ${{ env.HOME }}/cache_playwright_browsers
 
 jobs:
   build_website:
