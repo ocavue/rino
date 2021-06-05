@@ -11,11 +11,13 @@
         "dev:renderer": "tsc --build ./renderer/tsconfig.json && vite ./renderer",
         "dev:electron": "wait-on --timeout 60000 tcp:3004 && wait-on --timeout 60000 ./main/dist/main.js && NODE_ENV=development electron .",
         "build": "run-s build:main build:renderer build:electron",
-        "build:all": "run-s build:main build:renderer build:electron:all",
+        "build:all": "run-s build:main build:renderer build:electron:mac build:electron:win build:electron:linux",
         "build:main": "tsc --build ./main/tsconfig.json",
         "build:renderer": "tsc --build ./renderer/tsconfig.json && vite build ./renderer",
         "build:electron": "electron-builder -p never",
-        "build:electron:all": "electron-builder -p never -mwl --universal",
+        "build:electron:mac": "electron-builder -p never --mac --universal",
+        "build:electron:win": "electron-builder -p never --win",
+        "build:electron:linux": "electron-builder -p never --linux",
         "clean": "bash -c 'rm -rf ./dist/*/'"
     },
     "devDependencies": {
