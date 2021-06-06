@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.24.0](https://www.github.com/ocavue/rino/compare/v0.23.0...v0.24.0) (2021-06-06)
+
+
+### Features
+
+* provide installers for mac, windows and linux ([#630](https://www.github.com/ocavue/rino/issues/630)) ([131712d](https://www.github.com/ocavue/rino/commit/131712dcf58e85ddf1e52e513f00d3e06edb5409))
+
 ## [0.23.0](https://www.github.com/ocavue/rino/compare/v0.22.0...v0.23.0) (2021-06-05)
 
 
