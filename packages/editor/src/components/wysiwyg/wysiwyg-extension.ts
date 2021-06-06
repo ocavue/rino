@@ -75,7 +75,7 @@ export function createWysiwygExtension(): Array<WysiwygExtension> {
     // `WysiwygManager`.
     //
     /* istanbul ignore if */
-    if (process.env.NODE_ENV === "test") {
+    if (process?.env?.NODE_ENV === "test") {
         const f = (x: MarkdownNodeExtension[]) => {}
         f(rinoMarkdownNodeExtensions)
     }
