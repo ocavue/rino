@@ -5,7 +5,10 @@ import { defineConfig } from "vite"
 export default defineConfig({
     base: "",
     plugins: [reactRefresh()],
-    server: { port: 3004 },
+    server: {
+        port: 3004,
+        hmr: true, // it seems that electron doesn't play well with vite's hmr
+    },
     build: {
         chunkSizeWarningLimit: 5000,
     },
