@@ -266,6 +266,7 @@
           "run": "echo \"::set-output name=branch::$(node scripts/slugify-branch.js)\"\n"
         },
         {
+          "id": "step_vercel",
           "name": "Deploy @rino.app/home to Vercel",
           "uses": "amondnet/vercel-action@v20",
           "timeout-minutes": 10,
@@ -278,11 +279,12 @@
             "alias-domains": "rino-home-${{ steps.step_branch.outputs.branch }}.ocavue.vercel.app",
             "vercel-args": "--meta TYPE=PREVIEW",
             "working-directory": "./packages/home/"
-          }
+          },
+          "continue-on-error": true
         },
         {
-          "uses": "jwalton/gh-find-current-pr@v1",
           "id": "step_find_pr",
+          "uses": "jwalton/gh-find-current-pr@v1",
           "with": {
             "github-token": "${{ secrets.GITHUB_TOKEN }}"
           },
@@ -299,7 +301,8 @@
         },
         {
           "name": "Generate configrations for Lighthouse CI",
-          "run": "node scripts/generate-lighthouserc.js"
+          "run": "node scripts/generate-lighthouserc.js",
+          "if": "steps.step_vercel.outcome == 'success'"
         },
         {
           "name": "Run lighthouse",
@@ -307,7 +310,8 @@
             "GITHUB_TOKEN": "${{ secrets.GITHUB_TOKEN }}",
             "LHCI_GITHUB_APP_TOKEN": "${{ secrets.LHCI_GITHUB_APP_TOKEN }}"
           },
-          "run": "ultra lhci autorun --config .lighthouserc.home.json\n"
+          "run": "ultra lhci autorun --config .lighthouserc.home.json\n",
+          "if": "steps.step_vercel.outcome == 'success'"
         }
       ]
     },
