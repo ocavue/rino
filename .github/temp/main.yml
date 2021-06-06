@@ -192,7 +192,8 @@ jobs:
         run: |
           echo "::set-output name=branch::$(node scripts/slugify-branch.js)"
 
-      - name: Deploy @rino.app/home to Vercel
+      - id: step_vercel
+        name: Deploy @rino.app/home to Vercel
         uses: &vercel_action amondnet/vercel-action@v20
         timeout-minutes: 10
         with: &vercel_args
@@ -204,9 +205,11 @@ jobs:
           alias-domains: rino-home-${{ steps.step_branch.outputs.branch }}.ocavue.vercel.app
           vercel-args: '--meta TYPE=PREVIEW'
           working-directory: './packages/home/'
+        # Vercel only allows a free account to deploy 100 times every day so this step could fail
+        continue-on-error: true
 
-      - uses: jwalton/gh-find-current-pr@v1
-        id: step_find_pr
+      - id: step_find_pr
+        uses: jwalton/gh-find-current-pr@v1
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
         continue-on-error: true
@@ -223,6 +226,7 @@ jobs:
 
       - name: Generate configrations for Lighthouse CI
         run: node scripts/generate-lighthouserc.js
+        if: steps.step_vercel.outcome == 'success'
 
       - name: Run lighthouse
         env:
@@ -230,6 +234,7 @@ jobs:
           LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }} # Install this GitHub App and get the token: https://github.com/apps/lighthouse-ci
         run: |
           ultra lhci autorun --config .lighthouserc.home.json
+        if: steps.step_vercel.outcome == 'success'
 
   release:
     runs-on: ubuntu-18.04
