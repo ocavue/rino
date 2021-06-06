@@ -17,7 +17,6 @@ const Workbench: FC = () => {
 
     const onClickOpenFile = async () => {
         const file = await getApi().openFile()
-        console.log("file:", file)
         if (file) {
             setNote({ content: file.content, deleted: false, path: file.path })
         }
