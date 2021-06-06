@@ -12,8 +12,8 @@ export async function createWindow() {
     const currentWindow = BrowserWindow.getFocusedWindow()
     if (currentWindow) {
         const [currentWindowX, currentWindowY] = currentWindow.getPosition()
-        x = currentWindowX + 16
-        y = currentWindowY + 16
+        x = currentWindowX + 32
+        y = currentWindowY + 32
     }
 
     const newWindow = new BrowserWindow({

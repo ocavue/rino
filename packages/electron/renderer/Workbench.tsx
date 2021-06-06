@@ -24,7 +24,7 @@ const Workbench: FC = () => {
 
     return (
         <div>
-            <button>New File</button>
+            <button onClick={ipc.newWindow}>New File</button>
             <button onClick={onClickOpenFile}>Open File</button>
             <button disabled>Save File</button>
             <button disabled>Revert</button>

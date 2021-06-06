@@ -10,6 +10,7 @@ export default defineConfig({
         hmr: false, // it seems that electron doesn't play well with vite's hmr
     },
     build: {
+        sourcemap: true,
         chunkSizeWarningLimit: 5000,
     },
 })

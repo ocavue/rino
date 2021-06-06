@@ -5,7 +5,7 @@ import type { ElectronIpcApi } from "../types/api"
 import { logger } from "./logger"
 
 async function openFile(): Promise<{ path: string; content: string }> {
-    const result = await ipcRenderer.invoke("open-file")
+    const result = await ipcRenderer.invoke("open_file")
     if (result && isString(result.path) && isString(result.content)) {
         logger.info(`received file content from ${result.path}`)
         return result
@@ -14,4 +14,8 @@ async function openFile(): Promise<{ path: string; content: string }> {
     }
 }
 
-export const electronIpcApi: ElectronIpcApi = { openFile }
+async function newWindow(): Promise<void> {
+    await ipcRenderer.invoke("new_window")
+}
+
+export const electronIpcApi: ElectronIpcApi = { openFile, newWindow }
