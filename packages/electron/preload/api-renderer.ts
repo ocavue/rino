@@ -15,7 +15,15 @@ async function openFile(): Promise<{ path: string; content: string }> {
 }
 
 async function newWindow(): Promise<void> {
-    await ipcRenderer.invoke("new_window")
+    return await ipcRenderer.invoke("new_window")
 }
 
-export const electronIpcApi: ElectronIpcApi = { openFile, newWindow }
+async function getCurrentWindow(): Promise<{ id: string; title: string } | null> {
+    return await ipcRenderer.invoke("get_current_window")
+}
+
+async function setTitle(options: { title: string }): Promise<void> {
+    return await ipcRenderer.invoke("set_title", options)
+}
+
+export const electronIpcApi: ElectronIpcApi = { openFile, newWindow, getCurrentWindow, setTitle }

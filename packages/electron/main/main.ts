@@ -1,7 +1,7 @@
 import { app } from "electron"
 
+import { registerIpcHandlers } from "./api-main"
 import { env } from "./env"
-import { registerIpcHandlers } from "./ipc-main"
 import { logger } from "./logger"
 import { createWindow } from "./window"
 

@@ -47,3 +47,7 @@ export const metaKey = isMac() ? "metaKey" : "ctrlKey"
 export function sleep(ms: number) {
     return new Promise((resolve) => setTimeout(resolve, ms))
 }
+
+export function basename(filePath: string) {
+    return filePath.split("\\").pop()?.split("/").pop() ?? ""
+}
