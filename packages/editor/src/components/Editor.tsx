@@ -13,7 +13,7 @@ export interface Note {
 }
 
 export type EditorProps = {
-    note: Note
+    note: Readonly<Note>
     setNoteContent: (content: string) => void
     drawerActivityContainer: DrawerActivityContainer
     autoFocus?: boolean
