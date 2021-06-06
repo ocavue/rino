@@ -1,8 +1,10 @@
 import { app, BrowserWindow } from "electron"
-import logger from "electron-log"
+import { join } from "path"
 import { URL } from "url"
 
 import { env } from "./env"
+import { registerIpcHandlers } from "./ipc-main"
+import { logger } from "./logger"
 
 async function setupAutoUpdate() {
     if (env.PROD) {
@@ -36,24 +38,33 @@ if (!lock) {
 
     const createWindow = async () => {
         mainWindow = new BrowserWindow({
-            show: true,
+            show: false,
             webPreferences: {
-                enableRemoteModule: true,
+                preload: join(__dirname, "../../preload/dist/index.js"),
             },
         })
+
+        mainWindow.once("ready-to-show", () => {
+            mainWindow?.show()
+        })
+
+        mainWindow.on("closed", () => {
+            mainWindow = null
+        })
+
+        if (env.MODE === "development") {
+            setTimeout(() => {
+                mainWindow?.webContents.openDevTools({ activate: false, mode: "detach" })
+            }, 1000)
+        }
 
         /**
          * URL for main window.
          * Vite dev server for development.
          * `file://../renderer/index.html` for production and test
          */
-        const pageUrl = (
-            env.MODE === "development" ? "http://localhost:3003" : new URL("../renderer/dist/index.html", "file://" + __dirname).toString()
-        ) as string
-
-        // if (env.MODE === "development") {
-        //     mainWindow.webContents.openDevTools()
-        // }
+        const pageUrl =
+            env.MODE === "development" ? "http://localhost:3004" : new URL("../renderer/dist/index.html", "file://" + __dirname).toString()
 
         await mainWindow.loadURL(pageUrl)
     }
@@ -74,8 +85,10 @@ if (!lock) {
 
     app.whenReady()
         .then(createWindow)
-        .catch((e) => logger.error("Failed create window:", e))
+        .catch((e) => logger.error("failed create window:", e))
 
     // Auto-updates
     setupAutoUpdate()
+
+    registerIpcHandlers()
 }
