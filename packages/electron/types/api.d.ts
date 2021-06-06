@@ -1,3 +1,3 @@
-export interface ElectronApi {
-    openFile: () => Promise<{ path: string; content: string } | null>
+export interface ElectronIpcApi {
+    openFile: () => Promise<{ path: string; content: string }>
 }

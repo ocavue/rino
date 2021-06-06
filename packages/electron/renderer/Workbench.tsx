@@ -2,7 +2,7 @@ import React, { FC, useState } from "react"
 
 import { Editor } from "@rino.app/editor"
 
-import { getApi } from "./ipc-renderer"
+import { ipc } from "./ipc"
 
 const drawerActivityContainer = {
     useContainer: () => ({
@@ -16,7 +16,7 @@ const Workbench: FC = () => {
     const [note, setNote] = useState({ content: "# hello", deleted: false, path: "$[default]$" })
 
     const onClickOpenFile = async () => {
-        const file = await getApi().openFile()
+        const file = await ipc.openFile()
         if (file) {
             setNote({ content: file.content, deleted: false, path: file.path })
         }

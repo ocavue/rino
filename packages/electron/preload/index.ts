@@ -1,5 +1,5 @@
 import { contextBridge } from "electron"
 
-import { electronApi } from "./api"
+import { electronIpcApi } from "./api"
 
-contextBridge.exposeInMainWorld("electronContextBridgeApi", electronApi)
+contextBridge.exposeInMainWorld("electronContextBridgeApi", electronIpcApi)
