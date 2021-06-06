@@ -12,7 +12,7 @@ function getDevtools() {
             }
         }
     } catch (error) {
-        console.log("failed to load Devtools:", error)
+        console.warn("failed to load Devtools:", error)
     }
 }
 

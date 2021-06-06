@@ -50,7 +50,6 @@ const WysiwygEditor = React.memo<WysiwygEditorProps>(
         isTestEnv,
         beforeUnmount,
     }) => {
-        console.log(`<WysiwygEditor initialContent=${initialContent}>`)
         const [error, setError] = useState<Error | null>(null)
 
         const { manager } = useWysiwygRemirror()

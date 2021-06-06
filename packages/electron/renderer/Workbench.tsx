@@ -13,7 +13,7 @@ const drawerActivityContainer = {
 const setNoteContent = (content: string) => {}
 
 const Workbench: FC = () => {
-    const [note, setNote] = useState({ content: "# hello", deleted: false, path: "$[default]$" })
+    const [note, setNote] = useState({ content: "", deleted: false, path: "$[default]$" })
 
     const onClickOpenFile = async () => {
         const file = await ipc.openFile()
