@@ -1,17 +1,18 @@
 import { BrowserWindow, ipcMain } from "electron"
 
+import { InvokeMainAPI } from "../types/api"
 import { askMarkdownFileForOpen, askMarkdownFileForSave, openFile, saveFile } from "./file"
 import { createWindow } from "./window"
 
-export function registerIpcHandlers() {
-    ipcMain.handle("open_file", async (event) => {
+const invokeMainAPI: InvokeMainAPI = {
+    openFile: async (event) => {
         const path = await askMarkdownFileForOpen()
         if (!path) return { canceled: true, path: "", content: "" }
         const content = await openFile(path)
         return { canceled: false, path, content }
-    })
+    },
 
-    ipcMain.handle("save_file", async (event, note) => {
+    saveFile: async (event, note) => {
         let filePath: string | undefined = note.path
         if (!filePath) {
             filePath = await askMarkdownFileForSave()
@@ -21,24 +22,30 @@ export function registerIpcHandlers() {
         }
         await saveFile(filePath, note.content)
         return { canceled: false, path: filePath }
-    })
+    },
 
-    ipcMain.handle("new_window", async (event) => {
+    newWindow: async (event) => {
         await createWindow()
-    })
+    },
 
-    ipcMain.handle("get_current_window", async (event) => {
+    getCurrentWindow: async (event) => {
         const win = BrowserWindow.fromWebContents(event.sender)
         if (!win) return null
         return {
             id: win.id,
             title: win.getTitle(),
         }
-    })
+    },
 
-    ipcMain.handle("set_title", async (event, options) => {
+    setTitle: async (event, options) => {
         const win = BrowserWindow.fromWebContents(event.sender)
-        if (!win) return null
+        if (!win) return
         win.setTitle(options.title)
-    })
+    },
+}
+
+export function registerIpcHandlers() {
+    for (const [channel, handler] of Object.entries(invokeMainAPI)) {
+        ipcMain.handle("invoke:" + channel, handler)
+    }
 }
