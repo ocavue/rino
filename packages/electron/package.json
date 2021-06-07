@@ -20,7 +20,7 @@
         "build:electron:mac": "electron-builder -p never --mac --universal",
         "build:electron:win": "electron-builder -p never --win",
         "build:electron:linux": "electron-builder -p never --linux",
-        "clean": "bash -c 'rm -rf ./dist/*/'"
+        "clean": "bash -c 'rm -rf ./dist/*/ ./preload/dist/ ./main/dist/ ./renderer/dist/'"
     },
     "devDependencies": {
         "@types/react": "^17.0.9",

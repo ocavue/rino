@@ -5,8 +5,10 @@ export type EditorProps = {
     autoFocus: boolean
     editable: boolean
     initialContent: string
-    onContentChange: (content: string) => void
-    beforeUnmount: () => void
+    onContentSaveDelay: number
+    onContentSave: (content: string) => void
+    onContentEdit: () => void
+    beforeUnmount: (content?: string) => void
 }
 
 export type DrawerActivityContainer = Pick<Container<{ drawerActivity: boolean }>, "useContainer">

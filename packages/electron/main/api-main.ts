@@ -5,11 +5,11 @@ import { askMarkdownFileForOpen, askMarkdownFileForSave, openFile, saveFile } fr
 import { createWindow } from "./window"
 
 const invokeMainAPI: InvokeMainAPI = {
-    openFile: async (event) => {
-        const path = await askMarkdownFileForOpen()
-        if (!path) return { canceled: true, path: "", content: "" }
-        const content = await openFile(path)
-        return { canceled: false, path, content }
+    openFile: async (event, { path }) => {
+        const filePath = path || (await askMarkdownFileForOpen())
+        if (!filePath) return { canceled: true, path: "", content: "" }
+        const content = await openFile(filePath)
+        return { canceled: false, path: filePath, content }
     },
 
     saveFile: async (event, note) => {

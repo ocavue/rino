@@ -3,7 +3,7 @@ import fs from "fs/promises"
 
 import { logger } from "./logger"
 
-export async function askMarkdownFileForOpen(): Promise<string> {
+export async function askMarkdownFileForOpen(): Promise<string | undefined> {
     const result = await dialog.showOpenDialog({
         properties: ["openFile"],
         filters: [{ name: "Markdown Files", extensions: ["md", "markdown"] }],

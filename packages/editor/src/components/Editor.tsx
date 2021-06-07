@@ -1,4 +1,5 @@
-import React, { useCallback, useEffect, useRef, useState } from "react"
+import { isString } from "lodash"
+import React, { useCallback, useEffect, useState } from "react"
 
 import { metaKey } from "@rino.app/common"
 
@@ -14,13 +15,15 @@ export interface Note {
 
 export type EditorProps = {
     note: Readonly<Note>
-    setNoteContent: (content: string) => void
     drawerActivityContainer: DrawerActivityContainer
     autoFocus?: boolean
     isDarkMode?: boolean
     extraClassName?: string
     maxDrawerWidth?: number
     isTestEnv?: boolean
+    onContentSaveDelay?: number
+    onContentSave?: (content: string) => void
+    onContentEdit?: () => void
 }
 
 enum Mode {
@@ -30,29 +33,24 @@ enum Mode {
 
 const Editor: React.FC<EditorProps> = ({
     note,
-    setNoteContent,
     drawerActivityContainer,
     autoFocus = true,
     isDarkMode = false,
     extraClassName = "",
     maxDrawerWidth = 0,
     isTestEnv = false,
+    onContentSaveDelay = 500,
+    onContentSave = (content: string) => {},
+    onContentEdit = () => {},
 }) => {
     const [mode, setMode] = useState<Mode>(Mode.WYSIWYG)
     const [isSwitchingMode, setIsSwitchingMode] = useState<boolean>(false)
     const [initialContent, setInitialContent] = useState<string>(note.content)
-    const contentRef = useRef(note.content)
 
-    const onContentChange = useCallback(
-        (content: string) => {
-            contentRef.current = content
-            setNoteContent(content)
-        },
-        [setNoteContent],
-    )
-
-    const beforeUnmount = useCallback(() => {
-        setInitialContent(contentRef.current)
+    const beforeUnmount = useCallback((content?: string) => {
+        if (isString(content)) {
+            setInitialContent(content)
+        }
         setMode((mode) => (mode === Mode.WYSIWYG ? Mode.SOURCE_CODE : Mode.WYSIWYG))
         setIsSwitchingMode(false)
     }, [])
@@ -79,8 +77,11 @@ const Editor: React.FC<EditorProps> = ({
                 autoFocus={autoFocus}
                 editable={!note.deleted}
                 initialContent={initialContent}
-                onContentChange={onContentChange}
+                onContentSaveDelay={onContentSaveDelay}
                 beforeUnmount={beforeUnmount}
+                onContentEdit={onContentEdit}
+                onContentSave={onContentSave}
+                //
                 maxDrawerWidth={maxDrawerWidth}
                 drawerActivityContainer={drawerActivityContainer}
                 isTestEnv={isTestEnv}
@@ -93,8 +94,10 @@ const Editor: React.FC<EditorProps> = ({
                 autoFocus={autoFocus}
                 editable={!note.deleted}
                 initialContent={initialContent}
-                onContentChange={onContentChange}
+                onContentSaveDelay={onContentSaveDelay}
                 beforeUnmount={beforeUnmount}
+                onContentEdit={onContentEdit}
+                onContentSave={onContentSave}
             />
         )
     }

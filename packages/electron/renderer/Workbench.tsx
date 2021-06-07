@@ -3,7 +3,7 @@ import React, { FC, useCallback, useEffect, useState } from "react"
 import { basename } from "@rino.app/common"
 import { Editor } from "@rino.app/editor"
 
-import { ipc } from "./ipc"
+import { ipc, registerIpcHandlers } from "./ipc"
 
 const drawerActivityContainer = {
     useContainer: () => ({
@@ -11,56 +11,93 @@ const drawerActivityContainer = {
     }),
 }
 
+interface Note {
+    content: string
+    path: string
+    deleted: boolean
+}
+
 function useMarkdownNote() {
-    const [note, setNote] = useState<{ content: string; path: string; deleted: boolean }>({ content: "", path: "", deleted: false })
+    const [note, setNote] = useState<Note>({ content: "", path: "", deleted: false })
+    const [edited, setEdited] = useState(false)
 
     useEffect(() => {
-        // TODO: don't show multi-windows with a same title
-        ipc.setTitle({ title: `${basename(note.path)}` })
-    }, [note.path])
+        let title = basename(note.path)
+        if (title && edited) {
+            title = `${title} - Edited`
+        } else if (!title) {
+            title = "Untitled"
+        }
+        ipc.setTitle({ title })
+    }, [note.path, edited])
 
-    const openFile = useCallback(async () => {
-        const file = await ipc.openFile()
+    const openFile = useCallback(async (path?: string) => {
+        const file = await ipc.openFile({ path })
         if (!file.canceled) {
             setNote({ content: file.content, deleted: false, path: file.path })
         }
     }, [])
 
-    const saveFile = useCallback(async () => {
-        const { canceled, path } = await ipc.saveFile({ content: note.content, path: note.path })
-        if (!canceled && path && note.path !== path) {
-            setNote((note) => ({ ...note, path }))
-        }
-    }, [note])
+    const onContentSave = useCallback((content: string) => {
+        console.log("onContentSave1")
 
-    const setNoteContent = useCallback((content: string) => {
-        setNote((note) => ({ ...note, content }))
+        setEdited(false)
+        setNote((note) => {
+            return { ...note, content }
+        })
     }, [])
 
-    return { note, openFile, saveFile, setNoteContent }
+    const onContentEdit = useCallback(() => {
+        setEdited(true)
+    }, [])
+
+    const setNotePath = useCallback((path: string) => {
+        if (path) setNote((note) => ({ ...note, path }))
+    }, [])
+
+    const saveFile = useCallback(
+        async (note: Note) => {
+            console.log("savefile 0")
+            const { canceled, path } = await ipc.saveFile({ content: note.content, path: note.path })
+            console.log("savefile 1", canceled, path)
+
+            if (canceled) return
+
+            setEdited(false)
+
+            if (path && note.path !== path) {
+                setNotePath(path)
+            }
+        },
+        [setNotePath],
+    )
+
+    useEffect(() => {
+        if (note.path) {
+            saveFile(note)
+        }
+    }, [saveFile, note])
+
+    return { note, openFile, setNotePath, onContentSave, onContentEdit }
 }
 
 const Workbench: FC = () => {
-    const { note, openFile, saveFile, setNoteContent } = useMarkdownNote()
+    const { note, openFile, setNotePath, onContentSave, onContentEdit } = useMarkdownNote()
+
+    useEffect(() => {
+        registerIpcHandlers(openFile, setNotePath)
+    }, [setNotePath, openFile])
 
     return (
         <div>
-            <button onClick={ipc.newWindow}>New File</button>
-            <button onClick={openFile}>Open File</button>
-            <button onClick={saveFile}>Save File</button>
-            <button disabled>Revert</button>
-            <button>Save HTML</button>
-            <button disabled>Show File</button>
-            <button disabled>Open in Default Application</button>
-            <button
-                onClick={async () => {
-                    console.log(await ipc.getCurrentWindow())
-                }}
-            >
-                Show current window
-            </button>
-
-            <Editor key={note.path} note={note} setNoteContent={setNoteContent} drawerActivityContainer={drawerActivityContainer} />
+            <Editor
+                key={note.path}
+                note={note}
+                onContentSaveDelay={2000}
+                onContentEdit={onContentEdit}
+                onContentSave={onContentSave}
+                drawerActivityContainer={drawerActivityContainer}
+            />
         </div>
     )
 }

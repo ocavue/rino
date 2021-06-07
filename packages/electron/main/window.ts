@@ -48,4 +48,11 @@ export async function createWindow() {
     logger.info(`loading ${pageUrl}`)
 
     await newWindow.loadURL(pageUrl)
+    return newWindow
+}
+
+export async function createWindowByOpeningFile(path: string) {
+    if (!path) return
+    const win = await createWindow()
+    win.webContents.send("send:openFile", { path })
 }
