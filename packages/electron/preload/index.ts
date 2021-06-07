@@ -1,5 +1,8 @@
 import { contextBridge } from "electron"
+import { ipcRenderer } from "electron"
 
-import { electronIpcApi } from "./api-renderer"
+export const electronIpcRenderer = {
+    invoke: ipcRenderer.invoke.bind(ipcRenderer),
+}
 
-contextBridge.exposeInMainWorld("electronContextBridgeApi", electronIpcApi)
+contextBridge.exposeInMainWorld("electronIpcRenderer", electronIpcRenderer)
