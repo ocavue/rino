@@ -93,9 +93,12 @@ const WysiwygEditor = React.memo<WysiwygEditorProps>(
             return () => {
                 // console.debug(`Unmounting <${WysiwygEditor.displayName}/>`)
                 const content = getContent()
-                if (content === null) return
-                beforeUnmount(content)
-                onContentSave(content)
+                if (content === null) {
+                    beforeUnmount()
+                } else {
+                    beforeUnmount(content)
+                    onContentSave(content)
+                }
             }
         }, [getContent, onContentSave, beforeUnmount])
 

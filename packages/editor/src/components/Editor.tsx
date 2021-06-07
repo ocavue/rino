@@ -1,3 +1,4 @@
+import { isString } from "lodash"
 import React, { useCallback, useEffect, useState } from "react"
 
 import { metaKey } from "@rino.app/common"
@@ -46,8 +47,10 @@ const Editor: React.FC<EditorProps> = ({
     const [isSwitchingMode, setIsSwitchingMode] = useState<boolean>(false)
     const [initialContent, setInitialContent] = useState<string>(note.content)
 
-    const beforeUnmount = useCallback((content: string) => {
-        setInitialContent(content)
+    const beforeUnmount = useCallback((content?: string) => {
+        if (isString(content)) {
+            setInitialContent(content)
+        }
         setMode((mode) => (mode === Mode.WYSIWYG ? Mode.SOURCE_CODE : Mode.WYSIWYG))
         setIsSwitchingMode(false)
     }, [])

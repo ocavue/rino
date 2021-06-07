@@ -8,7 +8,7 @@ export type EditorProps = {
     onContentSaveDelay: number
     onContentSave: (content: string) => void
     onContentEdit: () => void
-    beforeUnmount: (content: string) => void
+    beforeUnmount: (content?: string) => void
 }
 
 export type DrawerActivityContainer = Pick<Container<{ drawerActivity: boolean }>, "useContainer">

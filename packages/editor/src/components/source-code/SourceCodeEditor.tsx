@@ -41,9 +41,12 @@ const SourceCodeEditor: FC<EditorProps> = React.memo<EditorProps>(
             return () => {
                 // console.debug(`Unmounting <${SourceCodeEditor.displayName}/>`)
                 const content = getContent()
-                if (content === null) return
-                beforeUnmount(content)
-                onContentSave(content)
+                if (content === null) {
+                    beforeUnmount()
+                } else {
+                    beforeUnmount(content)
+                    onContentSave(content)
+                }
             }
         }, [getContent, onContentSave, beforeUnmount])
 

@@ -79,6 +79,14 @@ export async function typeCodeMirror(testid: string, text: string, pressEnter = 
     return typeWithSelector(testidSelector(testid) + " .CodeMirror textarea", text, pressEnter)
 }
 
+export async function typeWysiwygEditor(text: string, pressEnter = true) {
+    return type("wysiwyg_mode_textarea", text, pressEnter)
+}
+
+export async function typeSourceCodeEditor(text: string, pressEnter = true) {
+    return typeCodeMirror("source_code_mode_textarea", text, pressEnter)
+}
+
 export async function getOne(testid: string) {
     return await page.$(testidSelector(testid))
 }
