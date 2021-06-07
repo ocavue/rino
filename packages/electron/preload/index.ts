@@ -1,8 +1,9 @@
-import { contextBridge } from "electron"
-import { ipcRenderer } from "electron"
+import { contextBridge, ipcRenderer } from "electron"
 
 export const electronIpcRenderer = {
-    invoke: ipcRenderer.invoke.bind(ipcRenderer),
+    invoke: async (channel: string, ...params: Array<any>) => {
+        return ipcRenderer.invoke(channel, ...params)
+    },
 }
 
 contextBridge.exposeInMainWorld("electronIpcRenderer", electronIpcRenderer)

@@ -45,20 +45,9 @@ const Workbench: FC = () => {
 
     return (
         <div>
-            <button onClick={ipc.newWindow}>New File</button>
+            <button onClick={() => ipc.newWindow()}>New File</button>
             <button onClick={openFile}>Open File</button>
             <button onClick={saveFile}>Save File</button>
-            <button disabled>Revert</button>
-            <button>Save HTML</button>
-            <button disabled>Show File</button>
-            <button disabled>Open in Default Application</button>
-            <button
-                onClick={async () => {
-                    console.log(await ipc.getCurrentWindow())
-                }}
-            >
-                Show current window
-            </button>
 
             <Editor key={note.path} note={note} setNoteContent={setNoteContent} drawerActivityContainer={drawerActivityContainer} />
         </div>
