@@ -44,11 +44,13 @@ const WysiwygEditor = React.memo<WysiwygEditorProps>(
         autoFocus,
         editable,
         initialContent,
-        onContentChange,
         maxDrawerWidth,
         drawerActivityContainer,
         isTestEnv,
         beforeUnmount,
+        onContentEdit,
+        onContentSave,
+        onContentSaveDelay,
     }) => {
         const [error, setError] = useState<Error | null>(null)
 
@@ -70,24 +72,32 @@ const WysiwygEditor = React.memo<WysiwygEditorProps>(
 
         const serializer = useMemo(() => buildMarkdownSerializer(manager), [manager])
 
-        const saveContent = useCallback(() => {
+        const getContent: () => string | null = useCallback(() => {
             const doc = manager.view?.state?.doc
-            if (!doc) return
-            const content = serializer.serialize(doc)
-            onContentChange(content)
-        }, [manager, onContentChange, serializer])
+            if (!doc) return null
+            return serializer.serialize(doc)
+        }, [manager, serializer])
 
-        const saveContentWithDelay = useMemo(() => debounce(saveContent, 500), [saveContent])
+        const onChange = useMemo(() => {
+            const saveContent = () => onContentSave(getContent())
+            const saveContentWithDelay = debounce(saveContent, onContentSaveDelay)
+            return () => {
+                onContentEdit()
+                saveContentWithDelay()
+            }
+        }, [getContent, onContentEdit, onContentSave, onContentSaveDelay])
 
         // We use `useLayoutEffect` instead of `useEffect` because we want `beforeUnmount` to be called ASAP
         useLayoutEffect(() => {
             // console.debug(`Mounting <${WysiwygEditor.displayName}/>`)
             return () => {
                 // console.debug(`Unmounting <${WysiwygEditor.displayName}/>`)
-                saveContent()
-                beforeUnmount()
+                const content = getContent()
+                if (content === null) return
+                beforeUnmount(content)
+                onContentSave(content)
             }
-        }, [saveContent, beforeUnmount])
+        }, [getContent, onContentSave, beforeUnmount])
 
         if (error) {
             // I didn't use React `componentDidCatch` method because I can't turn off `react-error-overlay` (easily) and
@@ -109,7 +119,7 @@ const WysiwygEditor = React.memo<WysiwygEditorProps>(
                     manager={manager}
                     autoFocus={autoFocus}
                     initialContent={initialNode}
-                    onChange={saveContentWithDelay}
+                    onChange={onChange}
                     editable={editable}
                     attributes={{ "data-testid": "wysiwyg_mode_textarea" }}
                 >

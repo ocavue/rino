@@ -12,7 +12,7 @@ const InnerEditor: FC<{ className: string }> = ({ className }) => {
 }
 
 const SourceCodeEditor: FC<EditorProps> = React.memo<EditorProps>(
-    ({ className, initialContent, editable, autoFocus, onContentChange, beforeUnmount }) => {
+    ({ className, initialContent, editable, autoFocus, beforeUnmount, onContentEdit, onContentSave, onContentSaveDelay }) => {
         const { manager } = useSourceCodeRemirror()
 
         const initialNode = useMemo(() => {
@@ -20,29 +20,39 @@ const SourceCodeEditor: FC<EditorProps> = React.memo<EditorProps>(
             return schema.nodes.doc.create({}, schema.nodes.codeMirror.create({}, initialContent ? schema.text(initialContent) : undefined))
         }, [manager, initialContent])
 
-        const saveContent = useCallback(() => {
-            const content = manager.view.state.doc.textContent
-            onContentChange(content)
-        }, [manager, onContentChange])
+        const getContent: () => string | null = useCallback(() => {
+            const doc = manager.view?.state?.doc
+            if (!doc) return null
+            return doc.textContent
+        }, [manager])
 
-        const saveContentWithDelay = useMemo(() => debounce(saveContent, 500), [saveContent])
+        const onChange = useMemo(() => {
+            const saveContent = () => onContentSave(getContent())
+            const saveContentWithDelay = debounce(saveContent, onContentSaveDelay)
+            return () => {
+                onContentEdit()
+                saveContentWithDelay()
+            }
+        }, [getContent, onContentEdit, onContentSave, onContentSaveDelay])
 
         // We use `useLayoutEffect` instead of `useEffect` because we want `beforeUnmount` to be called ASAP
         useLayoutEffect(() => {
             // console.debug(`Mounting <${SourceCodeEditor.displayName}/>`)
             return () => {
                 // console.debug(`Unmounting <${SourceCodeEditor.displayName}/>`)
-                saveContent()
-                beforeUnmount()
+                const content = getContent()
+                if (content === null) return
+                beforeUnmount(content)
+                onContentSave(content)
             }
-        }, [saveContent, beforeUnmount])
+        }, [getContent, onContentSave, beforeUnmount])
 
         return (
             <Remirror
                 manager={manager}
                 autoFocus={autoFocus}
                 initialContent={initialNode}
-                onChange={saveContentWithDelay}
+                onChange={onChange}
                 editable={editable}
                 attributes={{ "data-testid": "source_code_mode_textarea" }}
             >
