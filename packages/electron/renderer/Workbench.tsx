@@ -3,7 +3,7 @@ import React, { FC, useCallback, useEffect, useState } from "react"
 import { basename } from "@rino.app/common"
 import { Editor } from "@rino.app/editor"
 
-import { ipc } from "./ipc"
+import { ipc, registerIpcHandlers } from "./ipc"
 
 const drawerActivityContainer = {
     useContainer: () => ({
@@ -31,8 +31,8 @@ function useMarkdownNote() {
         ipc.setTitle({ title })
     }, [note.path, edited])
 
-    const openFile = useCallback(async () => {
-        const file = await ipc.openFile()
+    const openFile = useCallback(async (path?: string) => {
+        const file = await ipc.openFile({ path })
         if (!file.canceled) {
             setNote({ content: file.content, deleted: false, path: file.path })
         }
@@ -51,19 +51,26 @@ function useMarkdownNote() {
         setEdited(true)
     }, [])
 
-    const saveFile = useCallback(async (note: Note) => {
-        console.log("savefile 0")
-        const { canceled, path } = await ipc.saveFile({ content: note.content, path: note.path })
-        console.log("savefile 1", canceled, path)
-
-        if (canceled) return
-
-        setEdited(false)
-
-        if (path && note.path !== path) {
-            setNote((note) => ({ ...note, path }))
-        }
+    const setNotePath = useCallback((path: string) => {
+        if (path) setNote((note) => ({ ...note, path }))
     }, [])
+
+    const saveFile = useCallback(
+        async (note: Note) => {
+            console.log("savefile 0")
+            const { canceled, path } = await ipc.saveFile({ content: note.content, path: note.path })
+            console.log("savefile 1", canceled, path)
+
+            if (canceled) return
+
+            setEdited(false)
+
+            if (path && note.path !== path) {
+                setNotePath(path)
+            }
+        },
+        [setNotePath],
+    )
 
     useEffect(() => {
         if (note.path) {
@@ -71,18 +78,18 @@ function useMarkdownNote() {
         }
     }, [saveFile, note])
 
-    return { note, openFile, saveFile, onContentSave, onContentEdit }
+    return { note, openFile, setNotePath, onContentSave, onContentEdit }
 }
 
 const Workbench: FC = () => {
-    const { note, openFile, saveFile, onContentSave, onContentEdit } = useMarkdownNote()
+    const { note, openFile, setNotePath, onContentSave, onContentEdit } = useMarkdownNote()
+
+    useEffect(() => {
+        registerIpcHandlers(openFile, setNotePath)
+    }, [setNotePath, openFile])
 
     return (
         <div>
-            <button onClick={() => ipc.newWindow()}>New File</button>
-            <button onClick={() => openFile()}>Open File</button>
-            <button onClick={() => saveFile(note)}>Save File</button>
-
             <Editor
                 key={note.path}
                 note={note}

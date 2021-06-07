@@ -1,8 +1,13 @@
-import { contextBridge, ipcRenderer } from "electron"
+import { contextBridge, ipcRenderer, IpcRendererEvent } from "electron"
 
-export const electronIpcRenderer = {
+import { PreloadIpcRenderer } from "../types/api"
+
+export const electronIpcRenderer: PreloadIpcRenderer = {
     invoke: async (channel: string, ...params: Array<any>) => {
         return ipcRenderer.invoke(channel, ...params)
+    },
+    on: (channel: string, listener: (event: IpcRendererEvent, ...args: any[]) => void) => {
+        ipcRenderer.on(channel, listener)
     },
 }
 

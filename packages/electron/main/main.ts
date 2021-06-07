@@ -1,8 +1,10 @@
-import { app } from "electron"
+import { app, Menu } from "electron"
 
 import { registerIpcHandlers } from "./api-main"
+import { buildApplicationMenu } from "./application-menu"
 import { env } from "./env"
 import { logger } from "./logger"
+import { isMac } from "./platform"
 import { createWindow } from "./window"
 
 async function setupAutoUpdate() {
@@ -25,7 +27,7 @@ async function setupAutoUpdate() {
 
 async function init() {
     app.on("window-all-closed", () => {
-        if (process.platform !== "darwin") {
+        if (!isMac) {
             app.quit()
         }
     })
@@ -34,6 +36,11 @@ async function init() {
         if (!hasVisibleWindows) {
             createWindow()
         }
+    })
+
+    app.on("ready", () => {
+        Menu.setApplicationMenu(buildApplicationMenu())
+        createWindow()
     })
 
     app.whenReady()
