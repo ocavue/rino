@@ -1,5 +1,5 @@
 import { switchMode } from "./actions"
-import { getInnerText, getSourceCodeModeText, setupEmptyEditor, sleep, typeSourceCodeEditor, typeWysiwygEditor, wait } from "./utils"
+import { getInnerText, getSourceCodeModeText, setupEmptyEditor, typeSourceCodeEditor, wait } from "./utils"
 
 describe("ProsemirrorView constructor error", () => {
     test("Prepare", async () => {
