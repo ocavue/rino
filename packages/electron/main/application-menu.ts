@@ -1,5 +1,6 @@
 import { Menu, MenuItemConstructorOptions } from "electron"
 
+import { env } from "./env"
 import { askMarkdownFileForOpen, askMarkdownFileForSave } from "./file"
 import { isMac } from "./platform"
 import { createWindow, createWindowByOpeningFile } from "./window"
@@ -17,6 +18,10 @@ export function buildApplicationMenu() {
             { type: "separator" },
             { role: "quit" },
         ],
+    }
+
+    const reloadMenu: MenuItemConstructorOptions = {
+        role: "reload",
     }
 
     return Menu.buildFromTemplate([
@@ -51,6 +56,7 @@ export function buildApplicationMenu() {
                         win?.webContents.send("send:setNotePath", { path })
                     },
                 },
+                ...(env.IS_PROD ? [] : [reloadMenu]),
             ],
         },
         {
