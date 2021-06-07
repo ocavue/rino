@@ -1,5 +1,5 @@
 export interface ElectronIpcApi {
-    openFile: () => Promise<{ path: string; content: string }>
+    openFile: () => Promise<{ canceled: boolean; path: string; content: string }>
     saveFile: (options: { path: string; content: string }) => Promise<{ canceled: boolean; path: string }>
     newWindow: () => Promise<void>
     getCurrentWindow: () => Promise<{ id: string; title: string } | null>

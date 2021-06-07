@@ -4,22 +4,22 @@ import fs from "fs/promises"
 import { logger } from "./logger"
 
 export async function askMarkdownFileForOpen(): Promise<string> {
-    const files = await dialog.showOpenDialog({
+    const result = await dialog.showOpenDialog({
         properties: ["openFile"],
         filters: [{ name: "Markdown Files", extensions: ["md", "markdown"] }],
     })
-    const filePaths = files.filePaths
-    logger.info(`user selected ${filePaths.length} file(s): ${filePaths}`)
-    return filePaths[0] // TODO: allow users to open many files
+    logger.info(`showOpenDialog result: ${result}`)
+    return result.filePaths[0] // TODO: allow users to open many files
 }
 
 export async function askMarkdownFileForSave(): Promise<string | undefined> {
-    const file = await dialog.showSaveDialog({
+    const result = await dialog.showSaveDialog({
         title: "Save Markdown",
         defaultPath: app.getPath("documents"),
         filters: [{ name: "Markdown Files", extensions: ["md", "markdown"] }],
     })
-    return file.filePath // If the dialog is canceled, this will be be undefined
+    logger.info(`showSaveDialog result: ${result}`)
+    return result.filePath // If the dialog is canceled, this will be be undefined
 }
 
 export async function openFile(filePath: string): Promise<string> {

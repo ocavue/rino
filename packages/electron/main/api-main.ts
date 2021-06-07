@@ -6,8 +6,9 @@ import { createWindow } from "./window"
 export function registerIpcHandlers() {
     ipcMain.handle("open_file", async (event) => {
         const path = await askMarkdownFileForOpen()
+        if (!path) return { canceled: true, path: "", content: "" }
         const content = await openFile(path)
-        return { path, content }
+        return { canceled: false, path, content }
     })
 
     ipcMain.handle("save_file", async (event, note) => {

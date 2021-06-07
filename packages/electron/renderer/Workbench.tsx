@@ -21,7 +21,7 @@ function useMarkdownNote() {
 
     const openFile = useCallback(async () => {
         const file = await ipc.openFile()
-        if (file) {
+        if (!file.canceled) {
             setNote({ content: file.content, deleted: false, path: file.path })
         }
     }, [])
