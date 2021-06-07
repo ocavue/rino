@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.25.0](https://www.github.com/ocavue/rino/compare/v0.24.0...v0.25.0) (2021-06-07)
+
+
+### Features
+
+* **electron:** add application menu ([#637](https://www.github.com/ocavue/rino/issues/637)) ([f13a8e1](https://www.github.com/ocavue/rino/commit/f13a8e13b37491fb54dde2a909feffdaefd7c914))
+* **electron:** read and write local files ([#634](https://www.github.com/ocavue/rino/issues/634)) ([c31f713](https://www.github.com/ocavue/rino/commit/c31f713bb290534c11791ca91c3e9ebffcc6545b))
+
 ## [0.24.0](https://www.github.com/ocavue/rino/compare/v0.23.0...v0.24.0) (2021-06-06)
 
 
