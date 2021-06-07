@@ -1,11 +1,12 @@
-import { app, BrowserWindow } from "electron"
-import logger from "electron-log"
-import { URL } from "url"
+import { app } from "electron"
 
+import { registerIpcHandlers } from "./api-main"
 import { env } from "./env"
+import { logger } from "./logger"
+import { createWindow } from "./window"
 
 async function setupAutoUpdate() {
-    if (env.PROD) {
+    if (env.IS_PROD) {
         logger.log("current environment is production")
 
         await app.whenReady()
@@ -22,60 +23,26 @@ async function setupAutoUpdate() {
     }
 }
 
-const lock = app.requestSingleInstanceLock()
-
-if (!lock) {
-    app.quit()
-} else {
-    /**
-     * Workaround for TypeScript bug
-     * @see https://github.com/microsoft/TypeScript/issues/41468#issuecomment-727543400
-     */
-
-    let mainWindow: BrowserWindow | null = null
-
-    const createWindow = async () => {
-        mainWindow = new BrowserWindow({
-            show: true,
-            webPreferences: {
-                enableRemoteModule: true,
-            },
-        })
-
-        /**
-         * URL for main window.
-         * Vite dev server for development.
-         * `file://../renderer/index.html` for production and test
-         */
-        const pageUrl = (
-            env.MODE === "development" ? "http://localhost:3003" : new URL("../renderer/dist/index.html", "file://" + __dirname).toString()
-        ) as string
-
-        // if (env.MODE === "development") {
-        //     mainWindow.webContents.openDevTools()
-        // }
-
-        await mainWindow.loadURL(pageUrl)
-    }
-
-    app.on("second-instance", () => {
-        // Someone tried to run a second instance, we should focus our window.
-        if (mainWindow) {
-            if (mainWindow.isMinimized()) mainWindow.restore()
-            mainWindow.focus()
-        }
-    })
-
+async function init() {
     app.on("window-all-closed", () => {
         if (process.platform !== "darwin") {
             app.quit()
         }
     })
 
+    app.on("activate", (event, hasVisibleWindows) => {
+        if (!hasVisibleWindows) {
+            createWindow()
+        }
+    })
+
     app.whenReady()
         .then(createWindow)
-        .catch((e) => logger.error("Failed create window:", e))
+        .catch((e) => logger.error("failed to create window:", e))
 
-    // Auto-updates
+    registerIpcHandlers()
+
     setupAutoUpdate()
 }
+
+init()

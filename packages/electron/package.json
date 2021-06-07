@@ -6,13 +6,15 @@
     "author": "ocavue",
     "description": "A better way to write Markdown",
     "scripts": {
-        "dev": "run-p dev:main dev:renderer dev:electron",
+        "dev": "run-p dev:main dev:renderer dev:preload dev:electron",
         "dev:main": "tsc --build --watch ./main/tsconfig.json",
-        "dev:renderer": "tsc --build ./renderer/tsconfig.json && vite ./renderer",
-        "dev:electron": "wait-on --timeout 60000 tcp:3004 && wait-on --timeout 60000 ./main/dist/main.js && NODE_ENV=development electron .",
-        "build": "run-s -l -n build:main build:renderer build:electron",
-        "build:all": "run-s -l -n build:main build:renderer build:electron:mac build:electron:win build:electron:linux",
+        "dev:preload": "tsc --build --watch ./preload/tsconfig.json",
+        "dev:renderer": "vite ./renderer",
+        "dev:electron": "wait-on --timeout 60000 tcp:3004 && wait-on --timeout 60000 ./main/dist/main.js && wait-on --timeout 60000 ./preload/dist/index.js && NODE_ENV=development electron .",
+        "build": "run-s -l -n build:main build:renderer build:preload build:electron",
+        "build:all": "run-s -l -n build:main build:renderer build:preload build:electron:mac build:electron:win build:electron:linux",
         "build:main": "tsc --build ./main/tsconfig.json",
+        "build:preload": "tsc --build ./preload/tsconfig.json",
         "build:renderer": "tsc --build ./renderer/tsconfig.json && vite build ./renderer",
         "build:electron": "electron-builder -p never",
         "build:electron:mac": "electron-builder -p never --mac --universal",
@@ -33,6 +35,7 @@
         "wait-on": "^5.3.0"
     },
     "dependencies": {
+        "@rino.app/common": "0.0.0",
         "@rino.app/editor": "0.0.0",
         "electron-log": "^4.3.5",
         "electron-updater": "^4.3.9",

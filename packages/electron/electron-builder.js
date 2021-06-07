@@ -10,7 +10,7 @@ const config = {
         output: "dist",
         buildResources: "resources",
     },
-    files: ["main/dist/**", "renderer/dist/**"],
+    files: ["main/dist/**", "preload/dist/**", "renderer/dist/**"],
     extraMetadata: {
         name: "Rino",
     },
