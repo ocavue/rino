@@ -31,8 +31,8 @@ async function init() {
     app.on("will-finish-launching", () => {
         logger.info("event triggered: will-finish-launching")
         app.on("open-file", (event, path) => {
-            openingFile = true
             logger.info("event triggered: open-file", { path })
+            openingFile = true
             event.preventDefault()
             createWindowByOpeningFile(path)
         })
