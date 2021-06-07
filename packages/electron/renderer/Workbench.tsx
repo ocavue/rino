@@ -15,8 +15,8 @@ function useMarkdownNote() {
     const [note, setNote] = useState<{ content: string; path: string; deleted: boolean }>({ content: "", path: "", deleted: false })
 
     useEffect(() => {
-        // TODO: don't show multi-windows with a same title
-        ipc.setTitle({ title: `${basename(note.path)}` })
+        const title = basename(note.path) || "Untitled"
+        ipc.setTitle({ title })
     }, [note.path])
 
     const openFile = useCallback(async () => {
