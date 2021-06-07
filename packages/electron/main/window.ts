@@ -64,7 +64,7 @@ export async function createWindow() {
 export async function createWindowByOpeningFile(path: string) {
     if (!path) return
     const win = await createWindow()
-    win?.webContents.send("send:openFile", { path })
+    win.webContents.send("send:openFile", { path })
 }
 
 export async function createWindowIfNotExist() {
