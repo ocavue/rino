@@ -1,8 +1,7 @@
 import { Menu, MenuItemConstructorOptions } from "electron"
 
-import { env } from "./env"
+import { env, plateform } from "./env"
 import { askMarkdownFileForOpen, askMarkdownFileForSave } from "./file"
-import { isMac } from "./platform"
 import { createWindow, createWindowByOpeningFile } from "./window"
 
 export function buildApplicationMenu() {
@@ -25,7 +24,7 @@ export function buildApplicationMenu() {
     }
 
     return Menu.buildFromTemplate([
-        ...(isMac ? [macMenu] : []),
+        ...(plateform.IS_MAC ? [macMenu] : []),
         {
             label: "File",
             submenu: [
