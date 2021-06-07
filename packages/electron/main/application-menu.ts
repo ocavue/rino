@@ -1,6 +1,6 @@
 import { Menu, MenuItemConstructorOptions } from "electron"
 
-import { askMarkdownFileForOpen, askMarkdownFileForSave, saveFile } from "./file"
+import { askMarkdownFileForOpen, askMarkdownFileForSave } from "./file"
 import { isMac } from "./platform"
 import { createWindow, createWindowByOpeningFile } from "./window"
 
