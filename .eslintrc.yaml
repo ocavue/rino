@@ -4,7 +4,6 @@ parserOptions:
   parser: "@typescript-eslint/parser"
   ecmaVersion: 2018 # Allows for the parsing of modern ECMAScript features
   project:
-    - "./packages/*/tsconfig.json"
     - "./packages/*/*/tsconfig.json"
     - "./tsconfig.json"
   ecmaFeatures:
