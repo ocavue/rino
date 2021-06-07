@@ -93,7 +93,7 @@ const Workbench: FC = () => {
             <Editor
                 key={note.path}
                 note={note}
-                onContentSaveDelay={5000}
+                onContentSaveDelay={2000}
                 onContentEdit={onContentEdit}
                 onContentSave={onContentSave}
                 drawerActivityContainer={drawerActivityContainer}

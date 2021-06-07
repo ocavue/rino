@@ -52,7 +52,7 @@ const SourceCodeEditor: FC<EditorProps> = React.memo<EditorProps>(
                 manager={manager}
                 autoFocus={autoFocus}
                 initialContent={initialNode}
-                onChange={onChange}
+                onChange={(event) => event.tr?.docChanged && onChange()}
                 editable={editable}
                 attributes={{ "data-testid": "source_code_mode_textarea" }}
             >

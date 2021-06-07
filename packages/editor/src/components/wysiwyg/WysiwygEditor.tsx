@@ -119,7 +119,7 @@ const WysiwygEditor = React.memo<WysiwygEditorProps>(
                     manager={manager}
                     autoFocus={autoFocus}
                     initialContent={initialNode}
-                    onChange={onChange}
+                    onChange={(event) => event.tr?.docChanged && onChange()}
                     editable={editable}
                     attributes={{ "data-testid": "wysiwyg_mode_textarea" }}
                 >
