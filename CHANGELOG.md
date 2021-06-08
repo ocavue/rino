@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.26.0](https://www.github.com/ocavue/rino/compare/v0.25.0...v0.26.0) (2021-06-08)
+
+
+### Features
+
+* **electron:** open files with double-click ([#639](https://www.github.com/ocavue/rino/issues/639)) ([2643cab](https://www.github.com/ocavue/rino/commit/2643cabfe2a63d5f5510ed84ebe201f90de7fbee))
+
 ## [0.25.0](https://www.github.com/ocavue/rino/compare/v0.24.0...v0.25.0) (2021-06-07)
 
 
