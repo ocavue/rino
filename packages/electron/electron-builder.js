@@ -1,5 +1,8 @@
 // @ts-check
 
+const isCI = !!process.env.CI
+const macArch = isCI ? "universal" : undefined
+
 /**
  * @type {import('electron-builder').Configuration}
  * @see https://www.electron.build/configuration/configuration
@@ -21,7 +24,10 @@ const config = {
 
         // Notice that mac dmg can only be built on macOS. https://github.com/electron-userland/electron-builder/issues/811#issuecomment-252558287
         // zip target for macOS is required for Squirrel.Mac.
-        target: ["zip", "dmg"],
+        target: [
+            { target: "zip", arch: macArch },
+            { target: "dmg", arch: macArch },
+        ],
 
         hardenedRuntime: true,
     },

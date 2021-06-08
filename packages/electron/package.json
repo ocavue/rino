@@ -17,7 +17,7 @@
         "build:preload": "tsc --build ./preload/tsconfig.json",
         "build:renderer": "tsc --build ./renderer/tsconfig.json && vite build ./renderer",
         "build:electron": "electron-builder -p never",
-        "build:electron:all": "electron-builder -p never --mac --universal --win --linux",
+        "build:electron:all": "electron-builder -p never --mac --win --linux",
         "clean": "bash -c 'rm -rf ./dist/*/ ./preload/dist/ ./main/dist/ ./renderer/dist/'"
     },
     "devDependencies": {
