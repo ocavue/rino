@@ -13,6 +13,9 @@ const commonAssertions = {
 
     // Material-UI has some components that break this rule
     "non-composited-animations": "warn",
+
+    // Since the website is not deployed on my own server, I can't do much about the HTTP response headers.
+    "csp-xss": "warn",
 }
 
 const webConfig = {
