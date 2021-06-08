@@ -48,9 +48,9 @@ jobs:
           export PLAYWRIGHT_BROWSERS_PATH=$HOME/cache_playwright_browsers
           env | grep CACHE
           time npm install -g pnpm
+          time pnpm install -g ultra-runner
           time pnpm install
           echo "[DEBUG] CACHE_HIT: $CACHE_HIT"
-          sudo ln -sf $PWD/node_modules/.bin/ultra /usr/local/bin/ultra
         env:
           CACHE_HIT: ${{ steps.step_cache_deps.outputs.cache-hit }}
 
