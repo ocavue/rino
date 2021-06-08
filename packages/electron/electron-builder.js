@@ -25,6 +25,10 @@ const config = {
 
         hardenedRuntime: true,
     },
+
+    fileAssociations: {
+        ext: "md",
+    },
 }
 
 module.exports = config
