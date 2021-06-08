@@ -2,9 +2,6 @@
     "name": "rino",
     "version": "0.0.0",
     "private": true,
-    "workspaces": [
-        "packages/*"
-    ],
     "scripts": {
         "lint": "eslint --ignore-path .gitignore --ext '.js,.jsx,.ts,.tsx'",
         "test": "jest --runInBand",
@@ -13,7 +10,7 @@
         "clean": "rimraf ./packages/*/dist ./packages/*/.next ./packages/*/.ultra.cache.json"
     },
     "devDependencies": {
-        "@lhci/cli": "^0.7.2",
+        "@lhci/cli": "^0.8.0",
         "@svgr/cli": "^5.5.0",
         "@types/jest": "^26.0.23",
         "@types/node": "^14.17.3",
@@ -34,7 +31,7 @@
         "playwright": "^1.11.1",
         "prettier": "^2.3.1",
         "rimraf": "^3.0.2",
-        "typescript": "~4.3.2",
+        "typescript": "^4.3.2",
         "ultra-runner": "^3.10.5"
     },
     "renovate": {
