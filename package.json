@@ -10,12 +10,10 @@
         "test": "jest --runInBand",
         "postinstall": "./scripts/post-install.sh && husky install",
         "exec": "./scripts/recursive-exec.sh",
-        "clean": "rimraf ./packages/*/dist ./packages/*/.next ./packages/*/.ultra.cache.json",
-        "build:size-limit": "ultra clean && ultra exec editor build && ultra exec home build"
+        "clean": "rimraf ./packages/*/dist ./packages/*/.next ./packages/*/.ultra.cache.json"
     },
     "devDependencies": {
         "@lhci/cli": "^0.7.2",
-        "@size-limit/file": "^4.11.0",
         "@svgr/cli": "^5.5.0",
         "@types/jest": "^26.0.23",
         "@types/node": "^14.17.3",
@@ -32,10 +30,10 @@
         "jest": "^26.6.3",
         "jest-playwright-preset": "^1.6.0",
         "jest-transform-stub": "^2.0.0",
+        "js-yaml": "^4.1.0",
         "playwright": "^1.11.1",
         "prettier": "^2.3.1",
         "rimraf": "^3.0.2",
-        "size-limit": "^4.11.0",
         "typescript": "~4.3.2",
         "ultra-runner": "^3.10.5"
     },
@@ -43,9 +41,6 @@
         "extends": [
             "config:base",
             ":semanticCommitTypeAll(chore)"
-        ],
-        "postUpdateOptions": [
-            "yarnDedupeHighest"
         ],
         "lockFileMaintenance": {
             "enabled": true,
@@ -73,21 +68,10 @@
             }
         ],
         "ignoreDeps": [
-            "@lhci/cli",
             "webpack",
             "node"
         ],
         "rangeStrategy": "bump",
         "dependencyDashboard": true
-    },
-    "size-limit": [
-        {
-            "name": "editor",
-            "path": "packages/editor/dist/**/*.{js,css,html}"
-        },
-        {
-            "name": "home",
-            "path": "packages/home/dist/**/*.{js,css,html}"
-        }
-    ]
+    }
 }
