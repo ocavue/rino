@@ -105,7 +105,7 @@
         },
         {
           "name": "Clean electron dist",
-          "run": "cd packages/electron\nfind ./dist -type f\necho '============== cleaning =============='\nyarn run clean\necho '============== cleaned ==============='\nfind ./dist -type f\n"
+          "run": "cd packages/electron\necho '============== before cleaning =============='\nfind ./dist -type f\necho '============== cleaning ====================='\nyarn run clean\necho '============== after cleaning ==============='\nfind ./dist -type f\n"
         },
         {
           "name": "Check electron cache after building",

@@ -107,10 +107,11 @@ jobs:
       - name: Clean electron dist
         run: |
           cd packages/electron
+          echo '============== before cleaning =============='
           find ./dist -type f
-          echo '============== cleaning =============='
+          echo '============== cleaning ====================='
           yarn run clean
-          echo '============== cleaned ==============='
+          echo '============== after cleaning ==============='
           find ./dist -type f
 
       - name: Check electron cache after building
