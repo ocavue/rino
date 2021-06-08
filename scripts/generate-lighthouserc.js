@@ -10,6 +10,9 @@ const commonAssertions = {
 
     // I don't know how to fix this.
     "uses-responsive-images": "warn",
+
+    // Material-UI has some components that break this rule
+    "non-composited-animations": "warn",
 }
 
 const webConfig = {
