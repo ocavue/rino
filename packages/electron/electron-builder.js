@@ -27,7 +27,7 @@ const config = {
     },
 
     fileAssociations: {
-        ext: ["md"],
+        ext: "md",
     },
 }
 
