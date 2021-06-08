@@ -28,19 +28,17 @@ jobs:
         uses: actions/cache@v2
         with:
           path: |
-            .yarn/cache
+            ~/.pnpm-store
             ~/cache_electron
             ~/cache_electron_builder
             ~/cache_playwright_browsers
 
-          key: ${{ runner.os }}-deps-v13-${{ hashFiles('yarn.lock') }}
+          key: ${{ runner.os }}-deps-v14-${{ hashFiles('pnpm-lock.yaml') }}
           restore-keys: |
-            ${{ runner.os }}-deps-v13-
-            ${{ runner.os }}-deps-v12-
+            ${{ runner.os }}-deps-v14-
 
       - &step_install_deps
         name: Install Dependencies
-        # Reinstall node modules even if `cache-hit` is `true` because we need to build symlinks for Yarn workspace
         run: |
           echo "ELECTRON_CACHE=$HOME/cache_electron" >> $GITHUB_ENV
           echo "ELECTRON_BUILDER_CACHE=$HOME/cache_electron_builder" >> $GITHUB_ENV
@@ -49,9 +47,8 @@ jobs:
           export ELECTRON_BUILDER_CACHE=$HOME/cache_electron_builder
           export PLAYWRIGHT_BROWSERS_PATH=$HOME/cache_playwright_browsers
           env | grep CACHE
-          date
-          yarn install --immutable
-          date
+          time npm install -g pnpm
+          time pnpm install
           echo "[DEBUG] CACHE_HIT: $CACHE_HIT"
           sudo ln -sf $PWD/node_modules/.bin/ultra /usr/local/bin/ultra
         env:
@@ -93,16 +90,10 @@ jobs:
           echo "$pkgjson" > ./packages/electron/package.json
           cat ./packages/electron/package.json
 
-      - name: Build dependencies
-        run: |
-          ultra exec editor build
-
-        # I have to use yarn install of ultra because electron-builder will detect which
-        # package manager I'm using and have differernt behaviors.
       - name: Build electron
         run: |
           cd packages/electron
-          yarn run build:all
+          ultra exec electron build:all
 
       - name: Clean electron dist
         run: |
@@ -110,7 +101,7 @@ jobs:
           echo '============== before cleaning =============='
           find ./dist -type f
           echo '============== cleaning ====================='
-          yarn run clean
+          pnpm run clean
           echo '============== after cleaning ==============='
           find ./dist -type f
 
