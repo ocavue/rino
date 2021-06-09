@@ -50,6 +50,7 @@
                     ".*remirror.*",
                     "jest-prosemirror"
                 ],
+                "stabilityDays": 0,
                 "allowedVersions": "/^.*pr706.[0-9]+$/"
             },
             {
@@ -68,6 +69,8 @@
             "webpack",
             "node"
         ],
+        "prCreation": "not-pending",
+        "stabilityDays": 14,
         "rangeStrategy": "bump",
         "dependencyDashboard": true
     }
