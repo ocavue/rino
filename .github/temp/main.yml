@@ -33,9 +33,9 @@ jobs:
             ~/cache_electron_builder
             ~/cache_playwright_browsers
 
-          key: ${{ runner.os }}-deps-v15-${{ hashFiles('pnpm-lock.yaml') }}
+          key: ${{ runner.os }}-deps-v16-${{ hashFiles('pnpm-lock.yaml') }}
           restore-keys: |
-            ${{ runner.os }}-deps-v15-
+            ${{ runner.os }}-deps-v16-
 
       - &step_install_deps
         name: Install Dependencies
