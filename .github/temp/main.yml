@@ -33,9 +33,9 @@ jobs:
             ~/cache_electron_builder
             ~/cache_playwright_browsers
 
-          key: ${{ runner.os }}-deps-v17-${{ hashFiles('pnpm-lock.yaml') }}
+          key: ${{ runner.os }}-deps-v18-${{ hashFiles('pnpm-lock.yaml') }}
           restore-keys: |
-            ${{ runner.os }}-deps-v17-
+            ${{ runner.os }}-deps-v18-
 
       - &step_install_deps
         name: Install Dependencies
@@ -73,6 +73,8 @@ jobs:
       - *step_checkout
       - *step_setup_node
       - *step_cache_deps
+      - &step_setup_pnpm_shamefully_hoist
+        run: echo 'shamefully-hoist=true' >> ~/.npmrc
       - *step_install_deps
 
       - name: Check electron cache before building
@@ -175,8 +177,6 @@ jobs:
       - *step_checkout
       - *step_setup_node
       - *step_cache_deps
-      - &step_setup_pnpm_shamefully_hoist
-        run: echo 'shamefully-hoist=true' >> ~/.npmrc
       - *step_install_deps
 
       - name: Build
