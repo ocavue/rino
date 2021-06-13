@@ -33,9 +33,9 @@ jobs:
             ~/cache_electron_builder
             ~/cache_playwright_browsers
 
-          key: ${{ runner.os }}-deps-v16-${{ hashFiles('pnpm-lock.yaml') }}
+          key: ${{ runner.os }}-deps-v17-${{ hashFiles('pnpm-lock.yaml') }}
           restore-keys: |
-            ${{ runner.os }}-deps-v16-
+            ${{ runner.os }}-deps-v17-
 
       - &step_install_deps
         name: Install Dependencies
@@ -43,6 +43,7 @@ jobs:
           echo "ELECTRON_CACHE=$HOME/cache_electron" >> $GITHUB_ENV
           echo "ELECTRON_BUILDER_CACHE=$HOME/cache_electron_builder" >> $GITHUB_ENV
           echo "PLAYWRIGHT_BROWSERS_PATH=$HOME/cache_playwright_browsers" >> $GITHUB_ENV
+          set -a; source $GITHUB_ENV; set +a
 
           time npm install -g pnpm
           time pnpm install
