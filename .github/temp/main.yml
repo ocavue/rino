@@ -74,6 +74,7 @@ jobs:
       - *step_setup_node
       - *step_cache_deps
       - &step_setup_pnpm_shamefully_hoist
+        name: Setup pnpm configration
         run: echo 'shamefully-hoist=true' >> ~/.npmrc
       - *step_install_deps
 
