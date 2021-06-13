@@ -33,9 +33,9 @@ jobs:
             ~/cache_electron_builder
             ~/cache_playwright_browsers
 
-          key: ${{ runner.os }}-deps-v14-${{ hashFiles('pnpm-lock.yaml') }}
+          key: ${{ runner.os }}-deps-v15-${{ hashFiles('pnpm-lock.yaml') }}
           restore-keys: |
-            ${{ runner.os }}-deps-v14-
+            ${{ runner.os }}-deps-v15-
 
       - &step_install_deps
         name: Install Dependencies
@@ -43,13 +43,15 @@ jobs:
           echo "ELECTRON_CACHE=$HOME/cache_electron" >> $GITHUB_ENV
           echo "ELECTRON_BUILDER_CACHE=$HOME/cache_electron_builder" >> $GITHUB_ENV
           echo "PLAYWRIGHT_BROWSERS_PATH=$HOME/cache_playwright_browsers" >> $GITHUB_ENV
-          export ELECTRON_CACHE=$HOME/cache_electron
-          export ELECTRON_BUILDER_CACHE=$HOME/cache_electron_builder
-          export PLAYWRIGHT_BROWSERS_PATH=$HOME/cache_playwright_browsers
-          env | grep CACHE
+
           time npm install -g pnpm
-          time pnpm install -g ultra-runner
           time pnpm install
+          time pnpm install -g ultra-runner
+
+          touch ~/.npmrc
+          echo "[DEBUG] ~/.npmrc"
+          cat ~/.npmrc
+
           echo "[DEBUG] CACHE_HIT: $CACHE_HIT"
         env:
           CACHE_HIT: ${{ steps.step_cache_deps.outputs.cache-hit }}
@@ -172,6 +174,8 @@ jobs:
       - *step_checkout
       - *step_setup_node
       - *step_cache_deps
+      - &step_setup_pnpm_shamefully_hoist
+        run: echo 'shamefully-hoist=true' >> ~/.npmrc
       - *step_install_deps
 
       - name: Build

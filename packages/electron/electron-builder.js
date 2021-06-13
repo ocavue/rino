@@ -18,6 +18,8 @@ const config = {
         name: "Rino",
     },
 
+    asar: isCI,
+
     mac: {
         // https://developer.apple.com/library/ios/documentation/General/Reference/InfoPlistKeyReference/Articles/LaunchServicesKeys.html#//apple_ref/doc/uid/TP40009250-SW8
         category: "public.app-category.productivity",
