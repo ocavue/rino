@@ -31,13 +31,13 @@
           "uses": "actions/cache@v2",
           "with": {
             "path": "~/.pnpm-store\n~/cache_electron\n~/cache_electron_builder\n~/cache_playwright_browsers\n",
-            "key": "${{ runner.os }}-deps-v14-${{ hashFiles('pnpm-lock.yaml') }}",
-            "restore-keys": "${{ runner.os }}-deps-v14-\n"
+            "key": "${{ runner.os }}-deps-v18-${{ hashFiles('pnpm-lock.yaml') }}",
+            "restore-keys": "${{ runner.os }}-deps-v18-\n"
           }
         },
         {
           "name": "Install Dependencies",
-          "run": "echo \"ELECTRON_CACHE=$HOME/cache_electron\" >> $GITHUB_ENV\necho \"ELECTRON_BUILDER_CACHE=$HOME/cache_electron_builder\" >> $GITHUB_ENV\necho \"PLAYWRIGHT_BROWSERS_PATH=$HOME/cache_playwright_browsers\" >> $GITHUB_ENV\nexport ELECTRON_CACHE=$HOME/cache_electron\nexport ELECTRON_BUILDER_CACHE=$HOME/cache_electron_builder\nexport PLAYWRIGHT_BROWSERS_PATH=$HOME/cache_playwright_browsers\nenv | grep CACHE\ntime npm install -g pnpm\ntime pnpm install -g ultra-runner\ntime pnpm install\necho \"[DEBUG] CACHE_HIT: $CACHE_HIT\"\n",
+          "run": "echo \"ELECTRON_CACHE=$HOME/cache_electron\" >> $GITHUB_ENV\necho \"ELECTRON_BUILDER_CACHE=$HOME/cache_electron_builder\" >> $GITHUB_ENV\necho \"PLAYWRIGHT_BROWSERS_PATH=$HOME/cache_playwright_browsers\" >> $GITHUB_ENV\nset -a; source $GITHUB_ENV; set +a\n\ntime npm install -g pnpm\ntime pnpm install\ntime pnpm install -g ultra-runner\n\ntouch ~/.npmrc\necho \"[DEBUG] ~/.npmrc\"\ncat ~/.npmrc\n\necho \"[DEBUG] CACHE_HIT: $CACHE_HIT\"\n",
           "env": {
             "CACHE_HIT": "${{ steps.step_cache_deps.outputs.cache-hit }}"
           }
@@ -76,13 +76,17 @@
           "uses": "actions/cache@v2",
           "with": {
             "path": "~/.pnpm-store\n~/cache_electron\n~/cache_electron_builder\n~/cache_playwright_browsers\n",
-            "key": "${{ runner.os }}-deps-v14-${{ hashFiles('pnpm-lock.yaml') }}",
-            "restore-keys": "${{ runner.os }}-deps-v14-\n"
+            "key": "${{ runner.os }}-deps-v18-${{ hashFiles('pnpm-lock.yaml') }}",
+            "restore-keys": "${{ runner.os }}-deps-v18-\n"
           }
         },
         {
+          "name": "Setup pnpm configration",
+          "run": "echo 'shamefully-hoist=true' >> ~/.npmrc"
+        },
+        {
           "name": "Install Dependencies",
-          "run": "echo \"ELECTRON_CACHE=$HOME/cache_electron\" >> $GITHUB_ENV\necho \"ELECTRON_BUILDER_CACHE=$HOME/cache_electron_builder\" >> $GITHUB_ENV\necho \"PLAYWRIGHT_BROWSERS_PATH=$HOME/cache_playwright_browsers\" >> $GITHUB_ENV\nexport ELECTRON_CACHE=$HOME/cache_electron\nexport ELECTRON_BUILDER_CACHE=$HOME/cache_electron_builder\nexport PLAYWRIGHT_BROWSERS_PATH=$HOME/cache_playwright_browsers\nenv | grep CACHE\ntime npm install -g pnpm\ntime pnpm install -g ultra-runner\ntime pnpm install\necho \"[DEBUG] CACHE_HIT: $CACHE_HIT\"\n",
+          "run": "echo \"ELECTRON_CACHE=$HOME/cache_electron\" >> $GITHUB_ENV\necho \"ELECTRON_BUILDER_CACHE=$HOME/cache_electron_builder\" >> $GITHUB_ENV\necho \"PLAYWRIGHT_BROWSERS_PATH=$HOME/cache_playwright_browsers\" >> $GITHUB_ENV\nset -a; source $GITHUB_ENV; set +a\n\ntime npm install -g pnpm\ntime pnpm install\ntime pnpm install -g ultra-runner\n\ntouch ~/.npmrc\necho \"[DEBUG] ~/.npmrc\"\ncat ~/.npmrc\n\necho \"[DEBUG] CACHE_HIT: $CACHE_HIT\"\n",
           "env": {
             "CACHE_HIT": "${{ steps.step_cache_deps.outputs.cache-hit }}"
           }
@@ -137,13 +141,13 @@
           "uses": "actions/cache@v2",
           "with": {
             "path": "~/.pnpm-store\n~/cache_electron\n~/cache_electron_builder\n~/cache_playwright_browsers\n",
-            "key": "${{ runner.os }}-deps-v14-${{ hashFiles('pnpm-lock.yaml') }}",
-            "restore-keys": "${{ runner.os }}-deps-v14-\n"
+            "key": "${{ runner.os }}-deps-v18-${{ hashFiles('pnpm-lock.yaml') }}",
+            "restore-keys": "${{ runner.os }}-deps-v18-\n"
           }
         },
         {
           "name": "Install Dependencies",
-          "run": "echo \"ELECTRON_CACHE=$HOME/cache_electron\" >> $GITHUB_ENV\necho \"ELECTRON_BUILDER_CACHE=$HOME/cache_electron_builder\" >> $GITHUB_ENV\necho \"PLAYWRIGHT_BROWSERS_PATH=$HOME/cache_playwright_browsers\" >> $GITHUB_ENV\nexport ELECTRON_CACHE=$HOME/cache_electron\nexport ELECTRON_BUILDER_CACHE=$HOME/cache_electron_builder\nexport PLAYWRIGHT_BROWSERS_PATH=$HOME/cache_playwright_browsers\nenv | grep CACHE\ntime npm install -g pnpm\ntime pnpm install -g ultra-runner\ntime pnpm install\necho \"[DEBUG] CACHE_HIT: $CACHE_HIT\"\n",
+          "run": "echo \"ELECTRON_CACHE=$HOME/cache_electron\" >> $GITHUB_ENV\necho \"ELECTRON_BUILDER_CACHE=$HOME/cache_electron_builder\" >> $GITHUB_ENV\necho \"PLAYWRIGHT_BROWSERS_PATH=$HOME/cache_playwright_browsers\" >> $GITHUB_ENV\nset -a; source $GITHUB_ENV; set +a\n\ntime npm install -g pnpm\ntime pnpm install\ntime pnpm install -g ultra-runner\n\ntouch ~/.npmrc\necho \"[DEBUG] ~/.npmrc\"\ncat ~/.npmrc\n\necho \"[DEBUG] CACHE_HIT: $CACHE_HIT\"\n",
           "env": {
             "CACHE_HIT": "${{ steps.step_cache_deps.outputs.cache-hit }}"
           }
@@ -196,13 +200,13 @@
           "uses": "actions/cache@v2",
           "with": {
             "path": "~/.pnpm-store\n~/cache_electron\n~/cache_electron_builder\n~/cache_playwright_browsers\n",
-            "key": "${{ runner.os }}-deps-v14-${{ hashFiles('pnpm-lock.yaml') }}",
-            "restore-keys": "${{ runner.os }}-deps-v14-\n"
+            "key": "${{ runner.os }}-deps-v18-${{ hashFiles('pnpm-lock.yaml') }}",
+            "restore-keys": "${{ runner.os }}-deps-v18-\n"
           }
         },
         {
           "name": "Install Dependencies",
-          "run": "echo \"ELECTRON_CACHE=$HOME/cache_electron\" >> $GITHUB_ENV\necho \"ELECTRON_BUILDER_CACHE=$HOME/cache_electron_builder\" >> $GITHUB_ENV\necho \"PLAYWRIGHT_BROWSERS_PATH=$HOME/cache_playwright_browsers\" >> $GITHUB_ENV\nexport ELECTRON_CACHE=$HOME/cache_electron\nexport ELECTRON_BUILDER_CACHE=$HOME/cache_electron_builder\nexport PLAYWRIGHT_BROWSERS_PATH=$HOME/cache_playwright_browsers\nenv | grep CACHE\ntime npm install -g pnpm\ntime pnpm install -g ultra-runner\ntime pnpm install\necho \"[DEBUG] CACHE_HIT: $CACHE_HIT\"\n",
+          "run": "echo \"ELECTRON_CACHE=$HOME/cache_electron\" >> $GITHUB_ENV\necho \"ELECTRON_BUILDER_CACHE=$HOME/cache_electron_builder\" >> $GITHUB_ENV\necho \"PLAYWRIGHT_BROWSERS_PATH=$HOME/cache_playwright_browsers\" >> $GITHUB_ENV\nset -a; source $GITHUB_ENV; set +a\n\ntime npm install -g pnpm\ntime pnpm install\ntime pnpm install -g ultra-runner\n\ntouch ~/.npmrc\necho \"[DEBUG] ~/.npmrc\"\ncat ~/.npmrc\n\necho \"[DEBUG] CACHE_HIT: $CACHE_HIT\"\n",
           "env": {
             "CACHE_HIT": "${{ steps.step_cache_deps.outputs.cache-hit }}"
           }
@@ -241,13 +245,13 @@
           "uses": "actions/cache@v2",
           "with": {
             "path": "~/.pnpm-store\n~/cache_electron\n~/cache_electron_builder\n~/cache_playwright_browsers\n",
-            "key": "${{ runner.os }}-deps-v14-${{ hashFiles('pnpm-lock.yaml') }}",
-            "restore-keys": "${{ runner.os }}-deps-v14-\n"
+            "key": "${{ runner.os }}-deps-v18-${{ hashFiles('pnpm-lock.yaml') }}",
+            "restore-keys": "${{ runner.os }}-deps-v18-\n"
           }
         },
         {
           "name": "Install Dependencies",
-          "run": "echo \"ELECTRON_CACHE=$HOME/cache_electron\" >> $GITHUB_ENV\necho \"ELECTRON_BUILDER_CACHE=$HOME/cache_electron_builder\" >> $GITHUB_ENV\necho \"PLAYWRIGHT_BROWSERS_PATH=$HOME/cache_playwright_browsers\" >> $GITHUB_ENV\nexport ELECTRON_CACHE=$HOME/cache_electron\nexport ELECTRON_BUILDER_CACHE=$HOME/cache_electron_builder\nexport PLAYWRIGHT_BROWSERS_PATH=$HOME/cache_playwright_browsers\nenv | grep CACHE\ntime npm install -g pnpm\ntime pnpm install -g ultra-runner\ntime pnpm install\necho \"[DEBUG] CACHE_HIT: $CACHE_HIT\"\n",
+          "run": "echo \"ELECTRON_CACHE=$HOME/cache_electron\" >> $GITHUB_ENV\necho \"ELECTRON_BUILDER_CACHE=$HOME/cache_electron_builder\" >> $GITHUB_ENV\necho \"PLAYWRIGHT_BROWSERS_PATH=$HOME/cache_playwright_browsers\" >> $GITHUB_ENV\nset -a; source $GITHUB_ENV; set +a\n\ntime npm install -g pnpm\ntime pnpm install\ntime pnpm install -g ultra-runner\n\ntouch ~/.npmrc\necho \"[DEBUG] ~/.npmrc\"\ncat ~/.npmrc\n\necho \"[DEBUG] CACHE_HIT: $CACHE_HIT\"\n",
           "env": {
             "CACHE_HIT": "${{ steps.step_cache_deps.outputs.cache-hit }}"
           }
