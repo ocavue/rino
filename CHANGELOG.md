@@ -1,5 +1,12 @@
 # Changelog
 
+### [0.26.1](https://www.github.com/ocavue/rino/compare/v0.26.0...v0.26.1) (2021-06-13)
+
+
+### Bug Fixes
+
+* **electron:** include the correct dependencies ([#647](https://www.github.com/ocavue/rino/issues/647)) ([9452319](https://www.github.com/ocavue/rino/commit/945231926d769fbd25b9d55d0f54a9219503993b))
+
 ## [0.26.0](https://www.github.com/ocavue/rino/compare/v0.25.0...v0.26.0) (2021-06-08)
 
 
