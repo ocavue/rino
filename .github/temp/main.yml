@@ -106,7 +106,7 @@ jobs:
           echo '============== before cleaning =============='
           find ./dist -type f
           echo '============== cleaning ====================='
-          pnpm run clean
+          rm -rf ./dist/*/
           echo '============== after cleaning ==============='
           find ./dist -type f
 
