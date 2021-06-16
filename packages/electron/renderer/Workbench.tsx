@@ -39,8 +39,6 @@ function useMarkdownNote() {
     }, [])
 
     const onContentSave = useCallback((content: string) => {
-        console.log("onContentSave1")
-
         setEdited(false)
         setNote((note) => {
             return { ...note, content }
@@ -57,9 +55,7 @@ function useMarkdownNote() {
 
     const saveFile = useCallback(
         async (note: Note) => {
-            console.log("savefile 0")
             const { canceled, path } = await ipc.saveFile({ content: note.content, path: note.path })
-            console.log("savefile 1", canceled, path)
 
             if (canceled) return
 

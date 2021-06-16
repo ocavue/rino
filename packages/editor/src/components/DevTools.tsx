@@ -1,21 +1,20 @@
-// import { ProsemirrorDevTools } from "@remirror/dev"
+import { ProsemirrorDevTools } from "@remirror/dev"
 import { FC } from "react"
 
-const DevTools: FC = () => null
+let DevTools: FC = () => null
 
 // Webpack will remove this in production mode
-function getDevtools() {
+function initDevTools() {
     try {
         if (process.env.NODE_ENV === "development") {
-            if (process.env.REACT_APP_PROSEMIRROR_DEV_TOOLS) {
-                // DevTools = ProsemirrorDevTools
-            }
+            DevTools = ProsemirrorDevTools
         }
     } catch (error) {
+        DevTools = () => null
         console.warn("failed to load Devtools:", error)
     }
 }
 
-getDevtools()
+initDevTools()
 
 export default DevTools

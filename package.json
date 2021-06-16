@@ -7,7 +7,7 @@
         "test": "jest --runInBand",
         "postinstall": "./scripts/post-install.sh && husky install",
         "exec": "./scripts/recursive-exec.sh",
-        "clean": "rimraf ./packages/*/dist ./packages/*/.next ./packages/*/.ultra.cache.json"
+        "clean": "./scripts/clean.mjs"
     },
     "devDependencies": {
         "@lhci/cli": "^0.8.0",
@@ -74,5 +74,10 @@
         "stabilityDays": 14,
         "rangeStrategy": "bump",
         "dependencyDashboard": true
+    },
+    "pnpm": {
+        "overrides": {
+            "prosemirror-dev-tools": "git+https://github.com/ocavue/prosemirror-dev-tools.git#deps-emotion-dist"
+          }
     }
 }
