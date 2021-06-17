@@ -59,7 +59,7 @@ describe("Source code text", () => {
     test("Check result", async () => {
         await switchMode() // Switch to the source code mode
         const received = await getSourceCodeModeText()
-        expect(received).toMatchSnapshot()
+        expect(received.trim()).toMatchSnapshot()
         await switchMode() // Switch back to the WYSIWYG mode
     })
 })
