@@ -69,15 +69,16 @@
                     "patch",
                     "minor"
                 ],
-                "schedule": ["every weekend"],
-                "stabilityDays": 7
+                "schedule": [
+                    "before 3am on Monday"
+                ],
+                "stabilityDays": 0
             }
         ],
         "ignoreDeps": [
             "webpack",
             "node"
         ],
-        "prCreation": "not-pending",
         "stabilityDays": 14,
         "rangeStrategy": "bump",
         "dependencyDashboard": true
@@ -85,6 +86,6 @@
     "pnpm": {
         "overrides": {
             "prosemirror-dev-tools": "git+https://github.com/ocavue/prosemirror-dev-tools.git#deps-emotion-dist"
-          }
+        }
     }
 }
