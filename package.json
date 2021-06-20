@@ -46,22 +46,25 @@
         "packageRules": [
             {
                 "groupName": "remirror packages",
-                "packagePatterns": [
-                    ".*remirror.*",
-                    "jest-prosemirror"
+                "matchPackagePatterns": [
+                    ".*remirror.*"
                 ],
                 "allowedVersions": "/^.*pr706.[0-9]+$/",
                 "stabilityDays": 0
             },
             {
                 "groupName": "prosemirror packages",
-                "packagePatterns": [
+                "matchPackagePatterns": [
                     ".*prosemirror.*"
                 ],
                 "stabilityDays": 0
             },
             {
                 "groupName": "dependencies (non-major)",
+                "excludePackagePatterns": [
+                    ".*remirror.*",
+                    ".*prosemirror.*"
+                ],
                 "matchUpdateTypes": [
                     "patch",
                     "minor"
