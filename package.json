@@ -50,20 +50,24 @@
                     ".*remirror.*",
                     "jest-prosemirror"
                 ],
-                "stabilityDays": 0,
-                "allowedVersions": "/^.*pr706.[0-9]+$/"
+                "allowedVersions": "/^.*pr706.[0-9]+$/",
+                "stabilityDays": 0
+            },
+            {
+                "groupName": "prosemirror packages",
+                "packagePatterns": [
+                    ".*prosemirror.*"
+                ],
+                "stabilityDays": 0
             },
             {
                 "groupName": "dependencies (non-major)",
-                "excludePackagePatterns": [
-                    ".*remirror.*",
-                    "jest-prosemirror"
-                ],
                 "matchUpdateTypes": [
                     "patch",
                     "minor"
                 ],
-                "schedule": ["every weekend"]
+                "schedule": ["every weekend"],
+                "stabilityDays": 7
             }
         ],
         "ignoreDeps": [
