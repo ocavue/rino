@@ -290,7 +290,7 @@ describe("toMarkdown", () => {
 })
 
 describe("inputRules", () => {
-    const { add, doc, p, bulletList, orderedList, listItem, checked, unchecked } = setup()
+    const { add, doc, p, bulletList, orderedList, listItem } = setup()
 
     test("ol", () => {
         add(doc(p("1.<cursor>")))
