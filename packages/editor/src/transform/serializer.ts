@@ -1,4 +1,3 @@
-import * as _ from "lodash"
 import { Node, Schema } from "prosemirror-model"
 
 export type NodeSerializerOptions<S extends Schema = any> = {
