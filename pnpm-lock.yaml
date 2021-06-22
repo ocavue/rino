@@ -1,8 +1,5 @@
 lockfileVersion: 5.3
 
-overrides:
-  prosemirror-dev-tools: git+https://github.com/ocavue/prosemirror-dev-tools.git#deps-emotion-dist
-
 importers:
 
   .:
@@ -243,7 +240,7 @@ importers:
       '@rino.app/next': link:../next
       '@types/react': 17.0.11
       '@types/react-dom': 17.0.8
-      next: 10.2.3_2dbe935e140170ce01c975771f1adcbd
+      next: 10.2.3_react-dom@17.0.2+react@17.0.2
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
 
@@ -271,7 +268,7 @@ importers:
       '@svgr/webpack': 5.5.0
       '@testing-library/jest-dom': 5.14.1
       '@testing-library/react': 11.2.7_react-dom@17.0.2+react@17.0.2
-      next: 10.2.3_b670d2e381217f5a443017ad45616c46
+      next: 10.2.3_f3c37f5acf65e366191f2ac67d197f5d
       next-offline: 5.0.5_next@10.2.3+webpack@4.46.0
       raw-loader: 4.0.2_webpack@4.46.0
       react: 17.0.2
@@ -2504,7 +2501,7 @@ packages:
       '@types/prosemirror-dev-tools': 3.0.1
       '@types/react': 17.0.11
       '@types/react-dom': 17.0.8
-      prosemirror-dev-tools: github.com/ocavue/prosemirror-dev-tools/46a7d191b0a483853db0206358d5900482c26f68_ccbfd03f579449ad1b870f525ba60673
+      prosemirror-dev-tools: 3.1.0_ccbfd03f579449ad1b870f525ba60673
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
     transitivePeerDependencies:
@@ -9509,6 +9506,7 @@ packages:
       chalk: 2.4.2
       diff-match-patch: 1.0.5
     dev: false
+    bundledDependencies: []
 
   /jsonfile/4.0.0:
     resolution: {integrity: sha1-h3Gq4HmbZAdrdmQPygWPnBDjPss=}
@@ -10378,89 +10376,14 @@ packages:
     dependencies:
       copy-webpack-plugin: 5.1.2_webpack@4.46.0
       fs-extra: 8.1.0
-      next: 10.2.3_b670d2e381217f5a443017ad45616c46
+      next: 10.2.3_f3c37f5acf65e366191f2ac67d197f5d
       webpack: 4.46.0
       workbox-webpack-plugin: 5.1.4_webpack@4.46.0
     transitivePeerDependencies:
       - supports-color
     dev: false
 
-  /next/10.2.3_2dbe935e140170ce01c975771f1adcbd:
-    resolution: {integrity: sha512-dkM1mIfnORtGyzw/Yme8RdqNxlCMZyi4Lqj56F01/yHbe1ZtOaJ0cyqqRB4RGiPhjGGh0319f8ddjDyO1605Ow==}
-    engines: {node: '>=10.13.0'}
-    hasBin: true
-    peerDependencies:
-      fibers: '>= 3.1.0'
-      node-sass: ^4.0.0 || ^5.0.0
-      react: ^16.6.0 || ^17
-      react-dom: ^16.6.0 || ^17
-      sass: ^1.3.0
-    peerDependenciesMeta:
-      fibers:
-        optional: true
-      node-sass:
-        optional: true
-      sass:
-        optional: true
-    dependencies:
-      '@babel/runtime': 7.12.5
-      '@hapi/accept': 5.0.2
-      '@next/env': 10.2.3
-      '@next/polyfill-module': 10.2.3
-      '@next/react-dev-overlay': 10.2.3_react-dom@17.0.2+react@17.0.2
-      '@next/react-refresh-utils': 10.2.3_react-refresh@0.8.3
-      '@opentelemetry/api': 0.14.0
-      assert: 2.0.0
-      ast-types: 0.13.2
-      browserify-zlib: 0.2.0
-      browserslist: 4.16.6
-      buffer: 5.6.0
-      caniuse-lite: 1.0.30001237
-      chalk: 2.4.2
-      chokidar: 3.5.1
-      constants-browserify: 1.0.0
-      crypto-browserify: 3.12.0
-      cssnano-simple: 2.0.0_postcss@8.2.13
-      domain-browser: 4.19.0
-      encoding: 0.1.13
-      etag: 1.8.1
-      find-cache-dir: 3.3.1
-      get-orientation: 1.1.2
-      https-browserify: 1.0.0
-      jest-worker: 27.0.0-next.5
-      native-url: 0.3.4
-      node-fetch: 2.6.1
-      node-html-parser: 1.4.9
-      node-libs-browser: 2.2.1
-      os-browserify: 0.3.0
-      p-limit: 3.1.0
-      path-browserify: 1.0.1
-      pnp-webpack-plugin: 1.6.4_typescript@4.3.4
-      postcss: 8.2.13
-      process: 0.11.10
-      prop-types: 15.7.2
-      querystring-es3: 0.2.1
-      raw-body: 2.4.1
-      react: 17.0.2
-      react-dom: 17.0.2_react@17.0.2
-      react-is: 16.13.1
-      react-refresh: 0.8.3
-      stream-browserify: 3.0.0
-      stream-http: 3.1.1
-      string_decoder: 1.3.0
-      styled-jsx: 3.3.2_react@17.0.2
-      timers-browserify: 2.0.12
-      tty-browserify: 0.0.1
-      use-subscription: 1.5.1_react@17.0.2
-      util: 0.12.3
-      vm-browserify: 1.1.2
-      watchpack: 2.1.1
-    transitivePeerDependencies:
-      - typescript
-      - webpack
-    dev: true
-
-  /next/10.2.3_b670d2e381217f5a443017ad45616c46:
+  /next/10.2.3_f3c37f5acf65e366191f2ac67d197f5d:
     resolution: {integrity: sha512-dkM1mIfnORtGyzw/Yme8RdqNxlCMZyi4Lqj56F01/yHbe1ZtOaJ0cyqqRB4RGiPhjGGh0319f8ddjDyO1605Ow==}
     engines: {node: '>=10.13.0'}
     hasBin: true
@@ -10510,7 +10433,7 @@ packages:
       os-browserify: 0.3.0
       p-limit: 3.1.0
       path-browserify: 1.0.1
-      pnp-webpack-plugin: 1.6.4_typescript@4.3.4
+      pnp-webpack-plugin: 1.6.4
       postcss: 8.2.13
       process: 0.11.10
       prop-types: 15.7.2
@@ -10534,6 +10457,81 @@ packages:
       - typescript
       - webpack
     dev: false
+
+  /next/10.2.3_react-dom@17.0.2+react@17.0.2:
+    resolution: {integrity: sha512-dkM1mIfnORtGyzw/Yme8RdqNxlCMZyi4Lqj56F01/yHbe1ZtOaJ0cyqqRB4RGiPhjGGh0319f8ddjDyO1605Ow==}
+    engines: {node: '>=10.13.0'}
+    hasBin: true
+    peerDependencies:
+      fibers: '>= 3.1.0'
+      node-sass: ^4.0.0 || ^5.0.0
+      react: ^16.6.0 || ^17
+      react-dom: ^16.6.0 || ^17
+      sass: ^1.3.0
+    peerDependenciesMeta:
+      fibers:
+        optional: true
+      node-sass:
+        optional: true
+      sass:
+        optional: true
+    dependencies:
+      '@babel/runtime': 7.12.5
+      '@hapi/accept': 5.0.2
+      '@next/env': 10.2.3
+      '@next/polyfill-module': 10.2.3
+      '@next/react-dev-overlay': 10.2.3_react-dom@17.0.2+react@17.0.2
+      '@next/react-refresh-utils': 10.2.3_react-refresh@0.8.3
+      '@opentelemetry/api': 0.14.0
+      assert: 2.0.0
+      ast-types: 0.13.2
+      browserify-zlib: 0.2.0
+      browserslist: 4.16.6
+      buffer: 5.6.0
+      caniuse-lite: 1.0.30001237
+      chalk: 2.4.2
+      chokidar: 3.5.1
+      constants-browserify: 1.0.0
+      crypto-browserify: 3.12.0
+      cssnano-simple: 2.0.0_postcss@8.2.13
+      domain-browser: 4.19.0
+      encoding: 0.1.13
+      etag: 1.8.1
+      find-cache-dir: 3.3.1
+      get-orientation: 1.1.2
+      https-browserify: 1.0.0
+      jest-worker: 27.0.0-next.5
+      native-url: 0.3.4
+      node-fetch: 2.6.1
+      node-html-parser: 1.4.9
+      node-libs-browser: 2.2.1
+      os-browserify: 0.3.0
+      p-limit: 3.1.0
+      path-browserify: 1.0.1
+      pnp-webpack-plugin: 1.6.4
+      postcss: 8.2.13
+      process: 0.11.10
+      prop-types: 15.7.2
+      querystring-es3: 0.2.1
+      raw-body: 2.4.1
+      react: 17.0.2
+      react-dom: 17.0.2_react@17.0.2
+      react-is: 16.13.1
+      react-refresh: 0.8.3
+      stream-browserify: 3.0.0
+      stream-http: 3.1.1
+      string_decoder: 1.3.0
+      styled-jsx: 3.3.2_react@17.0.2
+      timers-browserify: 2.0.12
+      tty-browserify: 0.0.1
+      use-subscription: 1.5.1_react@17.0.2
+      util: 0.12.3
+      vm-browserify: 1.1.2
+      watchpack: 2.1.1
+    transitivePeerDependencies:
+      - typescript
+      - webpack
+    dev: true
 
   /nice-try/1.0.5:
     resolution: {integrity: sha512-1nh45deeb5olNY7eX82BkPO7SSxR5SSYJiPTrTdFUVYwAl8CKMA5N9PjTYkHiRjisVcxcQ1HXdLhx2qxxJzLNQ==}
@@ -11242,11 +11240,11 @@ packages:
     engines: {node: '>=10.13.0'}
     dev: true
 
-  /pnp-webpack-plugin/1.6.4_typescript@4.3.4:
+  /pnp-webpack-plugin/1.6.4:
     resolution: {integrity: sha512-7Wjy+9E3WwLOEL30D+m8TSTF7qJJUJLONBnwQp0518siuMxUQUbgZwssaFX+QKlZkjHZcw/IpZCt/H0srrntSg==}
     engines: {node: '>=6'}
     dependencies:
-      ts-pnp: 1.2.0_typescript@4.3.4
+      ts-pnp: 1.2.0
     transitivePeerDependencies:
       - typescript
 
@@ -11420,6 +11418,34 @@ packages:
       prosemirror-model: 1.14.2
       prosemirror-state: 1.3.4
       prosemirror-transform: 1.3.2
+
+  /prosemirror-dev-tools/3.1.0_ccbfd03f579449ad1b870f525ba60673:
+    resolution: {integrity: sha512-ghuxb6QD3WWl3EE8OK1O3P67OKjbTxt5mvagAUK6xd0kS7SBysSS4KE+HiNPxC8r812EEFFJ2S6asIs9i7rvkQ==}
+    engines: {node: '>=10'}
+    peerDependencies:
+      react: '>=16.8.0'
+      react-dom: '>=16.8.0'
+    dependencies:
+      '@babel/runtime': 7.14.6
+      '@emotion/css': 11.1.3_@babel+core@7.14.6
+      '@emotion/react': 11.4.0_81862478866c67faf6c62f3dd0cd029f
+      '@emotion/styled': 11.3.0_9040e47581cdc4ea30d85a9c9daeae52
+      html: 1.0.0
+      jsondiffpatch: 0.4.1
+      nanoid: 2.1.11
+      prop-types: 15.7.2
+      prosemirror-model: 1.14.2
+      prosemirror-state: 1.3.4
+      react: 17.0.2
+      react-dock: 0.2.4_react@17.0.2
+      react-dom: 17.0.2_react@17.0.2
+      react-json-tree: 0.11.2_react-dom@17.0.2+react@17.0.2
+      unstated: 2.1.1_prop-types@15.7.2+react@17.0.2
+    transitivePeerDependencies:
+      - '@babel/core'
+      - '@types/react'
+      - babel-runtime
+    dev: false
 
   /prosemirror-dropcursor/1.3.5:
     resolution: {integrity: sha512-tNUwcF2lPAkwKBZPZRtbxpwljnODRNZ3eiYloN1DSUqDjMT1nBZm0nejaEMS1TvNQ+3amibUSAiV4hX+jpASFA==}
@@ -13600,7 +13626,7 @@ packages:
     resolution: {integrity: sha512-Z86EW+fFFh/IFB1fqQ3/+7Zpf9t2ebOAxNI/V6Wo7r5gqiqtxmgTlQ1qbqQcjLKYeSHPTsEmvlJUDg/EuL0uHQ==}
     dev: false
 
-  /ts-pnp/1.2.0_typescript@4.3.4:
+  /ts-pnp/1.2.0:
     resolution: {integrity: sha512-csd+vJOb/gkzvcCHgTGSChYpy5f1/XKNsmvBGO4JXS+z1v2HobugDz4s1IeFXM3wZB44uczs+eazB5Q/ccdhQw==}
     engines: {node: '>=6'}
     peerDependencies:
@@ -13608,8 +13634,6 @@ packages:
     peerDependenciesMeta:
       typescript:
         optional: true
-    dependencies:
-      typescript: 4.3.4
 
   /tslib/1.14.1:
     resolution: {integrity: sha512-Xni35NKzjgMrwevysHTCArtLDpPvye8zV/0E4EyYn43P7/7qvQwPh9BGkHewbMulVntbigmcT7rdX3BNo9wRJg==}
@@ -14719,35 +14743,4 @@ packages:
 
   /zwitch/1.0.5:
     resolution: {integrity: sha512-V50KMwwzqJV0NpZIZFwfOD5/lyny3WlSzRiXgA0G7VUnRlqttta1L6UQIHzd6EuBY/cHGfwTIck7w1yH6Q5zUw==}
-    dev: false
-
-  github.com/ocavue/prosemirror-dev-tools/46a7d191b0a483853db0206358d5900482c26f68_ccbfd03f579449ad1b870f525ba60673:
-    resolution: {tarball: https://codeload.github.com/ocavue/prosemirror-dev-tools/tar.gz/46a7d191b0a483853db0206358d5900482c26f68}
-    id: github.com/ocavue/prosemirror-dev-tools/46a7d191b0a483853db0206358d5900482c26f68
-    name: prosemirror-dev-tools
-    version: 3.0.2
-    engines: {node: '>=10'}
-    peerDependencies:
-      react: '>=16.8.0'
-      react-dom: '>=16.8.0'
-    dependencies:
-      '@babel/runtime': 7.14.6
-      '@emotion/css': 11.1.3_@babel+core@7.14.6
-      '@emotion/react': 11.4.0_81862478866c67faf6c62f3dd0cd029f
-      '@emotion/styled': 11.3.0_9040e47581cdc4ea30d85a9c9daeae52
-      html: 1.0.0
-      jsondiffpatch: 0.4.1
-      nanoid: 2.1.11
-      prop-types: 15.7.2
-      prosemirror-model: 1.14.2
-      prosemirror-state: 1.3.4
-      react: 17.0.2
-      react-dock: 0.2.4_react@17.0.2
-      react-dom: 17.0.2_react@17.0.2
-      react-json-tree: 0.11.2_react-dom@17.0.2+react@17.0.2
-      unstated: 2.1.1_prop-types@15.7.2+react@17.0.2
-    transitivePeerDependencies:
-      - '@babel/core'
-      - '@types/react'
-      - babel-runtime
     dev: false
