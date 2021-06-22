@@ -266,7 +266,8 @@ function parseInlineMarkdown(text: string): mdast.PhrasingContent[] {
         ]
         const options: FromMarkdownOptions = {
             extensions: [
-                { disable: { null: disabledConstructs } } as any /* TODO: remove this any */,
+                // @ts-expect-error types in `mdast` need to be fixed
+                { disable: { null: disabledConstructs } },
                 micromarkStrikethrough({ singleTilde: false }),
             ],
             mdastExtensions: [mdastStrikethrough.fromMarkdown],
