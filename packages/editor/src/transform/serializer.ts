@@ -1,4 +1,3 @@
-import * as _ from "lodash"
 import { Node, Schema } from "prosemirror-model"
 
 export type NodeSerializerOptions<S extends Schema = any> = {
@@ -10,7 +9,7 @@ export type NodeSerializerOptions<S extends Schema = any> = {
 export type NodeSerializerSpec = (options: NodeSerializerOptions) => void
 export type NodeSerializerSpecs = Record<string, NodeSerializerSpec>
 
-// ::- This is an object used to track state and expose
+// This is an object used to track state and expose
 // methods related to markdown serialization. Instances are passed to
 // node and mark serialization methods (see `toMarkdown`).
 export class MarkdownSerializerState {
@@ -18,23 +17,24 @@ export class MarkdownSerializerState {
     private delimiter: string
     public out: string
     private closed: Node | null
+    private inTightList: boolean
 
     public constructor(nodes: NodeSerializerSpecs, options?: Record<string, any>) {
         this.nodes = nodes
         this.delimiter = ""
         this.out = ""
         this.closed = null
+        this.inTightList = false
     }
 
-    public flushClose(size?: number) {
+    public flushClose(size = 2) {
         if (this.closed) {
-            if (!this.atBlank()) this.out += "\n"
-            if (size == null) size = 2
+            this.ensureNewLine()
             if (size > 1) {
-                const delimMin = _.trimEnd(this.delimiter)
-                _.range(size).forEach(() => {
-                    this.out += delimMin + "\n"
-                })
+                let delimMin = this.delimiter
+                const trim = /\s+$/.exec(delimMin)
+                if (trim) delimMin = delimMin.slice(0, delimMin.length - trim[0].length)
+                for (let i = 1; i < size; i++) this.out += delimMin + "\n"
             }
             this.closed = null
         }
@@ -57,7 +57,6 @@ export class MarkdownSerializerState {
         return /(^|\n)$/.test(this.out)
     }
 
-    // :: ()
     // Ensure the current content ends with a newline.
     public ensureNewLine() {
         if (!this.atBlank()) this.out += "\n"
@@ -114,12 +113,21 @@ export class MarkdownSerializerState {
     // `firstDelim` is a function going from an item index to a
     // delimiter for the first line of the item.
     public renderList(node: Node, delim: string, firstDelim: (n: number) => string): void {
-        this.flushClose(1)
+        if (this.closed && this.closed.type === node.type) {
+            this.flushClose(3)
+        } else if (this.inTightList) {
+            this.flushClose(1)
+        } else {
+            this.flushClose(2)
+        }
+
+        const prevTight = this.inTightList
+        this.inTightList = true
         node.forEach((child, _, i) => {
             if (i) this.flushClose(1)
             this.wrapBlock(delim, firstDelim(i), node, () => this.render(child, node, i))
         })
-        this.ensureNewLine()
+        this.inTightList = prevTight
     }
 
     // Escape the given string so that it can safely appear in Markdown
@@ -143,7 +151,6 @@ export class MarkdownSerializerState {
         return out
     }
 
-    // :: (string) → { leading: ?string, trailing: ?string }
     // Get leading and trailing whitespace from a string. Values of
     // leading or trailing property of the return object will be undefined
     // if there is no match.

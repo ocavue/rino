@@ -41,6 +41,6 @@ describe("toMarkdown", () => {
 
     test("base", () => {
         expect(serializer.serialize(doc(hr()))).toEqual("---")
-        expect(serializer.serialize(doc(p("1"), hr(), p("2")))).toEqual("1\n\n\n---\n\n\n2")
+        expect(serializer.serialize(doc(p("1"), hr(), p("2")))).toEqual("1\n\n---\n\n2")
     })
 })

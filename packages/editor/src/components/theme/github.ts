@@ -1,6 +1,9 @@
 import { css } from "@emotion/css"
+import { extensionListStyledCss } from "@remirror/styles/emotion"
 
 export const EDITOR_THEME_GITHUB = css`
+    ${extensionListStyledCss}
+
     & .anchor {
         float: left;
         line-height: 1;
@@ -238,14 +241,6 @@ export const EDITOR_THEME_GITHUB = css`
 
     &:after {
         clear: both;
-    }
-
-    & > :first-child {
-        margin-top: 0 !important;
-    }
-
-    & > :last-child {
-        margin-bottom: 0 !important;
     }
 
     & a:not([href]) {

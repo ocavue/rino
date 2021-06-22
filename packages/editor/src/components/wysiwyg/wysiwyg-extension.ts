@@ -7,7 +7,6 @@ import CodeMirror from "codemirror"
 import {
     RinoBlockquoteExtension,
     RinoBulletListExtension,
-    RinoCheckboxExtension,
     RinoCodeBlockExtension,
     RinoHardBreakExtension,
     RinoHeadingExtension,
@@ -15,6 +14,7 @@ import {
     RinoInlineDecorationExtension,
     RinoInlineMarkExtension,
     RinoListItemExtension,
+    RinoListItemSharedExtension,
     RinoMarkExtension,
     rinoMarkExtensions,
     RinoOrderedListExtension,
@@ -23,6 +23,8 @@ import {
     RinoTableExtension,
     RinoTableHeaderCellExtension,
     RinoTableRowExtension,
+    RinoTaskListExtension,
+    RinoTaskListItemExtension,
     RinoTextExtension,
 } from "../../extensions"
 import { MarkdownNodeExtension } from "../../utils"
@@ -44,10 +46,13 @@ function createRinoMarkdownNodeExtensions() {
         new RinoCodeBlockExtension({ CodeMirror }),
         new RinoBlockquoteExtension(),
         new RinoHeadingExtension({}),
-        new RinoCheckboxExtension(),
-        new RinoListItemExtension(),
-        new RinoBulletListExtension(),
+
+        new RinoTaskListExtension(),
+        new RinoTaskListItemExtension(),
+        new RinoListItemExtension({}),
+        new RinoBulletListExtension({}),
         new RinoOrderedListExtension(),
+
         new RinoTableExtension(),
         new RinoTableRowExtension(),
         new RinoTableCellExtension(),
@@ -65,6 +70,7 @@ export type WysiwygExtension =
     | ReactComponentExtension
     | RinoInlineMarkExtension
     | RinoInlineDecorationExtension
+    | RinoListItemSharedExtension
 
 export function createWysiwygExtension(): Array<WysiwygExtension> {
     const rinoMarkdownNodeExtensions = createRinoMarkdownNodeExtensions()
@@ -88,5 +94,6 @@ export function createWysiwygExtension(): Array<WysiwygExtension> {
         new ReactComponentExtension({}),
         new RinoInlineMarkExtension(),
         new RinoInlineDecorationExtension(),
+        new RinoListItemSharedExtension(),
     ]
 }

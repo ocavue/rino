@@ -11,8 +11,8 @@ interface StackItem {
     content: Node[]
 }
 
-type TokenHandler = (state: MarkdownParseState, tok: Token) => void
-type TokenHandlers = Record<string, TokenHandler>
+export type TokenHandler = (state: MarkdownParseState, tok: Token) => void
+export type TokenHandlers = Record<string, TokenHandler>
 
 export class UnknowMarkdownItTokenError extends Error {
     constructor(public tokenType: string, public supportedTokenTypes: string[]) {
@@ -25,7 +25,7 @@ export class UnknowMarkdownItTokenError extends Error {
 }
 
 // Object used to track the context of a running parse.
-class MarkdownParseState {
+export class MarkdownParseState {
     private schema: Schema
     private marks: Mark[]
     private tokenHandlers: TokenHandlers
@@ -152,6 +152,8 @@ function buildTokenHandlers(schema: Schema, parserRules: ParserRule[]): TokenHan
             case ParserRuleType.ignore:
                 handlers[parserRule.token] = () => {}
                 break
+            case ParserRuleType.free:
+                handlers[parserRule.token] = parserRule.handler
         }
     }
 

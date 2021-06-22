@@ -215,17 +215,13 @@ describe("toMarkdown", () => {
                         `
                         p0
 
-
                         p1
-
 
                         \`\`\`
                         code
                         \`\`\`
 
-
                             code
-
 
                         p2
                         `,

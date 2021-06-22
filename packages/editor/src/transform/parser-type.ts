@@ -1,11 +1,14 @@
 import Token from "markdown-it/lib/token"
 
+import type { TokenHandler } from "./parser"
+
 type MarkdownItToken = string
 
 export enum ParserRuleType {
     text = 1,
     block,
     ignore,
+    free,
 }
 
 export type TextParserRule = {
@@ -33,4 +36,12 @@ export type IgnoreParserRule = {
     token: MarkdownItToken
 }
 
-export type ParserRule = TextParserRule | BlockParserRule | IgnoreParserRule
+export type FreeParserRule = {
+    type: ParserRuleType.free
+    /** The name of the markdown-it token */
+    token: MarkdownItToken
+    /** A function that can directly mutate the parser state */
+    handler: TokenHandler
+}
+
+export type ParserRule = TextParserRule | BlockParserRule | IgnoreParserRule | FreeParserRule

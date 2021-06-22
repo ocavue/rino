@@ -1,6 +1,7 @@
 import type { InvokeRendererAPI, PreloadIpcRenderer } from "../types/api"
 
-const ipcRenderer: PreloadIpcRenderer = (window as any)["electronIpcRenderer"]
+// @ts-expect-error `window` doesn't have `electronIpcRenderer`
+const ipcRenderer: PreloadIpcRenderer = window["electronIpcRenderer"]
 
 const invokeAPI = new Proxy(
     {},
