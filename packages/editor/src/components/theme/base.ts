@@ -20,15 +20,6 @@ export const EDITOR_THEME_BASE = css`
 
     /**
      * add padding to the editor
-     *
-     * you may want to add the following css in the theme css:
-     *
-     *   &:first-child {
-     *       margin-top: 0;
-     *   }
-     *   &:last-child {
-     *       margin-bottom: 0;
-     *   }
      */
     & .ProseMirror {
         padding-top: 32px;

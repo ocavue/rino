@@ -269,12 +269,13 @@ export const EDITOR_THEME_GITHUB = css`
         border-left: 0.25em solid #dfe2e5;
     }
 
-    &:first-child {
+    & .ProseMirror > h1:first-of-type,
+    & .ProseMirror > h2:first-of-type,
+    & .ProseMirror > h3:first-of-type,
+    & .ProseMirror > h4:first-of-type,
+    & .ProseMirror > h5:first-of-type,
+    & .ProseMirror > h6:first-of-type {
         margin-top: 0;
-    }
-
-    &:last-child {
-        margin-bottom: 0;
     }
 
     & blockquote > :first-child {
