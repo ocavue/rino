@@ -21,13 +21,12 @@ export const EDITOR_THEME_BASE = css`
     /**
      * add padding to the editor
      *
-     * you may want to add something like this in the theme css：
+     * you may want to add the following css in the theme css:
      *
-     *   & :first-child {
+     *   &:first-child {
      *       margin-top: 0;
      *   }
-     *
-     *   & :last-child {
+     *   &:last-child {
      *       margin-bottom: 0;
      *   }
      */

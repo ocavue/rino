@@ -269,11 +269,11 @@ export const EDITOR_THEME_GITHUB = css`
         border-left: 0.25em solid #dfe2e5;
     }
 
-    & :first-child {
+    &:first-child {
         margin-top: 0;
     }
 
-    & :last-child {
+    &:last-child {
         margin-bottom: 0;
     }
 
