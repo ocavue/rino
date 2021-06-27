@@ -1,14 +1,9 @@
-import "codemirror/lib/codemirror.css"
-import "codemirror/theme/nord.css"
-import "prosemirror-tables/style/tables.css"
-import "prosemirror-view/style/prosemirror.css"
-
 import { isString } from "lodash"
 import React, { FC, useState } from "react"
 import ReactDOM from "react-dom"
 import { createContainer } from "unstated-next"
 
-import Editor from "../src/components/Editor"
+import { Editor } from "../src"
 
 const useDrawerActivityState = () => {
     const [drawerActivity, setDrawerActivity] = useState(true)
