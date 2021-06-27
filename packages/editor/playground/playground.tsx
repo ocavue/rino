@@ -4,7 +4,7 @@ import "prosemirror-tables/style/tables.css"
 import "prosemirror-view/style/prosemirror.css"
 
 import { isString } from "lodash"
-import React, { FC, useCallback, useState } from "react"
+import React, { FC, useState } from "react"
 import ReactDOM from "react-dom"
 import { createContainer } from "unstated-next"
 
