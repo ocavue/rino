@@ -1,3 +1,4 @@
+import { DocExtension } from "@remirror/extension-doc"
 import { useRemirror } from "@remirror/react"
 import CodeMirror from "codemirror"
 
@@ -5,7 +6,10 @@ import { RinoCodeBlockExtension } from "../../extensions"
 
 export function useSourceCodeRemirror() {
     return useRemirror({
-        extensions: () => [new RinoCodeBlockExtension({ CodeMirror, defaultCodeMirrorConfig: { mode: "text/x-markdown" } })],
+        extensions: () => [
+            new DocExtension({ content: "codeMirror" }),
+            new RinoCodeBlockExtension({ CodeMirror, defaultCodeMirrorConfig: { mode: "text/x-markdown" } }),
+        ],
     })
 }
 
