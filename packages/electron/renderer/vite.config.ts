@@ -2,7 +2,7 @@ import reactRefresh from "@vitejs/plugin-react-refresh"
 import { defineConfig } from "vite"
 
 // https://vitejs.dev/config/
-export default defineConfig({
+export default defineConfig((env) => ({
     base: "",
     cacheDir: ".cache/vite",
     plugins: [reactRefresh()],
@@ -28,4 +28,8 @@ export default defineConfig({
         sourcemap: true,
         chunkSizeWarningLimit: 5000,
     },
-})
+    define: {
+        "process.env.NODE_ENV": JSON.stringify(env.mode === "production" ? "production" : "development"),
+        "process.process.platform": JSON.stringify(process.platform),
+    },
+}))

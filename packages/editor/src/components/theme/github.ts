@@ -1,8 +1,9 @@
 import { css } from "@emotion/css"
-import { extensionListStyledCss } from "@remirror/styles/emotion"
+
+import { EDITOR_THEME_BASE } from "./base"
 
 export const EDITOR_THEME_GITHUB = css`
-    ${extensionListStyledCss}
+    ${EDITOR_THEME_BASE}
 
     & .anchor {
         float: left;
@@ -233,12 +234,6 @@ export const EDITOR_THEME_GITHUB = css`
         border-bottom-color: #eee;
     }
 
-    &:after,
-    &:before {
-        display: table;
-        content: "";
-    }
-
     &:after {
         clear: both;
     }
@@ -272,6 +267,14 @@ export const EDITOR_THEME_GITHUB = css`
         padding: 0 1em;
         color: #6a737d;
         border-left: 0.25em solid #dfe2e5;
+    }
+
+    & :first-child {
+        margin-top: 0;
+    }
+
+    & :last-child {
+        margin-bottom: 0;
     }
 
     & blockquote > :first-child {

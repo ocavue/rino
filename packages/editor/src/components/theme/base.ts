@@ -1,0 +1,27 @@
+import { css } from "@emotion/css"
+import { extensionListStyledCss } from "@remirror/styles/emotion"
+
+export const EDITOR_THEME_BASE = css`
+    ${extensionListStyledCss}
+
+    /* disable margin-collapsing https://stackoverflow.com/a/19719427 */
+    flex-direction: column;
+    display: flex;
+
+    /* extend to full height */
+    min-height: 100%;
+    & .ProseMirror {
+        min-height: 100%;
+    }
+
+    & .ProseMirror {
+        padding-top: 32px;
+        padding-left: 32px;
+        padding-right: 32px;
+        padding-bottom: 64px;
+    }
+
+    & .ProseMirror-focused {
+        outline: none; /* remove the default outline */
+    }
+`

@@ -1,8 +1,3 @@
-import "codemirror/lib/codemirror.css"
-import "codemirror/theme/nord.css"
-import "prosemirror-tables/style/tables.css"
-import "prosemirror-view/style/prosemirror.css"
-
 import { isString } from "lodash"
 import React, { FC, useCallback, useState } from "react"
 import ReactDOM from "react-dom"
@@ -39,10 +34,7 @@ const DefaultEditor: FC = () => {
 const App: FC = () => {
     return (
         <>
-            <span className="dev-header">
-                <p>notice: this page is only for development</p>
-                <p>you can click the editor and press "Command + /" (on macOS/iOS) or "Ctrl + /" (on other OS) to swtich the mode</p>
-            </span>
+
             <DefaultEditor />
         </>
     )
