@@ -7,11 +7,6 @@ describe("Smoke", () => {
         await setupEditor()
     })
 
-    test("header", async () => {
-        const browser = await page.$eval(".dev-header", (el) => el.innerHTML)
-        expect(browser).toContain("development")
-    })
-
     test("editor", async () => {
         const s = ".markdown-body > .ProseMirror"
         await page.waitForSelector(s, { timeout: 60 * 1000 })
