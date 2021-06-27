@@ -13,9 +13,9 @@ export const EDITOR_THEME_BASE = css`
     /**
      * extend to full height
      */
-    min-height: 100%;
+    flex-grow: 1;
     & .ProseMirror {
-        min-height: 100%;
+        flex-grow: 1;
     }
 
     /**

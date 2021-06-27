@@ -34,10 +34,25 @@ const DefaultEditor: FC = () => {
     )
 }
 
+const BlurHandler: FC = () => {
+    return (
+        <button
+            className="blur-handler"
+            style={{
+                position: "absolute",
+                bottom: "64px",
+                right: "64px",
+                opacity: 0,
+            }}
+        ></button>
+    )
+}
+
 const App: FC = () => {
     return (
         <>
             <DefaultEditor />
+            <BlurHandler />
         </>
     )
 }
