@@ -9,6 +9,7 @@ export type EditorProps = {
     onContentSave: (content: string) => void
     onContentEdit: () => void
     beforeUnmount: (content?: string) => void
+    enableDevTools: boolean
 }
 
 export type DrawerActivityContainer = Pick<Container<{ drawerActivity: boolean }>, "useContainer">

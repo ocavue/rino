@@ -16,6 +16,7 @@ export interface Note {
 export type EditorProps = {
     note: Readonly<Note>
     drawerActivityContainer: DrawerActivityContainer
+    enableDevTools?: boolean
     autoFocus?: boolean
     isDarkMode?: boolean
     extraClassName?: string
@@ -34,6 +35,7 @@ enum Mode {
 const Editor: React.FC<EditorProps> = ({
     note,
     drawerActivityContainer,
+    enableDevTools = true,
     autoFocus = true,
     isDarkMode = false,
     extraClassName = "",
@@ -81,6 +83,7 @@ const Editor: React.FC<EditorProps> = ({
                 beforeUnmount={beforeUnmount}
                 onContentEdit={onContentEdit}
                 onContentSave={onContentSave}
+                enableDevTools={enableDevTools}
                 //
                 maxDrawerWidth={maxDrawerWidth}
                 drawerActivityContainer={drawerActivityContainer}
@@ -98,6 +101,7 @@ const Editor: React.FC<EditorProps> = ({
                 beforeUnmount={beforeUnmount}
                 onContentEdit={onContentEdit}
                 onContentSave={onContentSave}
+                enableDevTools={enableDevTools}
             />
         )
     }

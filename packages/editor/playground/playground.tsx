@@ -1,3 +1,8 @@
+import "codemirror/lib/codemirror.css"
+import "codemirror/theme/nord.css"
+import "prosemirror-tables/style/tables.css"
+import "prosemirror-view/style/prosemirror.css"
+
 import { isString } from "lodash"
 import React, { FC, useCallback, useState } from "react"
 import ReactDOM from "react-dom"
@@ -18,15 +23,13 @@ const drawerActivityContainer = createContainer(useDrawerActivityState)
 const DefaultEditor: FC = () => {
     const params = new URLSearchParams(document.location.search)
     const content = params.get("content")
+    const enableDevTools = params.get("devtools") !== "false"
 
-    const [note, setNote] = useState({ content: isString(content) ? content : "# Title\nhello world", deleted: false })
-    const setNoteContent = useCallback((content: string) => {
-        setNote({ content, deleted: false })
-    }, [])
+    const [note] = useState({ content: isString(content) ? content : "# Title\nhello world", deleted: false })
 
     return (
         <drawerActivityContainer.Provider>
-            <Editor note={note} setNoteContent={setNoteContent} drawerActivityContainer={drawerActivityContainer} isTestEnv />
+            <Editor note={note} drawerActivityContainer={drawerActivityContainer} isTestEnv enableDevTools={enableDevTools} />
         </drawerActivityContainer.Provider>
     )
 }
@@ -34,7 +37,6 @@ const DefaultEditor: FC = () => {
 const App: FC = () => {
     return (
         <>
-
             <DefaultEditor />
         </>
     )

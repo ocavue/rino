@@ -1,5 +1,7 @@
 import { toMatchImageSnapshot } from "jest-image-snapshot"
 
+import { switchMode } from "./actions"
+
 expect.extend({ toMatchImageSnapshot })
 
 import { setupEditor } from "./utils"
@@ -20,6 +22,9 @@ const content = `# first heading in the document (zero margin-top)
 test("default", async () => {
     await setupEditor(content)
 
-    const image = await page.screenshot()
-    expect(image).toMatchImageSnapshot()
+    expect(await page.screenshot()).toMatchImageSnapshot()
+
+    await switchMode()
+
+    expect(await page.screenshot()).toMatchImageSnapshot()
 })

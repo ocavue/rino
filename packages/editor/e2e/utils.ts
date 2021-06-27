@@ -44,6 +44,7 @@ export async function setupEditor(content?: string) {
     if (typeof content === "string") {
         url.searchParams.append("content", content)
     }
+    url.searchParams.append("devtools", "false")
     await page.goto(url.href)
 }
 

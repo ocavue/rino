@@ -12,7 +12,17 @@ const InnerEditor: FC<{ className: string }> = ({ className }) => {
 }
 
 const SourceCodeEditor: FC<EditorProps> = React.memo<EditorProps>(
-    ({ className, initialContent, editable, autoFocus, beforeUnmount, onContentEdit, onContentSave, onContentSaveDelay }) => {
+    ({
+        className,
+        initialContent,
+        editable,
+        autoFocus,
+        beforeUnmount,
+        onContentEdit,
+        onContentSave,
+        onContentSaveDelay,
+        enableDevTools,
+    }) => {
         const { manager } = useSourceCodeRemirror()
 
         const initialNode = useMemo(() => {
@@ -60,7 +70,7 @@ const SourceCodeEditor: FC<EditorProps> = React.memo<EditorProps>(
                 attributes={{ "data-testid": "source_code_mode_textarea" }}
             >
                 <InnerEditor className={className} />
-                <DevTools />
+                {enableDevTools ? <DevTools /> : null}
             </Remirror>
         )
     },
