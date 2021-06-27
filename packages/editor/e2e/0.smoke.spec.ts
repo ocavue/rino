@@ -1,5 +1,3 @@
-import "jest"
-
 import { setupEditor } from "./utils"
 
 describe("Smoke", () => {
@@ -8,12 +6,12 @@ describe("Smoke", () => {
     })
 
     test("editor", async () => {
-        const s = ".markdown-body > .ProseMirror"
-        await page.waitForSelector(s, { timeout: 60 * 1000 })
+        const selector = ".markdown-body > .ProseMirror"
+        await page.waitForSelector(selector, { timeout: 60 * 1000 })
 
-        await page.focus(s)
-        await page.type(s, "12345")
+        await page.focus(selector)
+        await page.type(selector, "12345")
 
-        expect(await page.$eval(s, (el) => el.innerHTML)).toContain("12345")
+        expect(await page.$eval(selector, (el) => el.innerHTML)).toContain("12345")
     })
 })
