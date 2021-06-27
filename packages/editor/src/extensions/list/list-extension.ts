@@ -181,8 +181,8 @@ export class RinoTaskListItemExtension extends TaskListItemExtension implements 
                         parent.attrs = { checked: isString(checked) || !!checked }
                         if (grandParent?.type.name === "bulletList") {
                             grandParent.type = this.store.schema.nodes.taskList
-                        } else {
-                            console.warn(`expect bulletList but got ${grandParent?.type.name}`)
+                        } else if (grandParent?.type.name !== "taskList") {
+                            console.warn(`expect bulletList or taskList but got ${grandParent?.type.name}`)
                         }
                     } else {
                         console.warn(`expect listItem but got ${parent?.type.name}`)

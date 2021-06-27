@@ -41,9 +41,10 @@ export async function pressKey(...keys: string[]) {
 
 export async function setupEditor(content?: string) {
     const url = new URL("http://localhost:3001")
-    if (content === "" || content) {
+    if (typeof content === "string") {
         url.searchParams.append("content", content)
     }
+    url.searchParams.append("devtools", "false")
     await page.goto(url.href)
 }
 

@@ -14,7 +14,8 @@ const InnerEditor: FC<{
     className: string
     maxDrawerWidth: number
     drawerActivityContainer: DrawerActivityContainer
-}> = ({ className, maxDrawerWidth, drawerActivityContainer }) => {
+    enableDevTools: boolean
+}> = ({ className, maxDrawerWidth, drawerActivityContainer, enableDevTools }) => {
     const commands = useCommands<WysiwygExtension>()
     const helpers = useHelpers<WysiwygExtension>()
     const { getRootProps } = useRemirrorContext<WysiwygExtension>()
@@ -27,7 +28,7 @@ const InnerEditor: FC<{
                 drawerActivityContainer={drawerActivityContainer}
             />
             <div {...getRootProps()} className={className} />
-            <DevTools />
+            {enableDevTools ? <DevTools /> : null}
         </>
     )
 }
@@ -47,6 +48,7 @@ const WysiwygEditor = React.memo<WysiwygEditorProps>(
         maxDrawerWidth,
         drawerActivityContainer,
         isTestEnv,
+        enableDevTools,
         beforeUnmount,
         onContentEdit,
         onContentSave,
@@ -126,7 +128,12 @@ const WysiwygEditor = React.memo<WysiwygEditorProps>(
                     editable={editable}
                     attributes={{ "data-testid": "wysiwyg_mode_textarea" }}
                 >
-                    <InnerEditor className={className} maxDrawerWidth={maxDrawerWidth} drawerActivityContainer={drawerActivityContainer} />
+                    <InnerEditor
+                        className={className}
+                        maxDrawerWidth={maxDrawerWidth}
+                        drawerActivityContainer={drawerActivityContainer}
+                        enableDevTools={enableDevTools}
+                    />
                 </Remirror>
             </ErrorBoundary>
         )

@@ -6,5 +6,6 @@ export default defineConfig((env) => ({
     server: { port: 3001 },
     define: {
         "process.env.NODE_ENV": JSON.stringify(env.mode === "production" ? "production" : "development"),
+        "process.process.platform": JSON.stringify(process.platform),
     },
 }))

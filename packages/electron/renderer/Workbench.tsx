@@ -85,7 +85,13 @@ const Workbench: FC = () => {
     }, [setNotePath, openFile])
 
     return (
-        <div>
+        <div
+            style={{
+                flex: 1,
+                display: "flex",
+                flexDirection: "column",
+            }}
+        >
             <Editor
                 key={note.path}
                 note={note}
