@@ -17,15 +17,35 @@ const content = `# first heading in the document (zero margin-top)
 >
 > ### last heading in a quotablock (zero margin-bottom)
 
+## nested list
+
+- [ ] task item
+- [x] task item
+  1. ordered item
+  2. ordered item
+     1. ordered item
+     2. ordered item
+     3. ordered item
+        - bullet item
+        - bullet item
+        - bullet item
+     4. ordered item
+        - [x] task item
+        - [x] task item
+  3. ordered item
+     - bullet item
+     - bullet item
+     - bullet item
+
 `
 
 test("default", async () => {
     await setupEditor(content)
     await page.focus(".blur-helper") // hide the cursor
 
-    expect(await page.screenshot()).toMatchImageSnapshot()
+    expect(await page.screenshot({ fullPage: true })).toMatchImageSnapshot()
 
     await switchMode()
     await page.focus(".blur-helper")
-    expect(await page.screenshot()).toMatchImageSnapshot()
+    expect(await page.screenshot({ fullPage: true })).toMatchImageSnapshot()
 })
