@@ -1,5 +1,12 @@
 # Changelog
 
+### [0.26.2](https://www.github.com/ocavue/rino/compare/v0.26.1...v0.26.2) (2021-06-27)
+
+
+### Bug Fixes
+
+* **editor:** improve editor styles ([#670](https://www.github.com/ocavue/rino/issues/670)) ([f5b7a1b](https://www.github.com/ocavue/rino/commit/f5b7a1bee7cb060bb42eb1159ba9cc670689d075))
+
 ### [0.26.1](https://www.github.com/ocavue/rino/compare/v0.26.0...v0.26.1) (2021-06-13)
 
 
