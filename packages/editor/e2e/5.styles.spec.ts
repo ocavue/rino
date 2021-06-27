@@ -40,6 +40,10 @@ const content = `# first heading in the document (zero margin-top)
 `
 
 test("default", async () => {
+    if (process.platform !== "darwin") {
+        return
+    }
+
     await setupEditor(content)
     await page.focus(".blur-helper") // hide the cursor
 
