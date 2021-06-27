@@ -1,4 +1,7 @@
-module.exports = {
+// @ts-check
+
+/** @type {import('@jest/types').Config.InitialOptions} */
+const config = {
     // Indicates whether the coverage information should be collected while executing the test
     collectCoverage: false,
 
@@ -18,7 +21,7 @@ module.exports = {
     reporters: ["default"],
 
     // An array of file extensions your modules use
-    moduleFileExtensions: ["js", "json", "jsx", "ts", "tsx", "node", "vue", "md"],
+    moduleFileExtensions: ["js", "json", "jsx", "mjs", "ts", "tsx", "node", "vue", "md"],
 
     // Stop running tests after `n` failures
     bail: 1,
@@ -29,9 +32,11 @@ module.exports = {
     testSequencer: "./tests/jest-sequencer.js",
 
     projects: [
-        "./packages/home/jest.config.js",
-        "./packages/common/jest.config.js",
-        "./packages/editor/jest.config.js",
-        "./packages/editor/jest.e2e.config.js",
+        "./packages/home/jest.config.mjs",
+        "./packages/common/jest.config.mjs",
+        "./packages/editor/jest.config.mjs",
+        "./packages/editor/jest.e2e.config.mjs",
     ],
 }
+
+export default config

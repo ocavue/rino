@@ -1,9 +1,9 @@
 // For a detailed explanation regarding each configuration property, visit:
 // https://jestjs.io/docs/en/configuration.html
 
-const baseConfig = require("../../tests/jest.base.config")
+import baseConfig from "../../tests/jest.base.config.mjs"
 
-module.exports = {
+export default {
     ...baseConfig,
 
     displayName: { name: "EDITOR:UNIT", color: "blackBright" },
