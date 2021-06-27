@@ -21,11 +21,11 @@ const content = `# first heading in the document (zero margin-top)
 
 test("default", async () => {
     await setupEditor(content)
-    await page.focus(".blur-handler") // hide the cursor
+    await page.focus(".blur-helper") // hide the cursor
 
     expect(await page.screenshot()).toMatchImageSnapshot()
 
     await switchMode()
-    await page.focus(".blur-handler")
+    await page.focus(".blur-helper")
     expect(await page.screenshot()).toMatchImageSnapshot()
 })

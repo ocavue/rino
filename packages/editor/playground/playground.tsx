@@ -34,10 +34,11 @@ const DefaultEditor: FC = () => {
     )
 }
 
-const BlurHandler: FC = () => {
+/** focus this element to hide the cursor in the editor */
+const BlurHelper: FC = () => {
     return (
         <button
-            className="blur-handler"
+            className="blur-helper"
             style={{
                 position: "absolute",
                 bottom: "64px",
@@ -52,7 +53,7 @@ const App: FC = () => {
     return (
         <>
             <DefaultEditor />
-            <BlurHandler />
+            <BlurHelper />
         </>
     )
 }
