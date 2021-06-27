@@ -5,4 +5,4 @@ import "prosemirror-view/style/prosemirror.css"
 
 import Editor from "./components/Editor"
 export { Editor }
-export * from "./components/Editor"
+export type { EditorProps } from "./components/Editor"
