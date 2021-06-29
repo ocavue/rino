@@ -1,5 +1,12 @@
 # Changelog
 
+### [0.26.3](https://www.github.com/ocavue/rino/compare/v0.26.2...v0.26.3) (2021-06-29)
+
+
+### Bug Fixes
+
+* **editor:** don't allow text outside the source code mode code block ([#674](https://www.github.com/ocavue/rino/issues/674)) ([284e982](https://www.github.com/ocavue/rino/commit/284e982106fb62ede8e3ce8a6dcb71f684714bbe))
+
 ### [0.26.2](https://www.github.com/ocavue/rino/compare/v0.26.1...v0.26.2) (2021-06-27)
 
 
