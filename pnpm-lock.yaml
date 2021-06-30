@@ -204,7 +204,7 @@ importers:
       typescript: ^4.3.4
       unstated-next: ^1.1.0
       vite: ^2.3.8
-      wait-on: ^5.3.0
+      wait-on: ^6.0.0
     dependencies:
       electron-log: 4.3.5
       electron-updater: 4.3.9
@@ -224,7 +224,7 @@ importers:
       typescript: 4.3.4
       unstated-next: 1.1.0
       vite: 2.3.8
-      wait-on: 5.3.0
+      wait-on: 6.0.0
 
   packages/home:
     specifiers:
@@ -12674,6 +12674,12 @@ packages:
       tslib: 1.14.1
     dev: true
 
+  /rxjs/7.1.0:
+    resolution: {integrity: sha512-gCFO5iHIbRPwznl6hAYuwNFld8W4S2shtSJIqG27ReWXo9IWrCyEICxUA+6vJHwSR/OakoenC4QsDxq50tzYmw==}
+    dependencies:
+      tslib: 2.1.0
+    dev: true
+
   /safe-buffer/5.1.2:
     resolution: {integrity: sha512-Gd2UZBJDkXlY7GbJxfsE8/nvKkUEU1G38c1siN6QP6a9PT9MmHB8GnpscSmMJSoF8LOIrt8ud/wPtojys4G6+g==}
 
@@ -14356,6 +14362,20 @@ packages:
       lodash: 4.17.21
       minimist: 1.2.5
       rxjs: 6.6.7
+    transitivePeerDependencies:
+      - debug
+    dev: true
+
+  /wait-on/6.0.0:
+    resolution: {integrity: sha512-tnUJr9p5r+bEYXPUdRseolmz5XqJTTj98JgOsfBn7Oz2dxfE2g3zw1jE+Mo8lopM3j3et/Mq1yW7kKX6qw7RVw==}
+    engines: {node: '>=10.0.0'}
+    hasBin: true
+    dependencies:
+      axios: 0.21.1
+      joi: 17.4.0
+      lodash: 4.17.21
+      minimist: 1.2.5
+      rxjs: 7.1.0
     transitivePeerDependencies:
       - debug
     dev: true
