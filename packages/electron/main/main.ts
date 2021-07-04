@@ -8,9 +8,26 @@ import { openFile } from "./file"
 import { logger } from "./logger"
 import { createWindow, createWindowByOpeningFile, createWindowIfNotExist } from "./window"
 
+async function showUpdateDialog(version: string) {
+    // dialog module can only be used after app is ready
+    await app.whenReady()
+    const result = await dialog.showMessageBox({
+        type: "question",
+        title: "New version available",
+        message: "New version available",
+        detail: `Rino ${version} is now available. Would you like to download it now?`,
+        buttons: ["Remind Me Later", "Download"],
+        defaultId: 1,
+        cancelId: 0,
+    })
+    if (result.response === 1) {
+        await shell.openExternal("https://github.com/ocavue/rino/releases")
+    }
+}
+
 async function setupAutoUpdate() {
     if (env.IS_PROD) {
-        logger.log("current environment is production, checking update")
+        logger.log("current environment is production, checking updates")
 
         await app.whenReady()
         await new Promise((resolve) => setTimeout(resolve, 1000))
@@ -18,25 +35,13 @@ async function setupAutoUpdate() {
             const { autoUpdater } = await import("electron-updater")
             autoUpdater.logger = logger
             autoUpdater.autoDownload = false
-
-            autoUpdater.on("update-available", async ({ version }: UpdateInfo) => {
-                const result = await dialog.showMessageBox({
-                    type: "question",
-                    title: "New version available",
-                    message: `Rino ${version} is now available. Would you like to download it now?`,
-                    buttons: ["Download", "Remind Me Later"],
-                })
-                if (result.response === 0) {
-                    shell.openExternal("https://github.com/ocavue/rino/releases")
-                }
-            })
-
+            autoUpdater.on("update-available", ({ version }: UpdateInfo) => showUpdateDialog(version))
             await autoUpdater.checkForUpdates()
         } catch (e) {
             logger.error("failed to check updates:", e)
         }
     } else {
-        logger.log("current environment is not production, skipping update")
+        logger.log("current environment is not production, skipping update check")
     }
 }
 
