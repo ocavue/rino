@@ -1,4 +1,5 @@
 import { app, dialog, Menu, shell } from "electron"
+import type { UpdateInfo } from "electron-updater"
 
 import { registerIpcHandlers } from "./api-main"
 import { buildApplicationMenu } from "./application-menu"
@@ -18,7 +19,7 @@ async function setupAutoUpdate() {
             autoUpdater.logger = logger
             autoUpdater.autoDownload = false
 
-            autoUpdater.on("update-available", async ({ version }) => {
+            autoUpdater.on("update-available", async ({ version }: UpdateInfo) => {
                 const result = await dialog.showMessageBox({
                     type: "question",
                     title: "New version available",
