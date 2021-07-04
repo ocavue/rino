@@ -1,14 +1,3 @@
-// .md and .txt files will be transformed to string by webpack `raw-loader`
-declare module "*.md" {
-    const value: string
-    export = value
-}
-
-declare module "*.txt" {
-    const value: string
-    export = value
-}
-
 // .svg files will be transformed to React components by `@svgr/webpack`
 declare module "*.svg" {
     const value: React.FC<{ alt?: string; width?: string; height?: string }>

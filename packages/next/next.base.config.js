@@ -32,10 +32,6 @@ function getNextConfig() {
         webpack: (config, options) => {
             config.module.rules.push(
                 {
-                    test: /\.(md|txt)$/i,
-                    use: ["raw-loader"],
-                },
-                {
                     test: /\.(jpe?g|png|webp)$/i,
                     use: [
                         {
