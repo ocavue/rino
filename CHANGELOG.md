@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.27.0](https://www.github.com/ocavue/rino/compare/v0.26.4...v0.27.0) (2021-07-04)
+
+
+### Features
+
+* **editor:** support ordered list marker followed by `)` character ([#683](https://www.github.com/ocavue/rino/issues/683)) ([3701d80](https://www.github.com/ocavue/rino/commit/3701d8036ef69f53f4e7806b198bb279f39edeff))
+
 ### [0.26.4](https://www.github.com/ocavue/rino/compare/v0.26.3...v0.26.4) (2021-07-04)
 
 
