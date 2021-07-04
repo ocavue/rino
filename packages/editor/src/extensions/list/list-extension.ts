@@ -1,4 +1,4 @@
-import { ApplySchemaAttributes, GetSchema, KeyBindings, NodeExtensionSpec } from "@remirror/core"
+import { ApplySchemaAttributes, assertGet, GetSchema, KeyBindings, NodeExtensionSpec, NodeSpecOverride } from "@remirror/core"
 import {
     BulletListExtension,
     ListItemExtension,
@@ -60,8 +60,31 @@ export class RinoOrderedListExtension extends OrderedListExtension implements Ma
         return "orderedList" as const
     }
 
+    createNodeSpec(extra: ApplySchemaAttributes, override: NodeSpecOverride): NodeExtensionSpec {
+        return super.createNodeSpec(
+            {
+                ...extra,
+                defaults: () => ({
+                    marker: { default: "." },
+                }),
+            },
+            override,
+        )
+    }
+
     public createExtensions() {
         return []
+    }
+
+    createInputRules(): InputRule[] {
+        return [
+            wrappingInputRule(
+                /^(\d+)([.)])\s$/,
+                this.type,
+                (match) => ({ order: +assertGet(match, 1), marker: assertGet(match, 2) }),
+                (match, node) => node.childCount + (node.attrs.order as number) === +assertGet(match, 1),
+            ),
+        ]
     }
 
     public fromMarkdown() {
