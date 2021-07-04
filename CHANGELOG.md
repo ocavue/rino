@@ -1,5 +1,13 @@
 # Changelog
 
+### [0.26.4](https://www.github.com/ocavue/rino/compare/v0.26.3...v0.26.4) (2021-07-04)
+
+
+### Bug Fixes
+
+* **editor:** allow users to turn list items into task list items ([#680](https://www.github.com/ocavue/rino/issues/680)) ([26efc12](https://www.github.com/ocavue/rino/commit/26efc1238b3764cd64649986589d507a7bc7aa10))
+* **electron:** show a dialog when update available ([#681](https://www.github.com/ocavue/rino/issues/681)) ([16f5aa7](https://www.github.com/ocavue/rino/commit/16f5aa7b971f6899c1d276126c7565b41421d3e6))
+
 ### [0.26.3](https://www.github.com/ocavue/rino/compare/v0.26.2...v0.26.3) (2021-06-29)
 
 
