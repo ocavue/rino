@@ -1,4 +1,5 @@
-import { app, Menu } from "electron"
+import { app, dialog, Menu, shell } from "electron"
+import type { UpdateInfo } from "electron-updater"
 
 import { registerIpcHandlers } from "./api-main"
 import { buildApplicationMenu } from "./application-menu"
@@ -9,19 +10,33 @@ import { createWindow, createWindowByOpeningFile, createWindowIfNotExist } from 
 
 async function setupAutoUpdate() {
     if (env.IS_PROD) {
-        logger.log("current environment is production")
+        logger.log("current environment is production, checking update")
 
         await app.whenReady()
         await new Promise((resolve) => setTimeout(resolve, 1000))
         try {
             const { autoUpdater } = await import("electron-updater")
             autoUpdater.logger = logger
-            await autoUpdater.checkForUpdatesAndNotify()
+            autoUpdater.autoDownload = false
+
+            autoUpdater.on("update-available", async ({ version }: UpdateInfo) => {
+                const result = await dialog.showMessageBox({
+                    type: "question",
+                    title: "New version available",
+                    message: `Rino ${version} is now available. Would you like to download it now?`,
+                    buttons: ["Download", "Remind Me Later"],
+                })
+                if (result.response === 0) {
+                    shell.openExternal("https://github.com/ocavue/rino/releases")
+                }
+            })
+
+            await autoUpdater.checkForUpdates()
         } catch (e) {
             logger.error("failed to check updates:", e)
         }
     } else {
-        logger.log("current environment is not production")
+        logger.log("current environment is not production, skipping update")
     }
 }
 
