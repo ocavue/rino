@@ -30,14 +30,16 @@ const setup = () => {
     const {
         view,
         add,
-        nodes: { doc, p, listItem, orderedList, taskList, hardBreak },
-        attributeNodes: { taskListItem, bulletList },
+        nodes: { doc, p, listItem, taskList, hardBreak },
+        attributeNodes: { taskListItem, bulletList, orderedList },
         manager,
         schema,
     } = editor
 
     const checked = taskListItem({ checked: true })
     const unchecked = taskListItem({ checked: false })
+    const orderedListA = orderedList({ marker: "." })
+    const orderedListB = orderedList({ marker: ")" })
 
     return {
         manager,
@@ -46,7 +48,8 @@ const setup = () => {
         add,
         doc,
         p,
-        orderedList,
+        orderedListA,
+        orderedListB,
         bulletList,
         listItem,
         taskList,
@@ -58,7 +61,7 @@ const setup = () => {
 }
 
 describe("fromMarkdown", () => {
-    const { manager, doc, p, orderedList, bulletList, listItem, checked, unchecked, taskList } = setup()
+    const { manager, doc, p, orderedListA, bulletList, listItem, checked, unchecked, taskList } = setup()
     const parser = buildMarkdownParser(manager)
 
     test("simple ordered list", () => {
@@ -72,7 +75,7 @@ describe("fromMarkdown", () => {
                     `,
                 ),
             ),
-        ).toEqualRemirrorDocument(doc(orderedList(listItem(p("111")), listItem(p("222")), listItem(p("333")))))
+        ).toEqualRemirrorDocument(doc(orderedListA(listItem(p("111")), listItem(p("222")), listItem(p("333")))))
     })
 
     test("ordered list with mess umber", () => {
@@ -86,7 +89,7 @@ describe("fromMarkdown", () => {
                     `,
                 ),
             ),
-        ).toEqualRemirrorDocument(doc(orderedList(listItem(p("111")), listItem(p("222")), listItem(p("333")))))
+        ).toEqualRemirrorDocument(doc(orderedListA(listItem(p("111")), listItem(p("222")), listItem(p("333")))))
     })
 
     test("bullet list with '-'", () => {
@@ -159,14 +162,14 @@ describe("fromMarkdown", () => {
                 bulletList({bullet: "-"})(
                     listItem(
                         p("1"),
-                        orderedList(
+                        orderedListA(
                             listItem(p("1.1")),
                             listItem(p("1.2")),
                         ),
                     ),
                     listItem(
                         p("2"),
-                        orderedList(
+                        orderedListA(
                             listItem(p("2.1")),
                             listItem(p("2.2")),
                         ),
@@ -178,14 +181,14 @@ describe("fromMarkdown", () => {
 })
 
 describe("toMarkdown", () => {
-    const { manager, doc, p, orderedList, bulletList, listItem, checked, unchecked, taskList } = setup()
+    const { manager, doc, p, orderedListA, bulletList, listItem, checked, unchecked, taskList } = setup()
     const serializer = buildMarkdownSerializer(manager)
 
     test("ol", () => {
         expect(
             serializer.serialize(
                 doc(
-                    orderedList(
+                    orderedListA(
                         listItem(p("111")), //
                         listItem(p("222")),
                         listItem(p("333")),
@@ -239,10 +242,10 @@ describe("toMarkdown", () => {
         expect(
             serializer.serialize(
                 doc(
-                    orderedList(
+                    orderedListA(
                         listItem(
                             p("1"),
-                            orderedList(
+                            orderedListA(
                                 listItem(p("1.1")), //
                                 listItem(p("1.2")),
                                 listItem(p("1.3")),
@@ -291,7 +294,7 @@ describe("toMarkdown", () => {
 })
 
 describe("inputRules", () => {
-    const { add, doc, p, bulletList, orderedList, listItem, taskListItem, taskList } = setup()
+    const { add, doc, p, bulletList, orderedListA, orderedListB, listItem, taskListItem, taskList } = setup()
 
     test("ol", () => {
         add(doc(p("1.<cursor>")))
@@ -300,11 +303,24 @@ describe("inputRules", () => {
             })
             .insertText(" ")
             .callback((content) => {
-                expect(content.state.doc).toEqualRemirrorDocument(doc(orderedList(listItem(p("")))))
+                expect(content.state.doc).toEqualRemirrorDocument(doc(orderedListA(listItem(p("")))))
             })
             .insertText("INSERT")
             .callback((content) => {
-                expect(content.state.doc).toEqualRemirrorDocument(doc(orderedList(listItem(p("INSERT")))))
+                expect(content.state.doc).toEqualRemirrorDocument(doc(orderedListA(listItem(p("INSERT")))))
+            })
+
+        add(doc(p("1)<cursor>")))
+            .callback((content) => {
+                expect(content.state.doc).toEqualRemirrorDocument(doc(p("1)")))
+            })
+            .insertText(" ")
+            .callback((content) => {
+                expect(content.state.doc).toEqualRemirrorDocument(doc(orderedListB(listItem(p("")))))
+            })
+            .insertText("INSERT")
+            .callback((content) => {
+                expect(content.state.doc).toEqualRemirrorDocument(doc(orderedListB(listItem(p("INSERT")))))
             })
     })
 
@@ -359,21 +375,21 @@ describe("inputRules", () => {
 })
 
 describe("shortcuts", () => {
-    const { add, doc, p, bulletList, orderedList, listItem, checked, unchecked, taskList } = setup()
+    const { add, doc, p, bulletList, orderedListA, listItem, checked, unchecked, taskList } = setup()
 
     describe("split list item", () => {
         test("ordered list", () => {
-            add(doc(orderedList(listItem(p("12<cursor>34")), listItem(p("56")))))
+            add(doc(orderedListA(listItem(p("12<cursor>34")), listItem(p("56")))))
                 .press("Enter")
                 .callback((content) => {
                     expect(content.state.doc).toEqualRemirrorDocument(
-                        doc(orderedList(listItem(p("12")), listItem(p("34")), listItem(p("56")))),
+                        doc(orderedListA(listItem(p("12")), listItem(p("34")), listItem(p("56")))),
                     )
                 })
                 .insertText("INSERT")
                 .callback((content) => {
                     expect(content.state.doc).toEqualRemirrorDocument(
-                        doc(orderedList(listItem(p("12")), listItem(p("INSERT34")), listItem(p("56")))),
+                        doc(orderedListA(listItem(p("12")), listItem(p("INSERT34")), listItem(p("56")))),
                     )
                 })
         })
