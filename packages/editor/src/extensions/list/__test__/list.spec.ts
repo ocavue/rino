@@ -21,7 +21,7 @@ const setup = () => {
         new RinoListItemSharedExtension(),
         new RinoTaskListExtension(),
     ]
-    const result = renderEditor(extensions, {
+    const editor = renderEditor(extensions, {
         core: {
             // Remove `gapCursor` from `CorePreset` since it will cache the click event and cause some error.
             excludeExtensions: ["gapCursor", "paragraph", "text"],
@@ -34,7 +34,7 @@ const setup = () => {
         attributeNodes: { taskListItem, bulletList },
         manager,
         schema,
-    } = result
+    } = editor
 
     const checked = taskListItem({ checked: true })
     const unchecked = taskListItem({ checked: false })
@@ -52,6 +52,7 @@ const setup = () => {
         taskList,
         checked,
         unchecked,
+        taskListItem,
         hardBreak,
     }
 }
@@ -290,7 +291,7 @@ describe("toMarkdown", () => {
 })
 
 describe("inputRules", () => {
-    const { add, doc, p, bulletList, orderedList, listItem } = setup()
+    const { add, doc, p, bulletList, orderedList, listItem, taskListItem, taskList } = setup()
 
     test("ol", () => {
         add(doc(p("1.<cursor>")))
@@ -322,38 +323,39 @@ describe("inputRules", () => {
             })
     })
 
-    // const testCheckbox = (checked: boolean) =>
-    //     test(`checkbox ${checked}`, () => {
-    //         add(doc(p("-<cursor>")))
-    //             .callback((content) => {
-    //                 expect(content.state.doc).toEqualRemirrorDocument(doc(p("-")))
-    //             })
-    //             .insertText(" ")
-    //             .callback((content) => {
-    //                 expect(content.state.doc).toEqualRemirrorDocument(doc(bulletList({ bullet: "-" })(listItem(p("")))))
-    //             })
-    //             .insertText(checked ? "[x]" : "[ ]")
-    //             .callback((content) => {
-    //                 expect(content.state.doc).toEqualRemirrorDocument(
-    //                     doc(bulletList({ bullet: "-" })(listItem(p(checked ? "[x]" : "[ ]")))),
-    //                 )
-    //             })
-    //             .insertText(" ")
-    //             .callback((content) => {
-    //                 expect(content.state.doc).toEqualRemirrorDocument(
-    //                     doc(bulletList({ bullet: "-" })(listItem(rinoCheckbox({ checked: checked })(), p("")))),
-    //                 )
-    //             })
-    //             .insertText("INSERT")
-    //             .callback((content) => {
-    //                 expect(content.state.doc).toEqualRemirrorDocument(
-    //                     doc(bulletList({ bullet: "-" })(listItem(rinoCheckbox({ checked: checked })(), p("INSERT")))),
-    //                 )
-    //             })
-    //     })
+    const testCheckbox = (checked: boolean) =>
+        test(`checkbox ${checked}`, () => {
+            add(doc(p("-<cursor>")))
+                .callback((content) => {
+                    expect(content.state.doc).toEqualRemirrorDocument(doc(p("-")))
+                })
+                .insertText(" ")
+                .callback((content) => {
+                    expect(content.state.doc).toEqualRemirrorDocument(doc(bulletList({ bullet: "-" })(listItem(p("")))))
+                })
+                .insertText(checked ? "[x]" : "[ ]")
+                .callback((content) => {
+                    expect(content.state.doc).toEqualRemirrorDocument(
+                        doc(bulletList({ bullet: "-" })(listItem(p(checked ? "[x]" : "[ ]")))),
+                    )
+                })
+                .insertText(" ")
+                .callback((content) => {
+                    expect(content.state.doc).toEqualRemirrorDocument(doc(taskList(taskListItem({ checked })(p("")))))
+                })
+                .insertText("- ")
+                .callback((content) => {
+                    // make sure it won't turn to a bullet list item
+                    expect(content.state.doc).toEqualRemirrorDocument(doc(taskList(taskListItem({ checked })(p("- ")))))
+                })
+                .insertText("INSERT")
+                .callback((content) => {
+                    expect(content.state.doc).toEqualRemirrorDocument(doc(taskList(taskListItem({ checked })(p("- INSERT")))))
+                })
+        })
 
-    // testCheckbox(true)
-    // testCheckbox(false)
+    testCheckbox(true)
+    testCheckbox(false)
 })
 
 describe("shortcuts", () => {
