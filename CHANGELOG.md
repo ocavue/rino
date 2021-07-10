@@ -1,5 +1,12 @@
 # Changelog
 
+### [0.28.1](https://www.github.com/ocavue/rino/compare/v0.28.0...v0.28.1) (2021-07-10)
+
+
+### Bug Fixes
+
+* **electron:** don't show a dialog when saving an existed file ([#696](https://www.github.com/ocavue/rino/issues/696)) ([facfbab](https://www.github.com/ocavue/rino/commit/facfbab68d7161a6f4cf97b54ff026b06542de87))
+
 ## [0.28.0](https://www.github.com/ocavue/rino/compare/v0.27.0...v0.28.0) (2021-07-10)
 
 
