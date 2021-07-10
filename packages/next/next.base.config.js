@@ -30,44 +30,22 @@ function getNextConfig() {
             autoPrerender: false,
         },
         webpack: (config, options) => {
-            config.module.rules.push(
-                {
-                    test: /\.(jpe?g|png|webp)$/i,
-                    use: [
-                        {
-                            loader: "responsive-loader",
-                            options: {
-                                adapter: require("responsive-loader/sharp"),
-                                sizes: [320, 640, 960, 1200, 2400],
-                                placeholder: false,
-                                esModule: true,
-                                outputPath: "static/images/_responsive/",
-                                publicPath: "_next/static/images/_responsive/",
-                            },
+            config.module.rules.push({
+                test: /\.(jpe?g|png|webp)$/i,
+                use: [
+                    {
+                        loader: "responsive-loader",
+                        options: {
+                            adapter: require("responsive-loader/sharp"),
+                            sizes: [320, 640, 960, 1200, 2400],
+                            placeholder: false,
+                            esModule: true,
+                            outputPath: "static/images/_responsive/",
+                            publicPath: "_next/static/images/_responsive/",
                         },
-                    ],
-                },
-                {
-                    test: /\.svg$/i,
-                    use: [
-                        {
-                            loader: "@svgr/webpack",
-                            options: {
-                                svgoConfig: {
-                                    plugins: [
-                                        {
-                                            // SVGO will remove the svg attribute `viewBox` by default,
-                                            // which will stop me from resizing the image by setting
-                                            // `width` and `height`.
-                                            removeViewBox: false,
-                                        },
-                                    ],
-                                },
-                            },
-                        },
-                    ],
-                },
-            )
+                    },
+                ],
+            })
             return config
         },
         env: getEnvs(),
