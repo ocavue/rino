@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.28.0](https://www.github.com/ocavue/rino/compare/v0.27.0...v0.28.0) (2021-07-10)
+
+
+### Features
+
+* **electron:** improve update dialog style ([#685](https://www.github.com/ocavue/rino/issues/685)) ([0804913](https://www.github.com/ocavue/rino/commit/0804913430b3d9eb66c19b354f28e9afa5b4ee20))
+
+
+### Bug Fixes
+
+* **home:** fix server-side rendering ([#695](https://www.github.com/ocavue/rino/issues/695)) ([bef5064](https://www.github.com/ocavue/rino/commit/bef5064f5c93b0679a7d3992556980a43a2c38e4))
+
 ## [0.27.0](https://www.github.com/ocavue/rino/compare/v0.26.4...v0.27.0) (2021-07-04)
 
 
