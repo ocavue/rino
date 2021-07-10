@@ -340,12 +340,12 @@
         "tag_name": "${{ steps.step_release_please.outputs.tag_name }}"
       }
     },
-    "deployment": {
+    "deployment_electron": {
       "runs-on": "ubuntu-18.04",
       "needs": [
         "release"
       ],
-      "if": "github.ref == 'refs/heads/master' && ( needs.release.outputs.published == 'true' || contains(github.event.head_commit.message, '[force-deploy]') )",
+      "if": "github.ref == 'refs/heads/master' && needs.release.outputs.published == 'true'",
       "steps": [
         {
           "name": "Checkout code repository",
@@ -356,14 +356,6 @@
           "uses": "actions/setup-node@v2",
           "with": {
             "node-version": 14
-          }
-        },
-        {
-          "name": "Download dist (home)",
-          "uses": "actions/download-artifact@v2",
-          "with": {
-            "name": "home_dist",
-            "path": "./packages/home/dist"
           }
         },
         {
@@ -383,6 +375,34 @@
             "tag": "${{ needs.release.outputs.tag_name }}",
             "overwrite": true,
             "file_glob": true
+          }
+        }
+      ]
+    },
+    "deployment_website": {
+      "runs-on": "ubuntu-18.04",
+      "needs": [
+        "release"
+      ],
+      "if": "github.ref == 'refs/heads/master'",
+      "steps": [
+        {
+          "name": "Checkout code repository",
+          "uses": "actions/checkout@v2"
+        },
+        {
+          "name": "Setup node.js",
+          "uses": "actions/setup-node@v2",
+          "with": {
+            "node-version": 14
+          }
+        },
+        {
+          "name": "Download dist (home)",
+          "uses": "actions/download-artifact@v2",
+          "with": {
+            "name": "home_dist",
+            "path": "./packages/home/dist"
           }
         },
         {
