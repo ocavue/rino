@@ -1,11 +1,30 @@
+/* istanbul ignore file */
+
+import { AppProps } from "next/app"
+import Head from "next/head"
 import React from "react"
 
-import { BaseApp } from "@rino.app/next/dist/app"
+const BaseApp: React.FC<AppProps> = (props) => {
+    const { Component, pageProps } = props
 
-export default function MyApp<T>({ Component, pageProps }: { Component: React.FC<T>; pageProps: T }) {
+    // https://github.com/mui-org/material-ui/blob/v4.12.1/examples/nextjs/pages/_app.js#L11-L17
+    React.useEffect(() => {
+        // Remove the server-side injected CSS.
+        const jssStyles = document.querySelector("#jss-server-side")
+        if (jssStyles) {
+            jssStyles.parentElement.removeChild(jssStyles)
+        }
+    }, [])
+
     return (
-        <BaseApp>
+        <React.Fragment>
+            <Head>
+                <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+                <title>Rino</title>
+            </Head>
             <Component {...pageProps} />
-        </BaseApp>
+        </React.Fragment>
     )
 }
+
+export default BaseApp

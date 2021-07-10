@@ -1,9 +1,3 @@
-// .svg files will be transformed to React components by `@svgr/webpack`
-declare module "*.svg" {
-    const value: React.FC<{ alt?: string; width?: string; height?: string }>
-    export = value
-}
-
 // other image files will be transformed to objects by webpack `responsive-loader`
 type ResponsiveLoaderImage = {
     images: Array<{
