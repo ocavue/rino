@@ -50,6 +50,10 @@ rules:
 
   "@next/next/no-img-element": "off"
 
+  "react-hooks/exhaustive-deps":
+    - "warn"
+    - enableDangerousAutofixThisMayCauseInfiniteLoops: true
+
   # turn on the rules provided by `eslint-plugin-prettier` as `warn` instead of `error`
   "prettier/prettier": warn
 

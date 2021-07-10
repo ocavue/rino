@@ -24,6 +24,14 @@ const invokeMainAPI: InvokeMainAPI = {
         return { canceled: false, path: filePath }
     },
 
+    askMarkdownFileForSave: async () => {
+        const filePath = await askMarkdownFileForSave()
+        if (!filePath) {
+            return { canceled: true, path: "" }
+        }
+        return { canceled: false, path: filePath }
+    },
+
     newWindow: async (event) => {
         await createWindow()
     },
@@ -44,7 +52,7 @@ const invokeMainAPI: InvokeMainAPI = {
     },
 }
 
-export function registerIpcHandlers() {
+export function registerIpcInvokeHandlers() {
     for (const [channel, handler] of Object.entries(invokeMainAPI)) {
         ipcMain.handle("invoke:" + channel, handler)
     }

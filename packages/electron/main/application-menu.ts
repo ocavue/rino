@@ -1,7 +1,7 @@
 import { Menu, MenuItemConstructorOptions } from "electron"
 
 import { env, plateform } from "./env"
-import { askMarkdownFileForOpen, askMarkdownFileForSave } from "./file"
+import { askMarkdownFileForOpen } from "./file"
 import { createWindow, createWindowByOpeningFile } from "./window"
 
 export function buildApplicationMenu() {
@@ -50,9 +50,7 @@ export function buildApplicationMenu() {
                     label: "Save",
                     accelerator: "CommandOrControl+S",
                     click: async (_, win) => {
-                        const path = await askMarkdownFileForSave()
-                        if (!path) return
-                        win?.webContents.send("send:setNotePath", { path })
+                        win?.webContents.send("send:ensureFilePath")
                     },
                 },
                 ...(env.IS_PROD ? [] : [reloadMenu]),
