@@ -1,7 +1,7 @@
 import { app, dialog, Menu, shell } from "electron"
 import type { UpdateInfo } from "electron-updater"
 
-import { registerIpcHandlers } from "./api-main"
+import { registerIpcInvokeHandlers } from "./api-main"
 import { buildApplicationMenu } from "./application-menu"
 import { env, plateform } from "./env"
 import { openFile } from "./file"
@@ -80,7 +80,7 @@ async function init() {
         }
     })
 
-    registerIpcHandlers()
+    registerIpcInvokeHandlers()
 
     setupAutoUpdate()
 }
