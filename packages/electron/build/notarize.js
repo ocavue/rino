@@ -19,11 +19,11 @@ async function notarizing(context) {
     const { electronPlatformName, appOutDir } = context
 
     log("electronPlatformName:", electronPlatformName)
-    log("appOutDir:", appOutDir)
-
     if (electronPlatformName !== "darwin") {
         return
     }
+
+    log("appOutDir:", appOutDir)
 
     const appName = context.packager.appInfo.productFilename
     log("appName:", appName)
