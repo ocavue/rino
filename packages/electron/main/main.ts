@@ -1,5 +1,4 @@
-import { app, dialog, Menu, shell } from "electron"
-import type { UpdateInfo } from "electron-updater"
+import { app, Menu } from "electron"
 
 import { registerIpcInvokeHandlers } from "./api-main"
 import { buildApplicationMenu } from "./application-menu"
@@ -7,23 +6,6 @@ import { env, plateform } from "./env"
 import { openFile } from "./file"
 import { logger } from "./logger"
 import { createWindow, createWindowByOpeningFile, createWindowIfNotExist } from "./window"
-
-async function showUpdateDialog(version: string) {
-    // dialog module can only be used after app is ready
-    await app.whenReady()
-    const result = await dialog.showMessageBox({
-        type: "question",
-        title: "New version available",
-        message: "New version available",
-        detail: `Rino ${version} is now available. Would you like to download it now?`,
-        buttons: ["Remind Me Later", "Download"],
-        defaultId: 1,
-        cancelId: 0,
-    })
-    if (result.response === 1) {
-        await shell.openExternal("https://github.com/ocavue/rino/releases")
-    }
-}
 
 async function setupAutoUpdate() {
     if (env.IS_PROD) {
@@ -34,9 +16,7 @@ async function setupAutoUpdate() {
         try {
             const { autoUpdater } = await import("electron-updater")
             autoUpdater.logger = logger
-            autoUpdater.autoDownload = false
-            autoUpdater.on("update-available", ({ version }: UpdateInfo) => showUpdateDialog(version))
-            await autoUpdater.checkForUpdates()
+            await autoUpdater.checkForUpdatesAndNotify()
         } catch (e) {
             logger.error("failed to check updates:", e)
         }
