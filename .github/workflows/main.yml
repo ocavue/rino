@@ -101,7 +101,13 @@
         },
         {
           "name": "Build electron",
-          "run": "ultra exec electron build:all\n"
+          "run": "ultra exec electron build:all\n",
+          "env": {
+            "ELECTRON_APPLE_ID": "${{ secrets.ELECTRON_APPLE_ID }}",
+            "ELECTRON_APPLE_ID_PASSWORD": "${{ secrets.ELECTRON_APPLE_ID_PASSWORD }}",
+            "CSC_LINK": "${{ secrets.ELECTRON_MAC_P12_BASE64 }}",
+            "CSC_KEY_PASSWORD": "${{ secrets.ELECTRON_MAC_P12_PASSWORD }}"
+          }
         },
         {
           "name": "Clean electron dist",

@@ -17,6 +17,7 @@ const config = {
     extraMetadata: {
         name: "Rino",
     },
+    afterSign: "build/notarize.js",
 
     asar: isCI,
 
@@ -31,7 +32,8 @@ const config = {
             { target: "dmg", arch: macArch },
         ],
 
-        hardenedRuntime: true,
+        // https://kilianvalkhof.com/2019/electron/notarizing-your-electron-application/
+        entitlements: "build/entitlements.mac.plist",
     },
 
     fileAssociations: {
