@@ -68,7 +68,9 @@ export async function createWindowByOpeningFile(path: string) {
 }
 
 export async function createWindowIfNotExist() {
+    logger.debug(`current windows number: ${windows.size}`)
     if (windows.size === 0) {
+        logger.debug("creating a window")
         await createWindow()
     }
 }

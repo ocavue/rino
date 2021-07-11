@@ -27,7 +27,7 @@ const InnerEditor: FC<{
                 maxDrawerWidth={maxDrawerWidth}
                 drawerActivityContainer={drawerActivityContainer}
             />
-            <div {...getRootProps()} className={className} />
+            <div {...getRootProps()} className={className} spellCheck={false} />
             {enableDevTools ? <DevTools /> : null}
         </>
     )
