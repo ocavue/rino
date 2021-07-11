@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.31.0](https://www.github.com/ocavue/rino/compare/v0.30.0...v0.31.0) (2021-07-11)
+
+
+### Features
+
+* **electron:** automatically update ([#703](https://www.github.com/ocavue/rino/issues/703)) ([46e3be5](https://www.github.com/ocavue/rino/commit/46e3be56b26cf3f6983ffe85b8d37fdc6a54a66a))
+
+
+### Bug Fixes
+
+* **electron:** create a window when launch the app ([#704](https://www.github.com/ocavue/rino/issues/704)) ([d24a6c3](https://www.github.com/ocavue/rino/commit/d24a6c37c088c1532d0ca39c35dd6bb0aa01e3c8))
+
 ## [0.30.0](https://www.github.com/ocavue/rino/compare/v0.29.0...v0.30.0) (2021-07-11)
 
 
