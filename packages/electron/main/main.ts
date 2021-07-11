@@ -3,7 +3,6 @@ import { app, Menu } from "electron"
 import { registerIpcInvokeHandlers } from "./api-main"
 import { buildApplicationMenu } from "./application-menu"
 import { env, plateform } from "./env"
-import { openFile } from "./file"
 import { logger } from "./logger"
 import { createWindow, createWindowByOpeningFile, createWindowIfNotExist } from "./window"
 
@@ -55,7 +54,7 @@ async function init() {
     app.on("ready", () => {
         logger.info("event triggered: ready", { openingFile })
         Menu.setApplicationMenu(buildApplicationMenu())
-        if (!openFile) {
+        if (!openingFile) {
             createWindowIfNotExist()
         }
     })
