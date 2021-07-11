@@ -1,5 +1,12 @@
 # Changelog
 
+### [0.31.1](https://www.github.com/ocavue/rino/compare/v0.31.0...v0.31.1) (2021-07-11)
+
+
+### Bug Fixes
+
+* **editor:** disable spell checking ([#707](https://www.github.com/ocavue/rino/issues/707)) ([02f08d2](https://www.github.com/ocavue/rino/commit/02f08d2d5cc90512e97a9950493a95bab79b7214))
+
 ## [0.31.0](https://www.github.com/ocavue/rino/compare/v0.30.0...v0.31.0) (2021-07-11)
 
 
