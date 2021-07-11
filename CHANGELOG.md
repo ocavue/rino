@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.29.0](https://www.github.com/ocavue/rino/compare/v0.28.0...v0.29.0) (2021-07-11)
+
+
+### Features
+
+* **electron:** sign the mac app ([#699](https://www.github.com/ocavue/rino/issues/699)) ([b48e54f](https://www.github.com/ocavue/rino/commit/b48e54fa1490a7fb8bc9a6ba784dccf17e30a25d))
+
+
+### Bug Fixes
+
+* **electron:** don't show a dialog when saving an existed file ([#696](https://www.github.com/ocavue/rino/issues/696)) ([facfbab](https://www.github.com/ocavue/rino/commit/facfbab68d7161a6f4cf97b54ff026b06542de87))
+
 ## [0.28.0](https://www.github.com/ocavue/rino/compare/v0.27.0...v0.28.0) (2021-07-10)
 
 
