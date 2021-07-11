@@ -75,7 +75,7 @@ async function init() {
     app.on("ready", () => {
         logger.info("event triggered: ready", { openingFile })
         Menu.setApplicationMenu(buildApplicationMenu())
-        if (!openFile) {
+        if (!openingFile) {
             createWindowIfNotExist()
         }
     })
