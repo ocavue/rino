@@ -4,7 +4,6 @@ import type { UpdateInfo } from "electron-updater"
 import { registerIpcInvokeHandlers } from "./api-main"
 import { buildApplicationMenu } from "./application-menu"
 import { env, plateform } from "./env"
-import { openFile } from "./file"
 import { logger } from "./logger"
 import { createWindow, createWindowByOpeningFile, createWindowIfNotExist } from "./window"
 
