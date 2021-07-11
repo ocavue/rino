@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.30.0](https://www.github.com/ocavue/rino/compare/v0.29.0...v0.30.0) (2021-07-11)
+
+
+### Features
+
+* **electron:** allow users to toggle developer tools ([#701](https://www.github.com/ocavue/rino/issues/701)) ([061ae8c](https://www.github.com/ocavue/rino/commit/061ae8ccc7e752554b6f07a680c9ec06065d141a))
+
 ## [0.29.0](https://www.github.com/ocavue/rino/compare/v0.28.0...v0.29.0) (2021-07-11)
 
 
