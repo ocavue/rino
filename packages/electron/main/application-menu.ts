@@ -1,6 +1,6 @@
 import { Menu, MenuItemConstructorOptions } from "electron"
 
-import { env, plateform } from "./env"
+import { plateform } from "./env"
 import { askMarkdownFileForOpen } from "./file"
 import { createWindow, createWindowByOpeningFile } from "./window"
 
@@ -21,6 +21,10 @@ export function buildApplicationMenu() {
 
     const reloadMenu: MenuItemConstructorOptions = {
         role: "reload",
+    }
+
+    const toggleDevToolsMenu: MenuItemConstructorOptions = {
+        role: "toggleDevTools",
     }
 
     return Menu.buildFromTemplate([
@@ -53,7 +57,6 @@ export function buildApplicationMenu() {
                         win?.webContents.send("send:ensureFilePath")
                     },
                 },
-                ...(env.IS_PROD ? [] : [reloadMenu]),
             ],
         },
         {
@@ -70,6 +73,10 @@ export function buildApplicationMenu() {
                     accelerator: "CommandOrControl+V",
                 },
             ],
+        },
+        {
+            label: "View",
+            submenu: [reloadMenu, toggleDevToolsMenu],
         },
     ])
 }
