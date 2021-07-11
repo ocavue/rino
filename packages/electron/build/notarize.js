@@ -19,6 +19,7 @@ async function notarizing(context) {
     const { electronPlatformName, appOutDir } = context
 
     log("electronPlatformName:", electronPlatformName)
+    log("appOutDir:", appOutDir)
 
     if (electronPlatformName !== "darwin") {
         return
@@ -28,7 +29,7 @@ async function notarizing(context) {
     log("appName:", appName)
 
     const result = await notarize({
-        appBundleId: "com.yourcompany.yourAppId",
+        appBundleId: "app.rino.www",
         appPath: `${appOutDir}/${appName}.app`,
         appleId: loadEnv("ELECTRON_APPLE_ID"),
         appleIdPassword: loadEnv("ELECTRON_APPLE_ID_PASSWORD"),
