@@ -1,3 +1,4 @@
+import { cx } from "@emotion/css"
 import { isString } from "lodash"
 import React, { useCallback, useEffect, useState } from "react"
 
@@ -67,8 +68,7 @@ const Editor: React.FC<EditorProps> = ({
         return () => window.removeEventListener("keydown", handleKeydown)
     }, [mode, note])
 
-    const className =
-        `${extraClassName} ${EDITOR_THEME_GITHUB} markdown-body ` + (isDarkMode ? "markdown-body--dark" : "markdown-body--light")
+    const className = cx(extraClassName, EDITOR_THEME_GITHUB, "markdown-body", isDarkMode ? "markdown-body--dark" : "markdown-body--light")
 
     if (isSwitchingMode) {
         return null
