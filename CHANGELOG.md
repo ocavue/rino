@@ -1,5 +1,12 @@
 # Changelog
 
+### [0.31.2](https://www.github.com/ocavue/rino/compare/v0.31.1...v0.31.2) (2021-07-12)
+
+
+### Bug Fixes
+
+* **editor:** set maximum editor width ([#710](https://www.github.com/ocavue/rino/issues/710)) ([7b93ad8](https://www.github.com/ocavue/rino/commit/7b93ad8d6813b00baf36bbf805828801f8c79c17))
+
 ### [0.31.1](https://www.github.com/ocavue/rino/compare/v0.31.0...v0.31.1) (2021-07-11)
 
 
