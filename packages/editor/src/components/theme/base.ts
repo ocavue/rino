@@ -23,9 +23,15 @@ export const EDITOR_THEME_BASE = css`
      */
     & .ProseMirror {
         padding-top: 32px;
-        padding-left: 32px;
-        padding-right: 32px;
         padding-bottom: 64px;
+
+        /**
+         * The maximum width of the content area (e.g. a paragraph) is 800px, but the padding
+         * around the content area is also clickable and the mouse cursor over the whole
+         * editor area is a "text" cursor.
+         */
+        padding-left: max(32px, calc(50% - 400px));
+        padding-right: max(32px, calc(50% - 400px));
     }
 
     /**
