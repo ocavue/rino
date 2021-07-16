@@ -1,34 +1,34 @@
 import { RemirrorManager } from "@remirror/core"
+// @ts-expect-error commonmark-spec has not types
+import { tests } from "commonmark-spec"
 
 import { dedent } from "@rino.app/common"
 
 import { createWysiwygExtension } from "../wysiwyg-extension"
 import { buildMarkdownParser } from "../wysiwyg-markdown"
 
-describe("parser token support", () => {
-    /**
-     * The test case format from CommonMark
-     *
-     * example:
-     *   {
-     *      markdown: 'Foo\nbar\n\n---\n\nbaz\n',
-     *      html: '<p>Foo\nbar</p>\n<hr />\n<p>baz</p>\n',
-     *      section: 'Setext headings',
-     *      number: 74
-     *   }
-     */
-    interface CommonMarkTestCase {
-        markdown: string
-        // html: string // we don't need this
-        section: string
-        number: number
-    }
+/**
+ * The test case format from CommonMark
+ *
+ * example:
+ *   {
+ *      markdown: 'Foo\nbar\n\n---\n\nbaz\n',
+ *      html: '<p>Foo\nbar</p>\n<hr />\n<p>baz</p>\n',
+ *      section: 'Setext headings',
+ *      number: 74
+ *   }
+ */
+interface CommonMarkTestCase {
+    markdown: string
+    // html: string // we don't need this
+    section: string
+    number: number
+}
 
-    // eslint-disable-next-line
-    const tests = require("commonmark-spec").tests as CommonMarkTestCase[]
+describe("parser token support", () => {
     const parser = buildMarkdownParser(RemirrorManager.create(createWysiwygExtension()))
 
-    for (const t of tests) {
+    for (const t of tests as CommonMarkTestCase[]) {
         test(`CommonMark spec test case ${t.number}`, () => {
             try {
                 parser.parse(t.markdown)
