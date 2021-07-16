@@ -1,5 +1,3 @@
-import "jest"
-
 import { switchMode } from "./actions"
 import { getSourceCodeModeText, setupEditor, type as typeByTestid } from "./utils"
 
@@ -12,8 +10,6 @@ async function type(text: string, pressEnter = true) {
 }
 
 describe("Source code text", () => {
-    jest.setTimeout(180000)
-
     test("Create a note", async () => {
         await setupEditor("# ")
         await type("E2E test")
