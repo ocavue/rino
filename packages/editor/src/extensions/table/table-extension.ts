@@ -1,12 +1,11 @@
 import { ApplySchemaAttributes, KeyBindings, NodeSpecOverride } from "@remirror/core"
 import { TableCellExtension, TableExtension, TableHeaderCellExtension, TableRowExtension } from "@remirror/extension-tables"
 import { TableSchemaSpec } from "@remirror/extension-tables/dist/declarations/src/table-utils"
-import { Fragment, Node as ProsemirroNode } from "prosemirror-model"
+import { Fragment } from "prosemirror-model"
 import { TextSelection } from "prosemirror-state"
 
 import { NodeSerializerOptions, ParserRuleType } from "../../transform"
 import { buildBlockEnterKeymapBindings } from "../../utils"
-import { selectedTableCell } from "./table-helper"
 import { createTableHeigthlightPlugin } from "./table-plugin"
 
 enum TABLE_ALIGEN {
@@ -203,7 +202,6 @@ export class RinoTableCellExtension extends TableCellExtension {
     createPlugin() {
         return createTableHeigthlightPlugin()
     }
-
 
     public fromMarkdown() {
         return [

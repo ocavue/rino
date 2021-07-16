@@ -1,4 +1,4 @@
-import { Remirror, useCommands, useHelpers, useRemirrorContext } from "@remirror/react"
+import { Remirror, useCommands, useRemirrorContext } from "@remirror/react"
 import { debounce } from "lodash"
 import React, { FC, useCallback, useLayoutEffect, useMemo, useState } from "react"
 
