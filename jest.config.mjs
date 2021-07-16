@@ -2,13 +2,6 @@
 
 /** @type {import('@jest/types').Config.InitialOptions} */
 const config = {
-    extensionsToTreatAsEsm: [".ts",".tsx"],
-    globals: {
-        "ts-jest": {
-            useESM: true,
-        },
-    },
-
     // Indicates whether the coverage information should be collected while executing the test
     collectCoverage: false,
 
