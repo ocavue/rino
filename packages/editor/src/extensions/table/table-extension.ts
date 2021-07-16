@@ -204,13 +204,6 @@ export class RinoTableCellExtension extends TableCellExtension {
         return createTableHeigthlightPlugin()
     }
 
-    createHelpers() {
-        return {
-            selectedTableCell: (): ProsemirroNode | null => {
-                return selectedTableCell(this.store.getState())
-            },
-        }
-    }
 
     public fromMarkdown() {
         return [

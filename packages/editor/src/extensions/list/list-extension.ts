@@ -4,6 +4,8 @@ import {
     ListItemExtension,
     ListItemSharedExtension,
     OrderedListExtension,
+    sharedLiftListItem,
+    sharedSinkListItem,
     TaskListExtension,
     TaskListItemExtension,
 } from "@remirror/extension-list"
@@ -222,15 +224,12 @@ export class RinoTaskListItemExtension extends TaskListItemExtension implements 
 
 export class RinoListItemSharedExtension extends ListItemSharedExtension {
     createKeymap(): KeyBindings {
-        const oldKeyMap = super.createKeymap()
-        const sinkListItem = oldKeyMap["Tab"]
-        const liftListItem = oldKeyMap["Shift-Tab"]
-
+        const extensions = this.store.extensions
         return {
-            Tab: sinkListItem,
-            "Shift-Tab": liftListItem,
-            "Mod-]": sinkListItem,
-            "Mod-[": liftListItem,
+            Tab: sharedSinkListItem(extensions),
+            "Shift-Tab": sharedLiftListItem(extensions),
+            "Mod-]": sharedSinkListItem(extensions),
+            "Mod-[": sharedLiftListItem(extensions),
         }
     }
 }

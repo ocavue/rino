@@ -42,7 +42,7 @@ export function isMac(): boolean {
     return typeof navigator !== "undefined" ? navigator.platform.includes("Mac") : false
 }
 
-export const metaKey = isMac() ? "metaKey" : "ctrlKey"
+export const metaKey: "metaKey" | "ctrlKey" = isMac() ? "metaKey" : "ctrlKey"
 
 export function sleep(ms: number) {
     return new Promise((resolve) => setTimeout(resolve, ms))

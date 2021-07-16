@@ -37,7 +37,10 @@ const SourceCodeEditor: FC<EditorProps> = React.memo<EditorProps>(
         }, [manager])
 
         const onChange = useMemo(() => {
-            const saveContent = () => onContentSave(getContent())
+            const saveContent = () => {
+                const content = getContent()
+                if (content !== null) onContentSave(content)
+            }
             const saveContentWithDelay = debounce(saveContent, onContentSaveDelay)
             return () => {
                 onContentEdit()

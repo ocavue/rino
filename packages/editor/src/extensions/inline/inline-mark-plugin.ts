@@ -1,5 +1,6 @@
 import { PlainExtension } from "@remirror/core"
 import { Mark, Node, Schema } from "prosemirror-model"
+import { PluginSpec } from "prosemirror-state"
 import { Mappable } from "prosemirror-transform"
 import { EditorView } from "prosemirror-view"
 
@@ -172,7 +173,7 @@ function applyMarksToCurrentNode<S extends Schema>(view: EditorView<S>) {
     }
 }
 
-const createInlineMarkPlugin = (testing = false) => {
+function createInlineMarkPlugin(testing = false): PluginSpec {
     let marksTimeoutId: ReturnType<typeof setTimeout> | null = null
 
     const debounceApplyMarks: (view: EditorView) => void = testing
@@ -187,23 +188,23 @@ const createInlineMarkPlugin = (testing = false) => {
               }, 50)
           }
 
-    const pluginSpec = {
+    const pluginSpec: PluginSpec = {
         state: {
-            init: (config, state) => {},
+            init: () => {},
             apply: () => {},
         },
         props: {
-            handleTextInput(view, from, to, text) {
+            handleTextInput(view: EditorView, from: number, to: number, text: string) {
                 if (text && markdownPunctuationCharacter.test(text)) {
                     debounceApplyMarks(view)
                 }
                 return false
             },
-            handlePaste(view, event, slice) {
+            handlePaste(view: EditorView) {
                 debounceApplyMarks(view)
                 return false
             },
-            handleDrop(view) {
+            handleDrop(view: EditorView) {
                 debounceApplyMarks(view)
                 return false
             },
