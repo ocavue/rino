@@ -2,10 +2,9 @@
 
 import mdast from "mdast"
 import type { Options as FromMarkdownOptions } from "mdast-util-from-markdown"
-import fromMarkdown from "mdast-util-from-markdown"
-// @ts-expect-error mdast-util-gfm-strikethrough has not types
-import mdastStrikethrough from "mdast-util-gfm-strikethrough"
-import micromarkStrikethrough from "micromark-extension-gfm-strikethrough"
+import { fromMarkdown } from "mdast-util-from-markdown"
+import { gfmStrikethroughFromMarkdown } from "mdast-util-gfm-strikethrough"
+import { gfmStrikethrough } from "micromark-extension-gfm-strikethrough"
 
 import { InlineToken, RinoMarkName } from "./define"
 
@@ -268,12 +267,8 @@ function parseInlineMarkdown(text: string): mdast.PhrasingContent[] {
             "thematicBreak",
         ]
         const options: FromMarkdownOptions = {
-            extensions: [
-                // @ts-expect-error types in `mdast` need to be fixed
-                { disable: { null: disabledConstructs } },
-                micromarkStrikethrough({ singleTilde: false }),
-            ],
-            mdastExtensions: [mdastStrikethrough.fromMarkdown],
+            extensions: [{ disable: { null: disabledConstructs } }, gfmStrikethrough({ singleTilde: false })],
+            mdastExtensions: [gfmStrikethroughFromMarkdown],
         }
         const root: mdast.Root = fromMarkdown(text, options)
         if (root.children.length !== 1) {

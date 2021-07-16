@@ -1,3 +1,5 @@
+import "./polyfill"
+
 import { cx } from "@emotion/css"
 import { isString } from "lodash"
 import React, { useCallback, useEffect, useState } from "react"
