@@ -1,6 +1,9 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
+
 import mdast from "mdast"
 import type { Options as FromMarkdownOptions } from "mdast-util-from-markdown"
 import fromMarkdown from "mdast-util-from-markdown"
+// @ts-expect-error mdast-util-gfm-strikethrough has not types
 import mdastStrikethrough from "mdast-util-gfm-strikethrough"
 import micromarkStrikethrough from "micromark-extension-gfm-strikethrough"
 
@@ -19,8 +22,8 @@ function flatText(mdastToken: mdast.Text, depth: number): InlineToken[] {
         {
             marks: ["mdText"],
             attrs: { depth, first: true, last: true },
-            start: mdastToken.position.start.offset,
-            end: mdastToken.position.end.offset,
+            start: mdastToken.position!.start.offset!,
+            end: mdastToken.position!.end.offset!,
             text: "",
         },
     ]
@@ -31,8 +34,8 @@ function flatStrong(mdastToken: mdast.Strong, depth: number): InlineToken[] {
         {
             marks: ["mdMark"],
             attrs: { depth, first: true },
-            start: mdastToken.position.start.offset,
-            end: mdastToken.position.start.offset + 2,
+            start: mdastToken.position!.start.offset!,
+            end: mdastToken.position!.start.offset! + 2,
             text: "",
         },
     ]
@@ -45,8 +48,8 @@ function flatStrong(mdastToken: mdast.Strong, depth: number): InlineToken[] {
     inlineTokens.push({
         marks: ["mdMark"],
         attrs: { depth, last: true },
-        start: mdastToken.position.end.offset - 2,
-        end: mdastToken.position.end.offset,
+        start: mdastToken.position!.end.offset! - 2,
+        end: mdastToken.position!.end.offset!,
         text: "",
     })
     return inlineTokens
@@ -57,8 +60,8 @@ function flatEmphasis(mdastToken: mdast.Emphasis, depth: number): InlineToken[] 
         {
             marks: ["mdMark"],
             attrs: { depth, first: true },
-            start: mdastToken.position.start.offset,
-            end: mdastToken.position.start.offset + 1,
+            start: mdastToken.position!.start.offset!,
+            end: mdastToken.position!.start.offset! + 1,
             text: "",
         },
     ]
@@ -71,8 +74,8 @@ function flatEmphasis(mdastToken: mdast.Emphasis, depth: number): InlineToken[] 
     inlineTokens.push({
         marks: ["mdMark"],
         attrs: { depth, last: true },
-        start: mdastToken.position.end.offset - 1,
-        end: mdastToken.position.end.offset,
+        start: mdastToken.position!.end.offset! - 1,
+        end: mdastToken.position!.end.offset!,
         text: "",
     })
     return inlineTokens
@@ -83,8 +86,8 @@ function flatDelete(mdastToken: mdast.Delete, depth: number): InlineToken[] {
         {
             marks: ["mdMark"],
             attrs: { depth, first: true },
-            start: mdastToken.position.start.offset,
-            end: mdastToken.position.start.offset + 2,
+            start: mdastToken.position!.start.offset!,
+            end: mdastToken.position!.start.offset! + 2,
             text: "",
         },
     ]
@@ -97,8 +100,8 @@ function flatDelete(mdastToken: mdast.Delete, depth: number): InlineToken[] {
     inlineTokens.push({
         marks: ["mdMark"],
         attrs: { depth, last: true },
-        start: mdastToken.position.end.offset - 2,
-        end: mdastToken.position.end.offset,
+        start: mdastToken.position!.end.offset! - 2,
+        end: mdastToken.position!.end.offset!,
         text: "",
     })
     return inlineTokens
@@ -109,22 +112,22 @@ function flatInlineCode(mdastToken: mdast.InlineCode, depth: number): InlineToke
         {
             marks: ["mdMark"],
             attrs: { depth, first: true },
-            start: mdastToken.position.start.offset,
-            end: mdastToken.position.start.offset + 1,
+            start: mdastToken.position!.start.offset!,
+            end: mdastToken.position!.start.offset! + 1,
             text: "",
         },
         {
             marks: ["mdCodeText"],
             attrs: { depth },
-            start: mdastToken.position.start.offset + 1,
-            end: mdastToken.position.end.offset - 1,
+            start: mdastToken.position!.start.offset! + 1,
+            end: mdastToken.position!.end.offset! - 1,
             text: "",
         },
         {
             marks: ["mdMark"],
             attrs: { depth, last: true },
-            start: mdastToken.position.end.offset - 1,
-            end: mdastToken.position.end.offset,
+            start: mdastToken.position!.end.offset! - 1,
+            end: mdastToken.position!.end.offset!,
             text: "",
         },
     ]
@@ -135,8 +138,8 @@ function flatImage(mdastToken: mdast.Image, depth: number): InlineToken[] {
         {
             marks: ["mdImgUri"],
             attrs: { depth, first: true, last: true, href: mdastToken.url },
-            start: mdastToken.position.start.offset,
-            end: mdastToken.position.end.offset,
+            start: mdastToken.position!.start.offset!,
+            end: mdastToken.position!.end.offset!,
             text: "",
         },
     ]
@@ -148,8 +151,8 @@ function flatLink(mdastToken: mdast.Link, depth: number): InlineToken[] {
         {
             marks: ["mdMark"],
             attrs: { depth, first: true },
-            start: mdastToken.position.start.offset,
-            end: mdastToken.position.start.offset + 1,
+            start: mdastToken.position!.start.offset!,
+            end: mdastToken.position!.start.offset! + 1,
             text: "",
         },
     ]
@@ -161,7 +164,7 @@ function flatLink(mdastToken: mdast.Link, depth: number): InlineToken[] {
         }
     }
     const childrenEndPos = inlineTokens[inlineTokens.length - 1].end
-    const parentEndPos = mdastToken.position.end.offset
+    const parentEndPos = mdastToken.position!.end.offset!
 
     if (childrenEndPos + 2 < parentEndPos) {
         inlineTokens.push(

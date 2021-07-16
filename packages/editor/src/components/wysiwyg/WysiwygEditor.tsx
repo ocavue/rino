@@ -1,4 +1,4 @@
-import { Remirror, useCommands, useHelpers, useRemirrorContext } from "@remirror/react"
+import { Remirror, useCommands, useRemirrorContext } from "@remirror/react"
 import { debounce } from "lodash"
 import React, { FC, useCallback, useLayoutEffect, useMemo, useState } from "react"
 
@@ -17,16 +17,10 @@ const InnerEditor: FC<{
     enableDevTools: boolean
 }> = ({ className, maxDrawerWidth, drawerActivityContainer, enableDevTools }) => {
     const commands = useCommands<WysiwygExtension>()
-    const helpers = useHelpers<WysiwygExtension>()
     const { getRootProps } = useRemirrorContext<WysiwygExtension>()
     return (
         <>
-            <TableMenu
-                commands={commands}
-                helpers={helpers}
-                maxDrawerWidth={maxDrawerWidth}
-                drawerActivityContainer={drawerActivityContainer}
-            />
+            <TableMenu commands={commands} maxDrawerWidth={maxDrawerWidth} drawerActivityContainer={drawerActivityContainer} />
             <div {...getRootProps()} className={className} spellCheck={false} />
             {enableDevTools ? <DevTools /> : null}
         </>
@@ -81,7 +75,10 @@ const WysiwygEditor = React.memo<WysiwygEditorProps>(
         }, [manager, serializer])
 
         const onChange = useMemo(() => {
-            const saveContent = () => onContentSave(getContent())
+            const saveContent = () => {
+                const content = getContent()
+                if (content !== null) onContentSave(content)
+            }
             const saveContentWithDelay = debounce(saveContent, onContentSaveDelay)
             return () => {
                 onContentEdit()

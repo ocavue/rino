@@ -86,9 +86,11 @@ export class MarkdownParseState {
     }
 
     // Add a node at the current position.
-    public addNode(type: NodeType, attrs?: Record<string, any>, content?: Node[]): Node | null {
+    public addNode(type: NodeType, attrs?: Record<string, any>, content?: Node[]): Node {
         const node = type.createAndFill(attrs, content, this.marks)
-        if (!node) return null
+        if (!node) {
+            throw new Error("unexpected error: node is empty ")
+        }
         this.push(node)
         return node
     }
@@ -102,6 +104,9 @@ export class MarkdownParseState {
     public closeNode(): Node {
         if (this.marks.length) this.marks = Mark.none
         const info = this.stack.pop()
+        if (!info) {
+            throw new Error("unexpected error: info is empty")
+        }
         return this.addNode(info.type, info.attrs, info.content)
     }
 }

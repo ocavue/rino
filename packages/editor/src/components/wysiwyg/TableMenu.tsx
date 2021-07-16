@@ -1,8 +1,10 @@
 import { createStyles, IconButton, makeStyles, Paper, Snackbar, Theme } from "@material-ui/core"
-import { CommandsFromExtensions, CommandShape, GetHelpers } from "@remirror/core"
+import { CommandsFromExtensions, CommandShape } from "@remirror/core"
+import { useRemirrorContext } from "@remirror/react-core"
 import clsx from "clsx"
 import React, { useMemo } from "react"
 
+import { selectedTableCell } from "../../extensions/table/table-helper"
 import { tableMenuSvgs as svgs } from "../table-menu/svg"
 import { DrawerActivityContainer } from "../types"
 import { WysiwygExtension } from "./wysiwyg-extension"
@@ -42,13 +44,13 @@ const useStyles = makeStyles((theme: Theme) => {
 
 export type TableMenuProps = {
     commands: CommandsFromExtensions<WysiwygExtension>
-    helpers: GetHelpers<WysiwygExtension>
     maxDrawerWidth: number
     drawerActivityContainer: DrawerActivityContainer
 }
 
-const TableMenu: React.FC<TableMenuProps> = ({ commands, helpers, maxDrawerWidth, drawerActivityContainer }) => {
-    const showTableMenu = !!helpers.selectedTableCell()
+const TableMenu: React.FC<TableMenuProps> = ({ commands, maxDrawerWidth, drawerActivityContainer }) => {
+    const { view } = useRemirrorContext()
+    const showTableMenu = !!selectedTableCell(view.state)
 
     const { drawerActivity } = drawerActivityContainer.useContainer()
 

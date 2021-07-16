@@ -1,3 +1,4 @@
+import "codemirror/mode/meta"
 import "codemirror/mode/cmake/cmake"
 import "codemirror/mode/css/css"
 import "codemirror/mode/dart/dart"
@@ -32,7 +33,7 @@ export class RinoCodeBlockExtension extends CodeMirrorExtension {
         defaultCodeMirrorConfig: {
             theme: "nord",
             lineWrapping: true,
-            scrollbarStyle: null,
+            scrollbarStyle: "null",
 
             // By setting an editor's `height` style to `auto` and giving the `viewportMargin` a
             // value of `Infinity`, CodeMirror can be made to automatically resize to fit its
@@ -51,6 +52,7 @@ export class RinoCodeBlockExtension extends CodeMirrorExtension {
                 default: "fenced",
             },
         },
+        CodeMirror: undefined,
     }
 
     createKeymap(): KeyBindings {
