@@ -1,3 +1,5 @@
+import "jest"
+
 import { switchMode } from "./actions"
 import { getSourceCodeModeText, setupEditor, type as typeByTestid } from "./utils"
 
