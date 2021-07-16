@@ -1,7 +1,7 @@
 import { renderEditor } from "jest-remirror"
 
-import { buildMarkdownParser } from "../../../src/components/wysiwyg"
-import { RinoParagraphExtension, RinoTextExtension } from "../../../src/extensions"
+import { buildMarkdownParser } from "../../src/components/wysiwyg"
+import { RinoParagraphExtension, RinoTextExtension } from "../../src/extensions"
 
 const setup = () => {
     const {

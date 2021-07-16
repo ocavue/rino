@@ -2,7 +2,7 @@ import { renderEditor } from "jest-remirror"
 
 import { dedent } from "@rino.app/common"
 
-import { buildMarkdownParser, buildMarkdownSerializer } from "../../../src/components/wysiwyg"
+import { buildMarkdownParser, buildMarkdownSerializer } from "../../src/components/wysiwyg"
 import {
     RinoBulletListExtension,
     RinoHardBreakExtension,
@@ -13,7 +13,7 @@ import {
     RinoTaskListExtension,
     RinoTaskListItemExtension,
     RinoTextExtension,
-} from "../../../src/extensions"
+} from "../../src/extensions"
 
 const setup = () => {
     const extensions = [

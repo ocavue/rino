@@ -6,7 +6,7 @@ import {
     rinoMarkExtensions,
     RinoParagraphExtension,
     RinoTextExtension,
-} from "../../../src/extensions"
+} from "../../src/extensions"
 
 const setup = () => {
     const {

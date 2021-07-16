@@ -1,7 +1,7 @@
 import { renderEditor } from "jest-remirror"
 
-import { buildMarkdownSerializer, createRinoCorePreset } from "../../../src/components/wysiwyg"
-import { RinoHardBreakExtension } from "../../../src/extensions"
+import { buildMarkdownSerializer, createRinoCorePreset } from "../../src/components/wysiwyg"
+import { RinoHardBreakExtension } from "../../src/extensions"
 
 const setup = () => {
     const {
