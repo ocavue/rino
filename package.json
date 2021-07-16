@@ -5,7 +5,7 @@
     "scripts": {
         "update-deps": "pnpm -r update --depth Infinity",
         "lint": "eslint --ignore-path .gitignore --ext '.js,.jsx,.ts,.tsx'",
-        "test": "jest --runInBand",
+        "test": "NODE_OPTIONS=--experimental-vm-modules jest --runInBand",
         "postinstall": "./scripts/post-install.sh && husky install",
         "exec": "./scripts/recursive-exec.sh",
         "clean": "./scripts/clean.mjs"
