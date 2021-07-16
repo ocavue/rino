@@ -4,8 +4,7 @@ import { tests } from "commonmark-spec"
 
 import { dedent } from "@rino.app/common"
 
-import { createWysiwygExtension } from "../wysiwyg-extension"
-import { buildMarkdownParser } from "../wysiwyg-markdown"
+import { buildMarkdownParser, createWysiwygExtension } from "../../../src/components/wysiwyg"
 
 /**
  * The test case format from CommonMark

@@ -2,12 +2,18 @@ import { renderEditor } from "jest-remirror"
 
 import { dedent } from "@rino.app/common"
 
-import { buildMarkdownParser, buildMarkdownSerializer } from "../../../components/wysiwyg/wysiwyg-markdown"
-import { RinoHardBreakExtension } from "../.."
-import { RinoParagraphExtension } from "../../paragraph"
-import { RinoTextExtension } from "../../text"
-import { RinoBulletListExtension, RinoListItemExtension, RinoOrderedListExtension } from ".."
-import { RinoListItemSharedExtension, RinoTaskListExtension, RinoTaskListItemExtension } from "../list-extension"
+import { buildMarkdownParser, buildMarkdownSerializer } from "../../src/components/wysiwyg"
+import {
+    RinoBulletListExtension,
+    RinoHardBreakExtension,
+    RinoListItemExtension,
+    RinoListItemSharedExtension,
+    RinoOrderedListExtension,
+    RinoParagraphExtension,
+    RinoTaskListExtension,
+    RinoTaskListItemExtension,
+    RinoTextExtension,
+} from "../../src/extensions"
 
 const setup = () => {
     const extensions = [

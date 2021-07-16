@@ -1,4 +1,4 @@
-import { fromInlineMarkdown } from "../from-inline-markdown"
+import { fromInlineMarkdown } from "../../../src/extensions/inline/from-inline-markdown"
 
 describe("text", function () {
     test("normal", function () {
