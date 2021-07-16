@@ -2,10 +2,8 @@ import { renderEditor } from "jest-remirror"
 
 import { dedent } from "@rino.app/common"
 
-import { buildMarkdownParser, buildMarkdownSerializer } from "../../../components"
-import { RinoParagraphExtension } from "../../paragraph"
-import { RinoTextExtension } from "../../text"
-import { RinoCodeBlockExtension } from "../codemirror-extension"
+import { buildMarkdownParser, buildMarkdownSerializer } from "../../../src/components/wysiwyg"
+import { RinoCodeBlockExtension, RinoParagraphExtension, RinoTextExtension } from "../../../src/extensions"
 
 const defaultLanguage = ""
 

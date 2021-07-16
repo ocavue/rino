@@ -1,8 +1,12 @@
 import { renderEditor } from "jest-remirror"
 
-import { RinoParagraphExtension } from "../../../extensions"
-import { RinoTextExtension } from "../../../extensions"
-import { RinoInlineDecorationExtension, RinoInlineMarkExtension, rinoMarkExtensions } from ".."
+import {
+    RinoInlineDecorationExtension,
+    RinoInlineMarkExtension,
+    rinoMarkExtensions,
+    RinoParagraphExtension,
+    RinoTextExtension,
+} from "../../../src/extensions"
 
 const setup = () => {
     const {

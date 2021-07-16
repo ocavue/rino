@@ -2,9 +2,8 @@ import { renderEditor } from "jest-remirror"
 
 import { dedent } from "@rino.app/common"
 
-import { createRinoCorePreset } from "../../../components"
-import { buildMarkdownParser, buildMarkdownSerializer } from "../../../components/wysiwyg/wysiwyg-markdown"
-import { RinoTableCellExtension, RinoTableExtension, RinoTableHeaderCellExtension, RinoTableRowExtension } from ".."
+import { buildMarkdownParser, buildMarkdownSerializer, createRinoCorePreset } from "../../../src/components/wysiwyg"
+import { RinoTableCellExtension, RinoTableExtension, RinoTableHeaderCellExtension, RinoTableRowExtension } from "../../../src/extensions"
 
 const setup = () => {
     const {
