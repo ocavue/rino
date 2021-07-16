@@ -1,5 +1,5 @@
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles"
-import Alert from "@material-ui/lab/Alert"
+import { Alert } from "@material-ui/lab"
 import React from "react"
 
 import { rootLevelBlock } from "../styles/layout"

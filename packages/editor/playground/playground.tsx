@@ -1,4 +1,4 @@
-import { isString } from "lodash"
+import { isString } from "lodash-es"
 import React, { FC, useState } from "react"
 import ReactDOM from "react-dom"
 import { createContainer } from "unstated-next"

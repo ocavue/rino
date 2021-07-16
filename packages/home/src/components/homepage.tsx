@@ -1,6 +1,5 @@
-import { createStyles, Divider, makeStyles, ThemeProvider } from "@material-ui/core"
-import CssBaseline from "@material-ui/core/CssBaseline"
-import React from "react"
+import { createStyles, CssBaseline, Divider, makeStyles, ThemeProvider } from "@material-ui/core"
+import React, { FC } from "react"
 
 import { theme } from "../styles/theme"
 import { Appbar } from "./appbar"
@@ -30,7 +29,7 @@ type HomepageProps = {
     hero: HeroProps
 }
 
-export function Homepage(props: HomepageProps) {
+export const Homepage: FC<HomepageProps> = (props) => {
     const classes = useStyles()
 
     return (
