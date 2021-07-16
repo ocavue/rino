@@ -1,4 +1,5 @@
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles"
+import { Alert } from "@material-ui/lab"
 import React from "react"
 
 import { rootLevelBlock } from "../styles/layout"
@@ -20,9 +21,12 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export const Warning = () => {
     const classes = useStyles()
+
     return (
         <div className={classes.root}>
-            <div className={classes.alert}>PROJECT STATUS: WORK IN PROGRESS</div>
+            <Alert variant="standard" severity="warning" className={classes.alert}>
+                PROJECT STATUS: WORK IN PROGRESS
+            </Alert>
         </div>
     )
 }
