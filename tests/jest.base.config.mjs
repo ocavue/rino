@@ -4,7 +4,7 @@
 
 /** @type {import('@jest/types').Config.InitialOptions} */
 const config = {
-    extensionsToTreatAsEsm: [".ts"],
+    extensionsToTreatAsEsm: [".ts", ".tsx"],
     globals: {
         "ts-jest": {
             useESM: true,
