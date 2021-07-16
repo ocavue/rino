@@ -4,9 +4,12 @@
 
 /** @type {import('@jest/types').Config.InitialOptions} */
 const config = {
+    // extensionsToTreatAsEsm: [".ts", ".tsx"],
+
     // A map from regular expressions to paths to transformers
     transform: {
-        ".*\\.ts(x)?$": "babel-jest",
+        "^.+\\.(ts|tsx)$": "ts-jest",
+        "^.+\\.(js|jsx)$": "babel-jest",
         ".*\\.(css|styl|less|sass|scss|svg|png|jpg|ttf|woff|woff2|md|svg)$": "jest-transform-stub",
     },
 
