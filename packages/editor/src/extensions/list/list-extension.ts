@@ -9,7 +9,7 @@ import {
     TaskListExtension,
     TaskListItemExtension,
 } from "@remirror/extension-list"
-import { isString } from "lodash"
+import { isString } from "lodash-es"
 import Token from "markdown-it/lib/token"
 import { InputRule, wrappingInputRule } from "prosemirror-inputrules"
 

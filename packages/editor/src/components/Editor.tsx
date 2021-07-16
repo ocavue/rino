@@ -1,7 +1,7 @@
 import "./polyfill"
 
 import { cx } from "@emotion/css"
-import { isString } from "lodash"
+import { isString } from "lodash-es"
 import React, { useCallback, useEffect, useState } from "react"
 
 import { metaKey } from "@rino.app/common"

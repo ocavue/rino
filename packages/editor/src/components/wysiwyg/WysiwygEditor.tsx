@@ -1,5 +1,5 @@
 import { Remirror, useCommands, useRemirrorContext } from "@remirror/react"
-import { debounce } from "lodash"
+import { debounce } from "lodash-es"
 import React, { FC, useCallback, useLayoutEffect, useMemo, useState } from "react"
 
 import DevTools from "../DevTools"
