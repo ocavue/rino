@@ -35,17 +35,16 @@ export const Homepage: FC<HomepageProps> = (props) => {
 
     return (
         <ThemeProvider theme={theme}>
-            {/* <CssBaseline /> */}
+            <CssBaseline />
             <div className={classes.root} data-testid="homepage_root">
                 <Appbar />
-              <Divider />
+                <Divider />
                 <Warning />
                 <Headline />
-                  {/*
                 <Hero {...props.hero} />
                 <CTA />
                 <Divider />
-                <Footer /> */}
+                <Footer />
             </div>
         </ThemeProvider>
     )
