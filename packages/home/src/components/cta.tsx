@@ -2,26 +2,25 @@ import { createStyles, makeStyles } from "@material-ui/core"
 import React from "react"
 
 import { DownloadButton } from "./download-button"
-import { getDownloadLinks } from "./links"
 
 const useStyles = makeStyles((theme) =>
     createStyles({
         cta: {
             width: "100%",
-            margin: "0 auto",
 
             marginTop: 120,
             marginBottom: 160,
+            paddingTop: 48,
+            paddingBottom: 48,
+
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
             background: theme.palette.primary.light,
-
-            paddingBottom: 40,
         },
         header: {
             marginTop: 0,
-            marginBottom: 0,
+            marginBottom: 32,
             fontWeight: 700,
             color: theme.palette.common.white,
 
@@ -37,7 +36,6 @@ const useStyles = makeStyles((theme) =>
 export const CTA: React.FC = () => {
     const classes = useStyles()
     const version = "0.31.2"
-    const downloadLinks = getDownloadLinks(version)
 
     return (
         <div className={classes.cta}>
