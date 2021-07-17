@@ -87,6 +87,9 @@ export const DownloadDialog: React.FC<{ open: boolean; handleClose: () => void }
                 {platforms.map((platform) => (
                     <Button
                         key={platform.name}
+                        href={platform.link}
+                        rel="noopener"
+                        target="_blank"
                         className={classes.contentButton}
                         size="large"
                         variant="outlined"
