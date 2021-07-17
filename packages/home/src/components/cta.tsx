@@ -1,4 +1,4 @@
-import { Button, createStyles, makeStyles, Typography } from "@material-ui/core"
+import { Button, createStyles, makeStyles } from "@material-ui/core"
 import React from "react"
 
 import { rootLevelBlock } from "../styles/layout"
@@ -10,10 +10,10 @@ const useStyles = makeStyles((theme) =>
 
             marginTop: 120,
             marginBottom: 140,
-            paddingTop: 56,
-            paddingBottom: 56,
+            paddingTop: 48,
+            paddingBottom: 48,
 
-            background: theme.palette.primary.light,
+            background: theme.palette.primary.main,
         },
         container: {
             ...rootLevelBlock,
@@ -36,7 +36,9 @@ const useStyles = makeStyles((theme) =>
 
         button: {
             border: "2px solid #fff",
-            color: "#fff",
+            color: "#ffffff",
+            fontWeight: 600,
+            fontSize: 18,
         },
     }),
 )
@@ -50,9 +52,7 @@ export const CTA: React.FC<{ handleOpenDownloadDialog: () => void }> = ({ handle
             <div className={classes.container}>
                 <h3 className={classes.header}>Download Rino today</h3>
                 <Button variant="outlined" className={classes.button} onClick={handleOpenDownloadDialog} size="large">
-                    <Typography component="span" variant="h6">
-                        Download Rino
-                    </Typography>
+                    Download Rino
                 </Button>
             </div>
         </div>

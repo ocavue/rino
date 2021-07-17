@@ -3,7 +3,6 @@ import React, { FC } from "react"
 
 import { rootLevelBlock } from "../styles/layout"
 import { AppbarLogo } from "./appbar-logo"
-import { DOWNLOAD_LINK, GITHUB_LINK } from "./links"
 
 const useStyles = makeStyles((theme) =>
     createStyles({
@@ -41,7 +40,7 @@ const Appbar: FC<{ handleOpenDownloadDialog: () => void }> = ({ handleOpenDownlo
             </a>
             <div className={classes.flexGrow} />
             <Hidden xsDown>
-                <Button className={classes.button} variant="outlined" color="primary" size="large" onClick={handleOpenDownloadDialog}>
+                <Button className={classes.button} size="large" onClick={handleOpenDownloadDialog}>
                     Download
                 </Button>
             </Hidden>
