@@ -1,50 +1,60 @@
-import { Box, Button, createStyles, makeStyles } from "@material-ui/core"
+import { Button, createStyles, makeStyles } from "@material-ui/core"
 import React from "react"
 
-import { colors } from "../styles/color"
-import { DOWNLOAD_LINK } from "./links"
+import { rootLevelBlock } from "../styles/layout"
 
 const useStyles = makeStyles((theme) =>
     createStyles({
-        cta: {
+        root: {
+            width: "100%",
+
             marginTop: 120,
-            marginBottom: 160,
+            marginBottom: 140,
+            paddingTop: 48,
+            paddingBottom: 48,
+
+            background: theme.palette.primary.main,
+        },
+        container: {
+            ...rootLevelBlock,
+
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
         },
         header: {
-            marginTop: 64,
+            marginTop: 0,
             marginBottom: 32,
-            fontWeight: 700,
-            color: colors.gray900,
+            fontWeight: 500,
+            color: theme.palette.common.white,
 
             fontSize: "2.2rem",
             [theme.breakpoints.up("sm")]: {
                 fontSize: "3rem",
             },
         },
+
+        button: {
+            border: "2px solid #fff",
+            color: "#ffffff",
+            fontWeight: 700,
+            fontSize: "19px",
+        },
     }),
 )
 
-const CTAButton: React.FC<{ href: string }> = ({ href, children }) => {
-    return (
-        <Button disabled target="_blank" rel="noopener noreferrer" href={href} size="large" variant="contained" color="primary">
-            {children}
-        </Button>
-    )
-}
-
 // call-to-action
-export const CTA: React.FC = () => {
+export const CTA: React.FC<{ handleOpenDownloadDialog: () => void }> = ({ handleOpenDownloadDialog }) => {
     const classes = useStyles()
 
     return (
-        <div className={classes.cta}>
-            <h2 className={classes.header}>Get started with Rino</h2>
-            <Box display="flex">
-                <CTAButton href={DOWNLOAD_LINK}>comming soon</CTAButton>
-            </Box>
+        <div className={classes.root}>
+            <div className={classes.container}>
+                <h3 className={classes.header}>Download Rino today</h3>
+                <Button variant="outlined" className={classes.button} onClick={handleOpenDownloadDialog} size="large">
+                    Download Rino
+                </Button>
+            </div>
         </div>
     )
 }

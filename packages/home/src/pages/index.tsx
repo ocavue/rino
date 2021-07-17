@@ -3,7 +3,7 @@ import React from "react"
 import snapshot from "../assets/share/snapshot-mac.png"
 import { Homepage } from "../components/homepage"
 
-export default function Index() {
+const IndexPage: React.FC = () => {
     return (
         <Homepage
             hero={{
@@ -18,3 +18,5 @@ export default function Index() {
         />
     )
 }
+
+export default IndexPage
