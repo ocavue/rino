@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme) =>
     }),
 )
 
-const Appbar: FC = () => {
+const Appbar: FC<{ handleOpenDownloadDialog: () => void }> = ({ handleOpenDownloadDialog }) => {
     const classes = useStyles()
 
     return (
@@ -41,11 +41,8 @@ const Appbar: FC = () => {
             </a>
             <div className={classes.flexGrow} />
             <Hidden xsDown>
-                <Button target="_blank" rel="noopener noreferrer" className={classes.button} size="large" href={DOWNLOAD_LINK}>
+                <Button className={classes.button} variant="outlined" color="primary" size="large" onClick={handleOpenDownloadDialog}>
                     Download
-                </Button>
-                <Button target="_blank" rel="noopener noreferrer" className={classes.button} size="large" href={GITHUB_LINK}>
-                    Github
                 </Button>
             </Hidden>
         </Toolbar>

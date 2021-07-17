@@ -39,7 +39,7 @@ const Home: FC<HomepageProps> = (props) => {
 
     return (
         <div className={classes.root} data-testid="homepage_root">
-            <Appbar />
+            <Appbar handleOpenDownloadDialog={handleOpenDownloadDialog} />
             <Divider />
             <Warning />
             <Headline />
