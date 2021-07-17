@@ -36,6 +36,7 @@ const useStyles = makeStyles((theme) =>
             width: 240,
 
             border: "2px solid #fff",
+            borderRadius: 4,
             color: "#fff",
 
             "&:hover, &$focusVisible": {
@@ -49,7 +50,7 @@ const useStyles = makeStyles((theme) =>
 
         buttonText: {
             fontSize: "1.7em",
-            fontWeight: 600,
+            fontWeight: 500,
             position: "relative",
             padding: `${theme.spacing(2)}px ${theme.spacing(4)}px ${theme.spacing(1) + 6}px`,
         },
