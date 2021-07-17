@@ -1,8 +1,6 @@
-import { Box, Button, createStyles, makeStyles } from "@material-ui/core"
+import { createStyles, makeStyles } from "@material-ui/core"
 import React from "react"
 
-import { colors } from "../styles/color"
-import { rootLevelBlock } from "../styles/layout"
 import { DownloadButton } from "./download-button"
 import { getDownloadLinks } from "./links"
 
@@ -34,23 +32,6 @@ const useStyles = makeStyles((theme) =>
         },
     }),
 )
-
-// const DownloadButton: React.FC<{ href: string }> = ({ href, children }) => {
-//     const classes = useStyles()
-//     return (
-//         <Button
-//             target="_blank"
-//             rel="noopener noreferrer"
-//             href={href}
-//             size="large"
-//             // variant="contained"
-//             // color="primary"
-//             className={classes.downloadButton}
-//         >
-//             {children}
-//         </Button>
-//     )
-// }
 
 // call-to-action
 export const CTA: React.FC = () => {
