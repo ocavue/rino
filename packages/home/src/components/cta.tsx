@@ -1,7 +1,7 @@
 import { createStyles, makeStyles } from "@material-ui/core"
+import ButtonBase from "@material-ui/core/ButtonBase"
+import Typography from "@material-ui/core/Typography"
 import React from "react"
-
-import { DownloadButton } from "./download-button"
 
 const useStyles = makeStyles((theme) =>
     createStyles({
@@ -29,26 +29,50 @@ const useStyles = makeStyles((theme) =>
                 fontSize: "3rem",
             },
         },
+
+        button: {
+            position: "relative",
+            height: 64,
+            width: 240,
+
+            border: "2px solid #fff",
+            color: "#fff",
+
+            "&:hover, &$focusVisible": {
+                border: "none",
+                zIndex: 1,
+                backgroundColor: "#fff",
+                color: "#000",
+            },
+        },
+        focusVisible: {},
+
+        buttonText: {
+            fontSize: "1.7em",
+            fontWeight: 600,
+            position: "relative",
+            padding: `${theme.spacing(2)}px ${theme.spacing(4)}px ${theme.spacing(1) + 6}px`,
+        },
     }),
 )
 
 // call-to-action
-export const CTA: React.FC = () => {
+export const CTA: React.FC<{ handleOpenDownloadDialog: () => void }> = ({ handleOpenDownloadDialog }) => {
     const classes = useStyles()
-    const version = "0.31.2"
 
     return (
         <div className={classes.cta}>
             <h3 className={classes.header}>Download Rino today</h3>
-
-            <DownloadButton />
-
-            {/* <Box>v{version}</Box>
-            <Box className={classes.downloadButtonWrapper}>
-                <DownloadButton href={downloadLinks.mac}>Mac</DownloadButton>
-                <DownloadButton href={downloadLinks.win}>Windows</DownloadButton>
-                <DownloadButton href={downloadLinks.linux}>Linux</DownloadButton>
-            </Box> */}
+            <ButtonBase
+                focusRipple
+                className={classes.button}
+                focusVisibleClassName={classes.focusVisible}
+                onClick={handleOpenDownloadDialog}
+            >
+                <Typography component="span" variant="subtitle1" color="inherit" className={classes.buttonText}>
+                    Download Rino
+                </Typography>
+            </ButtonBase>
         </div>
     )
 }
