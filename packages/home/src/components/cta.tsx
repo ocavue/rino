@@ -37,8 +37,8 @@ const useStyles = makeStyles((theme) =>
         button: {
             border: "2px solid #fff",
             color: "#ffffff",
-            fontWeight: 600,
-            fontSize: 18,
+            fontWeight: 700,
+            fontSize: "19px",
         },
     }),
 )
