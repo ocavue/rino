@@ -9,9 +9,9 @@ const useStyles = makeStyles((theme) =>
             width: "100%",
 
             marginTop: 120,
-            marginBottom: 160,
-            paddingTop: 48,
-            paddingBottom: 48,
+            marginBottom: 140,
+            paddingTop: 56,
+            paddingBottom: 56,
 
             background: theme.palette.primary.light,
         },

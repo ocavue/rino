@@ -44,7 +44,7 @@ const Home: FC<HomepageProps> = (props) => {
             <Warning />
             <Headline />
             <Hero {...props.hero} />
-            <CTA handleOpenDownloadDialog={handleOpenDownloadDialog}  />
+            <CTA handleOpenDownloadDialog={handleOpenDownloadDialog} />
             <Divider />
             <Footer />
             <DownloadDialog open={openDownloadDialog} handleClose={handleCloseDownloadDialog} />
