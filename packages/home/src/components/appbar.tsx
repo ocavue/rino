@@ -1,6 +1,7 @@
 import { Button, createStyles, Hidden, makeStyles, Toolbar } from "@material-ui/core"
 import React, { FC } from "react"
 
+import { downloadDialogContainer } from "../hooks/download-dialog"
 import { rootLevelBlock } from "../styles/layout"
 import { AppbarLogo } from "./appbar-logo"
 
@@ -30,8 +31,9 @@ const useStyles = makeStyles((theme) =>
     }),
 )
 
-const Appbar: FC<{ handleOpenDownloadDialog: () => void }> = ({ handleOpenDownloadDialog }) => {
+const Appbar: FC = () => {
     const classes = useStyles()
+    const { handleOpenDownloadDialog } = downloadDialogContainer.useContainer()
 
     return (
         <Toolbar disableGutters className={classes.toolbar}>

@@ -3,6 +3,7 @@ import { createStyles, makeStyles } from "@material-ui/core/styles"
 import CloseIcon from "@material-ui/icons/Close"
 import React, { useMemo } from "react"
 
+import { downloadDialogContainer } from "../hooks/download-dialog"
 import { getDownloadLink } from "./links"
 import { AppleSvg, LinuxSvg, MicrosoftSvg } from "./svgs"
 
@@ -51,8 +52,12 @@ const useStyles = makeStyles((theme) =>
     }),
 )
 
-export const DownloadDialog: React.FC<{ open: boolean; handleClose: () => void }> = ({ open, handleClose }) => {
+export type DownloadDialogProps = Record<string, never>
+
+export const DownloadDialog: React.FC<DownloadDialogProps> = () => {
     const classes = useStyles()
+
+    const { openDownloadDialog: open, handleCloseDownloadDialog: handleClose } = downloadDialogContainer.useContainer()
 
     const platforms = useMemo(() => {
         const version = process.env.NEXT_PUBLIC_RINO_VERSION

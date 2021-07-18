@@ -1,6 +1,7 @@
 import { Button, createStyles, makeStyles } from "@material-ui/core"
 import React from "react"
 
+import { downloadDialogContainer } from "../hooks/download-dialog"
 import { rootLevelBlock } from "../styles/layout"
 
 const useStyles = makeStyles((theme) =>
@@ -44,8 +45,9 @@ const useStyles = makeStyles((theme) =>
 )
 
 // call-to-action
-export const CTA: React.FC<{ handleOpenDownloadDialog: () => void }> = ({ handleOpenDownloadDialog }) => {
+export const CTA: React.FC = () => {
     const classes = useStyles()
+    const { handleOpenDownloadDialog } = downloadDialogContainer.useContainer()
 
     return (
         <div className={classes.root}>
