@@ -347,12 +347,11 @@
         "tag_name": "${{ steps.step_release_please.outputs.tag_name }}"
       }
     },
-    "deployment_electron": {
+    "deploy": {
       "runs-on": "ubuntu-18.04",
       "needs": [
         "release"
       ],
-      "if": "github.ref == 'refs/heads/master' && needs.release.outputs.published == 'true'",
       "steps": [
         {
           "name": "Checkout code repository",
@@ -368,6 +367,7 @@
         {
           "name": "Download dist (electron)",
           "uses": "actions/download-artifact@v2",
+          "if": "github.ref == 'refs/heads/master' && needs.release.outputs.published == 'true'",
           "with": {
             "name": "electron_dist",
             "path": "./packages/electron/dist"
@@ -376,32 +376,13 @@
         {
           "name": "Upload @rino.app/electron to GitHub Release",
           "uses": "svenstaro/upload-release-action@v2",
+          "if": "github.ref == 'refs/heads/master' && needs.release.outputs.published == 'true'",
           "with": {
             "repo_token": "${{ secrets.GITHUB_TOKEN }}",
             "file": "./packages/electron/dist/*",
             "tag": "${{ needs.release.outputs.tag_name }}",
             "overwrite": true,
             "file_glob": true
-          }
-        }
-      ]
-    },
-    "deployment_website": {
-      "runs-on": "ubuntu-18.04",
-      "needs": [
-        "release"
-      ],
-      "if": "github.ref == 'refs/heads/master'",
-      "steps": [
-        {
-          "name": "Checkout code repository",
-          "uses": "actions/checkout@v2"
-        },
-        {
-          "name": "Setup node.js",
-          "uses": "actions/setup-node@v2",
-          "with": {
-            "node-version": 14
           }
         },
         {

@@ -1,9 +1,9 @@
 import { Button, Dialog, DialogContent, DialogTitle, IconButton, SvgIcon, Typography } from "@material-ui/core"
 import { createStyles, makeStyles } from "@material-ui/core/styles"
 import CloseIcon from "@material-ui/icons/Close"
-import React from "react"
+import React, { useMemo } from "react"
 
-import { getDownloadLinks } from "./links"
+import { getDownloadLink } from "./links"
 import { AppleSvg, LinuxSvg, MicrosoftSvg } from "./svgs"
 
 const useStyles = makeStyles((theme) =>
@@ -54,24 +54,26 @@ const useStyles = makeStyles((theme) =>
 export const DownloadDialog: React.FC<{ open: boolean; handleClose: () => void }> = ({ open, handleClose }) => {
     const classes = useStyles()
 
-    const links = getDownloadLinks("0.31.2")
-    const platforms = [
-        {
-            name: "Mac",
-            link: links.mac,
-            icon: <AppleSvg />,
-        },
-        {
-            name: "Windows",
-            link: links.win,
-            icon: <MicrosoftSvg />,
-        },
-        {
-            name: "Linux",
-            link: links.linux,
-            icon: <LinuxSvg />,
-        },
-    ]
+    const platforms = useMemo(() => {
+        const version = process.env.NEXT_PUBLIC_RINO_VERSION
+        return [
+            {
+                name: "Mac",
+                link: getDownloadLink("mac", version),
+                icon: <AppleSvg />,
+            },
+            {
+                name: "Windows",
+                link: getDownloadLink("win", version),
+                icon: <MicrosoftSvg />,
+            },
+            {
+                name: "Linux",
+                link: getDownloadLink("linux", version),
+                icon: <LinuxSvg />,
+            },
+        ]
+    }, [])
 
     return (
         <Dialog open={open} onClose={handleClose} aria-labelledby="download-dialog-title" aria-describedby="download-dialog-description">
