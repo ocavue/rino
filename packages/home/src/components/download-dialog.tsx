@@ -55,7 +55,7 @@ export const DownloadDialog: React.FC<{ open: boolean; handleClose: () => void }
     const classes = useStyles()
 
     const platforms = useMemo(() => {
-        const version = process.env.NEXT_PUBLIC_ELECTRON_VERSION
+        const version = process.env.NEXT_PUBLIC_RINO_VERSION
         return [
             {
                 name: "Mac",
