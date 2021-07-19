@@ -166,7 +166,7 @@
             "REACT_APP_TEST_PASSWORD": "${{ secrets.REACT_APP_TEST_PASSWORD }}",
             "REACT_APP_TESTING": 1
           },
-          "run": "ultra exec common build\nultra exec next build\n"
+          "run": "pnpm --filter @rino.app/common build\n"
         },
         {
           "name": "Run tests",

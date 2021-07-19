@@ -1,1 +1,1 @@
-export * from "./meta"
+export default {}
