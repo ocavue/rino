@@ -6,6 +6,8 @@ import React, { useMemo } from "react"
 import { getDownloadLink } from "./links"
 import { AppleSvg, LinuxSvg, MicrosoftSvg } from "./svgs"
 
+const VERSION = process.env.NEXT_PUBLIC_RINO_VERSION
+
 const useStyles = makeStyles((theme) =>
     createStyles({
         header: {
@@ -53,8 +55,6 @@ const useStyles = makeStyles((theme) =>
         },
     }),
 )
-
-const VERSION = process.env.NEXT_PUBLIC_RINO_VERSION
 
 export const DownloadDialog: React.FC<{ open: boolean; handleClose: () => void }> = ({ open, handleClose }) => {
     const classes = useStyles()
