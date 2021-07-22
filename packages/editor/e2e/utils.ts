@@ -1,13 +1,18 @@
 import os from "os"
-import { Dialog, ElementHandle } from "playwright"
+import { Dialog, ElementHandle } from "playwright-core"
 
 page.setDefaultTimeout(5000)
 
 const testidSelector = (testid: string) => `[data-testid="${testid}"]`
 
 type PageWaitForSelectorOptions = Parameters<typeof page.waitForSelector>[1]
+type PageWaitForSelectorOptionsNotHidden = PageWaitForSelectorOptions & {
+    state?: "visible" | "attached"
+}
 
-export async function wait(testid: string, options?: PageWaitForSelectorOptions) {
+export async function wait(testid: string, options?: PageWaitForSelectorOptionsNotHidden): Promise<ElementHandle<SVGElement | HTMLElement>>
+export async function wait(testid: string, options?: PageWaitForSelectorOptions): Promise<ElementHandle<SVGElement | HTMLElement> | null>
+export async function wait(testid: string, options?: PageWaitForSelectorOptions): Promise<ElementHandle<SVGElement | HTMLElement> | null> {
     if (options) {
         return page.waitForSelector(testidSelector(testid), options)
     } else {
@@ -88,22 +93,22 @@ export async function typeSourceCodeEditor(text: string, pressEnter = true) {
     return typeCodeMirror("source_code_mode_textarea", text, pressEnter)
 }
 
-export async function getOne(testid: string) {
+export async function getOne(testid: string): Promise<ElementHandle<SVGElement | HTMLElement> | null> {
     return await page.$(testidSelector(testid))
 }
 
-export async function mustGetOne(testid: string): Promise<ElementHandle<HTMLElement>> {
+export async function mustGetOne(testid: string): Promise<ElementHandle<SVGElement | HTMLElement>> {
     for (let i = 0; i < 3; i++) {
         const element = await getOne(testid)
         if (element) {
-            return element as ElementHandle<HTMLElement>
+            return element
         }
         await sleep(500)
     }
     throw new Error("failed to find element by testid " + JSON.stringify(testid))
 }
 
-export async function getAll(testid: string) {
+export async function getAll(testid: string): Promise<ElementHandle<SVGElement | HTMLElement>[]> {
     return await page.$$(testidSelector(testid))
 }
 

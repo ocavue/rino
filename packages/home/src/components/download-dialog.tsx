@@ -1,6 +1,6 @@
 import { Button, Dialog, DialogContent, DialogTitle, Hidden, IconButton, SvgIcon, Typography } from "@material-ui/core"
 import { createStyles, makeStyles } from "@material-ui/core/styles"
-import CloseIcon from "@material-ui/icons/Close"
+import { Close as CloseIcon } from "@material-ui/icons"
 import React, { useMemo } from "react"
 
 import { getDownloadLink } from "./links"

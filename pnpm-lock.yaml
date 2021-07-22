@@ -14,7 +14,7 @@ importers:
       eslint: ^7.31.0
       eslint-config-next: ^11.0.1
       eslint-config-prettier: ^8.3.0
-      eslint-plugin-jest: ^24.3.7
+      eslint-plugin-jest: ^24.4.0
       eslint-plugin-prettier: ^3.4.0
       eslint-plugin-react: ^7.24.0
       eslint-plugin-react-hooks: ^4.2.0
@@ -25,7 +25,8 @@ importers:
       jest-playwright-preset: ^1.7.0
       jest-transform-stub: ^2.0.0
       js-yaml: ^4.1.0
-      playwright: ^1.12.3
+      playwright-chromium: ^1.13.0
+      playwright-core: ^1.13.0
       prettier: ^2.3.2
       rimraf: ^3.0.2
       ts-jest: ^27.0.4
@@ -42,7 +43,7 @@ importers:
       eslint: 7.31.0
       eslint-config-next: 11.0.1_eslint@7.31.0+typescript@4.3.5
       eslint-config-prettier: 8.3.0_eslint@7.31.0
-      eslint-plugin-jest: 24.3.7_fc5326c9e782cff3be563ae5197052dc
+      eslint-plugin-jest: 24.4.0_fc5326c9e782cff3be563ae5197052dc
       eslint-plugin-prettier: 3.4.0_19f511d6aa08b367b6cb59e8f50291ca
       eslint-plugin-react: 7.24.0_eslint@7.31.0
       eslint-plugin-react-hooks: 4.2.0_eslint@7.31.0
@@ -53,7 +54,8 @@ importers:
       jest-playwright-preset: 1.7.0_jest@27.0.6
       jest-transform-stub: 2.0.0
       js-yaml: 4.1.0
-      playwright: 1.12.3
+      playwright-chromium: 1.13.0
+      playwright-core: 1.13.0
       prettier: 2.3.2
       rimraf: 3.0.2
       ts-jest: 27.0.4_52cc4273aa16028085013af47e479e10
@@ -3326,24 +3328,6 @@ packages:
       - supports-color
     dev: true
 
-  /@typescript-eslint/experimental-utils/4.28.3_eslint@7.31.0+typescript@4.3.5:
-    resolution: {integrity: sha512-zZYl9TnrxwEPi3FbyeX0ZnE8Hp7j3OCR+ELoUfbwGHGxWnHg9+OqSmkw2MoCVpZksPCZYpQzC559Ee9pJNHTQw==}
-    engines: {node: ^10.12.0 || >=12.0.0}
-    peerDependencies:
-      eslint: '*'
-    dependencies:
-      '@types/json-schema': 7.0.8
-      '@typescript-eslint/scope-manager': 4.28.3
-      '@typescript-eslint/types': 4.28.3
-      '@typescript-eslint/typescript-estree': 4.28.3_typescript@4.3.5
-      eslint: 7.31.0
-      eslint-scope: 5.1.1
-      eslint-utils: 3.0.0_eslint@7.31.0
-    transitivePeerDependencies:
-      - supports-color
-      - typescript
-    dev: true
-
   /@typescript-eslint/experimental-utils/4.28.4_eslint@7.31.0+typescript@4.3.5:
     resolution: {integrity: sha512-OglKWOQRWTCoqMSy6pm/kpinEIgdcXYceIcH3EKWUl4S8xhFtN34GQRaAvTIZB9DD94rW7d/U7tUg3SYeDFNHA==}
     engines: {node: ^10.12.0 || >=12.0.0}
@@ -5862,8 +5846,8 @@ packages:
       tsconfig-paths: 3.10.1
     dev: true
 
-  /eslint-plugin-jest/24.3.7_fc5326c9e782cff3be563ae5197052dc:
-    resolution: {integrity: sha512-pXED2NA4q2M/5mxlN6GyuUXAFJndT0uosOkQCHaUED9pqgBPd89ZzpcZEU6c5HtZNahC00M36FkwLdDHMDqaHw==}
+  /eslint-plugin-jest/24.4.0_fc5326c9e782cff3be563ae5197052dc:
+    resolution: {integrity: sha512-8qnt/hgtZ94E9dA6viqfViKBfkJwFHXgJmTWlMGDgunw1XJEGqm3eiPjDsTanM3/u/3Az82nyQM9GX7PM/QGmg==}
     engines: {node: '>=10'}
     peerDependencies:
       '@typescript-eslint/eslint-plugin': '>= 4'
@@ -5873,7 +5857,7 @@ packages:
         optional: true
     dependencies:
       '@typescript-eslint/eslint-plugin': 4.28.4_b1648df9f9ba40bdeef3710a5a5af353
-      '@typescript-eslint/experimental-utils': 4.28.3_eslint@7.31.0+typescript@4.3.5
+      '@typescript-eslint/experimental-utils': 4.28.4_eslint@7.31.0+typescript@4.3.5
       eslint: 7.31.0
     transitivePeerDependencies:
       - supports-color
@@ -7984,7 +7968,7 @@ packages:
       jest: 27.0.6
       jest-process-manager: 0.3.1
       nyc: 15.1.0
-      playwright-core: 1.12.3
+      playwright-core: 1.13.0
       rimraf: 3.0.2
       uuid: 8.3.2
     transitivePeerDependencies:
@@ -8442,6 +8426,7 @@ packages:
       chalk: 2.4.2
       diff-match-patch: 1.0.5
     dev: false
+    bundledDependencies: []
 
   /jsonfile/4.0.0:
     resolution: {integrity: sha1-h3Gq4HmbZAdrdmQPygWPnBDjPss=}
@@ -10116,8 +10101,8 @@ packages:
   /platform/1.3.6:
     resolution: {integrity: sha512-fnWVljUchTro6RiCFvCXBbNhJc2NijN7oIQxbwsyL0buWJPG85v81ehlHI9fXrJsMNgTofEoWIQeClKpgxFLrg==}
 
-  /playwright-core/1.12.3:
-    resolution: {integrity: sha512-7uCxloOH4JRVTdJa+PH0Lp+GqWHL7WjQwMT77TtGtBblgoVFuY7ZzVzXgAXtV0rfqq5xUvwaxFBS36fkgT2bNw==}
+  /playwright-chromium/1.13.0:
+    resolution: {integrity: sha512-Y1vB1eZZsH/LRdulLYWF1+1lo0TRJ3DkGoMO+QMBEs1Gh0pIoGRTcG25WHIE7z9dGfLaSpkfE11mf2vqU6LLKA==}
     engines: {node: '>=12'}
     hasBin: true
     requiresBuild: true
@@ -10142,8 +10127,8 @@ packages:
       - utf-8-validate
     dev: true
 
-  /playwright/1.12.3:
-    resolution: {integrity: sha512-eyhHvZV7dMAUltqjQsgJ9CjZM8dznzN1+rcfCI6W6lfQ7IlPvTFGLuKOCcI4ETbjfbxqaS5FKIkb1WDDzq2Nww==}
+  /playwright-core/1.13.0:
+    resolution: {integrity: sha512-4XquXr064AkVREZjl1IbQ66WAgUirOJKAutTP123M3Eg2n7HyIkz09QIq1itfmAdfavMXAM4Q5/kAdvv/xReKw==}
     engines: {node: '>=12'}
     hasBin: true
     requiresBuild: true
