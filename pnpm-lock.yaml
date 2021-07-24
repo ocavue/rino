@@ -191,8 +191,6 @@ importers:
 
   packages/electron:
     specifiers:
-      '@rino.app/electron-main': workspace:0.0.0
-      '@rino.app/electron-preload': workspace:0.0.0
       electron: 13.1.7
       electron-builder: ^22.11.7
       electron-log: ^4.4.0
@@ -200,8 +198,6 @@ importers:
       electron-updater: ^4.3.9
       wait-on: ^6.0.0
     dependencies:
-      '@rino.app/electron-main': link:../electron-main
-      '@rino.app/electron-preload': link:../electron-preload
       electron-log: 4.4.0
       electron-updater: 4.3.9
     devDependencies:

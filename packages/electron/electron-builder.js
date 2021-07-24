@@ -43,6 +43,13 @@ const config = {
     fileAssociations: {
         ext: "md",
     },
+
+    publish: {
+        // GitHub repository information is required for generating `latest.yml`
+        provider: "github",
+        owner: "ocavue",
+        repo: "rino",
+    },
 }
 
 module.exports = config

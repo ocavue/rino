@@ -7,6 +7,7 @@
     "description": "A better way to write Markdown",
     "scripts": {
         "dev": "build/copy-dist.sh && wait-on --timeout 60000 tcp:3004 && NODE_ENV=development electron .",
+        "build": "build/copy-dist.sh && electron-builder -p never",
         "build:dir": "build/copy-dist.sh && electron-builder -p never --dir",
         "build:all": "build/copy-dist.sh && electron-builder -p never --mac --win --linux"
     },
@@ -17,8 +18,6 @@
         "wait-on": "^6.0.0"
     },
     "dependencies": {
-        "@rino.app/electron-main": "workspace:0.0.0",
-        "@rino.app/electron-preload": "workspace:0.0.0",
         "electron-log": "^4.4.0",
         "electron-updater": "^4.3.9"
     }
