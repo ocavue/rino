@@ -3,7 +3,7 @@
 set -e
 
 # Go to the root of the project
-cd $(dirname $0)/../../..
+cd $(dirname $0)/../..
 ROOT=${PWD}
 
 function build_dist {
@@ -36,6 +36,6 @@ build_dist electron-preload
 build_dist electron-main
 
 # Keep the relative paths between packages the same during both development and production
-lnsf packages/electron-renderer/dist packages/electron/assets/electron-renderer/dist
-lnsf packages/electron-preload/dist packages/electron/assets/electron-preload/dist
-lnsf packages/electron-main/dist packages/electron/assets/electron-main/dist
+lnsf packages/electron-renderer/dist packages/electron/build/electron-renderer/dist
+lnsf packages/electron-preload/dist packages/electron/build/electron-preload/dist
+lnsf packages/electron-main/dist packages/electron/build/electron-main/dist
