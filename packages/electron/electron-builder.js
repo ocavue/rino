@@ -17,6 +17,7 @@ const config = {
     extraMetadata: {
         name: "Rino",
     },
+    // skip notarization in local development
     afterSign: isCI ? "build/notarize.js" : undefined,
 
     asar: isCI,
@@ -32,7 +33,7 @@ const config = {
             { target: "dmg", arch: macArch },
         ],
 
-        // skip signing in development mode
+        // skip signing in local development
         identity: isCI ? undefined : null,
 
         // https://kilianvalkhof.com/2019/electron/notarizing-your-electron-application/
