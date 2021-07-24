@@ -96,9 +96,13 @@ jobs:
           echo "$pkgjson" > ./packages/electron/package.json
           cat ./packages/electron/package.json
 
+      - name: Build dependencies
+        run: |
+          pnpm --filter '@rino.app/electron-*' build
+
       - name: Build electron
         run: |
-          ultra exec electron build:all
+          pnpm --filter '@rino.app/electron' build:all
         env:
           ELECTRON_APPLE_ID_NAME: ${{ secrets.ELECTRON_APPLE_ID_NAME }}
           ELECTRON_APPLE_ID: ${{ secrets.ELECTRON_APPLE_ID }}
@@ -124,6 +128,13 @@ jobs:
         with:
           name: electron_dist
           path: ./packages/electron/dist
+
+      - name: Upload dist (electron dmg)
+        uses: actions/upload-artifact@v2
+        if: "contains(github.event.head_commit.message, 'UPLOAD_DMG')"
+        with:
+          name: electron_dist_dmg
+          path: ./packages/electron/dist/*.dmg
 
   test:
     runs-on: ubuntu-latest

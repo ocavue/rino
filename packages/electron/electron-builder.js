@@ -13,11 +13,12 @@ const config = {
         output: "dist",
         buildResources: "resources",
     },
-    files: ["main/dist/**", "preload/dist/**", "renderer/dist/**"],
+    files: ["assets/"],
     extraMetadata: {
         name: "Rino",
     },
-    afterSign: "build/notarize.js",
+    // skip notarization in local development
+    afterSign: isCI ? "build/notarize.js" : undefined,
 
     asar: isCI,
 
@@ -31,6 +32,9 @@ const config = {
             { target: "zip", arch: macArch },
             { target: "dmg", arch: macArch },
         ],
+
+        // skip signing in local development
+        identity: isCI ? undefined : null,
 
         // https://kilianvalkhof.com/2019/electron/notarizing-your-electron-application/
         entitlements: "build/entitlements.mac.plist",

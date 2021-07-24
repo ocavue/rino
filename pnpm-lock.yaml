@@ -191,46 +191,83 @@ importers:
 
   packages/electron:
     specifiers:
-      '@rino.app/common': workspace:0.0.0
-      '@rino.app/editor': workspace:0.0.0
-      '@types/react': ^17.0.15
-      '@types/react-dom': ^17.0.9
-      '@vitejs/plugin-react-refresh': ^1.3.5
-      cross-env: ^7.0.3
+      '@rino.app/electron-main': workspace:0.0.0
+      '@rino.app/electron-preload': workspace:0.0.0
       electron: 13.1.7
       electron-builder: ^22.11.7
       electron-log: ^4.4.0
       electron-notarize: ^1.0.0
       electron-updater: ^4.3.9
-      lodash-es: ^4.17.21
-      npm-run-all: ^4.1.5
+      wait-on: ^6.0.0
+    dependencies:
+      '@rino.app/electron-main': link:../electron-main
+      '@rino.app/electron-preload': link:../electron-preload
+      electron-log: 4.4.0
+      electron-updater: 4.3.9
+    devDependencies:
+      electron: 13.1.7
+      electron-builder: 22.11.7
+      electron-notarize: 1.0.0
+      wait-on: 6.0.0
+
+  packages/electron-main:
+    specifiers:
+      '@rino.app/electron-types': workspace:0.0.0
+      electron: 13.1.7
+      electron-log: ^4.4.0
+      electron-updater: ^4.3.9
+      typescript: ^4.3.5
+    dependencies:
+      electron-log: 4.4.0
+      electron-updater: 4.3.9
+    devDependencies:
+      '@rino.app/electron-types': link:../electron-types
+      electron: 13.1.7
+      typescript: 4.3.5
+
+  packages/electron-preload:
+    specifiers:
+      '@rino.app/electron-types': workspace:0.0.0
+      electron: 13.1.7
+      typescript: ^4.3.5
+    devDependencies:
+      '@rino.app/electron-types': link:../electron-types
+      electron: 13.1.7
+      typescript: 4.3.5
+
+  packages/electron-renderer:
+    specifiers:
+      '@rino.app/common': workspace:0.0.0
+      '@rino.app/editor': workspace:0.0.0
+      '@rino.app/electron-types': workspace:0.0.0
+      '@types/react': ^17.0.15
+      '@types/react-dom': ^17.0.9
+      '@vitejs/plugin-react-refresh': ^1.3.5
+      electron: 13.1.7
       react: ^17.0.2
       react-dom: ^17.0.2
       typescript: ^4.3.5
       unstated-next: ^1.1.0
       vite: ^2.4.3
-      wait-on: ^6.0.0
-    dependencies:
-      electron-log: 4.4.0
-      electron-updater: 4.3.9
     devDependencies:
       '@rino.app/common': link:../common
       '@rino.app/editor': link:../editor
+      '@rino.app/electron-types': link:../electron-types
       '@types/react': 17.0.15
       '@types/react-dom': 17.0.9
       '@vitejs/plugin-react-refresh': 1.3.5
-      cross-env: 7.0.3
       electron: 13.1.7
-      electron-builder: 22.11.7
-      electron-notarize: 1.0.0
-      lodash-es: 4.17.21
-      npm-run-all: 4.1.5
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
       typescript: 4.3.5
       unstated-next: 1.1.0
       vite: 2.4.3
-      wait-on: 6.0.0
+
+  packages/electron-types:
+    specifiers:
+      electron: 13.1.7
+    devDependencies:
+      electron: 13.1.7
 
   packages/home:
     specifiers:
@@ -4733,29 +4770,10 @@ packages:
       react: 17.0.2
     dev: false
 
-  /cross-env/7.0.3:
-    resolution: {integrity: sha512-+/HKd6EgcQCJGh2PSjZuUitQBQynKor4wrFbRg4DtAgS1aWO+gU52xpH7M9ScGgXSYmAVS9bIJ8EzuaGw0oNAw==}
-    engines: {node: '>=10.14', npm: '>=6', yarn: '>=1'}
-    hasBin: true
-    dependencies:
-      cross-spawn: 7.0.3
-    dev: true
-
   /cross-spawn/5.1.0:
     resolution: {integrity: sha1-6L0O/uWPz/b4+UUQoKVUu/ojVEk=}
     dependencies:
       lru-cache: 4.1.5
-      shebang-command: 1.2.0
-      which: 1.3.1
-    dev: true
-
-  /cross-spawn/6.0.5:
-    resolution: {integrity: sha512-eTVLrBSt7fjbDygz805pMnstIs2VTBNkRm0qxZd+M7A5XDdxVRWO5MxGBXZhjY4cqLYLdtrGqRf8mBPmzwSpWQ==}
-    engines: {node: '>=4.8'}
-    dependencies:
-      nice-try: 1.0.5
-      path-key: 2.0.1
-      semver: 5.7.1
       shebang-command: 1.2.0
       which: 1.3.1
     dev: true
@@ -8228,6 +8246,7 @@ packages:
       chalk: 2.4.2
       diff-match-patch: 1.0.5
     dev: false
+    bundledDependencies: []
 
   /jsonfile/4.0.0:
     resolution: {integrity: sha1-h3Gq4HmbZAdrdmQPygWPnBDjPss=}
@@ -8728,11 +8747,6 @@ packages:
   /media-typer/0.3.0:
     resolution: {integrity: sha1-hxDXrwqmJvj/+hzgAWhUUmMlV0g=}
     engines: {node: '>= 0.6'}
-    dev: true
-
-  /memorystream/0.3.1:
-    resolution: {integrity: sha1-htcJCzDORV1j+64S3aUaR93K+bI=}
-    engines: {node: '>= 0.10.0'}
     dev: true
 
   /merge-descriptors/1.0.1:
@@ -9250,10 +9264,6 @@ packages:
       - typescript
       - webpack
 
-  /nice-try/1.0.5:
-    resolution: {integrity: sha512-1nh45deeb5olNY7eX82BkPO7SSxR5SSYJiPTrTdFUVYwAl8CKMA5N9PjTYkHiRjisVcxcQ1HXdLhx2qxxJzLNQ==}
-    dev: true
-
   /node-abi/2.30.0:
     resolution: {integrity: sha512-g6bZh3YCKQRdwuO/tSZZYJAw622SjsRfJ2X0Iy4sSOHZ34/sPPdVBn8fev2tj7njzLwuqPw9uMtGsGkO5kIQvg==}
     dependencies:
@@ -9350,22 +9360,6 @@ packages:
       pify: 3.0.0
     dev: true
     optional: true
-
-  /npm-run-all/4.1.5:
-    resolution: {integrity: sha512-Oo82gJDAVcaMdi3nuoKFavkIHBRVqQ1qvMb+9LHk/cF4P6B2m8aP04hGf7oL6wZ9BuGwX1onlLhpuoofSyoQDQ==}
-    engines: {node: '>= 4'}
-    hasBin: true
-    dependencies:
-      ansi-styles: 3.2.1
-      chalk: 2.4.2
-      cross-spawn: 6.0.5
-      memorystream: 0.3.1
-      minimatch: 3.0.4
-      pidtree: 0.3.1
-      read-pkg: 3.0.0
-      shell-quote: 1.7.2
-      string.prototype.padend: 3.1.2
-    dev: true
 
   /npm-run-path/2.0.2:
     resolution: {integrity: sha1-NakjLfo11wZ7TLLd8jV7GHFTbF8=}
@@ -9852,12 +9846,6 @@ packages:
 
   /pid-cwd/1.2.0:
     resolution: {integrity: sha512-8QQzIdBmy4bd2l1NKWON1X8flO5TQQRzU2uRDua/XaxSC0iJ+rgbDrlX76t0W3DaJ7OevTYpftyvQ6oMe3hclQ==}
-    dev: true
-
-  /pidtree/0.3.1:
-    resolution: {integrity: sha512-qQbW94hLHEqCg7nhby4yRC7G2+jYHY4Rguc2bjw7Uug4GIJuu1tvf2uHaZv5Q8zdt+WKJ6qK1FOI6amaWUo5FA==}
-    engines: {node: '>=0.10'}
-    hasBin: true
     dev: true
 
   /pify/3.0.0:
@@ -11657,15 +11645,6 @@ packages:
       internal-slot: 1.0.3
       regexp.prototype.flags: 1.3.1
       side-channel: 1.0.4
-    dev: true
-
-  /string.prototype.padend/3.1.2:
-    resolution: {integrity: sha512-/AQFLdYvePENU3W5rgurfWSMU6n+Ww8n/3cUt7E+vPBB/D7YDG8x+qjoFs4M/alR2bW7Qg6xMjVwWUOvuQ0XpQ==}
-    engines: {node: '>= 0.4'}
-    dependencies:
-      call-bind: 1.0.2
-      define-properties: 1.1.3
-      es-abstract: 1.18.3
     dev: true
 
   /string.prototype.trimend/1.0.4:
