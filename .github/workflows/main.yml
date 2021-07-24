@@ -100,8 +100,12 @@
           "run": "version=$(cat version.txt)\npkgjson=$(jq \".version = \\\"$version\\\"\" ./packages/electron/package.json)\necho \"$pkgjson\" > ./packages/electron/package.json\ncat ./packages/electron/package.json\n"
         },
         {
+          "name": "Build dependencies",
+          "run": "pnpm --filter '@rino.app/electron-*' build\n"
+        },
+        {
           "name": "Build electron",
-          "run": "ultra exec electron build:all\n",
+          "run": "pnpm --filter '@rino.app/electron' build\n",
           "env": {
             "ELECTRON_APPLE_ID_NAME": "${{ secrets.ELECTRON_APPLE_ID_NAME }}",
             "ELECTRON_APPLE_ID": "${{ secrets.ELECTRON_APPLE_ID }}",
