@@ -1,5 +1,5 @@
 import os from "os"
-import { Dialog, ElementHandle } from "playwright-core"
+import { Dialog, ElementHandle } from "playwright-chromium"
 
 page.setDefaultTimeout(5000)
 
