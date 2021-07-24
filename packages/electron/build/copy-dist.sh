@@ -4,30 +4,36 @@ set -e
 
 # Go to the root of the project
 cd $(dirname $0)/../../..
+ROOT=${PWD}
 
-if [ "$1" == "--prod" ]; then
-    MUST_EXIST=true
-else
-    MUST_EXIST=false
-fi
+function build_dist {
+    package="$1"
+    cd ${ROOT}/packages/${package}
+    if [ ! -d "./dist" ]; then
+        echo "building ${PWD}"
+        pnpm build
+    fi
+}
 
 function lnsf {
-    source_dir="$(pwd)/$1"
-    target_dir="$(pwd)/$2"
+    source_dir="$ROOT/$1"
+    target_dir="$ROOT/$2"
 
     # clean the target
     mkdir -p $(dirname $target_dir)
     rm -rf $target_dir || true
 
-    if [ "$MUST_EXIST" = true ]; then
-        # make sure $source_dir exists
-        ls $source_dir > /dev/null
-    fi
+    # make sure $source_dir exists
+    ls $source_dir > /dev/null
 
     ln -sf $source_dir $target_dir
 
     echo -e "${source_dir} <- ${target_dir}"
 }
+
+build_dist electron-renderer
+build_dist electron-preload
+build_dist electron-main
 
 # Keep the relative paths between packages the same during both development and production
 lnsf packages/electron-renderer/dist packages/electron/assets/electron-renderer/dist
