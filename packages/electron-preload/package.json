@@ -1,0 +1,14 @@
+{
+    "name": "@rino.app/electron-preload",
+    "version": "0.0.0",
+    "private": true,
+    "scripts": {
+        "dev": "tsc --build --watch ./src/tsconfig.json",
+        "build": "tsc --build ./src/tsconfig.json"
+    },
+    "devDependencies": {
+        "@rino.app/electron-types": "workspace:0.0.0",
+        "electron": "13.1.7",
+        "typescript": "^4.3.5"
+    }
+}

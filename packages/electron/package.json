@@ -2,21 +2,13 @@
     "name": "@rino.app/electron",
     "version": "0.0.0",
     "private": true,
-    "main": "./main/dist/main.js",
+    "main": "./assets/electron-main/dist/main.js",
     "author": "ocavue",
     "description": "A better way to write Markdown",
     "scripts": {
-        "dev": "run-p dev:main dev:preload dev:electron",
-        "dev:main": "tsc --build --watch ./main/tsconfig.json",
-        "dev:preload": "tsc --build --watch ./preload/tsconfig.json",
-        "dev:electron": "wait-on --timeout 60000 tcp:3004 && wait-on --timeout 60000 ./main/dist/main.js && wait-on --timeout 60000 ./preload/dist/index.js && NODE_ENV=development electron .",
-        "build": "run-s -l -n build:main build:preload build:electron:dir",
-        "build:all": "run-s -l -n build:main build:preload build:electron:all",
-        "build:main": "tsc --build ./main/tsconfig.json",
-        "build:preload": "tsc --build ./preload/tsconfig.json",
-        "build:electron": "electron-builder -p never",
-        "build:electron:dir": "electron-builder -p never --dir",
-        "build:electron:all": "electron-builder -p never --mac --win --linux"
+        "dev:electron": "build/copy-dist.sh && wait-on --timeout 60000 tcp:3004 && NODE_ENV=development electron .",
+        "build:electron:dir": "build/copy-dist.sh && electron-builder -p never --dir",
+        "build:electron:all": "build/copy-dist.sh && electron-builder -p never --mac --win --linux"
     },
     "devDependencies": {
         "@rino.app/common": "workspace:0.0.0",

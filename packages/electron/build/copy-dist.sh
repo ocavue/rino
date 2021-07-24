@@ -10,8 +10,8 @@ function lnsf {
     target_dir="$(pwd)/$2"
 
     # clean the target
-    mkdir -p $target_dir
-    rm -rf $target_dir
+    mkdir -p $(dirname $target_dir)
+    rm -rf $target_dir || true
 
     mkdir -p $source_dir
     ln -sf $source_dir $target_dir
@@ -19,4 +19,7 @@ function lnsf {
     echo -e "${source_dir} <- ${target_dir}"
 }
 
-lnsf packages/electron-renderer/dist/ packages/electron/assets/renderer
+# Keep the relative paths between packages the same during both development and production
+lnsf packages/electron-renderer/dist packages/electron/assets/electron-renderer/dist
+lnsf packages/electron-preload/dist packages/electron/assets/electron-preload/dist
+lnsf packages/electron-main/dist packages/electron/assets/electron-main/dist

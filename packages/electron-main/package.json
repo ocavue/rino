@@ -1,0 +1,18 @@
+{
+    "name": "@rino.app/electron-main",
+    "version": "0.0.0",
+    "private": true,
+    "scripts": {
+        "dev": "tsc --build --watch ./src/tsconfig.json",
+        "build": "tsc --build ./src/tsconfig.json"
+    },
+    "dependencies": {
+        "electron-log": "^4.4.0",
+        "electron-updater": "^4.3.9"
+    },
+    "devDependencies": {
+        "@rino.app/electron-types": "workspace:0.0.0",
+        "electron": "13.1.7",
+        "typescript": "^4.3.5"
+    }
+}

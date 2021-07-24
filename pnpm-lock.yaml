@@ -236,6 +236,31 @@ importers:
       vite: 2.4.3
       wait-on: 6.0.0
 
+  packages/electron-main:
+    specifiers:
+      '@rino.app/electron-types': workspace:0.0.0
+      electron: 13.1.7
+      electron-log: ^4.4.0
+      electron-updater: ^4.3.9
+      typescript: ^4.3.5
+    dependencies:
+      electron-log: 4.4.0
+      electron-updater: 4.3.9
+    devDependencies:
+      '@rino.app/electron-types': link:../electron-types
+      electron: 13.1.7
+      typescript: 4.3.5
+
+  packages/electron-preload:
+    specifiers:
+      '@rino.app/electron-types': workspace:0.0.0
+      electron: 13.1.7
+      typescript: ^4.3.5
+    devDependencies:
+      '@rino.app/electron-types': link:../electron-types
+      electron: 13.1.7
+      typescript: 4.3.5
+
   packages/electron-renderer:
     specifiers:
       '@rino.app/common': workspace:0.0.0

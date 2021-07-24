@@ -20,12 +20,15 @@ export async function createWindow() {
             y = currentWindowY + 32
         }
 
+        const preloadEntry = join(__dirname, "../../electron-preload/dist/index.js")
+        const rendererEntry = join(__dirname, "../../electron-renderer/dist/index.html")
+
         const newWindow = new BrowserWindow({
             x,
             y,
             show: false,
             webPreferences: {
-                preload: join(__dirname, "../../preload/dist/index.js"),
+                preload: preloadEntry,
             },
         })
 
@@ -48,7 +51,7 @@ export async function createWindow() {
          * Vite dev server for development.
          * Local files for production and test
          */
-        const pageUrl = env.IS_DEV ? "http://localhost:3004" : new URL("../assets/renderer/index.html", "file://" + __dirname).toString()
+        const pageUrl = env.IS_DEV ? "http://localhost:3004" : new URL(rendererEntry, "file://").toString()
         logger.info(`loading ${pageUrl}`)
 
         await newWindow.loadURL(pageUrl)
