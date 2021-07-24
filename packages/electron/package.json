@@ -2,14 +2,14 @@
     "name": "@rino.app/electron",
     "version": "0.0.0",
     "private": true,
-    "main": "./assets/electron-main/dist/main.js",
+    "main": "./build/electron-main/dist/main.js",
     "author": "ocavue",
     "description": "A better way to write Markdown",
     "scripts": {
-        "dev": "build/copy-dist.sh && wait-on --timeout 60000 tcp:3004 && NODE_ENV=development electron .",
-        "build": "build/copy-dist.sh && electron-builder -p never",
-        "build:dir": "build/copy-dist.sh && electron-builder -p never --dir",
-        "build:all": "build/copy-dist.sh && electron-builder -p never --mac --win --linux"
+        "dev": "./setup.sh && wait-on --timeout 60000 tcp:3004 && NODE_ENV=development electron .",
+        "build": "./setup.sh && electron-builder -p never",
+        "build:dir": "./setup.sh && electron-builder -p never --dir",
+        "build:all": "./setup.sh && electron-builder -p never --mac --win --linux"
     },
     "devDependencies": {
         "electron": "13.1.7",
