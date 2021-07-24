@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.32.0](https://www.github.com/ocavue/rino/compare/v0.31.2...v0.32.0) (2021-07-24)
+
+
+### Features
+
+* **home:** improve download buttons ([#720](https://www.github.com/ocavue/rino/issues/720)) ([d098c13](https://www.github.com/ocavue/rino/commit/d098c13a1ec96549041656d389458edb5f6536a8))
+* **home:** show the latest version number  ([#726](https://www.github.com/ocavue/rino/issues/726)) ([a58ee1b](https://www.github.com/ocavue/rino/commit/a58ee1b4b1348d96d36f9605698d15cba582095a))
+
 ### [0.31.2](https://www.github.com/ocavue/rino/compare/v0.31.1...v0.31.2) (2021-07-12)
 
 
