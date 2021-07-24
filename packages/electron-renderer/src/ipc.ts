@@ -1,6 +1,6 @@
 import { useEffect } from "react"
 
-import type { InvokeRendererAPI, PreloadIpcRenderer } from "../types/api"
+import type { InvokeRendererAPI, PreloadIpcRenderer } from "@rino.app/electron-types"
 
 // @ts-expect-error `window` doesn't have `electronIpcRenderer`
 const ipcRenderer: PreloadIpcRenderer = window["electronIpcRenderer"]

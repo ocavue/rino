@@ -4,7 +4,7 @@ import { defineConfig } from "vite"
 // https://vitejs.dev/config/
 export default defineConfig((env) => ({
     base: "",
-    cacheDir: ".cache/vite",
+    outDir: "../dist",
     plugins: [reactRefresh()],
     server: {
         port: 3004,

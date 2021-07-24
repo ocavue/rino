@@ -1,6 +1,6 @@
 import { contextBridge, ipcRenderer, IpcRendererEvent } from "electron"
 
-import { PreloadIpcRenderer } from "../types/api"
+import { PreloadIpcRenderer } from "@rino.app/electron-types"
 
 const electronIpcRenderer: PreloadIpcRenderer = {
     invoke: async (channel: string, ...params: Array<any>) => {

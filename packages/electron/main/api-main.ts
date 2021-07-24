@@ -1,6 +1,7 @@
 import { BrowserWindow, ipcMain } from "electron"
 
-import { InvokeMainAPI } from "../types/api"
+import { InvokeMainAPI } from "@rino.app/electron-types"
+
 import { askMarkdownFileForOpen, askMarkdownFileForSave, openFile, saveFile } from "./file"
 import { createWindow } from "./window"
 
