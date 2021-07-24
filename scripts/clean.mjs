@@ -16,7 +16,7 @@ async function clean(dir) {
             continue
         } else if (TO_CLEAN.includes(d.name)) {
             console.log(`deleting ${entry}`)
-            fs.rm(entry, { recursive: true })
+            fs.rm(entry, { recursive: true, force: true })
             cleanNumber += 1
         } else if (d.isDirectory()) {
             cleanNumber += await clean(entry)

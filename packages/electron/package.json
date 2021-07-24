@@ -6,9 +6,9 @@
     "author": "ocavue",
     "description": "A better way to write Markdown",
     "scripts": {
-        "dev:electron": "build/copy-dist.sh && wait-on --timeout 60000 tcp:3004 && NODE_ENV=development electron .",
-        "build:electron:dir": "build/copy-dist.sh && electron-builder -p never --dir",
-        "build:electron:all": "build/copy-dist.sh && electron-builder -p never --mac --win --linux"
+        "dev": "build/copy-dist.sh && wait-on --timeout 60000 tcp:3004 && NODE_ENV=development electron .",
+        "build:electron:dir": "build/copy-dist.sh --prod && electron-builder -p never --dir",
+        "build:electron:all": "build/copy-dist.sh --prod && electron-builder -p never --mac --win --linux"
     },
     "devDependencies": {
         "@rino.app/common": "workspace:0.0.0",

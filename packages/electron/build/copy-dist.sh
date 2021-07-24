@@ -5,6 +5,12 @@ set -e
 # Go to the root of the project
 cd $(dirname $0)/../../..
 
+if [ "$1" == "--prod" ]; then
+    MUST_EXIST=true
+else
+    MUST_EXIST=false
+fi
+
 function lnsf {
     source_dir="$(pwd)/$1"
     target_dir="$(pwd)/$2"
@@ -13,7 +19,11 @@ function lnsf {
     mkdir -p $(dirname $target_dir)
     rm -rf $target_dir || true
 
-    mkdir -p $source_dir
+    if [ "$MUST_EXIST" = true ]; then
+        # make sure $source_dir exists
+        ls $source_dir > /dev/null
+    fi
+
     ln -sf $source_dir $target_dir
 
     echo -e "${source_dir} <- ${target_dir}"
