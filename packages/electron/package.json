@@ -7,8 +7,8 @@
     "description": "A better way to write Markdown",
     "scripts": {
         "dev": "build/copy-dist.sh && wait-on --timeout 60000 tcp:3004 && NODE_ENV=development electron .",
-        "build:electron:dir": "build/copy-dist.sh --prod && electron-builder -p never --dir",
-        "build:electron:all": "build/copy-dist.sh --prod && electron-builder -p never --mac --win --linux"
+        "build:dir": "build/copy-dist.sh --prod && electron-builder -p never --dir",
+        "build:all": "build/copy-dist.sh --prod && electron-builder -p never --mac --win --linux"
     },
     "devDependencies": {
         "electron": "13.1.7",

@@ -102,7 +102,7 @@ jobs:
 
       - name: Build electron
         run: |
-          pnpm --filter '@rino.app/electron' build
+          pnpm --filter '@rino.app/electron' build:all
         env:
           ELECTRON_APPLE_ID_NAME: ${{ secrets.ELECTRON_APPLE_ID_NAME }}
           ELECTRON_APPLE_ID: ${{ secrets.ELECTRON_APPLE_ID }}

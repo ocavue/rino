@@ -105,7 +105,7 @@
         },
         {
           "name": "Build electron",
-          "run": "pnpm --filter '@rino.app/electron' build\n",
+          "run": "pnpm --filter '@rino.app/electron' build:all\n",
           "env": {
             "ELECTRON_APPLE_ID_NAME": "${{ secrets.ELECTRON_APPLE_ID_NAME }}",
             "ELECTRON_APPLE_ID": "${{ secrets.ELECTRON_APPLE_ID }}",
