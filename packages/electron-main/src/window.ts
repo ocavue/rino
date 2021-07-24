@@ -49,7 +49,7 @@ export async function createWindow() {
         /**
          * URL for main window.
          * Vite dev server for development.
-         * Local files for production and test
+         * Local files for production.
          */
         const pageUrl = env.IS_DEV ? "http://localhost:3004" : new URL(rendererEntry, "file://").toString()
         logger.info(`loading ${pageUrl}`)
