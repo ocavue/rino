@@ -3,7 +3,7 @@
     "version": "0.0.0",
     "private": true,
     "scripts": {
-        "update-deps": "pnpm -r update --depth Infinity",
+        "update-deps": "pnpm -r update --depth Infinity --ignore-scripts",
         "lint": "eslint --ignore-path .gitignore --ext '.js,.jsx,.ts,.tsx'",
         "test": "NODE_OPTIONS=--experimental-vm-modules jest --runInBand",
         "postinstall": "./scripts/post-install.sh && husky install",

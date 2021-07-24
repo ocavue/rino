@@ -10,7 +10,7 @@ env:
 
 jobs:
   build_website:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
     steps:
       - &step_checkout
         name: Checkout code repository
@@ -126,7 +126,7 @@ jobs:
           path: ./packages/electron/dist
 
   test:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
     steps:
       - *step_checkout
       - *step_setup_node
@@ -156,7 +156,7 @@ jobs:
           fail_ci_if_error: false # Specify if CI pipeline should fail when Codecov runs into errors during upload. Defaults to false
 
   lint:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
     steps:
       - *step_checkout
       - *step_setup_node
@@ -178,7 +178,7 @@ jobs:
           if [ "$hash1" != "$hash2" ]; then exit 1; fi
 
   preview: # Preview deployment
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
     steps:
       - *step_checkout
       - *step_setup_node
@@ -239,7 +239,7 @@ jobs:
         if: steps.step_vercel.outcome == 'success'
 
   release:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
     needs:
       - build_website
       - build_electron
@@ -259,7 +259,7 @@ jobs:
       tag_name: ${{ steps.step_release_please.outputs.tag_name }}
 
   deploy: # Production deployment
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
     needs:
       - release
     steps:
