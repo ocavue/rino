@@ -1,3 +1,5 @@
+// @ts-check
+
 import { defineConfig } from "vite"
 
 // https://vitejs.dev/config/

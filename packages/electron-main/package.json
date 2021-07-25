@@ -3,8 +3,8 @@
     "version": "0.0.0",
     "private": true,
     "scripts": {
-        "dev": "tsc --build --watch ./src/tsconfig.json",
-        "build": "tsc --build ./src/tsconfig.json"
+        "dev": "tsc --build ./src/tsconfig.json && vite build ./src --watch",
+        "build": "tsc --build ./src/tsconfig.json && vite build ./src"
     },
     "dependencies": {
         "electron-log": "^4.4.0",
@@ -12,7 +12,9 @@
     },
     "devDependencies": {
         "@rino.app/electron-types": "workspace:0.0.0",
+        "builtin-modules": "^3.2.0",
         "electron": "13.1.7",
-        "typescript": "^4.3.5"
+        "typescript": "^4.3.5",
+        "vite": "^2.4.3"
     }
 }
