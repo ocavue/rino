@@ -1,4 +1,5 @@
 import { app, Menu } from "electron"
+import { autoUpdater } from "electron-updater"
 
 import { registerIpcInvokeHandlers } from "./api-main"
 import { buildApplicationMenu } from "./application-menu"
@@ -13,7 +14,6 @@ async function setupAutoUpdate() {
         await app.whenReady()
         await new Promise((resolve) => setTimeout(resolve, 1000))
         try {
-            const { autoUpdater } = await import("electron-updater")
             autoUpdater.logger = logger
             await autoUpdater.checkForUpdatesAndNotify()
         } catch (e) {
