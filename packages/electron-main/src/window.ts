@@ -7,33 +7,31 @@ import { logger } from "./logger"
 
 const windows = new Set<BrowserWindow>()
 
+function calcNewWindowSize() {
+    const currentWindow = BrowserWindow.getFocusedWindow()
+    if (currentWindow) {
+        const [x, y] = currentWindow.getPosition()
+        const [width, height] = currentWindow.getSize()
+        return { x: x + 30, y: y + 30, width, height }
+    }
+    return null
+}
+
 export async function createWindow() {
     try {
         logger.info("creating new window")
         await app.whenReady()
 
-        let x: number | undefined, y: number | undefined
-        const currentWindow = BrowserWindow.getFocusedWindow()
-        if (currentWindow) {
-            const [currentWindowX, currentWindowY] = currentWindow.getPosition()
-            x = currentWindowX + 32
-            y = currentWindowY + 32
-        }
-
         const preloadEntry = join(__dirname, "../../electron-preload/dist/index.js")
         const rendererEntry = join(__dirname, "../../electron-renderer/dist/index.html")
 
         const newWindow = new BrowserWindow({
-            x,
-            y,
-            show: false,
+            ...calcNewWindowSize(),
+            show: true,
+            title: "Rino",
             webPreferences: {
                 preload: preloadEntry,
             },
-        })
-
-        newWindow.once("ready-to-show", () => {
-            newWindow?.show()
         })
 
         newWindow.on("closed", () => {
