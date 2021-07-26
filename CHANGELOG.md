@@ -1,5 +1,13 @@
 # Changelog
 
+### [0.32.2](https://www.github.com/ocavue/rino/compare/v0.32.1...v0.32.2) (2021-07-26)
+
+
+### Bug Fixes
+
+* **editor:** fix IME input in task lists ([627d1d6](https://www.github.com/ocavue/rino/commit/627d1d664cc8cfc49301ea28a20eac6ccfb9abb6))
+* **electron:** reduce the startup delay ([#740](https://www.github.com/ocavue/rino/issues/740)) ([938d1f1](https://www.github.com/ocavue/rino/commit/938d1f15f34022bb55c1300bf30428e8ddec6949))
+
 ### [0.32.1](https://www.github.com/ocavue/rino/compare/v0.32.0...v0.32.1) (2021-07-25)
 
 
