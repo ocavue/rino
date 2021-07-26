@@ -17,7 +17,7 @@ export default defineConfig((env) => ({
             formats: ["cjs"],
         },
         rollupOptions: {
-            external: [...builtinModules, "electron", "fs/promises"],
+            external: [...builtinModules, "fs/promises", "electron"],
         },
     },
 }))

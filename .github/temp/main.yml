@@ -20,7 +20,7 @@ jobs:
         name: Setup node.js
         uses: actions/setup-node@v2
         with:
-          node-version: 14
+          node-version: 16
 
       - &step_cache_deps
         id: step_cache_deps
@@ -33,9 +33,9 @@ jobs:
             ~/cache_electron_builder
             ~/cache_playwright_browsers
 
-          key: ${{ runner.os }}-deps-v20-${{ hashFiles('pnpm-lock.yaml') }}
+          key: ${{ runner.os }}-deps-v21-${{ hashFiles('pnpm-lock.yaml') }}
           restore-keys: |
-            ${{ runner.os }}-deps-v20-
+            ${{ runner.os }}-deps-v21-
 
       - &step_install_deps
         name: Install Dependencies
