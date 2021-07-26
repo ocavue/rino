@@ -11,7 +11,7 @@ jobs:
     steps:
       - id: step_find_pr
         name: Find pull request
-        uses: jwalton/gh-find-current-pr
+        uses: jwalton/gh-find-current-pr@v1
 
       - name: Checkout code repository
         uses: actions/checkout@v2
