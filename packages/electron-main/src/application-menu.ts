@@ -1,10 +1,19 @@
-import { Menu, MenuItemConstructorOptions } from "electron"
+import { app, Menu, MenuItemConstructorOptions } from "electron"
 
-import { plateform } from "./env"
+import { COMMIT_SHA, plateform } from "./env"
 import { askMarkdownFileForOpen } from "./file"
 import { createWindow, createWindowByOpeningFile } from "./window"
 
 export function buildApplicationMenu() {
+    // set the options for the "about" menu
+    app.setAboutPanelOptions({
+        applicationName: "Rino",
+        applicationVersion: plateform.IS_MAC ? `Version ${app.getVersion()}` : `Version ${app.getVersion()} - ${COMMIT_SHA}`,
+        version: COMMIT_SHA,
+        copyright: `Copyright © ${new Date().getFullYear()} ocavue`,
+        website: "https://rino.app",
+    })
+
     const macMenu: MenuItemConstructorOptions = {
         label: "Rino",
         submenu: [
