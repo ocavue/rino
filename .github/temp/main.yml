@@ -33,29 +33,12 @@ jobs:
             ~/cache_electron_builder
             ~/cache_playwright_browsers
 
-          key: ${{ runner.os }}-deps-v21-${{ hashFiles('pnpm-lock.yaml') }}
+          key: ${{ runner.os }}-deps-v22-${{ hashFiles('pnpm-lock.yaml') }}
           restore-keys: |
-            ${{ runner.os }}-deps-v21-
+            ${{ runner.os }}-deps-v22-
 
       - &step_install_deps
-        name: Install Dependencies
-        run: |
-          echo "ELECTRON_CACHE=$HOME/cache_electron" >> $GITHUB_ENV
-          echo "ELECTRON_BUILDER_CACHE=$HOME/cache_electron_builder" >> $GITHUB_ENV
-          echo "PLAYWRIGHT_BROWSERS_PATH=$HOME/cache_playwright_browsers" >> $GITHUB_ENV
-          set -a; source $GITHUB_ENV; set +a
-
-          time npm install -g pnpm
-          time pnpm install
-          time pnpm install -g ultra-runner
-
-          touch ~/.npmrc
-          echo "[DEBUG] ~/.npmrc"
-          cat ~/.npmrc
-
-          echo "[DEBUG] CACHE_HIT: $CACHE_HIT"
-        env:
-          CACHE_HIT: ${{ steps.step_cache_deps.outputs.cache-hit }}
+        uses: ./.github/actions/dependencies
 
       - name: Build website
         run: |
@@ -73,21 +56,7 @@ jobs:
       - *step_checkout
       - *step_setup_node
       - *step_cache_deps
-      - &step_setup_pnpm_shamefully_hoist
-        name: Setup pnpm configration
-        run: echo 'shamefully-hoist=true' >> ~/.npmrc
       - *step_install_deps
-
-      - name: Check electron cache before building
-        run: &check_cache |
-          whoami
-          pwd
-          cd ~
-          pwd
-          env | grep ELECTRON
-          mkdir -p ~/cache_debug
-          touch ~/cache_debug/debug.txt
-          ls -lrth ~/cache_*
 
       - name: Update package.json
         run: |
@@ -119,9 +88,6 @@ jobs:
           rm -rf ./dist/*/
           echo '============== after cleaning ==============='
           find ./dist -type f
-
-      - name: Check electron cache after building
-        run: *check_cache
 
       - name: Upload dist (electron)
         uses: actions/upload-artifact@v2
@@ -173,9 +139,6 @@ jobs:
       - *step_setup_node
       - *step_cache_deps
       - *step_install_deps
-
-      - name: Check cache
-        run: *check_cache
 
       - name: Lint
         run: ultra lint .

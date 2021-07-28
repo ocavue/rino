@@ -37,6 +37,6 @@ jobs:
           git config user.name github-actions
           git config user.email github-actions@github.com
           git add .
-          git commit -m "chore(deps): update dependencies"
+          git commit -m "chore(deps): update all pnpm dependencies"
           git push
         if: ${{ steps.step_find_pr.outputs.number }}
