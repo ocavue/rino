@@ -38,6 +38,7 @@ jobs:
             ${{ runner.os }}-deps-v22-
 
       - &step_install_deps
+        name: Install dependencies
         uses: ./.github/actions/dependencies
 
       - name: Build website
