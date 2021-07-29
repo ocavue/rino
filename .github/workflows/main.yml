@@ -31,16 +31,13 @@
           "uses": "actions/cache@v2",
           "with": {
             "path": "~/.pnpm-store\n~/cache_electron\n~/cache_electron_builder\n~/cache_playwright_browsers\n",
-            "key": "${{ runner.os }}-deps-v21-${{ hashFiles('pnpm-lock.yaml') }}",
-            "restore-keys": "${{ runner.os }}-deps-v21-\n"
+            "key": "${{ runner.os }}-deps-v22-${{ hashFiles('pnpm-lock.yaml') }}",
+            "restore-keys": "${{ runner.os }}-deps-v22-\n"
           }
         },
         {
-          "name": "Install Dependencies",
-          "run": "echo \"ELECTRON_CACHE=$HOME/cache_electron\" >> $GITHUB_ENV\necho \"ELECTRON_BUILDER_CACHE=$HOME/cache_electron_builder\" >> $GITHUB_ENV\necho \"PLAYWRIGHT_BROWSERS_PATH=$HOME/cache_playwright_browsers\" >> $GITHUB_ENV\nset -a; source $GITHUB_ENV; set +a\n\ntime npm install -g pnpm\ntime pnpm install\ntime pnpm install -g ultra-runner\n\ntouch ~/.npmrc\necho \"[DEBUG] ~/.npmrc\"\ncat ~/.npmrc\n\necho \"[DEBUG] CACHE_HIT: $CACHE_HIT\"\n",
-          "env": {
-            "CACHE_HIT": "${{ steps.step_cache_deps.outputs.cache-hit }}"
-          }
+          "name": "Install dependencies",
+          "uses": "./.github/actions/dependencies"
         },
         {
           "name": "Build website",
@@ -76,24 +73,13 @@
           "uses": "actions/cache@v2",
           "with": {
             "path": "~/.pnpm-store\n~/cache_electron\n~/cache_electron_builder\n~/cache_playwright_browsers\n",
-            "key": "${{ runner.os }}-deps-v21-${{ hashFiles('pnpm-lock.yaml') }}",
-            "restore-keys": "${{ runner.os }}-deps-v21-\n"
+            "key": "${{ runner.os }}-deps-v22-${{ hashFiles('pnpm-lock.yaml') }}",
+            "restore-keys": "${{ runner.os }}-deps-v22-\n"
           }
         },
         {
-          "name": "Setup pnpm configration",
-          "run": "echo 'shamefully-hoist=true' >> ~/.npmrc"
-        },
-        {
-          "name": "Install Dependencies",
-          "run": "echo \"ELECTRON_CACHE=$HOME/cache_electron\" >> $GITHUB_ENV\necho \"ELECTRON_BUILDER_CACHE=$HOME/cache_electron_builder\" >> $GITHUB_ENV\necho \"PLAYWRIGHT_BROWSERS_PATH=$HOME/cache_playwright_browsers\" >> $GITHUB_ENV\nset -a; source $GITHUB_ENV; set +a\n\ntime npm install -g pnpm\ntime pnpm install\ntime pnpm install -g ultra-runner\n\ntouch ~/.npmrc\necho \"[DEBUG] ~/.npmrc\"\ncat ~/.npmrc\n\necho \"[DEBUG] CACHE_HIT: $CACHE_HIT\"\n",
-          "env": {
-            "CACHE_HIT": "${{ steps.step_cache_deps.outputs.cache-hit }}"
-          }
-        },
-        {
-          "name": "Check electron cache before building",
-          "run": "whoami\npwd\ncd ~\npwd\nenv | grep ELECTRON\nmkdir -p ~/cache_debug\ntouch ~/cache_debug/debug.txt\nls -lrth ~/cache_*\n"
+          "name": "Install dependencies",
+          "uses": "./.github/actions/dependencies"
         },
         {
           "name": "Update package.json",
@@ -117,10 +103,6 @@
         {
           "name": "Clean electron dist",
           "run": "cd packages/electron\necho '============== before cleaning =============='\nfind ./dist -type f\necho '============== cleaning ====================='\nrm -rf ./dist/*/\necho '============== after cleaning ==============='\nfind ./dist -type f\n"
-        },
-        {
-          "name": "Check electron cache after building",
-          "run": "whoami\npwd\ncd ~\npwd\nenv | grep ELECTRON\nmkdir -p ~/cache_debug\ntouch ~/cache_debug/debug.txt\nls -lrth ~/cache_*\n"
         },
         {
           "name": "Upload dist (electron)",
@@ -161,16 +143,13 @@
           "uses": "actions/cache@v2",
           "with": {
             "path": "~/.pnpm-store\n~/cache_electron\n~/cache_electron_builder\n~/cache_playwright_browsers\n",
-            "key": "${{ runner.os }}-deps-v21-${{ hashFiles('pnpm-lock.yaml') }}",
-            "restore-keys": "${{ runner.os }}-deps-v21-\n"
+            "key": "${{ runner.os }}-deps-v22-${{ hashFiles('pnpm-lock.yaml') }}",
+            "restore-keys": "${{ runner.os }}-deps-v22-\n"
           }
         },
         {
-          "name": "Install Dependencies",
-          "run": "echo \"ELECTRON_CACHE=$HOME/cache_electron\" >> $GITHUB_ENV\necho \"ELECTRON_BUILDER_CACHE=$HOME/cache_electron_builder\" >> $GITHUB_ENV\necho \"PLAYWRIGHT_BROWSERS_PATH=$HOME/cache_playwright_browsers\" >> $GITHUB_ENV\nset -a; source $GITHUB_ENV; set +a\n\ntime npm install -g pnpm\ntime pnpm install\ntime pnpm install -g ultra-runner\n\ntouch ~/.npmrc\necho \"[DEBUG] ~/.npmrc\"\ncat ~/.npmrc\n\necho \"[DEBUG] CACHE_HIT: $CACHE_HIT\"\n",
-          "env": {
-            "CACHE_HIT": "${{ steps.step_cache_deps.outputs.cache-hit }}"
-          }
+          "name": "Install dependencies",
+          "uses": "./.github/actions/dependencies"
         },
         {
           "name": "Build dependencies",
@@ -220,20 +199,13 @@
           "uses": "actions/cache@v2",
           "with": {
             "path": "~/.pnpm-store\n~/cache_electron\n~/cache_electron_builder\n~/cache_playwright_browsers\n",
-            "key": "${{ runner.os }}-deps-v21-${{ hashFiles('pnpm-lock.yaml') }}",
-            "restore-keys": "${{ runner.os }}-deps-v21-\n"
+            "key": "${{ runner.os }}-deps-v22-${{ hashFiles('pnpm-lock.yaml') }}",
+            "restore-keys": "${{ runner.os }}-deps-v22-\n"
           }
         },
         {
-          "name": "Install Dependencies",
-          "run": "echo \"ELECTRON_CACHE=$HOME/cache_electron\" >> $GITHUB_ENV\necho \"ELECTRON_BUILDER_CACHE=$HOME/cache_electron_builder\" >> $GITHUB_ENV\necho \"PLAYWRIGHT_BROWSERS_PATH=$HOME/cache_playwright_browsers\" >> $GITHUB_ENV\nset -a; source $GITHUB_ENV; set +a\n\ntime npm install -g pnpm\ntime pnpm install\ntime pnpm install -g ultra-runner\n\ntouch ~/.npmrc\necho \"[DEBUG] ~/.npmrc\"\ncat ~/.npmrc\n\necho \"[DEBUG] CACHE_HIT: $CACHE_HIT\"\n",
-          "env": {
-            "CACHE_HIT": "${{ steps.step_cache_deps.outputs.cache-hit }}"
-          }
-        },
-        {
-          "name": "Check cache",
-          "run": "whoami\npwd\ncd ~\npwd\nenv | grep ELECTRON\nmkdir -p ~/cache_debug\ntouch ~/cache_debug/debug.txt\nls -lrth ~/cache_*\n"
+          "name": "Install dependencies",
+          "uses": "./.github/actions/dependencies"
         },
         {
           "name": "Lint",
@@ -265,16 +237,13 @@
           "uses": "actions/cache@v2",
           "with": {
             "path": "~/.pnpm-store\n~/cache_electron\n~/cache_electron_builder\n~/cache_playwright_browsers\n",
-            "key": "${{ runner.os }}-deps-v21-${{ hashFiles('pnpm-lock.yaml') }}",
-            "restore-keys": "${{ runner.os }}-deps-v21-\n"
+            "key": "${{ runner.os }}-deps-v22-${{ hashFiles('pnpm-lock.yaml') }}",
+            "restore-keys": "${{ runner.os }}-deps-v22-\n"
           }
         },
         {
-          "name": "Install Dependencies",
-          "run": "echo \"ELECTRON_CACHE=$HOME/cache_electron\" >> $GITHUB_ENV\necho \"ELECTRON_BUILDER_CACHE=$HOME/cache_electron_builder\" >> $GITHUB_ENV\necho \"PLAYWRIGHT_BROWSERS_PATH=$HOME/cache_playwright_browsers\" >> $GITHUB_ENV\nset -a; source $GITHUB_ENV; set +a\n\ntime npm install -g pnpm\ntime pnpm install\ntime pnpm install -g ultra-runner\n\ntouch ~/.npmrc\necho \"[DEBUG] ~/.npmrc\"\ncat ~/.npmrc\n\necho \"[DEBUG] CACHE_HIT: $CACHE_HIT\"\n",
-          "env": {
-            "CACHE_HIT": "${{ steps.step_cache_deps.outputs.cache-hit }}"
-          }
+          "name": "Install dependencies",
+          "uses": "./.github/actions/dependencies"
         },
         {
           "name": "Build",

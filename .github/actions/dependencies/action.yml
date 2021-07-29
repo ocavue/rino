@@ -1,0 +1,34 @@
+name: "Install dependencies"
+description: "Install dependencies"
+
+runs:
+  using: composite
+  steps:
+    - name: Setup cache directory
+      run: |
+        echo "ELECTRON_CACHE=$HOME/cache_electron" >> $GITHUB_ENV
+        echo "ELECTRON_BUILDER_CACHE=$HOME/cache_electron_builder" >> $GITHUB_ENV
+        echo "PLAYWRIGHT_BROWSERS_PATH=$HOME/cache_playwright_browsers" >> $GITHUB_ENV
+      shell: bash
+
+    - name: Print debug information
+      run: |
+        echo "[DEBUG] CACHE_HIT: ${{ inputs.cache-hit }}"
+        echo "[DEBUG] GITHUB_REF: $GITHUB_REF"
+        env | egrep '^ELECTRON_'
+        du -h -d 1 ~/cache_* || true
+      env:
+        CACHE_HIT: ${{ steps.step_cache_deps.outputs.cache-hit }}
+      shell: bash
+
+    - name: Install pnpm
+      run: npm install -g pnpm@6
+      shell: bash
+
+    - name: Install pnpm dependencies
+      run: pnpm install --loglevel debug --reporter append-only
+      shell: bash
+
+    - name: Install ultra-runner
+      run: pnpm install -g ultra-runner --prefer-offline
+      shell: bash
