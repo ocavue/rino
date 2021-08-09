@@ -1,5 +1,12 @@
 # Changelog
 
+### [0.32.3](https://www.github.com/ocavue/rino/compare/v0.32.2...v0.32.3) (2021-08-09)
+
+
+### Bug Fixes
+
+* **electron:** add git commit information in the about panel ([#748](https://www.github.com/ocavue/rino/issues/748)) ([8853fe6](https://www.github.com/ocavue/rino/commit/8853fe6e542dacd450148705e4e13e670d497108))
+
 ### [0.32.2](https://www.github.com/ocavue/rino/compare/v0.32.1...v0.32.2) (2021-07-26)
 
 
