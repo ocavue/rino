@@ -1,5 +1,12 @@
 # Changelog
 
+### [0.32.4](https://www.github.com/ocavue/rino/compare/v0.32.3...v0.32.4) (2021-08-10)
+
+
+### Bug Fixes
+
+* **electron:** use Ctrl+W or Command+W to close windows ([#756](https://www.github.com/ocavue/rino/issues/756)) ([f3927ab](https://www.github.com/ocavue/rino/commit/f3927ab6bec3608bbb3d707016e73deae7afb707))
+
 ### [0.32.3](https://www.github.com/ocavue/rino/compare/v0.32.2...v0.32.3) (2021-08-09)
 
 
