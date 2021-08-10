@@ -5,17 +5,14 @@ const path = require("path")
 const slugifyBranch = require("./slugify-branch").slugify
 
 const commonAssertions = {
-    // Preview deployments doesn't allow search engines to index them intentionally.
-    "is-crawlable": "warn",
-
     // I don't know how to fix this.
     "uses-responsive-images": "warn",
 
-    // Material-UI has some components that break this rule
-    "non-composited-animations": "warn",
-
     // Since the website is not deployed on my own server, I can't do much about the HTTP response headers.
     "csp-xss": "warn",
+
+    // `react-dom/cjs/react-dom.production.min.js` will be marked as a `unused-javascript`. I can do nothing about it.
+    "unused-javascript": "warn",
 }
 
 const webConfig = {
