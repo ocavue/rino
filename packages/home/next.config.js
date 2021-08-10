@@ -10,4 +10,9 @@ module.exports = {
         ...baseConfig.env,
         NEXT_PUBLIC_RINO_VERSION: readFileSync(join(__dirname, "..", "..", "version.txt"), "utf-8").trim(),
     },
+
+    // disable the built-in eslint step completely.
+    eslint: {
+        ignoreDuringBuilds: true,
+    },
 }
