@@ -48,7 +48,9 @@ export function buildApplicationMenu() {
                         await createWindow()
                     },
                 },
-                { type: "separator" },
+                {
+                    type: "separator",
+                },
                 {
                     label: "Open",
                     accelerator: "CommandOrControl+O",
@@ -58,13 +60,21 @@ export function buildApplicationMenu() {
                         await createWindowByOpeningFile(path)
                     },
                 },
-                { type: "separator" },
+                {
+                    type: "separator",
+                },
                 {
                     label: "Save",
                     accelerator: "CommandOrControl+S",
                     click: async (_, win) => {
                         win?.webContents.send("send:ensureFilePath")
                     },
+                },
+                {
+                    type: "separator",
+                },
+                {
+                    role: "close",
                 },
             ],
         },

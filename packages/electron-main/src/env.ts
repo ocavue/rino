@@ -1,4 +1,9 @@
-const NODE_ENV = process.env.NODE_ENV || "production"
+// Prevent rollup from replacing the environment variable during build time.
+function getenv(key: string) {
+    return process["env"][key]
+}
+
+const NODE_ENV = getenv("NODE_ENV") || "production"
 
 export const env = {
     IS_PROD: NODE_ENV === "production",
