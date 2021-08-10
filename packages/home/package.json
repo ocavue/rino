@@ -8,7 +8,8 @@
     "scripts": {
         "dev": "next dev",
         "start": "next start",
-        "build": "next build && next export -o dist"
+        "build": "next build && next export -o dist",
+        "build:analyze": "ANALYZE=true next build && next export -o dist"
     },
     "devDependencies": {
         "@babel/core": "^7.15.0",
@@ -22,7 +23,7 @@
         "@types/react": "^17.0.16",
         "@types/react-dom": "^17.0.9",
         "lodash-es": "^4.17.21",
-        "next": "^10.2.3",
+        "next": "^11.0.1",
         "react": "^17.0.2",
         "react-dom": "^17.0.2"
     },
