@@ -1,17 +1,20 @@
-import { contextBridge, ipcRenderer, IpcRendererEvent } from "electron"
+import { contextBridge, ipcRenderer } from "electron"
 
-import { PreloadIpcRenderer } from "@rino.app/electron-types"
+import type { InvokeApi, IpcRenderer, SendApi } from "@rino.app/electron-types"
 
-const electronIpcRenderer: PreloadIpcRenderer = {
-    invoke: async (channel: string, ...params: Array<any>) => {
+const electronIpcRenderer: IpcRenderer<SendApi, InvokeApi> = {
+    invoke: async (channel, ...params: Array<any>) => {
         return ipcRenderer.invoke(channel, ...params)
     },
-    on: (channel: string, listener: (event: IpcRendererEvent, ...args: any[]) => void) => {
+    on: (channel, listener: any) => {
         ipcRenderer.on(channel, listener)
     },
-    removeAllListeners: (channel: string) => {
+    removeListener: (channel, listener: any) => {
+        ipcRenderer.removeListener(channel, listener)
+    },
+    removeAllListeners: (channel) => {
         ipcRenderer.removeAllListeners(channel)
     },
 }
 
-contextBridge.exposeInMainWorld("electronIpcRenderer", electronIpcRenderer)
+contextBridge.exposeInMainWorld("ELECTRON_PRELOAD_IPC_RENDERER", electronIpcRenderer)

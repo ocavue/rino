@@ -1,9 +1,9 @@
 import { app, Menu } from "electron"
 import { autoUpdater } from "electron-updater"
 
-import { registerIpcInvokeHandlers } from "./api-main"
 import { buildApplicationMenu } from "./application-menu"
 import { env, plateform } from "./env"
+import { registerIpcInvokeHandlers } from "./ipc-handlers"
 import { logger } from "./logger"
 import { createWindow, createWindowByOpeningFile, createWindowIfNotExist } from "./window"
 

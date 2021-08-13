@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react"
 
-import { ipc } from "../ipc"
+import { ipcInvoker } from "../ipc-renderer"
 import { MarkdownNote } from "../types"
 import { useTitle } from "./use-title"
 
@@ -9,11 +9,11 @@ export function useMarkdownNote() {
     const { title, setSaved } = useTitle(note.path)
 
     useEffect(() => {
-        ipc.setTitle({ title })
+        ipcInvoker.setTitle({ title })
     }, [title])
 
     const openFile = useCallback(async (path?: string) => {
-        const file = await ipc.openFile({ path })
+        const file = await ipcInvoker.openFile({ path })
         if (!file.canceled) {
             setNote({ content: file.content, deleted: false, path: file.path })
         }
@@ -39,7 +39,7 @@ export function useMarkdownNote() {
 
     const saveNote = useCallback(
         async (note: MarkdownNote) => {
-            const { canceled, path } = await ipc.saveFile({ content: note.content, path: note.path })
+            const { canceled, path } = await ipcInvoker.saveFile({ content: note.content, path: note.path })
 
             if (canceled) return
 
@@ -60,7 +60,7 @@ export function useMarkdownNote() {
 
     const ensureFilePath = useCallback(async () => {
         if (!note.path) {
-            const { path, canceled } = await ipc.askMarkdownFileForSave()
+            const { path, canceled } = await ipcInvoker.askMarkdownFileForSave()
             if (!canceled) {
                 setNotePath(path)
             }
