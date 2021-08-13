@@ -3,7 +3,7 @@ import { join } from "path"
 import { URL } from "url"
 
 import { env } from "./env"
-import { ipcMain, ipcSender } from "./ipc-main"
+import { ipcSender } from "./ipc-main"
 import { logger } from "./logger"
 
 const windows = new Set<BrowserWindow>()
