@@ -3,8 +3,8 @@ import React, { FC } from "react"
 import { Editor } from "@rino.app/editor"
 
 import { useBeforeUnload } from "./hooks/use-before-unload"
+import { useIpcRendererHandlers } from "./hooks/use-ipc-renderer-handlers"
 import { useMarkdownNote } from "./hooks/use-markdown-note"
-import { useIpcSendHandelrs } from "./ipc"
 
 const drawerActivityContainer = {
     useContainer: () => ({
@@ -17,7 +17,7 @@ const Workbench: FC = () => {
 
     useBeforeUnload(note, ensureFilePath)
 
-    useIpcSendHandelrs({
+    useIpcRendererHandlers({
         setNotePath,
         openFile,
         ensureFilePath,

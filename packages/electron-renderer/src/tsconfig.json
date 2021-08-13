@@ -2,7 +2,6 @@
     "extends": "../../../tsconfig.base.json",
     "compilerOptions": {
         "composite": true,
-
         // if we just want incremental checking, we need to set `emitDeclarationOnly` to true.
         // https://github.com/microsoft/TypeScript/issues/33809#issuecomment-589446027
         "noEmit": false,
@@ -15,6 +14,9 @@
     "references": [
         {
             "path": "../../editor/src"
+        },
+        {
+            "path": "../../common/src"
         }
     ]
 }

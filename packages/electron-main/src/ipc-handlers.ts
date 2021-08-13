@@ -1,19 +1,18 @@
-import { BrowserWindow, ipcMain } from "electron"
-
-import { InvokeMainAPI } from "@rino.app/electron-types"
+import { BrowserWindow } from "electron"
 
 import { askMarkdownFileForOpen, askMarkdownFileForSave, openFile, saveFile } from "./file"
+import { ipcMain } from "./ipc-main"
 import { createWindow } from "./window"
 
-const invokeMainAPI: InvokeMainAPI = {
-    openFile: async (event, { path }) => {
+export function registerIpcInvokeHandlers() {
+    ipcMain.handle("openFile", async (_, { path }) => {
         const filePath = path || (await askMarkdownFileForOpen())
         if (!filePath) return { canceled: true, path: "", content: "" }
         const content = await openFile(filePath)
         return { canceled: false, path: filePath, content }
-    },
+    })
 
-    saveFile: async (event, note) => {
+    ipcMain.handle("saveFile", async (_, note) => {
         let filePath: string | undefined = note.path
         if (!filePath) {
             filePath = await askMarkdownFileForSave()
@@ -23,38 +22,32 @@ const invokeMainAPI: InvokeMainAPI = {
         }
         await saveFile(filePath, note.content)
         return { canceled: false, path: filePath }
-    },
+    })
 
-    askMarkdownFileForSave: async () => {
+    ipcMain.handle("askMarkdownFileForSave", async (_) => {
         const filePath = await askMarkdownFileForSave()
         if (!filePath) {
             return { canceled: true, path: "" }
         }
         return { canceled: false, path: filePath }
-    },
+    })
 
-    newWindow: async (event) => {
+    ipcMain.handle("newWindow", async (_) => {
         await createWindow()
-    },
+    })
 
-    getCurrentWindow: async (event) => {
+    ipcMain.handle("getCurrentWindow", async (event) => {
         const win = BrowserWindow.fromWebContents(event.sender)
         if (!win) return null
         return {
             id: win.id,
             title: win.getTitle(),
         }
-    },
+    })
 
-    setTitle: async (event, options) => {
+    ipcMain.handle("setTitle", async (event, options) => {
         const win = BrowserWindow.fromWebContents(event.sender)
         if (!win) return
         win.setTitle(options.title)
-    },
-}
-
-export function registerIpcInvokeHandlers() {
-    for (const [channel, handler] of Object.entries(invokeMainAPI)) {
-        ipcMain.handle("invoke:" + channel, handler)
-    }
+    })
 }

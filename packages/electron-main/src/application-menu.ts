@@ -2,6 +2,7 @@ import { app, Menu, MenuItemConstructorOptions } from "electron"
 
 import { COMMIT_SHA, plateform } from "./env"
 import { askMarkdownFileForOpen } from "./file"
+import { ipcSender } from "./ipc-main"
 import { createWindow, createWindowByOpeningFile } from "./window"
 
 export function buildApplicationMenu() {
@@ -67,7 +68,9 @@ export function buildApplicationMenu() {
                     label: "Save",
                     accelerator: "CommandOrControl+S",
                     click: async (_, win) => {
-                        win?.webContents.send("send:ensureFilePath")
+                        if (win) {
+                            ipcSender.ensureFilePath(win)
+                        }
                     },
                 },
                 {

@@ -1,6 +1,5 @@
-import type { IpcMainInvokeEvent, IpcRenderer } from "electron"
-
-export type InvokeRendererAPI = {
+// Sended by renderer process and recieved by main process
+export type InvokeApi = {
     openFile: (options: { path?: string }) => Promise<{ canceled: boolean; path: string; content: string }>
 
     saveFile: (options: { path: string; content: string }) => Promise<{ canceled: boolean; path: string }>
@@ -14,15 +13,11 @@ export type InvokeRendererAPI = {
     setTitle: (options: { title: string }) => Promise<void>
 }
 
-export type InvokeMainAPI = {
-    [Channel in keyof InvokeRendererAPI]: (
-        event: IpcMainInvokeEvent,
-        ...params: Parameters<InvokeRendererAPI[Channel]>
-    ) => ReturnType<InvokeRendererAPI[Channel]>
-}
+// Sended by main process and received by renderer process
+export type SendApi = {
+    openFile: (options: { path: string }) => void
 
-export type PreloadIpcRenderer = {
-    invoke: IpcRenderer["invoke"]
-    on: (...args: Parameters<IpcRenderer["on"]>) => void
-    removeAllListeners: (...args: Parameters<IpcRenderer["removeAllListeners"]>) => void
+    ensureFilePath: () => void
+
+    setNotePath: (options: { path: string }) => void
 }

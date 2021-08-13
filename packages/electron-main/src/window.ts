@@ -3,6 +3,7 @@ import { join } from "path"
 import { URL } from "url"
 
 import { env } from "./env"
+import { ipcMain, ipcSender } from "./ipc-main"
 import { logger } from "./logger"
 
 const windows = new Set<BrowserWindow>()
@@ -65,7 +66,7 @@ export async function createWindow() {
 export async function createWindowByOpeningFile(path: string) {
     if (!path) return
     const win = await createWindow()
-    win.webContents.send("send:openFile", { path })
+    ipcSender.openFile(win, { path })
 }
 
 export async function createWindowIfNotExist() {
