@@ -6,7 +6,7 @@ importers:
     specifiers:
       '@lhci/cli': ^0.8.0
       '@svgr/cli': ^5.5.0
-      '@types/jest': ^26.0.24
+      '@types/jest': ^27.0.1
       '@types/jest-image-snapshot': ^4.3.1
       '@types/node': ^16.6.1
       '@typescript-eslint/eslint-plugin': ^4.29.1
@@ -34,7 +34,7 @@ importers:
     devDependencies:
       '@lhci/cli': 0.8.0
       '@svgr/cli': 5.5.0
-      '@types/jest': 26.0.24
+      '@types/jest': 27.0.1
       '@types/jest-image-snapshot': 4.3.1
       '@types/node': 16.6.1
       '@typescript-eslint/eslint-plugin': 4.29.1_d4376362794b743c19f4cba25c7fc6f5
@@ -56,7 +56,7 @@ importers:
       playwright-chromium: 1.13.1
       prettier: 2.3.2
       rimraf: 3.0.2
-      ts-jest: 27.0.4_52cc4273aa16028085013af47e479e10
+      ts-jest: 27.0.4_92306e36c1a4cf876b1cd4839a977b9c
       typescript: 4.3.5
       ultra-runner: 3.10.5
 
@@ -8284,6 +8284,7 @@ packages:
       chalk: 2.4.2
       diff-match-patch: 1.0.5
     dev: false
+    bundledDependencies: []
 
   /jsonfile/4.0.0:
     resolution: {integrity: sha1-h3Gq4HmbZAdrdmQPygWPnBDjPss=}
@@ -12135,7 +12136,7 @@ packages:
     resolution: {integrity: sha512-Z86EW+fFFh/IFB1fqQ3/+7Zpf9t2ebOAxNI/V6Wo7r5gqiqtxmgTlQ1qbqQcjLKYeSHPTsEmvlJUDg/EuL0uHQ==}
     dev: false
 
-  /ts-jest/27.0.4_52cc4273aa16028085013af47e479e10:
+  /ts-jest/27.0.4_92306e36c1a4cf876b1cd4839a977b9c:
     resolution: {integrity: sha512-c4E1ECy9Xz2WGfTMyHbSaArlIva7Wi2p43QOMmCqjSSjHP06KXv+aT+eSY+yZMuqsMi3k7pyGsGj2q5oSl5WfQ==}
     engines: {node: ^10.13.0 || ^12.13.0 || ^14.15.0 || >=15.0.0}
     hasBin: true
@@ -12153,7 +12154,7 @@ packages:
       babel-jest:
         optional: true
     dependencies:
-      '@types/jest': 26.0.24
+      '@types/jest': 27.0.1
       bs-logger: 0.2.6
       buffer-from: 1.1.2
       fast-json-stable-stringify: 2.1.0
