@@ -3,11 +3,13 @@ import { useEffect } from "react"
 import { MarkdownNote } from "../types"
 
 export function useBeforeUnload(note: MarkdownNote, ensureFilePath: () => void) {
+    const hasContent = !!note.content
+
     useEffect(() => {
         // Note: There is a subtle difference between the behaviors of `window.onbeforeunload = handler` and
         // `window.addEventListener('beforeunload', handler)`.
         window.onbeforeunload = (e) => {
-            if (!note.path) {
+            if (!note.path && hasContent) {
                 ensureFilePath()
 
                 // Unlike usual browsers that a message box will be prompted to users, returning
@@ -17,5 +19,5 @@ export function useBeforeUnload(note: MarkdownNote, ensureFilePath: () => void) 
                 e.returnValue = false // equivalent to `return false` but not recommended
             }
         }
-    }, [note.path, ensureFilePath])
+    }, [note.path, ensureFilePath, hasContent])
 }
