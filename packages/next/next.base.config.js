@@ -48,6 +48,9 @@ function getNextConfig() {
             })
             return config
         },
+        images: {
+            disableStaticImages: true,
+        },
         env: getEnvs(),
     }
 }
