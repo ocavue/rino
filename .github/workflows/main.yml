@@ -388,6 +388,23 @@
             "vercel-args": "--prod --meta TYPE=PRODUCTION",
             "working-directory": "./packages/home/"
           }
+        },
+        {
+          "name": "Parse changelog",
+          "id": "step_parse_changelog",
+          "uses": "ocavue/changelog-parser-action@v1"
+        },
+        {
+          "name": "Send tweet",
+          "uses": "ethomson/send-tweet-action@v1",
+          "with": {
+            "status": "🎉 Rino ${{ steps.step_release_please.outputs.tag_name }} is here!\n\n${{ steps.step_parse_changelog.outputs.latestBody }}\n\nChangelog: https://github.com/ocavue/rino/blob/HEAD/CHANGELOG.md\nDownload: https://rino.app\n",
+            "consumer-key": "${{ secrets.TWITTER_CONSUMER_API_KEY }}",
+            "consumer-secret": "${{ secrets.TWITTER_CONSUMER_API_SECRET }}",
+            "access-token": "${{ secrets.TWITTER_ACCESS_TOKEN }}",
+            "access-token-secret": "${{ secrets.TWITTER_ACCESS_TOKEN_SECRET }}"
+          },
+          "continue-on-error": true
         }
       ]
     }
