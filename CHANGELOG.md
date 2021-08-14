@@ -1,5 +1,12 @@
 # Changelog
 
+### [0.32.5](https://www.github.com/ocavue/rino/compare/v0.32.4...v0.32.5) (2021-08-14)
+
+
+### Bug Fixes
+
+* **electron:** don't show the save file dialog when the note is empty ([#762](https://www.github.com/ocavue/rino/issues/762)) ([706179a](https://www.github.com/ocavue/rino/commit/706179a0c2fd6be22b657dff3738a09dab64d616))
+
 ### [0.32.4](https://www.github.com/ocavue/rino/compare/v0.32.3...v0.32.4) (2021-08-10)
 
 
