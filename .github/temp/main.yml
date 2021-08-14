@@ -279,11 +279,6 @@ jobs:
         id: step_parse_changelog
         uses: ocavue/changelog-parser-action@v1
 
-      - name: Debug changelog
-        run: |
-          echo "${{ steps.step_parse_changelog.outputs.latestBody }}"
-        continue-on-error: true
-
       - name: Send tweet
         uses: ethomson/send-tweet-action@v1
         with:
