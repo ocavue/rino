@@ -218,18 +218,24 @@
         {
           "name": "Parse changelog",
           "id": "step_parse_changelog",
-          "uses": "snapADDY/snapaddy-parse-changelog@0.1.0"
+          "uses": "ocavue/changelog-parser-action@v1"
+        },
+        {
+          "name": "Debug changelog",
+          "run": "echo \"${{ steps.step_parse_changelog.outputs.latestBody }}\"\n",
+          "continue-on-error": true
         },
         {
           "name": "Send tweet",
           "uses": "ethomson/send-tweet-action@v1",
           "with": {
-            "status": "🎉 New version of Rino is here!\n\n${{ steps.step_parse_changelog.outputs.changelog }}\n\nChangelog: https://github.com/ocavue/rino/blob/master/CHANGELOG.md\nDownload: https://rino.app\n",
+            "status": "🎉 New version of Rino is here!\n\n${{ steps.step_parse_changelog.outputs.latestBody }}\n\nChangelog: https://github.com/ocavue/rino/blob/HEAD/CHANGELOG.md\nDownload: https://rino.app\n",
             "consumer-key": "${{ secrets.TWITTER_CONSUMER_API_KEY }}",
             "consumer-secret": "${{ secrets.TWITTER_CONSUMER_API_SECRET }}",
             "access-token": "${{ secrets.TWITTER_ACCESS_TOKEN }}",
             "access-token-secret": "${{ secrets.TWITTER_ACCESS_TOKEN_SECRET }}"
-          }
+          },
+          "continue-on-error": true
         }
       ]
     },
