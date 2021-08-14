@@ -216,10 +216,15 @@
           "run": "hash1=$(sha1sum .github/workflows/main.yml)\n./node_modules/.bin/js-yaml .github/temp/main.yml > .github/workflows/main.yml\nhash2=$(sha1sum .github/workflows/main.yml)\necho \"$hash1\" \"$hash2\"\nif [ \"$hash1\" != \"$hash2\" ]; then exit 1; fi\n"
         },
         {
+          "name": "Parse changelog",
+          "id": "step_parse_changelog",
+          "uses": "snapADDY/snapaddy-parse-changelog@0.1.0"
+        },
+        {
           "name": "Send tweet",
           "uses": "ethomson/send-tweet-action@v1",
           "with": {
-            "status": "Hi, this is a test!",
+            "status": "🎉 New version of Rino is here!\n\n${{ steps.step_parse_changelog.outputs.changelog }}\n\nChangelog: https://github.com/ocavue/rino/blob/master/CHANGELOG.md\nDownload: https://rino.app\n",
             "consumer-key": "${{ secrets.TWITTER_CONSUMER_API_KEY }}",
             "consumer-secret": "${{ secrets.TWITTER_CONSUMER_API_SECRET }}",
             "access-token": "${{ secrets.TWITTER_ACCESS_TOKEN }}",
