@@ -1,0 +1,32 @@
+name: update-changelog
+
+on:
+  push:
+    branches:
+      - "release-*"
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16
+
+      - name: Checkout code repository
+        uses: actions/checkout@v2
+        with:
+          token: ${{ secrets.RELEASE_PLEASE_GITHUB_TOKEN }}
+        if: ${{ steps.step_find_pr.outputs.number }}
+
+      - name: Update changelog
+        run: ./scripts/fix-changelog.mjs
+
+      - name: Push to GitHub
+        continue-on-error: true
+        run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git commit -am "chore: update changelog"
+          git push
