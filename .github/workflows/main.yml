@@ -397,6 +397,7 @@
         {
           "name": "Send tweet",
           "uses": "ethomson/send-tweet-action@v1",
+          "if": "github.ref == 'refs/heads/master' && needs.release.outputs.published == 'true'",
           "with": {
             "status": "🎉 Rino ${{ steps.step_release_please.outputs.tag_name }} is here!\n\n${{ steps.step_parse_changelog.outputs.latestBody }}\n\nChangelog: https://github.com/ocavue/rino/blob/HEAD/CHANGELOG.md\nDownload: https://rino.app\n",
             "consumer-key": "${{ secrets.TWITTER_CONSUMER_API_KEY }}",
