@@ -1,6 +1,6 @@
 import { BrowserWindow } from "electron"
 
-import { askMarkdownFileForOpen, askMarkdownFileForSave, openFile, saveFile } from "./file"
+import { askMarkdownFileForClose, askMarkdownFileForOpen, askMarkdownFileForSave, openFile, saveFile } from "./file"
 import { ipcMain } from "./ipc-main"
 import { createWindow } from "./window"
 
@@ -12,24 +12,27 @@ export function registerIpcInvokeHandlers() {
         return { canceled: false, path: filePath, content }
     })
 
-    ipcMain.handle("saveFile", async (_, note) => {
+    ipcMain.handle("saveFile", async (event, note) => {
         let filePath: string | undefined = note.path
         if (!filePath) {
-            filePath = await askMarkdownFileForSave()
+            const win = BrowserWindow.fromWebContents(event.sender)
+            filePath = (await askMarkdownFileForSave(win)).filePath
         }
         if (!filePath) {
-            return { canceled: true, path: "" }
+            return { canceled: true }
         }
         await saveFile(filePath, note.content)
-        return { canceled: false, path: filePath }
+        return { canceled: false, filePath }
     })
 
-    ipcMain.handle("askMarkdownFileForSave", async (_) => {
-        const filePath = await askMarkdownFileForSave()
-        if (!filePath) {
-            return { canceled: true, path: "" }
-        }
-        return { canceled: false, path: filePath }
+    ipcMain.handle("askMarkdownFileForSave", async (event) => {
+        const win = BrowserWindow.fromWebContents(event.sender)
+        return await askMarkdownFileForSave(win)
+    })
+
+    ipcMain.handle("askMarkdownFileForClose", async (event) => {
+        const win = BrowserWindow.fromWebContents(event.sender)
+        return await askMarkdownFileForClose(win)
     })
 
     ipcMain.handle("newWindow", async (_) => {
