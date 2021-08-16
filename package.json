@@ -87,5 +87,10 @@
     },
     "pnpm": {
         "overrides": {}
+    },
+    "standard-version": {
+        "scripts": {
+            "postchangelog": "./scripts/fix-changelog.mjs"
+        }
     }
 }
