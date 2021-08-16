@@ -1,4 +1,5 @@
 import { app, BrowserWindow } from "electron"
+import { BrowserWindowConstructorOptions } from "electron/main"
 import { join } from "path"
 import { URL } from "url"
 
@@ -8,14 +9,19 @@ import { logger } from "./logger"
 
 const windows = new Set<BrowserWindow>()
 
-function calcNewWindowSize() {
+function calcNewWindowSize(): BrowserWindowConstructorOptions {
     const currentWindow = BrowserWindow.getFocusedWindow()
     if (currentWindow) {
         const [x, y] = currentWindow.getPosition()
         const [width, height] = currentWindow.getSize()
         return { x: x + 30, y: y + 30, width, height }
     }
-    return null
+    return {
+        // The default width of the save file dialog is 800. The default window width is also 800.
+        // So we set the window width to be slightly larger than 800 to make a bit padding between
+        // the window and the save file dialog.
+        width: 860,
+    }
 }
 
 export async function createWindow() {
@@ -35,7 +41,8 @@ export async function createWindow() {
             },
         })
 
-        newWindow.on("closed", () => {
+        newWindow.on("close", () => {
+            logger.info(`closing window ${newWindow.id}`)
             windows.delete(newWindow)
         })
 
@@ -54,7 +61,7 @@ export async function createWindow() {
         logger.info(`loading ${pageUrl}`)
 
         await newWindow.loadURL(pageUrl)
-        logger.info("created new window")
+        logger.info(`created new window ${newWindow.id}`)
 
         return newWindow
     } catch (error) {

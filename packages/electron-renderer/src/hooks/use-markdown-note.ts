@@ -39,14 +39,12 @@ export function useMarkdownNote() {
 
     const saveNote = useCallback(
         async (note: MarkdownNote) => {
-            const { canceled, path } = await ipcInvoker.saveFile({ content: note.content, path: note.path })
-
-            if (canceled) return
-
-            setSaved(true)
-
-            if (path && note.path !== path) {
-                setNotePath(path)
+            const { filePath } = await ipcInvoker.saveFile({ content: note.content, path: note.path })
+            if (filePath) {
+                setSaved(true)
+                if (note.path !== filePath) {
+                    setNotePath(filePath)
+                }
             }
         },
         [setNotePath, setSaved],
@@ -60,9 +58,9 @@ export function useMarkdownNote() {
 
     const ensureFilePath = useCallback(async () => {
         if (!note.path) {
-            const { path, canceled } = await ipcInvoker.askMarkdownFileForSave()
-            if (!canceled) {
-                setNotePath(path)
+            const { filePath } = await ipcInvoker.askMarkdownFileForSave()
+            if (filePath) {
+                setNotePath(filePath)
             }
         }
     }, [note.path, setNotePath])
