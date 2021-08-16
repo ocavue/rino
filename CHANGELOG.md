@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.32.7](https://www.github.com/ocavue/rino/compare/v0.32.6...v0.32.7) (2021-08-16)
+
+
+### Bug Fixes
+
+* fix a release workflow issue ([#776](https://www.github.com/ocavue/rino/issues/776)) ([47a0c63](https://www.github.com/ocavue/rino/commit/47a0c63c0b6b23a314f705e815e4d6aff17c25bf))
+
 ## [0.32.6](https://www.github.com/ocavue/rino/compare/v0.32.5...v0.32.6) (2021-08-16)
 
 
