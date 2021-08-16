@@ -306,6 +306,13 @@
     },
     "release": {
       "runs-on": "ubuntu-latest",
+      "needs": [
+        "build_website",
+        "build_electron",
+        "test",
+        "lint",
+        "preview"
+      ],
       "if": "github.ref == 'refs/heads/master'",
       "steps": [
         {
@@ -325,11 +332,6 @@
     "deploy": {
       "runs-on": "ubuntu-latest",
       "needs": [
-        "build_website",
-        "build_electron",
-        "test",
-        "lint",
-        "preview",
         "release"
       ],
       "steps": [

@@ -215,6 +215,12 @@ jobs:
 
   release:
     runs-on: ubuntu-latest
+    needs:
+      - build_website
+      - build_electron
+      - test
+      - lint
+      - preview
     if: github.ref == 'refs/heads/master'
     steps:
       - id: step_release_please
@@ -230,11 +236,6 @@ jobs:
   deploy: # Production deployment
     runs-on: ubuntu-latest
     needs:
-      - build_website
-      - build_electron
-      - test
-      - lint
-      - preview
       - release
     steps:
       - *step_checkout
