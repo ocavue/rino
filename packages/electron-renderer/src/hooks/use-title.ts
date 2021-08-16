@@ -7,10 +7,11 @@ export function useTitle(notePath: string) {
 
     const title: string = useMemo(() => {
         let title = basename(notePath)
-        if (title && !saved) {
-            title = `${title} - Edited`
-        } else if (!title) {
+        if (!title) {
             title = "Untitled"
+        }
+        if (!saved) {
+            title = `${title} - Edited`
         }
         return title
     }, [notePath, saved])
