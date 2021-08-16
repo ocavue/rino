@@ -33,9 +33,9 @@ jobs:
             ~/cache_electron_builder
             ~/cache_playwright_browsers
 
-          key: ${{ runner.os }}-deps-v22-${{ hashFiles('pnpm-lock.yaml') }}
+          key: ${{ runner.os }}-deps-v23-${{ hashFiles('pnpm-lock.yaml') }}
           restore-keys: |
-            ${{ runner.os }}-deps-v22-
+            ${{ runner.os }}-deps-v23-
 
       - &step_install_deps
         name: Install dependencies
@@ -215,12 +215,6 @@ jobs:
 
   release:
     runs-on: ubuntu-latest
-    needs:
-      - build_website
-      - build_electron
-      - test
-      - lint
-      - preview
     if: github.ref == 'refs/heads/master'
     steps:
       - id: step_release_please
@@ -236,6 +230,11 @@ jobs:
   deploy: # Production deployment
     runs-on: ubuntu-latest
     needs:
+      - build_website
+      - build_electron
+      - test
+      - lint
+      - preview
       - release
     steps:
       - *step_checkout
