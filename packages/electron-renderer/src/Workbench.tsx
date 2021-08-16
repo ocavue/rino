@@ -13,14 +13,15 @@ const drawerActivityContainer = {
 }
 
 const Workbench: FC = () => {
-    const { note, openFile, setNotePath, onContentSave, onContentEdit, ensureFilePath } = useMarkdownNote()
+    const { note, openFile, setNotePath, onContentSave, onContentEdit, ensureFilePath, beforeCloseWindow, closing } = useMarkdownNote()
 
-    useBeforeUnload(note, ensureFilePath)
+    useBeforeUnload(note, closing, ensureFilePath)
 
     useIpcRendererHandlers({
         setNotePath,
         openFile,
         ensureFilePath,
+        beforeCloseWindow,
     })
 
     return (

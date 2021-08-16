@@ -13,6 +13,8 @@ export type InvokeApi = {
     getCurrentWindow: () => Promise<{ id: number; title: string } | null>
 
     setTitle: (options: { title: string }) => Promise<void>
+
+    closeWindow: () => Promise<void>
 }
 
 // Sended by main process and received by renderer process
@@ -22,4 +24,6 @@ export type SendApi = {
     ensureFilePath: () => void
 
     setNotePath: (options: { path: string }) => void
+
+    beforeCloseWindow: () => void
 }

@@ -8,6 +8,7 @@ import { ipcSender } from "./ipc-main"
 import { logger } from "./logger"
 
 const windows = new Set<BrowserWindow>()
+const closingWindows = new Set<BrowserWindow>()
 
 function calcNewWindowSize(): BrowserWindowConstructorOptions {
     const currentWindow = BrowserWindow.getFocusedWindow()
@@ -41,16 +42,23 @@ export async function createWindow() {
             },
         })
 
-        newWindow.on("close", () => {
-            logger.info(`closing window ${newWindow.id}`)
-            windows.delete(newWindow)
+        newWindow.on("close", (event) => {
+            if (!closingWindows.has(newWindow)) {
+                logger.info(`try to close window ${newWindow.id}`)
+                event.preventDefault()
+                ipcSender.beforeCloseWindow(newWindow)
+            } else {
+                logger.info(`closing window ${newWindow.id}`)
+                windows.delete(newWindow)
+                closingWindows.delete(newWindow)
+            }
         })
 
-        if (env.IS_DEV) {
-            setTimeout(() => {
-                newWindow?.webContents.openDevTools({ activate: false, mode: "detach" })
-            }, 1000)
-        }
+        // if (env.IS_DEV) {
+        //     setTimeout(() => {
+        //         newWindow?.webContents.openDevTools({ activate: false, mode: "detach" })
+        //     }, 1000)
+        // }
 
         /**
          * URL for main window.
@@ -82,4 +90,9 @@ export async function createWindowIfNotExist() {
         logger.debug("creating a window")
         await createWindow()
     }
+}
+
+export function closeWindow(win: BrowserWindow) {
+    closingWindows.add(win)
+    win.close()
 }

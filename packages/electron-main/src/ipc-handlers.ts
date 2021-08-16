@@ -2,7 +2,7 @@ import { BrowserWindow } from "electron"
 
 import { askMarkdownFileForClose, askMarkdownFileForOpen, askMarkdownFileForSave, openFile, saveFile } from "./file"
 import { ipcMain } from "./ipc-main"
-import { createWindow } from "./window"
+import { closeWindow, createWindow } from "./window"
 
 export function registerIpcInvokeHandlers() {
     ipcMain.handle("openFile", async (_, { path }) => {
@@ -52,5 +52,11 @@ export function registerIpcInvokeHandlers() {
         const win = BrowserWindow.fromWebContents(event.sender)
         if (!win) return
         win.setTitle(options.title)
+    })
+
+    ipcMain.handle("closeWindow", async (event) => {
+        const win = BrowserWindow.fromWebContents(event.sender)
+        if (!win) return
+        closeWindow(win)
     })
 }

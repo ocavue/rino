@@ -6,10 +6,12 @@ export function useIpcRendererHandlers({
     openFile,
     ensureFilePath,
     setNotePath,
+    beforeCloseWindow,
 }: {
     openFile: (path: string) => void
     ensureFilePath: () => void
     setNotePath: (path: string) => void
+    beforeCloseWindow: () => void
 }) {
     useEffect(() => {
         ipcRenderer.on("openFile", (event, { path }) => {
@@ -37,4 +39,13 @@ export function useIpcRendererHandlers({
             ipcRenderer.removeAllListeners("setNotePath")
         }
     }, [setNotePath])
+
+    useEffect(() => {
+        ipcRenderer.on("beforeCloseWindow", (event) => {
+            beforeCloseWindow()
+        })
+        return () => {
+            ipcRenderer.removeAllListeners("beforeCloseWindow")
+        }
+    }, [beforeCloseWindow])
 }

@@ -285,7 +285,7 @@ jobs:
         if: *should_release
         with:
           status: |
-            🎉 Rino ${{ steps.step_release_please.outputs.tag_name }} is here!
+            🎉 Rino ${{ needs.release.outputs.tag_name }} is here!
 
             ${{ steps.step_parse_changelog.outputs.latestBody }}
 
