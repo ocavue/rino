@@ -236,6 +236,7 @@ jobs:
   deploy: # Production deployment
     runs-on: ubuntu-latest
     needs:
+      # make sure that `deploy` only depends on `release` because we don't want `deploy` to skip if `release` succeeded.
       - release
     steps:
       - *step_checkout
