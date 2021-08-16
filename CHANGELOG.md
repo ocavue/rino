@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.32.6](https://www.github.com/ocavue/rino/compare/v0.32.5...v0.32.6) (2021-08-16)
+
+
+### Bug Fixes
+
+* **electron:** fix window title for unsaved file ([#767](https://www.github.com/ocavue/rino/issues/767)) ([72120af](https://www.github.com/ocavue/rino/commit/72120af967cb89dc4d1392301684e906fdf2e035))
+
 ## [0.32.5](https://www.github.com/ocavue/rino/compare/v0.32.4...v0.32.5) (2021-08-14)
 
 
