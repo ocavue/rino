@@ -1,27 +1,27 @@
 # Changelog
 
-### [0.32.5](https://www.github.com/ocavue/rino/compare/v0.32.4...v0.32.5) (2021-08-14)
+## [0.32.5](https://www.github.com/ocavue/rino/compare/v0.32.4...v0.32.5) (2021-08-14)
 
 
 ### Bug Fixes
 
 * **electron:** don't show the save file dialog when the note is empty ([#762](https://www.github.com/ocavue/rino/issues/762)) ([706179a](https://www.github.com/ocavue/rino/commit/706179a0c2fd6be22b657dff3738a09dab64d616))
 
-### [0.32.4](https://www.github.com/ocavue/rino/compare/v0.32.3...v0.32.4) (2021-08-10)
+## [0.32.4](https://www.github.com/ocavue/rino/compare/v0.32.3...v0.32.4) (2021-08-10)
 
 
 ### Bug Fixes
 
 * **electron:** use Ctrl+W or Command+W to close windows ([#756](https://www.github.com/ocavue/rino/issues/756)) ([f3927ab](https://www.github.com/ocavue/rino/commit/f3927ab6bec3608bbb3d707016e73deae7afb707))
 
-### [0.32.3](https://www.github.com/ocavue/rino/compare/v0.32.2...v0.32.3) (2021-08-09)
+## [0.32.3](https://www.github.com/ocavue/rino/compare/v0.32.2...v0.32.3) (2021-08-09)
 
 
 ### Bug Fixes
 
 * **electron:** add git commit information in the about panel ([#748](https://www.github.com/ocavue/rino/issues/748)) ([8853fe6](https://www.github.com/ocavue/rino/commit/8853fe6e542dacd450148705e4e13e670d497108))
 
-### [0.32.2](https://www.github.com/ocavue/rino/compare/v0.32.1...v0.32.2) (2021-07-26)
+## [0.32.2](https://www.github.com/ocavue/rino/compare/v0.32.1...v0.32.2) (2021-07-26)
 
 
 ### Bug Fixes
@@ -29,7 +29,7 @@
 * **editor:** fix IME input in task lists ([627d1d6](https://www.github.com/ocavue/rino/commit/627d1d664cc8cfc49301ea28a20eac6ccfb9abb6))
 * **electron:** reduce the startup delay ([#740](https://www.github.com/ocavue/rino/issues/740)) ([938d1f1](https://www.github.com/ocavue/rino/commit/938d1f15f34022bb55c1300bf30428e8ddec6949))
 
-### [0.32.1](https://www.github.com/ocavue/rino/compare/v0.32.0...v0.32.1) (2021-07-25)
+## [0.32.1](https://www.github.com/ocavue/rino/compare/v0.32.0...v0.32.1) (2021-07-25)
 
 
 ### Bug Fixes
@@ -44,14 +44,14 @@
 * **home:** improve download buttons ([#720](https://www.github.com/ocavue/rino/issues/720)) ([d098c13](https://www.github.com/ocavue/rino/commit/d098c13a1ec96549041656d389458edb5f6536a8))
 * **home:** show the latest version number  ([#726](https://www.github.com/ocavue/rino/issues/726)) ([a58ee1b](https://www.github.com/ocavue/rino/commit/a58ee1b4b1348d96d36f9605698d15cba582095a))
 
-### [0.31.2](https://www.github.com/ocavue/rino/compare/v0.31.1...v0.31.2) (2021-07-12)
+## [0.31.2](https://www.github.com/ocavue/rino/compare/v0.31.1...v0.31.2) (2021-07-12)
 
 
 ### Bug Fixes
 
 * **editor:** set maximum editor width ([#710](https://www.github.com/ocavue/rino/issues/710)) ([7b93ad8](https://www.github.com/ocavue/rino/commit/7b93ad8d6813b00baf36bbf805828801f8c79c17))
 
-### [0.31.1](https://www.github.com/ocavue/rino/compare/v0.31.0...v0.31.1) (2021-07-11)
+## [0.31.1](https://www.github.com/ocavue/rino/compare/v0.31.0...v0.31.1) (2021-07-11)
 
 
 ### Bug Fixes
@@ -108,7 +108,7 @@
 
 * **editor:** support ordered list marker followed by `)` character ([#683](https://www.github.com/ocavue/rino/issues/683)) ([3701d80](https://www.github.com/ocavue/rino/commit/3701d8036ef69f53f4e7806b198bb279f39edeff))
 
-### [0.26.4](https://www.github.com/ocavue/rino/compare/v0.26.3...v0.26.4) (2021-07-04)
+## [0.26.4](https://www.github.com/ocavue/rino/compare/v0.26.3...v0.26.4) (2021-07-04)
 
 
 ### Bug Fixes
@@ -116,21 +116,21 @@
 * **editor:** allow users to turn list items into task list items ([#680](https://www.github.com/ocavue/rino/issues/680)) ([26efc12](https://www.github.com/ocavue/rino/commit/26efc1238b3764cd64649986589d507a7bc7aa10))
 * **electron:** show a dialog when update available ([#681](https://www.github.com/ocavue/rino/issues/681)) ([16f5aa7](https://www.github.com/ocavue/rino/commit/16f5aa7b971f6899c1d276126c7565b41421d3e6))
 
-### [0.26.3](https://www.github.com/ocavue/rino/compare/v0.26.2...v0.26.3) (2021-06-29)
+## [0.26.3](https://www.github.com/ocavue/rino/compare/v0.26.2...v0.26.3) (2021-06-29)
 
 
 ### Bug Fixes
 
 * **editor:** don't allow text outside the source code mode code block ([#674](https://www.github.com/ocavue/rino/issues/674)) ([284e982](https://www.github.com/ocavue/rino/commit/284e982106fb62ede8e3ce8a6dcb71f684714bbe))
 
-### [0.26.2](https://www.github.com/ocavue/rino/compare/v0.26.1...v0.26.2) (2021-06-27)
+## [0.26.2](https://www.github.com/ocavue/rino/compare/v0.26.1...v0.26.2) (2021-06-27)
 
 
 ### Bug Fixes
 
 * **editor:** improve editor styles ([#670](https://www.github.com/ocavue/rino/issues/670)) ([f5b7a1b](https://www.github.com/ocavue/rino/commit/f5b7a1bee7cb060bb42eb1159ba9cc670689d075))
 
-### [0.26.1](https://www.github.com/ocavue/rino/compare/v0.26.0...v0.26.1) (2021-06-13)
+## [0.26.1](https://www.github.com/ocavue/rino/compare/v0.26.0...v0.26.1) (2021-06-13)
 
 
 ### Bug Fixes
@@ -173,7 +173,7 @@
 
 * **workbench:** add basic workbench implementation ([#608](https://www.github.com/ocavue/rino/issues/608)) ([8bc737b](https://www.github.com/ocavue/rino/commit/8bc737b6ba8ca84a15c4425edf06d04fffa522ea))
 
-### [0.21.1](https://www.github.com/ocavue/rino/compare/v0.21.0...v0.21.1) (2021-04-27)
+## [0.21.1](https://www.github.com/ocavue/rino/compare/v0.21.0...v0.21.1) (2021-04-27)
 
 
 ### Bug Fixes
@@ -187,7 +187,7 @@
 
 * create DMG installer for macOS ([#593](https://www.github.com/ocavue/rino/issues/593)) ([5c3c97b](https://www.github.com/ocavue/rino/commit/5c3c97b529992fb4436d073c950bcf39731a44be))
 
-### [0.20.1](https://www.github.com/ocavue/rino/compare/v0.20.0...v0.20.1) (2021-04-26)
+## [0.20.1](https://www.github.com/ocavue/rino/compare/v0.20.0...v0.20.1) (2021-04-26)
 
 
 ### Bug Fixes
