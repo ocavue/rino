@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.32.8](https://www.github.com/ocavue/rino/compare/v0.32.7...v0.32.8) (2021-08-16)
+
+
+### Bug Fixes
+
+* **electron:** improve the file dialog when closing a file ([#779](https://www.github.com/ocavue/rino/issues/779)) ([552bcad](https://www.github.com/ocavue/rino/commit/552bcad7e31a32e16ef2117066c5936f0b53880f))
+
 ## [0.32.7](https://www.github.com/ocavue/rino/compare/v0.32.6...v0.32.7) (2021-08-16)
 
 
