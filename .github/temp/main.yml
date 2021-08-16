@@ -68,7 +68,7 @@ jobs:
 
       - name: Build dependencies
         run: |
-          pnpm --filter '@rino.app/electron-*' build
+          pnpm --filter '@rino.app/electron-*...' build
 
       - name: Build electron
         run: |
