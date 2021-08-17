@@ -125,7 +125,7 @@ jobs:
           REACT_APP_TEST_USERNAME: ${{ secrets.REACT_APP_TEST_USERNAME }}
           REACT_APP_TEST_PASSWORD: ${{ secrets.REACT_APP_TEST_PASSWORD }}
         run: |
-          pnpm test --coverage
+          pnpm test -- --coverage
 
       - name: Upload coverage information to codecov
         uses: codecov/codecov-action@v2
