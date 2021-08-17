@@ -68,7 +68,7 @@ jobs:
 
       - name: Build dependencies
         run: |
-          pnpm --filter '@rino.app/electron-*...' build
+          pnpm --filter '@rino.app/electron^...' build
 
       - name: Build electron
         run: |
@@ -117,7 +117,7 @@ jobs:
           REACT_APP_TEST_PASSWORD: ${{ secrets.REACT_APP_TEST_PASSWORD }}
           REACT_APP_TESTING: 1
         run: |
-          pnpm --filter @rino.app/common build
+          pnpm --filter '*^...' build
 
       - name: Run tests
         env:
@@ -125,13 +125,12 @@ jobs:
           REACT_APP_TEST_USERNAME: ${{ secrets.REACT_APP_TEST_USERNAME }}
           REACT_APP_TEST_PASSWORD: ${{ secrets.REACT_APP_TEST_PASSWORD }}
         run: |
-          ultra test --coverage
+          pnpm test --coverage
 
       - name: Upload coverage information to codecov
         uses: codecov/codecov-action@v2
         with:
           file: ./coverage/coverage-final.json
-          fail_ci_if_error: false # Specify if CI pipeline should fail when Codecov runs into errors during upload. Defaults to false
 
   lint:
     runs-on: ubuntu-latest

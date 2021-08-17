@@ -87,7 +87,7 @@
         },
         {
           "name": "Build dependencies",
-          "run": "pnpm --filter '@rino.app/electron-*...' build\n"
+          "run": "pnpm --filter '@rino.app/electron^...' build\n"
         },
         {
           "name": "Build electron",
@@ -158,7 +158,7 @@
             "REACT_APP_TEST_PASSWORD": "${{ secrets.REACT_APP_TEST_PASSWORD }}",
             "REACT_APP_TESTING": 1
           },
-          "run": "pnpm --filter @rino.app/common build\n"
+          "run": "pnpm --filter '*^...' build\n"
         },
         {
           "name": "Run tests",
@@ -167,14 +167,13 @@
             "REACT_APP_TEST_USERNAME": "${{ secrets.REACT_APP_TEST_USERNAME }}",
             "REACT_APP_TEST_PASSWORD": "${{ secrets.REACT_APP_TEST_PASSWORD }}"
           },
-          "run": "ultra test --coverage\n"
+          "run": "pnpm test --coverage\n"
         },
         {
           "name": "Upload coverage information to codecov",
           "uses": "codecov/codecov-action@v2",
           "with": {
-            "file": "./coverage/coverage-final.json",
-            "fail_ci_if_error": false
+            "file": "./coverage/coverage-final.json"
           }
         }
       ]
