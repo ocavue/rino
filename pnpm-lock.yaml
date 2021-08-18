@@ -78,7 +78,7 @@ importers:
       '@remirror/dev': ^1.0.2
       '@remirror/extension-blockquote': ^1.0.1
       '@remirror/extension-codemirror5': ^1.0.1
-      '@remirror/extension-doc': ^1.0.1
+      '@remirror/extension-doc': ^1.0.2
       '@remirror/extension-hard-break': ^1.0.1
       '@remirror/extension-heading': ^1.0.1
       '@remirror/extension-horizontal-rule': ^1.0.1
@@ -137,7 +137,7 @@ importers:
       '@remirror/dev': 1.0.2_b7ec5032ee69e481d3e05815b235d655
       '@remirror/extension-blockquote': 1.0.1_3e769c55361d6748c477af01856cb840
       '@remirror/extension-codemirror5': 1.0.1_43fcabbdb7454e7498a6372788c6f4b9
-      '@remirror/extension-doc': 1.0.1_3e769c55361d6748c477af01856cb840
+      '@remirror/extension-doc': 1.0.2_3e769c55361d6748c477af01856cb840
       '@remirror/extension-hard-break': 1.0.1_3e769c55361d6748c477af01856cb840
       '@remirror/extension-heading': 1.0.1_3e769c55361d6748c477af01856cb840
       '@remirror/extension-horizontal-rule': 1.0.1_3e769c55361d6748c477af01856cb840
@@ -1756,6 +1756,21 @@ packages:
       - '@types/node'
       - domino
       - jsdom
+
+  /@remirror/extension-doc/1.0.2_3e769c55361d6748c477af01856cb840:
+    resolution: {integrity: sha512-IM61n8oy8wGwaKtvKn+Rq7GSr1eZ/s7rQ+KFt5B5KhuVMVE5lY79ivGGABuBC91ymO/Vw1lDmIOiSDKolho0rg==}
+    peerDependencies:
+      '@remirror/pm': ^1.0.1
+    dependencies:
+      '@babel/runtime': 7.15.3
+      '@remirror/core': 1.0.2_3e769c55361d6748c477af01856cb840
+      '@remirror/messages': 1.0.2
+      '@remirror/pm': 1.0.1
+    transitivePeerDependencies:
+      - '@types/node'
+      - domino
+      - jsdom
+    dev: false
 
   /@remirror/extension-emoji/1.0.1_3e769c55361d6748c477af01856cb840:
     resolution: {integrity: sha512-1/jYFG5qVJukvngxI+wzCGxv5KDhW8ZC8M4bb2OslK00G0UjzLDATu+aj7ZCuPeCBlsjpuECM8bXubeKl2ehRg==}
