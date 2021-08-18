@@ -399,7 +399,7 @@
           "uses": "ethomson/send-tweet-action@v1",
           "if": "github.ref == 'refs/heads/master' && needs.release.outputs.published == 'true'",
           "with": {
-            "status": "🎉 Rino ${{ needs.release.outputs.tag_name }} is here!\n\n${{ steps.step_parse_changelog.outputs.latestBody }}\n\nChangelog: bit.ly/3meXiIy\nDownload: rino.app\n",
+            "status": "🎉 Rino ${{ needs.release.outputs.tag_name }} is here!\n\nChangelog: rino.app/changelog\nDiscord: rino.app/chat\nDownload: rino.app\n",
             "consumer-key": "${{ secrets.TWITTER_CONSUMER_API_KEY }}",
             "consumer-secret": "${{ secrets.TWITTER_CONSUMER_API_SECRET }}",
             "access-token": "${{ secrets.TWITTER_ACCESS_TOKEN }}",
