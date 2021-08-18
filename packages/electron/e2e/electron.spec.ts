@@ -16,7 +16,7 @@ test("launch", async () => {
     })
     expect(app).toBeTruthy()
     const page = await app.firstWindow()
-    await page.waitForSelector("[data-testid=wysiwyg_mode_textarea]")
+    await page.waitForSelector("[data-testid=wysiwyg_mode_textarea]", { timeout: 5000 })
     await page.close()
     await app.close()
 })
