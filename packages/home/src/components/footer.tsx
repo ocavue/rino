@@ -1,7 +1,7 @@
 import React from "react"
 
 import { colors } from "../styles/color"
-import { GITHUB_LINK, MAILTO_LINK, TWITTER_LINK } from "./links"
+import { DISCORD_LINK, GITHUB_LINK, MAILTO_LINK, TWITTER_LINK } from "./links"
 
 const Link: React.FC<{ href: string; text: string }> = ({ href, text }) => (
     <a
@@ -31,6 +31,7 @@ export const Footer: React.FC = () => (
         }}
     >
         <Link text="Twitter" href={TWITTER_LINK} />
+        <Link text="Discord" href={DISCORD_LINK} />
         <Link text="Github" href={GITHUB_LINK} />
         <Link text="Email" href={MAILTO_LINK} />
     </div>
