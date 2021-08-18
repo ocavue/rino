@@ -287,9 +287,8 @@ jobs:
           status: |
             🎉 Rino ${{ needs.release.outputs.tag_name }} is here!
 
-            ${{ steps.step_parse_changelog.outputs.latestBody }}
-
-            Changelog: bit.ly/3meXiIy
+            Changelog: rino.app/changelog
+            Discord: rino.app/chat
             Download: rino.app
           consumer-key: ${{ secrets.TWITTER_CONSUMER_API_KEY }}
           consumer-secret: ${{ secrets.TWITTER_CONSUMER_API_SECRET }}
