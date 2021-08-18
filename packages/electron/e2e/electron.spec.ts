@@ -8,15 +8,20 @@ const electron = playwright._electron
 const packageRoot = path.join(path.dirname(fileURLToPath(import.meta.url)), "..")
 const setupPath = path.join(packageRoot, "setup.sh")
 
-test("launch", async () => {
-    expect(packageRoot.endsWith("packages/electron")).toBeTruthy()
-    spawnSync(setupPath)
-    const app = await electron.launch({
-        args: [packageRoot],
+describe("smoke test", () => {
+    beforeAll(() => {
+        expect(packageRoot.endsWith("packages/electron")).toBeTruthy()
+        spawnSync(setupPath)
     })
-    expect(app).toBeTruthy()
-    const page = await app.firstWindow()
-    await page.waitForSelector("[data-testid=wysiwyg_mode_textarea]", { timeout: 5000 })
-    await page.close()
-    await app.close()
+
+    test("launch", async () => {
+        const app = await electron.launch({
+            args: [packageRoot],
+        })
+        expect(app).toBeTruthy()
+        const page = await app.firstWindow()
+        await page.waitForSelector("[data-testid=wysiwyg_mode_textarea]", { timeout: 5000 })
+        await page.close()
+        await app.close()
+    })
 })
