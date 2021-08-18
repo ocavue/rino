@@ -14,14 +14,22 @@ describe("smoke test", () => {
         spawnSync(setupPath)
     })
 
+    let app: playwright.ElectronApplication
+    let win: playwright.Page
     test("launch", async () => {
-        const app = await electron.launch({
+        app = await electron.launch({
             args: [packageRoot],
         })
         expect(app).toBeTruthy()
-        const page = await app.firstWindow()
-        await page.waitForSelector("[data-testid=wysiwyg_mode_textarea]", { timeout: 5000 })
-        await page.close()
+    })
+    test("window", async () => {
+        win = await app.firstWindow()
+        await win.waitForSelector("[data-testid=wysiwyg_mode_textarea]", { timeout: 5000 })
+    })
+    test("close window", async () => {
+        await win.close()
+    })
+    test("close window", async () => {
         await app.close()
     })
 })

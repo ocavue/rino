@@ -16,7 +16,6 @@ export default {
                 executablePath: process.env.PLAYWRIGHT_CHROME_EXECUTABLE_PATH,
                 headless: true,
             },
-            collectCoverage: true, // TODO: respect jest's --coverage flag
         },
     },
 }
