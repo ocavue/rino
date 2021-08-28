@@ -48,7 +48,7 @@ const WysiwygEditor = React.memo<WysiwygEditorProps>(
         onContentSave,
         onContentSaveDelay,
     }) => {
-        const [error, setError] = useState<Error | null>(null)
+        const [error, setError] = useState<any>(null)
 
         const { manager } = useWysiwygRemirror()
 
