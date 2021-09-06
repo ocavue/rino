@@ -1,3 +1,4 @@
+/* eslint-disable react/display-name */
 /* istanbul ignore file */
 
 import { ServerStyleSheets } from "@material-ui/core/styles"
