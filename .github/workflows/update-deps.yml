@@ -24,11 +24,9 @@ jobs:
         if: ${{ steps.step_find_pr.outputs.number }}
 
       - name: Install dependencies
-        run: pnpm install --ignore-scripts
-        if: ${{ steps.step_find_pr.outputs.number }}
-
-      - name: Update dependencies
-        run: pnpm update-deps
+        run: |
+          rm -rf pnpm-lock.yaml
+          pnpm i
         if: ${{ steps.step_find_pr.outputs.number }}
 
       - name: Push to GitHub
