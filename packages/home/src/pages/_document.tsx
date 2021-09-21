@@ -7,7 +7,7 @@ import React from "react"
 
 import { createEmotionCache } from "../styles/cache"
 
-export const NextMeta: React.FC<{ host: string; hasManifest: boolean; description: string }> = ({ host, hasManifest, description }) => {
+const NextMeta: React.FC<{ host: string; hasManifest: boolean; description: string }> = ({ host, hasManifest, description }) => {
     const image = `${host}/share/img/icons/android-chrome-512x512.png`
     return (
         /* prettier-ignore */

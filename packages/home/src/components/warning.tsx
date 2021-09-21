@@ -1,7 +1,7 @@
 import { Alert } from "@mui/material"
 import { Theme } from "@mui/material/styles"
-import createStyles from "@mui/styles/createStyles"
-import makeStyles from "@mui/styles/makeStyles"
+import {createStyles} from "@mui/styles"
+import {makeStyles } from "@mui/styles"
 import React from "react"
 
 import { rootLevelBlock } from "../styles/layout"

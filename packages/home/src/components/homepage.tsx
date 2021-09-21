@@ -1,6 +1,6 @@
 import { Divider, Theme } from "@mui/material"
-import createStyles from "@mui/styles/createStyles"
-import makeStyles from "@mui/styles/makeStyles"
+import {createStyles} from "@mui/styles"
+import {makeStyles } from "@mui/styles"
 import React, { FC, useCallback, useState } from "react"
 
 import { Appbar } from "./appbar"

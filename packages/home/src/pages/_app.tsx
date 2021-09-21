@@ -1,7 +1,7 @@
 /* istanbul ignore file */
 
 import { CacheProvider, EmotionCache } from "@emotion/react"
-import CssBaseline from "@mui/material/CssBaseline"
+import { CssBaseline } from "@mui/material"
 import { ThemeProvider } from "@mui/material/styles"
 import { AppProps } from "next/app"
 import Head from "next/head"
@@ -13,11 +13,11 @@ import { theme } from "../styles/theme"
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache()
 
-interface MyAppProps extends AppProps {
+interface BaseAppProps extends AppProps {
     emotionCache?: EmotionCache
 }
 
-export default function BaseApp(props: MyAppProps) {
+export default function BaseApp(props: BaseAppProps) {
     const { Component, emotionCache = clientSideEmotionCache, pageProps } = props
     return (
         <CacheProvider value={emotionCache}>

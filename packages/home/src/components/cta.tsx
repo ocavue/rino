@@ -1,6 +1,5 @@
 import { Button } from "@mui/material"
-import createStyles from "@mui/styles/createStyles"
-import makeStyles from "@mui/styles/makeStyles"
+import { createStyles, makeStyles } from "@mui/styles"
 import React from "react"
 
 import { rootLevelBlock } from "../styles/layout"

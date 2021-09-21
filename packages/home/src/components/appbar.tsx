@@ -1,6 +1,5 @@
 import { Button, Hidden, Toolbar } from "@mui/material"
-import createStyles from "@mui/styles/createStyles"
-import makeStyles from "@mui/styles/makeStyles"
+import { createStyles, makeStyles } from "@mui/styles"
 import React, { FC } from "react"
 
 import { rootLevelBlock } from "../styles/layout"
