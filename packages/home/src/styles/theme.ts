@@ -1,4 +1,3 @@
-import { Theme } from "@mui/material"
 import { createTheme } from "@mui/material/styles"
 
 const theme = createTheme({
@@ -22,8 +21,3 @@ const theme = createTheme({
 })
 
 export { theme }
-
-declare module "@mui/styles" {
-    // eslint-disable-next-line @typescript-eslint/no-empty-interface
-    interface DefaultTheme extends Theme {}
-}

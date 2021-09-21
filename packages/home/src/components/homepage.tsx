@@ -1,5 +1,5 @@
 import { Divider } from "@mui/material"
-import { createStyles, makeStyles } from "@mui/styles"
+import { Box } from "@mui/system"
 import React, { FC, useCallback, useState } from "react"
 
 import { Appbar } from "./appbar"
@@ -10,35 +10,30 @@ import { Headline } from "./headline"
 import { Hero, HeroProps } from "./hero"
 import { Warning } from "./warning"
 
-const useStyles = makeStyles(
-    createStyles({
-        root: {
-            position: "relative",
-
-            /**
-             * Reset links to optimize for opt-in styling instead of
-             * opt-out.
-             */
-            "& a": {
-                textDecoration: "inherit",
-            },
-        },
-    }),
-)
-
 type HomepageProps = {
     hero: HeroProps
 }
 
 const Home: FC<HomepageProps> = (props) => {
-    const classes = useStyles()
-
     const [openDownloadDialog, setOpenDownloadDialog] = useState(false)
     const handleCloseDownloadDialog = useCallback(() => setOpenDownloadDialog(false), [])
     const handleOpenDownloadDialog = useCallback(() => setOpenDownloadDialog(true), [])
 
     return (
-        <div className={classes.root} data-testid="homepage_root">
+        <Box
+            sx={{
+                position: "relative",
+
+                /**
+                 * Reset links to optimize for opt-in styling instead of
+                 * opt-out.
+                 */
+                "& a": {
+                    textDecoration: "inherit",
+                },
+            }}
+            data-testid="homepage_root"
+        >
             <Appbar handleOpenDownloadDialog={handleOpenDownloadDialog} />
             <Divider />
             <Warning />
@@ -48,7 +43,7 @@ const Home: FC<HomepageProps> = (props) => {
             <Divider />
             <Footer />
             <DownloadDialog open={openDownloadDialog} handleClose={handleCloseDownloadDialog} />
-        </div>
+        </Box>
     )
 }
 

@@ -271,7 +271,6 @@ importers:
       '@emotion/styled': ^11.3.0
       '@mui/icons-material': ^5.0.0
       '@mui/material': ^5.0.0
-      '@mui/styles': ^5.0.0
       '@mui/system': ^5.0.0
       '@testing-library/jest-dom': ^5.14.1
       '@testing-library/react': ^12.1.0
@@ -289,7 +288,6 @@ importers:
       '@emotion/styled': 11.3.0_20de4d7c06481574edaf49b95b4219b0
       '@mui/icons-material': 5.0.0_72e5a6ce8d0505565174dd974e4561c4
       '@mui/material': 5.0.0_bdd072f4e114e18a9f7e3389a09272ff
-      '@mui/styles': 5.0.0_4726f45725de6dc318b8ee59ad7f5865
       '@mui/system': 5.0.0_af2f2af50c58b767794686fb10dd91e9
       '@testing-library/jest-dom': 5.14.1
       '@testing-library/react': 12.1.0_react-dom@17.0.2+react@17.0.2
@@ -1575,37 +1573,6 @@ packages:
       '@emotion/cache': 11.4.0
       '@emotion/react': 11.4.1_832ac59335183f69c69af4dd1a5c8127
       '@emotion/styled': 11.3.0_20de4d7c06481574edaf49b95b4219b0
-      prop-types: 15.7.2
-      react: 17.0.2
-    dev: true
-
-  /@mui/styles/5.0.0_4726f45725de6dc318b8ee59ad7f5865:
-    resolution: {integrity: sha512-J4Cg43m1M+7HsvV4XtTGAs39ogZcnzTUDxw0VbEdDdaEYdXG0jC5VXT/UouOPI2SWA3/v+trfanW8t/U2pIsqA==}
-    engines: {node: '>=12.0.0'}
-    peerDependencies:
-      '@types/react': ^16.8.6 || ^17.0.0
-      react: ^17.0.2
-    peerDependenciesMeta:
-      '@types/react':
-        optional: true
-    dependencies:
-      '@babel/runtime': 7.15.4
-      '@emotion/hash': 0.8.0
-      '@mui/private-theming': 5.0.0_4726f45725de6dc318b8ee59ad7f5865
-      '@mui/types': 7.0.0_@types+react@17.0.22
-      '@mui/utils': 5.0.0_react@17.0.2
-      '@types/react': 17.0.22
-      clsx: 1.1.1
-      csstype: 3.0.9
-      hoist-non-react-statics: 3.3.2
-      jss: 10.8.0
-      jss-plugin-camel-case: 10.8.0
-      jss-plugin-default-unit: 10.8.0
-      jss-plugin-global: 10.8.0
-      jss-plugin-nested: 10.8.0
-      jss-plugin-props-sort: 10.8.0
-      jss-plugin-rule-value-function: 10.8.0
-      jss-plugin-vendor-prefixer: 10.8.0
       prop-types: 15.7.2
       react: 17.0.2
     dev: true
@@ -5061,6 +5028,7 @@ packages:
     dependencies:
       '@babel/runtime': 7.15.4
       is-in-browser: 1.1.3
+    dev: false
 
   /css-what/3.4.2:
     resolution: {integrity: sha512-ACUm3L0/jiZTqfzRM3Hi9Q8eZqd6IK37mMWPLz9PJxkLWllYeRf+EHUSHYEtFop2Eqytaq1FizFVh7XfBnXCDQ==}
@@ -7288,6 +7256,7 @@ packages:
 
   /is-in-browser/1.1.3:
     resolution: {integrity: sha1-Vv9NtoOgeMYILrldrX3GLh0E+DU=}
+    dev: false
 
   /is-installed-globally/0.1.0:
     resolution: {integrity: sha1-Df2Y9akRFxbdU13aZJL2e/PSWoA=}
@@ -8395,18 +8364,21 @@ packages:
       '@babel/runtime': 7.15.4
       hyphenate-style-name: 1.0.4
       jss: 10.8.0
+    dev: false
 
   /jss-plugin-default-unit/10.8.0:
     resolution: {integrity: sha512-9XJV546cY9zV9OvIE/v/dOaxSi4062VfYQQfwbplRExcsU2a79Yn+qDz/4ciw6P4LV1Naq90U+OffAGRHfNq/Q==}
     dependencies:
       '@babel/runtime': 7.15.4
       jss: 10.8.0
+    dev: false
 
   /jss-plugin-global/10.8.0:
     resolution: {integrity: sha512-H/8h/bHd4e7P0MpZ9zaUG8NQSB2ie9rWo/vcCP6bHVerbKLGzj+dsY22IY3+/FNRS8zDmUyqdZx3rD8k4nmH4w==}
     dependencies:
       '@babel/runtime': 7.15.4
       jss: 10.8.0
+    dev: false
 
   /jss-plugin-nested/10.8.0:
     resolution: {integrity: sha512-MhmINZkSxyFILcFBuDoZmP1+wj9fik/b9SsjoaggkGjdvMQCES21mj4K5ZnRGVm448gIXyi9j/eZjtDzhaHUYQ==}
@@ -8414,12 +8386,14 @@ packages:
       '@babel/runtime': 7.15.4
       jss: 10.8.0
       tiny-warning: 1.0.3
+    dev: false
 
   /jss-plugin-props-sort/10.8.0:
     resolution: {integrity: sha512-VY+Wt5WX5GMsXDmd+Ts8+O16fpiCM81svbox++U3LDbJSM/g9FoMx3HPhwUiDfmgHL9jWdqEuvSl/JAk+mh6mQ==}
     dependencies:
       '@babel/runtime': 7.15.4
       jss: 10.8.0
+    dev: false
 
   /jss-plugin-rule-value-function/10.8.0:
     resolution: {integrity: sha512-R8N8Ma6Oye1F9HroiUuHhVjpPsVq97uAh+rMI6XwKLqirIu2KFb5x33hPj+vNBMxSHc9jakhf5wG0BbQ7fSDOg==}
@@ -8427,6 +8401,7 @@ packages:
       '@babel/runtime': 7.15.4
       jss: 10.8.0
       tiny-warning: 1.0.3
+    dev: false
 
   /jss-plugin-vendor-prefixer/10.8.0:
     resolution: {integrity: sha512-G1zD0J8dFwKZQ+GaZaay7A/Tg7lhDw0iEkJ/iFFA5UPuvZFpMprCMQttXcTBhLlhhWnyZ8YPn4yqp+amrhQekw==}
@@ -8434,6 +8409,7 @@ packages:
       '@babel/runtime': 7.15.4
       css-vendor: 2.0.8
       jss: 10.8.0
+    dev: false
 
   /jss/10.8.0:
     resolution: {integrity: sha512-6fAMLJrVQ8epM5ghghxWqCwRR0ZamP2cKbOAtzPudcCMSNdAqtvmzQvljUZYR8OXJIeb/IpZeOXA1sDXms4R1w==}
@@ -8442,6 +8418,7 @@ packages:
       csstype: 3.0.9
       is-in-browser: 1.1.3
       tiny-warning: 1.0.3
+    dev: false
 
   /jsx-ast-utils/3.2.1:
     resolution: {integrity: sha512-uP5vu8xfy2F9A6LGC22KO7e2/vGTS1MhP+18f++ZNlf0Ohaxbc9nIEwHAsejlJKyzfZzU5UIhe5ItYkitcZnZA==}
