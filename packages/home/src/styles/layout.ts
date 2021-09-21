@@ -8,4 +8,4 @@ export const rootLevelBlock = {
     margin: "0 auto",
     paddingLeft: 32,
     paddingRight: 32,
-}
+} as const

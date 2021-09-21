@@ -1,5 +1,4 @@
-import {createStyles} from "@mui/styles"
-import {makeStyles } from "@mui/styles"
+import { Box } from "@mui/system"
 import React, { ImgHTMLAttributes } from "react"
 
 import { rootLevelBlock } from "../styles/layout"
@@ -8,30 +7,23 @@ export type HeroProps = {
     imageProps: ImgHTMLAttributes<HTMLImageElement>
 }
 
-const useStyles = makeStyles((theme) =>
-    createStyles({
-        hero: {
-            ...rootLevelBlock,
-            marginTop: "32px",
-        },
-        img: {
-            width: "100%",
-            height: "100%",
-
-            [theme.breakpoints.up("md")]: {
-                paddingLeft: 16,
-                paddingRight: 16,
-            },
-        },
-    }),
-)
-
 export const Hero: React.FC<HeroProps> = ({ imageProps }) => {
-    const classes = useStyles()
-
     return (
-        <div className={classes.hero}>
-            <img {...imageProps} alt="Snapshot" className={classes.img} />
-        </div>
+        <Box
+            sx={{
+                ...rootLevelBlock,
+                marginTop: "32px",
+            }}
+        >
+            <Box
+                component="img"
+                sx={{
+                    width: { xs: "100%", md: 16 },
+                    height: { xs: "100%", md: 16 },
+                }}
+                alt="Snapshot"
+                {...imageProps}
+            />
+        </Box>
     )
 }
