@@ -1,10 +1,10 @@
-import { adaptV4Theme, createTheme } from "@mui/material/styles"
+import { createTheme } from "@mui/material/styles"
 
-const theme = createTheme(
-    adaptV4Theme({
-        overrides: {
-            // Style sheet name ⚛️
-            MuiButton: {
+const theme = createTheme({
+    components: {
+        // Style sheet name ⚛️
+        MuiButton: {
+            styleOverrides: {
                 // Name of the rule
                 root: {
                     // Some CSS
@@ -12,12 +12,12 @@ const theme = createTheme(
                 },
             },
         },
-        palette: {
-            primary: {
-                main: "#2e93c1",
-            },
+    },
+    palette: {
+        primary: {
+            main: "#2e93c1",
         },
-    }),
-)
+    },
+})
 
 export { theme }
