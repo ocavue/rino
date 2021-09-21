@@ -3,6 +3,7 @@
 import { CacheProvider, EmotionCache } from "@emotion/react"
 import { CssBaseline } from "@mui/material"
 import { ThemeProvider } from "@mui/material/styles"
+import { StyledEngineProvider } from "@mui/material/styles"
 import { AppProps } from "next/app"
 import Head from "next/head"
 import React from "react"
@@ -20,16 +21,18 @@ interface BaseAppProps extends AppProps {
 export default function BaseApp(props: BaseAppProps) {
     const { Component, emotionCache = clientSideEmotionCache, pageProps } = props
     return (
-        <CacheProvider value={emotionCache}>
-            <Head>
-                <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-                <title>Rino</title>
-            </Head>
-            <ThemeProvider theme={theme}>
-                {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
-                <CssBaseline />
-                <Component {...pageProps} />
-            </ThemeProvider>
-        </CacheProvider>
+        <StyledEngineProvider injectFirst>
+            <CacheProvider value={emotionCache}>
+                <Head>
+                    <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+                    <title>Rino</title>
+                </Head>
+                <ThemeProvider theme={theme}>
+                    {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
+                    <CssBaseline />
+                    <Component {...pageProps} />
+                </ThemeProvider>
+            </CacheProvider>
+        </StyledEngineProvider>
     )
 }

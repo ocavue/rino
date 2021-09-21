@@ -1,6 +1,5 @@
-import { Divider, Theme } from "@mui/material"
-import {createStyles} from "@mui/styles"
-import {makeStyles } from "@mui/styles"
+import { Divider } from "@mui/material"
+import { createStyles, makeStyles } from "@mui/styles"
 import React, { FC, useCallback, useState } from "react"
 
 import { Appbar } from "./appbar"
@@ -10,11 +9,6 @@ import { Footer } from "./footer"
 import { Headline } from "./headline"
 import { Hero, HeroProps } from "./hero"
 import { Warning } from "./warning"
-
-declare module "@mui/styles/defaultTheme" {
-    // eslint-disable-next-line @typescript-eslint/no-empty-interface
-    interface DefaultTheme extends Theme {}
-}
 
 const useStyles = makeStyles(
     createStyles({

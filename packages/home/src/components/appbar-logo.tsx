@@ -1,5 +1,5 @@
-import {createStyles} from "@mui/styles"
-import {makeStyles } from "@mui/styles"
+import { createStyles } from "@mui/styles"
+import { makeStyles } from "@mui/styles"
 import React from "react"
 
 import { colors } from "../styles/color"
