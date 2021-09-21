@@ -117,11 +117,11 @@ importers:
       prosemirror-inputrules: ^1.1.3
       prosemirror-keymap: ^1.1.4
       prosemirror-model: ^1.14.3
-      prosemirror-schema-list: ^1.1.5
+      prosemirror-schema-list: ^1.1.6
       prosemirror-state: ^1.3.4
       prosemirror-tables: ^1.1.1
       prosemirror-transform: ^1.3.2
-      prosemirror-view: ^1.20.0
+      prosemirror-view: ^1.20.1
       react: ^17.0.2
       react-dom: ^17.0.2
       typescript: ^4.4.3
@@ -165,7 +165,7 @@ importers:
       prosemirror-inputrules: 1.1.3
       prosemirror-keymap: 1.1.4
       prosemirror-model: 1.14.3
-      prosemirror-schema-list: 1.1.5
+      prosemirror-schema-list: 1.1.6
       prosemirror-state: 1.3.4
       prosemirror-tables: 1.1.1
       prosemirror-transform: 1.3.2
@@ -182,7 +182,7 @@ importers:
       commonmark-spec: 0.30.0
       jest: 27.2.0
       jest-extended: 0.11.5
-      jest-remirror: 1.0.9_03f40ab4de196de531331007d816eece
+      jest-remirror: 1.0.9_6449272f1cdf82f56721e55e7a5ac6e4
       lodash-es: 4.17.21
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
@@ -7902,7 +7902,7 @@ packages:
       - supports-color
     dev: true
 
-  /jest-prosemirror/1.0.4_03f40ab4de196de531331007d816eece:
+  /jest-prosemirror/1.0.4_6449272f1cdf82f56721e55e7a5ac6e4:
     resolution: {integrity: sha512-l2Ey1Mdqyra06v5/CJsY8KinT6HKOg6VzeelIaaniOUd1p57d/OrCBD6Tke/Nu1EY6O6CeqzCrJlEBmW4lRuiw==}
     peerDependencies:
       jest: '>= 24'
@@ -7922,7 +7922,7 @@ packages:
       jest-matcher-utils: 27.2.0
       prosemirror-schema-basic: 1.1.2
       prosemirror-tables: 1.1.1
-      prosemirror-test-builder: 1.0.4_7f7e6f074ca07e5a0e0fbbc09c83f97f
+      prosemirror-test-builder: 1.0.4_b719db5d21bbda3c646dcc24a39fb429
       stringify-object: 3.3.0
       test-keyboard: 1.0.1_@remirror+pm@1.0.2
     transitivePeerDependencies:
@@ -7943,7 +7943,7 @@ packages:
     engines: {node: ^10.13.0 || ^12.13.0 || ^14.15.0 || >=15.0.0}
     dev: true
 
-  /jest-remirror/1.0.9_03f40ab4de196de531331007d816eece:
+  /jest-remirror/1.0.9_6449272f1cdf82f56721e55e7a5ac6e4:
     resolution: {integrity: sha512-+2DyWUmstBUfpWI8gfC4adK5PiF5SIN0GYqk/UNgoxa2w+z7MzmzBJdPbYi7kjUScqLThrxQhHwblxFtseBU7w==}
     peerDependencies:
       '@types/node': '*'
@@ -7961,7 +7961,7 @@ packages:
       '@types/node': 16.9.4
       '@types/sanitize-html': 2.3.2
       jest: 27.2.0
-      jest-prosemirror: 1.0.4_03f40ab4de196de531331007d816eece
+      jest-prosemirror: 1.0.4_6449272f1cdf82f56721e55e7a5ac6e4
       jest-snapshot: 27.2.0
       mutationobserver-shim: 0.3.7
       sanitize-html: 2.5.1
@@ -8287,6 +8287,7 @@ packages:
 
   /json-schema-traverse/0.4.1:
     resolution: {integrity: sha512-xbbCH5dCYU5T8LcEhhuh7HJ88HXuW3qsI3Y0zOZFKfZEHcpWiHU/Jxzk629Brsab/mMiHQti9wMP+845RPe3Vg==}
+    requiresBuild: true
 
   /json-schema-traverse/1.0.0:
     resolution: {integrity: sha512-NM8/P9n3XjXhIZn1lLhkFaACTOURQXjWhV4BA/RnOv8xvgqtqpAX9IO4mRQxSx1Rlo4tqzeqb0sOlruaOy3dug==}
@@ -8322,6 +8323,7 @@ packages:
       chalk: 2.4.2
       diff-match-patch: 1.0.5
     dev: false
+    bundledDependencies: []
 
   /jsonfile/4.0.0:
     resolution: {integrity: sha1-h3Gq4HmbZAdrdmQPygWPnBDjPss=}
@@ -10339,6 +10341,13 @@ packages:
       prosemirror-model: 1.14.3
       prosemirror-transform: 1.3.2
 
+  /prosemirror-schema-list/1.1.6:
+    resolution: {integrity: sha512-aFGEdaCWmJzouZ8DwedmvSsL50JpRkqhQ6tcpThwJONVVmCgI36LJHtoQ4VGZbusMavaBhXXr33zyD2IVsTlkw==}
+    dependencies:
+      prosemirror-model: 1.14.3
+      prosemirror-transform: 1.3.2
+    dev: false
+
   /prosemirror-state/1.3.4:
     resolution: {integrity: sha512-Xkkrpd1y/TQ6HKzN3agsQIGRcLckUMA9u3j207L04mt8ToRgpGeyhbVv0HI7omDORIBHjR29b7AwlATFFf2GLA==}
     dependencies:
@@ -10383,7 +10392,7 @@ packages:
       prosemirror-transform: 1.3.2
       prosemirror-view: 1.20.1
 
-  /prosemirror-test-builder/1.0.4_7f7e6f074ca07e5a0e0fbbc09c83f97f:
+  /prosemirror-test-builder/1.0.4_b719db5d21bbda3c646dcc24a39fb429:
     resolution: {integrity: sha512-d5ZwYcf+vd1YI0tgoB7UZ2B2iwb4jmxLGzkHz6ZbkAmPwAY48WpS1frv9BofC2m/MRIMp5SERhISNIANYPsVTg==}
     peerDependencies:
       prosemirror-model: ^1.0.0
@@ -10392,7 +10401,7 @@ packages:
     dependencies:
       prosemirror-model: 1.14.3
       prosemirror-schema-basic: 1.1.2
-      prosemirror-schema-list: 1.1.5
+      prosemirror-schema-list: 1.1.6
     dev: true
 
   /prosemirror-trailing-node/1.0.2_bed157c580d8fd9a0d0e729b41efd5a6:
@@ -11790,6 +11799,7 @@ packages:
   /strip-ansi/4.0.0:
     resolution: {integrity: sha1-qEeQIusaw2iocTibY1JixQXuNo8=}
     engines: {node: '>=4'}
+    requiresBuild: true
     dependencies:
       ansi-regex: 3.0.0
     dev: true
