@@ -26,8 +26,6 @@ extends:
   # https://github.com/prettier/eslint-plugin-prettier
   - "plugin:prettier/recommended"
 
-  - "plugin:@next/next/recommended"
-
 plugins:
   - "simple-import-sort"
 settings:
@@ -47,8 +45,6 @@ rules:
   "@typescript-eslint/explicit-module-boundary-types": off
   "@typescript-eslint/no-empty-function": off
   "@typescript-eslint/no-explicit-any": off
-
-  "@next/next/no-img-element": "off"
 
   "react-hooks/exhaustive-deps":
     - "warn"

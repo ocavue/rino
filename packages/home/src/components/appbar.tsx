@@ -1,4 +1,6 @@
-import { Button, createStyles, Hidden, makeStyles, Toolbar } from "@material-ui/core"
+import { Button, Hidden, Toolbar } from "@mui/material"
+import createStyles from "@mui/styles/createStyles"
+import makeStyles from "@mui/styles/makeStyles"
 import React, { FC } from "react"
 
 import { rootLevelBlock } from "../styles/layout"
@@ -39,7 +41,7 @@ const Appbar: FC<{ handleOpenDownloadDialog: () => void }> = ({ handleOpenDownlo
                 <AppbarLogo />
             </a>
             <div className={classes.flexGrow} />
-            <Hidden xsDown>
+            <Hidden smDown>
                 <Button className={classes.button} size="large" onClick={handleOpenDownloadDialog}>
                     Download
                 </Button>

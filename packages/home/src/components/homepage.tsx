@@ -1,7 +1,8 @@
-import { createStyles, CssBaseline, Divider, makeStyles, ThemeProvider } from "@material-ui/core"
+import { Divider, Theme } from "@mui/material"
+import createStyles from "@mui/styles/createStyles"
+import makeStyles from "@mui/styles/makeStyles"
 import React, { FC, useCallback, useState } from "react"
 
-import { theme } from "../styles/theme"
 import { Appbar } from "./appbar"
 import { CTA } from "./cta"
 import { DownloadDialog } from "./download-dialog"
@@ -9,6 +10,11 @@ import { Footer } from "./footer"
 import { Headline } from "./headline"
 import { Hero, HeroProps } from "./hero"
 import { Warning } from "./warning"
+
+declare module "@mui/styles/defaultTheme" {
+    // eslint-disable-next-line @typescript-eslint/no-empty-interface
+    interface DefaultTheme extends Theme {}
+}
 
 const useStyles = makeStyles(
     createStyles({
@@ -53,10 +59,5 @@ const Home: FC<HomepageProps> = (props) => {
 }
 
 export const Homepage: FC<HomepageProps> = (props) => {
-    return (
-        <ThemeProvider theme={theme}>
-            <CssBaseline />
-            <Home {...props} />
-        </ThemeProvider>
-    )
+    return <Home {...props} />
 }

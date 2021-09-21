@@ -1,6 +1,7 @@
-import { Button, Dialog, DialogContent, DialogTitle, Hidden, IconButton, SvgIcon, Typography } from "@material-ui/core"
-import { createStyles, makeStyles } from "@material-ui/core/styles"
-import { Close as CloseIcon } from "@material-ui/icons"
+import { Close as CloseIcon } from "@mui/icons-material"
+import { Button, Dialog, DialogContent, DialogTitle, Hidden, IconButton, SvgIcon, Typography } from "@mui/material"
+import createStyles from '@mui/styles/createStyles';
+import makeStyles from '@mui/styles/makeStyles';
 import React, { useMemo } from "react"
 
 import { getDownloadLink } from "./links"
@@ -88,17 +89,17 @@ export const DownloadDialog: React.FC<{ open: boolean; handleClose: () => void }
             aria-labelledby="download-dialog-title"
             aria-describedby="download-dialog-description"
         >
-            <DialogTitle disableTypography id="download-dialog-title" className={classes.header}>
+            <DialogTitle id="download-dialog-title" className={classes.header}>
                 <Typography component="h2" variant="h5">
                     Download Rino
                 </Typography>
-                <Hidden xsDown>
+                <Hidden smDown>
                     <Typography style={{ marginLeft: 16 }} variant="subtitle2">
                         v{VERSION}
                     </Typography>
                 </Hidden>
                 <div style={{ flex: 1 }} />
-                <IconButton aria-label="delete" onClick={handleClose}>
+                <IconButton aria-label="delete" onClick={handleClose} size="large">
                     <CloseIcon />
                 </IconButton>
             </DialogTitle>
