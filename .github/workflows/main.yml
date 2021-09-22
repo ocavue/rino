@@ -199,17 +199,16 @@ jobs:
     steps:
       - uses: ./.github/actions/setup
 
-      - &step_download_electron_dist
-        name: Download dist (electron)
+      - name: Download dist (electron)
         uses: actions/download-artifact@v2
-        if: &should_release github.ref == 'refs/heads/master' && needs.release.outputs.published == 'true'
+        if: ${{ github.ref == 'refs/heads/master' && needs.release.outputs.published == 'true' }}
         with:
           name: electron_dist
           path: ./packages/electron/dist
 
       - name: Upload @rino.app/electron to GitHub Release
         uses: svenstaro/upload-release-action@v2
-        if: *should_release
+        if: ${{ github.ref == 'refs/heads/master' && needs.release.outputs.published == 'true' }}
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: ./packages/electron/dist/*
@@ -217,8 +216,7 @@ jobs:
           overwrite: true
           file_glob: true
 
-      - &step_download_home_dist
-        name: Download dist (home)
+      - name: Download dist (home)
         uses: actions/download-artifact@v2
         with:
           name: home_dist
