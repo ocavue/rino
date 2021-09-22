@@ -4,6 +4,18 @@ description: "Install dependencies"
 runs:
   using: composite
   steps:
+    - id: step_cache_deps
+      name: Cache dependencies
+      uses: actions/cache@v2
+      with:
+        path: |
+          ~/.pnpm-store
+          ~/cache_electron
+          ~/cache_electron_builder
+          ~/cache_playwright_browsers
+
+        key: ${{ runner.os }}-deps-v24-${{ hashFiles('pnpm-lock.yaml') }}
+
     - name: Setup cache directory
       run: |
         echo "ELECTRON_CACHE=$HOME/cache_electron" >> $GITHUB_ENV
