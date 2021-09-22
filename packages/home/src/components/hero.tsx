@@ -18,8 +18,10 @@ export const Hero: React.FC<HeroProps> = ({ imageProps }) => {
             <Box
                 component="img"
                 sx={{
-                    width: { xs: "100%", md: 16 },
-                    height: { xs: "100%", md: 16 },
+                    width: "100%",
+                    height: "100%",
+                    pl: { md: 2 },
+                    pr: { md: 2 },
                 }}
                 alt="Snapshot"
                 {...imageProps}
