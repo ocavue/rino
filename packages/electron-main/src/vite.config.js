@@ -20,7 +20,7 @@ export default defineConfig({
             formats: ["cjs"],
         },
         rollupOptions: {
-            external: [...builtinModules, "fs/promises", "electron"],
+            external: [...builtinModules, /^node:/, "electron"],
         },
     },
 })
