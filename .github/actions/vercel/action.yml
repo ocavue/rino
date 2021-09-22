@@ -1,0 +1,37 @@
+name: "Deploy to Vercel"
+description: "Deploy to Vercel"
+
+inputs:
+  vercel-project-id:
+    required: true
+    description: ""
+
+  vercel-args:
+    required: false
+    description: ""
+    default: ""
+
+  alias-domains:
+    required: false
+    description: ""
+    default: ""
+
+  working-directory:
+    required: true
+    description: ""
+
+runs:
+  using: "composite"
+  steps:
+    - name: Deploy @rino.app/home to Vercel
+      uses: &vercel_action amondnet/vercel-action@v20
+      with: &vercel_args
+        github-comment: false
+        vercel-token: ${{ secrets.VERCEL_TOKEN }}
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+
+        vercel-project-id: ${{ inputs.vercel-project-id }}
+        vercel-args: ${{ inputs.vercel-args }}
+        alias-domains: ${{ inputs.alias-domains }}
+        working-directory: ${{ inputs.working-directory }}

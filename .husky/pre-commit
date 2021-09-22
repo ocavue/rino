@@ -1,5 +1,2 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
-
-./node_modules/.bin/js-yaml .github/temp/main.yml > .github/workflows/main.yml
-git add .github/workflows/main.yml
