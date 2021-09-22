@@ -116,14 +116,6 @@ jobs:
       - name: Lint
         run: ultra lint .
 
-      - name: Check actions configration
-        run: |
-          hash1=$(sha1sum .github/workflows/main.yml)
-          ./node_modules/.bin/js-yaml .github/temp/main.yml > .github/workflows/main.yml
-          hash2=$(sha1sum .github/workflows/main.yml)
-          echo "$hash1" "$hash2"
-          if [ "$hash1" != "$hash2" ]; then exit 1; fi
-
   preview: # Preview deployment
     runs-on: ubuntu-latest
     steps:
