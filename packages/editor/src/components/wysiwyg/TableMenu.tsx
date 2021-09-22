@@ -1,46 +1,12 @@
-import { createStyles, IconButton, makeStyles, Paper, Snackbar, Theme } from "@material-ui/core"
+import { IconButton, Paper, Snackbar } from "@mui/material"
 import { CommandsFromExtensions, CommandShape } from "@remirror/core"
 import { useRemirrorContext } from "@remirror/react-core"
-import clsx from "clsx"
 import React, { useMemo } from "react"
 
 import { selectedTableCell } from "../../extensions/table/table-helper"
 import { tableMenuSvgs as svgs } from "../table-menu/svg"
 import { DrawerActivityContainer } from "../types"
 import { WysiwygExtension } from "./wysiwyg-extension"
-
-type StylesProps = { maxDrawerWidth: number }
-
-const useStyles = makeStyles((theme: Theme) => {
-    return createStyles({
-        snackbar: {
-            zIndex: theme.zIndex.snackbar + 1,
-            transition: theme.transitions.create(["left"], {
-                easing: theme.transitions.easing.easeOut,
-                duration: theme.transitions.duration.enteringScreen,
-            }),
-            marginBottom: "env(safe-area-inset-bottom)",
-        },
-        snackbarShift: {
-            [theme.breakpoints.up("md")]: {
-                left: (props: StylesProps) => `calc(50% + ${props.maxDrawerWidth / 2}px)`,
-            },
-        },
-        menuPaper: {
-            zIndex: theme.zIndex.snackbar + 1,
-            padding: "4px",
-        },
-        menuButton: {
-            padding: "12px",
-            height: "48px",
-            width: "48px",
-            "& svg": {
-                // Change the svg color based on the theme
-                fill: theme.palette.text.secondary,
-            },
-        },
-    })
-})
 
 export type TableMenuProps = {
     commands: CommandsFromExtensions<WysiwygExtension>
@@ -51,10 +17,6 @@ export type TableMenuProps = {
 const TableMenu: React.FC<TableMenuProps> = ({ commands, maxDrawerWidth, drawerActivityContainer }) => {
     const { view } = useRemirrorContext()
     const showTableMenu = !!selectedTableCell(view.state)
-
-    const { drawerActivity } = drawerActivityContainer.useContainer()
-
-    const classes = useStyles({ maxDrawerWidth })
 
     const buttons = useMemo(() => {
         const options: [string, React.FC, CommandShape][] = [
@@ -67,24 +29,48 @@ const TableMenu: React.FC<TableMenuProps> = ({ commands, maxDrawerWidth, drawerA
         ]
         return options.map(([id, SvgComponent, action]) => {
             return (
-                <IconButton key={id} id={id} data-testid={id} onClick={action} className={classes.menuButton}>
+                <IconButton
+                    key={id}
+                    id={id}
+                    data-testid={id}
+                    onClick={action}
+                    sx={{
+                        padding: "12px",
+                        height: "48px",
+                        width: "48px",
+                        "& svg": {
+                            // Change the svg color based on the theme
+                            fill: (theme) => theme.palette.text.secondary,
+                        },
+                    }}
+                >
                     <SvgComponent />
                 </IconButton>
             )
         })
-    }, [commands, classes])
+    }, [commands])
 
     return (
         <Snackbar
             open={showTableMenu}
             onClose={() => {}}
-            classes={{
-                root: clsx(classes.snackbar, {
-                    [classes.snackbarShift]: drawerActivity,
-                }),
+            sx={{
+                zIndex: (theme) => theme.zIndex.snackbar + 1,
+                transition: (theme) =>
+                    theme.transitions.create(["left"], {
+                        easing: theme.transitions.easing.easeOut,
+                        duration: theme.transitions.duration.enteringScreen,
+                    }),
+                marginBottom: "env(safe-area-inset-bottom)",
             }}
         >
-            <Paper variant="outlined" className={classes.menuPaper}>
+            <Paper
+                variant="outlined"
+                sx={{
+                    zIndex: (theme) => theme.zIndex.snackbar + 1,
+                    padding: "4px",
+                }}
+            >
                 <>{buttons}</>
             </Paper>
         </Snackbar>
