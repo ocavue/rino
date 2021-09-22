@@ -1,11 +1,13 @@
 /* eslint-disable react/display-name */
 /* istanbul ignore file */
 
-import { ServerStyleSheets } from "@material-ui/core/styles"
-import Document, { DocumentContext, Head, Html, Main, NextScript } from "next/document"
+import createEmotionServer from "@emotion/server/create-instance"
+import Document, { Head, Html, Main, NextScript } from "next/document"
 import React from "react"
 
-export const NextMeta: React.FC<{ host: string; hasManifest: boolean; description: string }> = ({ host, hasManifest, description }) => {
+import { createEmotionCache } from "../styles/cache"
+
+const NextMeta: React.FC<{ host: string; hasManifest: boolean; description: string }> = ({ host, hasManifest, description }) => {
     const image = `${host}/share/img/icons/android-chrome-512x512.png`
     return (
         /* prettier-ignore */
@@ -51,7 +53,7 @@ export const NextMeta: React.FC<{ host: string; hasManifest: boolean; descriptio
     )
 }
 
-class BaseDocument extends Document {
+export default class BaseDocument extends Document {
     render() {
         const host = "https://www.rino.app"
         const hasManifest = false
@@ -76,11 +78,9 @@ class BaseDocument extends Document {
     }
 }
 
-// copied from https://github.com/mui-org/material-ui/blob/v4.12.1/examples/nextjs/pages/_document.js#L27-L68
-//
 // `getInitialProps` belongs to `_document` (instead of `_app`),
-// it's compatible with server-side generation (SSG).
-export async function getNextDocumentInitialProps(ctx: DocumentContext) {
+// it's compatible with static-site generation (SSG).
+BaseDocument.getInitialProps = async (ctx) => {
     // Resolution order
     //
     // On the server:
@@ -103,26 +103,34 @@ export async function getNextDocumentInitialProps(ctx: DocumentContext) {
     // 3. app.render
     // 4. page.render
 
-    // Render app and page and get the context of the page with collected side effects.
-    const sheets = new ServerStyleSheets()
     const originalRenderPage = ctx.renderPage
+
+    // You can consider sharing the same emotion cache between all the SSR requests to speed up performance.
+    // However, be aware that it can have global side effects.
+    const cache = createEmotionCache()
+    const { extractCriticalToChunks } = createEmotionServer(cache)
 
     ctx.renderPage = () =>
         originalRenderPage({
-            enhanceApp: (App) => (props) => sheets.collect(<App {...props} />),
+            enhanceApp: (App: any) => (props) => <App emotionCache={cache} {...props} />,
         })
 
     const initialProps = await Document.getInitialProps(ctx)
+    // This is important. It prevents emotion to render invalid HTML.
+    // See https://github.com/mui-org/material-ui/issues/26561#issuecomment-855286153
+    const emotionStyles = extractCriticalToChunks(initialProps.html)
+    const emotionStyleTags = emotionStyles.styles.map((style) => (
+        <style
+            data-emotion={`${style.key} ${style.ids.join(" ")}`}
+            key={style.key}
+            // eslint-disable-next-line react/no-danger
+            dangerouslySetInnerHTML={{ __html: style.css }}
+        />
+    ))
 
     return {
         ...initialProps,
         // Styles fragment is rendered after the app and page rendering finish.
-        styles: [...React.Children.toArray(initialProps.styles), sheets.getStyleElement()],
+        styles: [...React.Children.toArray(initialProps.styles), ...emotionStyleTags],
     }
 }
-
-BaseDocument.getInitialProps = async (ctx) => {
-    return await getNextDocumentInitialProps(ctx)
-}
-
-export default BaseDocument

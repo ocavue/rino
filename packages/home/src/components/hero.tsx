@@ -1,36 +1,31 @@
-import { createStyles, makeStyles } from "@material-ui/core"
+import { styled } from "@mui/material/styles"
+import { Box } from "@mui/system"
 import React, { ImgHTMLAttributes } from "react"
 
 import { rootLevelBlock } from "../styles/layout"
+
+const SnapshotImage = styled("img")({
+    width: "100%",
+    height: "auto",
+    pl: { md: 2 },
+    pr: { md: 2 },
+})
 
 export type HeroProps = {
     imageProps: ImgHTMLAttributes<HTMLImageElement>
 }
 
-const useStyles = makeStyles((theme) =>
-    createStyles({
-        hero: {
-            ...rootLevelBlock,
-            marginTop: "32px",
-        },
-        img: {
-            width: "100%",
-            height: "100%",
-
-            [theme.breakpoints.up("md")]: {
-                paddingLeft: 16,
-                paddingRight: 16,
-            },
-        },
-    }),
-)
-
 export const Hero: React.FC<HeroProps> = ({ imageProps }) => {
-    const classes = useStyles()
+    console.log("imageProps:", imageProps)
 
     return (
-        <div className={classes.hero}>
-            <img {...imageProps} alt="Snapshot" className={classes.img} />
-        </div>
+        <Box
+            sx={{
+                ...rootLevelBlock,
+                marginTop: "32px",
+            }}
+        >
+            <SnapshotImage alt="Snapshot" {...imageProps} />
+        </Box>
     )
 }

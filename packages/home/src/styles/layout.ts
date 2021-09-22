@@ -6,6 +6,6 @@ export const rootLevelBlock = {
     maxWidth: layout.maxWidth,
     width: "100%",
     margin: "0 auto",
-    paddingLeft: 32,
-    paddingRight: 32,
-}
+    paddingLeft: "32px",
+    paddingRight: "32px",
+} as const

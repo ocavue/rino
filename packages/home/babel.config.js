@@ -1,6 +1,14 @@
-const baseConfig = require("@rino.app/next/babel.base.config.js")
-
 module.exports = function (api) {
     console.log("loading", __filename)
-    return baseConfig(api)
+    api.cache(true)
+
+    const plugins = []
+    if (process.env.NODE_ENV === "development" || process.env.REACT_APP_TESTING) {
+        plugins.push("istanbul")
+    }
+
+    return {
+        presets: ["next/babel"],
+        plugins,
+    }
 }

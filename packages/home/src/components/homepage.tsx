@@ -1,7 +1,7 @@
-import { createStyles, CssBaseline, Divider, makeStyles, ThemeProvider } from "@material-ui/core"
+import { Divider } from "@mui/material"
+import { Box } from "@mui/system"
 import React, { FC, useCallback, useState } from "react"
 
-import { theme } from "../styles/theme"
 import { Appbar } from "./appbar"
 import { CTA } from "./cta"
 import { DownloadDialog } from "./download-dialog"
@@ -10,35 +10,30 @@ import { Headline } from "./headline"
 import { Hero, HeroProps } from "./hero"
 import { Warning } from "./warning"
 
-const useStyles = makeStyles(
-    createStyles({
-        root: {
-            position: "relative",
-
-            /**
-             * Reset links to optimize for opt-in styling instead of
-             * opt-out.
-             */
-            "& a": {
-                textDecoration: "inherit",
-            },
-        },
-    }),
-)
-
 type HomepageProps = {
     hero: HeroProps
 }
 
 const Home: FC<HomepageProps> = (props) => {
-    const classes = useStyles()
-
     const [openDownloadDialog, setOpenDownloadDialog] = useState(false)
     const handleCloseDownloadDialog = useCallback(() => setOpenDownloadDialog(false), [])
     const handleOpenDownloadDialog = useCallback(() => setOpenDownloadDialog(true), [])
 
     return (
-        <div className={classes.root} data-testid="homepage_root">
+        <Box
+            sx={{
+                position: "relative",
+
+                /**
+                 * Reset links to optimize for opt-in styling instead of
+                 * opt-out.
+                 */
+                "& a": {
+                    textDecoration: "inherit",
+                },
+            }}
+            data-testid="homepage_root"
+        >
             <Appbar handleOpenDownloadDialog={handleOpenDownloadDialog} />
             <Divider />
             <Warning />
@@ -48,15 +43,10 @@ const Home: FC<HomepageProps> = (props) => {
             <Divider />
             <Footer />
             <DownloadDialog open={openDownloadDialog} handleClose={handleCloseDownloadDialog} />
-        </div>
+        </Box>
     )
 }
 
 export const Homepage: FC<HomepageProps> = (props) => {
-    return (
-        <ThemeProvider theme={theme}>
-            <CssBaseline />
-            <Home {...props} />
-        </ThemeProvider>
-    )
+    return <Home {...props} />
 }

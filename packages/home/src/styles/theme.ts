@@ -1,13 +1,15 @@
-import { createTheme } from "@material-ui/core/styles"
+import { createTheme } from "@mui/material/styles"
 
 const theme = createTheme({
-    overrides: {
+    components: {
         // Style sheet name ⚛️
         MuiButton: {
-            // Name of the rule
-            root: {
-                // Some CSS
-                textTransform: "capitalize",
+            styleOverrides: {
+                // Name of the rule
+                root: {
+                    // Some CSS
+                    textTransform: "capitalize",
+                },
             },
         },
     },
