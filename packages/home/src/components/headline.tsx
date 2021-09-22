@@ -9,8 +9,8 @@ export const Headline: React.FC = () => {
         <Box
             sx={{
                 ...rootLevelBlock,
-                marginTop: 120,
-                marginBottom: 120,
+                marginTop: "120px",
+                marginBottom: "120px",
                 textAlign: { sm: "center" },
             }}
         >

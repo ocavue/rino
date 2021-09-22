@@ -12,7 +12,7 @@ const Appbar: FC<{ handleOpenDownloadDialog: () => void }> = ({ handleOpenDownlo
             sx={{
                 ...rootLevelBlock,
                 padding: (theme) => theme.spacing(0, 2),
-                height: { xs: 80, md: 96 },
+                height: { xs: "80px", md: "96px" },
             }}
         >
             <a href="/" title="rino">

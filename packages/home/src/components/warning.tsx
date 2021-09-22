@@ -9,7 +9,7 @@ export const Warning = () => {
         <Box
             sx={{
                 ...rootLevelBlock,
-                paddingTop: 16,
+                paddingTop: "16px",
             }}
         >
             <Alert

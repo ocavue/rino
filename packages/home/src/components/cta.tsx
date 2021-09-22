@@ -11,10 +11,10 @@ export const CTA: React.FC<{ handleOpenDownloadDialog: () => void }> = ({ handle
             sx={{
                 width: "100%",
 
-                marginTop: 120,
-                marginBottom: 140,
-                paddingTop: 48,
-                paddingBottom: 48,
+                marginTop: "120px",
+                marginBottom: "140px",
+                paddingTop: "48px",
+                paddingBottom: "48px",
 
                 background: (theme) => theme.palette.primary.main,
             }}
@@ -32,7 +32,7 @@ export const CTA: React.FC<{ handleOpenDownloadDialog: () => void }> = ({ handle
                     component="h3"
                     sx={{
                         marginTop: 0,
-                        marginBottom: 32,
+                        marginBottom: '32px',
                         fontWeight: 500,
                         color: (theme) => theme.palette.common.white,
                         fontSize: { xs: "2.2rem", sm: "3rem" },

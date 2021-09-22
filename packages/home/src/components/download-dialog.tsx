@@ -40,10 +40,10 @@ export const DownloadDialog: React.FC<{ open: boolean; handleClose: () => void }
             <DialogTitle
                 id="download-dialog-title"
                 sx={{
-                    paddingTop: 24,
-                    paddingBottom: 24,
-                    paddingLeft: 40,
-                    paddingRight: 40,
+                    paddingTop: "24px",
+                    paddingBottom: "24px",
+                    paddingLeft: "40px",
+                    paddingRight: "40px",
 
                     display: "flex",
                     justifyContent: "space-between",
@@ -66,10 +66,10 @@ export const DownloadDialog: React.FC<{ open: boolean; handleClose: () => void }
             </DialogTitle>
             <DialogContent
                 sx={{
-                    paddingTop: 36,
-                    paddingBottom: 36,
-                    paddingLeft: 40,
-                    paddingRight: 40,
+                    pt: 4,
+                    pb: 4,
+                    pl: 5,
+                    pr: 5,
                     background: (theme) => theme.palette.grey[50],
 
                     display: "flex",
@@ -85,25 +85,25 @@ export const DownloadDialog: React.FC<{ open: boolean; handleClose: () => void }
                         rel="noopener noreferrer"
                         target="_blank"
                         sx={{
-                            paddingTop: 12,
-                            paddingBottom: 12,
-                            paddingLeft: 26,
-                            paddingRight: 26,
+                            pt: "12px",
+                            pb: "12px",
+                            pl: "26px",
+                            pr: "26px",
                             // minWidth: "900px",
 
-                            marginTop: 8,
-                            marginBottom: 8,
-                            marginLeft: 12,
-                            marginRight: 12,
+                            mt: "8px",
+                            mb: "8px",
+                            ml: "12px",
+                            mr: "12px",
                         }}
                         size="large"
                         variant="outlined"
                         startIcon={
                             <SvgIcon
                                 sx={{
-                                    width: 26,
-                                    height: 26,
-                                    marginRight: 4,
+                                    width: "26px",
+                                    height: "26px",
+                                    mr: "4px",
                                 }}
                             >
                                 {platform.icon}
