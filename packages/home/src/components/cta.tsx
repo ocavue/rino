@@ -32,7 +32,7 @@ export const CTA: React.FC<{ handleOpenDownloadDialog: () => void }> = ({ handle
                     component="h3"
                     sx={{
                         marginTop: 0,
-                        marginBottom: '32px',
+                        marginBottom: "32px",
                         fontWeight: 500,
                         color: (theme) => theme.palette.common.white,
                         fontSize: { xs: "2.2rem", sm: "3rem" },
@@ -42,7 +42,17 @@ export const CTA: React.FC<{ handleOpenDownloadDialog: () => void }> = ({ handle
                 </Typography>
                 <Button
                     variant="outlined"
-                    sx={{ border: "2px solid #fff", color: "#ffffff", fontWeight: 700, fontSize: "19px" }}
+                    sx={{
+                        color: "#ffffff",
+                        fontWeight: 700,
+                        fontSize: "19px",
+                        border: "2px solid #ffffff",
+                        "&:hover": {
+                            color: "#313131",
+                            border: "2px solid #ffffff",
+                            background: "#ffffff",
+                        },
+                    }}
                     onClick={handleOpenDownloadDialog}
                     size="large"
                 >
