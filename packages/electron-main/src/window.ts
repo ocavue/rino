@@ -1,7 +1,7 @@
 import { app, BrowserWindow } from "electron"
 import { BrowserWindowConstructorOptions } from "electron/main"
-import { join } from "path"
-import { URL } from "url"
+import { join } from "node:path"
+import { URL } from "node:url"
 
 import { env } from "./env"
 import { ipcSender } from "./ipc-main"

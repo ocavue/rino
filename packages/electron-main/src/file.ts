@@ -1,5 +1,5 @@
 import { app, BrowserWindow, dialog } from "electron"
-import fs from "fs/promises"
+import fs from "node:fs/promises"
 
 import { logger } from "./logger"
 
