@@ -2,8 +2,8 @@
 
 import { CacheProvider, EmotionCache } from "@emotion/react"
 import { CssBaseline } from "@mui/material"
-import { ThemeProvider } from "@mui/material/styles"
 import { StyledEngineProvider } from "@mui/material/styles"
+import { ThemeProvider } from "@mui/system"
 import { AppProps } from "next/app"
 import Head from "next/head"
 import React from "react"
