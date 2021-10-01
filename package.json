@@ -40,10 +40,6 @@
             "config:base",
             ":semanticCommitTypeAll(chore)"
         ],
-        "lockFileMaintenance": {
-            "enabled": true,
-            "extends": "schedule:monthly"
-        },
         "packageRules": [
             {
                 "groupName": "remirror packages",
@@ -70,13 +66,12 @@
                     "minor"
                 ],
                 "schedule": [
-                    "before 2am"
+                    "before 3am on Friday"
                 ],
                 "stabilityDays": 0
             }
         ],
         "prConcurrentLimit": 1,
-        "ignoreDeps": [],
         "prCreation": "not-pending",
         "stabilityDays": 7,
         "rangeStrategy": "bump",
