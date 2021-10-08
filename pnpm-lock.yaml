@@ -75,7 +75,7 @@ importers:
       '@remirror/extension-hard-break': ^1.0.6
       '@remirror/extension-heading': ^1.0.6
       '@remirror/extension-horizontal-rule': ^1.0.6
-      '@remirror/extension-list': ^1.1.0
+      '@remirror/extension-list': ^1.1.1
       '@remirror/extension-paragraph': ^1.0.6
       '@remirror/extension-placeholder': ^1.0.7
       '@remirror/extension-react-component': ^1.0.8
@@ -133,7 +133,7 @@ importers:
       '@remirror/extension-hard-break': 1.0.6_4cda3a740ba67ae6874e66c92d44f4a0
       '@remirror/extension-heading': 1.0.6_4cda3a740ba67ae6874e66c92d44f4a0
       '@remirror/extension-horizontal-rule': 1.0.6_4cda3a740ba67ae6874e66c92d44f4a0
-      '@remirror/extension-list': 1.1.0_4cda3a740ba67ae6874e66c92d44f4a0
+      '@remirror/extension-list': 1.1.1_4cda3a740ba67ae6874e66c92d44f4a0
       '@remirror/extension-paragraph': 1.0.6_4cda3a740ba67ae6874e66c92d44f4a0
       '@remirror/extension-placeholder': 1.0.7_4cda3a740ba67ae6874e66c92d44f4a0
       '@remirror/extension-react-component': 1.0.8_355da988f395221e8d1c4afe73423dc5
@@ -1934,8 +1934,8 @@ packages:
       - jsdom
     dev: false
 
-  /@remirror/extension-list/1.1.0_4cda3a740ba67ae6874e66c92d44f4a0:
-    resolution: {integrity: sha512-4fmIMspMdG8Srm4wr64gCb/fVIeFc/YvK1XJ8HyjPO1Qzg02Pe+2tdFyb/hNFRbJhXgQa9zdS2p7i0lx4kqQDA==}
+  /@remirror/extension-list/1.1.1_4cda3a740ba67ae6874e66c92d44f4a0:
+    resolution: {integrity: sha512-a2iIYWqEl15lxyLc6S8q2XRZ5JGi+OCRADyS1nuxpSHpZeKwlyrIfdN4T1JD+mB59jqt1ScPtcIBhuhpzWnmkA==}
     peerDependencies:
       '@remirror/pm': ^1.0.3
     dependencies:
@@ -8495,6 +8495,7 @@ packages:
 
   /json-schema-traverse/0.4.1:
     resolution: {integrity: sha512-xbbCH5dCYU5T8LcEhhuh7HJ88HXuW3qsI3Y0zOZFKfZEHcpWiHU/Jxzk629Brsab/mMiHQti9wMP+845RPe3Vg==}
+    requiresBuild: true
     dev: true
 
   /json-schema-traverse/1.0.0:
@@ -8533,6 +8534,7 @@ packages:
       chalk: 2.4.2
       diff-match-patch: 1.0.5
     dev: false
+    bundledDependencies: []
 
   /jsonfile/4.0.0:
     resolution: {integrity: sha1-h3Gq4HmbZAdrdmQPygWPnBDjPss=}
@@ -11996,6 +11998,7 @@ packages:
   /strip-ansi/4.0.0:
     resolution: {integrity: sha1-qEeQIusaw2iocTibY1JixQXuNo8=}
     engines: {node: '>=4'}
+    requiresBuild: true
     dependencies:
       ansi-regex: 3.0.0
     dev: true
