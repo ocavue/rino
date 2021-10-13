@@ -23,7 +23,7 @@ jobs:
         run: npm install -g pnpm
         if: ${{ steps.step_find_pr.outputs.number }}
 
-      - name: Install dependencies
+      - name: Regenerate the lock file
         run: |
           rm -rf pnpm-lock.yaml
           pnpm i
