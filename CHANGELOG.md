@@ -1,6 +1,6 @@
 # Changelog
 
-### [0.32.9](https://www.github.com/ocavue/rino/compare/v0.32.8...v0.32.9) (2021-10-15)
+## [0.32.9](https://www.github.com/ocavue/rino/compare/v0.32.8...v0.32.9) (2021-10-15)
 
 
 ### Code Refactoring
