@@ -197,6 +197,7 @@ const autoHideMarks: Record<string, true> = {
     mdImgText: true,
     mdImgUri: true,
 }
+
 export function isAutoHideMark(name: string): boolean {
     // This should be the fastest way based on my performance test.
     return autoHideMarks[name]
@@ -224,40 +225,23 @@ export type RinnMarkAttrs = {
      * At the current depth, if this token the first or last token of a serial of tokens.
      * example:
      *      input:
-     *          Text**strong**[lable](https://example.com)
+     *          Text**strong**[label](https://example.com)
      *      output:
-     *          | text                | first | last |
+     *          | token               | first | last |
      *          | ------------------- | ----- | ---- |
-     *          | text                | True  | True |
-     *          | **                  | True  |      |
+     *          | text                | true  | true |
+     *          | **                  | true  |      |
      *          | strong              |       |      |
-     *          | **                  |       | True |
-     *          | [                   | True  |      |
+     *          | **                  |       | true |
+     *          | [                   | true  |      |
      *          | label               |       |      |
      *          | ]                   |       |      |
      *          | (                   |       |      |
      *          | https://example.com |       |      |
-     *          | )                   |       | True |
+     *          | )                   |       | true |
      */
     first?: true
     last?: true
 
     href?: string
-}
-
-export enum InlineDecorateType {
-    Ignore = "IGNORE",
-}
-
-export interface InlineToken {
-    marks: RinoMarkName[]
-
-    text: string
-
-    // start position
-    start: number
-    // end position
-    end: number
-
-    attrs: RinnMarkAttrs
 }
