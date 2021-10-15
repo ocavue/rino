@@ -3,7 +3,7 @@ import { Node as ProsemirrorNode } from "prosemirror-model"
 import { EditorState } from "prosemirror-state"
 import { Decoration, DecorationSet } from "prosemirror-view"
 
-import { isAutoHideMark, RinnMarkAttrs } from "./define"
+import { isAutoHideMark, RinnMarkAttrs } from "./inline-mark-extensions"
 
 type TextAttrs = Partial<RinnMarkAttrs & { isAutoHideMark?: boolean }>
 

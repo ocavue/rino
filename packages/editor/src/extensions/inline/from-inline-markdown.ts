@@ -6,7 +6,8 @@ import { fromMarkdown } from "mdast-util-from-markdown"
 import { gfmStrikethroughFromMarkdown } from "mdast-util-gfm-strikethrough"
 import { gfmStrikethrough } from "micromark-extension-gfm-strikethrough"
 
-import { InlineToken, RinoMarkName } from "./define"
+import type { RinoMarkName } from "./inline-mark-extensions"
+import type { InlineToken } from "./inline-types"
 
 function fixMarkNames(marks: RinoMarkName[]): RinoMarkName[] {
     if (marks.length <= 1) return marks

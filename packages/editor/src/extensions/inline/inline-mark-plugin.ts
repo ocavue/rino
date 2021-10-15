@@ -5,8 +5,8 @@ import { Mappable } from "prosemirror-transform"
 import { EditorView } from "prosemirror-view"
 
 import { iterNode, iterNodeRange } from "../../utils"
-import { InlineDecorateType } from "./define"
 import { fromInlineMarkdown } from "./from-inline-markdown"
+import { InlineDecorateType } from "./inline-types"
 
 const maxMarkStep = 10
 
