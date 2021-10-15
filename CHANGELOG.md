@@ -1,5 +1,12 @@
 # Changelog
 
+### [0.32.9](https://www.github.com/ocavue/rino/compare/v0.32.8...v0.32.9) (2021-10-15)
+
+
+### Code Refactoring
+
+* adjust file structure ([#823](https://www.github.com/ocavue/rino/issues/823)) ([44b2230](https://www.github.com/ocavue/rino/commit/44b223078a7d2f867bf449ad95eff36d6fbac458))
+
 ## [0.32.8](https://www.github.com/ocavue/rino/compare/v0.32.7...v0.32.8) (2021-08-16)
 
 
