@@ -16,8 +16,6 @@ export type HeroProps = {
 }
 
 export const Hero: React.FC<HeroProps> = ({ imageProps }) => {
-    console.log("imageProps:", imageProps)
-
     return (
         <Box
             sx={{
