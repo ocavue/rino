@@ -6,15 +6,6 @@ set -e
 cd $(dirname $0)/../..
 ROOT=${PWD}
 
-function build_dist {
-    package="$1"
-    cd ${ROOT}/packages/${package}
-    if [ ! -d "./dist" ]; then
-        echo "building ${PWD}"
-        pnpm build
-    fi
-}
-
 function lnsf {
     source_dir="$ROOT/$1"
     target_dir="$ROOT/$2"
@@ -30,10 +21,6 @@ function lnsf {
 
     echo -e "${source_dir} <- ${target_dir}"
 }
-
-build_dist electron-renderer
-build_dist electron-preload
-build_dist electron-main
 
 # Keep the relative paths between packages the same during both development and production
 lnsf packages/electron-renderer/dist packages/electron/build/electron-renderer/dist
