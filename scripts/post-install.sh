@@ -5,7 +5,7 @@ set -e
 cd $(dirname $0)/..
 
 # clean
-pnpm clean
+./scripts/clean.mjs
 
 # create symbolic links
 function lnsf {
