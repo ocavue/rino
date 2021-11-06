@@ -42,11 +42,12 @@ jobs:
 
       - name: Build dependencies
         run: |
-          pnpm --filter '@rino.app/electron-*...' build
+          node common/scripts/install-run-rush.js build -T @rino.app/electron
 
       - name: Build electron
         run: |
-          pnpm --filter '@rino.app/electron' build:all
+          cd packages/electron
+          node ../../common/scripts/install-run-rushx.js build:all
         env:
           ELECTRON_APPLE_ID_NAME: ${{ secrets.ELECTRON_APPLE_ID_NAME }}
           ELECTRON_APPLE_ID: ${{ secrets.ELECTRON_APPLE_ID }}
