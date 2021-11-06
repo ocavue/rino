@@ -38,14 +38,11 @@ runs:
         CACHE_HIT: ${{ steps.step_cache_deps.outputs.cache-hit }}
       shell: bash
 
-    - name: Install pnpm
-      run: npm install -g pnpm@6
+    - name: Install rush
+      run: node common/scripts/install-run-rush.js
       shell: bash
 
     - name: Install pnpm dependencies
-      run: pnpm install --loglevel debug --reporter append-only
+      run: rush install
       shell: bash
 
-    - name: Install ultra-runner
-      run: pnpm install -g ultra-runner --prefer-offline
-      shell: bash
