@@ -39,7 +39,10 @@ runs:
       shell: bash
 
     - name: Install rush
-      run:  node common/scripts/install-run-rush.js version
+      run: |
+        git config user.name github-actions
+        git config user.email github-actions@github.com
+        node common/scripts/install-run-rush.js version
       shell: bash
 
     - name: Install dependencies
