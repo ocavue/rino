@@ -39,7 +39,7 @@ runs:
       shell: bash
 
     - name: Install rush
-      run: node common/scripts/install-run-rush.js
+      run: node common/scripts/install-run-rush.js install
       shell: bash
 
     - name: Install pnpm dependencies
