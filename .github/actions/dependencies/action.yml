@@ -19,7 +19,7 @@ runs:
           ~/cache_electron_builder
           ~/cache_playwright_browsers
 
-        key: ${{ runner.os }}-deps-v25-${{ hashFiles('pnpm-lock.yaml') }}
+        key: ${{ runner.os }}-deps-v26-${{ hashFiles('pnpm-lock.yaml') }}
 
     - name: Setup cache directory
       run: |
@@ -38,14 +38,10 @@ runs:
         CACHE_HIT: ${{ steps.step_cache_deps.outputs.cache-hit }}
       shell: bash
 
-    - name: Link rush
-      run: ln -sf $PWD/common/scripts/rush-cli.sh /usr/local/bin/rush
+    - name: Install rush
+      run:  node common/scripts/install-run-rush.js version
       shell: bash
 
-    - name: Run rush
-      run: rush version
-      shell: bash
-
-    - name: Install pnpm dependencies
-      run: rush install
+    - name: Install dependencies
+      run: node common/scripts/install-run-rush.js install
       shell: bash

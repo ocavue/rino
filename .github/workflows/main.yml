@@ -18,7 +18,7 @@ jobs:
 
       - name: Build website
         run: |
-          rush build -t @rino.app/home
+          node common/scripts/install-run-rush.js build -t @rino.app/home
 
       - name: Upload dist (home)
         uses: actions/upload-artifact@v2
@@ -125,7 +125,7 @@ jobs:
 
       - name: Build
         run: |
-          rush build -t @rino.app/home
+          node common/scripts/install-run-rush.js build -t @rino.app/home
 
       - id: step_branch
         name: Get the branch name
@@ -168,7 +168,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }} # Install this GitHub App and get the token: https://github.com/apps/lighthouse-ci
         run: |
-          rushx lhci autorun --config .lighthouserc.home.json
+          node common/scripts/install-run-rushx.js lhci autorun --config .lighthouserc.home.json
         if: steps.step_vercel.outcome == 'success'
 
   release:
