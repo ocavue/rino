@@ -1,5 +1,3 @@
-# See http://help.github.com/ignore-files/ for more about ignoring files.
-
 packages/*/src/assets/share
 packages/*/public/share
 .lighthouserc*
@@ -9,34 +7,13 @@ nohup.out
 .ultra.cache.json
 __diff_output__
 
-# yarn https://yarnpkg.com/getting-started/qa#which-files-should-be-gitignored
-.yarn/*
-!.yarn/releases
-!.yarn/plugins
-.pnp.*
-
-# config
-**/config/*
-!firestore.indexes.json
-!firestore.rules
-.firebaserc
-
-# cypress reports
-cypress/videos/
-cypress/screenshots/
-
-# compiled output
-.cache
-dist
-tmp
-out-tsc
-out
-.firebase
-lighthouse
-.lighthouseci
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
 
 # Runtime data
-pids
 *.pid
 *.seed
 *.pid.lock
@@ -59,34 +36,8 @@ bower_components
 # node-waf configuration
 .lock-wscript
 
-# IDEs and editors
-.idea
-.project
-.classpath
-.c9/
-*.launch
-.settings/
-*.sublime-workspace
-
-# IDE - VSCode
-.vscode/*
-!.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json
-!.vscode/extensions.json
-
-# misc
-.sass-cache
-connect.lock
-typings
-
-# Logs
-logs
-*.log
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-
+# Compiled binary addons (https://nodejs.org/api/addons.html)
+build/Release
 
 # Dependency directories
 node_modules/
@@ -113,14 +64,14 @@ jspm_packages/
 # next.js build output
 .next
 
-# Lerna
-lerna-debug.log
-
-# System Files
+# OS X temporary files
 .DS_Store
-Thumbs.db
 
-# Local Netlify folder
-.netlify
+# Rush temporary files
+common/deploy/
+common/temp/
+common/autoinstallers/*/.npmrc
+**/.rush/temp/
 
-.vercel
+# Heft
+.heft
