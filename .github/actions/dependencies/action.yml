@@ -38,11 +38,14 @@ runs:
         CACHE_HIT: ${{ steps.step_cache_deps.outputs.cache-hit }}
       shell: bash
 
-    - name: Install rush
-      run: node common/scripts/install-run-rush.js install
+    - name: Link rush
+      run: ln -sf $PWD/common/scripts/rush-cli.sh /usr/local/bin/rush
+      shell: bash
+
+    - name: Run rush
+      run: rush version
       shell: bash
 
     - name: Install pnpm dependencies
       run: rush install
       shell: bash
-
