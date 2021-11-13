@@ -172,8 +172,17 @@
       "name": "fix",
       "summary": "Fix the codebase",
       "safeForSimultaneousRushProcesses":  true,
-      "shellCommand": "whoami; pwd",
-    }
+      "shellCommand": "pwd; packages/rig/node_modules/.bin/eslint --ignore-path .gitignore --ext '.js,.jsx,.ts,.tsx' $PWD",
+    },
+    {
+      "commandKind": "global",
+      "name": "test",
+      "summary": "Run Jest",
+      "safeForSimultaneousRushProcesses":  true,
+      "shellCommand": "NODE_OPTIONS=--experimental-vm-modules packages/rig/node_modules/.bin/jest --runInBand packages/editor/test",
+    },
+
+
   ],
 
   /**

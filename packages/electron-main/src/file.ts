@@ -3,6 +3,12 @@ import fs from "node:fs/promises"
 
 import { logger } from "./logger"
 
+let a = 0
+
+a = ""
+
+console.log(a)
+
 export async function askMarkdownFileForOpen(): Promise<string | undefined> {
     const result = await dialog.showOpenDialog({
         properties: ["openFile"],
