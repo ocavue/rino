@@ -105,7 +105,7 @@ importers:
       mdast-util-gfm-strikethrough: ^1.0.0
       micromark-extension-gfm-strikethrough: ^1.0.3
       prosemirror-commands: ^1.1.12
-      prosemirror-dropcursor: ^1.3.5
+      prosemirror-dropcursor: ^1.4.0
       prosemirror-history: ^1.2.0
       prosemirror-inputrules: ^1.1.3
       prosemirror-keymap: ^1.1.5
@@ -114,7 +114,7 @@ importers:
       prosemirror-state: ^1.3.4
       prosemirror-tables: ^1.1.1
       prosemirror-transform: ^1.3.3
-      prosemirror-view: ^1.21.0
+      prosemirror-view: ^1.23.0
       react: ^17.0.2
       react-dom: ^17.0.2
       typescript: ^4.4.4
@@ -148,7 +148,7 @@ importers:
       clsx: 1.1.1
       codemirror: 5.63.3
       markdown-it: 12.2.0
-      mdast-util-from-markdown: 1.0.4
+      mdast-util-from-markdown: 1.1.0
       mdast-util-gfm-strikethrough: 1.0.0
       micromark-extension-gfm-strikethrough: 1.0.3
       prosemirror-commands: 1.1.12
@@ -2998,8 +2998,8 @@ packages:
     dev: true
     optional: true
 
-  /@types/prettier/2.4.1:
-    resolution: {integrity: sha512-Fo79ojj3vdEZOHg3wR9ksAMRz4P3S5fDB5e/YWZiFnyFQI1WY2Vftu9XoXVVtJfxB7Bpce/QTqWSSntkz2Znrw==}
+  /@types/prettier/2.4.2:
+    resolution: {integrity: sha512-ekoj4qOQYp7CvjX8ZDBgN86w3MqQhLE1hczEJbEIjgFEumDy+na/4AJAbLXfgEWFNB2pKadM5rPFtuSGMWK7xA==}
     dev: true
 
   /@types/prop-types/15.7.4:
@@ -4011,9 +4011,9 @@ packages:
     engines: {node: ^6 || ^7 || ^8 || ^9 || ^10 || ^11 || ^12 || >=13.7}
     hasBin: true
     dependencies:
-      caniuse-lite: 1.0.30001279
+      caniuse-lite: 1.0.30001280
       colorette: 1.4.0
-      electron-to-chromium: 1.3.895
+      electron-to-chromium: 1.3.896
       escalade: 3.1.1
       node-releases: 1.1.77
     dev: true
@@ -4023,8 +4023,8 @@ packages:
     engines: {node: ^6 || ^7 || ^8 || ^9 || ^10 || ^11 || ^12 || >=13.7}
     hasBin: true
     dependencies:
-      caniuse-lite: 1.0.30001279
-      electron-to-chromium: 1.3.895
+      caniuse-lite: 1.0.30001280
+      electron-to-chromium: 1.3.896
       escalade: 3.1.1
       node-releases: 2.0.1
       picocolors: 1.0.0
@@ -4205,8 +4205,8 @@ packages:
     engines: {node: '>=10'}
     dev: true
 
-  /caniuse-lite/1.0.30001279:
-    resolution: {integrity: sha512-VfEHpzHEXj6/CxggTwSFoZBBYGQfQv9Cf42KPlO79sWXCD1QNKWKsKzFeWL7QpZHJQYAvocqV6Rty1yJMkqWLQ==}
+  /caniuse-lite/1.0.30001280:
+    resolution: {integrity: sha512-kFXwYvHe5rix25uwueBxC569o53J6TpnGu0BEEn+6Lhl2vsnAumRFWEBhDft1fwyo6m1r4i+RqA4+163FpeFcA==}
     dev: true
 
   /case-anything/1.1.3:
@@ -4865,7 +4865,7 @@ packages:
     peerDependencies:
       postcss: ^8.2.15
     dependencies:
-      caniuse-lite: 1.0.30001279
+      caniuse-lite: 1.0.30001280
       postcss: 8.2.15
     dev: true
 
@@ -5346,8 +5346,8 @@ packages:
       - supports-color
     dev: true
 
-  /electron-to-chromium/1.3.895:
-    resolution: {integrity: sha512-9Ww3fB8CWctjqHwkOt7DQbMZMpal2x2reod+/lU4b9axO1XJEDUpPMBxs7YnjLhhqpKXIIB5SRYN/B4K0QpvyQ==}
+  /electron-to-chromium/1.3.896:
+    resolution: {integrity: sha512-NcGkBVXePiuUrPLV8IxP43n1EOtdg+dudVjrfVEUd/bOqpQUFZ2diL5PPYzbgEhZFEltdXV3AcyKwGnEQ5lhMA==}
     dev: true
 
   /electron-updater/4.3.9:
@@ -8016,7 +8016,7 @@ packages:
       '@jest/transform': 27.3.1
       '@jest/types': 27.2.5
       '@types/babel__traverse': 7.14.2
-      '@types/prettier': 2.4.1
+      '@types/prettier': 2.4.2
       babel-preset-current-node-syntax: 1.0.1_@babel+core@7.16.0
       chalk: 4.1.2
       expect: 27.3.1
@@ -8579,8 +8579,8 @@ packages:
       is-buffer: 1.1.6
     dev: true
 
-  /mdast-util-from-markdown/1.0.4:
-    resolution: {integrity: sha512-BlL42o885QO+6o43ceoc6KBdp/bi9oYyamj0hUbeu730yhP1WDC7m2XYSBfmQkOb0TdoHSAJ3de3SMqse69u+g==}
+  /mdast-util-from-markdown/1.1.0:
+    resolution: {integrity: sha512-Mex7IIeIKRpGYNNywpxTfPhfFBTxBL5IVacPMU6GjYF+EkIvy++19cBgxVFyHVd2JpC/chG2IKGqZLffoo7Q1g==}
     dependencies:
       '@types/mdast': 3.0.10
       '@types/unist': 2.0.6
@@ -9090,7 +9090,7 @@ packages:
       browserify-zlib: 0.2.0
       browserslist: 4.16.6
       buffer: 5.6.0
-      caniuse-lite: 1.0.30001279
+      caniuse-lite: 1.0.30001280
       chalk: 2.4.2
       chokidar: 3.5.1
       constants-browserify: 1.0.0
@@ -10759,8 +10759,8 @@ packages:
     resolution: {integrity: sha512-RvuCITckrHM9k8DxCCU9rqWpuuKRfVX9iHG751dC3/EdERxp9gJATxYYdYOT3L0T+TAT4+27lENisk/VbHm47A==}
     dev: true
 
-  /rollup/2.59.0:
-    resolution: {integrity: sha512-l7s90JQhCQ6JyZjKgo7Lq1dKh2RxatOM+Jr6a9F7WbS9WgKbocyUSeLmZl8evAse7y96Ae98L2k1cBOwWD8nHw==}
+  /rollup/2.60.0:
+    resolution: {integrity: sha512-cHdv9GWd58v58rdseC8e8XIaPUo8a9cgZpnCMMDGZFDZKEODOiPPEQFXLriWr/TjXzhPPmG5bkAztPsOARIcGQ==}
     engines: {node: '>=10.0.0'}
     hasBin: true
     optionalDependencies:
@@ -12297,7 +12297,7 @@ packages:
       esbuild: 0.13.13
       postcss: 8.3.11
       resolve: 1.20.0
-      rollup: 2.59.0
+      rollup: 2.60.0
     optionalDependencies:
       fsevents: 2.3.2
     dev: true
@@ -12607,7 +12607,6 @@ packages:
   /xmlbuilder/9.0.7:
     resolution: {integrity: sha1-Ey7mPS7FVlxVfiD0wi35rKaGsQ0=}
     engines: {node: '>=4.0'}
-    requiresBuild: true
     dev: true
 
   /xmlchars/2.2.0:
