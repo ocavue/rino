@@ -24,8 +24,8 @@ runs:
   using: "composite"
   steps:
     - name: Deploy @rino.app/home to Vercel
-      uses: &vercel_action amondnet/vercel-action@v20
-      with: &vercel_args
+      uses: amondnet/vercel-action@v20
+      with:
         github-comment: false
         vercel-token: ${{ secrets.VERCEL_TOKEN }}
         github-token: ${{ secrets.GITHUB_TOKEN }}
