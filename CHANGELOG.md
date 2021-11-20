@@ -1,6 +1,6 @@
 # Changelog
 
-### [0.32.10](https://www.github.com/ocavue/rino/compare/v0.32.9...v0.32.10) (2021-11-20)
+## [0.32.10](https://www.github.com/ocavue/rino/compare/v0.32.9...v0.32.10) (2021-11-20)
 
 
 ### Miscellaneous Chores
