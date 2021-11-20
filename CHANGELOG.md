@@ -1,5 +1,12 @@
 # Changelog
 
+### [0.32.10](https://www.github.com/ocavue/rino/compare/v0.32.9...v0.32.10) (2021-11-20)
+
+
+### Miscellaneous Chores
+
+* **deps:** update dependency electron to v16 ([#841](https://www.github.com/ocavue/rino/issues/841)) ([2ad0c02](https://www.github.com/ocavue/rino/commit/2ad0c022354c2b0b0a9600339cb9c94e76ccfefd))
+
 ## [0.32.9](https://www.github.com/ocavue/rino/compare/v0.32.8...v0.32.9) (2021-10-15)
 
 
