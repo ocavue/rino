@@ -42,25 +42,7 @@
         ],
         "packageRules": [
             {
-                "groupName": "remirror packages",
-                "matchPackagePatterns": [
-                    ".*remirror.*"
-                ],
-                "stabilityDays": 0
-            },
-            {
-                "groupName": "prosemirror packages",
-                "matchPackagePatterns": [
-                    ".*prosemirror.*"
-                ],
-                "stabilityDays": 0
-            },
-            {
                 "groupName": "dependencies (non-major)",
-                "excludePackagePatterns": [
-                    ".*remirror.*",
-                    ".*prosemirror.*"
-                ],
                 "matchUpdateTypes": [
                     "patch",
                     "minor"
