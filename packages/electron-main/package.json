@@ -3,8 +3,8 @@
     "version": "0.0.0",
     "private": true,
     "scripts": {
-        "dev": "tsc --build ./src/tsconfig.json && vite build ./src --watch",
-        "build": "tsc --build ./src/tsconfig.json && vite build ./src"
+        "dev": "tsc --build ./src/tsconfig.json && vite build --watch",
+        "build": "tsc --build ./src/tsconfig.json && vite build"
     },
     "dependencies": {
         "electron-log": "^4.4.3",

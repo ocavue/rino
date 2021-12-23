@@ -8,7 +8,7 @@
     "module": "dist/index.js",
     "types": "dist/index.d.ts",
     "scripts": {
-        "dev": "tsc --build ./src/tsconfig.json && vite ./playground",
+        "dev": "tsc --build ./src/tsconfig.json && vite dev",
         "build": "tsc --build ./src/tsconfig.json"
     },
     "dependencies": {
