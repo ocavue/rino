@@ -16,7 +16,7 @@ export default defineConfig({
         emptyOutDir: true,
 
         lib: {
-            entry: "./main.ts",
+            entry: "./src/main.ts",
             formats: ["cjs"],
         },
         rollupOptions: {
