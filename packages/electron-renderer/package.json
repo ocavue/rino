@@ -3,8 +3,8 @@
     "version": "0.0.0",
     "private": true,
     "scripts": {
-        "dev": "tsc --build ./src/tsconfig.json && vite ./src",
-        "build": "tsc --build ./src/tsconfig.json && vite build ./src"
+        "dev": "tsc --build ./src/tsconfig.json && vite dev",
+        "build": "tsc --build ./src/tsconfig.json && vite build"
     },
     "devDependencies": {
         "@rino.app/common": "workspace:0.0.0",

@@ -6,6 +6,7 @@ import { defineConfig } from "vite"
 // https://vitejs.dev/config/
 export default defineConfig((env) => ({
     base: "",
+    root: "./src/",
     plugins: [reactRefresh()],
     server: {
         port: 3004,
@@ -28,7 +29,7 @@ export default defineConfig((env) => ({
         minify: "esbuild",
         sourcemap: true,
         chunkSizeWarningLimit: 5000,
-        outDir: "./dist",
+        outDir: "../dist",
         emptyOutDir: true,
     },
     define: {
