@@ -12,7 +12,7 @@ export default defineConfig({
         minify: "esbuild",
         sourcemap: true,
         chunkSizeWarningLimit: 2000,
-        outDir: "../dist",
+        outDir: "./dist",
         emptyOutDir: true,
 
         lib: {
