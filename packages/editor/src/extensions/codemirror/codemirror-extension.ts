@@ -4,7 +4,7 @@ import Token from "markdown-it/lib/token"
 import { NodeSerializerOptions, ParserRuleType } from "../../transform"
 
 /** Use this fake language name to mark a code block as an indented code block instead of a fence code block */
-const FAKE_INDENTED_LANGUAGE = "rino-indented"
+export const fakeIndentedLanguage = "rino-indented"
 
 export class RinoCodeMirrorExtension extends CodeMirrorExtension {
     public fromMarkdown() {
@@ -30,7 +30,7 @@ export class RinoCodeMirrorExtension extends CodeMirrorExtension {
                 hasOpenClose: false,
                 getAttrs: (tok: Token) => {
                     return {
-                        language: FAKE_INDENTED_LANGUAGE,
+                        language: fakeIndentedLanguage,
                     }
                 },
             },
@@ -38,7 +38,7 @@ export class RinoCodeMirrorExtension extends CodeMirrorExtension {
     }
 
     public toMarkdown({ state, node }: NodeSerializerOptions) {
-        if (node.attrs.codeBlockType !== FAKE_INDENTED_LANGUAGE) {
+        if (node.attrs.language !== fakeIndentedLanguage) {
             state.write("```" + ((node.attrs.language as string) || "") + "\n")
             state.text(node.textContent, false)
             state.text("\n")

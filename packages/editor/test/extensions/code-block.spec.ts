@@ -3,9 +3,7 @@ import { renderEditor } from "jest-remirror"
 import { dedent } from "@rino.app/common"
 
 import { buildMarkdownParser, buildMarkdownSerializer } from "../../src/components/wysiwyg"
-import { RinoCodeBlockExtension, RinoParagraphExtension, RinoTextExtension } from "../../src/extensions"
-
-const defaultLanguage = ""
+import { fakeIndentedLanguage, RinoCodeMirrorExtension, RinoParagraphExtension, RinoTextExtension } from "../../src/extensions"
 
 const setup = () => {
     const {
@@ -15,7 +13,7 @@ const setup = () => {
         attributeNodes: { codeMirror },
         manager,
         schema,
-    } = renderEditor([new RinoParagraphExtension(), new RinoTextExtension(), new RinoCodeBlockExtension({})])
+    } = renderEditor([new RinoParagraphExtension(), new RinoTextExtension(), new RinoCodeMirrorExtension()])
 
     return {
         manager,
@@ -38,9 +36,7 @@ describe("fromMarkdown", () => {
             expect(parser.parse(["    markdown", "    code", "    block"].join("\n"))).toEqualRemirrorDocument(
                 doc(
                     codeBlock({
-                        language: "",
-                        userInputLanguage: "",
-                        codeBlockType: "indented",
+                        language: fakeIndentedLanguage,
                     })("markdown\ncode\nblock"),
                 ),
             )
@@ -54,8 +50,6 @@ describe("fromMarkdown", () => {
                 doc(
                     codeBlock({
                         language: "python",
-                        userInputLanguage: "python",
-                        codeBlockType: "fenced",
                     })("print('hello world!')\nprint('hello world!')\nprint('hello world!')"),
                 ),
             )
@@ -66,8 +60,6 @@ describe("fromMarkdown", () => {
                 doc(
                     codeBlock({
                         language: "unknow",
-                        userInputLanguage: "unknow",
-                        codeBlockType: "fenced",
                     })("bla bla bla bla"),
                 ),
             )
@@ -78,8 +70,6 @@ describe("fromMarkdown", () => {
                 doc(
                     codeBlock({
                         language: "",
-                        userInputLanguage: "",
-                        codeBlockType: "fenced",
                     })("echo 'hello world!'"),
                 ),
             )
@@ -97,9 +87,7 @@ describe("toMarkdown", () => {
                 serializer.serialize(
                     doc(
                         codeBlock({
-                            language: defaultLanguage,
-                            userInputLanguage: "",
-                            codeBlockType: "indented",
+                            language: fakeIndentedLanguage,
                         })("markdown"),
                     ),
                 ),
@@ -110,9 +98,7 @@ describe("toMarkdown", () => {
                 serializer.serialize(
                     doc(
                         codeBlock({
-                            language: defaultLanguage,
-                            userInputLanguage: "",
-                            codeBlockType: "indented",
+                            language: fakeIndentedLanguage,
                         })("markdown\n"),
                     ),
                 ),
@@ -123,9 +109,7 @@ describe("toMarkdown", () => {
                 serializer.serialize(
                     doc(
                         codeBlock({
-                            language: defaultLanguage,
-                            userInputLanguage: "",
-                            codeBlockType: "indented",
+                            language: fakeIndentedLanguage,
                         })("markdown\nmarkdown\nmarkdown"),
                     ),
                 ),
@@ -136,9 +120,7 @@ describe("toMarkdown", () => {
                 serializer.serialize(
                     doc(
                         codeBlock({
-                            language: defaultLanguage,
-                            userInputLanguage: "",
-                            codeBlockType: "indented",
+                            language: fakeIndentedLanguage,
                         })("markdown\nmarkdown\nmarkdown\n"),
                     ),
                 ),
@@ -152,9 +134,7 @@ describe("toMarkdown", () => {
                 serializer.serialize(
                     doc(
                         codeBlock({
-                            language: defaultLanguage,
-                            userInputLanguage: "",
-                            codeBlockType: "fenced",
+                            language: "",
                         })("markdown"),
                     ),
                 ),
@@ -165,9 +145,7 @@ describe("toMarkdown", () => {
                 serializer.serialize(
                     doc(
                         codeBlock({
-                            language: defaultLanguage,
-                            userInputLanguage: "",
-                            codeBlockType: "fenced",
+                            language: "",
                         })("markdown\n"),
                     ),
                 ),
@@ -178,9 +156,7 @@ describe("toMarkdown", () => {
                 serializer.serialize(
                     doc(
                         codeBlock({
-                            language: defaultLanguage,
-                            userInputLanguage: "",
-                            codeBlockType: "fenced",
+                            language: "",
                         })("markdown\n\n"),
                     ),
                 ),
@@ -195,14 +171,10 @@ describe("toMarkdown", () => {
                             p("p0"),
                             p("p1"),
                             codeBlock({
-                                language: defaultLanguage,
-                                userInputLanguage: "",
-                                codeBlockType: "fenced",
+                                language: "",
                             })("code"),
                             codeBlock({
-                                language: defaultLanguage,
-                                userInputLanguage: "",
-                                codeBlockType: "indented",
+                                language: fakeIndentedLanguage,
                             })("code"),
                             p("p2"),
                         ),
