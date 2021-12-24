@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.33.0](https://www.github.com/ocavue/rino/compare/v0.32.10...v0.33.0) (2021-12-24)
+
+
+### Features
+
+* **editor:** update the code editor to CodeMirror v6 ([#851](https://www.github.com/ocavue/rino/issues/851)) ([538be37](https://www.github.com/ocavue/rino/commit/538be3726c8e7a79b69f011fd05f0e7187dbd5ac))
+
 ## [0.32.10](https://www.github.com/ocavue/rino/compare/v0.32.9...v0.32.10) (2021-11-20)
 
 
