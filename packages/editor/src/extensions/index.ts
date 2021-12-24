@@ -1,5 +1,4 @@
 export * from "./blockquote"
-export * from "./code-block"
 export * from "./hard-break"
 export * from "./heading"
 export * from "./horizontal-rule"

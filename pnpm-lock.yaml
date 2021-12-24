@@ -76,7 +76,6 @@ importers:
       '@remirror/core-utils': ^1.1.3
       '@remirror/dev': ^1.0.19
       '@remirror/extension-blockquote': ^1.0.13
-      '@remirror/extension-codemirror5': ^1.0.12
       '@remirror/extension-codemirror6': ^0.1.0
       '@remirror/extension-doc': ^1.0.13
       '@remirror/extension-hard-break': ^1.0.12
@@ -94,14 +93,12 @@ importers:
       '@remirror/react-core': ^1.0.17
       '@remirror/styles': ^1.1.2
       '@rino.app/common': workspace:0.0.0
-      '@types/codemirror': ^5.60.5
       '@types/lodash-es': ^4.17.5
       '@types/markdown-it': ^12.2.3
       '@types/react': ^17.0.38
       '@types/react-dom': ^17.0.11
       '@vitejs/plugin-react-refresh': ^1.3.6
       clsx: ^1.1.1
-      codemirror: ^5.65.0
       commonmark-spec: ^0.30.0
       jest: ^27.4.5
       jest-extended: ^1.2.0
@@ -141,7 +138,6 @@ importers:
       '@remirror/core-utils': 1.1.3_a2751efd9bd367adca9a52fbe5e44c38
       '@remirror/dev': 1.0.19_14b2a6b96823f70b1b28a590a9cd6374
       '@remirror/extension-blockquote': 1.0.13_a2751efd9bd367adca9a52fbe5e44c38
-      '@remirror/extension-codemirror5': 1.0.12_bf81c9f8f3b181084dc15f8020e1265c
       '@remirror/extension-codemirror6': 0.1.0_a2751efd9bd367adca9a52fbe5e44c38
       '@remirror/extension-doc': 1.0.13_a2751efd9bd367adca9a52fbe5e44c38
       '@remirror/extension-hard-break': 1.0.12_a2751efd9bd367adca9a52fbe5e44c38
@@ -160,7 +156,6 @@ importers:
       '@remirror/styles': 1.1.2_2049cdc45b22858865e3c2fe0fdbe7ea
       '@rino.app/common': link:../common
       clsx: 1.1.1
-      codemirror: 5.65.0
       markdown-it: 12.3.0
       mdast-util-from-markdown: 1.2.0
       mdast-util-gfm-strikethrough: 1.0.0
@@ -179,7 +174,6 @@ importers:
       unstated-next: 1.1.0
     devDependencies:
       '@babel/core': 7.16.5
-      '@types/codemirror': 5.60.5
       '@types/lodash-es': 4.17.5
       '@types/markdown-it': 12.2.3
       '@types/react': 17.0.38
@@ -2265,25 +2259,6 @@ packages:
       - jsdom
     dev: false
 
-  /@remirror/extension-codemirror5/1.0.12_bf81c9f8f3b181084dc15f8020e1265c:
-    resolution: {integrity: sha512-nvMyZiGi4Eo9U8t+R30PLgjfEELMxwKMbq7lucAWEh97eTUf6bWNcdb1X2u7jEBTVUs2wnfyG8a6sysVcp4qvw==}
-    peerDependencies:
-      '@remirror/pm': ^1.0.8
-      '@types/codemirror': '*'
-      codemirror: ^5
-    dependencies:
-      '@babel/runtime': 7.16.5
-      '@remirror/core': 1.3.2_a2751efd9bd367adca9a52fbe5e44c38
-      '@remirror/messages': 1.0.5
-      '@remirror/pm': 1.0.9
-      '@types/codemirror': 5.60.5
-      codemirror: 5.65.0
-    transitivePeerDependencies:
-      - '@types/node'
-      - domino
-      - jsdom
-    dev: false
-
   /@remirror/extension-codemirror6/0.1.0_a2751efd9bd367adca9a52fbe5e44c38:
     resolution: {integrity: sha512-mcM0/1Hx+69ZbV+fONUb6WWC0jdpa/LqQfwSikdy22n7x2vCwWh61Sc7PlnfZWG1x+kwvSJs5KPf3koIztNgLw==}
     peerDependencies:
@@ -3397,20 +3372,10 @@ packages:
       '@babel/types': 7.16.0
     dev: true
 
-  /@types/codemirror/5.60.5:
-    resolution: {integrity: sha512-TiECZmm8St5YxjFUp64LK0c8WU5bxMDt9YaAek1UqUb9swrSCoJhh92fWu1p3mTEqlHjhB5sY7OFBhWroJXZVg==}
-    dependencies:
-      '@types/tern': 0.23.4
-    dev: true
-
   /@types/debug/4.1.7:
     resolution: {integrity: sha512-9AonUzyTjXXhEOa0DnqpzZi6VHlqKMswga9EXjpXnnqxwLtdvPPtlO8evrI5D9S6asFRCQ6v+wpiUKbw+vKqyg==}
     dependencies:
       '@types/ms': 0.7.31
-
-  /@types/estree/0.0.50:
-    resolution: {integrity: sha512-C6N5s2ZFtuZRj54k2/zyRhNDjJwwcViAM3Nbm8zjBpbqAdZ00mr0CFxvSKeO8Y/e03WVFLpQMdHYVfUd6SB+Hw==}
-    dev: true
 
   /@types/fs-extra/9.0.13:
     resolution: {integrity: sha512-nEnwB++1u5lVDM2UI4c1+5R+FYaKfaAzS4OococimjVm3nQw3TuzH5UNsocrcTBbhnerblyHj4A49qXbIiZdpA==}
@@ -3709,12 +3674,6 @@ packages:
 
   /@types/stringify-object/3.3.1:
     resolution: {integrity: sha512-bpCBW0O+QrMLNFBY/+rkZtGzcYRmc2aTD8qYHOMNUmednqETfEZtFcGEA11l9xqbIeiT1PgXG0eq3zqayVzZSQ==}
-    dev: true
-
-  /@types/tern/0.23.4:
-    resolution: {integrity: sha512-JAUw1iXGO1qaWwEOzxTKJZ/5JxVeON9kvGZ/osgZaJImBnyjyn0cjovPsf6FNLmyGY8Vw9DoXZCMlfMkMwHRWg==}
-    dependencies:
-      '@types/estree': 0.0.50
     dev: true
 
   /@types/testing-library__jest-dom/5.14.2:
@@ -4936,10 +4895,6 @@ packages:
     resolution: {integrity: sha1-DQcLTQQ6W+ozovGkDi7bPZpMz3c=}
     engines: {node: '>=0.10.0'}
     dev: true
-
-  /codemirror/5.65.0:
-    resolution: {integrity: sha512-gWEnHKEcz1Hyz7fsQWpK7P0sPI2/kSkRX2tc7DFA6TmZuDN75x/1ejnH/Pn8adYKrLEA1V2ww6L00GudHZbSKw==}
-    dev: false
 
   /collect-v8-coverage/1.0.1:
     resolution: {integrity: sha512-iBPtljfCNcTKNAto0KEtDfZ3qzjJvqE3aTGZsbhjSBlorqpXJlaWWtPO35D+ZImoC3KWejX64o+yPGxhWSTzfg==}
