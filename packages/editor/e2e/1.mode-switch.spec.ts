@@ -22,23 +22,23 @@ describe("Mode switch", function () {
     })
     test("Default mode", async () => {
         await expectWysiwygMode()
-        await typeWysiwygEditor("1", false)
+        await typeWysiwygEditor("A", false)
     })
     test("Switch to source code mode", async () => {
         await pressHotkey()
         await expectSourceCodeMode()
-        await typeSourceCodeEditor("2", false)
+        await typeSourceCodeEditor("B", false)
     })
     test("Switch back to WYSIWYG mode", async () => {
         await pressHotkey()
         await expectWysiwygMode()
-        await typeWysiwygEditor("3", false)
+        await typeWysiwygEditor("C", false)
     })
     test("Switch back to source code mode", async () => {
         await pressHotkey()
         await expectSourceCodeMode()
-        await typeSourceCodeEditor("4", false)
+        await typeSourceCodeEditor("D", false)
         const text = await getSourceCodeModeText()
-        expect(text.trim()).toEqual("1234")
+        expect(text.trim()).toEqual("ABCD")
     })
 })
