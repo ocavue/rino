@@ -27,7 +27,9 @@ const SourceCodeEditor: FC<EditorProps> = React.memo<EditorProps>(
 
         const initialNode = useMemo(() => {
             const schema = manager.schema
-            return schema.nodes.doc.create({}, schema.nodes.codeMirror.create({}, initialContent ? schema.text(initialContent) : undefined))
+            const attrs = { language: "markdown" }
+            const child = initialContent ? schema.text(initialContent) : undefined
+            return schema.nodes.doc.create({}, schema.nodes.codeMirror.create(attrs, child))
         }, [manager, initialContent])
 
         const getContent: () => string | null = useCallback(() => {
