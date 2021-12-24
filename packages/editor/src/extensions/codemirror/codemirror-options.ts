@@ -10,7 +10,7 @@ const markdownLanguage = LanguageDescription.of({
     extensions: ["md", "markdown", "mkd"],
     load: async () => {
         const model = await import("@codemirror/lang-markdown")
-        return model.markdown({ codeLanguages: languages })
+        return model.markdown({ codeLanguages: languages, base: model.markdownLanguage })
     },
 })
 
