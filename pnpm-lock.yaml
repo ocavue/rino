@@ -63,12 +63,12 @@ importers:
   packages/editor:
     specifiers:
       '@babel/core': ^7.16.5
-      '@codemirror/basic-setup': ^0.19.0
-      '@codemirror/lang-markdown': ^0.19.0
-      '@codemirror/language': ^0.19.0
-      '@codemirror/language-data': ^0.19.0
-      '@codemirror/theme-one-dark': ^0.19.0
-      '@codemirror/view': ^0.19.0
+      '@codemirror/basic-setup': ^0.19.1
+      '@codemirror/lang-markdown': ^0.19.3
+      '@codemirror/language': ^0.19.7
+      '@codemirror/language-data': ^0.19.1
+      '@codemirror/theme-one-dark': ^0.19.1
+      '@codemirror/view': ^0.19.37
       '@emotion/css': ^11.7.1
       '@emotion/react': ^11.7.1
       '@mui/material': ^5.2.5
@@ -8639,6 +8639,7 @@ packages:
 
   /json-schema-traverse/0.4.1:
     resolution: {integrity: sha512-xbbCH5dCYU5T8LcEhhuh7HJ88HXuW3qsI3Y0zOZFKfZEHcpWiHU/Jxzk629Brsab/mMiHQti9wMP+845RPe3Vg==}
+    requiresBuild: true
     dev: true
 
   /json-stable-stringify-without-jsonify/1.0.1:
@@ -12428,6 +12429,7 @@ packages:
 
   /uri-js/4.4.1:
     resolution: {integrity: sha512-7rKUyy33Q1yc98pQ1DAmLtwX109F7TIfWlW1Ydo8Wl1ii1SeHieeh0HHfPeL2fMXK6z0s8ecKs9frCuLJvndBg==}
+    requiresBuild: true
     dependencies:
       punycode: 2.1.1
     dev: true
