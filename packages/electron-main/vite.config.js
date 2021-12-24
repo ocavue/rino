@@ -9,7 +9,6 @@ process.env.VITE_APP_GIT_COMMIT_SHA = execSync(`git rev-parse --short HEAD`).toS
 // https://vitejs.dev/config/
 export default defineConfig({
     build: {
-        minify: "esbuild",
         sourcemap: true,
         chunkSizeWarningLimit: 2000,
         outDir: "./dist",
@@ -20,7 +19,7 @@ export default defineConfig({
             formats: ["cjs"],
         },
         rollupOptions: {
-            external: [...builtinModules, /^node:/, "electron"],
+            external: [...builtinModules, ...builtinModules.map((module) => new RegExp("^" + module + "/")), /^node:/, "electron"],
         },
     },
 })
