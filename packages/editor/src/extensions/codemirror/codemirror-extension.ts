@@ -3,7 +3,7 @@ import Token from "markdown-it/lib/token"
 
 import { NodeSerializerOptions, ParserRuleType } from "../../transform"
 
-/** Use this fake language name to mark a code block is an indented code block instead of a fence code block */
+/** Use this fake language name to mark a code block as an indented code block instead of a fence code block */
 const FAKE_INDENTED_LANGUAGE = "rino-indented"
 
 export class RinoCodeMirrorExtension extends CodeMirrorExtension {
