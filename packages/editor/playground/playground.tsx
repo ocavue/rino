@@ -15,12 +15,25 @@ const useDrawerActivityState = () => {
 
 const drawerActivityContainer = createContainer(useDrawerActivityState)
 
+const defaultContent = `
+
+# Title
+
+hello world
+
+\`\`\`python
+while True:
+    print("hello world")
+\`\`\`
+
+`.trim()
+
 const DefaultEditor: FC = () => {
     const params = new URLSearchParams(document.location.search)
     const content = params.get("content")
     const enableDevTools = params.get("devtools") !== "false"
 
-    const [note] = useState({ content: isString(content) ? content : "# Title\nhello world", deleted: false })
+    const [note] = useState({ content: isString(content) ? content : defaultContent, deleted: false })
 
     return (
         <drawerActivityContainer.Provider>

@@ -1,13 +1,15 @@
+import { basicSetup } from "@codemirror/basic-setup"
+import { languages } from "@codemirror/language-data"
+import { oneDark } from "@codemirror/theme-one-dark"
 import type { ParagraphExtension } from "@remirror/extension-paragraph"
 import { ReactComponentExtension } from "@remirror/extension-react-component"
 import type { TextExtension } from "@remirror/extension-text"
 import { CorePreset, corePreset } from "@remirror/preset-core"
-import CodeMirror from "codemirror"
 
 import {
     RinoBlockquoteExtension,
     RinoBulletListExtension,
-    RinoCodeBlockExtension,
+    RinoCodeMirrorExtension,
     RinoHardBreakExtension,
     RinoHeadingExtension,
     RinoHorizontalRuleExtension,
@@ -43,7 +45,10 @@ function createRinoMarkdownNodeExtensions() {
     const rinoMarkdownNodeExtensions = [
         new RinoHardBreakExtension(),
         new RinoHorizontalRuleExtension(),
-        new RinoCodeBlockExtension({ CodeMirror }),
+        new RinoCodeMirrorExtension({
+            languages: languages,
+            extensions: [basicSetup, oneDark],
+        }),
         new RinoBlockquoteExtension(),
         new RinoHeadingExtension({}),
 

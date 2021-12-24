@@ -1,14 +1,19 @@
+import { basicSetup } from "@codemirror/basic-setup"
+import { languages } from "@codemirror/language-data"
+import { oneDark } from "@codemirror/theme-one-dark"
 import { DocExtension } from "@remirror/extension-doc"
 import { useRemirror } from "@remirror/react"
-import CodeMirror from "codemirror"
 
-import { RinoCodeBlockExtension } from "../../extensions"
+import { RinoCodeMirrorExtension } from "../../extensions"
 
 export function useSourceCodeRemirror() {
     return useRemirror({
         extensions: () => [
             new DocExtension({ content: "codeMirror" }),
-            new RinoCodeBlockExtension({ CodeMirror, defaultCodeMirrorConfig: { mode: "text/x-markdown" } }),
+            new RinoCodeMirrorExtension({
+                languages: languages,
+                extensions: [basicSetup, oneDark],
+            }),
         ],
     })
 }
