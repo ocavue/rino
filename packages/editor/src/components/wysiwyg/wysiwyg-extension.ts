@@ -2,12 +2,12 @@ import type { ParagraphExtension } from "@remirror/extension-paragraph"
 import { ReactComponentExtension } from "@remirror/extension-react-component"
 import type { TextExtension } from "@remirror/extension-text"
 import { CorePreset, corePreset } from "@remirror/preset-core"
-import CodeMirror from "codemirror"
 
 import {
+    buildCodeMirrorOptions,
     RinoBlockquoteExtension,
     RinoBulletListExtension,
-    RinoCodeBlockExtension,
+    RinoCodeMirrorExtension,
     RinoHardBreakExtension,
     RinoHeadingExtension,
     RinoHorizontalRuleExtension,
@@ -43,7 +43,7 @@ function createRinoMarkdownNodeExtensions() {
     const rinoMarkdownNodeExtensions = [
         new RinoHardBreakExtension(),
         new RinoHorizontalRuleExtension(),
-        new RinoCodeBlockExtension({ CodeMirror }),
+        new RinoCodeMirrorExtension(buildCodeMirrorOptions({ onlyMarkdown: false })),
         new RinoBlockquoteExtension(),
         new RinoHeadingExtension({}),
 

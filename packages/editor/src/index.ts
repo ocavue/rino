@@ -1,5 +1,3 @@
-import "codemirror/lib/codemirror.css"
-import "codemirror/theme/nord.css"
 import "prosemirror-tables/style/tables.css"
 import "prosemirror-view/style/prosemirror.css"
 

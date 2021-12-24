@@ -82,7 +82,7 @@ export async function type(testid: string, text: string, pressEnter = true) {
 }
 
 export async function typeCodeMirror(testid: string, text: string, pressEnter = true) {
-    return typeWithSelector(testidSelector(testid) + " .CodeMirror textarea", text, pressEnter)
+    return typeWithSelector(testidSelector(testid) + " .cm-editor .cm-content", text, pressEnter)
 }
 
 export async function typeWysiwygEditor(text: string, pressEnter = true) {
@@ -138,9 +138,15 @@ export const [wysiwygEditorSelector, sourceCodeEditorSelector] = [
 ]
 
 export async function getSourceCodeModeText() {
-    let text = await getInnerText("source_code_mode_textarea")
-    text = text.replace(/[\u200B]/g, "") // Remove Unicode ZERO WIDTH SPACE
-    text = text.replace(/[\u00A0]/g, " ") // Replace Unicode NO-BREAK SPACE
+    const elementHandle = await mustGetOne("source_code_mode_textarea")
+    const contentHandle = await elementHandle.$(".cm-content")
+    if (!contentHandle) {
+        throw new Error("failed to find .cm-content element")
+    }
+    let text = await contentHandle.innerText()
+    text = text.replaceAll(/[\u200B]/g, "") // Remove Unicode ZERO WIDTH SPACE
+    text = text.replaceAll(/[\u00A0]/g, " ") // Replace Unicode NO-BREAK SPACE
+    text = text.replaceAll("\n\n", "\n") // Remove double newline
     return text
 }
 
