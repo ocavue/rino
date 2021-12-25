@@ -17,4 +17,4 @@ export const plateform = {
     IS_LINUX: process.platform === "linux",
 }
 
-export const COMMIT_SHA: string | undefined = (import.meta.env.VITE_APP_GIT_COMMIT_SHA as string) || undefined
+export const COMMIT_SHA: string | undefined = process.env.RINO_GIT_COMMIT_SHA || undefined
