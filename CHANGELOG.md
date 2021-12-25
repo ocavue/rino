@@ -1,5 +1,12 @@
 # Changelog
 
+### [0.33.1](https://www.github.com/ocavue/rino/compare/v0.33.0...v0.33.1) (2021-12-25)
+
+
+### Bug Fixes
+
+* **electron:** fix automatic update ([#854](https://www.github.com/ocavue/rino/issues/854)) ([3f15d84](https://www.github.com/ocavue/rino/commit/3f15d84be28c177d32d55ec5d081a73fd423b61c))
+
 ## [0.33.0](https://www.github.com/ocavue/rino/compare/v0.32.10...v0.33.0) (2021-12-24)
 
 
