@@ -138,16 +138,15 @@ export const [wysiwygEditorSelector, sourceCodeEditorSelector] = [
 ]
 
 export async function getSourceCodeModeText() {
-    const elementHandle = await mustGetOne("source_code_mode_textarea")
-    const contentHandle = await elementHandle.$(".cm-content")
-    if (!contentHandle) {
+    const cmContentHandle = await page.$(testidSelector("source_code_mode_textarea") + " .cm-content")
+    if (!cmContentHandle) {
         throw new Error("failed to find .cm-content element")
     }
-    let text = await contentHandle.innerText()
-    text = text.replaceAll(/[\u200B]/g, "") // Remove Unicode ZERO WIDTH SPACE
-    text = text.replaceAll(/[\u00A0]/g, " ") // Replace Unicode NO-BREAK SPACE
-    text = text.replaceAll("\n\n", "\n") // Remove double newline
-    return text
+    return await cmContentHandle.evaluate((cmContent) => {
+        return Array.from(cmContent.querySelectorAll(".cm-line"))
+            .map((e) => e.textContent)
+            .join("\n")
+    })
 }
 
 export async function waitAnimation<T>(promise: Promise<T>, ms = 500): Promise<T> {
