@@ -34,11 +34,22 @@ export enum Mode {
     SOURCE_CODE = 2,
 }
 
-export type EditorState = {
-    mode: Mode
-    delegate: EditorDelegate
-    initialDoc: ProsemirrorNode
-    note: Note
-    hasUnsavedChanges: boolean
-    error: string | null
-}
+export type EditorState =
+    | {
+          mode: Mode
+          delegate: EditorDelegate
+          note: Note
+          hasUnsavedChanges: boolean
+
+          initialDoc: ProsemirrorNode
+          error: null
+      }
+    | {
+          mode: Mode
+          delegate: EditorDelegate
+          note: Note
+          hasUnsavedChanges: boolean
+
+          initialDoc: null
+          error: Error
+      }

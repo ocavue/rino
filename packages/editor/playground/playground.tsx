@@ -77,7 +77,7 @@ const App: FC = () => {
                 onHasUnsavedChanges={setHasUnsavedChanges}
                 onContentSave={setContent}
             />
-            <DebugConsole hasUnsavedChanges={hasUnsavedChanges} content={content} />
+            {enableDevTools ? <DebugConsole hasUnsavedChanges={hasUnsavedChanges} content={content} /> : null}
             <BlurHelper />
         </div>
     )

@@ -10,11 +10,9 @@ import { metaKey } from "@rino.app/common"
 
 import { editorReducer, initializeState } from "./editor-state"
 import { SourceCodeEditor } from "./source-code"
-import { useSourceCodeEditor } from "./source-code/use-source-code-editor"
 import { EDITOR_THEME_GITHUB } from "./theme/github"
-import { EditorDelegate, Mode, Note } from "./types"
+import { Mode, Note } from "./types"
 import { WysiwygEditor } from "./wysiwyg"
-import { useWysiwygEditor } from "./wysiwyg/use-wysiwyg-editor"
 
 export type EditorProps = {
     note: Readonly<Note>
@@ -39,17 +37,15 @@ const Editor: React.FC<EditorProps> = ({
     onContentSave,
     onHasUnsavedChanges,
 }) => {
-    const wysiwygDelegate: EditorDelegate = useWysiwygEditor({ isTestEnv })
-    const sourceCodeDelegate: EditorDelegate = useSourceCodeEditor()
-    const [state, dispatch] = useReducer(editorReducer, { wysiwygDelegate, note }, initializeState)
+    const [state, dispatch] = useReducer(editorReducer, { note, isTestEnv }, initializeState)
 
     const saveContent = useCallback(() => {
         dispatch({ type: "SAVE_CONTENT" })
     }, [])
 
     const switchMode = useCallback(() => {
-        dispatch({ type: "SWITCH_MODE", payload: { wysiwygDelegate, sourceCodeDelegate } })
-    }, [sourceCodeDelegate, wysiwygDelegate])
+        dispatch({ type: "SWITCH_MODE", payload: { isTestEnv } })
+    }, [isTestEnv])
 
     const editContent = useCallback(() => {
         dispatch({ type: "EDIT_CONTENT" })

@@ -1,10 +1,11 @@
-import { EditorDelegate, EditorState, Mode } from "../types"
+import { createSourceCodeDelegate } from "../source-code/source-code-delegate"
+import { EditorState, Mode } from "../types"
+import { createWysiwygDelegate } from "../wysiwyg/wysiwyg-delegate"
 
 export type SwitchModeAction = {
     type: "SWITCH_MODE"
     payload: {
-        wysiwygDelegate: EditorDelegate
-        sourceCodeDelegate: EditorDelegate
+        isTestEnv: boolean
     }
 }
 
@@ -12,21 +13,30 @@ export function switchMode(state: EditorState, action: SwitchModeAction): Editor
     const currDelegate = state.delegate
     const currDoc = currDelegate.manager?.view?.state?.doc
 
-    // The manager is not initialized yet, so we can't switch mode.
-    if (!currDoc) {
-        return state
-    }
-
-    const currContent: string = currDelegate.docToString(currDoc)
+    const currContent: string = currDoc ? currDelegate.docToString(currDoc) : state.note.content
+    setTimeout(() => currDelegate.manager.destroy(), 0)
 
     const nextMode = state.mode === Mode.WYSIWYG ? Mode.SOURCE_CODE : Mode.WYSIWYG
-    const nextDelegate = nextMode === Mode.WYSIWYG ? action.payload.wysiwygDelegate : action.payload.sourceCodeDelegate
-    const nextDoc = nextDelegate.stringToDoc(currContent)
+    const nextDelegate =
+        nextMode === Mode.WYSIWYG ? createWysiwygDelegate({ isTestEnv: action.payload.isTestEnv }) : createSourceCodeDelegate()
 
-    return {
-        ...state,
-        initialDoc: nextDoc,
-        mode: nextMode,
-        delegate: nextDelegate,
+    try {
+        const nextDoc = nextDelegate.stringToDoc(currContent)
+        return {
+            ...state,
+            initialDoc: nextDoc,
+            mode: nextMode,
+            delegate: nextDelegate,
+            error: null,
+        }
+    } catch (err) {
+        const error = err instanceof Error ? err : new Error(String(err))
+        return {
+            ...state,
+            initialDoc: null,
+            mode: nextMode,
+            delegate: nextDelegate,
+            error,
+        }
     }
 }

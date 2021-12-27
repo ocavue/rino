@@ -1,12 +1,11 @@
-import { useRemirror } from "@remirror/react"
+import { createReactManager } from "@remirror/react"
 
 import { createWysiwygExtension } from "./wysiwyg-extension"
 
-export function useWysiwygRemirror() {
-    return useRemirror({ extensions: () => createWysiwygExtension() })
+export function createWysiwygManager() {
+    return createReactManager(() => createWysiwygExtension())
 }
 
-export type WysiwygRemirror = ReturnType<typeof useWysiwygRemirror>
-export type WysiwygManager = WysiwygRemirror["manager"]
+export type WysiwygManager = ReturnType<typeof createWysiwygManager>
 export type WysiwygSchema = WysiwygManager["schema"]
 export type WysiwygExtensions = WysiwygManager["extensions"]
