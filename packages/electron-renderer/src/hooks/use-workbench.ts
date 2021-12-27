@@ -3,6 +3,7 @@ import { Dispatch, useCallback, useReducer } from "react"
 
 import { ipcInvoker } from "../ipc-renderer"
 import { calcCanCloseWindow } from "./calc-can-close-window"
+import { createTimeoutPromise } from "./create-timeout-promise"
 import { withLogReducer } from "./reducer-logger"
 import { useTitleEffect } from "./use-title-effect"
 
@@ -18,9 +19,7 @@ export type WorkbenchState = {
 
     actionQueue: WorkbenchAction[]
 
-    currentAction: WorkbenchAction | null
-
-    currentActionStartTime: number
+    runningAction: WorkbenchAction | null
 
     contentDiscarded: boolean
 }
@@ -34,9 +33,7 @@ const initialState = Object.freeze<WorkbenchState>({
 
     actionQueue: [],
 
-    currentAction: null,
-
-    currentActionStartTime: 0,
+    runningAction: null,
 
     contentDiscarded: false,
 })
@@ -54,7 +51,7 @@ async function asyncCloseWindow(state: WorkbenchState, action: CloseWindowAction
     const dispatch = action.dispatch
     if (!state.path) {
         const { filePath, canceled, discarded } = await ipcInvoker.askMarkdownFileForClose()
-        dispatch({ type: "CLEAN_CURRENT_ACTION" })
+        dispatch({ type: "CLEAN_RUNNING_ACTION" })
         if (discarded) {
             dispatch({ type: "DISCARD_CONTENT" })
             dispatch({ type: "CLOSE_WINDOW", dispatch })
@@ -117,8 +114,8 @@ function ensureFilePath(state: WorkbenchState, action: EnsureFilePathAction): vo
     startAsyncAction(state, action, asyncEnsureFilePath(state, action), action.dispatch)
 }
 
-type CleanCurrentActionAction = {
-    type: "CLEAN_CURRENT_ACTION"
+type CleanRunningActionAction = {
+    type: "CLEAN_RUNNING_ACTION"
 }
 
 type SetIsSerializingAction = {
@@ -134,9 +131,11 @@ type WorkbenchAction =
     | SetNotePathAction
     | SetNoteContentAction
     | EnsureFilePathAction
-    | CleanCurrentActionAction
+    | CleanRunningActionAction
     | DiscardContentAction
     | SetIsSerializingAction
+
+const ASYNC_ACTION_TIMEOUT = 10000
 
 function startAsyncAction(
     state: WorkbenchState,
@@ -144,11 +143,10 @@ function startAsyncAction(
     promise: Promise<void>,
     dispatch: Dispatch<WorkbenchAction>,
 ): WorkbenchState {
-    console.assert(state.currentAction === null, "startAsyncAction should not be called when currentAction is not null")
+    console.assert(state.runningAction === null, "startAsyncAction should not be called when runningAction is not null")
 
-    state.currentAction = action
-    state.currentActionStartTime = Number(Date.now())
-    promise.then(() => dispatch({ type: "CLEAN_CURRENT_ACTION" }))
+    state.runningAction = action
+    createTimeoutPromise(promise, ASYNC_ACTION_TIMEOUT).then(() => dispatch({ type: "CLEAN_RUNNING_ACTION" }))
     return state
 }
 
@@ -157,7 +155,7 @@ function throwUnknownActionError(action: never): never {
 }
 
 function executeAction(state: WorkbenchState, action: WorkbenchAction): WorkbenchState {
-    console.assert(state.currentAction === null, "executeAction should not be called when currentAction is not null")
+    console.assert(state.runningAction === null, "executeAction should not be called when runningAction is not null")
 
     switch (action.type) {
         case "CLOSE_WINDOW":
@@ -182,7 +180,7 @@ function executeAction(state: WorkbenchState, action: WorkbenchAction): Workbenc
         case "SET_IS_SERIALIZING":
             state.isSerializing = action.payload.isSerializing
             return state
-        case "CLEAN_CURRENT_ACTION":
+        case "CLEAN_RUNNING_ACTION":
             return state // do nothing
         default:
             throwUnknownActionError(action)
@@ -190,9 +188,9 @@ function executeAction(state: WorkbenchState, action: WorkbenchAction): Workbenc
 }
 
 function executePendingActions(state: WorkbenchState): WorkbenchState {
-    console.assert(state.currentAction === null, "executePendingActions should not be called when currentAction is not null")
+    console.assert(!state.runningAction, "executePendingActions should not be called when runningAction is not null")
 
-    while (state.currentAction === null) {
+    while (!state.runningAction) {
         const action = state.actionQueue.shift()
         if (!action) {
             // no action to execute, exit
@@ -205,30 +203,18 @@ function executePendingActions(state: WorkbenchState): WorkbenchState {
     return state
 }
 
-const ASYNC_ACTION_TIMEOUT = 15_000
-
 function workbenchReducer(prevState: WorkbenchState, action: WorkbenchAction): WorkbenchState {
     return produce(prevState, (state: WorkbenchState): WorkbenchState => {
-        if (action.type === "CLEAN_CURRENT_ACTION") {
-            state.currentAction = null
-            state.currentActionStartTime = 0
+        if (action.type === "CLEAN_RUNNING_ACTION") {
+            state.runningAction = null
         } else {
             // add the action to the queue
             state.actionQueue.push(action)
         }
 
-        if (state.currentAction) {
-            // last action is not finished yet, check if it is timeout
-
-            const during = Number(Date.now()) - state.currentActionStartTime
-            if (during > ASYNC_ACTION_TIMEOUT) {
-                // last action is timeout, delete it and start the next action
-                state.currentAction = null
-                state.currentActionStartTime = 0
-            } else {
-                // last action is not finished yet and not timeout, exit
-                return state
-            }
+        if (state.runningAction) {
+            // last async action is not finished yet
+            return state
         }
 
         // pick the next action and execute it

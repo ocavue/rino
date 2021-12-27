@@ -1,6 +1,6 @@
-export function createTimeoutPromise<T, P>(promise: Promise<T>, timeoutMs: number, fallbackReturn: P): Promise<T | P> {
-    const timeoutPromise = new Promise<P>((resolve, reject) => {
-        setTimeout(() => resolve(fallbackReturn), timeoutMs)
+export function createTimeoutPromise<T>(promise: Promise<T>, timeoutMs: number): Promise<T | void> {
+    const timeoutPromise = new Promise<void>((resolve) => {
+        setTimeout(resolve, timeoutMs)
     })
     return Promise.any([promise, timeoutPromise])
 }
