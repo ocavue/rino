@@ -1,9 +1,10 @@
 import "./polyfill"
 
 import { cx } from "@emotion/css"
+import { Extension, RemirrorEventListenerProps } from "@remirror/core"
 import { RemirrorProps } from "@remirror/react-core"
 import { debounce } from "lodash-es"
-import React, { useCallback, useEffect, useMemo, useReducer } from "react"
+import React, { useCallback, useEffect, useLayoutEffect, useMemo, useReducer } from "react"
 
 import { metaKey } from "@rino.app/common"
 
@@ -35,16 +36,16 @@ const Editor: React.FC<EditorProps> = ({
     extraClassName = "",
     isTestEnv = false,
     onContentSaveDelay = 500,
-    onContentSave = (content: string) => {},
-    onHasUnsavedChanges = (hasUnsavedChanges: boolean) => {},
+    onContentSave,
+    onHasUnsavedChanges,
 }) => {
     const wysiwygDelegate: EditorDelegate = useWysiwygEditor({ isTestEnv })
     const sourceCodeDelegate: EditorDelegate = useSourceCodeEditor()
     const [state, dispatch] = useReducer(editorReducer, { wysiwygDelegate, note }, initializeState)
 
     const saveContent = useCallback(() => {
-        dispatch({ type: "SAVE_CONTENT", payload: { onContentSave } })
-    }, [onContentSave])
+        dispatch({ type: "SAVE_CONTENT" })
+    }, [])
 
     const switchMode = useCallback(() => {
         dispatch({ type: "SWITCH_MODE", payload: { wysiwygDelegate, sourceCodeDelegate } })
@@ -56,12 +57,15 @@ const Editor: React.FC<EditorProps> = ({
 
     // Register onChange handler
     const onChange = useMemo(() => {
+        const saveContent = () => dispatch({ type: "SAVE_CONTENT" })
         const saveContentWithDelay = debounce(saveContent, onContentSaveDelay)
-        return () => {
-            editContent()
-            saveContentWithDelay()
+        return (props: RemirrorEventListenerProps<Extension>) => {
+            if (!props.firstRender && props.tr?.docChanged) {
+                editContent()
+                saveContentWithDelay()
+            }
         }
-    }, [editContent, onContentSaveDelay, saveContent])
+    }, [editContent, onContentSaveDelay])
 
     // Register switch mode shortcut
     useEffect(() => {
@@ -75,14 +79,14 @@ const Editor: React.FC<EditorProps> = ({
         return () => window.removeEventListener("keydown", handleKeydown)
     }, [saveContent, switchMode])
 
-    // Save content before unmounting
-    useEffect(() => {
-        return () => saveContent()
-    }, [saveContent])
+    // Save content when content changes
+    useLayoutEffect(() => {
+        onContentSave?.(state.note.content)
+    }, [onContentSave, state.note.content])
 
     // Register onHasUnsavedChanges handler
     useEffect(() => {
-        onHasUnsavedChanges(state.hasUnsavedChanges)
+        onHasUnsavedChanges?.(state.hasUnsavedChanges)
     }, [onHasUnsavedChanges, state.hasUnsavedChanges])
 
     const remirrorProps: RemirrorProps = {
@@ -90,7 +94,7 @@ const Editor: React.FC<EditorProps> = ({
         autoFocus: autoFocus,
         initialContent: state.initialDoc,
         onChange: onChange,
-        editable: !note.deleted,
+        editable: !state.note.deleted,
     }
 
     const className = cx(extraClassName, EDITOR_THEME_GITHUB, "markdown-body", isDarkMode ? "markdown-body--dark" : "markdown-body--light")
@@ -115,6 +119,7 @@ const Editor: React.FC<EditorProps> = ({
     } else {
         return <SourceCodeEditor remirrorProps={remirrorProps} innerEditorProps={{ className }} />
     }
+    return <div>xx</div>
 }
 
 export default Editor

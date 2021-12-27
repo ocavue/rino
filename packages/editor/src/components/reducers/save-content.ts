@@ -2,12 +2,9 @@ import { EditorState } from "../types"
 
 export type SaveContentAction = {
     type: "SAVE_CONTENT"
-    payload: {
-        onContentSave: (content: string) => void
-    }
 }
 
-export function saveContent(state: EditorState, action: SaveContentAction): EditorState {
+export function saveContent(state: EditorState): EditorState {
     const currDelegate = state.delegate
     const currDoc = currDelegate.manager?.view?.state?.doc
 
@@ -17,6 +14,5 @@ export function saveContent(state: EditorState, action: SaveContentAction): Edit
     }
 
     const currContent: string = currDelegate.docToString(currDoc)
-    action.payload.onContentSave(currContent)
-    return { ...state, hasUnsavedChanges: false }
+    return { ...state, note: { content: currContent, deleted: state.note.deleted }, hasUnsavedChanges: false }
 }
