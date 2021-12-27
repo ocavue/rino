@@ -1,11 +1,11 @@
 import produce from "immer"
 import { Dispatch, useCallback, useEffect, useReducer } from "react"
 
-import { ipcInvoker } from "../ipc-renderer"
-import { createTimeoutPromise } from "../utils/create-timeout-promise"
-import { calcCanCloseWindow } from "./calc-can-close-window"
-import { withLogReducer } from "./reducer-logger"
-import { useTitleEffect } from "./use-title-effect"
+import { ipcInvoker } from "../../ipc-renderer"
+import { createTimeoutPromise } from "../../utils/create-timeout-promise"
+import { calcCanCloseWindow } from "../calc-can-close-window"
+import { withLogReducer } from "../reducer-logger"
+import { useTitleEffect } from "../use-title-effect"
 
 export type WorkbenchState = {
     content: string
