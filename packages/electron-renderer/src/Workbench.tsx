@@ -6,7 +6,7 @@ import { useBeforeUnload } from "./hooks/use-before-unload"
 import { useIpcRendererHandlers } from "./hooks/use-ipc-renderer-handlers"
 import { useWorkbench } from "./hooks/use-workbench"
 
-const WorkbenchV2: FC = () => {
+const Workbench: FC = () => {
     const {
         state: { content, path, canCloseWindow },
         handlers: { closeWindow, setNotePath, setNoteContent, openFile, ensureFilePath, setIsSerializing },
@@ -47,4 +47,4 @@ const WorkbenchV2: FC = () => {
     )
 }
 
-export default WorkbenchV2
+export default Workbench
