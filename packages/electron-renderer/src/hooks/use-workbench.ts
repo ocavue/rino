@@ -26,6 +26,7 @@ export type WorkbenchState = {
 
     actionQueue: WorkbenchAction[]
     hasRunningAction: boolean
+    dispatch: WorkbenchDispatch
 }
 
 const initialState = Object.freeze<WorkbenchState>({
@@ -42,6 +43,7 @@ const initialState = Object.freeze<WorkbenchState>({
 
     actionQueue: [],
     hasRunningAction: false,
+    dispatch: () => {},
 })
 
 function calcCanCloseWindow(state: WorkbenchState): boolean {
@@ -50,48 +52,49 @@ function calcCanCloseWindow(state: WorkbenchState): boolean {
     return !state.isSaving && !state.isSerializing && !state.hasUnsavedChanges && !!state.path
 }
 
+type SetDispatchAction = {
+    type: "SET_DISPATCH"
+    payload: { dispatch: WorkbenchDispatch }
+}
+
 type DiscardContentAction = {
     type: "DISCARD_CONTENT"
-    dispatch: WorkbenchDispatch
 }
 
 type SetIsClosingAction = {
     type: "SET_IS_CLOSING"
-    dispatch: WorkbenchDispatch
 }
 
 type CloseWindowAction = {
     type: "CLOSE_WINDOW"
-    dispatch: WorkbenchDispatch
 }
 
-async function asyncCloseWindow(state: WorkbenchState, action: CloseWindowAction): Promise<void> {
-    const { dispatch } = action
+async function asyncCloseWindow(state: WorkbenchState, action: CloseWindowAction, dispatch: WorkbenchDispatch): Promise<void> {
     if (!state.path) {
         const { filePath, canceled, discarded } = await ipcInvoker.askMarkdownFileForClose()
         if (discarded) {
             // User discarded the content, close the window
-            dispatch({ dispatch, type: "DISCARD_CONTENT" })
+            dispatch({ type: "DISCARD_CONTENT" })
         } else if (filePath && !canceled) {
             // User selected a file, save the content and then close the window
-            dispatch({ dispatch, type: "SET_NOTE_PATH", payload: { path: filePath } })
-            dispatch({ dispatch, type: "SET_IS_CLOSING" })
+            dispatch({ type: "SET_NOTE_PATH", payload: { path: filePath } })
+            dispatch({ type: "SET_IS_CLOSING" })
         }
     } else {
         // Save the content and close the window
-        dispatch({ dispatch, type: "SET_IS_CLOSING" })
+        dispatch({ type: "SET_IS_CLOSING" })
     }
 }
 
 // Try to close the window. Send a message to the main process to close current window if the window can be closed immediately.
 // Otherwise, a close action will be added to the queue and try to close the window later.
-function closeWindow(state: WorkbenchState, action: CloseWindowAction): WorkbenchState | Promise<void> {
+function closeWindow(state: WorkbenchState, action: CloseWindowAction, dispatch: WorkbenchDispatch): WorkbenchState | Promise<void> {
     const canCloseWindow = calcCanCloseWindow(state)
     if (canCloseWindow) {
         state.isClosing = true
         return state
     } else {
-        return asyncCloseWindow(state, action)
+        return asyncCloseWindow(state, action, dispatch)
     }
 }
 
@@ -101,30 +104,26 @@ type OpenFileAction = {
         path: string
         content: string
     }
-    dispatch: WorkbenchDispatch
 }
 
 type SaveFileAction = {
     type: "SAVE_FILE"
-    dispatch: WorkbenchDispatch
 }
 
-async function asyncSaveFile(state: WorkbenchState, action: SaveFileAction) {
+async function asyncSaveFile(state: WorkbenchState, dispatch: WorkbenchDispatch) {
     await ipcInvoker.saveFile({ path: state.path, content: state.content })
-    const { dispatch } = action
-    dispatch({ dispatch, type: "FINISH_SAVE_FILE" })
+    dispatch({ type: "FINISH_SAVE_FILE" })
 }
 
-function saveFile(state: WorkbenchState, action: SaveFileAction): WorkbenchState | Promise<void> {
+function saveFile(state: WorkbenchState, dispatch: WorkbenchDispatch): WorkbenchState | Promise<void> {
     if (!state.path) {
         return state
     }
-    return asyncSaveFile(state, action)
+    return asyncSaveFile(state, dispatch)
 }
 
 type FinishSaveFileAction = {
     type: "FINISH_SAVE_FILE"
-    dispatch: WorkbenchDispatch
 }
 
 type SetNotePathAction = {
@@ -132,7 +131,6 @@ type SetNotePathAction = {
     payload: {
         path: string
     }
-    dispatch: WorkbenchDispatch
 }
 
 type SetNoteContentAction = {
@@ -140,33 +138,29 @@ type SetNoteContentAction = {
     payload: {
         content: string
     }
-    dispatch: WorkbenchDispatch
 }
 
 type EnsureFilePathAction = {
     type: "ENSURE_FILE_PATH"
-    dispatch: WorkbenchDispatch
 }
 
-async function asyncEnsureFilePath(state: WorkbenchState, action: EnsureFilePathAction): Promise<void> {
-    const dispatch = action.dispatch
+async function asyncEnsureFilePath(state: WorkbenchState, action: EnsureFilePathAction, dispatch: WorkbenchDispatch): Promise<void> {
     const { filePath, canceled } = await ipcInvoker.askMarkdownFileForSave()
     if (!canceled && filePath) {
-        dispatch({ dispatch, type: "SET_NOTE_PATH", payload: { path: filePath } })
+        dispatch({ type: "SET_NOTE_PATH", payload: { path: filePath } })
     }
 }
 
-function ensureFilePath(state: WorkbenchState, action: EnsureFilePathAction): WorkbenchState | Promise<void> {
+function ensureFilePath(state: WorkbenchState, action: EnsureFilePathAction, dispatch: WorkbenchDispatch): WorkbenchState | Promise<void> {
     if (state.path) {
         return state
     }
 
-    return asyncEnsureFilePath(state, action)
+    return asyncEnsureFilePath(state, action, dispatch)
 }
 
 type CleanRunningActionAction = {
     type: "CLEAN_RUNNING_ACTION"
-    dispatch: WorkbenchDispatch
 }
 
 type SetIsSerializingAction = {
@@ -174,10 +168,10 @@ type SetIsSerializingAction = {
     payload: {
         isSerializing: boolean
     }
-    dispatch: WorkbenchDispatch
 }
 
 type WorkbenchAction =
+    | SetDispatchAction
     | SetIsClosingAction
     | CloseWindowAction
     | OpenFileAction
@@ -200,19 +194,23 @@ function throwUnknownActionError(action: never): never {
 
 function executeAction(state: WorkbenchState, action: WorkbenchAction): WorkbenchState | Promise<void> {
     console.assert(!state.hasRunningAction, "executeAction should not be called when hasRunningAction is true")
+    const { dispatch } = state
 
     switch (action.type) {
+        case "SET_DISPATCH":
+            state.dispatch = action.payload.dispatch
+            return state
         case "SET_IS_CLOSING":
             state.isClosing = true
             return state
         case "CLOSE_WINDOW":
-            return closeWindow(state, action)
+            return closeWindow(state, action, dispatch)
         case "OPEN_FILE":
             state.path = action.payload.path
             state.content = action.payload.content
             return state
         case "SAVE_FILE":
-            return saveFile(state, action)
+            return saveFile(state, dispatch)
         case "SET_NOTE_PATH":
             state.path = action.payload.path
             return state
@@ -225,7 +223,7 @@ function executeAction(state: WorkbenchState, action: WorkbenchAction): Workbenc
             state.hasUnsavedChanges = false
             return state
         case "ENSURE_FILE_PATH":
-            return ensureFilePath(state, action)
+            return ensureFilePath(state, action, dispatch)
         case "DISCARD_CONTENT":
             state.contentDiscarded = true
             state.isClosing = true
@@ -252,7 +250,7 @@ function executePendingActions(state: WorkbenchState, dispatch: WorkbenchDispatc
         if (isPromise(stateOrPromise)) {
             state.hasRunningAction = true
             createTimeoutPromise(stateOrPromise, ASYNC_ACTION_TIMEOUT).then(() => {
-                dispatch({ dispatch, type: "CLEAN_RUNNING_ACTION" })
+                dispatch({ type: "CLEAN_RUNNING_ACTION" })
             })
             return state
         } else {
@@ -264,7 +262,7 @@ function executePendingActions(state: WorkbenchState, dispatch: WorkbenchDispatc
 }
 
 function workbenchReducer(prevState: WorkbenchState, action: WorkbenchAction): WorkbenchState {
-    const dispatch = action.dispatch
+    const dispatch = prevState.dispatch
     return produce(prevState, (state: WorkbenchState): WorkbenchState => {
         if (action.type === "CLEAN_RUNNING_ACTION") {
             state.hasRunningAction = false
@@ -282,12 +280,16 @@ const workbenchReducerWithLogger = withLogReducer(workbenchReducer)
 export function useWorkbench() {
     const [state, dispatch] = useReducer(workbenchReducerWithLogger, initialState)
 
+    useEffect(() => {
+        dispatch({ type: "SET_DISPATCH", payload: { dispatch } })
+    }, [])
+
     useTitleEffect(state)
 
     const canCloseWindow = calcCanCloseWindow(state)
 
     useEffect(() => {
-        dispatch({ dispatch, type: "SAVE_FILE" })
+        dispatch({ type: "SAVE_FILE" })
     }, [state.content, state.hasUnsavedChanges, state.isClosing])
 
     useEffect(() => {
@@ -297,27 +299,27 @@ export function useWorkbench() {
     }, [state.isClosing, canCloseWindow])
 
     const closeWindow = useCallback((): void => {
-        dispatch({ dispatch, type: "CLOSE_WINDOW" })
+        dispatch({ type: "CLOSE_WINDOW" })
     }, [])
 
     const openFile = useCallback(({ path, content }: { path: string; content: string }) => {
-        dispatch({ dispatch, type: "OPEN_FILE", payload: { path, content } })
+        dispatch({ type: "OPEN_FILE", payload: { path, content } })
     }, [])
 
     const setNotePath = useCallback((path: string) => {
-        dispatch({ dispatch, type: "SET_NOTE_PATH", payload: { path } })
+        dispatch({ type: "SET_NOTE_PATH", payload: { path } })
     }, [])
 
     const ensureFilePath = useCallback(() => {
-        dispatch({ dispatch, type: "ENSURE_FILE_PATH" })
+        dispatch({ type: "ENSURE_FILE_PATH" })
     }, [])
 
     const setIsSerializing = useCallback((isSerializing: boolean) => {
-        dispatch({ dispatch, type: "SET_IS_SERIALIZING", payload: { isSerializing } })
+        dispatch({ type: "SET_IS_SERIALIZING", payload: { isSerializing } })
     }, [])
 
     const setNoteContent = useCallback((content: string) => {
-        dispatch({ dispatch, type: "SET_NOTE_CONTENT", payload: { content } })
+        dispatch({ type: "SET_NOTE_CONTENT", payload: { content } })
     }, [])
 
     return {
