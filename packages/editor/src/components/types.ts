@@ -39,5 +39,6 @@ export type EditorState = {
     delegate: EditorDelegate
     initialDoc: ProsemirrorNode
     note: Note
+    hasUnsavedChanges: boolean
     error: string | null
 }

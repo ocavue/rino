@@ -2,7 +2,8 @@ import "./polyfill"
 
 import { cx } from "@emotion/css"
 import { RemirrorProps } from "@remirror/react-core"
-import React, { useCallback, useEffect, useReducer } from "react"
+import { debounce } from "lodash-es"
+import React, { useCallback, useEffect, useMemo, useReducer } from "react"
 
 import { metaKey } from "@rino.app/common"
 
@@ -49,8 +50,18 @@ const Editor: React.FC<EditorProps> = ({
         dispatch({ type: "SWITCH_MODE", payload: { wysiwygDelegate, sourceCodeDelegate } })
     }, [sourceCodeDelegate, wysiwygDelegate])
 
+    const editContent = useCallback(() => {
+        dispatch({ type: "EDIT_CONTENT" })
+    }, [])
+
     // Register onChange handler
-    const onChange = useCallback(() => {}, [])
+    const onChange = useMemo(() => {
+        const saveContentWithDelay = debounce(saveContent, onContentSaveDelay)
+        return () => {
+            editContent()
+            saveContentWithDelay()
+        }
+    }, [editContent, onContentSaveDelay, saveContent])
 
     // Register switch mode shortcut
     useEffect(() => {

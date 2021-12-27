@@ -18,5 +18,5 @@ export function saveContent(state: EditorState, action: SaveContentAction): Edit
 
     const currContent: string = currDelegate.docToString(currDoc)
     action.payload.onContentSave(currContent)
-    return state
+    return { ...state, hasUnsavedChanges: false }
 }
