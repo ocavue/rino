@@ -50,26 +50,27 @@ type CloseWindowAction = {
     dispatch: Dispatch<WorkbenchAction>
 }
 
-async function closeWindow(state: WorkbenchState, action: CloseWindowAction): Promise<void> {
+async function asyncCloseWindow(state: WorkbenchState, action: CloseWindowAction) {
+    const dispatch = action.dispatch
+    if (!state.path) {
+        const { filePath, canceled, discarded } = await ipcInvoker.askMarkdownFileForClose()
+        dispatch({ type: "CLEAN_CURRENT_ACTION" })
+        if (discarded) {
+            dispatch({ type: "DISCARD_CONTENT" })
+            dispatch({ type: "CLOSE_WINDOW", dispatch })
+        } else if (filePath && !canceled) {
+            dispatch({ type: "SET_NOTE_PATH", payload: { path: filePath } })
+            dispatch({ type: "CLOSE_WINDOW", dispatch })
+        }
+    }
+}
+
+function closeWindow(state: WorkbenchState, action: CloseWindowAction): void {
     if (calcCanCloseWindow(state)) {
         // close the window
         ipcInvoker.closeWindow()
     } else {
-        startAsyncAction(state, action)
-
-        const dispatch = action.dispatch
-        if (!state.path) {
-            const { filePath, canceled, discarded } = await ipcInvoker.askMarkdownFileForClose()
-
-            dispatch({ type: "CLEAN_CURRENT_ACTION", payload: { action: action } })
-            if (discarded) {
-                dispatch({ type: "DISCARD_CONTENT" })
-                dispatch({ type: "CLOSE_WINDOW", dispatch })
-            } else if (filePath && !canceled) {
-                dispatch({ type: "SET_NOTE_PATH", payload: { path: filePath } })
-                dispatch({ type: "CLOSE_WINDOW", dispatch })
-            }
-        }
+        startAsyncAction(state, action, asyncCloseWindow(state, action), action.dispatch)
     }
 }
 
@@ -100,34 +101,24 @@ type EnsureFilePathAction = {
     dispatch: Dispatch<WorkbenchAction>
 }
 
-async function ensureFilePath(state: WorkbenchState, action: EnsureFilePathAction): Promise<void> {
-    if (state.path) {
-        return
-    }
-
-    startAsyncAction(state, action)
-
+async function asyncEnsureFilePath(state: WorkbenchState, action: EnsureFilePathAction): Promise<void> {
     const dispatch = action.dispatch
     const { filePath, canceled } = await ipcInvoker.askMarkdownFileForSave()
-    if (canceled || !filePath) {
-        dispatch({ type: "CLEAN_CURRENT_ACTION", payload: { action: action } })
-    } else {
+    if (!canceled && filePath) {
         dispatch({ type: "SET_NOTE_PATH", payload: { path: filePath } })
     }
 }
 
-type CleanCurrentActionAction = {
-    type: "CLEAN_CURRENT_ACTION"
-    payload: {
-        action: WorkbenchAction
+function ensureFilePath(state: WorkbenchState, action: EnsureFilePathAction): void {
+    if (state.path) {
+        return
     }
+
+    startAsyncAction(state, action, asyncEnsureFilePath(state, action), action.dispatch)
 }
 
-function cleanCurrentAction(state: WorkbenchState, action: CleanCurrentActionAction): void {
-    if (state.currentAction === action.payload.action) {
-        state.currentAction = null
-        state.currentActionStartTime = 0
-    }
+type CleanCurrentActionAction = {
+    type: "CLEAN_CURRENT_ACTION"
 }
 
 type SetIsSerializingAction = {
@@ -147,11 +138,17 @@ type WorkbenchAction =
     | DiscardContentAction
     | SetIsSerializingAction
 
-function startAsyncAction(state: WorkbenchState, action: WorkbenchAction): WorkbenchState {
+function startAsyncAction(
+    state: WorkbenchState,
+    action: WorkbenchAction,
+    promise: Promise<void>,
+    dispatch: Dispatch<WorkbenchAction>,
+): WorkbenchState {
     console.assert(state.currentAction === null, "startAsyncAction should not be called when currentAction is not null")
 
     state.currentAction = action
     state.currentActionStartTime = Number(Date.now())
+    promise.then(() => dispatch({ type: "CLEAN_CURRENT_ACTION" }))
     return state
 }
 
@@ -179,15 +176,14 @@ function executeAction(state: WorkbenchState, action: WorkbenchAction): Workbenc
         case "ENSURE_FILE_PATH":
             ensureFilePath(state, action)
             return state
-        case "CLEAN_CURRENT_ACTION":
-            cleanCurrentAction(state, action)
-            return state
         case "DISCARD_CONTENT":
             state.contentDiscarded = true
             return state
         case "SET_IS_SERIALIZING":
             state.isSerializing = action.payload.isSerializing
             return state
+        case "CLEAN_CURRENT_ACTION":
+            return state // do nothing
         default:
             throwUnknownActionError(action)
     }
@@ -209,18 +205,23 @@ function executePendingActions(state: WorkbenchState): WorkbenchState {
     return state
 }
 
-const ACTION_TIMEOUT = 30_000
+const ASYNC_ACTION_TIMEOUT = 15_000
 
 function workbenchReducer(prevState: WorkbenchState, action: WorkbenchAction): WorkbenchState {
     return produce(prevState, (state: WorkbenchState): WorkbenchState => {
-        // add the action to the queue
-        state.actionQueue.push(action)
+        if (action.type === "CLEAN_CURRENT_ACTION") {
+            state.currentAction = null
+            state.currentActionStartTime = 0
+        } else {
+            // add the action to the queue
+            state.actionQueue.push(action)
+        }
 
         if (state.currentAction) {
             // last action is not finished yet, check if it is timeout
 
             const during = Number(Date.now()) - state.currentActionStartTime
-            if (during > ACTION_TIMEOUT) {
+            if (during > ASYNC_ACTION_TIMEOUT) {
                 // last action is timeout, delete it and start the next action
                 state.currentAction = null
                 state.currentActionStartTime = 0
@@ -266,7 +267,7 @@ export function useWorkbench() {
     }, [])
 
     const setIsSerializing = useCallback((isSerializing: boolean) => {
-        dispatch({ type: "SET_IS_SERIALIZING", payload: { isSerializing: true } })
+        dispatch({ type: "SET_IS_SERIALIZING", payload: { isSerializing } })
     }, [])
 
     const setNoteContent = useCallback((content: string) => {
