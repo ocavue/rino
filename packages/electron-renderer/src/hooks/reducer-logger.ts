@@ -22,9 +22,9 @@ export function withLogReducer<S, A>(reducer: Reducer<S, A>): Reducer<S, A> {
             "color: black; font-weight: bold;",
             "color: lightblue; font-weight: lighter;",
         )
-        logger.log("%cPrevious State:", "color: #9E9E9E; font-weight: 700;", state)
+        logger.log("%cPrevious State:", "color: #9E9E9E; font-weight: 700;", JSON.stringify(state))
         logger.log("%cAction:", "color: #00A7F7; font-weight: 700;", action)
-        logger.log("%cNext State:", "color: #47B04B; font-weight: 700;", next)
+        logger.log("%cNext State:", "color: #47B04B; font-weight: 700;", JSON.stringify(next))
         // logger.groupEnd()
         return next
     }
