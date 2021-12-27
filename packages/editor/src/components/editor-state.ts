@@ -1,6 +1,5 @@
 import "./polyfill"
 
-import { withLogReducer } from "./reducer-logger"
 import { editContent, EditContentAction } from "./reducers/edit-content"
 import { saveContent, SaveContentAction } from "./reducers/save-content"
 import { switchMode, SwitchModeAction } from "./reducers/switch-mode"
@@ -26,11 +25,11 @@ function editorReducer(state: EditorState, action: EditorAction): EditorState {
     }
 }
 
-// export { editorReducer }
+export { editorReducer }
 
-const editorReducerWithLog = withLogReducer(editorReducer)
+// const editorReducerWithLog = withLogReducer(editorReducer)
 
-export { editorReducerWithLog as editorReducer }
+// export { editorReducerWithLog as editorReducer }
 
 export function initializeState({ note, isTestEnv }: { note: Readonly<Note>; isTestEnv: boolean }): EditorState {
     const wysiwygDelegate = createWysiwygDelegate({ isTestEnv })
