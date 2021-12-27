@@ -8,7 +8,8 @@ import { useTitle } from "./use-title"
 export function useMarkdownNote() {
     const [closing, setClosing] = useState(false)
     const [note, setNote] = useState<MarkdownNote>({ content: "", path: "", deleted: false })
-    const { title, setSaved } = useTitle(note.path)
+    const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false)
+    const title = useTitle(note.path, hasUnsavedChanges)
 
     useEffect(() => {
         ipcInvoker.setTitle({ title })
@@ -28,8 +29,8 @@ export function useMarkdownNote() {
     }, [])
 
     const onContentEdit = useCallback(() => {
-        setSaved(false)
-    }, [setSaved])
+        setHasUnsavedChanges(true)
+    }, [])
 
     const setNotePath = useCallback((path: string) => {
         if (path) setNote((note) => ({ ...note, path }))
@@ -39,7 +40,7 @@ export function useMarkdownNote() {
         async (note: MarkdownNote) => {
             const { filePath } = await ipcInvoker.saveFile({ content: note.content, path: note.path })
             if (filePath) {
-                setSaved(true)
+                setHasUnsavedChanges(false)
                 if (note.path !== filePath) {
                     setNotePath(filePath)
                 }
@@ -48,7 +49,7 @@ export function useMarkdownNote() {
                 }
             }
         },
-        [closing, setNotePath, setSaved],
+        [closing, setNotePath],
     )
 
     useEffect(() => {
@@ -67,10 +68,10 @@ export function useMarkdownNote() {
     }, [note.path, setNotePath])
 
     const beforeCloseWindow = useCallback(async (): Promise<void> => {
-        logger.debug(`beforeCloseWindow note.path: ${note?.path}; node.content: ${note?.content?.length}`)
+        logger.debug(`beforeCloseWindow path: ${note?.path}; content: ${note?.content?.length}; hasUnsavedChanges: ${hasUnsavedChanges}`)
 
         if (!note.path) {
-            if (!note.content) {
+            if (!note.content && !hasUnsavedChanges) {
                 setClosing(true)
                 await ipcInvoker.closeWindow()
             } else {
@@ -89,7 +90,7 @@ export function useMarkdownNote() {
             setClosing(true)
             await ipcInvoker.closeWindow()
         }
-    }, [note.content, note.path, setNotePath])
+    }, [hasUnsavedChanges, note.content, note.path, setNotePath])
 
     return { note, openFile, setNotePath, onContentSave, onContentEdit, ensureFilePath, beforeCloseWindow, closing }
 }

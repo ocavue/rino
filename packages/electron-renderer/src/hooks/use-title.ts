@@ -1,20 +1,16 @@
-import { useMemo, useState } from "react"
+import { useMemo } from "react"
 
 import { basename } from "@rino.app/common"
 
-export function useTitle(notePath: string) {
-    const [saved, setSaved] = useState(true)
-
-    const title: string = useMemo(() => {
+export function useTitle(notePath: string, hasUnsavedChanges: boolean): string {
+    return useMemo(() => {
         let title = basename(notePath)
         if (!title) {
             title = "Untitled"
         }
-        if (!saved) {
+        if (hasUnsavedChanges) {
             title = `${title} - Edited`
         }
         return title
-    }, [notePath, saved])
-
-    return { setSaved, title }
+    }, [notePath, hasUnsavedChanges])
 }
