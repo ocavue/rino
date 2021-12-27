@@ -31,7 +31,7 @@ export async function createWindow() {
         logger.info("creating new window")
         await app.whenReady()
 
-        const preloadEntry = join(__dirname, "../../electron-preload/dist/index.js")
+        const preloadEntry = join(__dirname, "../../electron-preload/dist/electron-preload.js")
         const rendererEntry = join(__dirname, "../../electron-renderer/dist/index.html")
 
         const newWindow = new BrowserWindow({
