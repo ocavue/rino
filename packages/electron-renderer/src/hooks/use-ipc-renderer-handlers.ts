@@ -8,14 +8,14 @@ export function useIpcRendererHandlers({
     setNotePath,
     beforeCloseWindow,
 }: {
-    openFile: (path: string) => void
+    openFile: (props: { path: string; content: string }) => void
     ensureFilePath: () => void
     setNotePath: (path: string) => void
     beforeCloseWindow: () => void
 }) {
     useEffect(() => {
-        ipcRenderer.on("openFile", (event, { path }) => {
-            openFile(path)
+        ipcRenderer.on("openFile", (event, { path, content }) => {
+            openFile({ path, content })
         })
         return () => {
             ipcRenderer.removeAllListeners("openFile")

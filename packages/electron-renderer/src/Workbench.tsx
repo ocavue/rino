@@ -2,21 +2,23 @@ import React, { FC, useMemo } from "react"
 
 import { Editor } from "@rino.app/editor"
 
-import { useBeforeUnload } from "./hooks/use-before-unload"
+import { useBeforeUnloadV2 } from "./hooks/use-before-unload-v2"
 import { useIpcRendererHandlers } from "./hooks/use-ipc-renderer-handlers"
-import { useMarkdownNote } from "./hooks/use-markdown-note"
+import { useWorkbench } from "./hooks/use-workbench"
 
-const Workbench: FC = () => {
-    const { content, path, openFile, setNotePath, onContentSave, setIsSerializing, ensureFilePath, beforeCloseWindow, canUnmountNow } =
-        useMarkdownNote()
+const WorkbenchV2: FC = () => {
+    const {
+        state: { content, path },
+        handlers: { closeWindow, setNotePath, setNoteContent, openFile, ensureFilePath, setIsSerializing },
+    } = useWorkbench()
 
-    useBeforeUnload(content, path, canUnmountNow, ensureFilePath)
+    useBeforeUnloadV2(closeWindow)
 
     useIpcRendererHandlers({
         setNotePath,
         openFile,
         ensureFilePath,
-        beforeCloseWindow,
+        beforeCloseWindow: closeWindow,
     })
 
     const note = useMemo(() => {
@@ -34,9 +36,15 @@ const Workbench: FC = () => {
                 flexDirection: "column",
             }}
         >
-            <Editor key={path} note={note} onContentSaveDelay={2000} onHasUnsavedChanges={setIsSerializing} onContentSave={onContentSave} />
+            <Editor
+                key={path}
+                note={note}
+                onContentSaveDelay={2000}
+                onHasUnsavedChanges={setIsSerializing}
+                onContentSave={setNoteContent}
+            />
         </div>
     )
 }
 
-export default Workbench
+export default WorkbenchV2

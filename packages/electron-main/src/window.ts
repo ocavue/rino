@@ -4,6 +4,7 @@ import { join } from "node:path"
 import { URL } from "node:url"
 
 import { env } from "./env"
+import { openFile } from "./file"
 import { ipcSender } from "./ipc-main"
 import { logger } from "./logger"
 
@@ -81,7 +82,8 @@ export async function createWindow() {
 export async function createWindowByOpeningFile(path: string) {
     if (!path) return
     const win = await createWindow()
-    ipcSender.openFile(win, { path })
+    const content = await openFile(path)
+    ipcSender.openFile(win, { path, content })
 }
 
 export async function createWindowIfNotExist() {

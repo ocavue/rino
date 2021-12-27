@@ -8,6 +8,7 @@ import React, { useCallback, useEffect, useLayoutEffect, useMemo, useReducer } f
 
 import { metaKey } from "@rino.app/common"
 
+import { diffObject } from "./diff-object"
 import { editorReducer, initializeState } from "./editor-state"
 import { SourceCodeEditor } from "./source-code"
 import { EDITOR_THEME_GITHUB } from "./theme/github"
@@ -56,13 +57,13 @@ const Editor: React.FC<EditorProps> = ({
         const saveContent = () => dispatch({ type: "SAVE_CONTENT" })
         const saveContentWithDelay = debounce(saveContent, onContentSaveDelay)
         return (props: RemirrorEventListenerProps<Extension>) => {
-            // const { tr } = props
-            // if (tr && tr.docChanged) {
-            //     const prev = props.previousState.doc.toJSON()
-            //     const curr = props.state.doc.toJSON()
-            //     console.log("prev === curr:", prev === curr)
-            //     console.log("EDIT_CONTENT diff:", diffObject(curr, prev))
-            // }
+            const { tr } = props
+            if (tr && tr.docChanged) {
+                const prev = props.previousState.doc.toJSON()
+                const curr = props.state.doc.toJSON()
+                console.log("prev === curr:", prev === curr)
+                console.log("EDIT_CONTENT diff!!:", diffObject(curr, prev))
+            }
 
             if (!props.firstRender && props.tr?.docChanged) {
                 editContent()
