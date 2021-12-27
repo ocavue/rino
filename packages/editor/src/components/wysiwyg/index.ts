@@ -3,6 +3,6 @@ export * from "./wysiwyg-manager"
 export * from "./wysiwyg-markdown"
 
 import TableMenu from "./TableMenu"
-import WysiwygEditor from "./WysiwygEditor-v2"
+import WysiwygEditor from "./WysiwygEditor"
 
 export { TableMenu, WysiwygEditor }

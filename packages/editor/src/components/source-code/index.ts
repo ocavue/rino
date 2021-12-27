@@ -1,4 +1,4 @@
 export * from "./source-code-manager"
 
-import SourceCodeEditor from "./SourceCodeEditor-v2"
+import SourceCodeEditor from "./SourceCodeEditor"
 export { SourceCodeEditor }
