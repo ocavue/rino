@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.33.2](https://www.github.com/ocavue/rino/compare/v0.33.1...v0.33.2) (2021-12-27)
+
+
+### Bug Fixes
+
+* **editor:** refactor the saving workflow ([#857](https://www.github.com/ocavue/rino/issues/857)) ([ef658e0](https://www.github.com/ocavue/rino/commit/ef658e083f5baf278cea59e2988e44e49ec1ff91))
+
 ## [0.33.1](https://www.github.com/ocavue/rino/compare/v0.33.0...v0.33.1) (2021-12-25)
 
 
