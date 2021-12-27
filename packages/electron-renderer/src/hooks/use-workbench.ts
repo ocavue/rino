@@ -54,7 +54,6 @@ async function asyncCloseWindow(state: WorkbenchState, action: CloseWindowAction
     const dispatch = action.dispatch
     if (!state.path) {
         const { filePath, canceled, discarded } = await ipcInvoker.askMarkdownFileForClose()
-        dispatch({ type: "CLEAN_RUNNING_ACTION" })
         if (discarded) {
             dispatch({ type: "DISCARD_CONTENT" })
             dispatch({ type: "CLOSE_WINDOW", dispatch })
