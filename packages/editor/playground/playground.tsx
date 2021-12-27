@@ -8,12 +8,24 @@ const defaultContent = `
 
 # Title
 
-hello world
+hello world!
+
+hello **strong**! hello *italic*! hello \`code\`!
+
 
 \`\`\`python
 while True:
     print("hello world")
 \`\`\`
+
+- list item
+- list item
+  - [x] checked
+  - [ ] unchecked
+
+1. first
+1. second
+1. third
 
 `.trim()
 
