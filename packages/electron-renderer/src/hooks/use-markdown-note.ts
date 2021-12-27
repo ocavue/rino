@@ -67,7 +67,7 @@ export function useMarkdownNote() {
     }, [note.path, setNotePath])
 
     const beforeCloseWindow = useCallback(async (): Promise<void> => {
-        logger.debug("beforeCloseWindow")
+        logger.debug(`beforeCloseWindow note.path: ${note?.path}; node.content: ${note?.content?.length}`)
 
         if (!note.path) {
             if (!note.content) {
