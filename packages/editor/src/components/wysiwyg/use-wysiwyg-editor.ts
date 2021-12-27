@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from "react"
+import { useCallback, useMemo } from "react"
 
 import { DocToString, StringToDoc } from "../types"
 import { useWysiwygRemirror } from "./wysiwyg-manager"
@@ -28,15 +28,10 @@ export function useWysiwygEditor({ isTestEnv }: UseWysiwygEditorProps) {
 
     const docToString: DocToString = useCallback(
         (doc) => {
-            if (!doc) return null
             return serializer.serialize(doc)
         },
         [serializer],
     )
 
-    return {
-        manager,
-        stringToDoc,
-        docToString,
-    }
+    return useMemo(() => ({ manager, stringToDoc, docToString }), [manager, stringToDoc, docToString])
 }

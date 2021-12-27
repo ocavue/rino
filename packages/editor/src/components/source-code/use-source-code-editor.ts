@@ -2,7 +2,6 @@ import { useCallback, useMemo } from "react"
 
 import { DocToString, StringToDoc } from "../types"
 import { useSourceCodeRemirror } from "."
-import { buildMarkdownParser, buildMarkdownSerializer } from "./wysiwyg-markdown"
 
 export function useSourceCodeEditor() {
     const { manager } = useSourceCodeRemirror()
@@ -18,13 +17,8 @@ export function useSourceCodeEditor() {
     )
 
     const docToString: DocToString = useCallback((doc) => {
-        if (!doc) return null
         return doc.textContent
     }, [])
 
-    return {
-        manager,
-        stringToDoc,
-        docToString,
-    }
+    return useMemo(() => ({ manager, stringToDoc, docToString }), [manager, stringToDoc, docToString])
 }
