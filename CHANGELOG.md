@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.33.3](https://www.github.com/ocavue/rino/compare/v0.33.2...v0.33.3) (2021-12-27)
+
+
+### Bug Fixes
+
+* **electron:** fix a crash issue ([#860](https://www.github.com/ocavue/rino/issues/860)) ([d5b4ae3](https://www.github.com/ocavue/rino/commit/d5b4ae3933ea8a999c760d674e7cc5d05c50b747))
+
 ## [0.33.2](https://www.github.com/ocavue/rino/compare/v0.33.1...v0.33.2) (2021-12-27)
 
 
