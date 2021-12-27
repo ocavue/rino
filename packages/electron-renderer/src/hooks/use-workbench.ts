@@ -2,8 +2,8 @@ import produce from "immer"
 import { Dispatch, useCallback, useEffect, useReducer } from "react"
 
 import { ipcInvoker } from "../ipc-renderer"
+import { createTimeoutPromise } from "../utils/create-timeout-promise"
 import { calcCanCloseWindow } from "./calc-can-close-window"
-import { createTimeoutPromise } from "./create-timeout-promise"
 import { withLogReducer } from "./reducer-logger"
 import { useTitleEffect } from "./use-title-effect"
 
