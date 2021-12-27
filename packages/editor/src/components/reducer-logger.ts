@@ -15,7 +15,7 @@ export function withLogReducer<S, A>(reducer: Reducer<S, A>): Reducer<S, A> {
         console.group(
             `%cAction: %c${(action as any).type} %cat ${getCurrentTimeFormatted()}`,
             "color: lightgreen; font-weight: bold;",
-            "color: white; font-weight: bold;",
+            "color: black; font-weight: bold;",
             "color: lightblue; font-weight: lighter;",
         )
         console.log("%cPrevious State:", "color: #9E9E9E; font-weight: 700;", state)
