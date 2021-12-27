@@ -3,6 +3,7 @@ import { Dispatch, useCallback, useReducer } from "react"
 
 import { ipcInvoker } from "../ipc-renderer"
 import { calcCanCloseWindow } from "./calc-can-close-window"
+import { withLogReducer } from "./reducer-logger"
 import { useTitleEffect } from "./use-title-effect"
 
 export type WorkbenchState = {
@@ -233,9 +234,10 @@ function workbenchReducer(prevState: WorkbenchState, action: WorkbenchAction): W
         return executePendingActions(state)
     })
 }
+const workbenchReducerWithLogger = withLogReducer(workbenchReducer)
 
 export function useWorkbench() {
-    const [state, dispatch] = useReducer(workbenchReducer, initialState)
+    const [state, dispatch] = useReducer(workbenchReducerWithLogger, initialState)
 
     useTitleEffect(state)
 
