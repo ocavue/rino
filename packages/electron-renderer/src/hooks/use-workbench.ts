@@ -1,11 +1,10 @@
 import produce from "immer"
 import { Dispatch, useCallback, useEffect, useReducer } from "react"
 
-import { ipcInvoker } from "../../ipc-renderer"
-import { createTimeoutPromise } from "../../utils/create-timeout-promise"
-import { calcCanCloseWindow } from "../calc-can-close-window"
-import { withLogReducer } from "../reducer-logger"
-import { useTitleEffect } from "../use-title-effect"
+import { ipcInvoker } from "../ipc-renderer"
+import { createTimeoutPromise } from "../utils/create-timeout-promise"
+import { withLogReducer } from "./reducer-logger"
+import { useTitleEffect } from "./use-title-effect"
 
 export type WorkbenchState = {
     content: string
@@ -40,6 +39,12 @@ const initialState = Object.freeze<WorkbenchState>({
 
     contentDiscarded: false,
 })
+
+function calcCanCloseWindow(state: WorkbenchState): boolean {
+    if (state.contentDiscarded) return true
+
+    return !state.isSaving && !state.isSerializing && !state.hasUnsavedChanges && !!state.path
+}
 
 type DiscardContentAction = {
     type: "DISCARD_CONTENT"
