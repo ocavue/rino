@@ -4,7 +4,7 @@ import { Editor } from "@rino.app/editor"
 
 import { useBeforeUnload } from "./hooks/use-before-unload"
 import { useIpcRendererHandlers } from "./hooks/use-ipc-renderer-handlers"
-import { useWorkbench } from "./hooks/use-workbench/use-workbench"
+import { useWorkbench } from "./hooks/use-workbench"
 
 const WorkbenchV2: FC = () => {
     const {
