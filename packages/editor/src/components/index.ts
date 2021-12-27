@@ -1,5 +1,5 @@
 export * from "./wysiwyg"
 export * from "./source-code"
 export * from "./ErrorBoundary"
-export * from "./types"
+export type { EditorProps } from "./types"
 export * from "./DevTools"

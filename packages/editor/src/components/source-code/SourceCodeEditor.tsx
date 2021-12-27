@@ -4,7 +4,7 @@ import React, { FC, useCallback, useLayoutEffect, useMemo } from "react"
 
 import DevTools from "../DevTools"
 import { EditorProps } from "../types"
-import { useSourceCodeRemirror } from "./manager"
+import { useSourceCodeRemirror } from "./source-code-manager"
 
 const InnerEditor: FC<{ className: string }> = ({ className }) => {
     const { getRootProps } = useRemirrorContext()

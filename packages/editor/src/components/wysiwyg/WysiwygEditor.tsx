@@ -1,3 +1,4 @@
+import { AnyExtension, ProsemirrorNode, RemirrorManager } from "@remirror/core"
 import { Remirror, useCommands, useRemirrorContext } from "@remirror/react"
 import { debounce } from "lodash-es"
 import React, { FC, useCallback, useLayoutEffect, useMemo, useState } from "react"
@@ -52,8 +53,10 @@ const WysiwygEditor = React.memo<WysiwygEditorProps>(
 
         const { manager } = useWysiwygRemirror()
 
+        const parser = useMemo(() => buildMarkdownParser(manager), [manager])
+        const serializer = useMemo(() => buildMarkdownSerializer(manager), [manager])
+
         const initialNode = useMemo(() => {
-            const parser = buildMarkdownParser(manager)
             try {
                 if (isTestEnv) {
                     if (initialContent.trim() === "HOOK:FAILED_TO_INIT_PROSEMIRROR_VIEW") {
@@ -64,11 +67,9 @@ const WysiwygEditor = React.memo<WysiwygEditorProps>(
             } catch (error) {
                 setError(error)
             }
-        }, [manager, isTestEnv, initialContent])
+        }, [parser, isTestEnv, initialContent])
 
-        const serializer = useMemo(() => buildMarkdownSerializer(manager), [manager])
-
-        const getContent: () => string | null = useCallback(() => {
+        const getContent = useCallback((): string | null => {
             const doc = manager.view?.state?.doc
             if (!doc) return null
             return serializer.serialize(doc)
