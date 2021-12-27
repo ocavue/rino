@@ -1,5 +1,5 @@
 import produce from "immer"
-import { Dispatch, useCallback, useReducer } from "react"
+import { Dispatch, useCallback, useEffect, useReducer } from "react"
 
 import { ipcInvoker } from "../ipc-renderer"
 import { calcCanCloseWindow } from "./calc-can-close-window"
@@ -17,6 +17,8 @@ export type WorkbenchState = {
     // is wait for the main process to save the file
     isSaving: boolean
 
+    hasUnsavedChanges: boolean
+
     actionQueue: WorkbenchAction[]
 
     runningAction: WorkbenchAction | null
@@ -30,6 +32,7 @@ const initialState = Object.freeze<WorkbenchState>({
 
     isSerializing: false,
     isSaving: false,
+    hasUnsavedChanges: false,
 
     actionQueue: [],
 
@@ -71,12 +74,33 @@ function closeWindow(state: WorkbenchState, action: CloseWindowAction): void {
     }
 }
 
-type SaveFileAction = {
+type OpenFileAction = {
     type: "OPEN_FILE"
     payload: {
         path: string
         content: string
     }
+}
+
+type SaveFileAction = {
+    type: "SAVE_FILE"
+    dispatch: Dispatch<WorkbenchAction>
+}
+
+async function asyncSaveFile(state: WorkbenchState, action: SaveFileAction) {
+    await ipcInvoker.saveFile({ path: state.path, content: state.content })
+    action.dispatch({ type: "FINISH_SAVE_FILE" })
+}
+
+function saveFile(state: WorkbenchState, action: SaveFileAction): void {
+    if (!state.path) {
+        return
+    }
+    startAsyncAction(state, action, asyncSaveFile(state, action), action.dispatch)
+}
+
+type FinishSaveFileAction = {
+    type: "FINISH_SAVE_FILE"
 }
 
 type SetNotePathAction = {
@@ -127,9 +151,11 @@ type SetIsSerializingAction = {
 
 type WorkbenchAction =
     | CloseWindowAction
+    | OpenFileAction
     | SaveFileAction
     | SetNotePathAction
     | SetNoteContentAction
+    | FinishSaveFileAction
     | EnsureFilePathAction
     | CleanRunningActionAction
     | DiscardContentAction
@@ -165,11 +191,19 @@ function executeAction(state: WorkbenchState, action: WorkbenchAction): Workbenc
             state.path = action.payload.path
             state.content = action.payload.content
             return state
+        case "SAVE_FILE":
+            saveFile(state, action)
+            return state
         case "SET_NOTE_PATH":
             state.path = action.payload.path
             return state
         case "SET_NOTE_CONTENT":
+            state.hasUnsavedChanges = state.hasUnsavedChanges || state.content !== action.payload.content
             state.content = action.payload.content
+            return state
+        case "FINISH_SAVE_FILE":
+            state.isSaving = false
+            state.hasUnsavedChanges = false
             return state
         case "ENSURE_FILE_PATH":
             ensureFilePath(state, action)
@@ -259,6 +293,10 @@ export function useWorkbench() {
     const setNoteContent = useCallback((content: string) => {
         dispatch({ type: "SET_NOTE_CONTENT", payload: { content } })
     }, [])
+
+    useEffect(() => {
+        dispatch({ type: "SAVE_FILE", dispatch })
+    }, [state.content])
 
     return {
         state: {

@@ -10,15 +10,12 @@ export function useTitleEffect(state: WorkbenchState): void {
         let title = basename(state.path)
         if (!title) {
             title = "Untitled"
-            if (!state.content) {
-                // return title
-            }
         }
-        if (state.isSaving || state.isSerializing) {
+        if (state.isSaving || state.isSerializing || state.hasUnsavedChanges) {
             title = `${title} - Edited`
         }
         return title
-    }, [state.content, state.isSaving, state.isSerializing, state.path])
+    }, [state.hasUnsavedChanges, state.isSaving, state.isSerializing, state.path])
 
     console.log("useTitleEffect", title, {
         content: !!state.content,
