@@ -2,6 +2,7 @@ import produce from "immer"
 import { Dispatch, useCallback, useEffect, useReducer } from "react"
 
 import { ipcInvoker } from "../ipc-renderer"
+import { logger } from "../logger"
 import { createTimeoutPromise } from "../utils/create-timeout-promise"
 import { withLogReducer } from "./reducer-logger"
 import { useTitleEffect } from "./use-title-effect"
@@ -23,6 +24,9 @@ export type WorkbenchState = {
     runningAction: WorkbenchAction | null
 
     contentDiscarded: boolean
+
+    // is running the irrevocable close window action
+    isClosing: boolean
 }
 
 const initialState = Object.freeze<WorkbenchState>({
@@ -38,6 +42,8 @@ const initialState = Object.freeze<WorkbenchState>({
     runningAction: null,
 
     contentDiscarded: false,
+
+    isClosing: false,
 })
 
 function calcCanCloseWindow(state: WorkbenchState): boolean {
@@ -50,6 +56,10 @@ type DiscardContentAction = {
     type: "DISCARD_CONTENT"
 }
 
+type SetIsClosingAction = {
+    type: "SET_IS_CLOSING"
+}
+
 type CloseWindowAction = {
     type: "CLOSE_WINDOW"
     dispatch: Dispatch<WorkbenchAction>
@@ -60,19 +70,27 @@ async function asyncCloseWindow(state: WorkbenchState, action: CloseWindowAction
     if (!state.path) {
         const { filePath, canceled, discarded } = await ipcInvoker.askMarkdownFileForClose()
         if (discarded) {
+            // User discarded the content, close the window
             dispatch({ type: "DISCARD_CONTENT" })
-            dispatch({ type: "CLOSE_WINDOW", dispatch })
+            dispatch({ type: "SET_IS_CLOSING" })
         } else if (filePath && !canceled) {
+            // User selected a file, save the content amd close the window
             dispatch({ type: "SET_NOTE_PATH", payload: { path: filePath } })
-            dispatch({ type: "CLOSE_WINDOW", dispatch })
+            dispatch({ type: "SAVE_FILE", dispatch })
+            dispatch({ type: "SET_IS_CLOSING" })
         }
+    } else {
+        // Save the content and close the window
+        dispatch({ type: "SET_IS_CLOSING" })
     }
 }
 
+// Try to close the window. Send a message to the main process to close current window if the window can be closed immediately.
+// Otherwise, a close action will be added to the queue and try to close the window later.
 function closeWindow(state: WorkbenchState, action: CloseWindowAction): void {
-    if (calcCanCloseWindow(state)) {
-        // close the window
-        ipcInvoker.closeWindow()
+    const canCloseWindow = calcCanCloseWindow(state)
+    if (canCloseWindow) {
+        action.dispatch({ type: "SET_IS_CLOSING" })
     } else {
         startAsyncAction(state, action, asyncCloseWindow(state, action), action.dispatch)
     }
@@ -154,6 +172,7 @@ type SetIsSerializingAction = {
 }
 
 type WorkbenchAction =
+    | SetIsClosingAction
     | CloseWindowAction
     | OpenFileAction
     | SaveFileAction
@@ -188,6 +207,9 @@ function executeAction(state: WorkbenchState, action: WorkbenchAction): Workbenc
     console.assert(state.runningAction === null, "executeAction should not be called when runningAction is not null")
 
     switch (action.type) {
+        case "SET_IS_CLOSING":
+            state.isClosing = true
+            return state
         case "CLOSE_WINDOW":
             closeWindow(state, action)
             return state
@@ -268,15 +290,19 @@ export function useWorkbench() {
 
     const canCloseWindow = calcCanCloseWindow(state)
 
-    // Try to close the window. Return true if the window can be closed immediately. Otherwise, a close action will be added to the queue and return false.
-    const closeWindow = useCallback((): boolean => {
-        if (canCloseWindow) {
-            return true
-        } else {
-            dispatch({ type: "CLOSE_WINDOW", dispatch })
-            return false
+    useEffect(() => {
+        dispatch({ type: "SAVE_FILE", dispatch })
+    }, [state.content, state.hasUnsavedChanges, state.isClosing])
+
+    useEffect(() => {
+        if (state.isClosing && canCloseWindow) {
+            ipcInvoker.closeWindow()
         }
-    }, [canCloseWindow])
+    }, [state.isClosing, canCloseWindow])
+
+    const closeWindow = useCallback((): void => {
+        dispatch({ type: "CLOSE_WINDOW", dispatch })
+    }, [])
 
     const openFile = useCallback(({ path, content }: { path: string; content: string }) => {
         dispatch({ type: "OPEN_FILE", payload: { path, content } })
@@ -298,14 +324,11 @@ export function useWorkbench() {
         dispatch({ type: "SET_NOTE_CONTENT", payload: { content } })
     }, [])
 
-    useEffect(() => {
-        dispatch({ type: "SAVE_FILE", dispatch })
-    }, [state.content])
-
     return {
         state: {
             path: state.path,
             content: state.content,
+            canCloseWindow,
         },
         handlers: {
             closeWindow,

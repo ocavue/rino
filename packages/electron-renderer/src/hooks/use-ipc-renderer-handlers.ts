@@ -11,7 +11,7 @@ export function useIpcRendererHandlers({
     openFile: (props: { path: string; content: string }) => void
     ensureFilePath: () => void
     setNotePath: (path: string) => void
-    closeWindow: () => boolean
+    closeWindow: () => void
 }) {
     useEffect(() => {
         ipcRenderer.on("openFile", (event, { path, content }) => {
@@ -42,9 +42,7 @@ export function useIpcRendererHandlers({
 
     useEffect(() => {
         ipcRenderer.on("beforeCloseWindow", (event) => {
-            if (closeWindow()) {
-                window.close()
-            }
+            closeWindow()
         })
         return () => {
             ipcRenderer.removeAllListeners("beforeCloseWindow")

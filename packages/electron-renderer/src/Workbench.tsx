@@ -8,11 +8,11 @@ import { useWorkbench } from "./hooks/use-workbench"
 
 const WorkbenchV2: FC = () => {
     const {
-        state: { content, path },
+        state: { content, path, canCloseWindow },
         handlers: { closeWindow, setNotePath, setNoteContent, openFile, ensureFilePath, setIsSerializing },
     } = useWorkbench()
 
-    useBeforeUnload(closeWindow)
+    useBeforeUnload(canCloseWindow)
 
     useIpcRendererHandlers({
         setNotePath,
