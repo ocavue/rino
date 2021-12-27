@@ -1,7 +1,3 @@
-export interface MarkdownNote {
-    content: string
-    path: string
-}
 
 export type MarkdownNoteState = {
     content: string
@@ -23,5 +19,4 @@ export type MarkdownNoteState = {
 
     // if this is true, the file will be closed after saving
     isWaittingToClose: boolean
-
 }
