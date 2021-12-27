@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from "react"
 
 import { ipcInvoker } from "../ipc-renderer"
+import { logger } from "../logger"
 import { MarkdownNote } from "../types"
 import { useTitle } from "./use-title"
 
@@ -66,6 +67,8 @@ export function useMarkdownNote() {
     }, [note.path, setNotePath])
 
     const beforeCloseWindow = useCallback(async (): Promise<void> => {
+        logger.debug("beforeCloseWindow")
+
         if (!note.path) {
             if (!note.content) {
                 setClosing(true)
