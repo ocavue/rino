@@ -1,6 +1,6 @@
 import { useEffect } from "react"
 
-export function useBeforeUnloadV2(closeWindow: () => boolean) {
+export function useBeforeUnload(closeWindow: () => boolean) {
     useEffect(() => {
         // Note: There is a subtle difference between the behaviors of `window.onbeforeunload = handler` and
         // `window.addEventListener('beforeunload', handler)`.

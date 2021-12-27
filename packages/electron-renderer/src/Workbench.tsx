@@ -2,7 +2,7 @@ import React, { FC, useMemo } from "react"
 
 import { Editor } from "@rino.app/editor"
 
-import { useBeforeUnloadV2 } from "./hooks/use-before-unload-v2"
+import { useBeforeUnload } from "./hooks/use-before-unload"
 import { useIpcRendererHandlers } from "./hooks/use-ipc-renderer-handlers"
 import { useWorkbench } from "./hooks/use-workbench"
 
@@ -12,7 +12,7 @@ const WorkbenchV2: FC = () => {
         handlers: { closeWindow, setNotePath, setNoteContent, openFile, ensureFilePath, setIsSerializing },
     } = useWorkbench()
 
-    useBeforeUnloadV2(closeWindow)
+    useBeforeUnload(closeWindow)
 
     useIpcRendererHandlers({
         setNotePath,
