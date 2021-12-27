@@ -8,8 +8,9 @@ import { useTitle } from "./use-title"
 export function useMarkdownNote() {
     const [closing, setClosing] = useState(false)
     const [note, setNote] = useState<MarkdownNote>({ content: "", path: "", deleted: false })
+    const [saving, setSaving] = useState(false)
     const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false)
-    const title = useTitle(note.path, hasUnsavedChanges)
+    const title = useTitle(note.path, hasUnsavedChanges, saving)
 
     useEffect(() => {
         ipcInvoker.setTitle({ title })
@@ -28,19 +29,16 @@ export function useMarkdownNote() {
         })
     }, [])
 
-    const onContentEdit = useCallback(() => {
-        setHasUnsavedChanges(true)
-    }, [])
-
     const setNotePath = useCallback((path: string) => {
         if (path) setNote((note) => ({ ...note, path }))
     }, [])
 
     const saveNoteAndMaybeClose = useCallback(
         async (note: MarkdownNote) => {
+            setSaving(true)
             const { filePath } = await ipcInvoker.saveFile({ content: note.content, path: note.path })
+            setSaving(false)
             if (filePath) {
-                setHasUnsavedChanges(false)
                 if (note.path !== filePath) {
                     setNotePath(filePath)
                 }
@@ -92,5 +90,5 @@ export function useMarkdownNote() {
         }
     }, [hasUnsavedChanges, note.content, note.path, setNotePath])
 
-    return { note, openFile, setNotePath, onContentSave, onContentEdit, ensureFilePath, beforeCloseWindow, closing }
+    return { note, openFile, setNotePath, onContentSave, setHasUnsavedChanges, ensureFilePath, beforeCloseWindow, closing }
 }

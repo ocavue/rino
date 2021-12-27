@@ -93,16 +93,6 @@ const Editor: React.FC<EditorProps> = ({
         onHasUnsavedChanges?.(state.hasUnsavedChanges)
     }, [onHasUnsavedChanges, state.hasUnsavedChanges])
 
-    const remirrorProps: RemirrorProps = {
-        manager: state.delegate.manager,
-        autoFocus: autoFocus,
-        initialContent: state.initialDoc,
-        onChange: onChange,
-        editable: !state.note.deleted,
-    }
-
-    const className = cx(extraClassName, EDITOR_THEME_GITHUB, "markdown-body", isDarkMode ? "markdown-body--dark" : "markdown-body--light")
-
     if (state.error) {
         // I didn't use React `componentDidCatch` method because I can't turn off `react-error-overlay` (easily) and
         // it will show an error overlay window in development mode when `componentDidCatch` been called.
@@ -117,6 +107,16 @@ const Editor: React.FC<EditorProps> = ({
             </div>
         )
     }
+
+    const remirrorProps: RemirrorProps = {
+        manager: state.delegate.manager,
+        autoFocus: autoFocus,
+        initialContent: state.initialDoc,
+        onChange: onChange,
+        editable: !state.note.deleted,
+    }
+
+    const className = cx(extraClassName, EDITOR_THEME_GITHUB, "markdown-body", isDarkMode ? "markdown-body--dark" : "markdown-body--light")
 
     if (state.mode === Mode.WYSIWYG) {
         return <WysiwygEditor remirrorProps={remirrorProps} innerEditorProps={{ className, enableDevTools }} />

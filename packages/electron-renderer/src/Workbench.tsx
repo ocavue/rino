@@ -6,14 +6,9 @@ import { useBeforeUnload } from "./hooks/use-before-unload"
 import { useIpcRendererHandlers } from "./hooks/use-ipc-renderer-handlers"
 import { useMarkdownNote } from "./hooks/use-markdown-note"
 
-const drawerActivityContainer = {
-    useContainer: () => ({
-        drawerActivity: false,
-    }),
-}
-
 const Workbench: FC = () => {
-    const { note, openFile, setNotePath, onContentSave, onContentEdit, ensureFilePath, beforeCloseWindow, closing } = useMarkdownNote()
+    const { note, openFile, setNotePath, onContentSave, setHasUnsavedChanges, ensureFilePath, beforeCloseWindow, closing } =
+        useMarkdownNote()
 
     useBeforeUnload(note, closing, ensureFilePath)
 
@@ -36,9 +31,8 @@ const Workbench: FC = () => {
                 key={note.path}
                 note={note}
                 onContentSaveDelay={2000}
-                onContentEdit={onContentEdit}
+                onHasUnsavedChanges={setHasUnsavedChanges}
                 onContentSave={onContentSave}
-                drawerActivityContainer={drawerActivityContainer}
             />
         </div>
     )
