@@ -24,7 +24,7 @@ export type EditorProps = {
     isTestEnv?: boolean
     onContentSaveDelay?: number
     onContentSave?: (content: string) => void
-    onContentEdit?: () => void
+    onHasUnsavedChanges?: (hasUnsavedChanges: boolean) => void
 }
 
 const Editor: React.FC<EditorProps> = ({
@@ -36,7 +36,7 @@ const Editor: React.FC<EditorProps> = ({
     isTestEnv = false,
     onContentSaveDelay = 500,
     onContentSave = (content: string) => {},
-    onContentEdit = () => {},
+    onHasUnsavedChanges = (hasUnsavedChanges: boolean) => {},
 }) => {
     const wysiwygDelegate: EditorDelegate = useWysiwygEditor({ isTestEnv })
     const sourceCodeDelegate: EditorDelegate = useSourceCodeEditor()
@@ -79,6 +79,11 @@ const Editor: React.FC<EditorProps> = ({
     useEffect(() => {
         return () => saveContent()
     }, [saveContent])
+
+    // Register onHasUnsavedChanges handler
+    useEffect(() => {
+        onHasUnsavedChanges(state.hasUnsavedChanges)
+    }, [onHasUnsavedChanges, state.hasUnsavedChanges])
 
     const remirrorProps: RemirrorProps = {
         manager: state.delegate.manager,
