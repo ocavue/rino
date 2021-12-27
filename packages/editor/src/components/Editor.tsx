@@ -123,7 +123,6 @@ const Editor: React.FC<EditorProps> = ({
     } else {
         return <SourceCodeEditor remirrorProps={remirrorProps} innerEditorProps={{ className }} />
     }
-    return <div>xx</div>
 }
 
 export default Editor
