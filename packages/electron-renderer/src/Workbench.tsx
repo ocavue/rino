@@ -18,7 +18,7 @@ const WorkbenchV2: FC = () => {
         setNotePath,
         openFile,
         ensureFilePath,
-        beforeCloseWindow: closeWindow,
+        closeWindow,
     })
 
     const note = useMemo(() => {
