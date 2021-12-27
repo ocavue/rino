@@ -1,19 +1,8 @@
 import { isString } from "lodash-es"
 import React, { FC, useState } from "react"
 import ReactDOM from "react-dom"
-import { createContainer } from "unstated-next"
 
 import { Editor } from "../src"
-
-const useDrawerActivityState = () => {
-    const [drawerActivity, setDrawerActivity] = useState(true)
-    return {
-        drawerActivity,
-        setDrawerActivity,
-    }
-}
-
-const drawerActivityContainer = createContainer(useDrawerActivityState)
 
 const defaultContent = `
 
@@ -35,11 +24,7 @@ const DefaultEditor: FC = () => {
 
     const [note] = useState({ content: isString(content) ? content : defaultContent, deleted: false })
 
-    return (
-        <drawerActivityContainer.Provider>
-            <Editor note={note} drawerActivityContainer={drawerActivityContainer} isTestEnv enableDevTools={enableDevTools} />
-        </drawerActivityContainer.Provider>
-    )
+    return <Editor note={note} isTestEnv enableDevTools={enableDevTools} />
 }
 
 /** focus this element to hide the cursor in the editor */
