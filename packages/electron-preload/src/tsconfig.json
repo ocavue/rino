@@ -1,10 +1,10 @@
 {
     "extends": "../../../tsconfig.base.json",
     "compilerOptions": {
-        "module": "commonjs",
-        "noEmit": false,
-        "outDir": "../dist",
         "composite": true,
+        "noEmit": false,
+        "emitDeclarationOnly": true,
+        "outDir": "./.cache/typescript",
     },
     "include": [
         "./",
