@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+
 import { Reducer } from "react"
 
 const getCurrentTimeFormatted = () => {

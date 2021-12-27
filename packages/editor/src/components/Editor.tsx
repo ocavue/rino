@@ -8,7 +8,6 @@ import React, { useCallback, useEffect, useLayoutEffect, useMemo, useReducer } f
 
 import { metaKey } from "@rino.app/common"
 
-import { diffObject } from "./diff-object"
 import { editorReducer, initializeState } from "./editor-state"
 import { SourceCodeEditor } from "./source-code"
 import { useSourceCodeEditor } from "./source-code/use-source-code-editor"
