@@ -1,5 +1,4 @@
 import { AnyExtension, ProsemirrorNode, RemirrorManager } from "@remirror/core"
-import { Container } from "unstated-next"
 
 export type EditorProps = {
     className: string
@@ -12,8 +11,6 @@ export type EditorProps = {
     beforeUnmount: (content?: string) => void
     enableDevTools: boolean
 }
-
-export type DrawerActivityContainer = Pick<Container<{ drawerActivity: boolean }>, "useContainer">
 
 export type StringToDoc = (content: string) => ProsemirrorNode
 export type DocToString = (doc: ProsemirrorNode) => string
