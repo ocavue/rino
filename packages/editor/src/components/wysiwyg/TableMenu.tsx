@@ -5,16 +5,13 @@ import React, { useMemo } from "react"
 
 import { selectedTableCell } from "../../extensions/table/table-helper"
 import { tableMenuSvgs as svgs } from "../table-menu/svg"
-import { DrawerActivityContainer } from "../types"
 import { WysiwygExtension } from "./wysiwyg-extension"
 
 export type TableMenuProps = {
     commands: CommandsFromExtensions<WysiwygExtension>
-    maxDrawerWidth: number
-    drawerActivityContainer: DrawerActivityContainer
 }
 
-const TableMenu: React.FC<TableMenuProps> = ({ commands, maxDrawerWidth, drawerActivityContainer }) => {
+const TableMenu: React.FC<TableMenuProps> = ({ commands }) => {
     const { view } = useRemirrorContext()
     const showTableMenu = !!selectedTableCell(view.state)
 

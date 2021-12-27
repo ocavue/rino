@@ -1,28 +1,32 @@
-import React, { FC } from "react"
+import React, { FC, useMemo } from "react"
 
 import { Editor } from "@rino.app/editor"
 
 import { useBeforeUnload } from "./hooks/use-before-unload"
 import { useIpcRendererHandlers } from "./hooks/use-ipc-renderer-handlers"
-import { useMarkdownNote } from "./hooks/use-markdown-note"
-
-const drawerActivityContainer = {
-    useContainer: () => ({
-        drawerActivity: false,
-    }),
-}
+import { useWorkbench } from "./hooks/use-workbench"
 
 const Workbench: FC = () => {
-    const { note, openFile, setNotePath, onContentSave, onContentEdit, ensureFilePath, beforeCloseWindow, closing } = useMarkdownNote()
+    const {
+        state: { content, path, canCloseWindow },
+        handlers: { closeWindow, setNotePath, setNoteContent, openFile, ensureFilePath, setIsSerializing },
+    } = useWorkbench()
 
-    useBeforeUnload(note, closing, ensureFilePath)
+    useBeforeUnload(canCloseWindow)
 
     useIpcRendererHandlers({
         setNotePath,
         openFile,
         ensureFilePath,
-        beforeCloseWindow,
+        closeWindow,
     })
+
+    const note = useMemo(() => {
+        return {
+            content,
+            deleted: false,
+        }
+    }, [content])
 
     return (
         <div
@@ -33,12 +37,11 @@ const Workbench: FC = () => {
             }}
         >
             <Editor
-                key={note.path}
+                key={path}
                 note={note}
                 onContentSaveDelay={2000}
-                onContentEdit={onContentEdit}
-                onContentSave={onContentSave}
-                drawerActivityContainer={drawerActivityContainer}
+                onHasUnsavedChanges={setIsSerializing}
+                onContentSave={setNoteContent}
             />
         </div>
     )

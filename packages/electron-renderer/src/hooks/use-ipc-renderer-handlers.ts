@@ -6,16 +6,16 @@ export function useIpcRendererHandlers({
     openFile,
     ensureFilePath,
     setNotePath,
-    beforeCloseWindow,
+    closeWindow,
 }: {
-    openFile: (path: string) => void
+    openFile: (props: { path: string; content: string }) => void
     ensureFilePath: () => void
     setNotePath: (path: string) => void
-    beforeCloseWindow: () => void
+    closeWindow: () => void
 }) {
     useEffect(() => {
-        ipcRenderer.on("openFile", (event, { path }) => {
-            openFile(path)
+        ipcRenderer.on("openFile", (event, { path, content }) => {
+            openFile({ path, content })
         })
         return () => {
             ipcRenderer.removeAllListeners("openFile")
@@ -42,10 +42,10 @@ export function useIpcRendererHandlers({
 
     useEffect(() => {
         ipcRenderer.on("beforeCloseWindow", (event) => {
-            beforeCloseWindow()
+            closeWindow()
         })
         return () => {
             ipcRenderer.removeAllListeners("beforeCloseWindow")
         }
-    }, [beforeCloseWindow])
+    }, [closeWindow])
 }

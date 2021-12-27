@@ -1,85 +1,30 @@
-import { Remirror, useRemirrorContext } from "@remirror/react"
-import { debounce } from "lodash-es"
-import React, { FC, useCallback, useLayoutEffect, useMemo } from "react"
+import { Remirror, RemirrorProps, useRemirrorContext } from "@remirror/react"
+import React, { FC } from "react"
 
-import DevTools from "../DevTools"
-import { EditorProps } from "../types"
-import { useSourceCodeRemirror } from "./manager"
+import ErrorBoundary from "../ErrorBoundary"
+import { SourceCodeExtension } from "./source-code-manager"
 
-const InnerEditor: FC<{ className: string }> = ({ className }) => {
+type InnerEditorProps = { className: string }
+
+const InnerEditor: FC<InnerEditorProps> = ({ className }) => {
     const { getRootProps } = useRemirrorContext()
     return <div {...getRootProps()} className={className} />
 }
 
-const SourceCodeEditor: FC<EditorProps> = React.memo<EditorProps>(
-    ({
-        className,
-        initialContent,
-        editable,
-        autoFocus,
-        beforeUnmount,
-        onContentEdit,
-        onContentSave,
-        onContentSaveDelay,
-        enableDevTools,
-    }) => {
-        const { manager } = useSourceCodeRemirror()
+type SourceCodeEditorProps = {
+    remirrorProps: RemirrorProps<SourceCodeExtension>
+    innerEditorProps: InnerEditorProps
+}
 
-        const initialNode = useMemo(() => {
-            const schema = manager.schema
-            const attrs = { language: "markdown" }
-            const child = initialContent ? schema.text(initialContent) : undefined
-            return schema.nodes.doc.create({}, schema.nodes.codeMirror.create(attrs, child))
-        }, [manager, initialContent])
-
-        const getContent: () => string | null = useCallback(() => {
-            const doc = manager.view?.state?.doc
-            if (!doc) return null
-            return doc.textContent
-        }, [manager])
-
-        const onChange = useMemo(() => {
-            const saveContent = () => {
-                const content = getContent()
-                if (content !== null) onContentSave(content)
-            }
-            const saveContentWithDelay = debounce(saveContent, onContentSaveDelay)
-            return () => {
-                onContentEdit()
-                saveContentWithDelay()
-            }
-        }, [getContent, onContentEdit, onContentSave, onContentSaveDelay])
-
-        // We use `useLayoutEffect` instead of `useEffect` because we want `beforeUnmount` to be called ASAP
-        useLayoutEffect(() => {
-            // console.debug(`Mounting <${SourceCodeEditor.displayName}/>`)
-            return () => {
-                // console.debug(`Unmounting <${SourceCodeEditor.displayName}/>`)
-                const content = getContent()
-                if (content === null) {
-                    beforeUnmount()
-                } else {
-                    beforeUnmount(content)
-                    onContentSave(content)
-                }
-            }
-        }, [getContent, onContentSave, beforeUnmount])
-
-        return (
-            <Remirror
-                manager={manager}
-                autoFocus={autoFocus}
-                initialContent={initialNode}
-                onChange={(event) => event.tr?.docChanged && onChange()}
-                editable={editable}
-                attributes={{ "data-testid": "source_code_mode_textarea" }}
-            >
-                <InnerEditor className={className} />
-                {enableDevTools ? <DevTools /> : null}
+const SourceCodeEditor: React.FC<SourceCodeEditorProps> = ({ remirrorProps, innerEditorProps }) => {
+    return (
+        <ErrorBoundary>
+            <Remirror {...remirrorProps} attributes={{ "data-testid": "source_code_mode_textarea" }}>
+                <InnerEditor {...innerEditorProps} />
             </Remirror>
-        )
-    },
-)
+        </ErrorBoundary>
+    )
+}
 
 SourceCodeEditor.displayName = "SourceCodeEditor"
 

@@ -6,7 +6,7 @@ export type InvokeApi = {
 
     askMarkdownFileForSave: () => Promise<{ filePath?: string; canceled?: boolean }>
 
-    askMarkdownFileForClose: () => Promise<{ filePath?: string; canceled?: boolean; deleted?: boolean }>
+    askMarkdownFileForClose: () => Promise<{ filePath?: string; canceled?: boolean; discarded?: boolean }>
 
     newWindow: () => Promise<void>
 
@@ -19,7 +19,7 @@ export type InvokeApi = {
 
 // Sended by main process and received by renderer process
 export type SendApi = {
-    openFile: (options: { path: string }) => void
+    openFile: (options: { path: string; content: string }) => void
 
     ensureFilePath: () => void
 
