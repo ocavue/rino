@@ -1,4 +1,4 @@
-import React, { FC } from "react"
+import React, { FC, useMemo } from "react"
 
 import { Editor } from "@rino.app/editor"
 
@@ -7,10 +7,10 @@ import { useIpcRendererHandlers } from "./hooks/use-ipc-renderer-handlers"
 import { useMarkdownNote } from "./hooks/use-markdown-note"
 
 const Workbench: FC = () => {
-    const { note, openFile, setNotePath, onContentSave, setHasUnsavedChanges, ensureFilePath, beforeCloseWindow, closing } =
+    const { content, path, openFile, setNotePath, onContentSave, setIsSerializing, ensureFilePath, beforeCloseWindow, canUnmountNow } =
         useMarkdownNote()
 
-    useBeforeUnload(note, closing, ensureFilePath)
+    useBeforeUnload(content, path, canUnmountNow, ensureFilePath)
 
     useIpcRendererHandlers({
         setNotePath,
@@ -18,6 +18,13 @@ const Workbench: FC = () => {
         ensureFilePath,
         beforeCloseWindow,
     })
+
+    const note = useMemo(() => {
+        return {
+            content,
+            deleted: false,
+        }
+    }, [content])
 
     return (
         <div
@@ -27,13 +34,7 @@ const Workbench: FC = () => {
                 flexDirection: "column",
             }}
         >
-            <Editor
-                key={note.path}
-                note={note}
-                onContentSaveDelay={2000}
-                onHasUnsavedChanges={setHasUnsavedChanges}
-                onContentSave={onContentSave}
-            />
+            <Editor key={path} note={note} onContentSaveDelay={2000} onHasUnsavedChanges={setIsSerializing} onContentSave={onContentSave} />
         </div>
     )
 }

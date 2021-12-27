@@ -2,15 +2,17 @@ import { useMemo } from "react"
 
 import { basename } from "@rino.app/common"
 
-export function useTitle(notePath: string, hasUnsavedChanges: boolean, saving: boolean): string {
+import { MarkdownNoteState } from "../types"
+
+export function useTitle(state: MarkdownNoteState): string {
     return useMemo(() => {
-        let title = basename(notePath)
+        let title = basename(state.path)
         if (!title) {
             title = "Untitled"
         }
-        if (saving || hasUnsavedChanges) {
+        if (state.savingContentId || state.isSerializing) {
             title = `${title} - Edited`
         }
         return title
-    }, [notePath, saving, hasUnsavedChanges])
+    }, [state.isSerializing, state.path, state.savingContentId])
 }

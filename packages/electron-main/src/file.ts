@@ -48,12 +48,12 @@ export async function askMarkdownFileForSave(win: BrowserWindow | null): Promise
 
 export async function askMarkdownFileForClose(
     win: BrowserWindow | null,
-): Promise<{ filePath?: string; canceled?: boolean; deleted?: boolean }> {
+): Promise<{ filePath?: string; canceled?: boolean; discarded?: boolean }> {
     const action = await showDialogBeforeDelete(win)
     if (action === "cancel") {
         return { canceled: true }
     } else if (action === "delete") {
-        return { deleted: true }
+        return { discarded: true }
     }
     return showSaveMarkdownDialog(win)
 }

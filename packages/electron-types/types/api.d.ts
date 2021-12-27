@@ -6,7 +6,7 @@ export type InvokeApi = {
 
     askMarkdownFileForSave: () => Promise<{ filePath?: string; canceled?: boolean }>
 
-    askMarkdownFileForClose: () => Promise<{ filePath?: string; canceled?: boolean; deleted?: boolean }>
+    askMarkdownFileForClose: () => Promise<{ filePath?: string; canceled?: boolean; discarded?: boolean }>
 
     newWindow: () => Promise<void>
 
