@@ -122,7 +122,7 @@ const unchangedMappable: Mappable = {
  * @param startPos The (absolute) position at the start of the node
  */
 function applyMarksToNode<S extends Schema>(view: EditorView<S>, node: Node<S>, startPos: number) {
-    const tr = view.state.tr
+    const tr = view.state.tr.setMeta("RINO_APPLY_MARKS", true)
 
     if (!node.isTextblock) {
         for (const [child, offset] of iterNode(node)) {
