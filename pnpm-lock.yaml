@@ -76,7 +76,7 @@ importers:
       '@remirror/core-utils': ^1.1.3
       '@remirror/dev': ^1.0.19
       '@remirror/extension-blockquote': ^1.0.13
-      '@remirror/extension-codemirror6': ^0.1.0
+      '@remirror/extension-codemirror6': ^0.1.1
       '@remirror/extension-doc': ^1.0.13
       '@remirror/extension-hard-break': ^1.0.12
       '@remirror/extension-heading': ^1.0.12
@@ -123,7 +123,7 @@ importers:
       react-dom: ^17.0.2
       typescript: ^4.5.4
       unstated-next: ^1.1.0
-      vite: ^2.7.7
+      vite: ^2.7.8
     dependencies:
       '@codemirror/basic-setup': 0.19.1
       '@codemirror/lang-markdown': 0.19.3
@@ -138,7 +138,7 @@ importers:
       '@remirror/core-utils': 1.1.3_a2751efd9bd367adca9a52fbe5e44c38
       '@remirror/dev': 1.0.19_14b2a6b96823f70b1b28a590a9cd6374
       '@remirror/extension-blockquote': 1.0.13_a2751efd9bd367adca9a52fbe5e44c38
-      '@remirror/extension-codemirror6': 0.1.0_a2751efd9bd367adca9a52fbe5e44c38
+      '@remirror/extension-codemirror6': 0.1.1_a2751efd9bd367adca9a52fbe5e44c38
       '@remirror/extension-doc': 1.0.13_a2751efd9bd367adca9a52fbe5e44c38
       '@remirror/extension-hard-break': 1.0.12_a2751efd9bd367adca9a52fbe5e44c38
       '@remirror/extension-heading': 1.0.12_a2751efd9bd367adca9a52fbe5e44c38
@@ -187,7 +187,7 @@ importers:
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
       typescript: 4.5.4
-      vite: 2.7.7
+      vite: 2.7.8
 
   packages/electron:
     specifiers:
@@ -248,7 +248,7 @@ importers:
       react-dom: ^17.0.2
       typescript: ^4.5.4
       unstated-next: ^1.1.0
-      vite: ^2.7.7
+      vite: ^2.7.8
     devDependencies:
       '@rino.app/common': link:../common
       '@rino.app/editor': link:../editor
@@ -264,7 +264,7 @@ importers:
       react-dom: 17.0.2_react@17.0.2
       typescript: 4.5.4
       unstated-next: 1.1.0
-      vite: 2.7.7
+      vite: 2.7.8
 
   packages/electron-types:
     specifiers:
@@ -2267,8 +2267,8 @@ packages:
       - jsdom
     dev: false
 
-  /@remirror/extension-codemirror6/0.1.0_a2751efd9bd367adca9a52fbe5e44c38:
-    resolution: {integrity: sha512-mcM0/1Hx+69ZbV+fONUb6WWC0jdpa/LqQfwSikdy22n7x2vCwWh61Sc7PlnfZWG1x+kwvSJs5KPf3koIztNgLw==}
+  /@remirror/extension-codemirror6/0.1.1_a2751efd9bd367adca9a52fbe5e44c38:
+    resolution: {integrity: sha512-zSC1LW5RqGPUdNMryFWf9wOyXOvogkMsMazuQDqEMZAmhUwmVDty/SBB0xDHcgiAPnqqOQ7MEygCJX7Gdjnx+g==}
     peerDependencies:
       '@remirror/pm': ^1.0.7
     dependencies:
@@ -8818,6 +8818,7 @@ packages:
 
   /json-schema-traverse/0.4.1:
     resolution: {integrity: sha512-xbbCH5dCYU5T8LcEhhuh7HJ88HXuW3qsI3Y0zOZFKfZEHcpWiHU/Jxzk629Brsab/mMiHQti9wMP+845RPe3Vg==}
+    requiresBuild: true
     dev: true
 
   /json-stable-stringify-without-jsonify/1.0.1:
@@ -8852,6 +8853,7 @@ packages:
       chalk: 2.4.2
       diff-match-patch: 1.0.5
     dev: false
+    bundledDependencies: []
 
   /jsonfile/4.0.0:
     resolution: {integrity: sha1-h3Gq4HmbZAdrdmQPygWPnBDjPss=}
@@ -12605,6 +12607,7 @@ packages:
 
   /uri-js/4.4.1:
     resolution: {integrity: sha512-7rKUyy33Q1yc98pQ1DAmLtwX109F7TIfWlW1Ydo8Wl1ii1SeHieeh0HHfPeL2fMXK6z0s8ecKs9frCuLJvndBg==}
+    requiresBuild: true
     dependencies:
       punycode: 2.1.1
     dev: true
@@ -12730,8 +12733,8 @@ packages:
     dev: true
     optional: true
 
-  /vite/2.7.7:
-    resolution: {integrity: sha512-Nm4ingl//gMSj/p1aCBHuTc5Fd8W8Mwdci/HUvqCVq8xaJqF7z08S/LRq1M9kS0jRfJk1/f/CwUyQAr6YgsOLw==}
+  /vite/2.7.8:
+    resolution: {integrity: sha512-NOgvRtXUq4/7srE2cTQ2IU1oERdGq2njVOlZtgRrjMO+PPJpncd61/AUzxzZklQ1zBkiWXEVrw3Csq0Sbgr0rQ==}
     engines: {node: '>=12.2.0'}
     hasBin: true
     peerDependencies:
@@ -13059,6 +13062,7 @@ packages:
   /xmlbuilder/9.0.7:
     resolution: {integrity: sha1-Ey7mPS7FVlxVfiD0wi35rKaGsQ0=}
     engines: {node: '>=4.0'}
+    requiresBuild: true
     dev: true
 
   /xmlchars/2.2.0:
