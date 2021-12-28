@@ -76,7 +76,7 @@ importers:
       '@remirror/core-utils': ^1.1.3
       '@remirror/dev': ^1.0.19
       '@remirror/extension-blockquote': ^1.0.13
-      '@remirror/extension-codemirror6': ^0.1.0
+      '@remirror/extension-codemirror6': ^0.1.1
       '@remirror/extension-doc': ^1.0.13
       '@remirror/extension-hard-break': ^1.0.12
       '@remirror/extension-heading': ^1.0.12
@@ -123,7 +123,7 @@ importers:
       react-dom: ^17.0.2
       typescript: ^4.5.4
       unstated-next: ^1.1.0
-      vite: ^2.7.7
+      vite: ^2.7.8
     dependencies:
       '@codemirror/basic-setup': 0.19.1
       '@codemirror/lang-markdown': 0.19.3
@@ -138,7 +138,7 @@ importers:
       '@remirror/core-utils': 1.1.3_a2751efd9bd367adca9a52fbe5e44c38
       '@remirror/dev': 1.0.19_14b2a6b96823f70b1b28a590a9cd6374
       '@remirror/extension-blockquote': 1.0.13_a2751efd9bd367adca9a52fbe5e44c38
-      '@remirror/extension-codemirror6': 0.1.0_a2751efd9bd367adca9a52fbe5e44c38
+      '@remirror/extension-codemirror6': 0.1.1_a2751efd9bd367adca9a52fbe5e44c38
       '@remirror/extension-doc': 1.0.13_a2751efd9bd367adca9a52fbe5e44c38
       '@remirror/extension-hard-break': 1.0.12_a2751efd9bd367adca9a52fbe5e44c38
       '@remirror/extension-heading': 1.0.12_a2751efd9bd367adca9a52fbe5e44c38
@@ -187,7 +187,7 @@ importers:
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
       typescript: 4.5.4
-      vite: 2.7.7
+      vite: 2.7.8
 
   packages/electron:
     specifiers:
@@ -248,7 +248,7 @@ importers:
       react-dom: ^17.0.2
       typescript: ^4.5.4
       unstated-next: ^1.1.0
-      vite: ^2.7.7
+      vite: ^2.7.8
     devDependencies:
       '@rino.app/common': link:../common
       '@rino.app/editor': link:../editor
@@ -264,7 +264,7 @@ importers:
       react-dom: 17.0.2_react@17.0.2
       typescript: 4.5.4
       unstated-next: 1.1.0
-      vite: 2.7.7
+      vite: 2.7.8
 
   packages/electron-types:
     specifiers:
@@ -2139,7 +2139,7 @@ packages:
       '@types/object.omit': 3.0.0
       '@types/object.pick': 1.3.1
       '@types/throttle-debounce': 2.1.0
-      case-anything: 1.1.3
+      case-anything: 1.1.5
       dash-get: 1.0.2
       deepmerge: 4.2.2
       fast-deep-equal: 3.1.3
@@ -2267,8 +2267,8 @@ packages:
       - jsdom
     dev: false
 
-  /@remirror/extension-codemirror6/0.1.0_a2751efd9bd367adca9a52fbe5e44c38:
-    resolution: {integrity: sha512-mcM0/1Hx+69ZbV+fONUb6WWC0jdpa/LqQfwSikdy22n7x2vCwWh61Sc7PlnfZWG1x+kwvSJs5KPf3koIztNgLw==}
+  /@remirror/extension-codemirror6/0.1.1_a2751efd9bd367adca9a52fbe5e44c38:
+    resolution: {integrity: sha512-zSC1LW5RqGPUdNMryFWf9wOyXOvogkMsMazuQDqEMZAmhUwmVDty/SBB0xDHcgiAPnqqOQ7MEygCJX7Gdjnx+g==}
     peerDependencies:
       '@remirror/pm': ^1.0.7
     dependencies:
@@ -3031,7 +3031,7 @@ packages:
       '@babel/runtime': 7.16.5
       '@linaria/core': 3.0.0-beta.4
       '@remirror/core-types': 1.0.3_@remirror+pm@1.0.9
-      case-anything: 1.1.3
+      case-anything: 1.1.5
       color2k: 1.2.4
       csstype: 3.0.10
     transitivePeerDependencies:
@@ -4702,8 +4702,8 @@ packages:
     resolution: {integrity: sha512-jnT4Tq0Q4ma+6nncYQVe7d73kmDmE9C3OGTx3MvW7lBM/eY1S1DZTMBON7dqV481RhNiS5OxD7k9JQvmDOTirw==}
     dev: true
 
-  /case-anything/1.1.3:
-    resolution: {integrity: sha512-DJLmEwc1dsFQNzTFgfmNcSOJB1SY0/feYjQIbaRJNBve8GuMt22W/GRwrcPtqOsls6tDPTkCwhWKVKgogmwsfw==}
+  /case-anything/1.1.5:
+    resolution: {integrity: sha512-UsoMDAMnOaD3mkNmbRg7WoCi6tViuqCihsUCVvHojgsVYJ6kcDjhrvzNwv8nZqjqatYTeQbfoDlJ+2xJVWwp4A==}
 
   /chalk/1.1.3:
     resolution: {integrity: sha1-qBFcVeSnAv5NFQq9OHKCKn4J/Jg=}
@@ -11312,8 +11312,8 @@ packages:
       tslib: 1.14.1
     dev: true
 
-  /rxjs/7.5.0:
-    resolution: {integrity: sha512-fuCKAfFawVYX0pyFlETtYnXI+5iiY9Dftgk+VdgeOq+Qyi9ZDWckHZRDaXRt5WCNbbLkmAheoSGDiceyCIKNZA==}
+  /rxjs/7.5.1:
+    resolution: {integrity: sha512-KExVEeZWxMZnZhUZtsJcFwz8IvPvgu4G2Z2QyqjZQzUGr32KDYuSxrEYO4w3tFFNbfLozcrKUTvTPi+E9ywJkQ==}
     dependencies:
       tslib: 2.3.1
     dev: true
@@ -12730,8 +12730,8 @@ packages:
     dev: true
     optional: true
 
-  /vite/2.7.7:
-    resolution: {integrity: sha512-Nm4ingl//gMSj/p1aCBHuTc5Fd8W8Mwdci/HUvqCVq8xaJqF7z08S/LRq1M9kS0jRfJk1/f/CwUyQAr6YgsOLw==}
+  /vite/2.7.8:
+    resolution: {integrity: sha512-NOgvRtXUq4/7srE2cTQ2IU1oERdGq2njVOlZtgRrjMO+PPJpncd61/AUzxzZklQ1zBkiWXEVrw3Csq0Sbgr0rQ==}
     engines: {node: '>=12.2.0'}
     hasBin: true
     peerDependencies:
@@ -12797,7 +12797,7 @@ packages:
       joi: 17.5.0
       lodash: 4.17.21
       minimist: 1.2.5
-      rxjs: 7.5.0
+      rxjs: 7.5.1
     transitivePeerDependencies:
       - debug
     dev: true
@@ -13059,6 +13059,7 @@ packages:
   /xmlbuilder/9.0.7:
     resolution: {integrity: sha1-Ey7mPS7FVlxVfiD0wi35rKaGsQ0=}
     engines: {node: '>=4.0'}
+    requiresBuild: true
     dev: true
 
   /xmlchars/2.2.0:
