@@ -2,6 +2,7 @@ import { BrowserWindow } from "electron"
 
 import { askMarkdownFileForClose, askMarkdownFileForOpen, askMarkdownFileForSave, openFile, saveFile } from "./file"
 import { ipcMain } from "./ipc-main"
+import { state } from "./state"
 import { closeWindow, createWindow } from "./window"
 
 export function registerIpcInvokeHandlers() {
@@ -58,5 +59,9 @@ export function registerIpcInvokeHandlers() {
         const win = BrowserWindow.fromWebContents(event.sender)
         if (!win) return
         closeWindow(win)
+    })
+
+    ipcMain.handle("stopQuitting", async (event) => {
+        state.isQuitting = false
     })
 }

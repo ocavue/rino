@@ -15,6 +15,8 @@ export type InvokeApi = {
     setTitle: (options: { title: string }) => Promise<void>
 
     closeWindow: () => Promise<void>
+
+    stopQuitting: () => Promise<void>
 }
 
 // Sended by main process and received by renderer process
