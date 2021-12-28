@@ -44,12 +44,13 @@ export async function createWindow() {
         })
 
         newWindow.on("close", (event) => {
+            logger.info(`window (id=${newWindow.id}) event triggered: close`)
             if (!closingWindows.has(newWindow)) {
-                logger.info(`try to close window ${newWindow.id}`)
+                logger.info(`try to close window id=${newWindow.id}`)
                 event.preventDefault()
                 ipcSender.beforeCloseWindow(newWindow)
             } else {
-                logger.info(`closing window ${newWindow.id}`)
+                logger.info(`closing window id=${newWindow.id}`)
                 windows.delete(newWindow)
                 closingWindows.delete(newWindow)
             }
@@ -67,10 +68,10 @@ export async function createWindow() {
          * Local files for production.
          */
         const pageUrl = env.IS_DEV ? "http://localhost:3004" : new URL(rendererEntry, "file://").toString()
-        logger.info(`loading ${pageUrl}`)
+        logger.info(`loading ${pageUrl} for window id=${newWindow.id}`)
 
         await newWindow.loadURL(pageUrl)
-        logger.info(`created new window ${newWindow.id}`)
+        logger.info(`created new window id=${newWindow.id}`)
 
         return newWindow
     } catch (error) {
