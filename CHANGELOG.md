@@ -1,6 +1,6 @@
 # Changelog
 
-### [0.33.4](https://www.github.com/ocavue/rino/compare/v0.33.3...v0.33.4) (2021-12-28)
+## [0.33.4](https://www.github.com/ocavue/rino/compare/v0.33.3...v0.33.4) (2021-12-28)
 
 
 ### Bug Fixes
