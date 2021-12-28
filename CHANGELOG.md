@@ -1,5 +1,12 @@
 # Changelog
 
+### [0.33.4](https://www.github.com/ocavue/rino/compare/v0.33.3...v0.33.4) (2021-12-28)
+
+
+### Bug Fixes
+
+* **electron:** press Command-Q to quit the application on macOS ([#863](https://www.github.com/ocavue/rino/issues/863)) ([a48738b](https://www.github.com/ocavue/rino/commit/a48738b3c63978ba52220c8802cc9b2ab7cdd689))
+
 ## [0.33.3](https://www.github.com/ocavue/rino/compare/v0.33.2...v0.33.3) (2021-12-27)
 
 
