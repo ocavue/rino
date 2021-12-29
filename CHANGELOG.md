@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.34.1](https://www.github.com/ocavue/rino/compare/v0.34.0...v0.34.1) (2021-12-29)
+
+
+### Bug Fixes
+
+* **electron:** set category for linux ([#868](https://www.github.com/ocavue/rino/issues/868)) ([aaebebb](https://www.github.com/ocavue/rino/commit/aaebebb37c6c315bccd0003672b746013a24d65d))
+
 ## [0.34.0](https://www.github.com/ocavue/rino/compare/v0.33.4...v0.34.0) (2021-12-29)
 
 
