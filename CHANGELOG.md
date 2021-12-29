@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.34.0](https://www.github.com/ocavue/rino/compare/v0.33.4...v0.34.0) (2021-12-29)
+
+
+### Features
+
+* **editor:** add language menu to code blocks ([#865](https://www.github.com/ocavue/rino/issues/865)) ([b4e303f](https://www.github.com/ocavue/rino/commit/b4e303fead1a2fe7fe4a5ec14b4a607f22db3d70))
+
 ## [0.33.4](https://www.github.com/ocavue/rino/compare/v0.33.3...v0.33.4) (2021-12-28)
 
 
