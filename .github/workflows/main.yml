@@ -133,11 +133,16 @@ jobs:
           echo "::set-output name=branch::$(node scripts/slugify-branch.js)"
 
       - id: step_vercel
-        uses: ./.github/actions/vercel
+        name: Deploy @rino.app/home to Vercel
         # Vercel only allows a free account to deploy 100 times every day so this step could fail
         continue-on-error: true
         timeout-minutes: 10
+        uses: amondnet/vercel-action@v20
         with:
+          github-comment: false
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
           vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID_HOME }}
           alias-domains: rino-home-${{ steps.step_branch.outputs.branch }}.ocavue.vercel.app
           vercel-args: "--meta TYPE=PREVIEW"
@@ -223,10 +228,15 @@ jobs:
           path: ./packages/home/dist
 
       - id: step_vercel
-        uses: ./.github/actions/vercel
+        name: Deploy @rino.app/home to Vercel
         continue-on-error: true
         timeout-minutes: 10
+        uses: amondnet/vercel-action@v20
         with:
+          github-comment: false
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
           vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID_HOME }}
           vercel-args: "--prod --meta TYPE=PRODUCTION"
           alias-domains: rino-home-master.ocavue.vercel.app
