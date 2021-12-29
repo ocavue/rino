@@ -1,20 +1,9 @@
-import { basicSetup } from "@codemirror/basic-setup"
-import { LanguageDescription } from "@codemirror/language"
-import { languages } from "@codemirror/language-data"
 import { oneDark } from "@codemirror/theme-one-dark"
 import { EditorView } from "@codemirror/view"
 import { CodeMirrorExtensionOptions } from "@remirror/extension-codemirror6"
 
-const markdownLanguage = LanguageDescription.of({
-    name: "Markdown",
-    extensions: ["md", "markdown", "mkd"],
-    load: async () => {
-        const model = await import("@codemirror/lang-markdown")
-        return model.markdown({ codeLanguages: languages, base: model.markdownLanguage })
-    },
-})
-
-const allLanguages = languages.filter((language) => language.name !== "Markdown").concat(markdownLanguage)
+import { allLanguages, markdownLanguage } from "./codemirror-languages"
+import { basicSetup } from "./codemirror-setup"
 
 export function buildCodeMirrorOptions({ onlyMarkdown }: { onlyMarkdown: boolean }): CodeMirrorExtensionOptions {
     return {
