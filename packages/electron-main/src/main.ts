@@ -98,8 +98,6 @@ async function setupAutoUpdate() {
  *
  */
 
-
-
 async function init() {
     let openingFile = false
 

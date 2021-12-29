@@ -502,14 +502,33 @@ export const EDITOR_THEME_GITHUB = css`
         caret-color: #ffffff;
     }
 
-    & .CodeMirror {
-        padding: 8px;
+    & .cm-editor {
+        padding: 8px 12px;
         border-radius: 4px;
+    }
 
-        // By setting an editor's 'height' style to 'auto' and giving the 'viewportMargin' a
-        // value of 'Infinity', CodeMirror can be made to automatically resize to fit its
-        // content.
-        // https://codemirror.net/demo/resize.html
-        height: auto;
+    & .language-menu {
+        width: auto;
+        height: 100%;
+        z-index: 10;
+        background: #282c33;
+        color: #9d9d9d;
+        caret-color: #fff;
+        border-radius: 4px;
+        border-style: none;
+        font-size: 14px;
+        position: absolute;
+        min-width: 50px;
+        height: 16px;
+        margin: 4px 0px;
+        padding: 8px;
+    }
+
+    & .language-menu-positioner {
+        position: relative;
+        height: 0;
+        display: flex;
+        justify-content: flex-end;
+        align-items: flex-end;
     }
 `
