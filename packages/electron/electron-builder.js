@@ -40,6 +40,11 @@ const config = {
         entitlements: "./entitlements.mac.plist",
     },
 
+    linux: {
+        // https://specifications.freedesktop.org/menu-spec/latest/apa.html#main-category-registry
+        category: "Office",
+    },
+
     fileAssociations: {
         ext: "md",
     },
