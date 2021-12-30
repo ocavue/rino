@@ -10,8 +10,7 @@ const defaultContent = `
 
 hello world!
 
-hello **strong**! hello *italic*! hello \`code\`!
-
+hello **strong**! hello *italic*! hello \`code\`! hello [link](https://www.google.com)!
 
 \`\`\`python
 while True:

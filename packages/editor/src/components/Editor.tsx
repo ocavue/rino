@@ -94,6 +94,14 @@ const Editor: React.FC<EditorProps> = ({
         onHasUnsavedChanges?.(state.hasUnsavedChanges)
     }, [onHasUnsavedChanges, state.hasUnsavedChanges])
 
+    // Register view for debug
+    useEffect(() => {
+        if (typeof window !== "undefined") {
+            // Let e2e test to inject the editor view
+            ;(window as any)._RINO_EDITOR_VIEW = state.delegate.manager.view
+        }
+    }, [state.delegate.manager.view])
+
     if (state.error) {
         // I didn't use React `componentDidCatch` method because I can't turn off `react-error-overlay` (easily) and
         // it will show an error overlay window in development mode when `componentDidCatch` been called.

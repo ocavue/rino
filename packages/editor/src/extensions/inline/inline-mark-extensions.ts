@@ -115,16 +115,13 @@ class LinkText extends MarkExtension {
                 },
             },
             toDOM: (mark) => [
-                "span",
-                [
-                    "a",
-                    {
-                        href: mark.attrs.href,
-                        // This <a> element is `contenteditable`, so it's not clickable by default.
-                        onClick: `window.open('${mark.attrs.href}')`,
-                    },
-                    0,
-                ],
+                "a",
+                {
+                    href: mark.attrs.href,
+                    // This <a> element is `contenteditable`, so it's not clickable by default.
+                    onClick: `window.open('${mark.attrs.href}')`,
+                },
+                0,
             ],
         }
     }

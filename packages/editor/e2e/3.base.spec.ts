@@ -1,13 +1,9 @@
 import { switchMode } from "./actions"
-import { getSourceCodeModeText, setupEditor, type as typeByTestid } from "./utils"
+import { getSourceCodeModeText, setupEditor, typeWysiwygEditor as type } from "./utils"
 
 beforeAll(async () => {
     await setupEditor()
 })
-
-async function type(text: string, pressEnter = true) {
-    await typeByTestid("wysiwyg_mode_textarea", text, pressEnter)
-}
 
 describe("Source code text", () => {
     test("Create a note", async () => {
