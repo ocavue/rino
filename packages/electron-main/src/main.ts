@@ -1,14 +1,14 @@
 import { registerAppHandlers } from "./app"
-import { setupAutoUpdate } from "./auto-update"
 import { setupContextMenu } from "./context-menu"
 import { registerIpcInvokeHandlers } from "./ipc-handlers"
+import { checkForUpdatesAutomatically } from "./updater"
 
 async function init() {
     registerAppHandlers()
 
     registerIpcInvokeHandlers()
 
-    setupAutoUpdate()
+    checkForUpdatesAutomatically()
 
     setupContextMenu()
 }

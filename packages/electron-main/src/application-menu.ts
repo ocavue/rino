@@ -3,6 +3,7 @@ import { app, Menu, MenuItemConstructorOptions } from "electron"
 import { COMMIT_SHA, plateform } from "./env"
 import { askMarkdownFileForOpen } from "./file"
 import { ipcSender } from "./ipc-main"
+import { checkForUpdatesManually } from "./updater"
 import { createWindow, createWindowByOpeningFile } from "./window"
 
 export function buildApplicationMenu() {
@@ -19,6 +20,12 @@ export function buildApplicationMenu() {
         label: "Rino",
         submenu: [
             { role: "about" },
+            {
+                label: "Check for Updates",
+                click: async () => {
+                    await checkForUpdatesManually()
+                },
+            },
             { type: "separator" },
             { role: "services" },
             { type: "separator" },
