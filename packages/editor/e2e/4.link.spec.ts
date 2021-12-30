@@ -1,4 +1,4 @@
-import { getDocJson, pressKey, setupEmptyEditor, sleep, typeWysiwygEditor, waitAnimation } from "./utils"
+import { getDocJson, pressKey, setupEmptyEditor, sleep, typeWysiwygEditor } from "./utils"
 
 test("link", async () => {
     await setupEmptyEditor()
