@@ -115,8 +115,6 @@ class LinkText extends MarkExtension {
                 },
             },
             toDOM: (mark) => [
-                // "span",
-                // [
                 "a",
                 {
                     href: mark.attrs.href,
@@ -124,7 +122,6 @@ class LinkText extends MarkExtension {
                     onClick: `window.open('${mark.attrs.href}')`,
                 },
                 0,
-                // ],
             ],
         }
     }

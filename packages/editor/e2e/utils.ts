@@ -1,5 +1,6 @@
 import os from "os"
 import { Dialog, ElementHandle } from "playwright-chromium"
+import type { EditorView } from "prosemirror-view"
 
 page.setDefaultTimeout(5000)
 
@@ -132,10 +133,8 @@ export async function getTextAreaValue(testid: string): Promise<string> {
     return expectString(value)
 }
 
-export const [wysiwygEditorSelector, sourceCodeEditorSelector] = [
-    testidSelector("wysiwyg_mode_textarea"),
-    testidSelector("source_code_mode_textarea"),
-]
+export const wysiwygEditorSelector = testidSelector("wysiwyg_mode_textarea")
+export const sourceCodeEditorSelector = testidSelector("source_code_mode_textarea")
 
 export async function getSourceCodeModeText() {
     const cmContentHandle = await page.$(testidSelector("source_code_mode_textarea") + " .cm-content")
@@ -275,4 +274,14 @@ export async function debugPrintBodyInnerHTML() {
         return body.innerHTML
     })
     console.log("body.innerHTML:\n", innerHTML)
+}
+
+export async function getDocJson() {
+    return await page.$$eval("body", () => {
+        const view = (window as any)._RINO_EDITOR_VIEW as EditorView
+        if (!view) {
+            throw new Error("No editor view found")
+        }
+        return view.state.doc.toJSON()
+    })
 }
