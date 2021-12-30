@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.36.0](https://github.com/ocavue/rino/compare/v0.35.0...v0.36.0) (2021-12-30)
+
+
+### Features
+
+* **electron:** allow users to check for updates manually ([#875](https://github.com/ocavue/rino/issues/875)) ([0fb3bb6](https://github.com/ocavue/rino/commit/0fb3bb6e31c7a0a3a7576f10ecb286334dc1b046))
+
 ## [0.35.0](https://github.com/ocavue/rino/compare/v0.34.1...v0.35.0) (2021-12-30)
 
 
