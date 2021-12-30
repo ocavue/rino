@@ -1,5 +1,13 @@
 # Changelog
 
+### [0.36.1](https://github.com/ocavue/rino/compare/v0.36.0...v0.36.1) (2021-12-30)
+
+
+### Bug Fixes
+
+* **editor:** address a link input issue ([#878](https://github.com/ocavue/rino/issues/878)) ([5262f0e](https://github.com/ocavue/rino/commit/5262f0efd09398752f664903b7d5f4ebacceb0d8))
+* **editor:** address a parser issue when a paragraph only contains whitespaces ([#880](https://github.com/ocavue/rino/issues/880)) ([26126b3](https://github.com/ocavue/rino/commit/26126b32e0559aa917615500870e9748906d1cf2))
+
 ## [0.36.0](https://github.com/ocavue/rino/compare/v0.35.0...v0.36.0) (2021-12-30)
 
 
