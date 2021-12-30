@@ -252,26 +252,36 @@ const phrasingContentTypes: Record<PhrasingContentType, true> = {
     linkReference: true,
 }
 
+const fromMarkdownOptions: FromMarkdownOptions = {
+    extensions: [
+        {
+            disable: {
+                null: [
+                    "blockQuote",
+                    "characterEscape",
+                    "characterReference",
+                    "codeFenced",
+                    "codeIndented",
+                    "definition",
+                    "headingAtx",
+                    "htmlFlow",
+                    "htmlText",
+                    "list",
+                    "thematicBreak",
+                ],
+            },
+        },
+        gfmStrikethrough({ singleTilde: false }),
+    ],
+    mdastExtensions: [gfmStrikethroughFromMarkdown],
+}
+
 function parseInlineMarkdown(text: string): mdast.PhrasingContent[] {
     try {
-        const disabledConstructs = [
-            "blockQuote",
-            "characterEscape",
-            "characterReference",
-            "codeFenced",
-            "codeIndented",
-            "definition",
-            "headingAtx",
-            "htmlFlow",
-            "htmlText",
-            "list",
-            "thematicBreak",
-        ]
-        const options: FromMarkdownOptions = {
-            extensions: [{ disable: { null: disabledConstructs } }, gfmStrikethrough({ singleTilde: false })],
-            mdastExtensions: [gfmStrikethroughFromMarkdown],
+        const root: mdast.Root = fromMarkdown(text, fromMarkdownOptions)
+        if (root.children.length === 0) {
+            return []
         }
-        const root: mdast.Root = fromMarkdown(text, options)
         if (root.children.length !== 1) {
             throw Error(`root.children has ${root.children.length} children`)
         }

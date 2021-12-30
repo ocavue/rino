@@ -12,6 +12,22 @@ describe("text", function () {
             },
         ])
     })
+
+    test("with whitespace", function () {
+        expect(fromInlineMarkdown(" abc  def ")).toStrictEqual([
+            {
+                text: "abc  def",
+                start: 1,
+                end: 9,
+                marks: ["mdText"],
+                attrs: { depth: 1, first: true, last: true },
+            },
+        ])
+    })
+
+    test("only whitespace", function () {
+        expect(fromInlineMarkdown(" ")).toStrictEqual([])
+    })
 })
 
 describe("strong + emphasis", function () {
