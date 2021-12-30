@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.35.0](https://github.com/ocavue/rino/compare/v0.34.1...v0.35.0) (2021-12-30)
+
+
+### Features
+
+* **electron:** add context menu ([#871](https://github.com/ocavue/rino/issues/871)) ([4d4281e](https://github.com/ocavue/rino/commit/4d4281e290321c168e20be7ee83c3a5a4c4eca69))
+
 ## [0.34.1](https://www.github.com/ocavue/rino/compare/v0.34.0...v0.34.1) (2021-12-29)
 
 
