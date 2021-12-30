@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.36.2](https://github.com/ocavue/rino/compare/v0.36.1...v0.36.2) (2021-12-30)
+
+
+### Bug Fixes
+
+* **editor:** press backspace to delete a code block ([#881](https://github.com/ocavue/rino/issues/881)) ([2f87915](https://github.com/ocavue/rino/commit/2f879155954407bde03f3e5621e6be6cf32dd2de))
+
 ## [0.36.1](https://github.com/ocavue/rino/compare/v0.36.0...v0.36.1) (2021-12-30)
 
 
