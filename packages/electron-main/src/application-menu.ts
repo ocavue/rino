@@ -92,14 +92,16 @@ export function buildApplicationMenu() {
             label: "Edit",
             submenu: [
                 {
-                    label: "Copy",
                     role: "copy",
                     accelerator: "CommandOrControl+C",
                 },
                 {
-                    label: "Paste",
                     role: "paste",
                     accelerator: "CommandOrControl+V",
+                },
+                {
+                    role: "selectAll",
+                    accelerator: "CommandOrControl+A",
                 },
             ],
         },
