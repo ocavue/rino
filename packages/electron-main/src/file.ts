@@ -42,8 +42,22 @@ async function showSaveMarkdownDialog(win: BrowserWindow | null) {
     return { filePath: result.filePath, canceled: result.canceled }
 }
 
+async function showSavePdfDialog(win: BrowserWindow | null) {
+    const options = {
+        defaultPath: app.getPath("documents"),
+        filters: [{ name: "PDF File", extensions: ["pdf"] }],
+    }
+    const result = win ? await dialog.showSaveDialog(win, options) : await dialog.showSaveDialog(options)
+    logger.info(`showSaveDialog result:`, result)
+    return { filePath: result.filePath, canceled: result.canceled }
+}
+
 export async function askMarkdownFileForSave(win: BrowserWindow | null): Promise<{ filePath?: string; canceled?: boolean }> {
     return showSaveMarkdownDialog(win)
+}
+
+export async function askPdfFileForSave(win: BrowserWindow | null): Promise<{ filePath?: string; canceled?: boolean }> {
+    return showSavePdfDialog(win)
 }
 
 export async function askMarkdownFileForClose(

@@ -4,7 +4,8 @@ import { cx } from "@emotion/css"
 import { Extension, RemirrorEventListenerProps } from "@remirror/core"
 import { RemirrorProps } from "@remirror/react-core"
 import { debounce } from "lodash-es"
-import React, { useCallback, useEffect, useLayoutEffect, useMemo, useReducer } from "react"
+import { TextSelection } from "prosemirror-state"
+import React, { useCallback, useEffect, useImperativeHandle, useLayoutEffect, useMemo, useReducer } from "react"
 
 import { metaKey } from "@rino.app/common"
 
@@ -26,26 +27,41 @@ export type EditorProps = {
     onHasUnsavedChanges?: (hasUnsavedChanges: boolean) => void
 }
 
-const Editor: React.FC<EditorProps> = ({
-    note,
-    enableDevTools = true,
-    autoFocus = true,
-    isDarkMode = false,
-    extraClassName = "",
-    isTestEnv = false,
-    onContentSaveDelay = 500,
-    onContentSave,
-    onHasUnsavedChanges,
-}) => {
+export type EditorHandle = {
+    switchMode: (mode?: Mode) => void
+
+    // Set the selection at the beginning of the editor
+    resetSelection: () => void
+}
+
+const Editor: React.ForwardRefRenderFunction<EditorHandle, EditorProps> = (
+    {
+        note,
+        enableDevTools = true,
+        autoFocus = true,
+        isDarkMode = false,
+        extraClassName = "",
+        isTestEnv = false,
+        onContentSaveDelay = 500,
+        onContentSave,
+        onHasUnsavedChanges,
+    },
+    forwardedRef,
+) => {
     const [state, dispatch] = useReducer(editorReducer, { note, isTestEnv }, initializeState)
+
+    const view = state.delegate.manager.view
 
     const saveContent = useCallback(() => {
         dispatch({ type: "SAVE_CONTENT" })
     }, [])
 
-    const switchMode = useCallback(() => {
-        dispatch({ type: "SWITCH_MODE", payload: { isTestEnv } })
-    }, [isTestEnv])
+    const switchMode = useCallback(
+        (mode?: Mode) => {
+            dispatch({ type: "SWITCH_MODE", payload: { isTestEnv, mode } })
+        },
+        [isTestEnv],
+    )
 
     const editContent = useCallback(() => {
         dispatch({ type: "EDIT_CONTENT" })
@@ -98,9 +114,20 @@ const Editor: React.FC<EditorProps> = ({
     useEffect(() => {
         if (typeof window !== "undefined") {
             // Let e2e test to inject the editor view
-            ;(window as any)._RINO_EDITOR_VIEW = state.delegate.manager.view
+            ;(window as any)._RINO_EDITOR_VIEW = view
         }
-    }, [state.delegate.manager.view])
+    }, [view])
+
+    useImperativeHandle(forwardedRef, () => ({
+        switchMode: switchMode,
+        resetSelection: () => {
+            if (!view) {
+                console.warn("can not find view")
+                return
+            }
+            view.dispatch(view.state.tr.setSelection(TextSelection.near(view.state.doc.resolve(1))))
+        },
+    }))
 
     if (state.error) {
         // I didn't use React `componentDidCatch` method because I can't turn off `react-error-overlay` (easily) and
@@ -134,4 +161,7 @@ const Editor: React.FC<EditorProps> = ({
     }
 }
 
-export default Editor
+const ForwardRefEditor = React.forwardRef(Editor)
+ForwardRefEditor.displayName = "Editor"
+
+export default ForwardRefEditor

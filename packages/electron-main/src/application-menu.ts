@@ -1,12 +1,19 @@
-import { app, Menu, MenuItemConstructorOptions } from "electron"
+import { app, BrowserWindow, Menu, MenuItemConstructorOptions } from "electron"
 
 import { COMMIT_SHA, plateform } from "./env"
+import { exportToPDF } from "./export-to-pdf"
 import { askMarkdownFileForOpen } from "./file"
 import { ipcSender } from "./ipc-main"
 import { checkForUpdatesManually } from "./updater"
 import { createWindow, createWindowByOpeningFile } from "./window"
 
-export function buildApplicationMenu() {
+const enum MemuId {
+    ExportToPdf = "EXPORT_TO_PDF",
+}
+
+let menu: Menu | null = null
+
+export function buildApplicationMenu(): Menu {
     // set the options for the "about" menu
     app.setAboutPanelOptions({
         applicationName: "Rino",
@@ -44,7 +51,7 @@ export function buildApplicationMenu() {
         role: "toggleDevTools",
     }
 
-    return Menu.buildFromTemplate([
+    menu = Menu.buildFromTemplate([
         ...(plateform.IS_MAC ? [macMenu] : []),
         {
             label: "File",
@@ -86,6 +93,16 @@ export function buildApplicationMenu() {
                 {
                     role: "close",
                 },
+                { type: "separator" },
+                {
+                    label: "Export as PDF",
+                    id: MemuId.ExportToPdf,
+                    click: async (_, win) => {
+                        if (win) {
+                            await exportToPDF(win)
+                        }
+                    },
+                },
             ],
         },
         {
@@ -110,4 +127,16 @@ export function buildApplicationMenu() {
             submenu: [reloadMenu, toggleDevToolsMenu],
         },
     ])
+
+    return menu
+}
+
+export function updateApplicationMenu() {
+    if (!menu) return
+
+    const exportToPdfMenuItem = menu.getMenuItemById(MemuId.ExportToPdf)
+    if (exportToPdfMenuItem) {
+        const hasFocusedWindow = !!BrowserWindow.getFocusedWindow()
+        exportToPdfMenuItem.enabled = hasFocusedWindow
+    }
 }

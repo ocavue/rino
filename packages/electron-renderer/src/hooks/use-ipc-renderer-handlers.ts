@@ -1,4 +1,6 @@
-import { useEffect } from "react"
+import { RefObject, useEffect } from "react"
+
+import { EditorHandle, Mode } from "@rino.app/editor"
 
 import { ipcRenderer } from "../ipc-renderer"
 
@@ -7,11 +9,13 @@ export function useIpcRendererHandlers({
     ensureFilePath,
     setNotePath,
     closeWindow,
+    editorRef,
 }: {
     openFile: (props: { path: string; content: string }) => void
     ensureFilePath: () => void
     setNotePath: (path: string) => void
     closeWindow: () => void
+    editorRef: RefObject<EditorHandle>
 }) {
     useEffect(() => {
         ipcRenderer.on("openFile", (event, { path, content }) => {
@@ -48,4 +52,15 @@ export function useIpcRendererHandlers({
             ipcRenderer.removeAllListeners("beforeCloseWindow")
         }
     }, [closeWindow])
+
+    useEffect(() => {
+        ipcRenderer.on("beforeExportToPdf", (event) => {
+            editorRef.current?.switchMode(Mode.WYSIWYG)
+            editorRef.current?.resetSelection()
+            ;(document.activeElement as HTMLElement | null)?.blur()
+        })
+        return () => {
+            ipcRenderer.removeAllListeners("beforeExportToPdf")
+        }
+    }, [editorRef])
 }

@@ -1,6 +1,6 @@
 import { app, Menu } from "electron"
 
-import { buildApplicationMenu } from "./application-menu"
+import { buildApplicationMenu, updateApplicationMenu } from "./application-menu"
 import { plateform } from "./env"
 import { logger } from "./logger"
 import { state } from "./state"
@@ -111,6 +111,8 @@ export async function registerAppHandlers() {
         if (!plateform.IS_MAC || state.isQuitting) {
             app.quit()
         }
+
+        updateApplicationMenu()
     })
 
     app.on("before-quit", () => {
@@ -124,5 +126,17 @@ export async function registerAppHandlers() {
 
     app.on("quit", () => {
         logger.info("app event triggered: quit")
+    })
+
+    app.on("browser-window-focus", () => {
+        updateApplicationMenu()
+    })
+
+    app.on("browser-window-blur", () => {
+        updateApplicationMenu()
+    })
+
+    app.on("browser-window-created", () => {
+        updateApplicationMenu()
     })
 }
