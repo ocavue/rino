@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.37.0](https://github.com/ocavue/rino/compare/v0.36.3...v0.37.0) (2021-12-31)
+
+
+### Features
+
+* **electron:** support PDF export ([#887](https://github.com/ocavue/rino/issues/887)) ([3db0534](https://github.com/ocavue/rino/commit/3db05341264ed3d2902d79a84ba65354490533d2))
+
 ## [0.36.3](https://github.com/ocavue/rino/compare/v0.36.2...v0.36.3) (2021-12-31)
 
 
