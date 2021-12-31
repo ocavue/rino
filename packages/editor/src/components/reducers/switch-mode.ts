@@ -6,10 +6,17 @@ export type SwitchModeAction = {
     type: "SWITCH_MODE"
     payload: {
         isTestEnv: boolean
+
+        // If `mode` is provided, the editor will be forced to switch to that mode.
+        mode?: Mode
     }
 }
 
 export function switchMode(state: EditorState, action: SwitchModeAction): EditorState {
+    if (action.payload.mode === state.mode) {
+        return state
+    }
+
     const currDelegate = state.delegate
     const currDoc = currDelegate.manager?.view?.state?.doc
 

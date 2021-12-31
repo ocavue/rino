@@ -28,4 +28,6 @@ export type SendApi = {
     setNotePath: (options: { path: string }) => void
 
     beforeCloseWindow: () => void
+
+    beforeExportToPdf: () => void
 }

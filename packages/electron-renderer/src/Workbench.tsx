@@ -1,12 +1,14 @@
-import React, { FC, useMemo } from "react"
+import React, { FC, useMemo, useRef } from "react"
 
-import { Editor } from "@rino.app/editor"
+import { Editor, EditorHandle } from "@rino.app/editor"
 
 import { useBeforeUnload } from "./hooks/use-before-unload"
 import { useIpcRendererHandlers } from "./hooks/use-ipc-renderer-handlers"
 import { useWorkbench } from "./hooks/use-workbench"
 
 const Workbench: FC = () => {
+    const editorRef = useRef<EditorHandle>(null)
+
     const {
         state: { content, path, canCloseWindow },
         handlers: { closeWindow, setNotePath, setNoteContent, openFile, ensureFilePath, setIsSerializing },
@@ -19,6 +21,7 @@ const Workbench: FC = () => {
         openFile,
         ensureFilePath,
         closeWindow,
+        editorRef,
     })
 
     const note = useMemo(() => {
@@ -39,6 +42,7 @@ const Workbench: FC = () => {
             <Editor
                 key={path}
                 note={note}
+                ref={editorRef}
                 onContentSaveDelay={2000}
                 onHasUnsavedChanges={setIsSerializing}
                 onContentSave={setNoteContent}
