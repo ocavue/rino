@@ -1,5 +1,13 @@
 # Changelog
 
+### [0.36.3](https://github.com/ocavue/rino/compare/v0.36.2...v0.36.3) (2021-12-31)
+
+
+### Bug Fixes
+
+* **electron:** don't show the save dialog when closing an unedited file ([#884](https://github.com/ocavue/rino/issues/884)) ([cee1a65](https://github.com/ocavue/rino/commit/cee1a65945db7c54d4808838937363102068e587))
+* **electron:** make Ctrl-A (or Command-A) work inside the language menu ([#886](https://github.com/ocavue/rino/issues/886)) ([ec66f8a](https://github.com/ocavue/rino/commit/ec66f8a287ec2d0231a2691bd8a6b0c2e89f2078))
+
 ## [0.36.2](https://github.com/ocavue/rino/compare/v0.36.1...v0.36.2) (2021-12-30)
 
 
