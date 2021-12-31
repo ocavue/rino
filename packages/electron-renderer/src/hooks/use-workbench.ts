@@ -49,7 +49,7 @@ const initialState = Object.freeze<WorkbenchState>({
 function calcCanCloseWindow(state: WorkbenchState): boolean {
     if (state.contentDiscarded) return true
 
-    return !state.isSaving && !state.isSerializing && !state.hasUnsavedChanges && !!state.path
+    return !state.isSaving && !state.isSerializing && !state.hasUnsavedChanges
 }
 
 type SetDispatchAction = {
