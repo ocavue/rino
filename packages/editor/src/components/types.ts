@@ -1,5 +1,7 @@
 import { AnyExtension, ProsemirrorNode, RemirrorManager } from "@remirror/core"
 
+import { FileHandler } from "../extensions"
+
 export type EditorProps = {
     className: string
     autoFocus: boolean
@@ -31,22 +33,26 @@ export enum Mode {
     SOURCE_CODE = 2,
 }
 
-export type EditorState =
-    | {
-          mode: Mode
-          delegate: EditorDelegate
-          note: Note
-          hasUnsavedChanges: boolean
+export type WysiwygOptions = {
+    isTesting?: boolean
+    imageFileHandler?: FileHandler
+}
 
-          initialDoc: ProsemirrorNode
-          error: null
-      }
-    | {
-          mode: Mode
-          delegate: EditorDelegate
-          note: Note
-          hasUnsavedChanges: boolean
+type BaseEditorState = {
+    mode: Mode
+    delegate: EditorDelegate
+    note: Note
+    hasUnsavedChanges: boolean
+}
 
-          initialDoc: null
-          error: Error
-      }
+export type EditorState = BaseEditorState &
+    (
+        | {
+              initialDoc: ProsemirrorNode
+              error: null
+          }
+        | {
+              initialDoc: null
+              error: Error
+          }
+    )

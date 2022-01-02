@@ -1,19 +1,15 @@
-import { DocToString, StringToDoc } from "../types"
+import { DocToString, StringToDoc, WysiwygOptions } from "../types"
 import { createWysiwygManager } from "./wysiwyg-manager"
 import { buildMarkdownParser, buildMarkdownSerializer } from "./wysiwyg-markdown"
 
-type UseWysiwygEditorProps = {
-    isTestEnv?: boolean
-}
-
-export function createWysiwygDelegate({ isTestEnv }: UseWysiwygEditorProps) {
-    const manager = createWysiwygManager()
+export function createWysiwygDelegate(wysiwygOptions: WysiwygOptions) {
+    const manager = createWysiwygManager(wysiwygOptions)
 
     const parser = buildMarkdownParser(manager)
     const serializer = buildMarkdownSerializer(manager)
 
     const stringToDoc: StringToDoc = (content) => {
-        if (isTestEnv) {
+        if (wysiwygOptions.isTesting) {
             if (content.trim() === "HOOK:FAILED_TO_INIT_PROSEMIRROR_VIEW") {
                 throw new Error("Found error hook for testing")
             }

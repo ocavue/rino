@@ -1,3 +1,4 @@
+import { DropCursorExtension } from "@remirror/extension-drop-cursor"
 import type { ParagraphExtension } from "@remirror/extension-paragraph"
 import { ReactComponentExtension } from "@remirror/extension-react-component"
 import type { TextExtension } from "@remirror/extension-text"
@@ -8,6 +9,7 @@ import {
     RinoBlockquoteExtension,
     RinoBulletListExtension,
     RinoCodeMirrorExtension,
+    RinoFileExtension,
     RinoHardBreakExtension,
     RinoHeadingExtension,
     RinoHorizontalRuleExtension,
@@ -28,6 +30,7 @@ import {
     RinoTextExtension,
 } from "../../extensions"
 import { MarkdownNodeExtension } from "../../utils"
+import { WysiwygOptions } from "../types"
 
 export type RinoCorePreset = Exclude<CorePreset, ParagraphExtension | TextExtension> | RinoParagraphExtension | RinoTextExtension
 
@@ -68,11 +71,13 @@ export type WysiwygExtension =
     | RinoMarkExtension
     | RinoMarkdownNodeExtension
     | ReactComponentExtension
+    | DropCursorExtension
     | RinoInlineMarkExtension
     | RinoInlineDecorationExtension
     | RinoListItemSharedExtension
+    | RinoFileExtension
 
-export function createWysiwygExtension(): Array<WysiwygExtension> {
+export function createWysiwygExtension({ imageFileHandler }: WysiwygOptions): Array<WysiwygExtension> {
     const rinoMarkdownNodeExtensions = createRinoMarkdownNodeExtensions()
 
     // By doing this, TypeScript can find extensions with wrong `MarkdownNodeExtension` implementation.
@@ -92,8 +97,10 @@ export function createWysiwygExtension(): Array<WysiwygExtension> {
         ...rinoMarkdownNodeExtensions,
 
         new ReactComponentExtension({}),
+        new DropCursorExtension(),
         new RinoInlineMarkExtension(),
         new RinoInlineDecorationExtension(),
         new RinoListItemSharedExtension(),
+        new RinoFileExtension({ imageFileHandler }),
     ]
 }

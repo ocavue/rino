@@ -1,5 +1,7 @@
 import { MarkExtension, MarkExtensionSpec, NodeView, NodeViewMethod } from "@remirror/core"
 
+import { formatHref } from "./format-href"
+
 const commonAttrs = {
     depth: { default: 0 },
 }
@@ -176,7 +178,7 @@ class ImgUri extends MarkExtension {
             const innerContainer = document.createElement("span")
 
             const img = document.createElement("img")
-            img.setAttribute("src", mark.attrs.href)
+            img.setAttribute("src", formatHref(mark.attrs.href))
 
             const outerContainer = document.createElement("span")
             outerContainer.appendChild(img)

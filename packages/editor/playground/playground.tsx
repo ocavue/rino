@@ -2,6 +2,7 @@ import { isString } from "lodash-es"
 import React, { FC, useMemo, useState } from "react"
 import ReactDOM from "react-dom"
 
+import type { WysiwygOptions } from "../src"
 import { Editor } from "../src"
 
 const defaultContent = `
@@ -52,6 +53,10 @@ const DebugConsole: FC<{ hasUnsavedChanges: boolean; content: string }> = ({ has
     )
 }
 
+const wysiwygOptions: WysiwygOptions = {
+    isTesting: true,
+}
+
 const App: FC = () => {
     const params = new URLSearchParams(document.location.search)
     const initialContent = params.get("content")
@@ -71,7 +76,7 @@ const App: FC = () => {
         <div style={{ display: "flex", flexDirection: "column" }}>
             <Editor
                 note={note}
-                isTestEnv
+                wysiwygOptions={wysiwygOptions}
                 enableDevTools={enableDevTools}
                 onHasUnsavedChanges={setHasUnsavedChanges}
                 onContentSave={setContent}

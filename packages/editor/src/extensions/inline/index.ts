@@ -1,4 +1,5 @@
 export * from "./inline-deco-plugin"
 export * from "./inline-mark-extensions"
-export * from "./inline-mark-plugin"
+export { RinoInlineMarkExtension } from "./inline-mark-plugin"
+export { applyMarksToCurrentNode, applyMarksToNode } from "./inline-mark-helpers"
 export * from "./inline-types"
