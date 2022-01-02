@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.38.0](https://github.com/ocavue/rino/compare/v0.37.0...v0.38.0) (2022-01-02)
+
+
+### Features
+
+* **editor:** drag and drop to insert images ([#890](https://github.com/ocavue/rino/issues/890)) ([a86fdaa](https://github.com/ocavue/rino/commit/a86fdaac0b9df9aa1011eb8aed209a3a9a9b3cca))
+
 ## [0.37.0](https://github.com/ocavue/rino/compare/v0.36.3...v0.37.0) (2021-12-31)
 
 
