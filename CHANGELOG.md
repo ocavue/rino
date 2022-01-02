@@ -1,5 +1,12 @@
 # Changelog
 
+### [0.38.1](https://github.com/ocavue/rino/compare/v0.38.0...v0.38.1) (2022-01-02)
+
+
+### Bug Fixes
+
+* **electron:** fix the shortcut Ctrl-X (or Command-X on macOS) ([#891](https://github.com/ocavue/rino/issues/891)) ([ba768d1](https://github.com/ocavue/rino/commit/ba768d1529102a0aafe28e74b40ca1fbc895b945))
+
 ## [0.38.0](https://github.com/ocavue/rino/compare/v0.37.0...v0.38.0) (2022-01-02)
 
 
