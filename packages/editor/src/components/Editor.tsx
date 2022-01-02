@@ -12,7 +12,7 @@ import { metaKey } from "@rino.app/common"
 import { editorReducer, initializeState } from "./editor-state"
 import { SourceCodeEditor } from "./source-code"
 import { EDITOR_THEME_GITHUB } from "./theme/github"
-import { Mode, Note } from "./types"
+import { Mode, Note, WysiwygOptions } from "./types"
 import { WysiwygEditor } from "./wysiwyg"
 
 export type EditorProps = {
@@ -21,7 +21,7 @@ export type EditorProps = {
     autoFocus?: boolean
     isDarkMode?: boolean
     extraClassName?: string
-    isTestEnv?: boolean
+    wysiwygOptions?: WysiwygOptions
     onContentSaveDelay?: number
     onContentSave?: (content: string) => void
     onHasUnsavedChanges?: (hasUnsavedChanges: boolean) => void
@@ -34,6 +34,8 @@ export type EditorHandle = {
     resetSelection: () => void
 }
 
+const defaultWysiwygOptions: WysiwygOptions = {}
+
 const Editor: React.ForwardRefRenderFunction<EditorHandle, EditorProps> = (
     {
         note,
@@ -41,14 +43,14 @@ const Editor: React.ForwardRefRenderFunction<EditorHandle, EditorProps> = (
         autoFocus = true,
         isDarkMode = false,
         extraClassName = "",
-        isTestEnv = false,
+        wysiwygOptions = defaultWysiwygOptions,
         onContentSaveDelay = 500,
         onContentSave,
         onHasUnsavedChanges,
     },
     forwardedRef,
 ) => {
-    const [state, dispatch] = useReducer(editorReducer, { note, isTestEnv }, initializeState)
+    const [state, dispatch] = useReducer(editorReducer, { note, wysiwygOptions }, initializeState)
 
     const view = state.delegate.manager.view
 
@@ -58,9 +60,9 @@ const Editor: React.ForwardRefRenderFunction<EditorHandle, EditorProps> = (
 
     const switchMode = useCallback(
         (mode?: Mode) => {
-            dispatch({ type: "SWITCH_MODE", payload: { isTestEnv, mode } })
+            dispatch({ type: "SWITCH_MODE", payload: { wysiwygOptions, mode } })
         },
-        [isTestEnv],
+        [wysiwygOptions],
     )
 
     const editContent = useCallback(() => {

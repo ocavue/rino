@@ -3,7 +3,7 @@ import "./polyfill"
 import { editContent, EditContentAction } from "./reducers/edit-content"
 import { saveContent, SaveContentAction } from "./reducers/save-content"
 import { switchMode, SwitchModeAction } from "./reducers/switch-mode"
-import { EditorState, Mode, Note } from "./types"
+import { EditorState, Mode, Note, WysiwygOptions } from "./types"
 import { createWysiwygDelegate } from "./wysiwyg/wysiwyg-delegate"
 
 type EditorAction = SwitchModeAction | SaveContentAction | EditContentAction
@@ -31,8 +31,8 @@ export { editorReducer }
 
 // export { editorReducerWithLog as editorReducer }
 
-export function initializeState({ note, isTestEnv }: { note: Readonly<Note>; isTestEnv: boolean }): EditorState {
-    const wysiwygDelegate = createWysiwygDelegate({ isTestEnv })
+export function initializeState({ note, wysiwygOptions }: { note: Readonly<Note>; wysiwygOptions: WysiwygOptions }): EditorState {
+    const wysiwygDelegate = createWysiwygDelegate(wysiwygOptions)
 
     return {
         mode: Mode.WYSIWYG,

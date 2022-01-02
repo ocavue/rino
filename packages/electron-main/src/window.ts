@@ -40,6 +40,10 @@ export async function createWindow() {
             title: "Rino",
             webPreferences: {
                 preload: preloadEntry,
+
+                // I need to disable web security in dev mode to load local image files
+                // https://stackoverflow.com/a/50319258/9426588
+                webSecurity: !env.IS_DEV,
             },
         })
 

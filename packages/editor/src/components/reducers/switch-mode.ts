@@ -1,14 +1,14 @@
 import { createSourceCodeDelegate } from "../source-code/source-code-delegate"
-import { EditorState, Mode } from "../types"
+import { EditorState, Mode, WysiwygOptions } from "../types"
 import { createWysiwygDelegate } from "../wysiwyg/wysiwyg-delegate"
 
 export type SwitchModeAction = {
     type: "SWITCH_MODE"
     payload: {
-        isTestEnv: boolean
-
         // If `mode` is provided, the editor will be forced to switch to that mode.
         mode?: Mode
+
+        wysiwygOptions: WysiwygOptions
     }
 }
 
@@ -24,8 +24,7 @@ export function switchMode(state: EditorState, action: SwitchModeAction): Editor
     setTimeout(() => currDelegate.manager.destroy(), 0)
 
     const nextMode = state.mode === Mode.WYSIWYG ? Mode.SOURCE_CODE : Mode.WYSIWYG
-    const nextDelegate =
-        nextMode === Mode.WYSIWYG ? createWysiwygDelegate({ isTestEnv: action.payload.isTestEnv }) : createSourceCodeDelegate()
+    const nextDelegate = nextMode === Mode.WYSIWYG ? createWysiwygDelegate(action.payload.wysiwygOptions) : createSourceCodeDelegate()
 
     try {
         const nextDoc = nextDelegate.stringToDoc(currContent)

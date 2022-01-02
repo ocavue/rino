@@ -25,7 +25,7 @@ interface CommonMarkTestCase {
 }
 
 describe("parser token support", () => {
-    const parser = buildMarkdownParser(RemirrorManager.create(createWysiwygExtension()))
+    const parser = buildMarkdownParser(RemirrorManager.create(createWysiwygExtension({})))
 
     for (const t of tests as CommonMarkTestCase[]) {
         test(`CommonMark spec test case ${t.number}`, () => {
