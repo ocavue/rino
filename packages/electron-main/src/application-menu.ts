@@ -109,6 +109,10 @@ export function buildApplicationMenu(): Menu {
             label: "Edit",
             submenu: [
                 {
+                    role: "cut",
+                    accelerator: "CommandOrControl+X",
+                },
+                {
                     role: "copy",
                     accelerator: "CommandOrControl+C",
                 },
