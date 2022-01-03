@@ -78,7 +78,7 @@ import { createWindow, createWindowByOpeningFile, createWindowIfNotExist } from 
  * docs.
  *
  */
-export async function registerAppHandlers() {
+export function registerAppHandlers(): void {
     let openingFile = false
 
     app.on("will-finish-launching", () => {

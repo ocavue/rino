@@ -5,7 +5,7 @@ import { ipcMain } from "./ipc-main"
 import { state } from "./state"
 import { closeWindow, createWindow } from "./window"
 
-export function registerIpcInvokeHandlers() {
+export function registerIpcInvokeHandlers(): void {
     ipcMain.handle("openFile", async (_, { path }) => {
         const filePath = path || (await askMarkdownFileForOpen())
         if (!filePath) return { canceled: true, path: "", content: "" }

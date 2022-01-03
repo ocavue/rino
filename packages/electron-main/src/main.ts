@@ -3,7 +3,7 @@ import { setupContextMenu } from "./context-menu"
 import { registerIpcInvokeHandlers } from "./ipc-handlers"
 import { checkForUpdatesAutomatically } from "./updater"
 
-async function init() {
+function init() {
     registerAppHandlers()
 
     registerIpcInvokeHandlers()
