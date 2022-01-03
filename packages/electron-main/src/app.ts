@@ -82,13 +82,22 @@ export async function registerAppHandlers() {
     let openingFile = false
 
     app.on("will-finish-launching", () => {
-        logger.info("app event triggered: will-finish-launching")
-        app.on("open-file", (event, path) => {
-            logger.info("event triggered: open-file", { path })
-            openingFile = true
-            event.preventDefault()
-            createWindowByOpeningFile(path)
-        })
+        logger.info("app event triggered: will-finish-launching", { argv: JSON.stringify(process.argv) })
+
+        if (plateform.IS_MAC) {
+            app.on("open-file", (event, path) => {
+                logger.info("event triggered: open-file", { path })
+                openingFile = true
+                event.preventDefault()
+                createWindowByOpeningFile(path)
+            })
+        } else {
+            const path = process.argv[1]
+            if (path) {
+                openingFile = true
+                createWindowByOpeningFile(path)
+            }
+        }
     })
 
     app.on("activate", (event, hasVisibleWindows) => {
