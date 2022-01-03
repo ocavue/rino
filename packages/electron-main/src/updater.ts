@@ -24,7 +24,7 @@ async function checkForUpdatesAndNotify(): Promise<boolean> {
 }
 
 export async function checkForUpdatesAutomatically(): Promise<void> {
-    await new Promise((resolve) => setTimeout(resolve, 5000))
+    await new Promise((resolve) => setTimeout(resolve, 6000))
     await checkForUpdatesAndNotify()
 }
 
