@@ -1,5 +1,12 @@
 # Changelog
 
+### [0.38.2](https://github.com/ocavue/rino/compare/v0.38.1...v0.38.2) (2022-01-03)
+
+
+### Bug Fixes
+
+* **electron:** double-click a ".md" file to open it on Windows ([#895](https://github.com/ocavue/rino/issues/895)) ([f1cac14](https://github.com/ocavue/rino/commit/f1cac14ba100c07f7bf892ad897ac1b651833731))
+
 ## [0.38.1](https://github.com/ocavue/rino/compare/v0.38.0...v0.38.1) (2022-01-02)
 
 
