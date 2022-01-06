@@ -6,7 +6,7 @@
     "author": "ocavue",
     "description": "A better way to write Markdown",
     "scripts": {
-        "dev": "./setup.sh && wait-on --timeout 60000 tcp:3004 && NODE_ENV=development electron .",
+        "dev": "./setup.sh && NODE_ENV=development electron .",
         "build": "./setup.sh && electron-builder -p never",
         "build:dir": "./setup.sh && electron-builder -p never --dir",
         "build:all": "./setup.sh && electron-builder -p never --mac --win --linux"

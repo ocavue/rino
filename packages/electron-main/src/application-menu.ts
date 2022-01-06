@@ -1,4 +1,4 @@
-import { app, BrowserWindow, Menu, MenuItemConstructorOptions } from "electron"
+import { app, BrowserWindow, Menu, MenuItemConstructorOptions, shell } from "electron"
 
 import { COMMIT_SHA, plateform } from "./env"
 import { exportToPDF } from "./export-to-pdf"
@@ -23,16 +23,18 @@ export function buildApplicationMenu(): Menu {
         website: "https://rino.app",
     })
 
+    const checkForUpdateMenu: MenuItemConstructorOptions = {
+        label: "Check for Updates",
+        click: async () => {
+            await checkForUpdatesManually()
+        },
+    }
+
     const macMenu: MenuItemConstructorOptions = {
         label: "Rino",
         submenu: [
             { role: "about" },
-            {
-                label: "Check for Updates",
-                click: async () => {
-                    await checkForUpdatesManually()
-                },
-            },
+            checkForUpdateMenu,
             { type: "separator" },
             { role: "services" },
             { type: "separator" },
@@ -43,12 +45,37 @@ export function buildApplicationMenu(): Menu {
         ],
     }
 
-    const reloadMenu: MenuItemConstructorOptions = {
-        role: "reload",
-    }
+    const noMacHelpMenus: MenuItemConstructorOptions[] = [{ type: "separator" }, checkForUpdateMenu, { role: "about" }]
 
-    const toggleDevToolsMenu: MenuItemConstructorOptions = {
-        role: "toggleDevTools",
+    const helpMenu: MenuItemConstructorOptions = {
+        label: "Help",
+        submenu: [
+            {
+                label: "Website",
+                click: () => {
+                    shell.openExternal("https://rino.app")
+                },
+            },
+            {
+                label: "Changelog",
+                click: () => {
+                    shell.openExternal("https://rino.app/changelog")
+                },
+            },
+            {
+                label: "Join Us on Discord",
+                click: () => {
+                    shell.openExternal("https://rino.app/chat")
+                },
+            },
+            {
+                label: "Report an Issue",
+                click: () => {
+                    shell.openExternal("https://github.com/ocavue/rino/issues/new")
+                },
+            },
+            ...(plateform.IS_MAC ? [] : noMacHelpMenus),
+        ],
     }
 
     menu = Menu.buildFromTemplate([
@@ -128,8 +155,16 @@ export function buildApplicationMenu(): Menu {
         },
         {
             label: "View",
-            submenu: [reloadMenu, toggleDevToolsMenu],
+            submenu: [
+                {
+                    role: "reload",
+                },
+                {
+                    role: "toggleDevTools",
+                },
+            ],
         },
+        helpMenu,
     ])
 
     return menu
