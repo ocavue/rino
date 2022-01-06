@@ -16,6 +16,7 @@ type PastedFile = {
      * The local or remote path of the file.
      *
      * @example "/Users/user/Desktop/00FFFF.png"
+     * @example "/Users/user/Desktop/00FFFF with whitespace.png"
      * @example "https://example.com/file.pdf"
      * @example "blob:http://localhost:3001/a1b84bff-6e93-4159-8e24-1e132b9c3d7a"
      */
@@ -44,7 +45,11 @@ export class RinoFileExtension extends PlainExtension<RinoFileExtensionOptions> 
 
                     let text = ""
                     for (const file of files) {
-                        text += `![${file.name}](${file.uri}) `
+                        if (file.uri.includes(" ")) {
+                            text += `![${file.name}](<${file.uri}>) `
+                        } else {
+                            text += `![${file.name}](${file.uri}) `
+                        }
                     }
 
                     const view = this.store.view
