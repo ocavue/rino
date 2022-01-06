@@ -1,5 +1,12 @@
 # Changelog
 
+### [0.38.3](https://github.com/ocavue/rino/compare/v0.38.2...v0.38.3) (2022-01-06)
+
+
+### Bug Fixes
+
+* **editor:** correctly display images with paths containing whitespaces ([#899](https://github.com/ocavue/rino/issues/899)) ([2036131](https://github.com/ocavue/rino/commit/20361319679d6098bedeee1d2a7d928eba98d7a1))
+
 ## [0.38.2](https://github.com/ocavue/rino/compare/v0.38.1...v0.38.2) (2022-01-03)
 
 
