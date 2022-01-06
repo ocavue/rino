@@ -549,6 +549,72 @@ describe("link", function () {
     })
 })
 
+describe("image", function () {
+    test("normal local file", function () {
+        expect(fromInlineMarkdown(`![foo](/tmp/image.png)`)).toStrictEqual([
+            {
+                attrs: {
+                    depth: 1,
+                    first: true,
+                    href: "/tmp/image.png",
+                    last: true,
+                },
+                marks: ["mdImgUri"],
+                text: "![foo](/tmp/image.png)",
+                start: 0,
+                end: 22,
+            },
+        ])
+    })
+
+    test("normal remote url", function () {
+        expect(fromInlineMarkdown(`![foo](http://example.com/image.png)`)).toStrictEqual([
+            {
+                attrs: {
+                    depth: 1,
+                    first: true,
+                    href: "http://example.com/image.png",
+                    last: true,
+                },
+                marks: ["mdImgUri"],
+                text: "![foo](http://example.com/image.png)",
+                start: 0,
+                end: 36,
+            },
+        ])
+    })
+
+    test("local file path with whitepsace", function () {
+        expect(fromInlineMarkdown(`![foo](</tmp/file path/image v2.png>)`)).toStrictEqual([
+            {
+                attrs: {
+                    depth: 1,
+                    first: true,
+                    href: "/tmp/file path/image v2.png",
+                    last: true,
+                },
+                marks: ["mdImgUri"],
+                text: "![foo](</tmp/file path/image v2.png>)",
+                start: 0,
+                end: 37,
+            },
+        ])
+        expect(fromInlineMarkdown(`![foo](/tmp/file path/image v2.png)`)).toStrictEqual([
+            {
+                attrs: {
+                    depth: 1,
+                    first: true,
+                    last: true,
+                },
+                marks: ["mdText"],
+                text: "![foo](/tmp/file path/image v2.png)",
+                start: 0,
+                end: 35,
+            },
+        ])
+    })
+})
+
 describe("autolink", function () {
     test("normal", function () {
         expect(fromInlineMarkdown("<https://rino.app>")).toStrictEqual([
