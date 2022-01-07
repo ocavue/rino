@@ -80,12 +80,13 @@ export function buildBlockEnterKeymapBindings<Node extends ProsemirrorNode>(
  * 2. ability to break the loop
  *
  * @param node The parent node
+ * @yields {[node, offset, index]}
  */
-export function* iterNode<S extends Schema>(node: ProsemirrorNode<S>) {
+export function* iterNode<S extends Schema>(node: ProsemirrorNode<S>): Generator<[ProsemirrorNode<S>, number, number]> {
     const fragment = node.content
-    for (let i = 0, offset = 0; i < fragment.childCount; i++) {
-        const child = fragment.child(i)
-        yield [child, offset, i] as const
+    for (let index = 0, offset = 0; index < fragment.childCount; index++) {
+        const child = fragment.child(index)
+        yield [child, offset, index]
         offset += child.nodeSize
     }
 }
@@ -93,14 +94,16 @@ export function* iterNode<S extends Schema>(node: ProsemirrorNode<S>) {
 /**
  * Iterage all children from a NodeRange object. Yield each child node
  * and its (absolute) position
+ *
  * @param range
+ * @yields {[node, offset]}
  */
-export function* iterNodeRange<S extends Schema>(range: NodeRange<S>) {
+export function* iterNodeRange<S extends Schema>(range: NodeRange<S>): Generator<[ProsemirrorNode<S>, number]> {
     let pos = range.start + 1
     for (const [child, , index] of iterNode(range.parent)) {
         if (index < range.startIndex) continue
         else if (index >= range.endIndex) break
-        yield [child, pos] as const
+        yield [child, pos]
         pos += child.nodeSize
     }
 }

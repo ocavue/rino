@@ -1,12 +1,10 @@
 import { Mark, Node, Schema } from "prosemirror-model"
-import { Mappable } from "prosemirror-transform"
+import { Mappable, Transform } from "prosemirror-transform"
 import { EditorView } from "prosemirror-view"
 
 import { iterNode, iterNodeRange } from "../../utils"
 import { fromInlineMarkdown } from "./from-inline-markdown"
 import { InlineDecorateType } from "./inline-types"
-
-const maxMarkStep = 10
 
 type MarkStep<S extends Schema = any> = {
     start: number
@@ -110,6 +108,39 @@ const unchangedMappable: Mappable = {
 }
 
 /**
+ * Update the inline marks.
+ *
+ * Notice that this function may change the selection, which may be unexpected.
+ */
+export function updateMarks<S extends Schema>(tr: Transform<S>, node: Node<S>, startPos: number): void {
+    if (!node.isTextblock) {
+        for (const [child, offset] of iterNode(node)) {
+            updateMarks(tr, child, startPos + offset + 1)
+        }
+    } else {
+        const schema = tr.doc.type.schema
+        const steps: MarkStep<S>[] = parseNode(schema, node, startPos)
+        if (steps.length === 0) {
+            return
+        }
+
+        const textNodes: Node[] = steps.map((step) => schema.text(step.text, step.marks))
+        tr.replaceWith(steps[0].start, steps[steps.length - 1].end, textNodes)
+
+        // Another way to apply marks, which might be more reliable and won't change the selection but less efficient
+        // when the number of "steps" is large.
+        // Just put it as a backup.
+        //
+        // for (const step of steps) {
+        //     tr.removeMark(step.start, step.end, undefined)
+        //     for (const mark of step.marks) {
+        //         tr.addMark(step.start, step.end, mark)
+        //     }
+        // }
+    }
+}
+
+/**
  * Parse the text content from a Prosemirror node and dispatch a transaction to apply markdown marks to this Node.
  *
  * @param view The EditorView object
@@ -118,36 +149,11 @@ const unchangedMappable: Mappable = {
  */
 export function applyMarksToNode<S extends Schema>(view: EditorView<S>, node: Node<S>, startPos: number) {
     const tr = view.state.tr.setMeta("RINO_APPLY_MARKS", true)
-
-    if (!node.isTextblock) {
-        for (const [child, offset] of iterNode(node)) {
-            applyMarksToNode(view, child, startPos + offset + 1)
-        }
-        return
-    } else {
-        const schema = view.state.schema
-        const steps: MarkStep<S>[] = parseNode(schema, node, startPos)
-        if (steps.length === 0) {
-            return
-        }
-
-        // TODO: I'm not sure the performance different between the two methods below.
-        if (steps.length < maxMarkStep) {
-            for (const step of steps) {
-                // tr.maybeStep(new RemoveMarkStep())
-                // tr.maybeStep(new AddMarkStep())
-                tr.removeMark(step.start, step.end, undefined)
-                step.marks.map((mark) => tr.addMark(step.start, step.end, mark))
-            }
-            view.dispatch(tr)
-        } else {
-            const textNodes: Node[] = steps.map((step) => schema.text(step.text, step.marks))
-            const originSelection = view.state.selection
-            tr.replaceWith(steps[0].start, steps[steps.length - 1].end, textNodes)
-            const newSelection = originSelection.map(tr.doc, unchangedMappable)
-            tr.setSelection(newSelection)
-            view.dispatch(tr)
-        }
+    const oldSelection = tr.selection
+    updateMarks(tr, node, startPos)
+    if (tr.docChanged) {
+        tr.setSelection(oldSelection.map(tr.doc, unchangedMappable))
+        view.dispatch(tr)
     }
 }
 
@@ -159,11 +165,19 @@ export function applyMarksToNode<S extends Schema>(view: EditorView<S>, node: No
 export function applyMarksToCurrentNode<S extends Schema>(view: EditorView<S>) {
     const { $from, $to } = view.state.selection
     const range = $from.blockRange($to)
+    const tr = view.state.tr.setMeta("RINO_APPLY_MARKS", true)
+    const oldSelection = tr.selection
+
     if (!range) {
-        applyMarksToNode(view, view.state.doc, 0)
+        updateMarks(tr, view.state.doc, 0)
     } else {
         for (const [child, pos] of iterNodeRange(range)) {
-            applyMarksToNode(view, child, pos)
+            updateMarks(tr, child, pos)
         }
+    }
+
+    if (tr.docChanged) {
+        tr.setSelection(oldSelection.map(tr.doc, unchangedMappable))
+        view.dispatch(tr)
     }
 }

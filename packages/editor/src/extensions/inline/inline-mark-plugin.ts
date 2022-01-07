@@ -2,7 +2,7 @@ import { PlainExtension } from "@remirror/core"
 import { PluginSpec } from "prosemirror-state"
 import { EditorView } from "prosemirror-view"
 
-import { applyMarksToCurrentNode, applyMarksToNode } from "./inline-mark-helpers"
+import { applyMarksToCurrentNode } from "./inline-mark-helpers"
 
 // https://spec.commonmark.org/0.29/#ascii-punctuation-character
 const markdownPunctuationCharacter = /[\!\"\#\$\%\&\'\(\)\*\+\,\-\.\/\:\;\<\=\>\?\@\[\\\]\^\_\`\{\|\}\~\s]/
@@ -42,15 +42,6 @@ function createInlineMarkPlugin(testing = false): PluginSpec {
                 debounceApplyMarks(view)
                 return false
             },
-        },
-        view: (view: EditorView) => {
-            // This function will be called when the editor is initializing.
-            setTimeout(() => {
-                if (!testing) {
-                    applyMarksToNode(view, view.state.doc, 0)
-                }
-            }, 0)
-            return {}
         },
     }
 
