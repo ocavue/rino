@@ -1,6 +1,5 @@
 import { Mark, Node, Schema } from "prosemirror-model"
-import { Transaction } from "prosemirror-state"
-import { Mappable } from "prosemirror-transform"
+import { Mappable, Transform } from "prosemirror-transform"
 import { EditorView } from "prosemirror-view"
 
 import { iterNode, iterNodeRange } from "../../utils"
@@ -108,7 +107,12 @@ const unchangedMappable: Mappable = {
     },
 }
 
-function updateMarks<S extends Schema>(tr: Transaction<S>, node: Node<S>, startPos: number): void {
+/**
+ * Update the inline marks.
+ *
+ * Notice that this function may change the selection, which may be unexpected.
+ */
+export function updateMarks<S extends Schema>(tr: Transform<S>, node: Node<S>, startPos: number): void {
     if (!node.isTextblock) {
         for (const [child, offset] of iterNode(node)) {
             updateMarks(tr, child, startPos + offset + 1)
