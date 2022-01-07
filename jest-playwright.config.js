@@ -14,6 +14,7 @@ const config = {
         launchTimeout: 120 * 1000,
         debug: true,
         protocol: "http-get",
+        host: "127.0.0.1", // Node.js v17+ will resolve localhost to ipv6 ::1 instead of 127.0.0.1
         waitOnScheme: {
             verbose: false,
             interval: 1000,
