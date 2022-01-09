@@ -1,4 +1,5 @@
 import { Mark, Node, Schema } from "prosemirror-model"
+import { Transaction } from "prosemirror-state"
 import { Mappable, Transform } from "prosemirror-transform"
 import { EditorView } from "prosemirror-view"
 
@@ -112,10 +113,10 @@ const unchangedMappable: Mappable = {
  *
  * Notice that this function may change the selection, which may be unexpected.
  */
-export function updateMarks<S extends Schema>(tr: Transform<S>, node: Node<S>, startPos: number): void {
+export function updateNodeMarks<S extends Schema>(tr: Transform<S>, node: Node<S>, startPos: number): void {
     if (!node.isTextblock) {
         for (const [child, offset] of iterNode(node)) {
-            updateMarks(tr, child, startPos + offset + 1)
+            updateNodeMarks(tr, child, startPos + offset + 1)
         }
     } else {
         const schema = tr.doc.type.schema
@@ -147,10 +148,10 @@ export function updateMarks<S extends Schema>(tr: Transform<S>, node: Node<S>, s
  * @param node The Prosemirror node to parse
  * @param startPos The (absolute) position at the start of the node
  */
-export function applyMarksToNode<S extends Schema>(view: EditorView<S>, node: Node<S>, startPos: number) {
+export function applyNodeMarks<S extends Schema>(view: EditorView<S>, node: Node<S>, startPos: number) {
     const tr = view.state.tr.setMeta("RINO_APPLY_MARKS", true)
     const oldSelection = tr.selection
-    updateMarks(tr, node, startPos)
+    updateNodeMarks(tr, node, startPos)
     if (tr.docChanged) {
         tr.setSelection(oldSelection.map(tr.doc, unchangedMappable))
         view.dispatch(tr)
@@ -158,26 +159,33 @@ export function applyMarksToNode<S extends Schema>(view: EditorView<S>, node: No
 }
 
 /**
- * Apply markdown marks.
- *
- * @param view The EditorView object
+ * Apply markdown marks to current selection range.
  */
-export function applyMarksToCurrentNode<S extends Schema>(view: EditorView<S>) {
-    const { $from, $to } = view.state.selection
+export function applyRangeMarks<S extends Schema>(view: EditorView<S>): void {
+    const tr = view.state.tr
+    if (updateRangeMarks(tr)) {
+        view.dispatch(tr)
+    }
+}
+
+export function updateRangeMarks(tr: Transaction): boolean {
+    tr.setMeta("RINO_APPLY_MARKS", true)
+
+    const { $from, $to } = tr.selection
     const range = $from.blockRange($to)
-    const tr = view.state.tr.setMeta("RINO_APPLY_MARKS", true)
     const oldSelection = tr.selection
 
     if (!range) {
-        updateMarks(tr, view.state.doc, 0)
+        updateNodeMarks(tr, tr.doc, 0)
     } else {
         for (const [child, pos] of iterNodeRange(range)) {
-            updateMarks(tr, child, pos)
+            updateNodeMarks(tr, child, pos)
         }
     }
 
     if (tr.docChanged) {
         tr.setSelection(oldSelection.map(tr.doc, unchangedMappable))
-        view.dispatch(tr)
+        return true
     }
+    return false
 }

@@ -32,7 +32,7 @@ test("link", async () => {
                 content: [
                     { type: "text", marks: [{ type: "mdText", attrs: { depth: 1, first: true, last: true } }], text: "hello " },
                     { type: "text", marks: [{ type: "mdMark", attrs: { depth: 1, first: true, last: false } }], text: "[" },
-                    { type: "text", marks: [{ type: "mdLinkText", attrs: { depth: 2, href: "https://g.co" } }], text: "link" },
+                    { type: "text", marks: [{ type: "mdLinkText", attrs: { depth: 2, href: "https://g.co9" } }], text: "link" },
                     { type: "text", marks: [{ type: "mdMark", attrs: { depth: 1, first: false, last: false } }], text: "](" },
                     { type: "text", marks: [{ type: "mdLinkUri", attrs: { depth: 1 } }], text: "https://g.co9" },
                     { type: "text", marks: [{ type: "mdMark", attrs: { depth: 1, first: false, last: true } }], text: ")" },
@@ -52,7 +52,7 @@ test("link", async () => {
                 content: [
                     { type: "text", marks: [{ type: "mdText", attrs: { depth: 1, first: true, last: true } }], text: "hello " },
                     { type: "text", marks: [{ type: "mdMark", attrs: { depth: 1, first: true, last: false } }], text: "[" },
-                    { type: "text", marks: [{ type: "mdLinkText", attrs: { depth: 2, href: "https://g.co" } }], text: "link8" },
+                    { type: "text", marks: [{ type: "mdLinkText", attrs: { depth: 2, href: "https://g.co9" } }], text: "link8" },
                     { type: "text", marks: [{ type: "mdMark", attrs: { depth: 1, first: false, last: false } }], text: "](" },
                     { type: "text", marks: [{ type: "mdLinkUri", attrs: { depth: 1 } }], text: "https://g.co9" },
                     { type: "text", marks: [{ type: "mdMark", attrs: { depth: 1, first: false, last: true } }], text: ")" },

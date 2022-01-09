@@ -1,47 +1,52 @@
 import { PlainExtension } from "@remirror/core"
-import { PluginSpec } from "prosemirror-state"
+import { EditorState, PluginSpec, Transaction } from "prosemirror-state"
 import { EditorView } from "prosemirror-view"
 
-import { applyMarksToCurrentNode } from "./inline-mark-helpers"
+import { applyRangeMarks, updateRangeMarks } from "./inline-mark-helpers"
 
-// https://spec.commonmark.org/0.29/#ascii-punctuation-character
-const markdownPunctuationCharacter = /[\!\"\#\$\%\&\'\(\)\*\+\,\-\.\/\:\;\<\=\>\?\@\[\\\]\^\_\`\{\|\}\~\s]/
+function createInlineMarkPlugin(isUnitTest = false, isDestroyedRef: { val: boolean }): PluginSpec {
+    let timeoutId: ReturnType<typeof setTimeout> | null = null
 
-function createInlineMarkPlugin(testing = false): PluginSpec {
-    let marksTimeoutId: ReturnType<typeof setTimeout> | null = null
-
-    const debounceApplyMarks: (view: EditorView) => void = testing
-        ? applyMarksToCurrentNode
+    const debounceApplyMarks: (view: EditorView) => void = isUnitTest
+        ? applyRangeMarks
         : (view: EditorView) => {
-              if (marksTimeoutId) {
-                  clearTimeout(marksTimeoutId)
+              if (timeoutId) {
+                  clearTimeout(timeoutId)
               }
-              marksTimeoutId = setTimeout(() => {
-                  applyMarksToCurrentNode(view)
-                  marksTimeoutId = null
-              }, 50)
+              timeoutId = setTimeout(() => {
+                  if (!isDestroyedRef.val) {
+                      applyRangeMarks(view)
+                  }
+                  timeoutId = null
+              }, 100)
           }
 
+    let globalView: EditorView | null = null
+
     const pluginSpec: PluginSpec = {
-        state: {
-            init: () => {},
-            apply: () => {},
-        },
-        props: {
-            handleTextInput(view: EditorView, from: number, to: number, text: string) {
-                if (text && markdownPunctuationCharacter.test(text)) {
-                    debounceApplyMarks(view)
+        appendTransaction: (transactions: Array<Transaction>, oldState: EditorState, newState: EditorState): Transaction | void => {
+            let shouldUpdate = false
+
+            for (const tr of transactions) {
+                if (tr.docChanged && !tr.getMeta("RINO_APPLY_MARKS")) {
+                    shouldUpdate = true
+                    break
                 }
-                return false
-            },
-            handlePaste(view: EditorView) {
-                debounceApplyMarks(view)
-                return false
-            },
-            handleDrop(view: EditorView) {
-                debounceApplyMarks(view)
-                return false
-            },
+            }
+
+            if (isUnitTest) {
+                const tr = newState.tr
+                updateRangeMarks(tr)
+                return tr
+            } else {
+                if (shouldUpdate && globalView) {
+                    debounceApplyMarks(globalView)
+                }
+            }
+        },
+        view: (view) => {
+            globalView = view
+            return {}
         },
     }
 
@@ -50,11 +55,13 @@ function createInlineMarkPlugin(testing = false): PluginSpec {
 
 export class RinoInlineMarkExtension extends PlainExtension {
     // The editor will not "debounce" when `#testing` is true. Used in unit tests.
-    #testing: boolean
+    private isUnitTest: boolean
+    private isDestroyedRef: { val: boolean }
 
-    public constructor(testing = false) {
+    public constructor(isUnitTest = false) {
         super()
-        this.#testing = testing
+        this.isUnitTest = isUnitTest
+        this.isDestroyedRef = { val: false }
     }
 
     get name() {
@@ -68,6 +75,10 @@ export class RinoInlineMarkExtension extends PlainExtension {
     }
 
     createPlugin() {
-        return createInlineMarkPlugin(this.#testing)
+        return createInlineMarkPlugin(this.isUnitTest, this.isDestroyedRef)
+    }
+
+    onDestroy() {
+        this.isDestroyedRef.val = true
     }
 }
