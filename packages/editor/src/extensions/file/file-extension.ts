@@ -1,7 +1,6 @@
-import { findParentNode, PlainExtension } from "@remirror/core"
+import { PlainExtension } from "@remirror/core"
 import { FileHandlerProps, FilePasteRule } from "@remirror/pm/paste-rules"
-
-import { applyNodeMarks } from "../inline"
+import { Selection } from "prosemirror-state"
 
 type PastedFile = {
     /**
@@ -53,18 +52,12 @@ export class RinoFileExtension extends PlainExtension<RinoFileExtensionOptions> 
                     }
 
                     const view = this.store.view
-                    const pos: number = props.type === "drop" ? props.pos : view.state.selection.anchor
-                    view.dispatch(view.state.tr.insertText(text, pos))
-
-                    const found = findParentNode({
-                        selection: view.state.doc.resolve(pos),
-                        predicate: (node) => {
-                            return node.isTextblock && !node.type.spec.code
-                        },
-                    })
-                    if (found) {
-                        applyNodeMarks(view, found.node, found.start)
-                    }
+                    const pos = props.type === "drop" ? props.pos : view.state.selection.anchor
+                    const tr = view.state.tr
+                    tr.insertText(text, pos)
+                    tr.setSelection(Selection.near(tr.doc.resolve(pos)))
+                    tr.scrollIntoView()
+                    view.dispatch(tr)
 
                     return true
                 },
