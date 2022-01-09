@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.39.0](https://github.com/ocavue/rino/compare/v0.38.3...v0.39.0) (2022-01-09)
+
+
+### Features
+
+* **electron:** add help menu ([#901](https://github.com/ocavue/rino/issues/901)) ([f8bc422](https://github.com/ocavue/rino/commit/f8bc42237d3c8e4b9c9f0a31135857eef8c65845))
+
 ## [0.38.3](https://github.com/ocavue/rino/compare/v0.38.2...v0.38.3) (2022-01-06)
 
 
