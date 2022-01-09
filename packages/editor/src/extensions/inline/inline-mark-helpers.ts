@@ -168,7 +168,7 @@ export function applyRangeMarks<S extends Schema>(view: EditorView<S>): void {
     }
 }
 
-function updateRangeMarks(tr: Transaction): boolean {
+export function updateRangeMarks(tr: Transaction): boolean {
     tr.setMeta("RINO_APPLY_MARKS", true)
 
     const { $from, $to } = tr.selection

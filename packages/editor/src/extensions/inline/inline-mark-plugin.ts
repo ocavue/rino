@@ -2,12 +2,12 @@ import { PlainExtension } from "@remirror/core"
 import { EditorState, PluginSpec, Transaction } from "prosemirror-state"
 import { EditorView } from "prosemirror-view"
 
-import { applyRangeMarks } from "./inline-mark-helpers"
+import { applyRangeMarks, updateRangeMarks } from "./inline-mark-helpers"
 
-function createInlineMarkPlugin(testing = false): PluginSpec {
+function createInlineMarkPlugin(isUnitTest = false): PluginSpec {
     let timeoutId: ReturnType<typeof setTimeout> | null = null
 
-    const debounceApplyMarks: (view: EditorView) => void = testing
+    const debounceApplyMarks: (view: EditorView) => void = isUnitTest
         ? applyRangeMarks
         : (view: EditorView) => {
               if (timeoutId) {
@@ -22,7 +22,7 @@ function createInlineMarkPlugin(testing = false): PluginSpec {
     let globalView: EditorView | null = null
 
     const pluginSpec: PluginSpec = {
-        appendTransaction: (transactions: Array<Transaction>, oldState: EditorState, newState: EditorState): void => {
+        appendTransaction: (transactions: Array<Transaction>, oldState: EditorState, newState: EditorState): Transaction | void => {
             let shouldUpdate = false
 
             for (const tr of transactions) {
@@ -32,8 +32,14 @@ function createInlineMarkPlugin(testing = false): PluginSpec {
                 }
             }
 
-            if (shouldUpdate && globalView) {
-                debounceApplyMarks(globalView)
+            if (isUnitTest) {
+                const tr = newState.tr
+                updateRangeMarks(tr)
+                return tr
+            } else {
+                if (shouldUpdate && globalView) {
+                    debounceApplyMarks(globalView)
+                }
             }
         },
         view: (view) => {
@@ -47,11 +53,11 @@ function createInlineMarkPlugin(testing = false): PluginSpec {
 
 export class RinoInlineMarkExtension extends PlainExtension {
     // The editor will not "debounce" when `#testing` is true. Used in unit tests.
-    #testing: boolean
+    private isUnitTest: boolean
 
-    public constructor(testing = false) {
+    public constructor(isUnitTest = false) {
         super()
-        this.#testing = testing
+        this.isUnitTest = isUnitTest
     }
 
     get name() {
@@ -65,6 +71,6 @@ export class RinoInlineMarkExtension extends PlainExtension {
     }
 
     createPlugin() {
-        return createInlineMarkPlugin(this.#testing)
+        return createInlineMarkPlugin(this.isUnitTest)
     }
 }
