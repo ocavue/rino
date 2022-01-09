@@ -1,6 +1,6 @@
 import { Transform } from "prosemirror-transform"
 
-import { updateMarks } from "../../extensions/inline"
+import { updateNodeMarks } from "../../extensions/inline"
 import { DocToString, StringToDoc, WysiwygOptions } from "../types"
 import { createWysiwygManager } from "./wysiwyg-manager"
 import { buildMarkdownParser, buildMarkdownSerializer } from "./wysiwyg-markdown"
@@ -23,7 +23,7 @@ export function createWysiwygDelegate(wysiwygOptions: WysiwygOptions) {
 
         // Apply inline marks to the doc
         const tr = new Transform(doc)
-        updateMarks(tr, doc, 0)
+        updateNodeMarks(tr, doc, 0)
         return tr.doc
     }
 

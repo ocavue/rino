@@ -1,47 +1,44 @@
 import { PlainExtension } from "@remirror/core"
-import { PluginSpec } from "prosemirror-state"
+import { EditorState, PluginSpec, Transaction } from "prosemirror-state"
 import { EditorView } from "prosemirror-view"
 
-import { applyMarksToCurrentNode } from "./inline-mark-helpers"
-
-// https://spec.commonmark.org/0.29/#ascii-punctuation-character
-const markdownPunctuationCharacter = /[\!\"\#\$\%\&\'\(\)\*\+\,\-\.\/\:\;\<\=\>\?\@\[\\\]\^\_\`\{\|\}\~\s]/
+import { applyRangeMarks } from "./inline-mark-helpers"
 
 function createInlineMarkPlugin(testing = false): PluginSpec {
-    let marksTimeoutId: ReturnType<typeof setTimeout> | null = null
+    let timeoutId: ReturnType<typeof setTimeout> | null = null
 
     const debounceApplyMarks: (view: EditorView) => void = testing
-        ? applyMarksToCurrentNode
+        ? applyRangeMarks
         : (view: EditorView) => {
-              if (marksTimeoutId) {
-                  clearTimeout(marksTimeoutId)
+              if (timeoutId) {
+                  clearTimeout(timeoutId)
               }
-              marksTimeoutId = setTimeout(() => {
-                  applyMarksToCurrentNode(view)
-                  marksTimeoutId = null
-              }, 50)
+              timeoutId = setTimeout(() => {
+                  applyRangeMarks(view)
+                  timeoutId = null
+              }, 100)
           }
 
+    let globalView: EditorView | null = null
+
     const pluginSpec: PluginSpec = {
-        state: {
-            init: () => {},
-            apply: () => {},
-        },
-        props: {
-            handleTextInput(view: EditorView, from: number, to: number, text: string) {
-                if (text && markdownPunctuationCharacter.test(text)) {
-                    debounceApplyMarks(view)
+        appendTransaction: (transactions: Array<Transaction>, oldState: EditorState, newState: EditorState): void => {
+            let shouldUpdate = false
+
+            for (const tr of transactions) {
+                if (tr.docChanged && !tr.getMeta("RINO_APPLY_MARKS")) {
+                    shouldUpdate = true
+                    break
                 }
-                return false
-            },
-            handlePaste(view: EditorView) {
-                debounceApplyMarks(view)
-                return false
-            },
-            handleDrop(view: EditorView) {
-                debounceApplyMarks(view)
-                return false
-            },
+            }
+
+            if (shouldUpdate && globalView) {
+                debounceApplyMarks(globalView)
+            }
+        },
+        view: (view) => {
+            globalView = view
+            return {}
         },
     }
 

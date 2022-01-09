@@ -1,7 +1,7 @@
 import { findParentNode, PlainExtension } from "@remirror/core"
 import { FileHandlerProps, FilePasteRule } from "@remirror/pm/paste-rules"
 
-import { applyMarksToNode } from "../inline"
+import { applyNodeMarks } from "../inline"
 
 type PastedFile = {
     /**
@@ -63,7 +63,7 @@ export class RinoFileExtension extends PlainExtension<RinoFileExtensionOptions> 
                         },
                     })
                     if (found) {
-                        applyMarksToNode(view, found.node, found.start)
+                        applyNodeMarks(view, found.node, found.start)
                     }
 
                     return true

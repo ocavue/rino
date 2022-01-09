@@ -29,6 +29,10 @@ while True:
 
 `.trim()
 
+const longContent = (
+    `hello **strong**! hello *italic*! hello \`code\`! hello [link](https://www.google.com)! `.repeat(200) + "\n\n"
+).repeat(5)
+
 /** focus this element to hide the cursor in the editor */
 const BlurHelper: FC = () => {
     return (
@@ -60,14 +64,22 @@ const wysiwygOptions: WysiwygOptions = {
 const App: FC = () => {
     const params = new URLSearchParams(document.location.search)
     const initialContent = params.get("content")
+    const initialContentId = params.get("contentid")
     const enableDevTools = params.get("devtools") !== "false"
 
     const note = useMemo(() => {
+        let content = defaultContent
+        if (isString(initialContent)) {
+            content = initialContent
+        } else if (initialContentId === "long") {
+            content = longContent
+        }
+
         return {
-            content: isString(initialContent) ? initialContent : defaultContent,
+            content,
             deleted: false,
         }
-    }, [initialContent])
+    }, [initialContent, initialContentId])
 
     const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false)
     const [content, setContent] = useState("")
