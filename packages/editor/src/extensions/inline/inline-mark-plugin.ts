@@ -4,7 +4,7 @@ import { EditorView } from "prosemirror-view"
 
 import { applyRangeMarks, updateRangeMarks } from "./inline-mark-helpers"
 
-function createInlineMarkPlugin(isUnitTest = false): PluginSpec {
+function createInlineMarkPlugin(isUnitTest = false, isDestroyedRef: { val: boolean }): PluginSpec {
     let timeoutId: ReturnType<typeof setTimeout> | null = null
 
     const debounceApplyMarks: (view: EditorView) => void = isUnitTest
@@ -14,7 +14,9 @@ function createInlineMarkPlugin(isUnitTest = false): PluginSpec {
                   clearTimeout(timeoutId)
               }
               timeoutId = setTimeout(() => {
-                  applyRangeMarks(view)
+                  if (!isDestroyedRef.val) {
+                      applyRangeMarks(view)
+                  }
                   timeoutId = null
               }, 100)
           }
@@ -54,10 +56,12 @@ function createInlineMarkPlugin(isUnitTest = false): PluginSpec {
 export class RinoInlineMarkExtension extends PlainExtension {
     // The editor will not "debounce" when `#testing` is true. Used in unit tests.
     private isUnitTest: boolean
+    private isDestroyedRef: { val: boolean }
 
     public constructor(isUnitTest = false) {
         super()
         this.isUnitTest = isUnitTest
+        this.isDestroyedRef = { val: false }
     }
 
     get name() {
@@ -71,6 +75,10 @@ export class RinoInlineMarkExtension extends PlainExtension {
     }
 
     createPlugin() {
-        return createInlineMarkPlugin(this.isUnitTest)
+        return createInlineMarkPlugin(this.isUnitTest, this.isDestroyedRef)
+    }
+
+    onDestroy() {
+        this.isDestroyedRef.val = true
     }
 }
