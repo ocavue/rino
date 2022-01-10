@@ -1,12 +1,14 @@
-import { EditorView, findParentNodeOfType } from "@remirror/core"
+import { computePosition, flip, offset } from "@floating-ui/dom"
+import { EditorView, ProsemirrorNode } from "@remirror/core"
 
-import { fakeIndentedLanguage } from "."
+import { fakeIndentedLanguage } from "./code-mirror-const"
 import { allLanguages } from "./codemirror-languages"
 
 const languageNames = allLanguages.map((language) => language.name)
-const lowerCaseLanguageNames: Record<string, string> = {}
+const lowerCaseLanguageNameMap: Record<string, string> = {}
+
 languageNames.forEach((name) => {
-    lowerCaseLanguageNames[name.toLowerCase()] = name
+    lowerCaseLanguageNameMap[name.toLowerCase()] = name
 })
 
 type SetLanguage = (language: string) => void
@@ -34,33 +36,76 @@ function createInput(currentLanguage: string, setLanguage: SetLanguage) {
         setLanguage(input.value)
     })
     input.addEventListener("input", () => {
-        const language = lowerCaseLanguageNames[input.value.toLowerCase()]
+        const language = lowerCaseLanguageNameMap[input.value.toLowerCase()]
         if (language) {
             setLanguage(language)
         }
     })
+    input.style.position = "absolute"
+    input.style.visibility = "hidden" // stay hidden until the position is calculated
     return input
 }
 
-function createLanguageMenuPositioner(currentLanguage: string, setLanguage: SetLanguage) {
+function createReference() {
     const div = document.createElement("div")
     div.className = "language-menu-positioner"
-    div.appendChild(createInput(currentLanguage, setLanguage))
-    div.appendChild(createDatalist())
     return div
 }
 
-export function createLanguageMenu(view: EditorView): HTMLElement {
-    const found = findParentNodeOfType({ types: "codeMirror", selection: view.state.selection })
+export function setupLanguageMenu(node: ProsemirrorNode) {
+    let updatePosition: null | (() => void) = null
 
-    let currentLanguage = found?.node.attrs.language || ""
-    if (currentLanguage === fakeIndentedLanguage) {
-        currentLanguage = ""
+    const create = (view: EditorView, getPos: () => number): HTMLElement => {
+        let currentLanguage = node.attrs.language || ""
+        if (currentLanguage === fakeIndentedLanguage) {
+            currentLanguage = ""
+        }
+
+        const setLanguage = (language: string) => {
+            view.dispatch(view.state.tr.setNodeMarkup(getPos(), undefined, { language }))
+        }
+
+        const reference = createReference()
+        const input = createInput(currentLanguage, setLanguage)
+        const datalist = createDatalist()
+
+        reference.appendChild(input)
+        reference.appendChild(datalist)
+
+        updatePosition = () => {
+            // If the language menu is not yet mounted, the position will be wrong.
+            if (!reference.parentElement) {
+                return
+            }
+
+            computePosition(reference, input, {
+                placement: "top-end",
+                middleware: [offset(8), flip()],
+            }).then(({ x, y }) => {
+                Object.assign(input.style, {
+                    left: `${x}px`,
+                    top: `${y}px`,
+                    visibility: "visible",
+                })
+            })
+        }
+
+        if (reference.parentElement) {
+            updatePosition()
+        } else {
+            setTimeout(updatePosition, 100)
+        }
+
+        window.addEventListener("resize", updatePosition)
+
+        return reference
     }
 
-    const setLanguage = (language: string) => {
-        found && view.dispatch(view.state.tr.setNodeMarkup(found.pos, undefined, { language }))
+    const destroy = (): void => {
+        if (updatePosition) {
+            window.removeEventListener("resize", updatePosition)
+        }
     }
 
-    return createLanguageMenuPositioner(currentLanguage, setLanguage)
+    return [create, destroy] as const
 }

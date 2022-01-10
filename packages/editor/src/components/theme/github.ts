@@ -506,6 +506,9 @@ export const EDITOR_THEME_GITHUB = css`
         padding: 8px 12px;
         border-radius: 4px;
     }
+    & .cm-editor.cm-focused {
+        outline: none; // override the default outline
+    }
 
     & .language-menu {
         width: auto;
@@ -520,7 +523,6 @@ export const EDITOR_THEME_GITHUB = css`
         position: absolute;
         min-width: 50px;
         height: 16px;
-        margin: 4px 0px;
         padding: 8px;
     }
 

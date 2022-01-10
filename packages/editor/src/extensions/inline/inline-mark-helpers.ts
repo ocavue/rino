@@ -142,26 +142,14 @@ export function updateNodeMarks<S extends Schema>(tr: Transform<S>, node: Node<S
 }
 
 /**
- * Parse the text content from a Prosemirror node and dispatch a transaction to apply markdown marks to this Node.
- *
- * @param view The EditorView object
- * @param node The Prosemirror node to parse
- * @param startPos The (absolute) position at the start of the node
- */
-export function applyNodeMarks<S extends Schema>(view: EditorView<S>, node: Node<S>, startPos: number) {
-    const tr = view.state.tr.setMeta("RINO_APPLY_MARKS", true)
-    const oldSelection = tr.selection
-    updateNodeMarks(tr, node, startPos)
-    if (tr.docChanged) {
-        tr.setSelection(oldSelection.map(tr.doc, unchangedMappable))
-        view.dispatch(tr)
-    }
-}
-
-/**
  * Apply markdown marks to current selection range.
  */
 export function applyRangeMarks<S extends Schema>(view: EditorView<S>): void {
+    // @ts-expect-error This will be fixed by https://github.com/DefinitelyTyped/DefinitelyTyped/pull/58084
+    if (view.isDestroyed) {
+        return
+    }
+
     const tr = view.state.tr
     if (updateRangeMarks(tr)) {
         view.dispatch(tr)

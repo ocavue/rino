@@ -2,13 +2,11 @@ import { findParentNodeOfType } from "@remirror/core"
 import { CodeMirrorExtension } from "@remirror/extension-codemirror6"
 import Token from "markdown-it/lib/token"
 import { EditorState } from "prosemirror-state"
-import { Decoration, DecorationSet } from "prosemirror-view"
+import { Decoration, DecorationSet, WidgetDecorationSpec } from "prosemirror-view"
 
 import { NodeSerializerOptions, ParserRuleType } from "../../transform"
-import { createLanguageMenu } from "./codemirror-language-menu"
-
-/** Use this fake language name to mark a code block as an indented code block instead of a fence code block */
-export const fakeIndentedLanguage = "rino-indented"
+import { fakeIndentedLanguage } from "./code-mirror-const"
+import { setupLanguageMenu } from "./codemirror-language-menu"
 
 export class RinoCodeMirrorExtension extends CodeMirrorExtension {
     public fromMarkdown() {
@@ -66,10 +64,15 @@ export class RinoCodeMirrorExtension extends CodeMirrorExtension {
             return DecorationSet.empty
         }
 
-        const deco = Decoration.widget(found.pos, createLanguageMenu, {
+        const [createLanguageMenu, destroyLanguageMenu] = setupLanguageMenu(found.node)
+
+        const deco = Decoration.widget<WidgetDecorationSpec>(found.pos, createLanguageMenu, {
             ignoreSelection: true,
             stopEvent: () => true,
             key: "language-menu",
+            // @ts-expect-error: this needed to be fixed in the next version of @types/prosemirror-view
+            // TODO: fix the types
+            destroy: destroyLanguageMenu,
         })
         return DecorationSet.create(state.doc, [deco])
     }
