@@ -145,10 +145,7 @@ export function updateNodeMarks<S extends Schema>(tr: Transform<S>, node: Node<S
  * Apply markdown marks to current selection range.
  */
 export function applyRangeMarks<S extends Schema>(view: EditorView<S>): void {
-    // @ts-expect-error This will be fixed by https://github.com/DefinitelyTyped/DefinitelyTyped/pull/58084
-    if (view.isDestroyed) {
-        return
-    }
+    if (view.isDestroyed) return
 
     const tr = view.state.tr
     if (updateRangeMarks(tr)) {
