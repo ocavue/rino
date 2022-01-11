@@ -33,6 +33,13 @@ const longContent = (
     `hello **strong**! hello *italic*! hello \`code\`! hello [link](https://www.google.com)! `.repeat(200) + "\n\n"
 ).repeat(5)
 
+const justCodeContent = `
+\`\`\`python
+while True:
+    print("hello world")
+\`\`\`
+`.trim()
+
 /** focus this element to hide the cursor in the editor */
 const BlurHelper: FC = () => {
     return (
@@ -73,6 +80,8 @@ const App: FC = () => {
             content = initialContent
         } else if (initialContentId === "long") {
             content = longContent
+        } else if (initialContentId === "just-code") {
+            content = justCodeContent
         }
 
         return {
