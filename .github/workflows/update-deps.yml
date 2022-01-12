@@ -31,6 +31,8 @@ jobs:
           else
             rm -rf pnpm-lock.yaml
             pnpm i
+            cd packages/rig
+            pnpm output-licenses
           fi
         if: ${{ steps.step_find_pr.outputs.number }}
 

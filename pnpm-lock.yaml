@@ -345,6 +345,12 @@ importers:
       responsive-loader: 2.3.0_sharp@0.29.3
       sharp: 0.29.3
 
+  packages/rig:
+    specifiers:
+      monorepo-license-checker: ^0.3.0
+    devDependencies:
+      monorepo-license-checker: 0.3.0
+
 packages:
 
   /7zip-bin/5.1.1:
@@ -8956,6 +8962,7 @@ packages:
       chalk: 2.4.2
       diff-match-patch: 1.0.5
     dev: false
+    bundledDependencies: []
 
   /jsonfile/4.0.0:
     resolution: {integrity: sha1-h3Gq4HmbZAdrdmQPygWPnBDjPss=}
@@ -9681,6 +9688,11 @@ packages:
   /modify-filename/1.1.0:
     resolution: {integrity: sha1-mi3sg4Bvuy2XXyK+7IWcoms5OqE=}
     engines: {node: '>=0.10.0'}
+    dev: true
+
+  /monorepo-license-checker/0.3.0:
+    resolution: {integrity: sha512-eAG8zbwJVUyX8cP3kSWXA3hX+LOVrXzuoTnmrMNrnGgo3uYv54E2qmisbW5bBzGFZQgMA9395AjvJY7sL3x3zg==}
+    hasBin: true
     dev: true
 
   /mri/1.2.0:
