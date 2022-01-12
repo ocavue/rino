@@ -827,7 +827,7 @@ packages:
       '@codemirror/autocomplete': 0.19.12
       '@codemirror/highlight': 0.19.7
       '@codemirror/lang-css': 0.19.3
-      '@codemirror/lang-javascript': 0.19.4
+      '@codemirror/lang-javascript': 0.19.6
       '@codemirror/language': 0.19.7
       '@codemirror/state': 0.19.6
       '@lezer/common': 0.15.11
@@ -842,8 +842,8 @@ packages:
       '@lezer/java': 0.15.0
     dev: false
 
-  /@codemirror/lang-javascript/0.19.4:
-    resolution: {integrity: sha512-oRANfqQH5XNcfr0Y9pIzAxqXldLmCLpklknODtmEAZ8wQNBiVmgIeLb3JXdOJ43iZWnnmetkDOctFy/N8KuD4Q==}
+  /@codemirror/lang-javascript/0.19.6:
+    resolution: {integrity: sha512-NgkoCIc3hdTNTBRIRuPqfUJ0WB798qEgwAgtjwYy6yoiK5CzbDS2z5CFW17h9RmaAx6t1m64iY2CZ3tC7r15Gw==}
     dependencies:
       '@codemirror/autocomplete': 0.19.12
       '@codemirror/highlight': 0.19.7
@@ -937,7 +937,7 @@ packages:
       '@codemirror/lang-css': 0.19.3
       '@codemirror/lang-html': 0.19.4
       '@codemirror/lang-java': 0.19.1
-      '@codemirror/lang-javascript': 0.19.4
+      '@codemirror/lang-javascript': 0.19.6
       '@codemirror/lang-json': 0.19.1
       '@codemirror/lang-markdown': 0.19.4
       '@codemirror/lang-php': 0.19.1
@@ -974,7 +974,7 @@ packages:
       '@codemirror/panel': 0.19.1
       '@codemirror/rangeset': 0.19.6
       '@codemirror/state': 0.19.6
-      '@codemirror/tooltip': 0.19.10
+      '@codemirror/tooltip': 0.19.12
       '@codemirror/view': 0.19.39
       crelt: 1.0.5
     dev: false
@@ -1045,13 +1045,6 @@ packages:
     resolution: {integrity: sha512-8gc4c2k2o/EhyHoWkghCxp5vyDT96JaFGtRy35PHwIom0LZdx7aU4AbDUnITvwiFB+0+i54VO+WQjBqgTyJvqg==}
     dependencies:
       '@codemirror/highlight': 0.19.7
-      '@codemirror/state': 0.19.6
-      '@codemirror/view': 0.19.39
-    dev: false
-
-  /@codemirror/tooltip/0.19.10:
-    resolution: {integrity: sha512-xqIhCHr+IYoamdNLvBnU/oDh92zPnsbT1zLaFtKTFi9GI9SxOfBhWY3jfMENlK0j1C9rk8+AvwpXblPGvY/O6w==}
-    dependencies:
       '@codemirror/state': 0.19.6
       '@codemirror/view': 0.19.39
     dev: false
@@ -3513,8 +3506,8 @@ packages:
     dev: true
     optional: true
 
-  /@types/prettier/2.4.2:
-    resolution: {integrity: sha512-ekoj4qOQYp7CvjX8ZDBgN86w3MqQhLE1hczEJbEIjgFEumDy+na/4AJAbLXfgEWFNB2pKadM5rPFtuSGMWK7xA==}
+  /@types/prettier/2.4.3:
+    resolution: {integrity: sha512-QzSuZMBuG5u8HqYz01qtMdg/Jfctlnvj1z/lYnIDXs/golxw0fxtRAHd9KrzjR7Yxz1qVeI00o0kiO3PmVdJ9w==}
     dev: true
 
   /@types/prop-types/15.7.4:
@@ -3650,8 +3643,8 @@ packages:
       '@types/react': 17.0.38
     dev: false
 
-  /@types/sanitize-html/2.6.1:
-    resolution: {integrity: sha512-+JLlZdJkIHdgvlFnMorJeLv5WIORNcI+jHsAoPBWMnhGx5Rbz/D1QN5D4qvmoA7fooDlEVy6zlioWSgqbU0KeQ==}
+  /@types/sanitize-html/2.6.2:
+    resolution: {integrity: sha512-7Lu2zMQnmHHQGKXVvCOhSziQMpa+R2hMHFefzbYoYMHeaXR0uXqNeOc3JeQQQ8/6Xa2Br/P1IQTLzV09xxAiUQ==}
     dependencies:
       htmlparser2: 6.1.0
     dev: true
@@ -4305,7 +4298,6 @@ packages:
 
   /base64-js/1.5.1:
     resolution: {integrity: sha512-AKpaYlHn8t4SVbOHCy+b5+KKgvR4vrsD8vbvrbiQJps7fKDTkjkDry6ji0rUJjC0kzbNePLwzxq8iypo41qeWA==}
-    requiresBuild: true
     dev: true
 
   /big.js/5.2.2:
@@ -4424,8 +4416,8 @@ packages:
     engines: {node: ^6 || ^7 || ^8 || ^9 || ^10 || ^11 || ^12 || >=13.7}
     hasBin: true
     dependencies:
-      caniuse-lite: 1.0.30001298
-      electron-to-chromium: 1.4.40
+      caniuse-lite: 1.0.30001299
+      electron-to-chromium: 1.4.43
       escalade: 3.1.1
       node-releases: 2.0.1
       picocolors: 1.0.0
@@ -4568,8 +4560,8 @@ packages:
     engines: {node: '>=10'}
     dev: true
 
-  /caniuse-lite/1.0.30001298:
-    resolution: {integrity: sha512-AcKqikjMLlvghZL/vfTHorlQsLDhGRalYf1+GmWCf5SCMziSGjRYQW/JEksj14NaYHIR6KIhrFAy0HV5C25UzQ==}
+  /caniuse-lite/1.0.30001299:
+    resolution: {integrity: sha512-iujN4+x7QzqA2NCSrS5VUy+4gLmRd4xv6vbBBsmfVqTx8bLAD8097euLqQgKxSVLvxjSDcvF1T/i9ocgnUFexw==}
     dev: true
 
   /case-anything/1.1.5:
@@ -5560,8 +5552,8 @@ packages:
       - supports-color
     dev: true
 
-  /electron-to-chromium/1.4.40:
-    resolution: {integrity: sha512-j+eVIyQGt2EU5xPWUblhpp5P5z5xyAdRgzogBgfe2F5JGV17gr9pfzWBua6DlPL00LavbOjxubWkWkbVQe9Wlw==}
+  /electron-to-chromium/1.4.43:
+    resolution: {integrity: sha512-PO3kEfcxPrti/4STbXvCkNIF4fgWvCKl2508e6UI7KomCDffpIfeBZLXsh5DK/XGsjUw3kwq6WEsi0MJTlGAdg==}
     dev: true
 
   /electron-updater/4.6.1:
@@ -7182,7 +7174,6 @@ packages:
 
   /ieee754/1.2.1:
     resolution: {integrity: sha512-dcyqhDvX1C46lXZcVqCpK+FtMRQVdIMN6/Df5js2zouUsqG7I6sFxitIC+7KYK29KdXOLHdu9zL4sFnoVQnqaA==}
-    requiresBuild: true
     dev: true
 
   /ignore/4.0.6:
@@ -8141,7 +8132,7 @@ packages:
       '@remirror/preset-core': 1.0.17_faa36c6b4392e5b76d566689f25c17a2
       '@testing-library/dom': 8.11.1
       '@types/node': 16.11.19
-      '@types/sanitize-html': 2.6.1
+      '@types/sanitize-html': 2.6.2
       jest: 27.4.7
       jest-prosemirror: 1.0.12_@types+node@16.11.19+jest@27.4.7
       jest-snapshot: 27.4.6
@@ -8264,7 +8255,7 @@ packages:
       '@jest/transform': 27.4.6
       '@jest/types': 27.4.2
       '@types/babel__traverse': 7.14.2
-      '@types/prettier': 2.4.2
+      '@types/prettier': 2.4.3
       babel-preset-current-node-syntax: 1.0.1_@babel+core@7.16.7
       chalk: 4.1.2
       expect: 27.4.6
@@ -8463,7 +8454,6 @@ packages:
 
   /json-schema-traverse/0.4.1:
     resolution: {integrity: sha512-xbbCH5dCYU5T8LcEhhuh7HJ88HXuW3qsI3Y0zOZFKfZEHcpWiHU/Jxzk629Brsab/mMiHQti9wMP+845RPe3Vg==}
-    requiresBuild: true
     dev: true
 
   /json-stable-stringify-without-jsonify/1.0.1:
@@ -9290,8 +9280,8 @@ packages:
     resolution: {integrity: sha512-s/snB+WGm6uwi0WjsZdaVcuf3KJXlfGl2LcxgwkEwJF0D/BWzVWAZW/XY4bFaiR7s0Jk3FPvlnepg1H1b1UwlA==}
     dev: false
 
-  /nanoid/3.1.30:
-    resolution: {integrity: sha512-zJpuPDwOv8D2zq2WRoMe1HsfZthVewpel9CAvTfc/2mBD1uUT/agc5f7GHGWXlYkFvi1mVxe4IjvP2HNrop7nQ==}
+  /nanoid/3.1.32:
+    resolution: {integrity: sha512-F8mf7R3iT9bvThBoW4tGXhXFHCctyCiUUPrWF8WaTqa3h96d9QybkSeba43XVOOE3oiLfkVDe4bT8MeGmkrTxw==}
     engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
     hasBin: true
     dev: true
@@ -9329,7 +9319,7 @@ packages:
     dependencies:
       '@next/env': 12.0.8
       '@next/react-refresh-utils': 12.0.8_react-refresh@0.8.3
-      caniuse-lite: 1.0.30001298
+      caniuse-lite: 1.0.30001299
       jest-worker: 27.0.0-next.5
       node-fetch: 2.6.1
       postcss: 8.2.15
@@ -9943,7 +9933,7 @@ packages:
     engines: {node: ^10 || ^12 || >=14}
     dependencies:
       colorette: 1.4.0
-      nanoid: 3.1.30
+      nanoid: 3.1.32
       source-map: 0.6.1
     dev: true
 
@@ -9951,7 +9941,7 @@ packages:
     resolution: {integrity: sha512-jBDboWM8qpaqwkMwItqTQTiFikhs/67OYVvblFFTM7MrZjt6yMKd6r2kgXizEbTTljacm4NldIlZnhbjr84QYg==}
     engines: {node: ^10 || ^12 || >=14}
     dependencies:
-      nanoid: 3.1.30
+      nanoid: 3.1.32
       picocolors: 1.0.0
       source-map-js: 1.0.1
     dev: true
@@ -12131,7 +12121,6 @@ packages:
 
   /uri-js/4.4.1:
     resolution: {integrity: sha512-7rKUyy33Q1yc98pQ1DAmLtwX109F7TIfWlW1Ydo8Wl1ii1SeHieeh0HHfPeL2fMXK6z0s8ecKs9frCuLJvndBg==}
-    requiresBuild: true
     dependencies:
       punycode: 2.1.1
     dev: true
