@@ -30,7 +30,8 @@ export type EditorProps = {
 export type EditorHandle = {
     switchMode: (mode?: Mode) => void
 
-    // Set the selection at the beginning of the editor
+    // Set the selection at the beginning of the editor. By doing this, we can
+    // make sure any popups (e.g. language menu for code blocks) are hidden.
     resetSelection: () => void
 }
 
@@ -52,7 +53,7 @@ const Editor: React.ForwardRefRenderFunction<EditorHandle, EditorProps> = (
 ) => {
     const [state, dispatch] = useReducer(editorReducer, { note, wysiwygOptions }, initializeState)
 
-    const view = state.delegate.manager.view
+    const manager = state.delegate.manager
 
     const saveContent = useCallback(() => {
         dispatch({ type: "SAVE_CONTENT" })
@@ -116,20 +117,29 @@ const Editor: React.ForwardRefRenderFunction<EditorHandle, EditorProps> = (
     useEffect(() => {
         if (typeof window !== "undefined") {
             // Let e2e test to inject the editor view
-            ;(window as any)._RINO_EDITOR_VIEW = view
+            ;(window as any)._RINO_EDITOR_VIEW = manager.view
         }
-    }, [view])
+    }, [manager])
 
-    useImperativeHandle(forwardedRef, () => ({
-        switchMode: switchMode,
-        resetSelection: () => {
-            if (!view) {
-                console.warn("can not find view")
-                return
+    // Notice that we only watch `manager` and never watch `manager.view`. That's because `manager.view` is not yet exist when the component
+    // is mounted, and when `manager.view` does exist, this component not re-render.
+    useImperativeHandle(
+        forwardedRef,
+        () => {
+            const view = manager.view
+            return {
+                switchMode: switchMode,
+                resetSelection: () => {
+                    if (!view) {
+                        console.warn("failed to find view")
+                        return
+                    }
+                    view.dispatch(view.state.tr.setSelection(TextSelection.near(view.state.doc.resolve(1))))
+                },
             }
-            view.dispatch(view.state.tr.setSelection(TextSelection.near(view.state.doc.resolve(1))))
         },
-    }))
+        [switchMode, manager],
+    )
 
     if (state.error) {
         // I didn't use React `componentDidCatch` method because I can't turn off `react-error-overlay` (easily) and

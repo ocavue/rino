@@ -1,5 +1,6 @@
 import { RefObject, useEffect } from "react"
 
+import { sleep } from "@rino.app/common"
 import { EditorHandle, Mode } from "@rino.app/editor"
 
 import { ipcRenderer } from "../ipc-renderer"
@@ -54,9 +55,10 @@ export function useIpcRendererHandlers({
     }, [closeWindow])
 
     useEffect(() => {
-        ipcRenderer.on("beforeExportToPdf", (event) => {
+        ipcRenderer.on("beforeExportToPdf", async (event) => {
             editorRef.current?.switchMode(Mode.WYSIWYG)
             editorRef.current?.resetSelection()
+            await sleep(0) // wait for the `resetSelection` to be applied
             ;(document.activeElement as HTMLElement | null)?.blur()
         })
         return () => {
