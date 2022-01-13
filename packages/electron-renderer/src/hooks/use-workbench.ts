@@ -2,7 +2,7 @@ import produce from "immer"
 import isPromise from "is-promise"
 import { Dispatch, useCallback, useEffect, useReducer } from "react"
 
-import { ipcInvoker } from "../ipc-renderer"
+import { ipcInvoker, ipcSyncInvoker } from "../ipc-renderer"
 import { createTimeoutPromise } from "../utils/create-timeout-promise"
 import { withLogReducer } from "./reducer-logger"
 import { useTitleEffect } from "./use-title-effect"
@@ -79,6 +79,8 @@ async function asyncCloseWindow(state: WorkbenchState, action: CloseWindowAction
             // User selected a file, save the content and then close the window
             dispatch({ type: "SET_NOTE_PATH", payload: { path: filePath } })
             dispatch({ type: "SET_IS_CLOSING" })
+        } else {
+            // User canceled the operation, do nothing
         }
     } else {
         // Save the content and close the window
@@ -322,13 +324,33 @@ export function useWorkbench() {
         dispatch({ type: "SET_NOTE_CONTENT", payload: { content } })
     }, [])
 
+    const beforeUnload = useCallback((): { canUnload: boolean } => {
+        if (canCloseWindow) {
+            return { canUnload: true }
+        }
+
+        if (!state.path) {
+            const { result } = ipcSyncInvoker.askBeforeDeleteSync()
+            if (result === "cancel") {
+                return { canUnload: false }
+            } else if (result === "delete") {
+                return { canUnload: true }
+            } else if (result === "save") {
+                dispatch({ type: "ENSURE_FILE_PATH" })
+                return { canUnload: false }
+            }
+        }
+
+        return { canUnload: true }
+    }, [canCloseWindow, state.path])
+
     return {
         state: {
             path: state.path,
             content: state.content,
-            canCloseWindow,
         },
         handlers: {
+            beforeUnload,
             closeWindow,
             openFile,
             setNotePath,

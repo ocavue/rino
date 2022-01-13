@@ -1,11 +1,12 @@
 import { useEffect } from "react"
 
-export function useBeforeUnload(canCloseWindow: boolean) {
+export function useBeforeUnload(beforeUnload: () => { canUnload: boolean }) {
     useEffect(() => {
         // Note: There is a subtle difference between the behaviors of `window.onbeforeunload = handler` and
         // `window.addEventListener('beforeunload', handler)`.
         window.onbeforeunload = (e) => {
-            if (canCloseWindow) {
+            const { canUnload } = beforeUnload()
+            if (canUnload) {
                 return
             } else {
                 // Unlike usual browsers that a message box will be prompted to users, returning
@@ -15,5 +16,5 @@ export function useBeforeUnload(canCloseWindow: boolean) {
                 return false
             }
         }
-    }, [canCloseWindow])
+    }, [beforeUnload])
 }

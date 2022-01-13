@@ -1,4 +1,4 @@
-// Sended by renderer process and recieved by main process
+// Sended by renderer process and recieved by main process, asynchronous
 export type InvokeApi = {
     openFile: (options: { path?: string }) => Promise<{ canceled: boolean; path: string; content: string }>
 
@@ -17,6 +17,17 @@ export type InvokeApi = {
     closeWindow: () => Promise<void>
 
     stopQuitting: () => Promise<void>
+}
+
+// Sended by renderer process and recieved by main process, synchronous
+export type SyncInvokeApi = {
+    askMarkdownFileForSaveSync: () => { filePath?: string; canceled?: boolean }
+
+    askBeforeDeleteSync: () => { result: "save" | "delete" | "cancel" }
+
+    // This will not be implemented, just for TypeScript. TypeScript forces me to have at least one function who has parameters so that
+    // I can use spread argument ('...') somewhere else.
+    fakeAPI: (fakeParam: string) => { fakeResult: string }
 }
 
 // Sended by main process and received by renderer process
