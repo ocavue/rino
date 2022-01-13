@@ -12,8 +12,8 @@ export async function askMarkdownFileForOpen(): Promise<string | undefined> {
     return result.filePaths[0] // TODO: allow users to open many files
 }
 
-async function showDialogBeforeDelete(win: BrowserWindow | null): Promise<"save" | "delete" | "cancel"> {
-    const options = {
+function getDialogBeforeDeleteOptions() {
+    return {
         type: "warning",
         buttons: ["Save", "Don't save", "Cancel"],
         defaultId: 0,
@@ -21,6 +21,10 @@ async function showDialogBeforeDelete(win: BrowserWindow | null): Promise<"save"
         message: "Do you want to save the changes you made?",
         detail: "Your changes will be lost if you don't save them.",
     }
+}
+
+async function showDialogBeforeDelete(win: BrowserWindow | null): Promise<"save" | "delete" | "cancel"> {
+    const options = getDialogBeforeDeleteOptions()
     const result = win ? await dialog.showMessageBox(win, options) : await dialog.showMessageBox(options)
     switch (result.response) {
         case 0:
@@ -32,14 +36,38 @@ async function showDialogBeforeDelete(win: BrowserWindow | null): Promise<"save"
     }
 }
 
-async function showSaveMarkdownDialog(win: BrowserWindow | null) {
-    const options = {
+function showDialogBeforeDeleteSync(win: BrowserWindow | null): "save" | "delete" | "cancel" {
+    const options = getDialogBeforeDeleteOptions()
+    const result = win ? dialog.showMessageBoxSync(win, options) : dialog.showMessageBoxSync(options)
+    switch (result) {
+        case 0:
+            return "save"
+        case 1:
+            return "delete"
+        default:
+            return "cancel"
+    }
+}
+
+function getSaveMarkdownDialogOptions() {
+    return {
         defaultPath: app.getPath("documents"),
         filters: [{ name: "Markdown Files", extensions: ["md", "markdown"] }],
     }
+}
+
+async function showSaveMarkdownDialog(win: BrowserWindow | null): Promise<{ filePath?: string; canceled: boolean }> {
+    const options = getSaveMarkdownDialogOptions()
     const result = win ? await dialog.showSaveDialog(win, options) : await dialog.showSaveDialog(options)
     logger.info(`showSaveDialog result:`, result)
     return { filePath: result.filePath, canceled: result.canceled }
+}
+
+function showSaveMarkdownDialogSync(win: BrowserWindow | null): { filePath?: string; canceled: boolean } {
+    const options = getSaveMarkdownDialogOptions()
+    const result = win ? dialog.showSaveDialogSync(win, options) : dialog.showSaveDialogSync(options)
+    logger.info(`showSaveDialog result:`, result)
+    return { filePath: result, canceled: !result }
 }
 
 async function showSavePdfDialog(win: BrowserWindow | null) {
@@ -56,6 +84,10 @@ export async function askMarkdownFileForSave(win: BrowserWindow | null): Promise
     return showSaveMarkdownDialog(win)
 }
 
+export function askMarkdownFileForSaveSync(win: BrowserWindow | null): { filePath?: string; canceled?: boolean } {
+    return showSaveMarkdownDialogSync(win)
+}
+
 export async function askPdfFileForSave(win: BrowserWindow | null): Promise<{ filePath?: string; canceled?: boolean }> {
     return showSavePdfDialog(win)
 }
@@ -70,6 +102,10 @@ export async function askMarkdownFileForClose(
         return { discarded: true }
     }
     return showSaveMarkdownDialog(win)
+}
+
+export function askBeforeDeleteSync(win: BrowserWindow | null): { result: "save" | "delete" | "cancel" } {
+    return { result: showDialogBeforeDeleteSync(win) }
 }
 
 export async function openFile(filePath: string): Promise<string> {

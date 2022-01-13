@@ -1,6 +1,14 @@
 import { BrowserWindow } from "electron"
 
-import { askMarkdownFileForClose, askMarkdownFileForOpen, askMarkdownFileForSave, openFile, saveFile } from "./file"
+import {
+    askBeforeDeleteSync,
+    askMarkdownFileForClose,
+    askMarkdownFileForOpen,
+    askMarkdownFileForSave,
+    askMarkdownFileForSaveSync,
+    openFile,
+    saveFile,
+} from "./file"
 import { ipcMain } from "./ipc-main"
 import { state } from "./state"
 import { closeWindow, createWindow } from "./window"
@@ -63,5 +71,15 @@ export function registerIpcInvokeHandlers(): void {
 
     ipcMain.handle("stopQuitting", async (event) => {
         state.isQuitting = false
+    })
+
+    ipcMain.syncHandle("askMarkdownFileForSaveSync", (event) => {
+        const win = BrowserWindow.fromWebContents(event.sender)
+        return askMarkdownFileForSaveSync(win)
+    })
+
+    ipcMain.syncHandle("askBeforeDeleteSync", (event) => {
+        const win = BrowserWindow.fromWebContents(event.sender)
+        return askBeforeDeleteSync(win)
     })
 }

@@ -1,13 +1,16 @@
 import { contextBridge, ipcRenderer } from "electron"
 import log from "electron-log"
 
-import type { InvokeApi, IpcRenderer, SendApi } from "@rino.app/electron-types"
+import type { InvokeApi, IpcRenderer, SendApi, SyncInvokeApi } from "@rino.app/electron-types"
 
 contextBridge.exposeInMainWorld("ELECTRON_PRELOAD_ELECTRON_LOG", log)
 
-const electronIpcRenderer: IpcRenderer<SendApi, InvokeApi> = {
+const electronIpcRenderer: IpcRenderer<SendApi, InvokeApi, SyncInvokeApi> = {
     invoke: async (channel, ...params: Array<any>) => {
         return ipcRenderer.invoke(channel, ...params)
+    },
+    invokeSync: (channel, ...params: Array<any>) => {
+        return ipcRenderer.sendSync(channel, ...params)
     },
     on: (channel, listener: any) => {
         ipcRenderer.on(channel, listener)

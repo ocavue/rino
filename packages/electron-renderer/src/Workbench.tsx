@@ -22,11 +22,11 @@ const Workbench: FC = () => {
     const editorRef = useRef<EditorHandle>(null)
 
     const {
-        state: { content, path, canCloseWindow },
-        handlers: { closeWindow, setNotePath, setNoteContent, openFile, ensureFilePath, setIsSerializing },
+        state: { content, path },
+        handlers: { beforeUnload, closeWindow, setNotePath, setNoteContent, openFile, ensureFilePath, setIsSerializing },
     } = useWorkbench()
 
-    useBeforeUnload(canCloseWindow)
+    useBeforeUnload(beforeUnload)
 
     useIpcRendererHandlers({
         setNotePath,
