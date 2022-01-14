@@ -10,12 +10,17 @@ export const DISCORD_LINK = "https://rino.app/chat"
 export function getDownloadLink(os: "mac" | "win" | "linux", version: string | undefined): string {
     if (!version) return RELEASE_LINK
 
+    // TODO: remove this
+    if (version === "0.39.1") {
+        return RELEASE_LINK
+    }
+
     switch (os) {
         case "mac":
-            return `https://github.com/ocavue/rino/releases/download/v${version}/Rino-${version}-universal.dmg`
+            return `https://github.com/ocavue/rino/releases/download/v${version}/Rino-v${version}-mac-universal.dmg`
         case "win":
-            return `https://github.com/ocavue/rino/releases/download/v${version}/Rino.Setup.${version}.exe`
+            return `https://github.com/ocavue/rino/releases/download/v${version}/Rino-v${version}-win-x64.exe`
         case "linux":
-            return `https://github.com/ocavue/rino/releases/download/v${version}/Rino-${version}.AppImage`
+            return `https://github.com/ocavue/rino/releases/download/v${version}/Rino-v${version}-linux-x86_64.AppImage`
     }
 }
