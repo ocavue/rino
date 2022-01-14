@@ -133,12 +133,12 @@ importers:
       prosemirror-state: ^1.3.4
       prosemirror-tables: ^1.1.1
       prosemirror-transform: ^1.3.3
-      prosemirror-view: ^1.23.5
+      prosemirror-view: ^1.23.6
       react: ^17.0.2
       react-dom: ^17.0.2
       typescript: ^4.5.4
       unstated-next: ^1.1.0
-      vite: ^2.7.10
+      vite: ^2.7.12
     dependencies:
       '@codemirror/autocomplete': 0.19.12
       '@codemirror/closebrackets': 0.19.0
@@ -199,7 +199,7 @@ importers:
       prosemirror-state: 1.3.4
       prosemirror-tables: 1.1.1
       prosemirror-transform: 1.3.3
-      prosemirror-view: 1.23.5
+      prosemirror-view: 1.23.6
       unstated-next: 1.1.0
     devDependencies:
       '@babel/core': 7.16.7
@@ -217,7 +217,7 @@ importers:
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
       typescript: 4.5.4
-      vite: 2.7.10
+      vite: 2.7.12
 
   packages/electron:
     specifiers:
@@ -279,7 +279,7 @@ importers:
       react-dom: ^17.0.2
       typescript: ^4.5.4
       unstated-next: ^1.1.0
-      vite: ^2.7.10
+      vite: ^2.7.12
     devDependencies:
       '@rino.app/common': link:../common
       '@rino.app/editor': link:../editor
@@ -295,7 +295,7 @@ importers:
       react-dom: 17.0.2_react@17.0.2
       typescript: 4.5.4
       unstated-next: 1.1.0
-      vite: 2.7.10
+      vite: 2.7.12
 
   packages/electron-types:
     specifiers:
@@ -2674,14 +2674,14 @@ packages:
       prosemirror-inputrules: 1.1.3
       prosemirror-keymap: 1.1.5
       prosemirror-model: 1.16.1
-      prosemirror-paste-rules: 1.0.6_054fd640a4f2b5a28a7a6859b672b399
+      prosemirror-paste-rules: 1.0.6_cfefb0de14b68c437fcd740e2930e47e
       prosemirror-schema-list: 1.1.6
       prosemirror-state: 1.3.4
-      prosemirror-suggest: 1.0.6_054fd640a4f2b5a28a7a6859b672b399
+      prosemirror-suggest: 1.0.6_cfefb0de14b68c437fcd740e2930e47e
       prosemirror-tables: 1.1.1
-      prosemirror-trailing-node: 1.0.6_054fd640a4f2b5a28a7a6859b672b399
+      prosemirror-trailing-node: 1.0.6_cfefb0de14b68c437fcd740e2930e47e
       prosemirror-transform: 1.3.3
-      prosemirror-view: 1.23.5
+      prosemirror-view: 1.23.6
 
   /@remirror/preset-core/1.0.17_faa36c6b4392e5b76d566689f25c17a2:
     resolution: {integrity: sha512-7P+sdNdwOSQL2UphpU0aGU6WtTxUpsX0ojgoaRhqJWFV/QHIq/nxfFf6EyNsWVwOj0A4bKXCzZ4zi0tmCZdXyw==}
@@ -4298,6 +4298,7 @@ packages:
 
   /base64-js/1.5.1:
     resolution: {integrity: sha512-AKpaYlHn8t4SVbOHCy+b5+KKgvR4vrsD8vbvrbiQJps7fKDTkjkDry6ji0rUJjC0kzbNePLwzxq8iypo41qeWA==}
+    requiresBuild: true
     dev: true
 
   /big.js/5.2.2:
@@ -4417,7 +4418,7 @@ packages:
     hasBin: true
     dependencies:
       caniuse-lite: 1.0.30001299
-      electron-to-chromium: 1.4.43
+      electron-to-chromium: 1.4.45
       escalade: 3.1.1
       node-releases: 2.0.1
       picocolors: 1.0.0
@@ -5552,8 +5553,8 @@ packages:
       - supports-color
     dev: true
 
-  /electron-to-chromium/1.4.43:
-    resolution: {integrity: sha512-PO3kEfcxPrti/4STbXvCkNIF4fgWvCKl2508e6UI7KomCDffpIfeBZLXsh5DK/XGsjUw3kwq6WEsi0MJTlGAdg==}
+  /electron-to-chromium/1.4.45:
+    resolution: {integrity: sha512-czF9eYVuOmlY/vxyMQz2rGlNSjZpxNQYBe1gmQv7al171qOIhgyO9k7D5AKlgeTCSPKk+LHhj5ZyIdmEub9oNg==}
     dev: true
 
   /electron-updater/4.6.1:
@@ -7174,6 +7175,7 @@ packages:
 
   /ieee754/1.2.1:
     resolution: {integrity: sha512-dcyqhDvX1C46lXZcVqCpK+FtMRQVdIMN6/Df5js2zouUsqG7I6sFxitIC+7KYK29KdXOLHdu9zL4sFnoVQnqaA==}
+    requiresBuild: true
     dev: true
 
   /ignore/4.0.6:
@@ -10096,7 +10098,7 @@ packages:
     dependencies:
       prosemirror-state: 1.3.4
       prosemirror-transform: 1.3.3
-      prosemirror-view: 1.23.5
+      prosemirror-view: 1.23.6
 
   /prosemirror-gapcursor/1.2.1:
     resolution: {integrity: sha512-PHa9lj27iM/g4C46gxVzsefuXVfy/LrGQH4QjMRht7VDBgw77iWYWn8ZHMWSFkwtr9jQEuxI5gccHHHwWG80nw==}
@@ -10104,7 +10106,7 @@ packages:
       prosemirror-keymap: 1.1.5
       prosemirror-model: 1.16.1
       prosemirror-state: 1.3.4
-      prosemirror-view: 1.23.5
+      prosemirror-view: 1.23.6
 
   /prosemirror-history/1.2.0:
     resolution: {integrity: sha512-B9v9xtf4fYbKxQwIr+3wtTDNLDZcmMMmGiI3TAPShnUzvo+Rmv1GiUrsQChY1meetHl7rhML2cppF3FTs7f7UQ==}
@@ -10130,7 +10132,7 @@ packages:
     dependencies:
       orderedmap: 1.1.1
 
-  /prosemirror-paste-rules/1.0.6_054fd640a4f2b5a28a7a6859b672b399:
+  /prosemirror-paste-rules/1.0.6_cfefb0de14b68c437fcd740e2930e47e:
     resolution: {integrity: sha512-ekZWrazkwQ2oGGd73QAT0NQLEmI7bY7bMFisa1m4nhl1qWQwDzdodueumah+gdUIw87V2xXoCxenLykmG41XQQ==}
     peerDependencies:
       '@types/prosemirror-model': ^1
@@ -10156,7 +10158,7 @@ packages:
       escape-string-regexp: 4.0.0
       prosemirror-model: 1.16.1
       prosemirror-state: 1.3.4
-      prosemirror-view: 1.23.5
+      prosemirror-view: 1.23.6
 
   /prosemirror-schema-basic/1.1.2:
     resolution: {integrity: sha512-G4q8WflNsR1Q33QAV4MQO0xWrHLOJ+BQcKswGXMy626wlQj6c/1n1v4eC9ns+h2y1r/fJHZEgSZnsNhm9lbrDw==}
@@ -10176,7 +10178,7 @@ packages:
       prosemirror-model: 1.16.1
       prosemirror-transform: 1.3.3
 
-  /prosemirror-suggest/1.0.6_054fd640a4f2b5a28a7a6859b672b399:
+  /prosemirror-suggest/1.0.6_cfefb0de14b68c437fcd740e2930e47e:
     resolution: {integrity: sha512-tuItdLT8S4y02r85cBhCLRRRP1vuZAsk3b4bpv4yIi1enrENmqPXsgwt+VaFjzJ3Z+OMQczrUJTsYm1czqF5FQ==}
     peerDependencies:
       '@types/prosemirror-model': ^1
@@ -10203,7 +10205,7 @@ packages:
       escape-string-regexp: 4.0.0
       prosemirror-model: 1.16.1
       prosemirror-state: 1.3.4
-      prosemirror-view: 1.23.5
+      prosemirror-view: 1.23.6
 
   /prosemirror-tables/1.1.1:
     resolution: {integrity: sha512-LmCz4jrlqQZRsYRDzCRYf/pQ5CUcSOyqZlAj5kv67ZWBH1SVLP2U9WJEvQfimWgeRlIz0y0PQVqO1arRm1+woA==}
@@ -10212,7 +10214,7 @@ packages:
       prosemirror-model: 1.16.1
       prosemirror-state: 1.3.4
       prosemirror-transform: 1.3.3
-      prosemirror-view: 1.23.5
+      prosemirror-view: 1.23.6
 
   /prosemirror-test-builder/1.0.5:
     resolution: {integrity: sha512-mymXkqJlhcB4JtQpM5buHvfn7SawJ2vRwYzuIUMkky00ILBOPUnwUCAbjA7L8o4hsaQeyHljRCNdpjXKK8KsOw==}
@@ -10222,7 +10224,7 @@ packages:
       prosemirror-schema-list: 1.1.6
     dev: true
 
-  /prosemirror-trailing-node/1.0.6_054fd640a4f2b5a28a7a6859b672b399:
+  /prosemirror-trailing-node/1.0.6_cfefb0de14b68c437fcd740e2930e47e:
     resolution: {integrity: sha512-erK95qWliHluuhxHJC7WA1VPuOcmZ06lw21w7087S1LXxZFVgv7GH/TBEujkLlMcjsQaJMwsaRUmG7f5GT+9VA==}
     peerDependencies:
       '@types/prosemirror-model': ^1
@@ -10248,15 +10250,15 @@ packages:
       escape-string-regexp: 4.0.0
       prosemirror-model: 1.16.1
       prosemirror-state: 1.3.4
-      prosemirror-view: 1.23.5
+      prosemirror-view: 1.23.6
 
   /prosemirror-transform/1.3.3:
     resolution: {integrity: sha512-9NLVXy1Sfa2G6qPqhWMkEvwQQMTw7OyTqOZbJaGQWsCeH3hH5Cw+c5eNaLM1Uu75EyKLsEZhJ93XpHJBa6RX8A==}
     dependencies:
       prosemirror-model: 1.16.1
 
-  /prosemirror-view/1.23.5:
-    resolution: {integrity: sha512-GlcCtoFdW17KNOKjOl7OZTU3btENgVfzN/i0RBvy1SEKAZfo88PdvcFrWTraNZHH+y/uhYR3PAdMiDK9DlN5UA==}
+  /prosemirror-view/1.23.6:
+    resolution: {integrity: sha512-B4DAzriNpI/AVoW0Lu6SVfX00jZZQxOVwdBQEjWlRbCdT9V0pvk4GQJ3JTFaib+b6BcPdRZ3MjWXz2xvV1rblA==}
     dependencies:
       prosemirror-model: 1.16.1
       prosemirror-state: 1.3.4
@@ -10638,8 +10640,8 @@ packages:
   /regenerator-runtime/0.13.9:
     resolution: {integrity: sha512-p3VT+cOEgxFsRRA9X4lkI1E+k2/CtnKtU4gcxyaCUreilL/vqI6CdZ3wxVUx3UOUg+gnUOQQcRI7BmSI656MYA==}
 
-  /regexp.prototype.flags/1.3.1:
-    resolution: {integrity: sha512-JiBdRBq91WlY7uRJ0ds7R+dU02i6LKi8r3BuQhNXn+kmeLN+EfHhfjqMRis1zJxnlu88hq/4dx0P2OP3APRTOA==}
+  /regexp.prototype.flags/1.3.2:
+    resolution: {integrity: sha512-uaro52GSI5be7+ssxjxxnLlleDBN3VHIWQHvBhfeeSXRQkuV/0Jo/hBU+omYH6NUkM+LYpTHnRRf2W/v+x7LzQ==}
     engines: {node: '>= 0.4'}
     dependencies:
       call-bind: 1.0.2
@@ -11368,7 +11370,7 @@ packages:
       get-intrinsic: 1.1.1
       has-symbols: 1.0.2
       internal-slot: 1.0.3
-      regexp.prototype.flags: 1.3.1
+      regexp.prototype.flags: 1.3.2
       side-channel: 1.0.4
     dev: true
 
@@ -12241,8 +12243,8 @@ packages:
     dev: true
     optional: true
 
-  /vite/2.7.10:
-    resolution: {integrity: sha512-KEY96ntXUid1/xJihJbgmLZx7QSC2D4Tui0FdS0Old5OokYzFclcofhtxtjDdGOk/fFpPbHv9yw88+rB93Tb8w==}
+  /vite/2.7.12:
+    resolution: {integrity: sha512-KvPYToRQWhRfBeVkyhkZ5hASuHQkqZUUdUcE3xyYtq5oYEPIJ0h9LWiWTO6v990glmSac2cEPeYeXzpX5Z6qKQ==}
     engines: {node: '>=12.2.0'}
     hasBin: true
     peerDependencies:

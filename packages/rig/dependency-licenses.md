@@ -187,7 +187,7 @@
 | prosemirror-state@1.3.4                     | MIT          | https://github.com/prosemirror/prosemirror-state                               |
 | prosemirror-tables@1.1.1                    | MIT          | https://github.com/prosemirror/prosemirror-tables                              |
 | prosemirror-transform@1.3.3                 | MIT          | https://github.com/prosemirror/prosemirror-transform                           |
-| prosemirror-view@1.23.5                     | MIT          | https://github.com/prosemirror/prosemirror-view                                |
+| prosemirror-view@1.23.6                     | MIT          | https://github.com/prosemirror/prosemirror-view                                |
 | react-dom@17.0.2                            | MIT          | https://github.com/facebook/react                                              |
 | react@17.0.2                                | MIT          | https://github.com/facebook/react                                              |
 | responsive-loader@2.3.0                     | BSD-3-Clause | https://github.com/dazuaz/responsive-loader                                    |
@@ -196,5 +196,5 @@
 | typescript@4.5.4                            | Apache-2.0   | https://github.com/Microsoft/TypeScript                                        |
 | ultra-runner@3.10.5                         | MIT          | https://github.com/folke/ultra-runner                                          |
 | unstated-next@1.1.0                         | MIT          |                                                                                |
-| vite@2.7.10                                 | MIT          | https://github.com/vitejs/vite                                                 |
+| vite@2.7.12                                 | MIT          | https://github.com/vitejs/vite                                                 |
 | wait-on@6.0.0                               | MIT          | https://github.com/jeffbski/wait-on                                            |
