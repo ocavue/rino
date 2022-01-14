@@ -22,6 +22,11 @@ const config = {
 
     asar: isCI,
 
+    // In order to make Windows auto update to work, I need to set the `artifactName` manually and
+    // make sure it doesn't include any spaces.
+    // Check this link for more details: https://github.com/electron-userland/electron-builder/issues/4223
+    artifactName: "${productName}-v${version}-${os}-${arch}.${ext}",
+
     mac: {
         // https://developer.apple.com/library/ios/documentation/General/Reference/InfoPlistKeyReference/Articles/LaunchServicesKeys.html#//apple_ref/doc/uid/TP40009250-SW8
         category: "public.app-category.productivity",
