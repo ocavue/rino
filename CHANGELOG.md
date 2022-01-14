@@ -1,5 +1,14 @@
 # Changelog
 
+### [0.39.2](https://github.com/ocavue/rino/compare/v0.39.1...v0.39.2) (2022-01-14)
+
+
+### Bug Fixes
+
+* **editor:** hide the cursor when exporting to PDF ([#913](https://github.com/ocavue/rino/issues/913)) ([690d156](https://github.com/ocavue/rino/commit/690d156421da149db1b7f10b91a49c7feec371d7))
+* **electron:** address an auto update issue on Windows ([#917](https://github.com/ocavue/rino/issues/917)) ([f1af97b](https://github.com/ocavue/rino/commit/f1af97b60f6232b7eaa00fec4c6ff321a98de4df))
+* **electron:** show a dialog before reloading a unsaved file ([#914](https://github.com/ocavue/rino/issues/914)) ([df6b9b8](https://github.com/ocavue/rino/commit/df6b9b812159ea712d3a7a2d8f28f91380eab85f))
+
 ## [0.39.1](https://github.com/ocavue/rino/compare/v0.39.0...v0.39.1) (2022-01-11)
 
 
