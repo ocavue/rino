@@ -2,7 +2,7 @@ import { useEffect, useMemo } from "react"
 
 import { basename } from "@rino.app/common"
 
-import { ipcInvoker } from "../ipc-renderer"
+import { ipcRendererAsyncSender } from "../ipc-renderer"
 import type { WorkbenchState } from "./use-workbench"
 
 export function useTitleEffect(state: WorkbenchState): void {
@@ -15,6 +15,6 @@ export function useTitleEffect(state: WorkbenchState): void {
     }, [state.hasUnsavedChanges, state.isSaving, state.isSerializing, state.path])
 
     useEffect(() => {
-        ipcInvoker.setTitle({ title })
+        ipcRendererAsyncSender.setTitle({ title })
     }, [title])
 }

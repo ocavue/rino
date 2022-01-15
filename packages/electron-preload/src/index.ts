@@ -1,26 +1,24 @@
-import { contextBridge, ipcRenderer } from "electron"
+import { contextBridge, IpcRenderer, ipcRenderer } from "electron"
 import log from "electron-log"
-
-import type { InvokeApi, IpcRenderer, SendApi, SyncInvokeApi } from "@rino.app/electron-types"
 
 contextBridge.exposeInMainWorld("ELECTRON_PRELOAD_ELECTRON_LOG", log)
 
-const electronIpcRenderer: IpcRenderer<SendApi, InvokeApi, SyncInvokeApi> = {
-    invoke: async (channel, ...params: Array<any>) => {
-        return ipcRenderer.invoke(channel, ...params)
-    },
-    invokeSync: (channel, ...params: Array<any>) => {
+const partialIpcRenderer: Pick<IpcRenderer, "invoke" | "sendSync" | "on" | "removeListener" | "removeAllListeners"> = {
+    sendSync: (channel: string, ...params: Array<any>) => {
         return ipcRenderer.sendSync(channel, ...params)
     },
-    on: (channel, listener: any) => {
-        ipcRenderer.on(channel, listener)
+    invoke: async (channel: string, ...params: Array<any>) => {
+        return ipcRenderer.invoke(channel, ...params)
     },
-    removeListener: (channel, listener: any) => {
-        ipcRenderer.removeListener(channel, listener)
+    on: (channel: string, listener: any) => {
+        return ipcRenderer.on(channel, listener)
     },
-    removeAllListeners: (channel) => {
-        ipcRenderer.removeAllListeners(channel)
+    removeListener: (channel: string, listener: any) => {
+        return ipcRenderer.removeListener(channel, listener)
+    },
+    removeAllListeners: (channel: string) => {
+        return ipcRenderer.removeAllListeners(channel)
     },
 }
 
-contextBridge.exposeInMainWorld("ELECTRON_PRELOAD_IPC_RENDERER", electronIpcRenderer)
+contextBridge.exposeInMainWorld("ELECTRON_PRELOAD_IPC_RENDERER", partialIpcRenderer)
