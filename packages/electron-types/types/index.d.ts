@@ -1,3 +1,3 @@
-export { IpcMainSender, IpcRendererReceiver } from "./main-to-renderer"
-export { IpcMainAsyncReceiver, IpcRendererAsyncSender } from "./renderer-to-main-async"
-export { IpcMainSyncReceiver, IpcRendererSyncSender } from "./renderer-to-main-sync"
+export { IpcMainSender, IpcRendererListener } from "./main-to-renderer"
+export { IpcRendererAsyncSender, IpcMainAsyncListener } from "./renderer-to-main-async"
+export { IpcRendererSyncSender, IpcMainSyncListener } from "./renderer-to-main-sync"

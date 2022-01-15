@@ -24,4 +24,4 @@ export type IpcMainSender = {
     [T in ApiType]: (window: BrowserWindow, options: ApiOption<T>) => void
 }
 
-export type IpcRendererReceiver = MainToRendererApi
+export type IpcRendererListener = MainToRendererApi

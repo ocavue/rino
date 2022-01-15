@@ -1,9 +1,11 @@
-import React, { FC, useMemo, useRef } from "react"
+import React, { FC, useCallback, useMemo, useRef } from "react"
 
-import { Editor, EditorHandle, WysiwygOptions } from "@rino.app/editor"
+import { sleep } from "@rino.app/common"
+import { Editor, EditorHandle, Mode, WysiwygOptions } from "@rino.app/editor"
+import { IpcRendererListener } from "@rino.app/electron-types"
 
 import { useBeforeUnload } from "./hooks/use-before-unload"
-import { useIpcRendererHandlers } from "./hooks/use-ipc-renderer-handlers"
+import { useIpcRendererListener } from "./hooks/use-ipc-renderer-listener"
 import { useWorkbench } from "./hooks/use-workbench"
 
 const wysiwygOptions: WysiwygOptions = {
@@ -28,13 +30,22 @@ const Workbench: FC = () => {
 
     useBeforeUnload(beforeUnload)
 
-    useIpcRendererHandlers({
-        setNotePath,
+    const beforeExportToPdf = useCallback(async () => {
+        editorRef.current?.switchMode(Mode.WYSIWYG)
+        editorRef.current?.resetSelection()
+        await sleep(0) // wait for the `resetSelection` to be applied
+        ;(document.activeElement as HTMLElement | null)?.blur()
+    }, [editorRef])
+
+    const listener: IpcRendererListener = {
         openFile,
         ensureFilePath,
-        closeWindow,
-        editorRef,
-    })
+        setNotePath,
+        beforeCloseWindow: closeWindow,
+        beforeExportToPdf,
+    }
+
+    useIpcRendererListener(listener)
 
     const note = useMemo(() => {
         return {

@@ -18,6 +18,6 @@ type ApiResult<T extends ApiType> = ReturnType<RendererToMainSyncApi[T]>
 
 export type IpcRendererSyncSender = RendererToMainSyncApi
 
-export type IpcMainSyncReceiver = {
+export type IpcMainSyncListener = {
     [T in ApiType]: (event: IpcMainEvent, options: ApiOption<T>) => ApiResult<T>
 }

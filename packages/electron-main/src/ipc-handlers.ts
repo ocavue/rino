@@ -1,6 +1,6 @@
 import { BrowserWindow, ipcMain } from "electron"
 
-import { IpcMainAsyncReceiver, IpcMainSyncReceiver } from "@rino.app/electron-types"
+import { IpcMainAsyncListener, IpcMainSyncListener } from "@rino.app/electron-types"
 
 import {
     askBeforeDeleteSync,
@@ -15,7 +15,7 @@ import { state } from "./state"
 import { closeWindow, createWindow } from "./window"
 
 export function registerIpcInvokeHandlers(): void {
-    const asyncListener: IpcMainAsyncReceiver = {
+    const asyncListener: IpcMainAsyncListener = {
         openFile: async (_, { path }) => {
             const filePath = path || (await askMarkdownFileForOpen())
             if (!filePath) return { canceled: true, path: "", content: "" }
@@ -76,7 +76,7 @@ export function registerIpcInvokeHandlers(): void {
         },
     }
 
-    const syncListener: IpcMainSyncReceiver = {
+    const syncListener: IpcMainSyncListener = {
         askMarkdownFileForSaveSync: (event) => {
             const win = BrowserWindow.fromWebContents(event.sender)
             return askMarkdownFileForSaveSync(win)
@@ -88,11 +88,11 @@ export function registerIpcInvokeHandlers(): void {
         },
     }
 
-    ipcMain.handle("RENDERER_TO_MAIN_ASYNC", async (event, type: keyof IpcMainAsyncReceiver, option: any) => {
+    ipcMain.handle("RENDERER_TO_MAIN_ASYNC", async (event, type: keyof IpcMainAsyncListener, option: any) => {
         return await asyncListener[type](event, option)
     })
 
-    ipcMain.on("RENDERER_TO_MAIN_SYNC", (event, type: keyof IpcMainSyncReceiver, option: any) => {
+    ipcMain.on("RENDERER_TO_MAIN_SYNC", (event, type: keyof IpcMainSyncListener, option: any) => {
         event.returnValue = syncListener[type](event, option)
     })
 }
