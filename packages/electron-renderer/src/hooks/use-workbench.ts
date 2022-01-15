@@ -2,9 +2,8 @@ import produce from "immer"
 import isPromise from "is-promise"
 import { Dispatch, useCallback, useEffect, useReducer } from "react"
 
-import { ipcInvoker, ipcSyncInvoker } from "../ipc-renderer"
+import { ipcRendererAsyncSender, ipcRendererSyncSender } from "../ipc-renderer"
 import { createTimeoutPromise } from "../utils/create-timeout-promise"
-import { withLogReducer } from "./reducer-logger"
 import { useTitleEffect } from "./use-title-effect"
 
 export type WorkbenchState = {
@@ -71,7 +70,7 @@ type CloseWindowAction = {
 
 async function asyncCloseWindow(state: WorkbenchState, action: CloseWindowAction, dispatch: WorkbenchDispatch): Promise<void> {
     if (!state.path) {
-        const { filePath, canceled, discarded } = await ipcInvoker.askMarkdownFileForClose()
+        const { filePath, canceled, discarded } = await ipcRendererAsyncSender.askMarkdownFileForClose()
         if (discarded) {
             // User discarded the content, close the window
             dispatch({ type: "DISCARD_CONTENT" })
@@ -113,7 +112,7 @@ type SaveFileAction = {
 }
 
 async function asyncSaveFile(state: WorkbenchState, dispatch: WorkbenchDispatch) {
-    await ipcInvoker.saveFile({ path: state.path, content: state.content })
+    await ipcRendererAsyncSender.saveFile({ path: state.path, content: state.content })
     dispatch({ type: "FINISH_SAVE_FILE" })
 }
 
@@ -147,7 +146,7 @@ type EnsureFilePathAction = {
 }
 
 async function asyncEnsureFilePath(state: WorkbenchState, action: EnsureFilePathAction, dispatch: WorkbenchDispatch): Promise<void> {
-    const { filePath, canceled } = await ipcInvoker.askMarkdownFileForSave()
+    const { filePath, canceled } = await ipcRendererAsyncSender.askMarkdownFileForSave()
     if (!canceled && filePath) {
         dispatch({ type: "SET_NOTE_PATH", payload: { path: filePath } })
     }
@@ -263,7 +262,7 @@ function executePendingActions(state: WorkbenchState, dispatch: WorkbenchDispatc
     return state
 }
 
-function workbenchReducer(prevState: WorkbenchState, action: WorkbenchAction): WorkbenchState {
+function workbenchReducerCore(prevState: WorkbenchState, action: WorkbenchAction): WorkbenchState {
     const dispatch = prevState.dispatch
     return produce(prevState, (state: WorkbenchState): WorkbenchState => {
         if (action.type === "CLEAN_RUNNING_ACTION") {
@@ -277,10 +276,12 @@ function workbenchReducer(prevState: WorkbenchState, action: WorkbenchAction): W
         return executePendingActions(state, dispatch)
     })
 }
-const workbenchReducerWithLogger = withLogReducer(workbenchReducer)
+
+const workbenchReducer = workbenchReducerCore
+// const workbenchReducer = withLogReducer(workbenchReducerCore)
 
 export function useWorkbench() {
-    const [state, dispatch] = useReducer(workbenchReducerWithLogger, initialState)
+    const [state, dispatch] = useReducer(workbenchReducer, initialState)
 
     useEffect(() => {
         dispatch({ type: "SET_DISPATCH", payload: { dispatch } })
@@ -296,7 +297,7 @@ export function useWorkbench() {
 
     useEffect(() => {
         if (state.isClosing && canCloseWindow) {
-            ipcInvoker.closeWindow()
+            ipcRendererAsyncSender.closeWindow()
         }
     }, [state.isClosing, canCloseWindow])
 
@@ -308,7 +309,7 @@ export function useWorkbench() {
         dispatch({ type: "OPEN_FILE", payload: { path, content } })
     }, [])
 
-    const setNotePath = useCallback((path: string) => {
+    const setNotePath = useCallback(({ path }: { path: string }) => {
         dispatch({ type: "SET_NOTE_PATH", payload: { path } })
     }, [])
 
@@ -330,7 +331,7 @@ export function useWorkbench() {
         }
 
         if (!state.path) {
-            const { result } = ipcSyncInvoker.askBeforeDeleteSync()
+            const { result } = ipcRendererSyncSender.askBeforeDeleteSync()
             if (result === "cancel") {
                 return { canUnload: false }
             } else if (result === "delete") {
@@ -338,6 +339,8 @@ export function useWorkbench() {
             } else if (result === "save") {
                 dispatch({ type: "ENSURE_FILE_PATH" })
                 return { canUnload: false }
+            } else {
+                throw new Error(`Unknown result ${result}`)
             }
         }
 

@@ -1,9 +1,10 @@
-import { RefObject, useEffect } from "react"
+import { RefObject, useCallback, useEffect, useRef } from "react"
 
 import { sleep } from "@rino.app/common"
 import { EditorHandle, Mode } from "@rino.app/editor"
+import { IpcRendererReceiver } from "@rino.app/electron-types"
 
-import { ipcRenderer } from "../ipc-renderer"
+import { ipcRendererV2 } from "../ipc-renderer"
 
 export function useIpcRendererHandlers({
     openFile,
@@ -14,55 +15,34 @@ export function useIpcRendererHandlers({
 }: {
     openFile: (props: { path: string; content: string }) => void
     ensureFilePath: () => void
-    setNotePath: (path: string) => void
+    setNotePath: (props: { path: string }) => void
     closeWindow: () => void
     editorRef: RefObject<EditorHandle>
 }) {
-    useEffect(() => {
-        ipcRenderer.on("openFile", (event, { path, content }) => {
-            openFile({ path, content })
-        })
-        return () => {
-            ipcRenderer.removeAllListeners("openFile")
-        }
-    }, [openFile])
-
-    useEffect(() => {
-        ipcRenderer.on("ensureFilePath", (event) => {
-            ensureFilePath()
-        })
-        return () => {
-            ipcRenderer.removeAllListeners("ensureFilePath")
-        }
-    }, [ensureFilePath])
-
-    useEffect(() => {
-        ipcRenderer.on("setNotePath", (event, { path }) => {
-            setNotePath(path)
-        })
-        return () => {
-            ipcRenderer.removeAllListeners("setNotePath")
-        }
-    }, [setNotePath])
-
-    useEffect(() => {
-        ipcRenderer.on("beforeCloseWindow", (event) => {
-            closeWindow()
-        })
-        return () => {
-            ipcRenderer.removeAllListeners("beforeCloseWindow")
-        }
-    }, [closeWindow])
-
-    useEffect(() => {
-        ipcRenderer.on("beforeExportToPdf", async (event) => {
-            editorRef.current?.switchMode(Mode.WYSIWYG)
-            editorRef.current?.resetSelection()
-            await sleep(0) // wait for the `resetSelection` to be applied
-            ;(document.activeElement as HTMLElement | null)?.blur()
-        })
-        return () => {
-            ipcRenderer.removeAllListeners("beforeExportToPdf")
-        }
+    const beforeExportToPdf = useCallback(async () => {
+        editorRef.current?.switchMode(Mode.WYSIWYG)
+        editorRef.current?.resetSelection()
+        await sleep(0) // wait for the `resetSelection` to be applied
+        ;(document.activeElement as HTMLElement | null)?.blur()
     }, [editorRef])
+
+    const receiver: IpcRendererReceiver = {
+        openFile,
+        ensureFilePath,
+        setNotePath,
+        beforeCloseWindow: closeWindow,
+        beforeExportToPdf,
+    }
+
+    const ipcRendererReceiver = useRef<IpcRendererReceiver>(receiver)
+    ipcRendererReceiver.current = receiver
+
+    useEffect(() => {
+        ipcRendererV2.on("MAIN_TO_RENDEREER", (event, type: keyof IpcRendererReceiver, options: any) => {
+            return ipcRendererReceiver.current[type](options)
+        })
+        return () => {
+            ipcRendererV2.removeAllListeners("MAIN_TO_RENDEREER")
+        }
+    }, [])
 }

@@ -1,25 +1,29 @@
-import type { InvokeApi, IpcInvoker, IpcRenderer, IpcSyncInvoker, SendApi, SyncInvokeApi } from "@rino.app/electron-types"
+import type { IpcRenderer as ElectronIpcRenderer } from "electron"
 
-export const ipcRenderer: IpcRenderer<SendApi, InvokeApi, SyncInvokeApi> = (window as any)["ELECTRON_PRELOAD_IPC_RENDERER"]
+import { IpcRendererAsyncSender, IpcRendererSyncSender } from "@rino.app/electron-types"
 
-export const ipcInvoker: IpcInvoker<InvokeApi> = new Proxy(
+export const ipcRendererV2: Pick<ElectronIpcRenderer, "invoke" | "sendSync" | "on" | "removeListener" | "removeAllListeners"> = (
+    window as any
+)["ELECTRON_PRELOAD_IPC_RENDERER"]
+
+export const ipcRendererAsyncSender: IpcRendererAsyncSender = new Proxy(
     {},
     {
-        get: (_, channel: keyof InvokeApi) => {
-            return async (...params: any) => {
-                return await ipcRenderer.invoke(channel, ...params)
+        get: (_, type: string) => {
+            return (option: any) => {
+                return ipcRendererV2.invoke("RENDERER_TO_MAIN_ASYNC", type, option)
             }
         },
     },
-) as IpcInvoker<InvokeApi>
+) as any
 
-export const ipcSyncInvoker: IpcSyncInvoker<SyncInvokeApi> = new Proxy(
+export const ipcRendererSyncSender: IpcRendererSyncSender = new Proxy(
     {},
     {
-        get: (_, channel: keyof SyncInvokeApi) => {
-            return (...params: any) => {
-                return ipcRenderer.invokeSync(channel, ...params)
+        get: (_, type: string) => {
+            return (option: any) => {
+                return ipcRendererV2.sendSync("RENDERER_TO_MAIN_SYNC", type, option)
             }
         },
     },
-) as IpcSyncInvoker<SyncInvokeApi>
+) as any

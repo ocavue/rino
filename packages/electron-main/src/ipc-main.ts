@@ -1,34 +1,14 @@
-import { BrowserWindow, ipcMain as electronIpcMain } from "electron"
+import { BrowserWindow } from "electron"
 
-import type { InvokeApi, IpcMain, IpcSender, SendApi, SyncInvokeApi } from "@rino.app/electron-types"
+import type { IpcMainSender } from "@rino.app/electron-types"
 
-export const ipcMain: IpcMain<SendApi, InvokeApi, SyncInvokeApi> = {
-    send: (window: BrowserWindow, channel, ...args): void => {
-        window.webContents.send(channel, ...args)
-    },
-
-    handle: (channel, listener: any): void => {
-        electronIpcMain.handle(channel, listener)
-    },
-
-    syncHandle: (channel, listener: any): void => {
-        electronIpcMain.on(channel, (event, ...args) => {
-            event.returnValue = listener(event, ...args)
-        })
-    },
-
-    removeHandler: (channel): void => {
-        electronIpcMain.removeHandler(channel)
-    },
-}
-
-export const ipcSender: IpcSender<SendApi> = new Proxy(
+export const ipcSender: IpcMainSender = new Proxy(
     {},
     {
-        get: (_, channel: keyof SendApi) => {
-            return async (window: BrowserWindow, ...params: any) => {
-                return ipcMain.send(window, channel, ...params)
+        get: (_, type: keyof IpcMainSender) => {
+            return async (window: BrowserWindow, option: any) => {
+                return window.webContents.send("MAIN_TO_RENDEREER", type, option)
             }
         },
     },
-) as IpcSender<SendApi>
+) as any
