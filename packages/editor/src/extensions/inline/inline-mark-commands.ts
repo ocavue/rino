@@ -10,8 +10,8 @@ type CreateInlineKeyBindingProps = {
 
 function doToggleInlineMark({ left, right }: CreateInlineKeyBindingProps): CommandFunction {
     return (props: CommandFunctionProps): boolean => {
-        const { tr, dispatch } = props
-        const { $from, $to, anchor, head } = props.state.selection
+        const { tr, dispatch, state } = props
+        const { $from, $to, anchor, head } = state.selection
 
         if ($from.sameParent($to) && $from.parent.type.isTextblock) {
             if (dispatch) {
