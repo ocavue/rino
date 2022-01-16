@@ -9,7 +9,7 @@ import React, { useCallback, useEffect, useImperativeHandle, useLayoutEffect, us
 
 import { metaKey } from "@rino.app/common"
 
-import { ToggleableInlineMarkName, ToggleInlineMark } from "../extensions"
+import { ToggleableInlineMarkName } from "../extensions"
 import { editorReducer, initializeState } from "./editor-state"
 import { SourceCodeEditor } from "./source-code"
 import { EDITOR_THEME_GITHUB } from "./theme/github"
