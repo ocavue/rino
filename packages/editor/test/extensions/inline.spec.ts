@@ -1,4 +1,5 @@
 import { renderEditor } from "jest-remirror"
+import { EditorState } from "prosemirror-state"
 
 import {
     RinoInlineDecorationExtension,
@@ -13,7 +14,7 @@ const setup = () => {
         view,
         add,
         nodes: { doc, p },
-        attributeMarks: { mdCodeSpace, mdCodeText, mdText, mdMark },
+        attributeMarks: { mdCodeSpace, mdCodeText, mdText, mdMark, mdStrong, mdEm, mdDel },
         manager,
         schema,
     } = renderEditor([
@@ -31,6 +32,9 @@ const setup = () => {
         add,
         doc,
         p,
+        mdStrong,
+        mdEm,
+        mdDel,
         mdCodeSpace,
         mdCodeText,
         mdText,
@@ -66,3 +70,82 @@ describe("Mark transform", () => {
         })
     })
 })
+
+describe("Toggle inline marks by using shortcuts", () => {
+    const { doc, p, add, mdStrong, mdEm, mdDel, mdText, mdMark } = setup()
+
+    describe("add marks", () => {
+        test("strong", () => {
+            const editor = add(doc(p("hello <start>world<end>")))
+
+            editor.shortcut("Mod-b")
+
+            expect(editor.state.doc).toEqualRemirrorDocument(
+                doc(
+                    p(
+                        mdText({ depth: 1, first: true, last: true })("hello "),
+                        mdMark({ depth: 1, first: true })("**"),
+                        mdStrong({ depth: 2 })("world"),
+                        mdMark({ depth: 1, last: true })("**"),
+                    ),
+                ),
+            )
+
+            expect(getSelectedText(editor.state)).toEqual("world")
+        })
+
+        test("emphasis", () => {
+            const editor = add(doc(p("hello <start>w<end>orld")))
+
+            editor.shortcut("Mod-i")
+
+            expect(editor.state.doc).toEqualRemirrorDocument(
+                doc(
+                    p(
+                        mdText({ depth: 1, first: true, last: true })("hello "),
+                        mdMark({ depth: 1, first: true })("*"),
+                        mdEm({ depth: 2 })("w"),
+                        mdMark({ depth: 1, last: true })("*"),
+                        mdText({ depth: 1, first: true, last: true })("orld"),
+                    ),
+                ),
+            )
+
+            expect(getSelectedText(editor.state)).toEqual("w")
+        })
+
+        test("strike", () => {
+            const editor = add(doc(p("hello <start><end>")))
+
+            editor.shortcut("mod-shift-s")
+
+            expect(editor.state.doc).toEqualRemirrorDocument(
+                doc(
+                    p(
+                        mdText({ depth: 1, first: true, last: true })("hello ~~~~"), //
+                    ),
+                ),
+            )
+
+            expect(getSelectedText(editor.state)).toEqual("")
+
+            editor.insertText("x")
+
+            expect(editor.state.doc).toEqualRemirrorDocument(
+                doc(
+                    p(
+                        mdText({ depth: 1, first: true, last: true })("hello "),
+                        mdMark({ depth: 1, first: true })("~~"),
+                        mdDel({ depth: 2 })("x"),
+                        mdMark({ depth: 1, last: true })("~~"),
+                    ),
+                ),
+            )
+        })
+    })
+})
+
+function getSelectedText(state: EditorState): string {
+    const { from, to } = state.selection
+    return state.doc.textBetween(from, to)
+}
