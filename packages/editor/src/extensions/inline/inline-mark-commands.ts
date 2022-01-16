@@ -13,7 +13,7 @@ function doToggleInlineMark({ left, right }: CreateInlineKeyBindingProps): Comma
         const { tr, dispatch } = props
         const { $from, $to, anchor, head } = props.state.selection
 
-        if ($from.sameParent($to) && $from.parent.type.name === "paragraph") {
+        if ($from.sameParent($to) && $from.parent.type.isTextblock) {
             if (dispatch) {
                 tr.insertText(right, $to.pos)
                 tr.insertText(left, $from.pos)
