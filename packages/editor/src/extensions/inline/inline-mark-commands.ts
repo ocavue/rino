@@ -8,7 +8,7 @@ type CreateInlineKeyBindingProps = {
     right: string
 }
 
-function createInlineKeyBinding({ left, right }: CreateInlineKeyBindingProps): CommandFunction {
+function doToggleInlineMark({ left, right }: CreateInlineKeyBindingProps): CommandFunction {
     return (props: CommandFunctionProps): boolean => {
         const { tr, dispatch } = props
         const { $from, $to, anchor, head } = props.state.selection
@@ -34,13 +34,13 @@ export type ToggleableInlineMarkName = "mdStrong" | "mdEm" | "mdCodeText" | "mdD
 export function toggleInlineMark(mark: ToggleableInlineMarkName): CommandFunction {
     switch (mark) {
         case "mdStrong":
-            return createInlineKeyBinding({ left: "**", right: "**" })
+            return doToggleInlineMark({ left: "**", right: "**" })
         case "mdEm":
-            return createInlineKeyBinding({ left: "*", right: "*" })
+            return doToggleInlineMark({ left: "*", right: "*" })
         case "mdCodeText":
-            return createInlineKeyBinding({ left: "`", right: "`" })
+            return doToggleInlineMark({ left: "`", right: "`" })
         case "mdDel":
-            return createInlineKeyBinding({ left: "~~", right: "~~" })
+            return doToggleInlineMark({ left: "~~", right: "~~" })
         default:
             throwUnknownMarkError(mark)
     }
