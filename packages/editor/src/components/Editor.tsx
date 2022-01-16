@@ -1,7 +1,7 @@
 import "./polyfill"
 
 import { cx } from "@emotion/css"
-import { Extension, RemirrorEventListenerProps } from "@remirror/core"
+import { Extension, RemirrorEventListenerProps, RemirrorManager } from "@remirror/core"
 import { RemirrorProps } from "@remirror/react-core"
 import { debounce } from "lodash-es"
 import { TextSelection } from "prosemirror-state"
@@ -9,11 +9,12 @@ import React, { useCallback, useEffect, useImperativeHandle, useLayoutEffect, us
 
 import { metaKey } from "@rino.app/common"
 
+import { ToggleableInlineMarkName, ToggleInlineMark } from "../extensions"
 import { editorReducer, initializeState } from "./editor-state"
 import { SourceCodeEditor } from "./source-code"
 import { EDITOR_THEME_GITHUB } from "./theme/github"
 import { Mode, Note, WysiwygOptions } from "./types"
-import { WysiwygEditor } from "./wysiwyg"
+import { WysiwygEditor, WysiwygExtension } from "./wysiwyg"
 
 export type EditorProps = {
     note: Readonly<Note>
@@ -33,6 +34,8 @@ export type EditorHandle = {
     // Set the selection at the beginning of the editor. By doing this, we can
     // make sure any popups (e.g. language menu for code blocks) are hidden.
     resetSelection: () => void
+
+    toggleInlineMark: (mark: ToggleableInlineMarkName) => void
 }
 
 const defaultWysiwygOptions: WysiwygOptions = {}
@@ -135,6 +138,10 @@ const Editor: React.ForwardRefRenderFunction<EditorHandle, EditorProps> = (
                         return
                     }
                     view.dispatch(view.state.tr.setSelection(TextSelection.near(view.state.doc.resolve(1))))
+                },
+                toggleInlineMark: (mark: ToggleableInlineMarkName) => {
+                    const m: RemirrorManager<WysiwygExtension> = manager
+                    m.store.commands.toggleInlineMark?.(mark)
                 },
             }
         },

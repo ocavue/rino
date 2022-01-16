@@ -1,7 +1,7 @@
 import React, { FC, useCallback, useMemo, useRef } from "react"
 
 import { sleep } from "@rino.app/common"
-import { Editor, EditorHandle, Mode, WysiwygOptions } from "@rino.app/editor"
+import { Editor, EditorHandle, Mode, ToggleableInlineMarkName, WysiwygOptions } from "@rino.app/editor"
 import { IpcRendererListener } from "@rino.app/electron-types"
 
 import { useBeforeUnload } from "./hooks/use-before-unload"
@@ -37,12 +37,20 @@ const Workbench: FC = () => {
         ;(document.activeElement as HTMLElement | null)?.blur()
     }, [editorRef])
 
+    const toggleInlineMark = useCallback(
+        ({ mark }: { mark: ToggleableInlineMarkName }) => {
+            editorRef.current?.toggleInlineMark(mark)
+        },
+        [editorRef],
+    )
+
     const listener: IpcRendererListener = {
         openFile,
         ensureFilePath,
         setNotePath,
         beforeCloseWindow: closeWindow,
         beforeExportToPdf,
+        toggleInlineMark,
     }
 
     useIpcRendererListener(listener)
