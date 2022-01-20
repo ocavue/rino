@@ -70,8 +70,6 @@ export class RinoCodeMirrorExtension extends CodeMirrorExtension {
             ignoreSelection: true,
             stopEvent: () => true,
             key: "language-menu",
-            // @ts-expect-error: this needed to be fixed in the next version of @types/prosemirror-view
-            // TODO: fix the types
             destroy: destroyLanguageMenu,
         })
         return DecorationSet.create(state.doc, [deco])
