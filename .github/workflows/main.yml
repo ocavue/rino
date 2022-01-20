@@ -26,6 +26,17 @@ jobs:
           name: home_dist
           path: ./packages/home/dist
 
+  build_packages:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: ./.github/actions/dependencies
+
+      - name: Build electron dependencies
+        run: |
+          pnpm --filter '@rino.app/electron-*...' build
+
   build_electron:
     runs-on: macos-10.15
     steps:
@@ -40,7 +51,7 @@ jobs:
           echo "$pkgjson" > ./packages/electron/package.json
           cat ./packages/electron/package.json
 
-      - name: Build dependencies
+      - name: Build electron dependencies
         run: |
           pnpm --filter '@rino.app/electron-*...' build
 
