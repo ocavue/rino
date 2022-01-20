@@ -51,7 +51,7 @@ jobs:
           echo "$pkgjson" > ./packages/electron/package.json
           cat ./packages/electron/package.json
 
-      - name: Build dependencies
+      - name: Build electron dependencies
         run: |
           pnpm --filter '@rino.app/electron-*...' build
 
