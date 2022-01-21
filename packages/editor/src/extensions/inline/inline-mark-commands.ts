@@ -1,4 +1,4 @@
-import { CommandFunction, CommandFunctionProps, DispatchFunction, ProsemirrorNode } from "@remirror/core"
+import { CommandFunction, CommandFunctionProps, ProsemirrorNode } from "@remirror/core"
 import { TextSelection, Transaction } from "prosemirror-state"
 
 import { updateRangeMarks } from "./inline-mark-helpers"
@@ -28,64 +28,62 @@ function findMarkIndex(textBlockNode: ProsemirrorNode, mark: string, fromIndex: 
     return false
 }
 
-function deleteSimpleInlineMark() {}
-
-function toggleSimpleInlineMark({ left, right, mark }: CreateInlineKeyBindingProps): CommandFunction {
+function deleteSimpleInlineMark({ left, right, mark }: CreateInlineKeyBindingProps): CommandFunction {
     return (props: CommandFunctionProps): boolean => {
         const { tr, dispatch, state } = props
-        const { $from, $to, anchor, head, empty } = state.selection
+        const { $from, $to, empty } = state.selection
 
-        if (!$from.sameParent($to) || !$from.parent.type.isTextblock) {
-            return false
-        }
+        const textBlockNode = $from.parent
+        const textBlockStart = $from.start()
 
-        // remove mark
-        {
-            const textBlockNode = $from.parent
-            const textBlockStart = $from.start()
+        let fromIndex = $from.index()
+        let toIndex = $to.index()
 
-            let fromIndex = $from.index()
-            let toIndex = $to.index()
-
-            // `$to` is between two text nodes and `toIndex` is pointing to the right text node.
-            if ($to.textOffset === 0) {
-                if (empty) {
-                    fromIndex = Math.max(fromIndex - 1, 0)
-                } else if (toIndex > fromIndex) {
-                    toIndex--
-                }
-            }
-
-            const existedMarkIndex = findMarkIndex(textBlockNode, mark, fromIndex, toIndex, empty)
-            console.debug("existedMarkIndex", fromIndex, toIndex, existedMarkIndex)
-
-            if (existedMarkIndex !== false) {
-                let found = false
-                for (let i = existedMarkIndex; i < textBlockNode.childCount; i++) {
-                    const textNode = textBlockNode.child(i)
-                    if (hasMark(textNode, "mdMark") && textNode.text === right) {
-                        deleteTextBlockChild(tr, textBlockNode, textBlockStart, i)
-                        found = true
-                    }
-                }
-                for (let i = existedMarkIndex; i >= 0; i--) {
-                    const textNode = textBlockNode.child(i)
-                    if (hasMark(textNode, "mdMark") && textNode.text === left) {
-                        deleteTextBlockChild(tr, textBlockNode, textBlockStart, i)
-                        found = true
-                    }
-                }
-                if (found) {
-                    if (dispatch) {
-                        updateRangeMarks(tr)
-                        dispatch(tr)
-                    }
-                    return true
-                }
+        // `$to` is between two text nodes and `toIndex` is pointing to the right text node.
+        if ($to.textOffset === 0) {
+            if (empty) {
+                fromIndex = Math.max(fromIndex - 1, 0)
+            } else if (toIndex > fromIndex) {
+                toIndex--
             }
         }
 
-        // add mark
+        const existedMarkIndex = findMarkIndex(textBlockNode, mark, fromIndex, toIndex, empty)
+
+        if (existedMarkIndex !== false) {
+            let found = false
+            for (let i = existedMarkIndex; i < textBlockNode.childCount; i++) {
+                const textNode = textBlockNode.child(i)
+                if (hasMark(textNode, "mdMark") && textNode.text === right) {
+                    deleteTextBlockChild(tr, textBlockNode, textBlockStart, i)
+                    found = true
+                }
+            }
+            for (let i = existedMarkIndex; i >= 0; i--) {
+                const textNode = textBlockNode.child(i)
+                if (hasMark(textNode, "mdMark") && textNode.text === left) {
+                    deleteTextBlockChild(tr, textBlockNode, textBlockStart, i)
+                    found = true
+                }
+            }
+            if (found) {
+                if (dispatch) {
+                    updateRangeMarks(tr)
+                    dispatch(tr)
+                }
+                return true
+            }
+        }
+
+        return false
+    }
+}
+
+function addSimpleInlineMark({ left, right }: CreateInlineKeyBindingProps): CommandFunction {
+    return (props: CommandFunctionProps): boolean => {
+        const { tr, dispatch, state } = props
+        const { $from, $to, anchor, head } = state.selection
+
         if (dispatch) {
             tr.insertText(right, $to.pos)
             tr.insertText(left, $from.pos)
@@ -94,7 +92,28 @@ function toggleSimpleInlineMark({ left, right, mark }: CreateInlineKeyBindingPro
             updateRangeMarks(tr)
             dispatch(tr)
         }
+
         return true
+    }
+}
+
+function toggleSimpleInlineMark({ left, right, mark }: CreateInlineKeyBindingProps): CommandFunction {
+    return (props: CommandFunctionProps): boolean => {
+        const { $from, $to } = props.state.selection
+
+        if (!$from.sameParent($to) || !$from.parent.type.isTextblock) {
+            return false
+        }
+
+        if (deleteSimpleInlineMark({ left, right, mark })(props)) {
+            return true
+        }
+
+        if (addSimpleInlineMark({ left, right, mark })(props)) {
+            return true
+        }
+
+        return false
     }
 }
 
@@ -130,11 +149,9 @@ function hasMark(node: ProsemirrorNode | null | undefined, mark: string): boolea
 }
 
 function deleteTextBlockChild(tr: Transaction, textBlockNode: ProsemirrorNode, textBlockStart: number, childIndex: number): Transaction {
-    console.debug("deleteTextBlockChild", textBlockStart, childIndex)
     let offset = textBlockStart
     for (let i = 0; i < childIndex; i++) {
         offset += textBlockNode.child(i).nodeSize
     }
-    console.debug("deleteTextBlockChild delete", offset, offset + textBlockNode.child(childIndex).nodeSize)
     return tr.delete(offset, offset + textBlockNode.child(childIndex).nodeSize)
 }
