@@ -15,7 +15,7 @@ function findMarkIndex(textBlockNode: ProsemirrorNode, mark: string, fromIndex: 
             return index
         }
     }
-    if (empty) {
+    if (empty || fromIndex === toIndex) {
         if (hasMark(textBlockNode.maybeChild(fromIndex), "mdMark") && hasMark(textBlockNode.maybeChild(fromIndex - 1), mark)) {
             return fromIndex - 1
         }
