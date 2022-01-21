@@ -78,6 +78,23 @@ export function buildApplicationMenu(): Menu {
         ],
     }
 
+    const formatInlineMarkData = [
+        ["Strong", "CommandOrControl+B", "mdStrong"],
+        ["Emphasis", "CommandOrControl+I", "mdEm"],
+        ["Code", "CommandOrControl+E", "mdCodeText"],
+        ["Strike", "CommandOrControl+Shift+S", "mdDel"],
+    ] as const
+
+    const formatInlineMarkMenus: MenuItemConstructorOptions[] = formatInlineMarkData.map(([label, accelerator, mark]) => ({
+        label: label,
+        accelerator: accelerator,
+        click: (_, win, event) => {
+            if (win && !event.triggeredByAccelerator) {
+                ipcSender.toggleInlineMark(win, { mark })
+            }
+        },
+    }))
+
     menu = Menu.buildFromTemplate([
         ...(plateform.IS_MAC ? [macMenu] : []),
         {
@@ -152,6 +169,10 @@ export function buildApplicationMenu(): Menu {
                     accelerator: "CommandOrControl+A",
                 },
             ],
+        },
+        {
+            label: "Format",
+            submenu: formatInlineMarkMenus,
         },
         {
             label: "View",

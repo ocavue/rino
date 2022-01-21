@@ -1,6 +1,7 @@
-import { MarkExtension, MarkExtensionSpec, NodeView, NodeViewMethod } from "@remirror/core"
+import { KeyBindings, MarkExtension, MarkExtensionSpec, NodeView, NodeViewMethod } from "@remirror/core"
 
 import { formatHref } from "./format-href"
+import { toggleInlineMark } from "./inline-mark-commands"
 
 const commonAttrs = {
     depth: { default: 0 },
@@ -21,6 +22,11 @@ class MetaKey extends MarkExtension {
             inclusive: false,
             attrs: endpointAttrs,
             toDOM: (mark, inline) => ["span", { class: "md-mark" }, 0],
+        }
+    }
+    createCommands() {
+        return {
+            toggleInlineMark: toggleInlineMark,
         }
     }
 }
@@ -49,6 +55,9 @@ class Emphasis extends MarkExtension {
             toDOM: (mark, inline) => ["em", 0],
         }
     }
+    createKeymap(): KeyBindings {
+        return { "mod-i": toggleInlineMark(this.name) }
+    }
 }
 
 class Strong extends MarkExtension {
@@ -62,6 +71,9 @@ class Strong extends MarkExtension {
             toDOM: (mark, inline) => ["strong", 0],
         }
     }
+    createKeymap(): KeyBindings {
+        return { "mod-b": toggleInlineMark(this.name) }
+    }
 }
 
 class CodeText extends MarkExtension {
@@ -74,6 +86,9 @@ class CodeText extends MarkExtension {
             attrs: commonAttrs,
             toDOM: (mark, inline) => ["code", 0],
         }
+    }
+    createKeymap(): KeyBindings {
+        return { "mod-e": toggleInlineMark(this.name) }
     }
 }
 
@@ -100,6 +115,9 @@ class Delete extends MarkExtension {
             attrs: commonAttrs,
             toDOM: (mark, inline) => ["del", 0],
         }
+    }
+    createKeymap(): KeyBindings {
+        return { "mod-shift-s": toggleInlineMark(this.name) }
     }
 }
 

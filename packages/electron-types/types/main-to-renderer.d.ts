@@ -2,6 +2,8 @@
 
 import type { BrowserWindow } from "electron"
 
+import type { ToggleableInlineMarkName } from "@rino.app/editor"
+
 import { VoidIfUndefined } from "./utils"
 
 type MainToRendererApi = {
@@ -14,6 +16,8 @@ type MainToRendererApi = {
     beforeCloseWindow: () => void
 
     beforeExportToPdf: () => void
+
+    toggleInlineMark: (options: { mark: ToggleableInlineMarkName }) => void
 }
 
 type ApiType = keyof MainToRendererApi
