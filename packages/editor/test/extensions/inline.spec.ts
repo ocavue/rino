@@ -1,4 +1,5 @@
-import { renderEditor } from "jest-remirror"
+import { AnyExtension } from "@remirror/core"
+import { RemirrorTestChain, renderEditor } from "jest-remirror"
 import { EditorState } from "prosemirror-state"
 
 import {
@@ -151,13 +152,30 @@ describe("Toggle inline marks by using shortcuts", () => {
     })
 
     describe("remove marks", () => {
+        const expectSimpleResult = <Extension extends AnyExtension>(
+            originText: string,
+            i: number,
+            j: number,
+            editor: RemirrorTestChain<Extension>,
+        ) => {
+            expect(editor.state.doc).toEqualRemirrorDocument(doc(p(mdText({ depth: 1, first: true, last: true })("hello world"))))
+
+            const expectedSelectedText = originText.slice(i, j).replaceAll("|", "").replaceAll("*", "")
+            expect(getSelectedText(editor.state)).toEqual(expectedSelectedText)
+            if (!expectedSelectedText) {
+                editor.insertText("X")
+                expect(editor.state.doc.textContent).toEqual(
+                    "hello " + (originText.slice(0, i) + "X" + originText.slice(j)).replaceAll("|", "").replaceAll("*", ""),
+                )
+            }
+        }
+
         describe("simple strong", () => {
             const originText = "**|world|**"
 
             for (let i = 0; i <= originText.length; i++) {
                 for (let j = i; j <= originText.length; j++) {
                     const tagedText = originText.slice(0, i) + "<start>" + originText.slice(i, j) + "<end>" + originText.slice(j)
-                    const expectedSelectedText = originText.slice(i, j).replaceAll("|", "").replaceAll("*", "")
 
                     const [part1, part2, part3] = tagedText.split("|")
                     test(`${part1} ${part2} ${part3}`, () => {
@@ -172,11 +190,7 @@ describe("Toggle inline marks by using shortcuts", () => {
                             ),
                         )
                         editor.shortcut("Mod-b")
-                        expect(editor.state.doc).toEqualRemirrorDocument(
-                            doc(p(mdText({ depth: 1, first: true, last: true })("hello world"))),
-                        )
-                        expect(getSelectedText(editor.state)).toEqual(expectedSelectedText)
-                        // expect(editor.state.selection.from).toEqual(expectedSelectronFrom)
+                        expectSimpleResult(originText, i, j, editor)
                     })
                 }
             }
@@ -188,7 +202,6 @@ describe("Toggle inline marks by using shortcuts", () => {
             for (let i = 0; i <= originText.length; i++) {
                 for (let j = i; j <= originText.length; j++) {
                     const tagedText = originText.slice(0, i) + "<start>" + originText.slice(i, j) + "<end>" + originText.slice(j)
-                    const expectedSelectedText = originText.slice(i, j).replaceAll("|", "").replaceAll("*", "")
 
                     const [part1, part2, part3] = tagedText.split("|")
                     test(`${part1} ${part2} ${part3}`, () => {
@@ -203,11 +216,7 @@ describe("Toggle inline marks by using shortcuts", () => {
                             ),
                         )
                         editor.shortcut("Mod-i")
-                        expect(editor.state.doc).toEqualRemirrorDocument(
-                            doc(p(mdText({ depth: 1, first: true, last: true })("hello world"))),
-                        )
-                        expect(getSelectedText(editor.state)).toEqual(expectedSelectedText)
-                        // expect(editor.state.selection.from).toEqual(expectedSelectronFrom)
+                        expectSimpleResult(originText, i, j, editor)
                     })
                 }
             }
