@@ -141,11 +141,11 @@
 | commonmark-spec@0.30.0                       | MIT          | https://github.com/commonmark/CommonMark                                       |
 | electron-builder@22.14.5                     | MIT          | https://github.com/electron-userland/electron-builder                          |
 | electron-context-menu@3.1.1                  | MIT          | https://github.com/sindresorhus/electron-context-menu                          |
-| electron-log@4.4.4                           | MIT          | https://github.com/megahertz/electron-log                                      |
+| electron-log@4.4.5                           | MIT          | https://github.com/megahertz/electron-log                                      |
 | electron-notarize@1.1.1                      | MIT          | https://github.com/electron/electron-notarize                                  |
 | electron-updater@4.6.1                       | MIT          | https://github.com/electron-userland/electron-builder                          |
 | electron@16.0.7                              | MIT          | https://github.com/electron/electron                                           |
-| esbuild@0.14.11                              | MIT          | https://github.com/evanw/esbuild                                               |
+| esbuild@0.14.12                              | MIT          | https://github.com/evanw/esbuild                                               |
 | eslint-config-prettier@8.3.0                 | MIT          | https://github.com/prettier/eslint-config-prettier                             |
 | eslint-plugin-jest@25.7.0                    | MIT          | https://github.com/jest-community/eslint-plugin-jest                           |
 | eslint-plugin-prettier@4.0.0                 | MIT          | https://github.com/prettier/eslint-plugin-prettier                             |
@@ -175,10 +175,10 @@
 | monorepo-license-checker@0.3.0               | MIT          | https://github.com/ocavue/monorepo-license-checker                             |
 | next@12.0.8                                  | MIT          | https://github.com/vercel/next.js                                              |
 | npm-run-all@4.1.5                            | MIT          | https://github.com/mysticatea/npm-run-all                                      |
-| playwright-chromium@1.17.2                   | Apache-2.0   | https://github.com/Microsoft/playwright                                        |
+| playwright-chromium@1.18.0                   | Apache-2.0   | https://github.com/Microsoft/playwright                                        |
 | prettier@2.5.1                               | MIT          | https://github.com/prettier/prettier                                           |
 | prop-types@15.8.1                            | MIT          | https://github.com/facebook/prop-types                                         |
-| prosemirror-commands@1.2.0                   | MIT          | https://github.com/prosemirror/prosemirror-commands                            |
+| prosemirror-commands@1.2.1                   | MIT          | https://github.com/prosemirror/prosemirror-commands                            |
 | prosemirror-dropcursor@1.4.0                 | MIT          | https://github.com/prosemirror/prosemirror-dropcursor                          |
 | prosemirror-history@1.2.0                    | MIT          | https://github.com/prosemirror/prosemirror-history                             |
 | prosemirror-inputrules@1.1.3                 | MIT          | https://github.com/prosemirror/prosemirror-inputrules                          |
@@ -194,7 +194,7 @@
 | responsive-loader@2.3.0                      | BSD-3-Clause | https://github.com/dazuaz/responsive-loader                                    |
 | sharp@0.29.3                                 | Apache-2.0   | https://github.com/lovell/sharp                                                |
 | ts-jest@27.1.3                               | MIT          | https://github.com/kulshekhar/ts-jest                                          |
-| typescript@4.5.4                             | Apache-2.0   | https://github.com/Microsoft/TypeScript                                        |
+| typescript@4.5.5                             | Apache-2.0   | https://github.com/Microsoft/TypeScript                                        |
 | ultra-runner@3.10.5                          | MIT          | https://github.com/folke/ultra-runner                                          |
 | unstated-next@1.1.0                          | MIT          |                                                                                |
 | vite@2.7.13                                  | MIT          | https://github.com/vitejs/vite                                                 |
