@@ -160,7 +160,7 @@ describe("Toggle inline marks by using shortcuts", () => {
                     const expectedSelectedText = originText.slice(i, j).replaceAll("|", "").replaceAll("*", "")
 
                     const [part1, part2, part3] = tagedText.split("|")
-                    test(`simple case ${part1} ${part2} ${part3}`, () => {
+                    test(`${part1} ${part2} ${part3}`, () => {
                         const editor = add(
                             doc(
                                 p(
@@ -172,6 +172,37 @@ describe("Toggle inline marks by using shortcuts", () => {
                             ),
                         )
                         editor.shortcut("Mod-b")
+                        expect(editor.state.doc).toEqualRemirrorDocument(
+                            doc(p(mdText({ depth: 1, first: true, last: true })("hello world"))),
+                        )
+                        expect(getSelectedText(editor.state)).toEqual(expectedSelectedText)
+                        // expect(editor.state.selection.from).toEqual(expectedSelectronFrom)
+                    })
+                }
+            }
+        })
+
+        describe("simple emphasis", () => {
+            const originText = "*|world|*"
+
+            for (let i = 0; i <= originText.length; i++) {
+                for (let j = i; j <= originText.length; j++) {
+                    const tagedText = originText.slice(0, i) + "<start>" + originText.slice(i, j) + "<end>" + originText.slice(j)
+                    const expectedSelectedText = originText.slice(i, j).replaceAll("|", "").replaceAll("*", "")
+
+                    const [part1, part2, part3] = tagedText.split("|")
+                    test(`${part1} ${part2} ${part3}`, () => {
+                        const editor = add(
+                            doc(
+                                p(
+                                    mdText({ depth: 1, first: true, last: true })("hello "),
+                                    mdMark({ depth: 1, first: true })(part1),
+                                    mdEm({ depth: 2 })(part2),
+                                    mdMark({ depth: 1, last: true })(part3),
+                                ),
+                            ),
+                        )
+                        editor.shortcut("Mod-i")
                         expect(editor.state.doc).toEqualRemirrorDocument(
                             doc(p(mdText({ depth: 1, first: true, last: true })("hello world"))),
                         )
