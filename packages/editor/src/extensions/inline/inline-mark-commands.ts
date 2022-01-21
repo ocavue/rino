@@ -1,5 +1,5 @@
-import { CommandFunction, CommandFunctionProps, ProsemirrorNode } from "@remirror/core"
-import { TextSelection } from "prosemirror-state"
+import { CommandFunction, CommandFunctionProps, DispatchFunction, ProsemirrorNode } from "@remirror/core"
+import { TextSelection, Transaction } from "prosemirror-state"
 
 import { updateRangeMarks } from "./inline-mark-helpers"
 
@@ -9,66 +9,83 @@ type CreateInlineKeyBindingProps = {
     mark: ToggleableInlineMarkName
 }
 
+function findMarkIndex(textBlockNode: ProsemirrorNode, mark: string, fromIndex: number, toIndex: number, empty: boolean): false | number {
+    for (let index = fromIndex; index <= toIndex; index++) {
+        if (hasMark(textBlockNode.maybeChild(index), mark)) {
+            return index
+        }
+    }
+    if (empty) {
+        if (hasMark(textBlockNode.maybeChild(fromIndex), "mdMark") && hasMark(textBlockNode.maybeChild(fromIndex - 1), mark)) {
+            return fromIndex - 1
+        }
+
+        if (hasMark(textBlockNode.maybeChild(toIndex), "mdMark") && hasMark(textBlockNode.maybeChild(toIndex + 1), mark)) {
+            return toIndex + 1
+        }
+    }
+
+    return false
+}
+
+function deleteSimpleInlineMark() {}
+
 function toggleSimpleInlineMark({ left, right, mark }: CreateInlineKeyBindingProps): CommandFunction {
     return (props: CommandFunctionProps): boolean => {
         const { tr, dispatch, state } = props
-        const { $from, $to, anchor, head } = state.selection
+        const { $from, $to, anchor, head, empty } = state.selection
 
         if (!$from.sameParent($to) || !$from.parent.type.isTextblock) {
             return false
         }
 
-        const parent = $from.parent
+        // remove mark
+        {
+            const textBlockNode = $from.parent
+            const textBlockStart = $from.start()
 
-        let fromIndex = $from.index()
-        let toIndex = $to.index()
+            let fromIndex = $from.index()
+            let toIndex = $to.index()
 
-        if (toIndex > fromIndex && $to.textOffset === 0) {
-            // `$to` is between two text nodes and `toIndex` is pointing to the right node. Let's make it point to the left node.
-            toIndex -= 1
-        }
-
-        if (fromIndex < toIndex) {
-            const toTextNode = parent.child(toIndex)
-            if (hasMark(toTextNode, "mdMark") && toTextNode.textContent === right) {
-                toIndex -= 1
-            }
-        }
-
-        if (fromIndex < toIndex) {
-            const fromTextNode = parent.child(fromIndex)
-            if (hasMark(fromTextNode, "mdMark") && fromTextNode.textContent === left) {
-                fromIndex += 1
-            }
-        }
-
-        if (fromIndex === toIndex) {
-            console.debug("same text node :)")
-            const textNode = parent.child(fromIndex)
-            const markType = state.schema.marks[mark]
-            if (!markType) {
-                console.warn(`failed to find mark type "${mark}" in the schema`)
-                return false
-            }
-
-            if (textNode.marks.map((mark) => mark.type.name).includes(mark)) {
-                // remove marks
-                const prevMarkIndex = fromIndex - 1
-                const nextMarkIndex = fromIndex + 1
-                if (dispatch && prevMarkIndex >= 0) {
-                    tr.delete()
+            // `$to` is between two text nodes and `toIndex` is pointing to the right text node.
+            if ($to.textOffset === 0) {
+                if (empty) {
+                    fromIndex = Math.max(fromIndex - 1, 0)
+                } else if (toIndex > fromIndex) {
+                    toIndex--
                 }
-                return true
             }
-        } else {
-            console.debug("different text node :(")
+
+            const existedMarkIndex = findMarkIndex(textBlockNode, mark, fromIndex, toIndex, empty)
+            console.debug("existedMarkIndex", fromIndex, toIndex, existedMarkIndex)
+
+            if (existedMarkIndex !== false) {
+                let found = false
+                for (let i = existedMarkIndex; i < textBlockNode.childCount; i++) {
+                    const textNode = textBlockNode.child(i)
+                    if (hasMark(textNode, "mdMark") && textNode.text === right) {
+                        deleteTextBlockChild(tr, textBlockNode, textBlockStart, i)
+                        found = true
+                    }
+                }
+                for (let i = existedMarkIndex; i >= 0; i--) {
+                    const textNode = textBlockNode.child(i)
+                    if (hasMark(textNode, "mdMark") && textNode.text === left) {
+                        deleteTextBlockChild(tr, textBlockNode, textBlockStart, i)
+                        found = true
+                    }
+                }
+                if (found) {
+                    if (dispatch) {
+                        updateRangeMarks(tr)
+                        dispatch(tr)
+                    }
+                    return true
+                }
+            }
         }
 
-        console.log("index", $from.index(), $to.index(), $from.indexAfter(), $to.indexAfter(), $from.parentOffset, $to.parentOffset)
-
-        const selectedSlice = parent.slice($from.parentOffset, $to.parentOffset)
-        console.log("selectedSlice", selectedSlice.content.childCount)
-
+        // add mark
         if (dispatch) {
             tr.insertText(right, $to.pos)
             tr.insertText(left, $from.pos)
@@ -104,6 +121,20 @@ function throwUnknownMarkError(mark: never): never {
     throw new Error(`Unknown mark to toggle: ${mark}`)
 }
 
-function hasMark(node: ProsemirrorNode, mark: string): boolean {
+function hasMark(node: ProsemirrorNode | null | undefined, mark: string): boolean {
+    if (!node) {
+        return false
+    }
+
     return node.marks.some((m) => m.type.name === mark)
+}
+
+function deleteTextBlockChild(tr: Transaction, textBlockNode: ProsemirrorNode, textBlockStart: number, childIndex: number): Transaction {
+    console.debug("deleteTextBlockChild", textBlockStart, childIndex)
+    let offset = textBlockStart
+    for (let i = 0; i < childIndex; i++) {
+        offset += textBlockNode.child(i).nodeSize
+    }
+    console.debug("deleteTextBlockChild delete", offset, offset + textBlockNode.child(childIndex).nodeSize)
+    return tr.delete(offset, offset + textBlockNode.child(childIndex).nodeSize)
 }

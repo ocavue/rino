@@ -149,6 +149,174 @@ describe("Toggle inline marks by using shortcuts", () => {
             )
         })
     })
+
+    describe("remove marks", () => {
+        const cases = [
+            [
+                p(
+                    mdText({ depth: 1, first: true, last: true })("hello "),
+                    mdMark({ depth: 1, first: true })("**"),
+                    mdStrong({ depth: 2 })("<start>world<end>"),
+                    mdMark({ depth: 1, last: true })("**"),
+                ),
+                "world",
+            ],
+            [
+                p(
+                    mdText({ depth: 1, first: true, last: true })("hello "),
+                    mdMark({ depth: 1, first: true })("**"),
+                    mdStrong({ depth: 2 })("wor<start>ld<end>"),
+                    mdMark({ depth: 1, last: true })("**"),
+                ),
+                "ld",
+            ],
+            [
+                p(
+                    mdText({ depth: 1, first: true, last: true })("hello "),
+                    mdMark({ depth: 1, first: true })("**"),
+                    mdStrong({ depth: 2 })("<start>wor<end>ld"),
+                    mdMark({ depth: 1, last: true })("**"),
+                ),
+                "wor",
+            ],
+            [
+                p(
+                    mdText({ depth: 1, first: true, last: true })("hello "),
+                    mdMark({ depth: 1, first: true })("**"),
+                    mdStrong({ depth: 2 })("wo<start>r<end>ld"),
+                    mdMark({ depth: 1, last: true })("**"),
+                ),
+                "r",
+            ],
+            [
+                p(
+                    mdText({ depth: 1, first: true, last: true })("hello "),
+                    mdMark({ depth: 1, first: true })("<start>**"),
+                    mdStrong({ depth: 2 })("world"),
+                    mdMark({ depth: 1, last: true })("**<end>"),
+                ),
+                "world",
+            ],
+            [
+                p(
+                    mdText({ depth: 1, first: true, last: true })("hello "),
+                    mdMark({ depth: 1, first: true })("<start>**"),
+                    mdStrong({ depth: 2 })("world<end>"),
+                    mdMark({ depth: 1, last: true })("**"),
+                ),
+                "world",
+            ],
+            [
+                p(
+                    mdText({ depth: 1, first: true, last: true })("hello "),
+                    mdMark({ depth: 1, first: true })("**"),
+                    mdStrong({ depth: 2 })("<start>world"),
+                    mdMark({ depth: 1, last: true })("**<end>"),
+                ),
+                "world",
+            ],
+            [
+                p(
+                    mdText({ depth: 1, first: true, last: true })("hello "),
+                    mdMark({ depth: 1, first: true })("**"),
+                    mdStrong({ depth: 2 })("<start>world"),
+                    mdMark({ depth: 1, last: true })("*<end>*"),
+                ),
+                "world",
+            ],
+            [
+                p(
+                    mdText({ depth: 1, first: true, last: true })("hello "),
+                    mdMark({ depth: 1, first: true })("*<start>*"),
+                    mdStrong({ depth: 2 })("world"),
+                    mdMark({ depth: 1, last: true })("<end>**"),
+                ),
+                "world",
+            ],
+            [
+                p(
+                    mdText({ depth: 1, first: true, last: true })("hello "),
+                    mdMark({ depth: 1, first: true })("<cursor>**"),
+                    mdStrong({ depth: 2 })("world"),
+                    mdMark({ depth: 1, last: true })("**"),
+                ),
+                "",
+            ],
+            [
+                p(
+                    mdText({ depth: 1, first: true, last: true })("hello "),
+                    mdMark({ depth: 1, first: true })("*<cursor>*"),
+                    mdStrong({ depth: 2 })("world"),
+                    mdMark({ depth: 1, last: true })("**"),
+                ),
+                "",
+            ],
+            [
+                p(
+                    mdText({ depth: 1, first: true, last: true })("hello "),
+                    mdMark({ depth: 1, first: true })("**<cursor>"),
+                    mdStrong({ depth: 2 })("world"),
+                    mdMark({ depth: 1, last: true })("**"),
+                ),
+                "",
+            ],
+            [
+                p(
+                    mdText({ depth: 1, first: true, last: true })("hello "),
+                    mdMark({ depth: 1, first: true })("**"),
+                    mdStrong({ depth: 2 })("<cursor>world"),
+                    mdMark({ depth: 1, last: true })("**"),
+                ),
+                "",
+            ],
+            [
+                p(
+                    mdText({ depth: 1, first: true, last: true })("hello "),
+                    mdMark({ depth: 1, first: true })("**"),
+                    mdStrong({ depth: 2 })("wor<cursor>ld"),
+                    mdMark({ depth: 1, last: true })("**"),
+                ),
+                "",
+            ],
+            [
+                p(
+                    mdText({ depth: 1, first: true, last: true })("hello "),
+                    mdMark({ depth: 1, first: true })("**"),
+                    mdStrong({ depth: 2 })("world<cursor>"),
+                    mdMark({ depth: 1, last: true })("**"),
+                ),
+                "",
+            ],
+            [
+                p(
+                    mdText({ depth: 1, first: true, last: true })("hello "),
+                    mdMark({ depth: 1, first: true })("**"),
+                    mdStrong({ depth: 2 })("world"),
+                    mdMark({ depth: 1, last: true })("*<cursor>*"),
+                ),
+                "",
+            ],
+            [
+                p(
+                    mdText({ depth: 1, first: true, last: true })("hello "),
+                    mdMark({ depth: 1, first: true })("**"),
+                    mdStrong({ depth: 2 })("world"),
+                    mdMark({ depth: 1, last: true })("**<cursor>"),
+                ),
+                "",
+            ],
+        ] as const
+
+        for (const [index, [paragraph, expectedSelectedText]] of cases.entries()) {
+            test(`simple case ${index} `, () => {
+                const editor = add(doc(paragraph))
+                editor.shortcut("Mod-b")
+                expect(editor.state.doc).toEqualRemirrorDocument(doc(p(mdText({ depth: 1, first: true, last: true })("hello world"))))
+                expect(getSelectedText(editor.state)).toEqual(expectedSelectedText)
+                // expect(editor.state.selection.from).toEqual(expectedSelectronFrom)
+            })
+        }
+    })
 })
 
 function getSelectedText(state: EditorState): string {
