@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.40.0](https://github.com/ocavue/rino/compare/v0.39.2...v0.40.0) (2022-01-22)
+
+
+### Features
+
+* **editor:** use shortcuts to toggle inline marks ([#919](https://github.com/ocavue/rino/issues/919)) ([5bb4285](https://github.com/ocavue/rino/commit/5bb4285ceedf1ff9078c85a0f14e652aca9669e7))
+
 ## [0.39.2](https://github.com/ocavue/rino/compare/v0.39.1...v0.39.2) (2022-01-14)
 
 
