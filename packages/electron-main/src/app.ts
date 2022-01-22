@@ -6,6 +6,16 @@ import { logger } from "./logger"
 import { state } from "./state"
 import { createWindow, createWindowByOpeningFile, createWindowIfNotExist } from "./window"
 
+export function requestSingleApp() {
+    // @ts-expect-error https://github.com/electron/electron/issues/32582
+    const lock = app.requestSingleInstanceLock({ key: "single-app" })
+    if (!lock) {
+        app.quit()
+        return false
+    }
+    return true
+}
+
 /**
  * Register all app handlers
  *
@@ -86,7 +96,7 @@ export function registerAppHandlers(): void {
 
         if (plateform.IS_MAC) {
             app.on("open-file", (event, path) => {
-                logger.info("event triggered: open-file", { path })
+                logger.info("app event triggered: open-file", { path })
                 openingFile = true
                 event.preventDefault()
                 createWindowByOpeningFile(path)
@@ -97,6 +107,15 @@ export function registerAppHandlers(): void {
                 openingFile = true
                 createWindowByOpeningFile(path)
             }
+
+            app.on("second-instance", (event, argv, workingDirectory, additionalData) => {
+                logger.info("app event triggered: second-instance", { argv })
+
+                const path = process.argv[1]
+                if (path) {
+                    createWindowByOpeningFile(path)
+                }
+            })
         }
     })
 
