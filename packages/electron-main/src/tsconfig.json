@@ -6,7 +6,13 @@
         "emitDeclarationOnly": true,
         "outDir": "./.cache/typescript",
     },
-    "include": [
-        "./",
-    ],
+    "include": ["./"],
+    "references": [
+        {
+            "path": "../../common/src"
+        },
+        {
+            "path": "../../editor/src"
+        }
+    ]
 }

@@ -51,3 +51,12 @@ export function sleep(ms: number) {
 export function basename(filePath: string) {
     return filePath.split("\\").pop()?.split("/").pop() ?? ""
 }
+
+async function sleepBeforeError(timeout: number): Promise<never> {
+    await sleep(timeout)
+    throw new Error("timed out")
+}
+
+export async function createTimeoutPromise<T>(promise: Promise<T>, delay: number): Promise<T> {
+    return await Promise.race([promise, sleepBeforeError(delay)])
+}
