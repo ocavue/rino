@@ -18,6 +18,7 @@ build({
     define: {
         "process.env.RINO_GIT_COMMIT_SHA": JSON.stringify(RINO_GIT_COMMIT_SHA),
     },
+    minify: true,
 }).catch((err) => {
     console.error(err)
     process.exit(1)
