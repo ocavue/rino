@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.40.1](https://github.com/ocavue/rino/compare/v0.40.0...v0.40.1) (2022-01-24)
+
+
+### Bug Fixes
+
+* **electron:** show a dialog if auto update doesn't work ([#927](https://github.com/ocavue/rino/issues/927)) ([7bd2021](https://github.com/ocavue/rino/commit/7bd2021cf00329e6924f129dc299b2494268a793))
+
 ## [0.40.0](https://github.com/ocavue/rino/compare/v0.39.2...v0.40.0) (2022-01-22)
 
 
