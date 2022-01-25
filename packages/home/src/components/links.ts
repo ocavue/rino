@@ -11,7 +11,9 @@ export function getDownloadLink(
     os: "mac" | "win-64" | "win-32" | "win-arm" | "linux-64" | "linux-arm",
     version: string | undefined,
 ): string {
-    if (!version) return RELEASE_LINK
+    if (!version) {
+        return RELEASE_LINK
+    }
 
     switch (os) {
         case "mac":
