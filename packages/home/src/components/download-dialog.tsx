@@ -1,37 +1,64 @@
-import { Close as CloseIcon } from "@mui/icons-material"
-import { Button, Dialog, DialogContent, DialogTitle, Hidden, IconButton, SvgIcon, Typography } from "@mui/material"
-import React, { useMemo } from "react"
+import { Close as CloseIcon, Download as DownloadIcon } from "@mui/icons-material"
+import { Button, ButtonGroup, Dialog, DialogContent, DialogTitle, Hidden, IconButton, SvgIcon, Typography } from "@mui/material"
+import { Box } from "@mui/system"
+import React from "react"
 
+import { colors } from "../styles/color"
 import { getDownloadLink } from "./links"
 import { AppleSvg, LinuxSvg, MicrosoftSvg } from "./svgs"
 
 const VERSION = process.env.NEXT_PUBLIC_RINO_VERSION
 
-export const DownloadDialog: React.FC<{ open: boolean; handleClose: () => void }> = ({ open, handleClose }) => {
-    const platforms = useMemo(() => {
-        return [
-            {
-                name: "Mac",
-                link: getDownloadLink("mac", VERSION),
-                icon: <AppleSvg />,
-            },
-            {
-                name: "Windows",
-                link: getDownloadLink("win", VERSION),
-                icon: <MicrosoftSvg />,
-            },
-            {
-                name: "Linux",
-                link: getDownloadLink("linux", VERSION),
-                icon: <LinuxSvg />,
-            },
-        ]
-    }, [])
+const platforms = [
+    [
+        {
+            name: "Mac",
+            arch: "",
+            link: getDownloadLink("mac", VERSION),
+            icon: <AppleSvg />,
+        },
+    ],
+    [
+        {
+            name: "Windows",
+            arch: "(64-bit)",
+            link: getDownloadLink("win-64", VERSION),
+            icon: <MicrosoftSvg />,
+        },
+        {
+            name: "Windows",
+            arch: "(32-bit)",
+            link: getDownloadLink("win-32", VERSION),
+            icon: <MicrosoftSvg />,
+        },
+        {
+            name: "Windows",
+            arch: "(ARM)",
+            link: getDownloadLink("win-arm", VERSION),
+            icon: <MicrosoftSvg />,
+        },
+    ],
+    [
+        {
+            name: "Linux",
+            arch: "(64-bit)",
+            link: getDownloadLink("linux-64", VERSION),
+            icon: <LinuxSvg />,
+        },
+        {
+            name: "Linux",
+            arch: "(ARM)",
+            link: getDownloadLink("linux-arm", VERSION),
+            icon: <LinuxSvg />,
+        },
+    ],
+]
 
+export const DownloadDialog: React.FC<{ open: boolean; handleClose: () => void }> = ({ open, handleClose }) => {
     return (
         <Dialog
             fullWidth
-            maxWidth="sm"
+            maxWidth="xs"
             open={open}
             onClose={handleClose}
             aria-labelledby="download-dialog-title"
@@ -74,46 +101,65 @@ export const DownloadDialog: React.FC<{ open: boolean; handleClose: () => void }
 
                     display: "flex",
                     justifyContent: "center",
-                    flexDirection: { xs: "column", sm: "row" },
+                    flexDirection: "column",
                 }}
                 dividers
             >
-                {platforms.map((platform) => (
-                    <Button
-                        key={platform.name}
-                        href={platform.link}
-                        rel="noopener noreferrer"
-                        target="_blank"
+                {platforms.map((platformGroup, index) => (
+                    <ButtonGroup
+                        key={index}
+                        orientation="vertical"
+                        aria-label="vertical outlined button group"
                         sx={{
-                            pt: "12px",
-                            pb: "12px",
-                            pl: "26px",
-                            pr: "26px",
-                            // minWidth: "900px",
-
                             mt: "8px",
                             mb: "8px",
-                            ml: "12px",
-                            mr: "12px",
+                            ml: "0px",
+                            mr: "0px",
                         }}
-                        size="large"
-                        variant="outlined"
-                        startIcon={
-                            <SvgIcon
-                                sx={{
-                                    width: "26px",
-                                    height: "26px",
-                                    mr: "4px",
-                                }}
-                            >
-                                {platform.icon}
-                            </SvgIcon>
-                        }
                     >
-                        <Typography variant="h6" noWrap>
-                            {platform.name}
-                        </Typography>
-                    </Button>
+                        {platformGroup.map((platform) => (
+                            <Button
+                                key={platform.name}
+                                href={platform.link}
+                                rel="noopener noreferrer"
+                                target="_blank"
+                                sx={{
+                                    color: colors.gray900,
+                                }}
+                                size="large"
+                                variant="outlined"
+                                startIcon={
+                                    <SvgIcon
+                                        sx={{
+                                            width: "24px",
+                                            height: "24px",
+                                            mr: "8px",
+                                            color: colors.gray800,
+                                        }}
+                                    >
+                                        {platform.icon}
+                                    </SvgIcon>
+                                }
+                                endIcon={
+                                    <DownloadIcon
+                                        sx={{
+                                            width: "24px",
+                                            height: "24px",
+                                            mr: "4px",
+                                            color: colors.gray600,
+                                        }}
+                                    >
+                                        {platform.icon}
+                                    </DownloadIcon>
+                                }
+                            >
+                                <Typography noWrap>{platform.name}</Typography>
+                                <Box width={8}></Box>
+                                <Typography noWrap>{platform.arch}</Typography>
+                                <Box flex={1}></Box>
+                            </Button>
+                        ))}
+                    </ButtonGroup>
                 ))}
             </DialogContent>
         </Dialog>
