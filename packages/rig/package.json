@@ -4,7 +4,7 @@
     "private": true,
     "license": "GPL-3.0",
     "scripts": {
-        "output-licenses": "monorepo-license-checker --markdown-table --exclude-private-packages > dependency-licenses.md"
+        "output-licenses": "monorepo-license-checker --markdown --exclude-private-packages > dependency-licenses.md"
     },
     "devDependencies": {
         "monorepo-license-checker": "^0.3.0"
