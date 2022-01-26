@@ -681,3 +681,69 @@ describe("autolink", function () {
         ])
     })
 })
+
+describe("hard break", function () {
+    test("no hard break", function () {
+        expect(fromInlineMarkdown("abc")).toStrictEqual([
+            {
+                start: 0,
+                end: 3,
+                marks: ["mdText"],
+                text: "abc",
+                attrs: {
+                    depth: 1,
+                    first: true,
+                    last: true,
+                },
+            },
+        ])
+    })
+
+    test("one hard break within text", function () {
+        expect(fromInlineMarkdown("ab\nc")).toStrictEqual([
+            {
+                start: 0,
+                end: 4,
+                marks: ["mdText"],
+                text: "ab\nc",
+                attrs: {
+                    depth: 1,
+                    first: true,
+                    last: true,
+                },
+            },
+        ])
+    })
+
+    test("one hard break at the beginning", function () {
+        expect(fromInlineMarkdown("\nabc")).toStrictEqual([
+            {
+                start: 1,
+                end: 4,
+                marks: ["mdText"],
+                text: "abc",
+                attrs: {
+                    depth: 1,
+                    first: true,
+                    last: true,
+                },
+            },
+        ])
+    })
+
+    test("one hard break at the end", function () {
+        expect(fromInlineMarkdown("abc\n")).toStrictEqual([
+            {
+                start: 0,
+                end: 3,
+                marks: ["mdText"],
+                text: "abc",
+                attrs: {
+                    depth: 1,
+                    first: true,
+                    last: true,
+                },
+            },
+        ])
+    })
+})
