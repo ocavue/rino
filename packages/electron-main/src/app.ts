@@ -7,7 +7,6 @@ import { state } from "./state"
 import { createWindow, createWindowByOpeningFile, createWindowIfNotExist } from "./window"
 
 export function requestSingleApp() {
-    // @ts-expect-error https://github.com/electron/electron/issues/32582
     const lock = app.requestSingleInstanceLock({ key: "single-app" })
     if (!lock) {
         app.quit()
