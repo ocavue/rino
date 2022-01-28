@@ -148,7 +148,7 @@ importers:
       '@codemirror/gutter': 0.19.9
       '@codemirror/highlight': 0.19.7
       '@codemirror/history': 0.19.2
-      '@codemirror/lang-markdown': 0.19.4
+      '@codemirror/lang-markdown': 0.19.5
       '@codemirror/language': 0.19.7
       '@codemirror/language-data': 0.19.1
       '@codemirror/lint': 0.19.3
@@ -819,7 +819,7 @@ packages:
       '@codemirror/autocomplete': 0.19.12
       '@codemirror/highlight': 0.19.7
       '@codemirror/lang-css': 0.19.3
-      '@codemirror/lang-javascript': 0.19.6
+      '@codemirror/lang-javascript': 0.19.7
       '@codemirror/language': 0.19.7
       '@codemirror/state': 0.19.6
       '@lezer/common': 0.15.11
@@ -834,8 +834,8 @@ packages:
       '@lezer/java': 0.15.0
     dev: false
 
-  /@codemirror/lang-javascript/0.19.6:
-    resolution: {integrity: sha512-NgkoCIc3hdTNTBRIRuPqfUJ0WB798qEgwAgtjwYy6yoiK5CzbDS2z5CFW17h9RmaAx6t1m64iY2CZ3tC7r15Gw==}
+  /@codemirror/lang-javascript/0.19.7:
+    resolution: {integrity: sha512-DL9f3JLqOEHH9cIwEqqjnP5bkjdVXeECksLtV+/MbPm+l4H+AG+PkwZaJQ2oR1GfPZKh8MVSIE94aGWNkJP8WQ==}
     dependencies:
       '@codemirror/autocomplete': 0.19.12
       '@codemirror/highlight': 0.19.7
@@ -854,8 +854,8 @@ packages:
       '@lezer/json': 0.15.0
     dev: false
 
-  /@codemirror/lang-markdown/0.19.4:
-    resolution: {integrity: sha512-/MF/e1yRtiGOQOvHbXNv8AELITUT7tax1Zx3FCQTx8t28IdFOee6j0VPSghMcqskOQlNo8RXJBfP8bIyWPZBog==}
+  /@codemirror/lang-markdown/0.19.5:
+    resolution: {integrity: sha512-CBc6UFhX+rqRs7axvO8yZZGorlTb5VP78YDmjIGIeQe+eNAoO5I48oNRwatz4hQXzbtYe1Cu4MskhVEhnMDOsg==}
     dependencies:
       '@codemirror/highlight': 0.19.7
       '@codemirror/lang-html': 0.19.4
@@ -929,9 +929,9 @@ packages:
       '@codemirror/lang-css': 0.19.3
       '@codemirror/lang-html': 0.19.4
       '@codemirror/lang-java': 0.19.1
-      '@codemirror/lang-javascript': 0.19.6
+      '@codemirror/lang-javascript': 0.19.7
       '@codemirror/lang-json': 0.19.1
-      '@codemirror/lang-markdown': 0.19.4
+      '@codemirror/lang-markdown': 0.19.5
       '@codemirror/lang-php': 0.19.1
       '@codemirror/lang-python': 0.19.4
       '@codemirror/lang-rust': 0.19.1
@@ -940,7 +940,7 @@ packages:
       '@codemirror/lang-xml': 0.19.2
       '@codemirror/language': 0.19.7
       '@codemirror/legacy-modes': 0.19.0
-      '@codemirror/stream-parser': 0.19.4
+      '@codemirror/stream-parser': 0.19.5
     dev: false
 
   /@codemirror/language/0.19.7:
@@ -956,7 +956,7 @@ packages:
   /@codemirror/legacy-modes/0.19.0:
     resolution: {integrity: sha512-GSPdBNUeyF3nxJ2lztXGp2UoQjn+ggK5z+Kd4tflziecCG1+8mcdudDgFvxDuaTGWyM34S7Ldb4Xv7/XodZtBA==}
     dependencies:
-      '@codemirror/stream-parser': 0.19.4
+      '@codemirror/stream-parser': 0.19.5
     dev: false
 
   /@codemirror/lint/0.19.3:
@@ -1018,8 +1018,8 @@ packages:
       '@codemirror/text': 0.19.6
     dev: false
 
-  /@codemirror/stream-parser/0.19.4:
-    resolution: {integrity: sha512-rvZpn3Dnxxjc+Pbjo1o/sJCgVO/CSyWCr52zRLeYYT30y3a+ogHIEtsUFBnY6kUDlxoxO9uc318JGGNuX4wjjQ==}
+  /@codemirror/stream-parser/0.19.5:
+    resolution: {integrity: sha512-5G+seD2H0dhz1ueyzy393rV6cq24Q0u8/pJn7Bs1Artrd7u1zg6+vAcRVY+RMKvwbLG8wowYLb3vjnM0Cx9L2A==}
     dependencies:
       '@codemirror/highlight': 0.19.7
       '@codemirror/language': 0.19.7
@@ -4141,7 +4141,6 @@ packages:
   /astral-regex/2.0.0:
     resolution: {integrity: sha512-Z7tMw1ytTXt5jqMcOP+OQteU1VuNK9Y02uuJtKQ1Sv69jXQKKg5cibLwGJow8yzZP+eAc18EmLGPal0bp36rvQ==}
     engines: {node: '>=8'}
-    requiresBuild: true
     dev: true
 
   /async-exit-hook/2.0.1:
@@ -4407,7 +4406,7 @@ packages:
     hasBin: true
     dependencies:
       caniuse-lite: 1.0.30001303
-      electron-to-chromium: 1.4.55
+      electron-to-chromium: 1.4.56
       escalade: 3.1.1
       node-releases: 2.0.1
       picocolors: 1.0.0
@@ -5289,6 +5288,11 @@ packages:
     hasBin: true
     dev: true
 
+  /detect-libc/2.0.0:
+    resolution: {integrity: sha512-S55LzUl8HUav8l9E2PBTlC5PAJrHK7tkM+XXFGD+fbsbkTzhCpG6K05LxJcUOEWzMa4v6ptcMZ9s3fOdJDu0Zw==}
+    engines: {node: '>=8'}
+    dev: true
+
   /detect-newline/3.1.0:
     resolution: {integrity: sha512-TLz+x/vEXm/Y7P7wn1EJFNLxYpUD4TgMosxY6fAVJUnJMbupHBOncxyWUG9OpTaH9EBD7uFI5LfEgmMOc54DsA==}
     engines: {node: '>=8'}
@@ -5569,8 +5573,8 @@ packages:
       type-fest: 1.4.0
     dev: true
 
-  /electron-to-chromium/1.4.55:
-    resolution: {integrity: sha512-AoCDEVElLY8mwe4TuDDkr1jxvSh/Ih5PFlEXCpmwFkq9JOXn4K58CScgBl+R1ghFW9cPJ7VeWo30nAHSRCe6rw==}
+  /electron-to-chromium/1.4.56:
+    resolution: {integrity: sha512-0k/S0FQqRRpJbX7YUjwCcLZ8D42RqGKtaiq90adXBOYgTIWwLA/g3toO8k9yEpqU8iC4QyaWYYWSTBIna8WV4g==}
     dev: true
 
   /electron-updater/4.6.1:
@@ -8423,7 +8427,6 @@ packages:
 
   /json-schema-traverse/0.4.1:
     resolution: {integrity: sha512-xbbCH5dCYU5T8LcEhhuh7HJ88HXuW3qsI3Y0zOZFKfZEHcpWiHU/Jxzk629Brsab/mMiHQti9wMP+845RPe3Vg==}
-    requiresBuild: true
     dev: true
 
   /json-schema-traverse/1.0.0:
@@ -8459,7 +8462,6 @@ packages:
       chalk: 2.4.2
       diff-match-patch: 1.0.5
     dev: false
-    bundledDependencies: []
 
   /jsonfile/4.0.0:
     resolution: {integrity: sha1-h3Gq4HmbZAdrdmQPygWPnBDjPss=}
@@ -9940,12 +9942,12 @@ packages:
       source-map-js: 1.0.2
     dev: true
 
-  /prebuild-install/7.0.0:
-    resolution: {integrity: sha512-IvSenf33K7JcgddNz2D5w521EgO+4aMMjFt73Uk9FRzQ7P+QZPKrp7qPsDydsSwjGt3T5xRNnM1bj1zMTD5fTA==}
+  /prebuild-install/7.0.1:
+    resolution: {integrity: sha512-QBSab31WqkyxpnMWQxubYAHR5S9B2+r81ucocew34Fkl98FhvKIF50jIJnNOBmAZfyNV7vE5T6gd3hTVWgY6tg==}
     engines: {node: '>=10'}
     hasBin: true
     dependencies:
-      detect-libc: 1.0.3
+      detect-libc: 2.0.0
       expand-template: 2.0.3
       github-from-package: 0.0.0
       minimist: 1.2.5
@@ -10997,7 +10999,7 @@ packages:
       color: 4.2.0
       detect-libc: 1.0.3
       node-addon-api: 4.3.0
-      prebuild-install: 7.0.0
+      prebuild-install: 7.0.1
       semver: 7.3.5
       simple-get: 4.0.1
       tar-fs: 2.1.1
@@ -11086,7 +11088,6 @@ packages:
   /slice-ansi/3.0.0:
     resolution: {integrity: sha512-pSyv7bSTC7ig9Dcgbw9AuRNUb5k5V6oDudjZoMBSr13qpLBG7tB+zgCkARjq7xIUgdz5P1Qe8u+rSGdouOOIyQ==}
     engines: {node: '>=8'}
-    requiresBuild: true
     dependencies:
       ansi-styles: 4.3.0
       astral-regex: 2.0.0
