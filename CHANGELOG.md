@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.41.0](https://github.com/ocavue/rino/compare/v0.40.1...v0.41.0) (2022-01-30)
+
+
+### Features
+
+* **electron:** support arm64 CPU on Linux ([#936](https://github.com/ocavue/rino/issues/936)) ([aef3559](https://github.com/ocavue/rino/commit/aef3559a2fc2b564ed7dd8fd65dd7641ee998d4b))
+* **electron:** support x86 and arm64 CPU on Windows ([#926](https://github.com/ocavue/rino/issues/926)) ([5b0d4b7](https://github.com/ocavue/rino/commit/5b0d4b7c9bcedbcfc2c63ed1d0df79c88fa70cfc))
+* **home:** update download links ([#929](https://github.com/ocavue/rino/issues/929)) ([d0161d8](https://github.com/ocavue/rino/commit/d0161d864624e41a8d9825314559a8721a15a979))
+
 ## [0.40.1](https://github.com/ocavue/rino/compare/v0.40.0...v0.40.1) (2022-01-24)
 
 
