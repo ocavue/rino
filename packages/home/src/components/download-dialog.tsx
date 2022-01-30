@@ -13,7 +13,7 @@ const platforms = [
     [
         {
             name: "Mac",
-            arch: "",
+            arch: "(Universal)",
             link: getDownloadLink("mac", VERSION),
             icon: <AppleSvg />,
         },
