@@ -52,10 +52,7 @@ const config = {
         // https://specifications.freedesktop.org/menu-spec/latest/apa.html#main-category-registry
         category: "Office",
 
-        target: [
-            { target: "AppImage", arch: isCI ? ["x64"] : undefined },
-            { target: "snap", arch: isCI ? ["x64"] : undefined },
-        ],
+        target: [{ target: "AppImage", arch: isCI ? ["x64", "arm64"] : undefined }],
     },
 
     fileAssociations: {
