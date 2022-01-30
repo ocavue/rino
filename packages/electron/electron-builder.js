@@ -1,7 +1,6 @@
 // @ts-check
 
 const isCI = !!process.env.CI
-const macArch = isCI ? "universal" : undefined
 
 /**
  * @type {import('electron-builder').Configuration}
@@ -27,6 +26,10 @@ const config = {
     // Check this link for more details: https://github.com/electron-userland/electron-builder/issues/4223
     artifactName: "${productName}-v${version}-${os}-${arch}.${ext}",
 
+    win: {
+        target: [{ target: "nsis", arch: isCI ? ["ia32", "x64", "arm64"] : undefined }],
+    },
+
     mac: {
         // https://developer.apple.com/library/ios/documentation/General/Reference/InfoPlistKeyReference/Articles/LaunchServicesKeys.html#//apple_ref/doc/uid/TP40009250-SW8
         category: "public.app-category.productivity",
@@ -34,8 +37,8 @@ const config = {
         // Notice that mac dmg can only be built on macOS. https://github.com/electron-userland/electron-builder/issues/811#issuecomment-252558287
         // zip target for macOS is required for Squirrel.Mac.
         target: [
-            { target: "zip", arch: macArch },
-            { target: "dmg", arch: macArch },
+            { target: "zip", arch: isCI ? "universal" : undefined },
+            { target: "dmg", arch: isCI ? "universal" : undefined },
         ],
 
         // skip signing in local development
@@ -48,6 +51,11 @@ const config = {
     linux: {
         // https://specifications.freedesktop.org/menu-spec/latest/apa.html#main-category-registry
         category: "Office",
+
+        target: [
+            { target: "AppImage", arch: isCI ? ["x64"] : undefined },
+            { target: "snap", arch: isCI ? ["x64"] : undefined },
+        ],
     },
 
     fileAssociations: {

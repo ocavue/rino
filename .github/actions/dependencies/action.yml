@@ -30,7 +30,7 @@ runs:
 
     - name: Print debug information
       run: |
-        echo "[DEBUG] CACHE_HIT: ${{ inputs.cache-hit }}"
+        echo "[DEBUG] CACHE_HIT: $CACHE_HIT"
         echo "[DEBUG] GITHUB_REF: $GITHUB_REF"
         env | egrep '^ELECTRON_'
         du -h -d 1 ~/cache_* || true
