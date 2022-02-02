@@ -5,18 +5,28 @@ import ReactDOM from "react-dom"
 import type { WysiwygOptions } from "../src"
 import { Editor } from "../src"
 
-const defaultContent = `
+const singleRow = `hello **strong**! hello *italic*! hello \`code\`! hello [link](https://www.google.com)!`
+
+const longContent = (singleRow.repeat(200) + "\n\n").repeat(5)
+
+const justCodeContent = `
+\`\`\`python
+while True:
+    print("hello world")
+\`\`\`
+`.trim()
+
+const defaultContent = [
+    `
 
 # Title
 
 hello world!
 
-hello **strong**! hello *italic*! hello \`code\`! hello [link](https://www.google.com)!
-
-\`\`\`python
-while True:
-    print("hello world")
-\`\`\`
+`.trim(),
+    singleRow,
+    justCodeContent,
+    `
 
 - list item
 - list item
@@ -27,18 +37,8 @@ while True:
 1. second
 1. third
 
-`.trim()
-
-const longContent = (
-    `hello **strong**! hello *italic*! hello \`code\`! hello [link](https://www.google.com)! `.repeat(200) + "\n\n"
-).repeat(5)
-
-const justCodeContent = `
-\`\`\`python
-while True:
-    print("hello world")
-\`\`\`
-`.trim()
+`.trim(),
+].join("\n")
 
 /** focus this element to hide the cursor in the editor */
 const BlurHelper: FC = () => {
@@ -57,9 +57,29 @@ const BlurHelper: FC = () => {
 
 const DebugConsole: FC<{ hasUnsavedChanges: boolean; content: string }> = ({ hasUnsavedChanges, content }) => {
     return (
-        <div>
-            <p>content: {content}</p>
-            <p>hasUnsavedChanges: {JSON.stringify(hasUnsavedChanges)}</p>
+        <div className="css-t4vd4r" style={{ borderTop: "1px solid gray" }}>
+            <div className="ProseMirror">
+                <p>
+                    <strong>hasUnsavedChanges: </strong>
+                    {JSON.stringify(hasUnsavedChanges)}
+                </p>
+                <p>
+                    <strong>content:</strong>
+                </p>
+                <pre
+                    style={{
+                        whiteSpace: "pre-wrap",
+                        fontFamily: "monospace",
+                        marginBottom: "16px",
+                        backgroundColor: "#f6f8fa",
+                        fontSize: "85%",
+                        borderRadius: "3px",
+                        padding: "16px",
+                    }}
+                >
+                    {content}
+                </pre>
+            </div>
         </div>
     )
 }
