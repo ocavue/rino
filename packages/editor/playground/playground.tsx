@@ -44,7 +44,7 @@ const contentMap: { [key: string]: string } = {
     default: defaultContent,
     "just-code": justCodeContent,
     long: longContent,
-    customize: "\n",
+    customize: "",
 }
 
 /** focus this element to hide the cursor in the editor */
@@ -74,42 +74,39 @@ const DebugConsole: FC<{ hasUnsavedChanges: boolean; contentId: string; content:
         </option>
     ))
     return (
-        <div style={{ borderTop: "1px solid gray" }}>
-            <div
-                className="ProseMirror"
+        <div
+            style={{
+                paddingTop: "32px",
+                paddingBottom: "64px",
+                paddingLeft: "max(32px, calc(50% - 400px))",
+                paddingRight: "max(32px, calc(50% - 400px))",
+                fontSize: "16px",
+                lineHeight: "1.5",
+            }}
+        >
+            <p>
+                <strong>hasUnsavedChanges: </strong>
+                {JSON.stringify(hasUnsavedChanges)}
+            </p>
+            <p>
+                <strong>content:</strong>
+            </p>
+            <select id="contentType" value={contentId} onChange={(e) => onSelect(e.target.value)}>
+                {options}
+            </select>
+            <pre
                 style={{
-                    paddingTop: "32px",
-                    paddingBottom: "64px",
-                    paddingLeft: "max(32px, calc(50% - 400px))",
-                    paddingRight: "max(32px, calc(50% - 400px))",
-                    fontSize: "16px",
-                    lineHeight: "1.5",
+                    whiteSpace: "pre-wrap",
+                    fontFamily: "monospace",
+                    marginBottom: "16px",
+                    backgroundColor: "#f6f8fa",
+                    fontSize: "85%",
+                    borderRadius: "3px",
+                    padding: "16px",
                 }}
             >
-                <p>
-                    <strong>hasUnsavedChanges: </strong>
-                    {JSON.stringify(hasUnsavedChanges)}
-                </p>
-                <p>
-                    <strong>content:</strong>
-                </p>
-                <select id="contentType" value={contentId} onChange={(e) => onSelect(e.target.value)}>
-                    {options}
-                </select>
-                <pre
-                    style={{
-                        whiteSpace: "pre-wrap",
-                        fontFamily: "monospace",
-                        marginBottom: "16px",
-                        backgroundColor: "#f6f8fa",
-                        fontSize: "85%",
-                        borderRadius: "3px",
-                        padding: "16px",
-                    }}
-                >
-                    {content}
-                </pre>
-            </div>
+                {content}
+            </pre>
         </div>
     )
 }
@@ -126,7 +123,7 @@ const App: FC = () => {
 
     const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false)
 
-    if (isString(initialContent) && initialContent.length > 0) {
+    if (isString(initialContent)) {
         contentMap["customize"] = initialContent
     }
     let defaultContentId = "default"
@@ -134,8 +131,8 @@ const App: FC = () => {
         defaultContentId = initialContentId
     }
 
-    const [contentId, setContentId] = useState(defaultContentId)
     const [content, setContent] = useState(contentMap[defaultContentId])
+    const [contentId, setContentId] = useState(defaultContentId)
 
     const note = useMemo(() => {
         return {
@@ -144,30 +141,38 @@ const App: FC = () => {
         }
     }, [content])
 
-    const changeContentSelect = function (e: string) {
-        console.log(e)
-        setContentId(e)
-        setContent(contentMap[e])
+    const changeContentSelect = (s: string) => {
+        setContentId(s)
+        setContent(contentMap[s])
     }
 
+    const editor = (
+        <Editor
+            key={contentId}
+            note={note}
+            wysiwygOptions={wysiwygOptions}
+            enableDevTools={enableDevTools}
+            onHasUnsavedChanges={setHasUnsavedChanges}
+            onContentSave={setContent}
+        />
+    )
     return (
-        <div style={{ display: "flex", flexDirection: "column" }}>
-            <Editor
-                key={content}
-                note={note}
-                wysiwygOptions={wysiwygOptions}
-                enableDevTools={enableDevTools}
-                onHasUnsavedChanges={setHasUnsavedChanges}
-                onContentSave={setContent}
-            />
+        <div>
             {enableDevTools ? (
-                <DebugConsole
-                    hasUnsavedChanges={hasUnsavedChanges}
-                    contentId={contentId}
-                    content={content}
-                    onSelect={changeContentSelect}
-                />
-            ) : null}
+                <div style={{ display: "flex", flexDirection: "row" }}>
+                    <div style={{ width: "50%", height: "100%", overflow: "auto", position: "fixed" }}>{editor}</div>
+                    <div style={{ width: "50%", height: "100%", overflow: "auto", position: "fixed", right: "0" }}>
+                        <DebugConsole
+                            hasUnsavedChanges={hasUnsavedChanges}
+                            contentId={contentId}
+                            content={content}
+                            onSelect={changeContentSelect}
+                        />
+                    </div>
+                </div>
+            ) : (
+                <div style={{ display: "flex", flexDirection: "row" }}>{editor}</div>
+            )}
             <BlurHelper />
         </div>
     )
