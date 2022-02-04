@@ -118,13 +118,15 @@ const wysiwygOptions: WysiwygOptions = {
 const App: FC = () => {
     const params = new URLSearchParams(document.location.search)
     const initialContent = params.get("content")
-    const initialContentId = params.get("contentid")
+    let initialContentId = params.get("contentid")
     const enableDevTools = params.get("devtools") !== "false"
 
     const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false)
 
     if (isString(initialContent)) {
+        // initialContent having priority over contentId
         contentMap["customize"] = initialContent
+        initialContentId = "customize"
     }
     let defaultContentId = "default"
     if (initialContentId !== null && initialContentId in contentMap) {
