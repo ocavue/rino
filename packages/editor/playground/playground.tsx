@@ -40,6 +40,13 @@ hello world!
 `.trim(),
 ].join("\n")
 
+const contentMap: { [key: string]: string } = {
+    default: defaultContent,
+    "just-code": justCodeContent,
+    long: longContent,
+    customize: "\n",
+}
+
 /** focus this element to hide the cursor in the editor */
 const BlurHelper: FC = () => {
     return (
@@ -55,10 +62,30 @@ const BlurHelper: FC = () => {
     )
 }
 
-const DebugConsole: FC<{ hasUnsavedChanges: boolean; content: string }> = ({ hasUnsavedChanges, content }) => {
+const DebugConsole: FC<{ hasUnsavedChanges: boolean; contentId: string; content: string; onSelect: (content: string) => void }> = ({
+    hasUnsavedChanges,
+    contentId,
+    content,
+    onSelect,
+}) => {
+    const options = Object.keys(contentMap).map((k) => (
+        <option key={k} value={k}>
+            {k}
+        </option>
+    ))
     return (
-        <div className="css-t4vd4r" style={{ borderTop: "1px solid gray" }}>
-            <div className="ProseMirror">
+        <div style={{ borderTop: "1px solid gray" }}>
+            <div
+                className="ProseMirror"
+                style={{
+                    paddingTop: "32px",
+                    paddingBottom: "64px",
+                    paddingLeft: "max(32px, calc(50% - 400px))",
+                    paddingRight: "max(32px, calc(50% - 400px))",
+                    fontSize: "16px",
+                    lineHeight: "1.5",
+                }}
+            >
                 <p>
                     <strong>hasUnsavedChanges: </strong>
                     {JSON.stringify(hasUnsavedChanges)}
@@ -66,6 +93,9 @@ const DebugConsole: FC<{ hasUnsavedChanges: boolean; content: string }> = ({ has
                 <p>
                     <strong>content:</strong>
                 </p>
+                <select id="contentType" value={contentId} onChange={(e) => onSelect(e.target.value)}>
+                    {options}
+                </select>
                 <pre
                     style={{
                         whiteSpace: "pre-wrap",
@@ -94,35 +124,50 @@ const App: FC = () => {
     const initialContentId = params.get("contentid")
     const enableDevTools = params.get("devtools") !== "false"
 
-    const note = useMemo(() => {
-        let content = defaultContent
-        if (isString(initialContent)) {
-            content = initialContent
-        } else if (initialContentId === "long") {
-            content = longContent
-        } else if (initialContentId === "just-code") {
-            content = justCodeContent
-        }
+    const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false)
 
+    if (isString(initialContent) && initialContent.length > 0) {
+        contentMap["customize"] = initialContent
+    }
+    let defaultContentId = "default"
+    if (initialContentId !== null && initialContentId in contentMap) {
+        defaultContentId = initialContentId
+    }
+
+    const [contentId, setContentId] = useState(defaultContentId)
+    const [content, setContent] = useState(contentMap[defaultContentId])
+
+    const note = useMemo(() => {
         return {
             content,
             deleted: false,
         }
-    }, [initialContent, initialContentId])
+    }, [content])
 
-    const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false)
-    const [content, setContent] = useState("")
+    const changeContentSelect = function (e: string) {
+        console.log(e)
+        setContentId(e)
+        setContent(contentMap[e])
+    }
 
     return (
         <div style={{ display: "flex", flexDirection: "column" }}>
             <Editor
+                key={content}
                 note={note}
                 wysiwygOptions={wysiwygOptions}
                 enableDevTools={enableDevTools}
                 onHasUnsavedChanges={setHasUnsavedChanges}
                 onContentSave={setContent}
             />
-            {enableDevTools ? <DebugConsole hasUnsavedChanges={hasUnsavedChanges} content={content} /> : null}
+            {enableDevTools ? (
+                <DebugConsole
+                    hasUnsavedChanges={hasUnsavedChanges}
+                    contentId={contentId}
+                    content={content}
+                    onSelect={changeContentSelect}
+                />
+            ) : null}
             <BlurHelper />
         </div>
     )
