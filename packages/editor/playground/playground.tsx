@@ -1,10 +1,11 @@
+import "./style.css"
+
 import { isString } from "lodash-es"
 import React, { FC, useMemo, useState } from "react"
 import ReactDOM from "react-dom"
 
 import type { WysiwygOptions } from "../src"
 import { Editor } from "../src"
-
 const singleRow = `hello **strong**! hello *italic*! hello \`code\`! hello [link](https://www.google.com)!`
 
 const longContent = (singleRow.repeat(200) + "\n\n").repeat(5)
@@ -119,7 +120,7 @@ const App: FC = () => {
     const params = new URLSearchParams(document.location.search)
     const initialContent = params.get("content")
     let initialContentId = params.get("contentid")
-    const enableDevTools = params.get("devtools") !== "false"
+    const defaultEnableDevTools = params.get("devtools") === "true"
 
     const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false)
 
@@ -135,6 +136,7 @@ const App: FC = () => {
 
     const [content, setContent] = useState(contentMap[defaultContentId])
     const [contentId, setContentId] = useState(defaultContentId)
+    const [enableDevTools, setEnableDevTools] = useState(defaultEnableDevTools)
 
     const note = useMemo(() => {
         return {
@@ -160,6 +162,16 @@ const App: FC = () => {
     )
     return (
         <div>
+            <input
+                className="debugInput"
+                id="debugEnable"
+                type="checkbox"
+                style={{ position: "absolute", left: "-9999px" }}
+                onChange={(e) => setEnableDevTools(e.target.checked)}
+            ></input>
+            <label className="debugLabel" htmlFor="debugEnable" style={{ position: "fixed", top: "30px", right: "60px", zIndex: "99999" }}>
+                Debug
+            </label>
             {enableDevTools ? (
                 <div style={{ display: "flex", flexDirection: "row" }}>
                     <div style={{ width: "50%", height: "100%", overflow: "auto", position: "fixed" }}>{editor}</div>

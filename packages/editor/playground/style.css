@@ -1,0 +1,47 @@
+input.debugInput, label.debugLabel::before, label.debugLabel::after {
+box-sizing: border-box;
+}
+
+label.debugLabel {
+display: block;
+/* margin: 20px; */
+padding: 5px 12px 5px 30px;
+border: 3px solid #fff;
+border-radius: 100px;
+color: #fff;
+background-color: #363753;
+box-shadow: 0 0 20px rgba(0, 0, 0, .2);
+white-space: nowrap;
+cursor: pointer;
+user-select: none;
+transition: background-color .2s, box-shadow .2s;
+}
+
+label.debugLabel::before {
+content: '';
+display: block;
+position: absolute;
+top: 5px;
+bottom: 5px;
+left: 5px;
+width: 22px;
+border: 3px solid #fff;
+border-radius: 50px;
+transition: background-color .2s;
+}
+
+label.debugLabel:last-of-type {
+transform: translateX(40px);
+}
+
+label.debugLabel:hover, input:focus + label {
+box-shadow: 0 0 20px rgba(0, 0, 0, .6);
+}
+
+input.debugInput:checked + label.debugLabel {
+background-color: #ab576c;
+}
+
+input.debugInput:checked + label.debugLabel::before {
+background-color: #fff;
+}
