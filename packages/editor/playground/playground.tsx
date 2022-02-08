@@ -48,6 +48,17 @@ const contentMap: { [key: string]: string } = {
     customize: "",
 }
 
+const DebugButton : FC<{enableDevTools:boolean, setEnableDevTools : ()=>void}> = ({
+    enableDevTools,
+    setEnableDevTools,
+})=>{
+    return  <button 
+        className={enableDevTools?"enable-debug": "unable-debug"}
+        onClick={(e)=>setEnableDevTools()}
+    >Debug
+    </button>
+}
+
 /** focus this element to hide the cursor in the editor */
 const BlurHelper: FC = () => {
     return (
@@ -104,6 +115,9 @@ const DebugConsole: FC<{ hasUnsavedChanges: boolean; contentId: string; content:
                     fontSize: "85%",
                     borderRadius: "3px",
                     padding: "16px",
+                    wordWrap:"break-word",
+                    overflowWrap: "break-word",
+                    overflow: "scroll",
                 }}
             >
                 {content}
@@ -161,21 +175,15 @@ const App: FC = () => {
         />
     )
     return (
-        <div>
-            <input
-                className="debugInput"
-                id="debugEnable"
-                type="checkbox"
-                style={{ position: "absolute", left: "-9999px" }}
-                onChange={(e) => setEnableDevTools(e.target.checked)}
-            ></input>
-            <label className="debugLabel" htmlFor="debugEnable" style={{ position: "fixed", top: "30px", right: "60px", zIndex: "99999" }}>
-                Debug
-            </label>
-            {enableDevTools ? (
-                <div style={{ display: "flex", flexDirection: "row" }}>
-                    <div style={{ width: "50%", height: "100%", overflow: "auto", position: "fixed" }}>{editor}</div>
-                    <div style={{ width: "50%", height: "100%", overflow: "auto", position: "fixed", right: "0" }}>
+        <div style={{width:"100%"}}>
+            <DebugButton
+                enableDevTools={enableDevTools}
+                setEnableDevTools={()=>setEnableDevTools(!enableDevTools)}
+            />
+            <div className="box">
+                <div className="self-scroll">{editor}</div>
+                {enableDevTools ? (
+                    <div className="self-scroll">
                         <DebugConsole
                             hasUnsavedChanges={hasUnsavedChanges}
                             contentId={contentId}
@@ -183,10 +191,8 @@ const App: FC = () => {
                             onSelect={changeContentSelect}
                         />
                     </div>
-                </div>
-            ) : (
-                <div style={{ display: "flex", flexDirection: "row" }}>{editor}</div>
-            )}
+                ) : null}
+            </div>
             <BlurHelper />
         </div>
     )
