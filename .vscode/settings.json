@@ -3,13 +3,9 @@
         "**/.next": true
     },
     "eslint.packageManager": "pnpm",
-    "eslint.validate": [
-        "javascript",
-        "typescript",
-        "typescriptreact",
-    ],
+    "eslint.validate": ["javascript", "typescript", "typescriptreact"],
     "editor.codeActionsOnSave": {
-        "source.fixAll.eslint": true,
+        "source.fixAll.eslint": true
     },
     "editor.defaultFormatter": "dbaeumer.vscode-eslint",
     "editor.rulers": [140],
@@ -28,6 +24,6 @@
         "editor.defaultFormatter": "dbaeumer.vscode-eslint"
     },
     "[css]": {
-        "editor.defaultFormatter": "aeschli.vscode-css-formatter"
-    },
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    }
 }
