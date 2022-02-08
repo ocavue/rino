@@ -1,11 +1,11 @@
 button.enable-debug, button.unable-debug {
+    position: fixed;
     box-sizing: border-box;
     display: block;
     padding: 5px 12px 5px 12px;
     border: 3px solid #fff;
-    right:60px;
-    top:120px;
-    position: absolute;
+    right:16px;
+    bottom:80px;
     z-index: 9999;
     color: #fff;
     box-shadow: 0 0 20px rgba(0, 0, 0, .2);
@@ -32,7 +32,7 @@ button.unable-debug {
 }
 
 .self-scroll {
-    overflow: "auto";
-    display: flex;
+    overflow: hidden;
+    /* display: flex; */
     flex: 1;
 }

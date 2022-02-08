@@ -115,9 +115,8 @@ const DebugConsole: FC<{ hasUnsavedChanges: boolean; contentId: string; content:
                     fontSize: "85%",
                     borderRadius: "3px",
                     padding: "16px",
-                    wordWrap:"break-word",
                     overflowWrap: "break-word",
-                    overflow: "scroll",
+                    overflow: "hidden",
                 }}
             >
                 {content}
