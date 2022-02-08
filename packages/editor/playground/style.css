@@ -1,37 +1,39 @@
-button.enable-debug, button.unable-debug {
+.playground-debug-button-enable, .playground-debug-button-disable {
     position: fixed;
     box-sizing: border-box;
     display: block;
     padding: 5px 12px 5px 12px;
     border: 3px solid #fff;
-    right:16px;
-    bottom:80px;
+    right: 16px;
+    bottom: 80px;
     z-index: 9999;
     color: #fff;
     box-shadow: 0 0 20px rgba(0, 0, 0, .2);
     border-radius: 100px;
     cursor: pointer;
 }
-button.enable-debug:hover, button.unable-debug:hover {
+
+.playground-debug-button-enable:hover, .playground-debug-button-disable:hover {
     opacity: 0.85;
     transition: opacity 0.3s;
 }
-button.enable-debug {
+
+.playground-debug-button-enable {
     background-color: #ab576c;
 }
 
-button.unable-debug {
+.playground-debug-button-disable {
     background-color: #363753;
 }
 
-.box {
+.playground-box {
     display: flex;
     min-height: min-content;
     flex-direction: row;
-    justify-content:center;
+    justify-content: center;
 }
 
-.self-scroll {
+.playground-self-scroll {
     overflow: hidden;
     /* display: flex; */
     flex: 1;

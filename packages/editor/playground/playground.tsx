@@ -48,15 +48,15 @@ const contentMap: { [key: string]: string } = {
     customize: "",
 }
 
-const DebugButton : FC<{enableDevTools:boolean, setEnableDevTools : ()=>void}> = ({
-    enableDevTools,
-    setEnableDevTools,
-})=>{
-    return  <button 
-        className={enableDevTools?"enable-debug": "unable-debug"}
-        onClick={(e)=>setEnableDevTools()}
-    >Debug
-    </button>
+const DebugButton: FC<{ enableDevTools: boolean; toggleEnableDevTools: () => void }> = ({ enableDevTools, toggleEnableDevTools }) => {
+    return (
+        <button
+            className={enableDevTools ? "playground-debug-button-enable" : "playground-debug-button-disable"}
+            onClick={(e) => toggleEnableDevTools()}
+        >
+            Debug
+        </button>
+    )
 }
 
 /** focus this element to hide the cursor in the editor */
@@ -174,15 +174,12 @@ const App: FC = () => {
         />
     )
     return (
-        <div style={{width:"100%"}}>
-            <DebugButton
-                enableDevTools={enableDevTools}
-                setEnableDevTools={()=>setEnableDevTools(!enableDevTools)}
-            />
-            <div className="box">
-                <div className="self-scroll">{editor}</div>
+        <div style={{ width: "100%" }}>
+            <DebugButton enableDevTools={enableDevTools} toggleEnableDevTools={() => setEnableDevTools(!enableDevTools)} />
+            <div className="playground-box">
+                <div className="playground-self-scroll">{editor}</div>
                 {enableDevTools ? (
-                    <div className="self-scroll">
+                    <div className="playground-self-scroll">
                         <DebugConsole
                             hasUnsavedChanges={hasUnsavedChanges}
                             contentId={contentId}
