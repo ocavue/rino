@@ -185,14 +185,17 @@ const App: FC = () => {
             wysiwygOptions={wysiwygOptions}
             enableDevTools={debugState.enableDevTools}
             onHasUnsavedChanges={setHasUnsavedChanges}
-            onContentSave={(s: string) => setDebugState((prevState) => ({ ...prevState, content: s }))}
+            onContentSave={(s: string) => {
+                debugState.content = s
+                setDebugState(debugState)
+            }}
         />
     )
     const debugConsole = (
         <DebugConsole
             hasUnsavedChanges={hasUnsavedChanges}
             debugState={debugState}
-            onSelect={(s: string) => setDebugState((prevState) => ({ ...prevState, contentId: s }))}
+            onSelect={(s: string) => setDebugState((prevState) => ({ ...prevState, contentId: s, content: contentMap[s] }))}
         />
     )
     return (
