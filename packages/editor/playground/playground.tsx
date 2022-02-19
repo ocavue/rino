@@ -154,9 +154,8 @@ interface DebugState {
 
 const useDebugState = (s: DebugState): void => {
     useEffect(() => {
-        const params = new URLSearchParams(document.location.search)
-        params.set("contentid", s.contentId)
-        params.set("devtools", s.enableDevTools ? "true" : "false")
+        const params = `?contentid=${s.contentId}&devtools=${s.enableDevTools ? "true" : "false"}`
+        history.pushState(s, "", params)
     })
 }
 
