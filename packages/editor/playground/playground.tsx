@@ -1,7 +1,7 @@
 import "./style.css"
 
 import { isString } from "lodash-es"
-import React, { FC, useMemo, useState } from "react"
+import React, { FC, useEffect, useMemo, useState } from "react"
 import ReactDOM from "react-dom"
 
 import type { WysiwygOptions } from "../src"
@@ -48,10 +48,11 @@ const contentMap: { [key: string]: string } = {
     customize: "",
 }
 
-const DebugButton: FC<{ enableDevTools: boolean; toggleEnableDevTools: () => void }> = ({ enableDevTools, toggleEnableDevTools }) => {
+const DebugButton: FC<{ debugState: DebugState; toggleEnableDevTools: () => void }> = ({ debugState, toggleEnableDevTools }) => {
+    useDebugState(debugState)
     return (
         <button
-            className={enableDevTools ? "playground-debug-button-enable" : "playground-debug-button-disable"}
+            className={debugState.enableDevTools ? "playground-debug-button-enable" : "playground-debug-button-disable"}
             onClick={(e) => toggleEnableDevTools()}
         >
             Debug
@@ -74,12 +75,12 @@ const BlurHelper: FC = () => {
     )
 }
 
-const DebugConsole: FC<{ hasUnsavedChanges: boolean; contentId: string; content: string; onSelect: (content: string) => void }> = ({
+const DebugConsole: FC<{ hasUnsavedChanges: boolean; debugState: DebugState; onSelect: (content: string) => void }> = ({
     hasUnsavedChanges,
-    contentId,
-    content,
+    debugState,
     onSelect,
 }) => {
+    useDebugState(debugState)
     const options = Object.keys(contentMap).map((k) => (
         <option key={k} value={k}>
             {k}
@@ -103,7 +104,7 @@ const DebugConsole: FC<{ hasUnsavedChanges: boolean; contentId: string; content:
             <p>
                 <strong>content:</strong>
             </p>
-            <select id="contentType" value={contentId} onChange={(e) => onSelect(e.target.value)}>
+            <select id="contentType" value={debugState.contentId} onChange={(e) => onSelect(e.target.value)}>
                 {options}
             </select>
             <pre
@@ -119,7 +120,7 @@ const DebugConsole: FC<{ hasUnsavedChanges: boolean; contentId: string; content:
                     overflow: "hidden",
                 }}
             >
-                {content}
+                {debugState.content}
             </pre>
         </div>
     )
@@ -129,65 +130,80 @@ const wysiwygOptions: WysiwygOptions = {
     isTesting: true,
 }
 
+const initDebugState = (params: URLSearchParams): DebugState => {
+    let content = params.get("content")
+    let contentId = params.get("contentid")
+    const enableDevTools = params.get("devtools") === "true"
+    if (isString(content)) {
+        // initialContent having priority over contentId
+        contentMap["customize"] = content
+        contentId = "customize"
+    }
+    if (!(contentId !== null && contentId in contentMap)) {
+        contentId = "default"
+    }
+    content = contentMap[contentId]
+    return { contentId, content, enableDevTools }
+}
+
+interface DebugState {
+    contentId: string
+    content: string
+    enableDevTools: boolean
+}
+
+const useDebugState = (s: DebugState): void => {
+    useEffect(() => {
+        const params = new URLSearchParams(document.location.search)
+        params.set("contentid", s.contentId)
+        params.set("devtools", s.enableDevTools ? "true" : "false")
+    })
+}
+
 const App: FC = () => {
     const params = new URLSearchParams(document.location.search)
-    const initialContent = params.get("content")
-    let initialContentId = params.get("contentid")
-    const defaultEnableDevTools = params.get("devtools") === "true"
+    // const debugState = initDebugState(params)
 
     const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false)
+    const [debugState, setDebugState] = useState(initDebugState(params))
 
-    if (isString(initialContent)) {
-        // initialContent having priority over contentId
-        contentMap["customize"] = initialContent
-        initialContentId = "customize"
-    }
-    let defaultContentId = "default"
-    if (initialContentId !== null && initialContentId in contentMap) {
-        defaultContentId = initialContentId
-    }
-
-    const [content, setContent] = useState(contentMap[defaultContentId])
-    const [contentId, setContentId] = useState(defaultContentId)
-    const [enableDevTools, setEnableDevTools] = useState(defaultEnableDevTools)
+    // const [content, setContent] = useState(debugState.content)
+    // const [contentId, setContentId] = useState(debugState.contentId)
+    // const [enableDevTools, setEnableDevTools] = useState(debugState.enableDevTools)
 
     const note = useMemo(() => {
         return {
-            content,
+            content: debugState.content,
             deleted: false,
         }
-    }, [content])
-
-    const changeContentSelect = (s: string) => {
-        setContentId(s)
-        setContent(contentMap[s])
-    }
+    }, [debugState.content])
 
     const editor = (
         <Editor
-            key={contentId}
+            key={debugState.contentId}
             note={note}
             wysiwygOptions={wysiwygOptions}
-            enableDevTools={enableDevTools}
+            enableDevTools={debugState.enableDevTools}
             onHasUnsavedChanges={setHasUnsavedChanges}
-            onContentSave={setContent}
+            onContentSave={(s: string) => setDebugState((prevState) => ({ ...prevState, content: s }))}
+        />
+    )
+    const debugConsole = (
+        <DebugConsole
+            hasUnsavedChanges={hasUnsavedChanges}
+            debugState={debugState}
+            onSelect={(s: string) => setDebugState((prevState) => ({ ...prevState, contentId: s }))}
         />
     )
     return (
         <div style={{ width: "100%" }}>
-            <DebugButton enableDevTools={enableDevTools} toggleEnableDevTools={() => setEnableDevTools(!enableDevTools)} />
+            <DebugButton
+                debugState={debugState}
+                toggleEnableDevTools={() => setDebugState((prevState) => ({ ...prevState, enableDevTools: !prevState.enableDevTools }))}
+            />
             <div className="playground-box">
                 <div className="playground-self-scroll">{editor}</div>
-                {enableDevTools ? (
-                    <div className="playground-self-scroll">
-                        <DebugConsole
-                            hasUnsavedChanges={hasUnsavedChanges}
-                            contentId={contentId}
-                            content={content}
-                            onSelect={changeContentSelect}
-                        />
-                    </div>
-                ) : null}
+                {debugState.enableDevTools ? <div className="playground-self-scroll">{debugConsole}</div> : null}
             </div>
             <BlurHelper />
         </div>
