@@ -1,13 +1,13 @@
 const html = `<!DOCTYPE html>
-<html lang="en">
+<html>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!--rvite-app-head-->
+    <!--visite-app-head-->
   </head>
   <body>
-    <div id="app"><!--rvite-app-html--></div>
-    <script type="module" src="/node_modules/rvite/entry-client.jsx"></script><!--RVITE-->
+    <div id="app"><!--visite-app-html--></div>
+    <script type="module" src="/node_modules/visite/app/entry-client.jsx"></script>
   </body>
 </html>`
 

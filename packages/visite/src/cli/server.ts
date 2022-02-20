@@ -4,13 +4,14 @@ import { fileURLToPath } from "node:url"
 import { resolve } from "path"
 import { createServer as createViteServer } from "vite"
 
-import { html as htmlTemplate } from "./html.mjs"
-import { injectHtml } from "./inject-html.mjs"
-import rvitePlugin from "./plugin.mjs"
+import { html as htmlTemplate } from "./html.js"
+import { injectHtml } from "./inject-html.js"
+import visitePlugin from "./plugin.js"
+import type { ServerEntry } from "./types"
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
-const toAbsolute = (p) => resolve(__dirname, p)
+const toAbsolute = (p: string) => resolve(__dirname, p)
 
 process.env.MY_CUSTOM_SECRET = "API_KEY_qwertyuiop"
 
@@ -22,9 +23,9 @@ async function createServer(root = process.cwd()) {
     /**
      * @type {import('vite').ViteDevServer}
      */
-    let vite = await createViteServer({
+    const vite = await createViteServer({
         root,
-        plugins: [rvitePlugin],
+        plugins: [visitePlugin],
         server: {
             middlewareMode: "ssr",
             watch: {
@@ -40,17 +41,18 @@ async function createServer(root = process.cwd()) {
 
     app.use(async (req, res) => {
         try {
-            const url = req.originalUrl
+            const url = req.originalUrl ?? req.url ?? ""
+
             console.log("[server.mjs] url:", url)
 
-            let template, render
+            let template
             // always read fresh template in dev
             template = htmlTemplate
             template = await vite.transformIndexHtml(url, template)
             // const myComponent = (await vite.ssrLoadModule("/src/components/counter.jsx")).default
             // console.log("myComponent:", myComponent)
             // console.log("myComponent.viteHOOKS:", myComponent.viteHOOKS)
-            render = (await vite.ssrLoadModule(toAbsolute("../../entry-server.jsx"))).render
+            const render: ServerEntry = (await vite.ssrLoadModule(toAbsolute("../../app/entry-server.jsx"))).render
             const html = await injectHtml(render, url, template)
             // if (context.url) {
             //     // Somewhere a `<Redirect>` was rendered
@@ -59,11 +61,16 @@ async function createServer(root = process.cwd()) {
             res.statusCode = 200
             res.setHeader("Content-Type", "text/html")
             res.end(html)
-        } catch (e) {
-            vite.ssrFixStacktrace(e)
-            console.log(e.stack)
-            res.statusCode = 500
-            res.end(e.stack)
+        } catch (err) {
+            if (err instanceof Error) {
+                vite.ssrFixStacktrace(err)
+                console.log(err.stack)
+                res.statusCode = 500
+                res.end(err.stack)
+            } else {
+                console.log(err)
+                res.end(String(err))
+            }
         }
     })
 

@@ -1,7 +1,7 @@
 // https://github.com/vercel/next.js//blob/c5291406aa884e3b6b315b63c1ddbbc2f4b1fc2a/packages/next/pages/_error.tsx#L1
 
 import React from "react"
-// import { Head } from "rvite/head"
+import { Head } from "visite/head"
 
 const statusCodes = {
     400: "Bad Request",
@@ -19,9 +19,9 @@ const Error = () => {
 
     return (
         <div style={styles.error}>
-            {/* <Head> */}
-            {/* <title>{statusCode ? `${statusCode}: ${title}` : "Application error: a client-side exception has occurred"}</title> */}
-            {/* </Head> */}
+            <Head>
+                <title>{statusCode ? `${statusCode}: ${title}` : "Application error: a client-side exception has occurred"}</title>
+            </Head>
             <div>
                 <style dangerouslySetInnerHTML={{ __html: "body { margin: 0 }" }} />
                 {statusCode ? <h1 style={styles.h1}>{statusCode}</h1> : null}

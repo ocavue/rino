@@ -1,10 +1,12 @@
-import { html } from "./html.mjs"
-import { preRenderOne } from "./pre-render.mjs"
-import { rollupInput } from "./utils.mjs"
+import type { Plugin } from "vite"
 
-const rvitePlugin = () => {
+import { html } from "./html.js"
+import { preRenderOne } from "./pre-render.js"
+import { rollupInput } from "./utils.js"
+
+const visitePlugin = (): Plugin => {
     return {
-        name: "vite-plugin-rvite",
+        name: "vite-plugin-visite",
         enforce: "pre",
 
         config(config) {
@@ -33,18 +35,15 @@ const rvitePlugin = () => {
             // console.log("_code", (_code || ""))
 
             if (id.endsWith(".html")) {
-                let url = id
+                const url = id
                     .replace(/^\.\//, "/")
                     .replace(/\.html$/, "")
                     .replace(/\/index$/g, "/")
-
-                return {
-                    code: preRenderOne(url, src),
-                    map: null,
-                }
+                const code: string = await preRenderOne(url, src)
+                return { code, map: null }
             }
         },
     }
 }
 
-export default rvitePlugin
+export default visitePlugin

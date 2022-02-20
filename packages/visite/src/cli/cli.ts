@@ -1,11 +1,11 @@
 import fs from "fs/promises"
 import vite from "vite"
 
-import { createDisableLogPlugin } from "./disable-log-plugin.mjs"
-import plugin from "./plugin.mjs"
-import { createServer } from "./server.mjs"
+import { createDisableLogPlugin } from "./disable-log-plugin"
+import plugin from "./plugin"
+import { createServer } from "./server.js"
 
-console.log("Welcome to rvite! v7")
+console.log("Welcome to Visite! v8")
 
 const command = process.argv[2]
 
@@ -39,13 +39,13 @@ async function buildStatic() {
 async function buildServer() {
     await vite.build({
         build: {
-            ssr: "node_modules/rvite/entry-server.jsx",
-            outDir: ".rvite-tmp/dist/",
+            ssr: "node_modules/visite/app/entry-server.jsx",
+            outDir: ".visite-tmp/dist/",
         },
         plugins: [createDisableLogPlugin()],
     })
 }
 
 async function clean() {
-    await fs.rm(".rvite-tmp/", { recursive: true, force: true })
+    await fs.rm(".visite-tmp/", { recursive: true, force: true })
 }

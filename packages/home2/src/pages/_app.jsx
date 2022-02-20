@@ -1,13 +1,14 @@
 import React from "react"
 import { Link } from "react-router-dom"
-import { Head } from "rvite/head"
+import { Head } from "visite/head"
 
 function MyApp({ Component, pageProps }) {
     // console.log("MyApp in:", !!Component)
     return (
         <>
             <Head>
-                <title>Rvite App</title>
+                <title>Visite App</title>
+                <html lang="en" />
             </Head>
             <ul>
                 <li>

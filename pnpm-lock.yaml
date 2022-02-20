@@ -363,7 +363,7 @@ importers:
       react: ^18.0.0-rc.0-next-fe905f152-20220107
       react-dom: ^18.0.0-rc.0-next-fe905f152-20220107
       react-router-dom: ^6.2.1
-      rvite: workspace:*
+      visite: workspace:*
       vite: ^2.8.4
     devDependencies:
       '@types/react': 17.0.39
@@ -372,7 +372,7 @@ importers:
       react: 18.0.0-rc.0-next-fe905f152-20220107
       react-dom: 18.0.0-rc.0-next-fe905f152-20220107_e32785dbcafa2fde92a71a8f50f52ce6
       react-router-dom: 6.2.1_88bc4fee344d9ebe6e1abd431fb36b31
-      rvite: link:../rvite
+      visite: link:../visite
       vite: 2.8.4
 
   packages/rig:
@@ -381,14 +381,17 @@ importers:
     devDependencies:
       monorepo-license-checker: 0.3.0
 
-  packages/rvite:
+  packages/visite:
     specifiers:
       '@types/connect': ^3.4.35
       connect: ^3.7.0
+      esbuild: ^0.14.23
+      npm-run-all: ^4.1.5
       react: ^18.0.0-rc.0-next-fe905f152-20220107
       react-dom: ^18.0.0-rc.0-next-fe905f152-20220107
       react-helmet-async: ^1.2.3
       react-router-dom: ^6.2.1
+      rimraf: ^3.0.2
       vite: ^2.8.4
     dependencies:
       connect: 3.7.0
@@ -399,6 +402,9 @@ importers:
       vite: 2.8.4
     devDependencies:
       '@types/connect': 3.4.35
+      esbuild: 0.14.23
+      npm-run-all: 4.1.5
+      rimraf: 3.0.2
 
 packages:
 
@@ -8428,6 +8434,7 @@ packages:
       chalk: 2.4.2
       diff-match-patch: 1.0.5
     dev: false
+    bundledDependencies: []
 
   /jsonfile/4.0.0:
     resolution: {integrity: sha1-h3Gq4HmbZAdrdmQPygWPnBDjPss=}
