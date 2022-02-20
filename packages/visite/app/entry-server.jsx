@@ -7,7 +7,6 @@ import { App } from "./load-app.mjs"
 import { buildPageRoutes } from "./routes.jsx"
 
 export async function render(url, context) {
-    // console.log("[entry-server.jsx] url:", url)
     const PageRoutes = await buildPageRoutes(url)
 
     return ReactDOMServer.renderToString(

@@ -2,21 +2,21 @@ import fs from "fs"
 import { resolve } from "path"
 const root = process.cwd()
 
-const toAbsolute = (p) => resolve(root, p)
+const toAbsolute = (p: string) => resolve(root, p)
 
 const filePaths = fs.readdirSync(toAbsolute("src/pages"))
 // console.log("pagePaths:", filePaths)
 
-function fileToUrl(filePath) {
+function fileToUrl(filePath: string) {
     const name = filePath.replace(/\.(jsx|js|tsx|ts)$/, "").toLowerCase()
     return name === "index" ? `/` : `/${name}`
 }
 
 const routesToPrerender = filePaths.map(fileToUrl)
 
-const fileToUrlMaps = {}
-const urlToFileMaps = {}
-const rollupInput = {}
+const fileToUrlMaps: Record<string, string> = {}
+const urlToFileMaps: Record<string, string> = {}
+const rollupInput: Record<string, string> = {}
 
 for (const filePath of filePaths) {
     const url = fileToUrl(filePath)
@@ -24,7 +24,7 @@ for (const filePath of filePaths) {
     fileToUrlMaps[file] = url
     urlToFileMaps[url] = file
 
-    let name = url.replace(/\/$/, "index").replace(/^\//, "")
+    const name = url.replace(/\/$/, "index").replace(/^\//, "")
     if (name === "_app") {
         continue
     }
