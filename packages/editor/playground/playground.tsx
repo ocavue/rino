@@ -1,16 +1,16 @@
 import "./style.css"
 
-import { isString } from "lodash-es"
 import React, { FC, useMemo } from "react"
 import ReactDOM from "react-dom"
 
 import type { WysiwygOptions } from "../src"
 import { Editor } from "../src"
-import useContent, { contentMap } from "./src/hooks/use-content"
+import { contentMap } from "./src/content"
+import useContent from "./src/hooks/use-content"
 import useDevTools from "./src/hooks/use-devtools"
+import { getInitOptions } from "./src/utils/update-url"
 
 const DebugButton: FC<{ enableDevTools: boolean; toggleEnableDevTools: () => void }> = ({ enableDevTools, toggleEnableDevTools }) => {
-    // useDebugState(debugState)
     return (
         <button
             className={enableDevTools ? "playground-debug-button-enable" : "playground-debug-button-disable"}
@@ -36,13 +36,12 @@ const BlurHelper: FC = () => {
     )
 }
 
-const DebugConsole: FC<{ hasUnsavedChanges: boolean; contentId: string; content: string; setContentId: (content: string) => void }> = ({
+const DebugConsole: FC<{ hasUnsavedChanges: boolean; contentId: string; content: string; setContentId: (contentId: string) => void }> = ({
     hasUnsavedChanges,
     contentId,
     content,
     setContentId,
 }) => {
-    // useDebugState(debugState)
     const options = Object.keys(contentMap).map((k) => (
         <option key={k} value={k}>
             {k}
@@ -92,27 +91,6 @@ const wysiwygOptions: WysiwygOptions = {
     isTesting: true,
 }
 
-function getInitOptions() {
-    const params = new URLSearchParams(document.location.search)
-    let initContent = params.get("content")
-    let initContentId = params.get("contentid")
-    const initEnableDevTools = params.get("devtools") === "true"
-    if (isString(initContent)) {
-        // initialContent having priority over contentId
-        contentMap["customize"] = initContent
-        initContentId = "customize"
-    }
-    if (!(initContentId !== null && initContentId in contentMap)) {
-        initContentId = "default"
-    }
-    initContent = contentMap[initContentId]
-    return {
-        initContentId,
-        initContent,
-        initEnableDevTools,
-    }
-}
-
 const App: FC = () => {
     const { initContentId, initContent, initEnableDevTools } = getInitOptions()
 
@@ -136,15 +114,18 @@ const App: FC = () => {
             onContentSave={setContent}
         />
     )
-    const debugConsole = (
-        <DebugConsole hasUnsavedChanges={hasUnsavedChanges} contentId={contentId} content={content} setContentId={setContentId} />
-    )
+    const debugConsole = enableDevTools ? (
+        <div className="playground-self-scroll">
+            <DebugConsole hasUnsavedChanges={hasUnsavedChanges} contentId={contentId} content={content} setContentId={setContentId} />
+        </div>
+    ) : null
+
     return (
         <div style={{ width: "100%" }}>
             <DebugButton enableDevTools={enableDevTools} toggleEnableDevTools={() => setEnableDevTools(!enableDevTools)} />
             <div className="playground-box">
                 <div className="playground-self-scroll">{editor}</div>
-                {enableDevTools ? <div className="playground-self-scroll">{debugConsole}</div> : null}
+                {debugConsole}
             </div>
             <BlurHelper />
         </div>
