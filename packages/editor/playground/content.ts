@@ -37,5 +37,4 @@ export const contentMap: { [key: string]: string } = {
     "just-code": justCodeContent,
     long: longContent,
     customize: "",
-    empty: "",
 }

@@ -48,11 +48,8 @@ export async function pressKey(...keys: string[]) {
 export async function setupEditor(content?: string) {
     const url = new URL("http://localhost:3001")
     if (typeof content === "string") {
-        if (content) {
-            url.searchParams.append("content", content)
-        } else {
-            url.searchParams.append("contentid", "empty")
-        }
+        url.searchParams.append("content", content)
+        url.searchParams.append("contentid", "customize")
     }
     url.searchParams.append("devtools", "false")
     await page.goto(url.href)
