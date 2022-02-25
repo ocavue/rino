@@ -16,7 +16,13 @@ export default function useContent(initContentId: string, initContent: string) {
             setContent(contentMap[newId])
             updateURLParams({ contentId: newId })
         }, []),
-        setContent,
+        setContent: useCallback(
+            (newContent: string) => {
+                contentMap[contentId] = newContent
+                setContent(newContent)
+            },
+            [contentId],
+        ),
         setHasUnsavedChanges,
     }
 }
