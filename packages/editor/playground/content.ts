@@ -31,6 +31,7 @@ hello world!
 
 `.trim(),
 ].join("\n")
+
 export const contentMap: { [key: string]: string } = {
     default: defaultContent,
     "just-code": justCodeContent,
