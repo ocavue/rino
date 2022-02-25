@@ -1,14 +1,13 @@
-import "./style.css"
+import "./App.css"
 
 import React, { FC, useMemo } from "react"
-import ReactDOM from "react-dom"
 
-import type { WysiwygOptions } from "../src"
-import { Editor } from "../src"
-import { contentMap } from "./src/content"
-import useContent from "./src/hooks/use-content"
-import useDevTools from "./src/hooks/use-devtools"
-import { getInitOptions } from "./src/utils/update-url"
+import type { WysiwygOptions } from "../../src"
+import { Editor } from "../../src"
+import { contentMap } from "../content"
+import useContent from "../hooks/use-content"
+import useDevTools from "../hooks/use-devtools"
+import { getInitOptions } from "../utils/update-url"
 
 const DebugButton: FC<{ enableDevTools: boolean; toggleEnableDevTools: () => void }> = ({ enableDevTools, toggleEnableDevTools }) => {
     return (
@@ -105,14 +104,16 @@ const App: FC = () => {
     }, [content])
 
     const editor = (
-        <Editor
-            key={contentId}
-            note={note}
-            wysiwygOptions={wysiwygOptions}
-            enableDevTools={enableDevTools}
-            onHasUnsavedChanges={setHasUnsavedChanges}
-            onContentSave={setContent}
-        />
+        <div className="playground-self-scroll">
+            <Editor
+                key={contentId}
+                note={note}
+                wysiwygOptions={wysiwygOptions}
+                enableDevTools={enableDevTools}
+                onHasUnsavedChanges={setHasUnsavedChanges}
+                onContentSave={setContent}
+            />
+        </div>
     )
     const debugConsole = enableDevTools ? (
         <div className="playground-self-scroll">
@@ -124,7 +125,7 @@ const App: FC = () => {
         <div style={{ width: "100%" }}>
             <DebugButton enableDevTools={enableDevTools} toggleEnableDevTools={() => setEnableDevTools(!enableDevTools)} />
             <div className="playground-box">
-                <div className="playground-self-scroll">{editor}</div>
+                {editor}
                 {debugConsole}
             </div>
             <BlurHelper />
@@ -132,9 +133,4 @@ const App: FC = () => {
     )
 }
 
-ReactDOM.render(
-    <React.StrictMode>
-        <App />
-    </React.StrictMode>,
-    document.getElementById("root"),
-)
+export default App
