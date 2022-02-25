@@ -1,12 +1,41 @@
-import { useCallback, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 
 import { contentMap } from "../content"
-import updateURLParams from "../utils/update-url"
+import { getURLParam, setURLParam } from "../utils/update-url"
 
-export default function useContent(initContentId: string, initContent: string) {
-    const [contentId, setContentId] = useState(initContentId)
-    const [content, setContent] = useState(initContent)
+function getURLContentId(): string {
+    if (getURLParam("content", "")) {
+        return "customize"
+    } else {
+        return getURLParam("contentid", "default")
+    }
+}
+
+function setURLContentId(contentId: string): void {
+    return setURLParam("contentid", contentId)
+}
+
+function setURLContent(content: string): void {
+    return setURLParam("content", content)
+}
+
+export default function useContent() {
+    const [contentId, setContentId] = useState(getURLContentId)
+    const [content, setContent] = useState(contentId === "customize" ? getURLParam("content", "") : contentMap[contentId])
     const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false)
+
+    useEffect(() => {
+        setURLContent("")
+    }, [])
+
+    useEffect(() => {
+        setURLContentId(contentId)
+    }, [contentId])
+
+    useEffect(() => {
+        contentMap[contentId] = content
+    }, [content, contentId])
+
     return {
         contentId,
         content,
@@ -14,15 +43,8 @@ export default function useContent(initContentId: string, initContent: string) {
         setContentId: useCallback((newId: string) => {
             setContentId(newId)
             setContent(contentMap[newId])
-            updateURLParams({ contentId: newId })
         }, []),
-        setContent: useCallback(
-            (newContent: string) => {
-                contentMap[contentId] = newContent
-                setContent(newContent)
-            },
-            [contentId],
-        ),
+        setContent,
         setHasUnsavedChanges,
     }
 }
