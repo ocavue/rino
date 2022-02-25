@@ -7,7 +7,6 @@ import { Editor } from "../../src"
 import { contentMap } from "../content"
 import useContent from "../hooks/use-content"
 import useDevTools from "../hooks/use-devtools"
-import { getInitOptions } from "../utils/update-url"
 
 const DebugButton: FC<{ enableDevTools: boolean; toggleEnableDevTools: () => void }> = ({ enableDevTools, toggleEnableDevTools }) => {
     return (
@@ -91,10 +90,8 @@ const wysiwygOptions: WysiwygOptions = {
 }
 
 const App: FC = () => {
-    const { initContentId, initContent, initEnableDevTools } = getInitOptions()
-
-    const { contentId, content, hasUnsavedChanges, setContentId, setContent, setHasUnsavedChanges } = useContent(initContentId, initContent)
-    const { enableDevTools, setEnableDevTools } = useDevTools(initEnableDevTools)
+    const { contentId, content, hasUnsavedChanges, setContentId, setContent, setHasUnsavedChanges } = useContent()
+    const { enableDevTools, setEnableDevTools } = useDevTools()
 
     const note = useMemo(() => {
         return {

@@ -1,14 +1,28 @@
-import { useCallback, useState } from "react"
+import { useEffect, useState } from "react"
 
-import updateURLParams from "../utils/update-url"
+import { getURLParam, setURLParam } from "../utils/update-url"
 
-export default function useDevTools(initEnableDevTools: boolean) {
-    const [enableDevTools, setEnableDevTools] = useState(initEnableDevTools)
+function getURLDevTools(): boolean {
+    return getURLParam("enableDevTools", "false") === "true"
+}
+
+function setURLDevTools(enable: boolean): void {
+    return setURLParam("enableDevTools", enable ? "true" : "false")
+}
+
+function useDevToolsEffect(enableDevTools: boolean) {
+    useEffect(() => {
+        setURLDevTools(enableDevTools)
+    }, [enableDevTools])
+}
+
+export default function useDevTools() {
+    const [enableDevTools, setEnableDevTools] = useState(getURLDevTools)
+
+    useDevToolsEffect(enableDevTools)
+
     return {
         enableDevTools,
-        setEnableDevTools: useCallback((newEnable: boolean) => {
-            setEnableDevTools(newEnable)
-            updateURLParams({ enableDevTools: newEnable })
-        }, []),
+        setEnableDevTools,
     }
 }
