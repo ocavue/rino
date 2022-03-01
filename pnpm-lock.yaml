@@ -83,7 +83,7 @@ importers:
       '@codemirror/view': ^0.19.45
       '@emotion/css': ^11.7.1
       '@emotion/react': ^11.8.1
-      '@floating-ui/dom': ^0.3.1
+      '@floating-ui/dom': 0.2.0
       '@mui/material': ^5.4.4
       '@remirror/core': ^1.3.6
       '@remirror/core-utils': ^1.1.7
@@ -160,7 +160,7 @@ importers:
       '@codemirror/view': 0.19.45
       '@emotion/css': 11.7.1_@babel+core@7.17.5
       '@emotion/react': 11.8.1_7c3ecd89bd75b61b41f2029715ea2305
-      '@floating-ui/dom': 0.3.1
+      '@floating-ui/dom': 0.2.0
       '@mui/material': 5.4.4_1cdaffb31bda3cd99b5546de1986fba0
       '@remirror/core': 1.3.6_6bb26f34deb178489c8e23a4415cd654
       '@remirror/core-utils': 1.1.7_6bb26f34deb178489c8e23a4415cd654
@@ -1334,14 +1334,14 @@ packages:
       - supports-color
     dev: true
 
-  /@floating-ui/core/0.5.1:
-    resolution: {integrity: sha512-LOFg65vdU4o4eZjVKNhu7VXbjdnY0amMw9sydLtKZiCNwj0eMD06rmktbWp9L/f6w6s9Qqe22lkks8PbwYwy4Q==}
+  /@floating-ui/core/0.4.0:
+    resolution: {integrity: sha512-99Pnb5T2S7PSE8rKHD5fZWWnXE3a2xG9E8eQm8SIMYWJyJoHDJIt0b9SK3UjetWFcepxVG+ZMDxcfbamyx+HSg==}
     dev: false
 
-  /@floating-ui/dom/0.3.1:
-    resolution: {integrity: sha512-HJX/2xgGPt01YHQNAya2taqg5HDnY6ipF0B0Bk/Th2s4FD9R89Ecw3TEegLLO+VrQnPEGbuHOGJ6Fr3BPM0DYg==}
+  /@floating-ui/dom/0.2.0:
+    resolution: {integrity: sha512-hNhTbImiJ8SH9rHsP0qcE9IVxn/maMhwWA5d17p7EkEzVdciayB664Qy2Vxa8RxY/8avE8iVKkfE8sIeg34J0g==}
     dependencies:
-      '@floating-ui/core': 0.5.1
+      '@floating-ui/core': 0.4.0
     dev: false
 
   /@hapi/hoek/9.2.1:
@@ -8435,6 +8435,7 @@ packages:
       chalk: 2.4.2
       diff-match-patch: 1.0.5
     dev: false
+    bundledDependencies: []
 
   /jsonfile/4.0.0:
     resolution: {integrity: sha1-h3Gq4HmbZAdrdmQPygWPnBDjPss=}
