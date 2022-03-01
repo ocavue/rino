@@ -33,7 +33,7 @@
         "playwright-chromium": "^1.19.2",
         "prettier": "^2.5.1",
         "ts-jest": "^27.1.3",
-        "typescript": "^4.6.2",
+        "typescript": "~4.5.5",
         "ultra-runner": "^3.10.5"
     },
     "renovate": {
@@ -53,6 +53,10 @@
                 ],
                 "stabilityDays": 0
             }
+        ],
+        "ignoreDeps": [
+            "typescript",
+            "@floating-ui/dom"
         ],
         "prConcurrentLimit": 1,
         "stabilityDays": 7,
