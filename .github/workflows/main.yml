@@ -191,7 +191,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }} # Install this GitHub App and get the token: https://github.com/apps/lighthouse-ci
         run: |
-          ultra lhci autorun --config .lighthouserc.home.json
+          pnpx lhci autorun --config .lighthouserc.home.json
         if: steps.step_vercel.outcome == 'success'
 
   release:
