@@ -16,7 +16,7 @@ jobs:
 
       - uses: ./.github/actions/dependencies
 
-      - name: Build website
+      - name: Build home
         run: |
           pnpm -F home build
 
