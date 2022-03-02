@@ -161,7 +161,7 @@ jobs:
         run: |
           echo "::set-output name=branch::$(node scripts/slugify-branch.js)"
 
-      - id: step_vercel
+      - id: step_vercel_home
         name: Deploy @rino.app/home to Vercel
         # Vercel only allows a free account to deploy 100 times every day so this step could fail
         continue-on-error: true
@@ -196,7 +196,7 @@ jobs:
 
       - name: Generate configrations for Lighthouse CI
         run: node scripts/generate-lighthouserc.js
-        if: steps.step_vercel.outcome == 'success'
+        if: steps.step_vercel_home.outcome == 'success'
 
       - name: Run lighthouse
         env:
@@ -204,7 +204,7 @@ jobs:
           LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }} # Install this GitHub App and get the token: https://github.com/apps/lighthouse-ci
         run: |
           pnpx lhci autorun --config .lighthouserc.home.json
-        if: steps.step_vercel.outcome == 'success'
+        if: steps.step_vercel_home.outcome == 'success'
 
   release:
     runs-on: ubuntu-latest
@@ -257,7 +257,7 @@ jobs:
           name: home_dist
           path: ./packages/home/dist
 
-      - id: step_vercel
+      - id: step_vercel_home
         name: Deploy @rino.app/home to Vercel
         continue-on-error: true
         timeout-minutes: 10
