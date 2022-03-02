@@ -4,7 +4,7 @@ import { contentMap } from "../content"
 import { getURLParam, setURLParam } from "../utils/update-url"
 
 function getURLContentId(): string {
-    if (getURLParam("content", "")) {
+    if (getURLParam("content")) {
         return "customize"
     } else {
         return getURLParam("contentid", "default")
@@ -12,7 +12,7 @@ function getURLContentId(): string {
 }
 
 function setURLContentId(contentId: string): void {
-    return setURLParam("contentid", contentId)
+    return setURLParam("contentid", contentId === "default" ? "" : contentId)
 }
 
 function setURLContent(content: string): void {
@@ -21,12 +21,14 @@ function setURLContent(content: string): void {
 
 export default function useContent() {
     const [contentId, setContentId] = useState(getURLContentId)
-    const [content, setContent] = useState(contentId === "customize" ? getURLParam("content", "") : contentMap[contentId])
+    const [content, setContent] = useState(contentId === "customize" ? getURLParam("content") : contentMap[contentId])
     const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false)
 
     useEffect(() => {
-        setURLContent("")
-    }, [])
+        if (contentId !== "customize") {
+            setURLContent("")
+        }
+    }, [contentId])
 
     useEffect(() => {
         setURLContentId(contentId)
