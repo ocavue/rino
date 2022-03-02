@@ -6,6 +6,7 @@
         "lint": "eslint --ignore-path .gitignore --ext '.js,.jsx,.ts,.tsx'",
         "fix": "eslint --ignore-path .gitignore --ext '.js,.jsx,.ts,.tsx' --fix .",
         "test": "NODE_OPTIONS=--experimental-vm-modules jest --runInBand",
+        "test:coverage": "NODE_OPTIONS=--experimental-vm-modules jest --runInBand --coverage",
         "postinstall": "./scripts/post-install.sh && husky install",
         "exec": "./scripts/recursive-exec.sh",
         "clean": "./scripts/clean.mjs"
