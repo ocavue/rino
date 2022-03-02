@@ -14,7 +14,7 @@ jobs:
         uses: jwalton/gh-find-current-pr@v1
 
       - name: Checkout code repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           token: ${{ secrets.RELEASE_PLEASE_GITHUB_TOKEN }}
         if: ${{ steps.step_find_pr.outputs.number }}

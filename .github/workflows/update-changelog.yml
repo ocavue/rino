@@ -15,7 +15,7 @@ jobs:
           node-version: 16
 
       - name: Checkout code repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           token: ${{ secrets.RELEASE_PLEASE_GITHUB_TOKEN }}
 
