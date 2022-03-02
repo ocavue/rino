@@ -77,8 +77,8 @@ const Editor: React.ForwardRefRenderFunction<EditorHandle, EditorProps> = (
     const onChange = useMemo(() => {
         const saveContent = () => dispatch({ type: "SAVE_CONTENT" })
         const saveContentWithDelay = debounce(saveContent, onContentSaveDelay)
-        return (props: RemirrorEventListenerProps<Extension>) => {
-            const { tr, firstRender } = props
+        return (params: RemirrorEventListenerProps<Extension>) => {
+            const { tr, firstRender } = params
 
             // if (tr && tr.docChanged && !tr.getMeta("RINO_APPLY_MARKS")) {
             //     const prev = props.previousState.doc.toJSON()

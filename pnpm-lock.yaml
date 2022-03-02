@@ -27,7 +27,6 @@ importers:
       prettier: ^2.5.1
       ts-jest: ^27.1.3
       typescript: ~4.5.5
-      ultra-runner: ^3.10.5
     devDependencies:
       '@lhci/cli': 0.9.0
       '@svgr/cli': 6.2.1
@@ -52,7 +51,6 @@ importers:
       prettier: 2.5.1
       ts-jest: 27.1.3_8fa130d172bf7d71653f05507c50c5a3
       typescript: 4.5.5
-      ultra-runner: 3.10.5
 
   packages/common:
     specifiers:
@@ -4111,12 +4109,6 @@ packages:
     engines: {node: '>=8'}
     dev: true
 
-  /ansi-split/1.0.1:
-    resolution: {integrity: sha512-RRxQym4DFtDNmHIkW6aeFVvrXURb11lGAEPXNiryjCe8bK8RsANjzJ0M2aGOkvBYwP4Bl/xZ8ijtr6D3j1x/eg==}
-    dependencies:
-      ansi-regex: 3.0.0
-    dev: true
-
   /ansi-styles/2.2.1:
     resolution: {integrity: sha1-tDLdM1i2NM914eRmQ2gkBTPB3b4=}
     engines: {node: '>=0.10.0'}
@@ -6926,10 +6918,6 @@ packages:
       slash: 3.0.0
     dev: true
 
-  /globrex/0.1.2:
-    resolution: {integrity: sha512-uHJgbwAMwNFf5mLst7IWLNg14x1CkeqglJb/K3doi4dw6q2IvAAmM/Y81kevy83wP+Sst+nutFTYOGg3d1lsxg==}
-    dev: true
-
   /glur/1.1.2:
     resolution: {integrity: sha1-8g6jbbEDv8KSNDkh8fkeg8NGdok=}
     dev: true
@@ -8435,6 +8423,7 @@ packages:
       chalk: 2.4.2
       diff-match-patch: 1.0.5
     dev: false
+    bundledDependencies: []
 
   /jsonfile/4.0.0:
     resolution: {integrity: sha1-h3Gq4HmbZAdrdmQPygWPnBDjPss=}
@@ -8861,10 +8850,6 @@ packages:
   /methods/1.1.2:
     resolution: {integrity: sha1-VSmk1nZUE07cxSZmVoNbD4Ua/O4=}
     engines: {node: '>= 0.6'}
-    dev: true
-
-  /micro-memoize/4.0.9:
-    resolution: {integrity: sha512-Z2uZi/IUMGQDCXASdujXRqrXXEwSY0XffUrAOllhqzQI3wpUyZbiZTiE2JuYC0HSG2G7DbCS5jZmsEKEGZuemg==}
     dev: true
 
   /micromark-core-commonmark/1.0.6:
@@ -9825,10 +9810,6 @@ packages:
     engines: {node: '>=8.6'}
     dev: true
 
-  /pid-cwd/1.2.0:
-    resolution: {integrity: sha512-8QQzIdBmy4bd2l1NKWON1X8flO5TQQRzU2uRDua/XaxSC0iJ+rgbDrlX76t0W3DaJ7OevTYpftyvQ6oMe3hclQ==}
-    dev: true
-
   /pidtree/0.3.1:
     resolution: {integrity: sha512-qQbW94hLHEqCg7nhby4yRC7G2+jYHY4Rguc2bjw7Uug4GIJuu1tvf2uHaZv5Q8zdt+WKJ6qK1FOI6amaWUo5FA==}
     engines: {node: '>=0.10'}
@@ -10267,11 +10248,6 @@ packages:
 
   /proxy-from-env/1.1.0:
     resolution: {integrity: sha512-D+zkORCbA9f1tdWRK0RaCR3GPv50cMxcrz4X8k5LTSUD1Dkw47mKJEZQNunItRTkWwgtaUSo1RVFRIG9ZXiFYg==}
-    dev: true
-
-  /ps-list/7.2.0:
-    resolution: {integrity: sha512-v4Bl6I3f2kJfr5o80ShABNHAokIgY+wFDTQfE+X3zWYgSGQOCBeYptLZUpoOALBqO5EawmDN/tjTldJesd0ujQ==}
-    engines: {node: '>=10'}
     dev: true
 
   /ps-list/8.1.0:
@@ -11106,10 +11082,6 @@ packages:
     resolution: {integrity: sha512-Vpfqwm4EnqGdlsBFNmHhxhElJYrdfcxPThu+ryKS5J8L/fhAwLazFZtq+S+TWZ9ANj2piSQLGj6NQg+lKPmxrw==}
     dev: true
 
-  /shellwords-ts/3.0.0:
-    resolution: {integrity: sha512-4uZTHR2P7zKRZmSoOiUCFK1K+5LlDxay/RVNWDDImnGG1/4r/dZ2Y3rzpo871Iche913yOgYeKrrxl+3vengFw==}
-    dev: true
-
   /side-channel/1.0.4:
     resolution: {integrity: sha512-q5XPytqFEIKHkGdiMIrY10mvLRvnQh42/+GoBlFW3b2LXLE2xxJpZFdm94we0BaoV3RwJyGqg5wS7epxTv0Zvw==}
     dependencies:
@@ -11866,10 +11838,6 @@ packages:
     resolution: {integrity: sha512-Xni35NKzjgMrwevysHTCArtLDpPvye8zV/0E4EyYn43P7/7qvQwPh9BGkHewbMulVntbigmcT7rdX3BNo9wRJg==}
     dev: true
 
-  /tslib/2.1.0:
-    resolution: {integrity: sha512-hcVC3wYEziELGGmEEXue7D75zbwIIVUMWAVbHItGPx0ziyXxrOMQx4rQEVEV45Ut/1IotuEvwqPopzIOkDMf0A==}
-    dev: true
-
   /tslib/2.3.1:
     resolution: {integrity: sha512-77EbyPPpMz+FRFRuAFlWMtmgUWGe9UOG2Z25NqCwiIjRhOf5iKGuzSe5P2w1laq+FkRy4p+PCuVkJSGkzTEKVw==}
 
@@ -11970,31 +11938,6 @@ packages:
   /uc.micro/1.0.6:
     resolution: {integrity: sha512-8Y75pvTYkLJW2hWQHXxoqRgV7qb9B+9vFEtidML+7koHUFapnVJAZ6cKs+Qjz5Aw3aZWHMC6u0wJE3At+nSGwA==}
     dev: false
-
-  /ultra-runner/3.10.5:
-    resolution: {integrity: sha512-0U2OPII7sbvtbu9rhDlUUkP4Au/DPz2Tzbnawd/XwDuUruDqd+t/Bmel3cLJxl3yMLHf0OY0TMcIx9zzxdlAZw==}
-    engines: {node: '>=10.0.0'}
-    hasBin: true
-    dependencies:
-      ansi-split: 1.0.1
-      chalk: 4.1.2
-      cross-spawn: 7.0.3
-      fast-glob: 3.2.11
-      globrex: 0.1.2
-      ignore: 5.2.0
-      json5: 2.2.0
-      micro-memoize: 4.0.9
-      npm-run-path: 4.0.1
-      pid-cwd: 1.2.0
-      ps-list: 7.2.0
-      shellwords-ts: 3.0.0
-      string-width: 4.2.3
-      tslib: 2.1.0
-      type-fest: 0.21.3
-      wrap-ansi: 7.0.0
-      yamljs: 0.3.0
-      yargs: 16.2.0
-    dev: true
 
   /unbox-primitive/1.0.1:
     resolution: {integrity: sha512-tZU/3NqK3dA5gpE1KtyiJUrEB0lxnGkMFHptJ7q6ewdZ8s12QrODwNbhIJStmJkd1QDXa1NRA8aF2A1zk/Ypyw==}
@@ -12575,14 +12518,6 @@ packages:
   /yaml/1.10.2:
     resolution: {integrity: sha512-r3vXyErRCYJ7wg28yvBY5VSoAF8ZvlcW9/BwUzEtUsjvX/DKs24dIkuwjtuprwJJHsbyUbLApepYTR1BN4uHrg==}
     engines: {node: '>= 6'}
-
-  /yamljs/0.3.0:
-    resolution: {integrity: sha512-C/FsVVhht4iPQYXOInoxUM/1ELSf9EsgKH34FofQOp6hwCPrW4vG4w5++TED3xRUo8gD7l0P1J1dLlDYzODsTQ==}
-    hasBin: true
-    dependencies:
-      argparse: 1.0.10
-      glob: 7.2.0
-    dev: true
 
   /yargs-parser/13.1.2:
     resolution: {integrity: sha512-3lbsNRf/j+A4QuSZfDRA7HRSfWrzO0YjqTJd5kjAq37Zep1CEgaYmrH9Q3GwPiB9cHyd1Y1UwggGhJGoxipbzg==}

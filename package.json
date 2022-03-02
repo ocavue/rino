@@ -6,8 +6,8 @@
         "lint": "eslint --ignore-path .gitignore --ext '.js,.jsx,.ts,.tsx'",
         "fix": "eslint --ignore-path .gitignore --ext '.js,.jsx,.ts,.tsx' --fix .",
         "test": "NODE_OPTIONS=--experimental-vm-modules jest --runInBand",
+        "test:coverage": "NODE_OPTIONS=--experimental-vm-modules jest --runInBand --coverage",
         "postinstall": "./scripts/post-install.sh && husky install",
-        "exec": "./scripts/recursive-exec.sh",
         "clean": "./scripts/clean.mjs"
     },
     "devDependencies": {
@@ -33,8 +33,7 @@
         "playwright-chromium": "^1.19.2",
         "prettier": "^2.5.1",
         "ts-jest": "^27.1.3",
-        "typescript": "~4.5.5",
-        "ultra-runner": "^3.10.5"
+        "typescript": "~4.5.5"
     },
     "renovate": {
         "extends": [

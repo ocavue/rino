@@ -202,7 +202,6 @@
 - [sharp@0.30.1](https://github.com/lovell/sharp) - Apache-2.0
 - [ts-jest@27.1.3](https://github.com/kulshekhar/ts-jest) - MIT
 - [typescript@4.5.5](https://github.com/Microsoft/TypeScript) - Apache-2.0
-- [ultra-runner@3.10.5](https://github.com/folke/ultra-runner) - MIT
 - unstated-next@1.1.0 - MIT
 - [vite@2.8.6](https://github.com/vitejs/vite) - MIT
 - [wait-on@6.0.1](https://github.com/jeffbski/wait-on) - MIT

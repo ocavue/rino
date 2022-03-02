@@ -16,15 +16,25 @@ jobs:
 
       - uses: ./.github/actions/dependencies
 
-      - name: Build website
+      - name: Build home
         run: |
-          ultra exec home build
+          pnpm -F home build
+
+      - name: Build editor playground
+        run: |
+          pnpm -F editor build:all
 
       - name: Upload dist (home)
         uses: actions/upload-artifact@v2
         with:
           name: home_dist
           path: ./packages/home/dist
+
+      - name: Upload dist (editor playground)
+        uses: actions/upload-artifact@v2
+        with:
+          name: editor_playground_dist
+          path: ./packages/editor/playground/dist
 
   build_packages:
     runs-on: ubuntu-latest
@@ -116,7 +126,7 @@ jobs:
           REACT_APP_TEST_USERNAME: ${{ secrets.REACT_APP_TEST_USERNAME }}
           REACT_APP_TEST_PASSWORD: ${{ secrets.REACT_APP_TEST_PASSWORD }}
         run: |
-          ultra test --coverage
+          pnpm test:coverage
 
       - name: Upload coverage information to codecov
         uses: codecov/codecov-action@v2
@@ -132,7 +142,7 @@ jobs:
       - uses: ./.github/actions/dependencies
 
       - name: Lint
-        run: ultra lint .
+        run: pnpm lint .
 
   preview: # Preview deployment
     runs-on: ubuntu-latest
@@ -143,14 +153,15 @@ jobs:
 
       - name: Build
         run: |
-          ultra exec home build
+          pnpm -F home build
+          pnpm -F editor build:all
 
       - id: step_branch
         name: Get the branch name
         run: |
           echo "::set-output name=branch::$(node scripts/slugify-branch.js)"
 
-      - id: step_vercel
+      - id: step_vercel_home
         name: Deploy @rino.app/home to Vercel
         # Vercel only allows a free account to deploy 100 times every day so this step could fail
         continue-on-error: true
@@ -164,7 +175,22 @@ jobs:
           vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID_HOME }}
           alias-domains: rino-home-${{ steps.step_branch.outputs.branch }}.ocavue.vercel.app
           vercel-args: "--meta TYPE=PREVIEW"
-          working-directory: "./packages/home/"
+          working-directory: "./packages/home/dist/"
+
+      - id: step_vercel_editor
+        name: Deploy @rino.app/editor to Vercel
+        continue-on-error: true
+        timeout-minutes: 10
+        uses: amondnet/vercel-action@v20
+        with:
+          github-comment: false
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID_EDITOR }}
+          alias-domains: rino-editor-${{ steps.step_branch.outputs.branch }}.ocavue.vercel.app
+          vercel-args: "--meta TYPE=PREVIEW"
+          working-directory: "./packages/editor/playground/dist/"
 
       - id: step_find_pr
         uses: jwalton/gh-find-current-pr@v1
@@ -180,19 +206,20 @@ jobs:
             ## Preview Deployment
             ${{ github.sha }}:
             - https://rino-home-${{ steps.step_branch.outputs.branch }}.ocavue.vercel.app
+            - https://rino-editor-${{ steps.step_branch.outputs.branch }}.ocavue.vercel.app
         continue-on-error: true
 
       - name: Generate configrations for Lighthouse CI
         run: node scripts/generate-lighthouserc.js
-        if: steps.step_vercel.outcome == 'success'
+        if: steps.step_vercel_home.outcome == 'success'
 
       - name: Run lighthouse
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }} # Install this GitHub App and get the token: https://github.com/apps/lighthouse-ci
         run: |
-          ultra lhci autorun --config .lighthouserc.home.json
-        if: steps.step_vercel.outcome == 'success'
+          pnpx lhci autorun --config .lighthouserc.home.json
+        if: steps.step_vercel_home.outcome == 'success'
 
   release:
     runs-on: ubuntu-latest
@@ -245,7 +272,7 @@ jobs:
           name: home_dist
           path: ./packages/home/dist
 
-      - id: step_vercel
+      - id: step_vercel_home
         name: Deploy @rino.app/home to Vercel
         continue-on-error: true
         timeout-minutes: 10
@@ -256,6 +283,21 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
           vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID_HOME }}
-          vercel-args: "--prod --meta TYPE=PRODUCTION"
           alias-domains: rino-home-master.ocavue.vercel.app
-          working-directory: "./packages/home/"
+          vercel-args: "--prod --meta TYPE=PRODUCTION"
+          working-directory: "./packages/home/dist/"
+
+      - id: step_vercel_editor
+        name: Deploy @rino.app/editor to Vercel
+        continue-on-error: true
+        timeout-minutes: 10
+        uses: amondnet/vercel-action@v20
+        with:
+          github-comment: false
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID_EDITOR }}
+          alias-domains: rino-editor-master.ocavue.vercel.app
+          vercel-args: "--prod --meta TYPE=PRODUCTION"
+          working-directory: "./packages/editor/playground/dist/"

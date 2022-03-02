@@ -45,7 +45,3 @@ runs:
     - name: Install pnpm dependencies
       run: pnpm install --loglevel debug --reporter append-only
       shell: bash
-
-    - name: Install ultra-runner
-      run: pnpm install -g ultra-runner --prefer-offline
-      shell: bash
