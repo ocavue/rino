@@ -5,7 +5,9 @@
 <h1 align="center">
 Rino
 </h1>
-<h3 align="center"><span style="color:#d32ed3">*</span><em>Live Preview</em><span style="color:#d32ed3">*</span> Markdown Editor</h3>
+<p align="center">
+<span style="color:#d32ed3">*</span><em>Live Preview</em><span style="color:#d32ed3">*</span> Markdown Editor
+<p>
 
 <p align="center">
 <a href="https://rino.app" target="__blank"><img src="https://img.shields.io/github/v/release/ocavue/rino?color=2e93c1&label=Version" alt="App version"></a>
@@ -17,7 +19,7 @@ Rino
 <p align="center">
 <a href="https://rino-editor.vercel.app/">Online Playground</a>
 <span> | </span>
-<a href="https://rino.app/">Desktop Application</a>
+<a href="https://rino.app/">Download Desktop Application</a>
 </p>
 <br>
 <br>
