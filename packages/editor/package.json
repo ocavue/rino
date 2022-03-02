@@ -12,7 +12,9 @@
         "dev:tsc": "tsc --build --watch ./src/tsconfig.json --preserveWatchOutput",
         "dev:vite": "vite dev --clearScreen=false",
         "dev:all": "run-p dev:tsc dev:vite",
-        "build": "tsc --build ./src/tsconfig.json"
+        "build": "tsc --build ./src/tsconfig.json",
+        "build:playground": "vite build",
+        "build:all": "run-s build build:playground"
     },
     "dependencies": {
         "@codemirror/autocomplete": "^0.19.13",

@@ -20,11 +20,21 @@ jobs:
         run: |
           pnpm -F home build
 
+      - name: Build editor playground
+        run: |
+          pnpm -F editor build:all
+
       - name: Upload dist (home)
         uses: actions/upload-artifact@v2
         with:
           name: home_dist
           path: ./packages/home/dist
+
+      - name: Upload dist (editor playground)
+        uses: actions/upload-artifact@v2
+        with:
+          name: editor_playground_dist
+          path: ./packages/editor/playground/dist
 
   build_packages:
     runs-on: ubuntu-latest
@@ -144,6 +154,7 @@ jobs:
       - name: Build
         run: |
           pnpm -F home build
+          pnpm -F editor build:all
 
       - id: step_branch
         name: Get the branch name
