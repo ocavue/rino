@@ -177,6 +177,21 @@ jobs:
           vercel-args: "--meta TYPE=PREVIEW"
           working-directory: "./packages/home/"
 
+      - id: step_vercel_editor
+        name: Deploy @rino.app/editor to Vercel
+        continue-on-error: true
+        timeout-minutes: 10
+        uses: amondnet/vercel-action@v20
+        with:
+          github-comment: false
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID_EDITOR }}
+          alias-domains: rino-editor-${{ steps.step_branch.outputs.branch }}.ocavue.vercel.app
+          vercel-args: "--meta TYPE=PREVIEW"
+          working-directory: "./packages/editor/playground/dist/"
+
       - id: step_find_pr
         uses: jwalton/gh-find-current-pr@v1
         with:
@@ -268,6 +283,21 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
           vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID_HOME }}
-          vercel-args: "--prod --meta TYPE=PRODUCTION"
           alias-domains: rino-home-master.ocavue.vercel.app
+          vercel-args: "--prod --meta TYPE=PRODUCTION"
           working-directory: "./packages/home/"
+
+      - id: step_vercel_editor
+        name: Deploy @rino.app/editor to Vercel
+        continue-on-error: true
+        timeout-minutes: 10
+        uses: amondnet/vercel-action@v20
+        with:
+          github-comment: false
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID_EDITOR }}
+          alias-domains: rino-editor-master.ocavue.vercel.app
+          vercel-args: "--prod --meta TYPE=PRODUCTION"
+          working-directory: "./packages/editor/playground/dist/"
