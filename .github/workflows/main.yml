@@ -191,6 +191,7 @@ jobs:
             ## Preview Deployment
             ${{ github.sha }}:
             - https://rino-home-${{ steps.step_branch.outputs.branch }}.ocavue.vercel.app
+            - https://rino-editor-${{ steps.step_branch.outputs.branch }}.ocavue.vercel.app
         continue-on-error: true
 
       - name: Generate configrations for Lighthouse CI
