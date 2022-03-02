@@ -175,7 +175,7 @@ jobs:
           vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID_HOME }}
           alias-domains: rino-home-${{ steps.step_branch.outputs.branch }}.ocavue.vercel.app
           vercel-args: "--meta TYPE=PREVIEW"
-          working-directory: "./packages/home/"
+          working-directory: "./packages/home/dist/"
 
       - id: step_vercel_editor
         name: Deploy @rino.app/editor to Vercel
@@ -285,7 +285,7 @@ jobs:
           vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID_HOME }}
           alias-domains: rino-home-master.ocavue.vercel.app
           vercel-args: "--prod --meta TYPE=PRODUCTION"
-          working-directory: "./packages/home/"
+          working-directory: "./packages/home/dist/"
 
       - id: step_vercel_editor
         name: Deploy @rino.app/editor to Vercel
