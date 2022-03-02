@@ -8,7 +8,7 @@
     "scripts": {
         "dev": "next dev",
         "start": "next start",
-        "build": "next build && next export -o dist",
+        "build": "next build && next export -o dist && cp ./vercel.json ./dist/vercel.json",
         "build:analyze": "ANALYZE=true next build && next export -o dist"
     },
     "devDependencies": {
