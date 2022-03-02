@@ -3,11 +3,11 @@ import { useEffect, useState } from "react"
 import { getURLParam, setURLParam } from "../utils/update-url"
 
 function getURLDevTools(): boolean {
-    return getURLParam("enableDevTools", "false") === "true"
+    return getURLParam("dev") === "true"
 }
 
 function setURLDevTools(enable: boolean): void {
-    return setURLParam("enableDevTools", enable ? "true" : "false")
+    return setURLParam("dev", enable ? "true" : "")
 }
 
 function useDevToolsEffect(enableDevTools: boolean) {
