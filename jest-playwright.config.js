@@ -7,7 +7,6 @@ const config = {
         command: `pnpm -F editor dev`,
         options: {
             env: {
-                REACT_APP_TESTING: "yes",
                 NODE_ENV: "test",
             },
         },

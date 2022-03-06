@@ -202,5 +202,3 @@ describe("toMarkdown", () => {
         })
     })
 })
-
-describe("input rules", () => {})
