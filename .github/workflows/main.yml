@@ -25,13 +25,13 @@ jobs:
           pnpm -F editor build:all
 
       - name: Upload dist (home)
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: home_dist
           path: ./packages/home/dist
 
       - name: Upload dist (editor playground)
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: editor_playground_dist
           path: ./packages/editor/playground/dist
@@ -86,20 +86,20 @@ jobs:
           find ./dist -type f
 
       - name: Upload dist (electron)
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: electron_dist
           path: ./packages/electron/dist
 
       - name: Upload dist (electron dmg)
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         if: "contains(github.event.head_commit.message, 'UPLOAD_DMG')"
         with:
           name: electron_dist_dmg
           path: ./packages/electron/dist/*.dmg
 
       - name: Upload dist (electron exe)
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         if: "contains(github.event.head_commit.message, 'UPLOAD_EXE')"
         with:
           name: electron_dist_exe
