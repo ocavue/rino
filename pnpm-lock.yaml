@@ -371,9 +371,9 @@ importers:
       '@types/react': 17.0.39
       '@types/react-dom': 17.0.13
       '@vitejs/plugin-react': 1.2.0
-      react: 18.0.0-rc.1
-      react-dom: 18.0.0-rc.1_react@18.0.0-rc.1
-      react-router-dom: 6.2.2_dde4e734dd2b0b3bb2733d8cbf4f2511
+      react: 18.0.0-rc.1-next-f468816ef-20220225
+      react-dom: 18.0.0-rc.1-next-f468816ef-20220225_a28f1fd517be1d2b056a3673720bd102
+      react-router-dom: 6.2.2_bcb7dcc2a7fe19b9bd101bda0ea1da4c
       visite: link:../visite
       vite: 2.8.6
 
@@ -397,15 +397,15 @@ importers:
       vite: ^2.8.6
     dependencies:
       connect: 3.7.0
-      react-helmet-async: 1.2.3_dde4e734dd2b0b3bb2733d8cbf4f2511
-      react-router-dom: 6.2.2_dde4e734dd2b0b3bb2733d8cbf4f2511
+      react-helmet-async: 1.2.3_bcb7dcc2a7fe19b9bd101bda0ea1da4c
+      react-router-dom: 6.2.2_bcb7dcc2a7fe19b9bd101bda0ea1da4c
       vite: 2.8.6
     devDependencies:
       '@types/connect': 3.4.35
       esbuild: 0.14.25
       npm-run-all: 4.1.5
-      react: 18.0.0-rc.1
-      react-dom: 18.0.0-rc.1_react@18.0.0-rc.1
+      react: 18.0.0-rc.1-next-f468816ef-20220225
+      react-dom: 18.0.0-rc.1-next-f468816ef-20220225_a28f1fd517be1d2b056a3673720bd102
       rimraf: 3.0.2
 
 packages:
@@ -8434,7 +8434,6 @@ packages:
       chalk: 2.4.2
       diff-match-patch: 1.0.5
     dev: false
-    bundledDependencies: []
 
   /jsonfile/4.0.0:
     resolution: {integrity: sha1-h3Gq4HmbZAdrdmQPygWPnBDjPss=}
@@ -10389,13 +10388,13 @@ packages:
       scheduler: 0.20.2
     dev: true
 
-  /react-dom/18.0.0-rc.1_react@18.0.0-rc.1:
-    resolution: {integrity: sha512-BZ9NEwUp56MEguEwAzuh3u4bYE9Jv3QrzjaTmu11PV4C/lJCARTELEI16vjnHLq184GoJcCHMBrDILqlCrkZFQ==}
+  /react-dom/18.0.0-rc.1-next-f468816ef-20220225_a28f1fd517be1d2b056a3673720bd102:
+    resolution: {integrity: sha512-GDr1pMmH6bMjv571SAVdsW9C99zkx5xJ6tG4Mu5vhOBApV2LZkvrAy9eUS1l3W/ZGp6hTrTUzrnKJ2PIA/g00Q==}
     peerDependencies:
-      react: ^18.0.0-rc.1
+      react: 18.0.0-rc.1-next-f468816ef-20220225
     dependencies:
       loose-envify: 1.4.0
-      react: 18.0.0-rc.1
+      react: 18.0.0-rc.1-next-f468816ef-20220225
       scheduler: 0.21.0-rc.1-next-f468816ef-20220225
     dev: true
 
@@ -10403,7 +10402,7 @@ packages:
     resolution: {integrity: sha512-rtGImPZ0YyLrscKI9xTpV8psd6I8VAtjKCzQDlzyDvqJA8XOW78TXYQwNRNd8g8JZnDu8q9Fu/1v4HPAVwVdHA==}
     dev: false
 
-  /react-helmet-async/1.2.3_dde4e734dd2b0b3bb2733d8cbf4f2511:
+  /react-helmet-async/1.2.3_bcb7dcc2a7fe19b9bd101bda0ea1da4c:
     resolution: {integrity: sha512-mCk2silF53Tq/YaYdkl2sB+/tDoPnaxN7dFS/6ZLJb/rhUY2EWGI5Xj2b4jHppScMqY45MbgPSwTxDchKpZ5Kw==}
     peerDependencies:
       react: ^16.6.0 || ^17.0.0
@@ -10412,8 +10411,8 @@ packages:
       '@babel/runtime': 7.17.2
       invariant: 2.2.4
       prop-types: 15.8.1
-      react: 18.0.0-rc.1
-      react-dom: 18.0.0-rc.1_react@18.0.0-rc.1
+      react: 18.0.0-rc.1-next-f468816ef-20220225
+      react-dom: 18.0.0-rc.1-next-f468816ef-20220225_a28f1fd517be1d2b056a3673720bd102
       react-fast-compare: 3.2.0
       shallowequal: 1.1.0
     dev: false
@@ -10459,24 +10458,24 @@ packages:
     engines: {node: '>=0.10.0'}
     dev: true
 
-  /react-router-dom/6.2.2_dde4e734dd2b0b3bb2733d8cbf4f2511:
+  /react-router-dom/6.2.2_bcb7dcc2a7fe19b9bd101bda0ea1da4c:
     resolution: {integrity: sha512-AtYEsAST7bDD4dLSQHDnk/qxWLJdad5t1HFa1qJyUrCeGgEuCSw0VB/27ARbF9Fi/W5598ujvJOm3ujUCVzuYQ==}
     peerDependencies:
       react: '>=16.8'
       react-dom: '>=16.8'
     dependencies:
       history: 5.3.0
-      react: 18.0.0-rc.1
-      react-dom: 18.0.0-rc.1_react@18.0.0-rc.1
-      react-router: 6.2.2_react@18.0.0-rc.1
+      react: 18.0.0-rc.1-next-f468816ef-20220225
+      react-dom: 18.0.0-rc.1-next-f468816ef-20220225_a28f1fd517be1d2b056a3673720bd102
+      react-router: 6.2.2_a28f1fd517be1d2b056a3673720bd102
 
-  /react-router/6.2.2_react@18.0.0-rc.1:
+  /react-router/6.2.2_a28f1fd517be1d2b056a3673720bd102:
     resolution: {integrity: sha512-/MbxyLzd7Q7amp4gDOGaYvXwhEojkJD5BtExkuKmj39VEE0m3l/zipf6h2WIB2jyAO0lI6NGETh4RDcktRm4AQ==}
     peerDependencies:
       react: '>=16.8'
     dependencies:
       history: 5.3.0
-      react: 18.0.0-rc.1
+      react: 18.0.0-rc.1-next-f468816ef-20220225
 
   /react-transition-group/4.4.2_react-dom@17.0.2+react@17.0.2:
     resolution: {integrity: sha512-/RNYfRAMlZwDSr6z4zNKV6xu53/e2BuaBbGhbyYIXTrmgu/bGHzmqOs7mJSJBHy9Ud+ApHx3QjrkKSp1pxvlFg==}
@@ -10533,8 +10532,8 @@ packages:
       object-assign: 4.1.1
     dev: true
 
-  /react/18.0.0-rc.1:
-    resolution: {integrity: sha512-IdvjOtyeFhITZwDrj+GMvY7kbWnGklRzNByO7/pOVIt0o3VZi++BUybpK3Fen1gDPkOZDP/rag7lSh6RZuWOeQ==}
+  /react/18.0.0-rc.1-next-f468816ef-20220225:
+    resolution: {integrity: sha512-KTEaxCdleZPZtCfxhrSEYHohZRo0W1FWt5s28OsmwpPfIiDaQksoUf5bvMSn4wgfyt1gAM1Ot+wM74s4lTbNtA==}
     engines: {node: '>=0.10.0'}
     dependencies:
       loose-envify: 1.4.0
