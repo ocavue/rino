@@ -113,20 +113,16 @@ jobs:
       - uses: ./.github/actions/dependencies
 
       - name: Build dependencies
-        env:
-          REACT_APP_TEST_USERNAME: ${{ secrets.REACT_APP_TEST_USERNAME }}
-          REACT_APP_TEST_PASSWORD: ${{ secrets.REACT_APP_TEST_PASSWORD }}
-          REACT_APP_TESTING: 1
         run: |
           pnpm --filter @rino.app/common build
 
       - name: Run tests
-        env:
-          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }} # https://firebase.google.com/docs/cli#cli-ci-systems
-          REACT_APP_TEST_USERNAME: ${{ secrets.REACT_APP_TEST_USERNAME }}
-          REACT_APP_TEST_PASSWORD: ${{ secrets.REACT_APP_TEST_PASSWORD }}
         run: |
           pnpm test:coverage
+
+      - name: Run vitest
+        run: |
+          pnpm -F editor test:vitest:coverage
 
       - name: Upload coverage information to codecov
         uses: codecov/codecov-action@v2
