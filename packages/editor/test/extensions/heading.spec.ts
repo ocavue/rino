@@ -4,6 +4,7 @@ import { buildMarkdownParser, createRinoCorePreset } from "../../src/components/
 import { RinoHardBreakExtension, RinoHeadingExtension } from "../../src/extensions"
 
 const setup = () => {
+    const editor = renderEditor([new RinoHardBreakExtension(), new RinoHeadingExtension({}), ...createRinoCorePreset()])
     const {
         view,
         add,
@@ -11,7 +12,7 @@ const setup = () => {
         attributeNodes: { heading },
         manager,
         schema,
-    } = renderEditor([new RinoHardBreakExtension(), new RinoHeadingExtension({}), ...createRinoCorePreset()])
+    } = editor
 
     const [h1, h2, h3, h4, h5, h6] = [
         heading({ level: 1 }),

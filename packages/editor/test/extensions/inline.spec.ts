@@ -12,6 +12,14 @@ import {
 } from "../../src/extensions"
 
 const setup = () => {
+    const editor = renderEditor([
+        ...rinoMarkExtensions,
+        new RinoInlineDecorationExtension(),
+        new RinoInlineMarkExtension(true),
+        new RinoParagraphExtension(),
+        new RinoTextExtension(),
+        new RinoHeadingExtension(),
+    ])
     const {
         view,
         add,
@@ -20,14 +28,7 @@ const setup = () => {
         attributeMarks: { mdCodeSpace, mdCodeText, mdText, mdMark, mdStrong, mdEm, mdDel },
         manager,
         schema,
-    } = renderEditor([
-        ...rinoMarkExtensions,
-        new RinoInlineDecorationExtension(),
-        new RinoInlineMarkExtension(true),
-        new RinoParagraphExtension(),
-        new RinoTextExtension(),
-        new RinoHeadingExtension(),
-    ])
+    } = editor
 
     const h1 = heading({ level: 1 })
 
