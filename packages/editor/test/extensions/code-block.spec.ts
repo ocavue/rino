@@ -6,6 +6,7 @@ import { buildMarkdownParser, buildMarkdownSerializer } from "../../src/componen
 import { fakeIndentedLanguage, RinoCodeMirrorExtension, RinoParagraphExtension, RinoTextExtension } from "../../src/extensions"
 
 const setup = () => {
+    const editor = renderEditor([new RinoParagraphExtension(), new RinoTextExtension(), new RinoCodeMirrorExtension()])
     const {
         view,
         add,
@@ -13,7 +14,7 @@ const setup = () => {
         attributeNodes: { codeMirror },
         manager,
         schema,
-    } = renderEditor([new RinoParagraphExtension(), new RinoTextExtension(), new RinoCodeMirrorExtension()])
+    } = editor
 
     return {
         manager,

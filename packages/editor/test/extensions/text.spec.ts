@@ -4,13 +4,14 @@ import { buildMarkdownParser } from "../../src/components/wysiwyg"
 import { RinoParagraphExtension, RinoTextExtension } from "../../src/extensions"
 
 const setup = () => {
+    const editor = renderEditor([new RinoTextExtension(), new RinoParagraphExtension()])
     const {
         view,
         add,
         nodes: { doc, p },
         manager,
         schema,
-    } = renderEditor([new RinoTextExtension(), new RinoParagraphExtension()])
+    } = editor
 
     return {
         manager,

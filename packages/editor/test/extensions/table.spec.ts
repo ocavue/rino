@@ -6,19 +6,20 @@ import { buildMarkdownParser, buildMarkdownSerializer, createRinoCorePreset } fr
 import { RinoTableCellExtension, RinoTableExtension, RinoTableHeaderCellExtension, RinoTableRowExtension } from "../../src/extensions"
 
 const setup = () => {
-    const {
-        view,
-        add,
-        nodes: { doc, p, table, tableRow, tableCell },
-        manager,
-        schema,
-    } = renderEditor([
+    const editor = renderEditor([
         ...createRinoCorePreset(),
         new RinoTableExtension(),
         new RinoTableRowExtension(),
         new RinoTableCellExtension(),
         new RinoTableHeaderCellExtension(),
     ])
+    const {
+        view,
+        add,
+        nodes: { doc, p, table, tableRow, tableCell },
+        manager,
+        schema,
+    } = editor
 
     const buildRegularTable = (rows: string[][]) => {
         // Esnure that all rows have same length

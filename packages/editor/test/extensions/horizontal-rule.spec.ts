@@ -4,13 +4,14 @@ import { buildMarkdownParser, buildMarkdownSerializer, createRinoCorePreset } fr
 import { RinoHorizontalRuleExtension } from "../../src/extensions"
 
 const setup = () => {
+    const editor = renderEditor([new RinoHorizontalRuleExtension(), ...createRinoCorePreset()])
     const {
         view,
         add,
         nodes: { doc, p, horizontalRule },
         manager,
         schema,
-    } = renderEditor([new RinoHorizontalRuleExtension(), ...createRinoCorePreset()])
+    } = editor
     return {
         manager,
         view,

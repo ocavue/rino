@@ -4,13 +4,14 @@ import { buildMarkdownSerializer, createRinoCorePreset } from "../../src/compone
 import { RinoHardBreakExtension } from "../../src/extensions"
 
 const setup = () => {
+    const editor = renderEditor([new RinoHardBreakExtension(), ...createRinoCorePreset()])
     const {
         view,
         add,
         nodes: { doc, p, hardBreak },
         manager,
         schema,
-    } = renderEditor([new RinoHardBreakExtension(), ...createRinoCorePreset()])
+    } = editor
 
     return {
         manager,
