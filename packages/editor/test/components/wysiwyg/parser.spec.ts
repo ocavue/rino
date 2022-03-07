@@ -40,13 +40,130 @@ describe("parser token support", () => {
 
     // CommonSpec doesn't contain table
     test("table", () => {
-        parser.parse(
+        const node = parser.parse(
             dedent(`
-                | header | header |
-                | ------ | ------ |
-                | cell   | cell   |
-                | cell   | cell   |
+| header | header |
+| ------ | ------ |
+| cell   | cell   |
+| cell   | cell   |
             `),
         )
+        expect(node.toJSON()).toMatchInlineSnapshot(`
+          {
+            "content": [
+              {
+                "content": [
+                  {
+                    "content": [
+                      {
+                        "attrs": {
+                          "background": null,
+                          "colspan": 1,
+                          "colwidth": null,
+                          "rowspan": 1,
+                        },
+                        "content": [
+                          {
+                            "text": "header",
+                            "type": "text",
+                          },
+                        ],
+                        "type": "tableCell",
+                      },
+                      {
+                        "attrs": {
+                          "background": null,
+                          "colspan": 1,
+                          "colwidth": null,
+                          "rowspan": 1,
+                        },
+                        "content": [
+                          {
+                            "text": "header",
+                            "type": "text",
+                          },
+                        ],
+                        "type": "tableCell",
+                      },
+                    ],
+                    "type": "tableRow",
+                  },
+                  {
+                    "content": [
+                      {
+                        "attrs": {
+                          "background": null,
+                          "colspan": 1,
+                          "colwidth": null,
+                          "rowspan": 1,
+                        },
+                        "content": [
+                          {
+                            "text": "cell",
+                            "type": "text",
+                          },
+                        ],
+                        "type": "tableCell",
+                      },
+                      {
+                        "attrs": {
+                          "background": null,
+                          "colspan": 1,
+                          "colwidth": null,
+                          "rowspan": 1,
+                        },
+                        "content": [
+                          {
+                            "text": "cell",
+                            "type": "text",
+                          },
+                        ],
+                        "type": "tableCell",
+                      },
+                    ],
+                    "type": "tableRow",
+                  },
+                  {
+                    "content": [
+                      {
+                        "attrs": {
+                          "background": null,
+                          "colspan": 1,
+                          "colwidth": null,
+                          "rowspan": 1,
+                        },
+                        "content": [
+                          {
+                            "text": "cell",
+                            "type": "text",
+                          },
+                        ],
+                        "type": "tableCell",
+                      },
+                      {
+                        "attrs": {
+                          "background": null,
+                          "colspan": 1,
+                          "colwidth": null,
+                          "rowspan": 1,
+                        },
+                        "content": [
+                          {
+                            "text": "cell",
+                            "type": "text",
+                          },
+                        ],
+                        "type": "tableCell",
+                      },
+                    ],
+                    "type": "tableRow",
+                  },
+                ],
+                "type": "table",
+              },
+            ],
+            "type": "doc",
+          }
+        `)
     })
 })
