@@ -191,15 +191,18 @@ jobs:
         continue-on-error: true
 
       - uses: marocchino/sticky-pull-request-comment@v2
+        if: ${{ steps.step_find_pr.outcome == 'success' }}
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           number: ${{ steps.step_find_pr.outputs.pr }}
           message: |
-            ## Preview Deployment
-            ${{ github.sha }}:
-            - https://rino-home-${{ steps.step_branch.outputs.branch }}.ocavue.vercel.app
-            - https://rino-editor-${{ steps.step_branch.outputs.branch }}.ocavue.vercel.app
-        continue-on-error: true
+            ## Preview Deployment ${{ github.sha }}:
+            ### Home
+            - status: ${{ steps.step_vercel_home.outcome }}
+            - url: https://rino-home-${{ steps.step_branch.outputs.branch }}.ocavue.vercel.app
+            ### Editor playground
+            - status: ${{ steps.step_vercel_editor.outcome }}
+            - url: https://rino-editor-${{ steps.step_branch.outputs.branch }}.ocavue.vercel.app
 
       - name: Generate configrations for Lighthouse CI
         run: node scripts/generate-lighthouserc.js
