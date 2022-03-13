@@ -8,15 +8,15 @@
     "module": "dist/index.js",
     "types": "dist/index.d.ts",
     "scripts": {
-        "dev": "run-s build dev:all",
-        "dev:tsc": "tsc --build --watch ./src/tsconfig.json --preserveWatchOutput",
-        "dev:vite": "vite dev --clearScreen=false",
-        "dev:all": "run-p dev:tsc dev:vite",
-        "build": "tsc --build ./src/tsconfig.json",
-        "build:playground": "vite build",
-        "build:all": "run-s build build:playground",
-        "test:vitest": "vitest run",
-        "test:vitest:coverage": "vitest run --coverage"
+        "dev": "run-s _dep _dev:all",
+        "build": "run-s _dep _build",
+        "test:vitest": "pnpm _dep && vitest run",
+        "test:vitest:coverage": "pnpm _dep && vitest run --coverage",
+        "_dep": "pnpm -F '@rino.app/editor^...' build",
+        "_dev:tsc": "tsc --build --watch ./src/tsconfig.json --preserveWatchOutput",
+        "_dev:vite": "vite dev --clearScreen=false",
+        "_dev:all": "run-p _dev:tsc _dev:vite",
+        "_build": "tsc --build ./src/tsconfig.json"
     },
     "dependencies": {
         "@codemirror/autocomplete": "^0.19.14",
