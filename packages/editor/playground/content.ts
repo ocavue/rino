@@ -33,11 +33,10 @@ hello world!
 ].join("\n")
 
 const tableContent = `
-| Header A | Header B | Header C |
-| --- | :--- | ---: |
-| Cell 1 | Cell 2 | Cell 3 |
-| Cell 1 | Cell 2 | Cell 3 |
-| Cell 1 | Cell 2 | Cell 3 |
+| First Header  | Second Header |
+| ------------- | ------------- |
+| Content Cell  | Content Cell  |
+| Content Cell  | Content Cell  |
 `
 
 export const contentMap: { [key: string]: string } = {
