@@ -198,10 +198,10 @@ jobs:
           message: |
             ## Preview Deployment ${{ github.sha }}:
             ### Home
-            - Status: ${{ steps.step_vercel_home.outcome }}
+            - Status: ***${{ steps.step_vercel_home.outcome }}***
             - URL: https://rino-home-${{ steps.step_branch.outputs.branch }}.ocavue.vercel.app
             ### Editor playground
-            - Status: ${{ steps.step_vercel_editor.outcome }}
+            - Status: ***${{ steps.step_vercel_editor.outcome }}***
             - URL: https://rino-editor-${{ steps.step_branch.outputs.branch }}.ocavue.vercel.app
 
       - name: Generate configrations for Lighthouse CI
