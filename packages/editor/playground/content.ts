@@ -32,9 +32,18 @@ hello world!
 `.trim(),
 ].join("\n")
 
+const tableContent = `
+| Header A | Header B | Header C |
+| --- | :--- | ---: |
+| Cell 1 | Cell 2 | Cell 3 |
+| Cell 1 | Cell 2 | Cell 3 |
+| Cell 1 | Cell 2 | Cell 3 |
+`
+
 export const contentMap: { [key: string]: string } = {
     default: defaultContent,
     "just-code": justCodeContent,
     long: longContent,
+    table: tableContent,
     customize: "",
 }

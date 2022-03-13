@@ -1,11 +1,12 @@
 import { ApplySchemaAttributes, KeyBindings, NodeSpecOverride } from "@remirror/core"
-import { TableCellExtension, TableExtension, TableHeaderCellExtension, TableRowExtension } from "@remirror/extension-tables"
+import { TableCellExtension, TableHeaderCellExtension, TableRowExtension } from "@remirror/extension-tables"
 import { TableSchemaSpec } from "@remirror/extension-tables/dist/declarations/src/table-utils"
 import { Fragment } from "prosemirror-model"
 import { TextSelection } from "prosemirror-state"
 
 import { NodeSerializerOptions, ParserRuleType } from "../../transform"
 import { buildBlockEnterKeymapBindings } from "../../utils"
+import { ReactTableExtension } from "../table3"
 import { createTableHeigthlightPlugin } from "./table-plugin"
 
 enum TABLE_ALIGEN {
@@ -15,7 +16,7 @@ enum TABLE_ALIGEN {
     LEFT = 4,
 }
 
-export class RinoTableExtension extends TableExtension {
+export class RinoTableExtension extends ReactTableExtension {
     get name() {
         return "table" as const
     }
