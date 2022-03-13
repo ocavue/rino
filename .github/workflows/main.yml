@@ -112,17 +112,13 @@ jobs:
 
       - uses: ./.github/actions/dependencies
 
-      - name: Build dependencies
+      - name: Run vitest
         run: |
-          pnpm --filter @rino.app/common build
+          pnpm -F '*' test:vitest:coverage
 
       - name: Run jest
         run: |
           pnpm test:coverage
-
-      - name: Run vitest
-        run: |
-          pnpm -F '*' test:vitest:coverage
 
       - name: Upload coverage information to codecov
         uses: codecov/codecov-action@v2
@@ -195,15 +191,18 @@ jobs:
         continue-on-error: true
 
       - uses: marocchino/sticky-pull-request-comment@v2
+        if: ${{ steps.step_find_pr.outcome == 'success' }}
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           number: ${{ steps.step_find_pr.outputs.pr }}
           message: |
-            ## Preview Deployment
-            ${{ github.sha }}:
-            - https://rino-home-${{ steps.step_branch.outputs.branch }}.ocavue.vercel.app
-            - https://rino-editor-${{ steps.step_branch.outputs.branch }}.ocavue.vercel.app
-        continue-on-error: true
+            ## Preview Deployment ${{ github.sha }}:
+            ### Home
+            - Status: ***${{ steps.step_vercel_home.outcome }}***
+            - URL: https://rino-home-${{ steps.step_branch.outputs.branch }}.ocavue.vercel.app
+            ### Editor playground
+            - Status: ***${{ steps.step_vercel_editor.outcome }}***
+            - URL: https://rino-editor-${{ steps.step_branch.outputs.branch }}.ocavue.vercel.app
 
       - name: Generate configrations for Lighthouse CI
         run: node scripts/generate-lighthouserc.js
