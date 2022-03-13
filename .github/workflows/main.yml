@@ -112,17 +112,13 @@ jobs:
 
       - uses: ./.github/actions/dependencies
 
-      - name: Build dependencies
+      - name: Run vitest
         run: |
-          pnpm --filter @rino.app/common build
+          pnpm -F '*' test:vitest:coverage
 
       - name: Run jest
         run: |
           pnpm test:coverage
-
-      - name: Run vitest
-        run: |
-          pnpm -F '*' test:vitest:coverage
 
       - name: Upload coverage information to codecov
         uses: codecov/codecov-action@v2
