@@ -1,1 +1,1 @@
-export { ReactTableExtension } from "./table-extensions"
+export { TableExtension, TableCellExtension, TableHeaderCellExtension, TableRowExtension } from "./table-extensions"
