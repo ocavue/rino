@@ -10,13 +10,15 @@
     "scripts": {
         "dev": "run-s _dep _dev:all",
         "build": "run-s _dep _build",
+        "build:all": "run-s _dep _build:all",
         "test:vitest": "pnpm _dep && vitest run",
         "test:vitest:coverage": "pnpm _dep && vitest run --coverage",
         "_dep": "pnpm -F '@rino.app/editor^...' build",
         "_dev:tsc": "tsc --build --watch ./src/tsconfig.json --preserveWatchOutput",
         "_dev:vite": "vite dev --clearScreen=false",
         "_dev:all": "run-p _dev:tsc _dev:vite",
-        "_build": "tsc --build ./src/tsconfig.json"
+        "_build": "tsc --build ./src/tsconfig.json",
+        "_build:all": "tsc --build ./src/tsconfig.json && vite build"
     },
     "dependencies": {
         "@codemirror/autocomplete": "^0.19.14",
