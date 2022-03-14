@@ -6,17 +6,15 @@
         // https://github.com/microsoft/TypeScript/issues/33809#issuecomment-589446027
         "noEmit": false,
         "emitDeclarationOnly": true,
-        "outDir": "./.cache/typescript",
+        "outDir": "./.cache/typescript"
     },
-    "include": [
-        "./",
-    ],
+    "include": ["./"],
     "references": [
         {
-            "path": "../../editor/src"
+            "path": "../../editor/src/tsconfig.json"
         },
         {
-            "path": "../../common/src"
+            "path": "../../common/src/tsconfig.json"
         }
     ]
 }

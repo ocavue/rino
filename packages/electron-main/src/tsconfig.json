@@ -4,15 +4,15 @@
         "composite": true,
         "noEmit": false,
         "emitDeclarationOnly": true,
-        "outDir": "./.cache/typescript",
+        "outDir": "./.cache/typescript"
     },
     "include": ["./"],
     "references": [
         {
-            "path": "../../common/src"
+            "path": "../../common/src/tsconfig.json"
         },
         {
-            "path": "../../editor/src"
+            "path": "../../editor/src/tsconfig.json"
         }
     ]
 }
