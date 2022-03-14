@@ -1,16 +1,15 @@
 {
-  "extends": "../../../tsconfig.base.json",
-  "compilerOptions": {
-    "noEmit": false,
-    "composite": true,
-    "outDir": "../dist",
-  },
-  "include": [
-    "./",
-  ],
-  "references": [
-    {
-      "path": "../../common/src"
-    }
-  ]
+    "extends": "../../../tsconfig.base.json",
+    "compilerOptions": {
+        "noEmit": false,
+        "composite": true,
+        "emitDeclarationOnly": true,
+        "outDir": "../dist-types/"
+    },
+    "include": ["./"],
+    "references": [
+        {
+            "path": "../../common/src/tsconfig.json"
+        }
+    ]
 }

@@ -18,11 +18,11 @@ jobs:
 
       - name: Build home
         run: |
-          pnpm -F home build
+          pnpm -F '@rino.app/home' build
 
       - name: Build editor playground
         run: |
-          pnpm -F editor build:all
+          pnpm -F '@rino.app/playground' build
 
       - name: Upload dist (home)
         uses: actions/upload-artifact@v3
@@ -34,7 +34,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: editor_playground_dist
-          path: ./packages/editor/playground/dist
+          path: ./packages/playground/dist
 
   build_packages:
     runs-on: ubuntu-latest
@@ -143,10 +143,13 @@ jobs:
 
       - uses: ./.github/actions/dependencies
 
-      - name: Build
+      - name: Build home
         run: |
-          pnpm -F home build
-          pnpm -F editor build:all
+          pnpm -F '@rino.app/home' build
+
+      - name: Build editor playground
+        run: |
+          pnpm -F '@rino.app/playground' build
 
       - id: step_branch
         name: Get the branch name
@@ -182,7 +185,7 @@ jobs:
           vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID_EDITOR }}
           alias-domains: rino-editor-${{ steps.step_branch.outputs.branch }}.ocavue.vercel.app
           vercel-args: "--meta TYPE=PREVIEW"
-          working-directory: "./packages/editor/playground/dist/"
+          working-directory: "./packages/playground/dist/"
 
       - id: step_find_pr
         uses: jwalton/gh-find-current-pr@v1
@@ -295,4 +298,4 @@ jobs:
           vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID_EDITOR }}
           alias-domains: rino-editor-master.ocavue.vercel.app
           vercel-args: "--prod --meta TYPE=PRODUCTION"
-          working-directory: "./packages/editor/playground/dist/"
+          working-directory: "./packages/playground/dist/"

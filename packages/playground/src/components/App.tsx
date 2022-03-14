@@ -2,8 +2,9 @@ import "./App.css"
 
 import React, { FC, useMemo } from "react"
 
-import type { WysiwygOptions } from "../../src"
-import { Editor } from "../../src"
+import type { WysiwygOptions } from "@rino.app/editor"
+import { Editor } from "@rino.app/editor"
+
 import { contentMap } from "../content"
 import useContent from "../hooks/use-content"
 import useDevTools from "../hooks/use-devtools"
