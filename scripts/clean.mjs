@@ -4,7 +4,7 @@ import fs from "node:fs/promises"
 import path from "node:path"
 import { fileURLToPath } from "node:url"
 
-const TO_CLEAN = [".next", "dist", ".cache", "coverage", "out", "build"]
+const TO_CLEAN = [".next", "dist", "dist-types", ".cache", "coverage", "out", "build"]
 const TO_IGNORE = ["node_modules"]
 
 async function clean(dir) {

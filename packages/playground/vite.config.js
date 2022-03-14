@@ -2,9 +2,20 @@
 // @ts-check
 
 import { defineConfig } from "vite"
+import react from '@vitejs/plugin-react'
 
 // https://vitejs.dev/config/
 export default defineConfig((env) => ({
+    root: "./src/",
+    server: { port: 3001 },
+    define: {
+        "process.env.NODE_ENV": JSON.stringify(env.mode === "production" ? "production" : "development"),
+        "process.process.platform": JSON.stringify(process.platform),
+    },
+    build: {
+        outDir: "../dist",
+        emptyOutDir: true,
+    },
     test: {
         globals: true,
         environment: "jsdom",
@@ -14,4 +25,5 @@ export default defineConfig((env) => ({
             reporter: ["text-summary", "json", "html"],
         },
     },
+    plugins: [react()]
 }))
