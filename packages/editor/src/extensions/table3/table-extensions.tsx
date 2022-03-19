@@ -16,6 +16,11 @@ export class TableExtension extends BaseTableExtension {
         return "table" as const
     }
 
+    // TODO: we might not need this
+    createNodeSpec(extra: ApplySchemaAttributes, override: NodeSpecOverride): TableSchemaSpec {
+        return { ...super.createNodeSpec(extra, override), allowGapCursor: false }
+    }
+
     createDecorations(state: EditorState): DecorationSet {
         return createSelectors(state)
     }
