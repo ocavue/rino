@@ -8,6 +8,7 @@ function findTable(selection: Selection) {
 
 function findCellsInReat(
     table: FindProsemirrorNodeResult,
+    map: TableMap,
     rect: {
         top?: number
         bottom?: number
@@ -15,7 +16,6 @@ function findCellsInReat(
         right?: number
     },
 ): NodeWithPosition[] {
-    const map = TableMap.get(table.node)
     const { top = 0, bottom = map.height, left = 0, right = map.width } = rect
     const cellPositions = map.cellsInRect({ top, bottom, left, right })
     return cellPositions.map((cellPos) => {
@@ -31,7 +31,7 @@ export function getCellsInColumn(selection: Selection, columnIndex: number): Nod
     if (!table) return []
     const map = TableMap.get(table.node)
     if (columnIndex < 0 || columnIndex >= map.width) return []
-    return findCellsInReat(table, { left: columnIndex, right: columnIndex + 1 })
+    return findCellsInReat(table, map, { left: columnIndex, right: columnIndex + 1 })
 }
 
 export function getCellsInRow(selection: Selection, rowIndex: number): NodeWithPosition[] {
@@ -39,5 +39,32 @@ export function getCellsInRow(selection: Selection, rowIndex: number): NodeWithP
     if (!table) return []
     const map = TableMap.get(table.node)
     if (rowIndex < 0 || rowIndex >= map.height) return []
-    return findCellsInReat(table, { top: rowIndex, bottom: rowIndex + 1 })
+    return findCellsInReat(table, map, { top: rowIndex, bottom: rowIndex + 1 })
+}
+
+export function getCellsInRect(
+    selection: Selection,
+    rect: { top: number; bottom: number; left: number; right: number },
+): NodeWithPosition[] {
+    const table = findTable(selection)
+    if (!table) return []
+    const map = TableMap.get(table.node)
+    return findCellsInReat(table, map, rect)
+}
+
+export function createElement<TagName extends keyof HTMLElementTagNameMap>(
+    tagName: TagName,
+    attributes?: Record<string, string> | null,
+    ...children: Array<HTMLElement | string>
+) {
+    const element = document.createElement(tagName)
+    if (attributes) {
+        Object.entries(attributes).forEach(([key, value]) => {
+            element.setAttribute(key, value)
+        })
+    }
+    children.forEach((child) => {
+        element.append(child)
+    })
+    return element
 }
