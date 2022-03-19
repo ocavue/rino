@@ -40,7 +40,7 @@ export function selectColumn(view: EditorView, pos: number) {
     }
 
     const tr = view.state.tr
-    const selection = CellSelection.colSelection(tr.doc.resolve(pos))
+    const selection = CellSelection.colSelection(tr.doc.resolve(details.cellPos))
     // @ts-expect-error CellSelection has incorrect type
     view.dispatch(tr.setSelection(selection))
 }
