@@ -16,6 +16,10 @@ css`
         .remirror-table-selector {
             cursor: pointer;
 
+            outline-color: #c5c5c5;
+            outline-style: solid;
+            outline-width: 1px;
+
             background-color: #e5e5e5;
 
             &:hover {
@@ -27,8 +31,8 @@ css`
             position: absolute;
             width: 16px;
             height: 16px;
-            top: -22px;
-            left: -22px;
+            top: -17px;
+            left: -17px;
         }
 
         /* First implementation  */
@@ -57,7 +61,7 @@ css`
             width: 16px;
             top: 0;
             bottom: 0;
-            left: -22px;
+            left: -17px;
         }
 
         /* Second implementation */
@@ -66,7 +70,7 @@ css`
             height: 16px;
             left: 0;
             right: 0;
-            top: -22px;
+            top: -17px;
         }
     }
 `
