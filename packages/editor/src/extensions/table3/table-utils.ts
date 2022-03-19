@@ -1,6 +1,6 @@
 import { findParentNodeOfType, FindProsemirrorNodeResult, NodeWithPosition } from "@remirror/core"
 import { EditorState, ResolvedPos, Selection } from "@remirror/pm"
-import { CellSelection, TableMap } from "@remirror/pm/tables"
+import { CellSelection, Rect, TableMap } from "@remirror/pm/tables"
 
 export function findTable(selection: EditorState | Selection | ResolvedPos) {
     return findParentNodeOfType({ selection, types: "table" })
@@ -117,4 +117,11 @@ function calcCellSelectionType(selection: CellSelection): CellSelectionType {
     } else {
         return "cell"
     }
+}
+
+export function getCellSelectionRect(selection: CellSelection): Rect {
+    const table = selection.$anchorCell.node(-1)
+    const map = TableMap.get(table)
+    const start = selection.$anchorCell.start(-1)
+    return map.rectBetween(selection.$anchorCell.pos - start, selection.$headCell.pos - start)
 }

@@ -9,7 +9,7 @@ import {
 import { EditorState } from "prosemirror-state"
 import { DecorationSet } from "prosemirror-view"
 
-import { createSelectors } from "./table-selector"
+import { createSelectorDecorations } from "./table-selector"
 
 export class TableExtension extends BaseTableExtension {
     get name() {
@@ -22,7 +22,7 @@ export class TableExtension extends BaseTableExtension {
     }
 
     createDecorations(state: EditorState): DecorationSet {
-        return createSelectors(state)
+        return createSelectorDecorations(state)
     }
 }
 

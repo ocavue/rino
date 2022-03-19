@@ -1,11 +1,19 @@
 import { injectGlobal as css } from "@emotion/css"
 import { cx } from "@remirror/core"
-import { EditorState, Selection } from "prosemirror-state"
-import { CellSelection, TableMap } from "prosemirror-tables"
-import { Decoration, DecorationSet } from "prosemirror-view"
+import { EditorState } from "@remirror/pm"
+import { CellSelection, TableMap } from "@remirror/pm/tables"
+import { Decoration, DecorationSet, EditorView, WidgetDecorationSpec } from "@remirror/pm/view"
 
 import { selectColumn, selectRow, selectTable } from "./table-operation"
-import { createElement as h, findTable, getCellSelectionType, getCellsInColumn, getCellsInRect, getCellsInRow } from "./table-utils"
+import {
+    createElement as h,
+    findTable,
+    getCellSelectionRect,
+    getCellSelectionType,
+    getCellsInColumn,
+    getCellsInRect,
+    getCellsInRow,
+} from "./table-utils"
 
 css`
     .remirror-editor.ProseMirror .tableWrapper {
@@ -30,7 +38,7 @@ css`
         }
 
         .remirror-table-selector-highlight {
-            background-color: purple;
+            background-color: lightblue;
 
             &:hover {
                 background-color: purple;
@@ -85,79 +93,49 @@ css`
     }
 `
 
-function createBodySelector(selection: Selection, highlight: boolean): Decoration | null {
-    const cell = getCellsInRect(selection, { top: 0, bottom: 1, left: 0, right: 1 }).at(0)
-    if (cell) {
-        return Decoration.widget(
-            cell.pos + 1,
-            (view, getPos) => {
-                return h("div", {
-                    class: cx("remirror-table-body-selector remirror-table-selector", highlight && "remirror-table-selector-highlight"),
-                    contenteditable: "false",
-                    onmousedown: (event) => {
-                        event.preventDefault()
-                    },
-                    onclick: (event) => {
-                        event.preventDefault()
-                        selectTable(view, getPos())
-                    },
-                })
-            },
-            { side: -1, ignoreSelection: true },
-        )
-    }
-    return null
-}
-
-function createRowSelectors(selection: Selection): Decoration[] {
-    return getCellsInColumn(selection, 0).map((cell) => {
-        const highlight = true
-
-        return Decoration.widget(
-            cell.pos + 1,
-            (view, getPos) => {
-                return h("div", {
-                    class: cx("remirror-table-row-selector remirror-table-selector", highlight && "remirror-table-selector-highlight"),
-                    contenteditable: "false",
-                    onmousedown: (event) => {
-                        event.preventDefault()
-                    },
-                    onclick: (event) => {
-                        event.preventDefault()
-                        selectRow(view, getPos())
-                    },
-                })
-            },
-            { side: -1, ignoreSelection: true },
-        )
+function createBodySelector(view: EditorView, getPos: () => number, highlight: boolean): HTMLElement {
+    return h("div", {
+        class: cx("remirror-table-body-selector remirror-table-selector", highlight && "remirror-table-selector-highlight"),
+        contenteditable: "false",
+        onmousedown: (event) => {
+            event.preventDefault()
+        },
+        onclick: (event) => {
+            event.preventDefault()
+            selectTable(view, getPos())
+        },
     })
 }
 
-function createColumnSelectors(selection: Selection): Decoration[] {
-    return getCellsInRow(selection, 0).map((cell) => {
-        const highlight = true
-
-        return Decoration.widget(
-            cell.pos + 1,
-            (view, getPos) => {
-                return h("div", {
-                    class: cx("remirror-table-column-selector remirror-table-selector", highlight && "remirror-table-selector-highlight"),
-                    contenteditable: "false",
-                    onmousedown: (event) => {
-                        event.preventDefault()
-                    },
-                    onclick: (event) => {
-                        event.preventDefault()
-                        selectColumn(view, getPos())
-                    },
-                })
-            },
-            { side: -1, ignoreSelection: true },
-        )
+function createRowSelector(view: EditorView, getPos: () => number, highlight: boolean): HTMLElement {
+    return h("div", {
+        class: cx("remirror-table-row-selector remirror-table-selector", highlight && "remirror-table-selector-highlight"),
+        contenteditable: "false",
+        onmousedown: (event) => {
+            event.preventDefault()
+        },
+        onclick: (event) => {
+            event.preventDefault()
+            selectRow(view, getPos())
+        },
     })
 }
 
-export function createSelectors(state: EditorState): DecorationSet {
+function createColumnSelector(view: EditorView, getPos: () => number, highlight: boolean): HTMLElement {
+    return h("div", {
+        class: cx("remirror-table-column-selector remirror-table-selector", highlight && "remirror-table-selector-highlight"),
+        contenteditable: "false",
+        onmousedown: (event) => {
+            event.preventDefault()
+        },
+        onclick: (event) => {
+            event.preventDefault()
+            selectColumn(view, getPos())
+        },
+    })
+}
+
+export function createSelectorDecorations(state: EditorState): DecorationSet {
     const { doc, selection } = state
 
     const table = findTable(selection)
@@ -172,26 +150,50 @@ export function createSelectors(state: EditorState): DecorationSet {
         return DecorationSet.empty
     }
 
+    const decos: Decoration[] = []
+
+    const selectionType = selection instanceof CellSelection ? getCellSelectionType(selection) : null
+
     let minHighlightRow = -1
     let maxHighlightRow = -1
     let minHighlightCol = -1
     let maxHighlightCol = -1
 
     if (selection instanceof CellSelection) {
-        const type = getCellSelectionType(selection)
-        if (type === "table") {
+        if (selectionType === "table") {
             minHighlightRow = 0
             maxHighlightRow = map.height - 1
             minHighlightCol = 0
             maxHighlightCol = map.width - 1
+        } else if (selectionType === "row") {
+            const rect = getCellSelectionRect(selection)
+            minHighlightRow = rect.top
+            maxHighlightRow = rect.bottom - 1
+        } else if (selectionType === "column") {
+            const rect = getCellSelectionRect(selection)
+            minHighlightCol = rect.left
+            maxHighlightCol = rect.right - 1
         }
     }
 
-    const tableSelector = createBodySelector(selection)
-    if (!tableSelector) return DecorationSet.empty
+    const spec: WidgetDecorationSpec = {
+        side: -1,
+        ignoreSelection: true,
+    }
 
-    const rowSelectors = createRowSelectors(selection)
-    const columnSelectors = createColumnSelectors(selection)
+    const cornerCell = getCellsInRect(selection, { top: 0, bottom: 1, left: 0, right: 1 })[0]
 
-    return DecorationSet.create(doc, [tableSelector, ...rowSelectors, ...columnSelectors])
+    decos.push(Decoration.widget(cornerCell.pos + 1, (view, getPos) => createBodySelector(view, getPos, selectionType === "table"), spec))
+
+    getCellsInColumn(selection, 0).forEach((cell, rowIndex) => {
+        const highlight = rowIndex >= minHighlightRow && rowIndex <= maxHighlightRow
+        decos.push(Decoration.widget(cell.pos + 1, (view, getPos) => createRowSelector(view, getPos, highlight), spec))
+    })
+
+    getCellsInRow(selection, 0).forEach((cell, colIndex) => {
+        const highlight = colIndex >= minHighlightCol && colIndex <= maxHighlightCol
+        decos.push(Decoration.widget(cell.pos + 1, (view, getPos) => createColumnSelector(view, getPos, highlight), spec))
+    })
+
+    return DecorationSet.create(doc, decos)
 }
