@@ -26,13 +26,14 @@ jobs:
       - name: Regenerate the lock file
         continue-on-error: true
         run: |
-          if $(git log -1 --pretty=format:'%an' | egrep -q '^github-actions$'); then
-            echo "Skipping lockfile regeneration"
-          else
+          if $(git log -1 --pretty=format:'%an' | egrep -q 'Renovate'); then
+            echo "Regenerating lock file"
             rm -rf pnpm-lock.yaml
             pnpm i
             cd packages/rig
             pnpm output-licenses
+          else
+            echo "Skipping lockfile regeneration"
           fi
         if: ${{ steps.step_find_pr.outputs.number }}
 
