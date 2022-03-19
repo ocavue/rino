@@ -11,10 +11,10 @@ export function injectGlobalStyles() {
 
             .remirror-table-selector {
                 background-color: #e5e5e5;
+                cursor: pointer;
             }
 
             .remirror-table-body-selector {
-                background: lightblue;
                 position: absolute;
                 width: 16px;
                 height: 16px;
@@ -23,7 +23,7 @@ export function injectGlobalStyles() {
             }
 
             /* First implementation  */
-            .remirror-table-row-selector {
+            /* .remirror-table-row-selector {
                 position: absolute;
                 top: 0;
                 bottom: 0;
@@ -41,11 +41,18 @@ export function injectGlobalStyles() {
                     display: block;
                     content: "";
                 }
+            } */
+
+            .remirror-table-row-selector {
+                position: absolute;
+                width: 16px;
+                top: 0;
+                bottom: 0;
+                left: -24px;
             }
 
             /* Second implementation */
             .remirror-table-column-selector {
-                cursor: pointer;
                 position: absolute;
                 height: 16px;
                 left: 0;
