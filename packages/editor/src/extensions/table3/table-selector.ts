@@ -17,10 +17,8 @@ css`
             cursor: pointer;
 
             background-color: #e5e5e5;
-            transition: background-color 0.15s ease-in-out;
 
             &:hover {
-                transition: background-color 0.05s ease-in-out;
                 background-color: #bbbbbb;
             }
         }
