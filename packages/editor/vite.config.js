@@ -13,5 +13,8 @@ export default defineConfig((env) => ({
         coverage: {
             reporter: ["text-summary", "json", "html"],
         },
+        deps: {
+            fallbackCJS: true,
+        },
     },
 }))
