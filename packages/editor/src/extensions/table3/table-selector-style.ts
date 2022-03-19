@@ -10,8 +10,15 @@ export function injectGlobalStyles() {
             overflow: visible;
 
             .remirror-table-selector {
-                background-color: #e5e5e5;
                 cursor: pointer;
+
+                background-color: #e5e5e5;
+                transition: background-color 0.15s ease-in-out;
+
+                &:hover {
+                    transition: background-color 0.05s ease-in-out;
+                    background-color: #bbbbbb;
+                }
             }
 
             .remirror-table-body-selector {
