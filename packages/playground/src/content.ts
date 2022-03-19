@@ -39,6 +39,13 @@ const tableContent = `
 | Content Cell  | Content Cell  |
 
 Click me to exit the table (TODO: I should not need this)
+
+| First Header  | Second Header |
+| ------------- | ------------- |
+| Content Cell  | Content Cell  |
+| Content Cell  | Content Cell  |
+
+Click me to exit the table (TODO: I should not need this)
 `
 
 export const contentMap: { [key: string]: string } = {

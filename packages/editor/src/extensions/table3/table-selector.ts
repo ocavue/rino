@@ -2,6 +2,7 @@ import { injectGlobal as css } from "@emotion/css"
 import { EditorState, Selection } from "prosemirror-state"
 import { Decoration, DecorationSet } from "prosemirror-view"
 
+import { selectColumn, selectRow, selectTable } from "./table-operation"
 import { createElement as h, getCellsInColumn, getCellsInRect, getCellsInRow } from "./table-utils"
 
 css`
@@ -86,6 +87,7 @@ function createBodySelector(selection: Selection): Decoration | null {
                     },
                     onclick: (event) => {
                         event.preventDefault()
+                        selectTable(view)
                     },
                 })
             },
@@ -108,6 +110,7 @@ function createRowSelectors(selection: Selection): Decoration[] {
                     },
                     onclick: (event) => {
                         event.preventDefault()
+                        selectRow(view, rowIndex)
                     },
                 })
             },
@@ -129,6 +132,7 @@ function createColumnSelectors(selection: Selection): Decoration[] {
                     },
                     onclick: (event) => {
                         event.preventDefault()
+                        selectColumn(view, columnIndex)
                     },
                 })
             },
