@@ -25,8 +25,8 @@ export function injectGlobalStyles() {
                 position: absolute;
                 width: 16px;
                 height: 16px;
-                top: -24px;
-                left: -24px;
+                top: -22px;
+                left: -22px;
             }
 
             /* First implementation  */
@@ -55,7 +55,7 @@ export function injectGlobalStyles() {
                 width: 16px;
                 top: 0;
                 bottom: 0;
-                left: -24px;
+                left: -22px;
             }
 
             /* Second implementation */
@@ -64,7 +64,7 @@ export function injectGlobalStyles() {
                 height: 16px;
                 left: 0;
                 right: 0;
-                top: -24px;
+                top: -22px;
             }
         }
     `
