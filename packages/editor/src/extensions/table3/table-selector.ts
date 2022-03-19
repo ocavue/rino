@@ -8,28 +8,39 @@ injectGlobalStyles()
 
 function createBodySelector(selection: Selection): Decoration | null {
     const cell = getCellsInRect(selection, { top: 0, bottom: 1, left: 0, right: 1 }).at(0)
-    if (!cell) {
-        return null
+    if (cell) {
+        return Decoration.widget(
+            cell.pos + 1,
+            (view, getPos) => {
+                return h("div", { class: "remirror-table-body-selector remirror-table-selector", contenteditable: "false" })
+            },
+            { side: -1 },
+        )
     }
-
-    return Decoration.widget(cell.pos + 1, (view, getPos) => {
-        return h("div", { class: "remirror-table-body-selector remirror-table-selector", contenteditable: "false" })
-    })
+    return null
 }
 
 function createRowSelectors(selection: Selection): Decoration[] {
     return getCellsInColumn(selection, 0).map((cell, rowIndex) => {
-        return Decoration.widget(cell.pos + 1, (view, getPos) => {
-            return h("div", { class: "remirror-table-row-selector remirror-table-selector", contenteditable: "false" })
-        })
+        return Decoration.widget(
+            cell.pos + 1,
+            (view, getPos) => {
+                return h("div", { class: "remirror-table-row-selector remirror-table-selector", contenteditable: "false" })
+            },
+            { side: -1 },
+        )
     })
 }
 
 function createColumnSelectors(selection: Selection): Decoration[] {
     return getCellsInRow(selection, 0).map((cell, columnIndex) => {
-        return Decoration.widget(cell.pos + 1, (view, getPos) => {
-            return h("div", { class: "remirror-table-column-selector remirror-table-selector", contenteditable: "false" })
-        })
+        return Decoration.widget(
+            cell.pos + 1,
+            (view, getPos) => {
+                return h("div", { class: "remirror-table-column-selector remirror-table-selector", contenteditable: "false" })
+            },
+            { side: -1, ignoreSelection: true },
+        )
     })
 }
 
