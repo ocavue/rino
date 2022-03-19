@@ -1,4 +1,4 @@
-import { clamp, findParentNodeOfType, FindProsemirrorNodeResult, NodeWithPosition } from "@remirror/core"
+import { findParentNodeOfType, FindProsemirrorNodeResult, NodeWithPosition } from "@remirror/core"
 import { Selection } from "@remirror/pm"
 import { TableMap } from "@remirror/pm/tables"
 
@@ -16,12 +16,8 @@ function findCellsInReat(
     },
 ): NodeWithPosition[] {
     const map = TableMap.get(table.node)
-    const cellPositions = map.cellsInRect({
-        top: clamp({ min: 0, max: map.height, value: rect.top ?? 0 }),
-        bottom: clamp({ min: 0, max: map.height, value: rect.bottom ?? map.height }),
-        left: clamp({ min: 0, max: map.width, value: rect.left ?? 0 }),
-        right: clamp({ min: 0, max: map.width, value: rect.right ?? map.width }),
-    })
+    const { top = 0, bottom = map.height, left = 0, right = map.width } = rect
+    const cellPositions = map.cellsInRect({ top, bottom, left, right })
     return cellPositions.map((cellPos) => {
         const node = table.node.nodeAt(cellPos)
         const pos = cellPos + table.start
@@ -33,12 +29,15 @@ function findCellsInReat(
 export function getCellsInColumn(selection: Selection, columnIndex: number): NodeWithPosition[] {
     const table = findTable(selection)
     if (!table) return []
+    const map = TableMap.get(table.node)
+    if (columnIndex < 0 || columnIndex >= map.width) return []
     return findCellsInReat(table, { left: columnIndex, right: columnIndex + 1 })
 }
 
 export function getCellsInRow(selection: Selection, rowIndex: number): NodeWithPosition[] {
     const table = findTable(selection)
     if (!table) return []
+    const map = TableMap.get(table.node)
+    if (rowIndex < 0 || rowIndex >= map.height) return []
     return findCellsInReat(table, { top: rowIndex, bottom: rowIndex + 1 })
 }
-
