@@ -78,9 +78,18 @@ function createBodySelector(selection: Selection): Decoration | null {
         return Decoration.widget(
             cell.pos + 1,
             (view, getPos) => {
-                return h("div", { class: "remirror-table-body-selector remirror-table-selector", contenteditable: "false" })
+                return h("div", {
+                    class: "remirror-table-body-selector remirror-table-selector",
+                    contenteditable: "false",
+                    onmousedown: (event) => {
+                        event.preventDefault()
+                    },
+                    onclick: (event) => {
+                        event.preventDefault()
+                    },
+                })
             },
-            { side: -1 },
+            { side: -1, ignoreSelection: true },
         )
     }
     return null
@@ -91,9 +100,18 @@ function createRowSelectors(selection: Selection): Decoration[] {
         return Decoration.widget(
             cell.pos + 1,
             (view, getPos) => {
-                return h("div", { class: "remirror-table-row-selector remirror-table-selector", contenteditable: "false" })
+                return h("div", {
+                    class: "remirror-table-row-selector remirror-table-selector",
+                    contenteditable: "false",
+                    onmousedown: (event) => {
+                        event.preventDefault()
+                    },
+                    onclick: (event) => {
+                        event.preventDefault()
+                    },
+                })
             },
-            { side: -1 },
+            { side: -1, ignoreSelection: true },
         )
     })
 }
@@ -103,7 +121,16 @@ function createColumnSelectors(selection: Selection): Decoration[] {
         return Decoration.widget(
             cell.pos + 1,
             (view, getPos) => {
-                return h("div", { class: "remirror-table-column-selector remirror-table-selector", contenteditable: "false" })
+                return h("div", {
+                    class: "remirror-table-column-selector remirror-table-selector",
+                    contenteditable: "false",
+                    onmousedown: (event) => {
+                        event.preventDefault()
+                    },
+                    onclick: (event) => {
+                        event.preventDefault()
+                    },
+                })
             },
             { side: -1, ignoreSelection: true },
         )
