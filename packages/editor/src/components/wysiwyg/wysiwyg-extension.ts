@@ -56,7 +56,7 @@ function createRinoMarkdownNodeExtensions() {
         new RinoBulletListExtension({}),
         new RinoOrderedListExtension(),
 
-        new RinoTableExtension(),
+        new RinoTableExtension({ resizable: false }),
         new RinoTableRowExtension(),
         new RinoTableCellExtension(),
         new RinoTableHeaderCellExtension(),
