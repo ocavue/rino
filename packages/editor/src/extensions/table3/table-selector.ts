@@ -87,7 +87,7 @@ function createBodySelector(selection: Selection): Decoration | null {
                     },
                     onclick: (event) => {
                         event.preventDefault()
-                        selectTable(view)
+                        selectTable(view, getPos())
                     },
                 })
             },
@@ -98,7 +98,7 @@ function createBodySelector(selection: Selection): Decoration | null {
 }
 
 function createRowSelectors(selection: Selection): Decoration[] {
-    return getCellsInColumn(selection, 0).map((cell, rowIndex) => {
+    return getCellsInColumn(selection, 0).map((cell) => {
         return Decoration.widget(
             cell.pos + 1,
             (view, getPos) => {
@@ -110,7 +110,7 @@ function createRowSelectors(selection: Selection): Decoration[] {
                     },
                     onclick: (event) => {
                         event.preventDefault()
-                        selectRow(view, rowIndex)
+                        selectRow(view, getPos())
                     },
                 })
             },
@@ -120,7 +120,7 @@ function createRowSelectors(selection: Selection): Decoration[] {
 }
 
 function createColumnSelectors(selection: Selection): Decoration[] {
-    return getCellsInRow(selection, 0).map((cell, columnIndex) => {
+    return getCellsInRow(selection, 0).map((cell) => {
         return Decoration.widget(
             cell.pos + 1,
             (view, getPos) => {
@@ -132,7 +132,7 @@ function createColumnSelectors(selection: Selection): Decoration[] {
                     },
                     onclick: (event) => {
                         event.preventDefault()
-                        selectColumn(view, columnIndex)
+                        selectColumn(view, getPos())
                     },
                 })
             },

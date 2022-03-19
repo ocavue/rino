@@ -1,8 +1,8 @@
 import { findParentNodeOfType, FindProsemirrorNodeResult, NodeWithPosition } from "@remirror/core"
-import { Selection } from "@remirror/pm"
+import { EditorState, ResolvedPos, Selection } from "@remirror/pm"
 import { TableMap } from "@remirror/pm/tables"
 
-export function findTable(selection: Selection) {
+export function findTable(selection: EditorState | Selection | ResolvedPos) {
     return findParentNodeOfType({ selection, types: "table" })
 }
 
