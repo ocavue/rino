@@ -1,6 +1,6 @@
 import { findParentNodeOfType, FindProsemirrorNodeResult, NodeWithPosition } from "@remirror/core"
 import { EditorState, ResolvedPos, Selection } from "@remirror/pm"
-import { TableMap } from "@remirror/pm/tables"
+import { CellSelection, TableMap } from "@remirror/pm/tables"
 
 export function findTable(selection: EditorState | Selection | ResolvedPos) {
     return findParentNodeOfType({ selection, types: "table" })
@@ -76,4 +76,45 @@ export function createElement<TagName extends keyof HTMLElementTagNameMap>(
         element.append(child)
     })
     return element
+}
+
+/**
+ * All available cell selection type.
+ *
+ * @remarks
+ *
+ * - "table": This selection includes all cells in the table.
+ * - "row": This selection goes all the way from the left to the right of the table.
+ * - "column": This selection goes all the way from the top to the bottom of the table.
+ * - "cell": This selection is neither any of the above. *
+ */
+export type CellSelectionType = "table" | "row" | "column" | "cell"
+
+const cellSelectionTypeCache = new WeakMap<CellSelection, CellSelectionType>()
+
+/**
+ * Returns the type of the cell selection if it is a cell selection.
+ */
+export function getCellSelectionType(selection: CellSelection): CellSelectionType {
+    let type = cellSelectionTypeCache.get(selection)
+    if (!type) {
+        type = calcCellSelectionType(selection)
+        cellSelectionTypeCache.set(selection, type)
+    }
+    return type
+}
+
+function calcCellSelectionType(selection: CellSelection): CellSelectionType {
+    const isColSelection = selection.isColSelection()
+    const isRowSelection = selection.isRowSelection()
+
+    if (isColSelection && isRowSelection) {
+        return "table"
+    } else if (isColSelection) {
+        return "column"
+    } else if (isRowSelection) {
+        return "row"
+    } else {
+        return "cell"
+    }
 }
