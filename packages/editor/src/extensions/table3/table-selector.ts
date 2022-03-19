@@ -33,15 +33,15 @@ css`
             background-color: #e5e5e5;
 
             &:hover {
-                background-color: #bbbbbb;
+                background-color: #c6c6c6;
             }
         }
 
         .remirror-table-selector-highlight {
-            background-color: lightblue;
+            background-color: #bbd5ef;
 
             &:hover {
-                background-color: purple;
+                background-color: #91bbe5;
             }
         }
 
