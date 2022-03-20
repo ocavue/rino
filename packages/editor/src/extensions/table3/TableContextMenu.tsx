@@ -1,4 +1,5 @@
 import { autoUpdate, shift, useFloating } from "@floating-ui/react-dom"
+import { Selection } from "@remirror/core"
 import { CellSelection } from "@remirror/pm/tables"
 import { useCommands, useRemirrorContext } from "@remirror/react-core"
 import React, { useCallback, useEffect } from "react"
@@ -65,7 +66,11 @@ const TableBodyMenuOptions: React.FC = () => {
     )
 }
 
-const TableMenuOptions: React.FC<{ selection: CellSelection }> = ({ selection }) => {
+const TableMenuOptions: React.FC<{ selection: Selection }> = ({ selection }) => {
+    if (!(selection instanceof CellSelection)) {
+        return null
+    }
+
     const isColSelection = selection.isColSelection()
     const isRowSelection = selection.isRowSelection()
 
@@ -90,7 +95,7 @@ export function TableContextMenu(): JSX.Element | null {
         middleware: [shift()],
     })
 
-    console.log("[TableContextMenu]", { x, y })
+    console.log("[TableContextMenu]", { x, y, showMenu })
 
     const clickSelectorHandler: ClickSelectorHandler = useCallback(
         (type, event) => {
@@ -100,7 +105,25 @@ export function TableContextMenu(): JSX.Element | null {
 
             console.log("clickSelectorHandler")
             setShowMenu(true)
-            reference(selector)
+
+            const { clientX, clientY } = event
+            const virtualEl = {
+                getBoundingClientRect() {
+                    return {
+                        width: 0,
+                        height: 0,
+                        x: clientX,
+                        y: clientY,
+                        top: clientY,
+                        left: clientX,
+                        right: clientX,
+                        bottom: clientY,
+                    }
+                },
+                contextElement: selector,
+            }
+
+            reference(virtualEl)
         },
         [reference],
     )
@@ -116,13 +139,13 @@ export function TableContextMenu(): JSX.Element | null {
         return autoUpdate(refs.reference.current, refs.floating.current, update)
     }, [refs.floating, refs.reference, update])
 
-    if (!showMenu) return null
+    // if (!showMenu) return null
 
     if (!(selection instanceof CellSelection)) {
         if (showMenu) {
             setShowMenu(false)
         }
-        return null
+        // return null
     }
 
     return (
@@ -135,7 +158,7 @@ export function TableContextMenu(): JSX.Element | null {
                 left: x ?? "",
                 padding: "8px",
                 background: "lightcoral",
-                display: "flex",
+                display: showMenu ? "flex" : "none",
                 flexDirection: "column",
             }}
         >
