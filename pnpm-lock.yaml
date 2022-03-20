@@ -82,6 +82,7 @@ importers:
       '@emotion/css': ^11.7.1
       '@emotion/react': ^11.8.2
       '@floating-ui/dom': ^0.4.1
+      '@floating-ui/react-dom': ^0.6.0
       '@mui/material': ^5.5.1
       '@remirror/core': ^1.4.0
       '@remirror/dev': ^1.0.28
@@ -161,6 +162,7 @@ importers:
       '@emotion/css': 11.7.1_@babel+core@7.17.8
       '@emotion/react': 11.8.2_707fe24a3ddaa8115c00d0a9966a19ae
       '@floating-ui/dom': 0.4.1
+      '@floating-ui/react-dom': 0.6.0_f456dfc349ace84b0ea11d9e6e4ef3ab
       '@mui/material': 5.5.1_afdb6803ab85596df04477f074381996
       '@remirror/core': 1.4.0_629bb69c395e6cae3b2276cc62f3041e
       '@remirror/dev': 1.0.28_fd7def88da7565a3d40b6ec6d36ef469
@@ -1373,6 +1375,20 @@ packages:
     resolution: {integrity: sha512-VAdIkn+zc4VB3pSemBk2JwjXlbVEBUbQft4V5jGpUeA9Vxd1fQD5eL3dMIMLVW003NYCOoW42JjjyBPNTpr8uQ==}
     dependencies:
       '@floating-ui/core': 0.6.1
+    dev: false
+
+  /@floating-ui/react-dom/0.6.0_f456dfc349ace84b0ea11d9e6e4ef3ab:
+    resolution: {integrity: sha512-/dF+jpAUtoonjs2lO0F+miqEQlzA9XJGOxWBiJsq/COhK2kz7XzryyJdxfaNEH+RN63vRs9osDolOJXlst50hg==}
+    peerDependencies:
+      react: '>=16.8.0'
+      react-dom: '>=16.8.0'
+    dependencies:
+      '@floating-ui/dom': 0.4.1
+      react: 17.0.2
+      react-dom: 17.0.2_react@17.0.2
+      use-isomorphic-layout-effect: 1.1.1_00d6772dea80510e818fd171caaa025a
+    transitivePeerDependencies:
+      - '@types/react'
     dev: false
 
   /@hapi/hoek/9.2.1:
