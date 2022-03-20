@@ -1,8 +1,8 @@
 import { css } from "@emotion/css"
-import { shift, useFloating } from "@floating-ui/react-dom"
+import { autoUpdate, shift, useFloating } from "@floating-ui/react-dom"
 import { CellSelection } from "@remirror/pm/tables"
 import { useCommands, useRemirrorContext } from "@remirror/react-core"
-import React, { useCallback } from "react"
+import React, { useCallback, useEffect } from "react"
 
 import { ClickSelectorHandler, useSelectorEvent } from "./use-selector-event"
 
@@ -86,7 +86,7 @@ export function TableContextMenu(): JSX.Element | null {
     const { view } = useRemirrorContext({ autoUpdate: true })
     const selection = view.state.selection
 
-    const { x, y, reference, floating, strategy } = useFloating({
+    const { x, y, reference, floating, strategy, refs, update } = useFloating({
         placement: "right",
         middleware: [shift()],
     })
@@ -114,6 +114,17 @@ export function TableContextMenu(): JSX.Element | null {
     //     }
     // }
 
+    useEffect(() => {
+        if (!refs.reference.current || !refs.floating.current) {
+            return
+        }
+
+        // Only call this when the floating element is rendered
+        return autoUpdate(refs.reference.current, refs.floating.current, update)
+    }, [refs.floating, refs.reference, update])
+
+    if (!showMenu) return null
+
     return (
         <div
             ref={floating}
@@ -122,7 +133,7 @@ export function TableContextMenu(): JSX.Element | null {
                 position: strategy,
                 top: y ?? "",
                 left: x ?? "",
-                display: showMenu ? "block" : "none",
+                // display: showMenu ? "block" : "none",
             }}
         >
             Tooltip
