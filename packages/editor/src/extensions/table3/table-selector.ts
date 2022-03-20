@@ -99,65 +99,59 @@ function createBodySelector(view: EditorView, getPos: () => number, highlight: b
         class: cx("remirror-table-body-selector remirror-table-selector", highlight && "remirror-table-selector-highlight"),
         contenteditable: "false",
         onmousedown: (event) => {
-            console.log("[body-selector] onmousedown")
             event.preventDefault()
-
-            const tr = setTableSelectorMeta(view.state.tr, { type: "mousedown" })
-            if (selectTable(tr, getPos())) {
+            const pos = getPos()
+            const tr = setTableSelectorMeta(view.state.tr, { type: "mousedown", selectionType: "table", pos })
+            if (selectTable(tr, pos)) {
                 view.dispatch(tr)
             }
         },
         onmouseup: (event) => {
-            console.log("[body-selector] onmouseup")
             event.preventDefault()
-
-            const tr = setTableSelectorMeta(view.state.tr, { type: "mouseup" })
+            const pos = getPos()
+            const tr = setTableSelectorMeta(view.state.tr, { type: "mouseup", selectionType: "table", pos })
             view.dispatch(tr)
         },
     })
 }
 
-function createRowSelector(view: EditorView, getPos: () => number, highlight: boolean): HTMLElement {
+function createRowSelector(view: EditorView, getPos: () => number, highlight: boolean, rowIndex: number): HTMLElement {
     return h("div", {
         class: cx("remirror-table-row-selector remirror-table-selector", highlight && "remirror-table-selector-highlight"),
         contenteditable: "false",
         onmousedown: (event) => {
-            console.log("[row-selector] onmousedown")
             event.preventDefault()
-
-            const tr = setTableSelectorMeta(view.state.tr, { type: "mousedown" })
-            if (selectRow(tr, getPos())) {
+            const pos = getPos()
+            const tr = setTableSelectorMeta(view.state.tr, { type: "mousedown", selectionType: "row", pos })
+            if (selectRow(tr, pos)) {
                 view.dispatch(tr)
             }
         },
         onmouseup: (event) => {
-            console.log("[row-selector] onmouseup")
             event.preventDefault()
-
-            const tr = setTableSelectorMeta(view.state.tr, { type: "mouseup" })
+            const pos = getPos()
+            const tr = setTableSelectorMeta(view.state.tr, { type: "mouseup", selectionType: "row", pos })
             view.dispatch(tr)
         },
     })
 }
 
-function createColumnSelector(view: EditorView, getPos: () => number, highlight: boolean): HTMLElement {
+function createColumnSelector(view: EditorView, getPos: () => number, highlight: boolean, colIndex: number): HTMLElement {
     return h("div", {
         class: cx("remirror-table-column-selector remirror-table-selector", highlight && "remirror-table-selector-highlight"),
         contenteditable: "false",
         onmousedown: (event) => {
-            console.log("[column-selector] onmousedown")
             event.preventDefault()
-
-            const tr = setTableSelectorMeta(view.state.tr, { type: "mousedown" })
+            const pos = getPos()
+            const tr = setTableSelectorMeta(view.state.tr, { type: "mousedown", selectionType: "column", pos })
             if (selectColumn(tr, getPos())) {
                 view.dispatch(tr)
             }
         },
         onmouseup: (event) => {
-            console.log("[column-selector] onmouseup")
             event.preventDefault()
-
-            const tr = setTableSelectorMeta(view.state.tr, { type: "mouseup" })
+            const pos = getPos()
+            const tr = setTableSelectorMeta(view.state.tr, { type: "mouseup", selectionType: "column", pos })
             view.dispatch(tr)
         },
     })
@@ -215,12 +209,12 @@ export function createSelectorDecorations(state: EditorState): DecorationSet {
 
     getCellsInColumn(selection, 0).forEach((cell, rowIndex) => {
         const highlight = rowIndex >= minHighlightRow && rowIndex <= maxHighlightRow
-        decos.push(Decoration.widget(cell.pos + 1, (view, getPos) => createRowSelector(view, getPos, highlight), spec))
+        decos.push(Decoration.widget(cell.pos + 1, (view, getPos) => createRowSelector(view, getPos, highlight, rowIndex), spec))
     })
 
     getCellsInRow(selection, 0).forEach((cell, colIndex) => {
         const highlight = colIndex >= minHighlightCol && colIndex <= maxHighlightCol
-        decos.push(Decoration.widget(cell.pos + 1, (view, getPos) => createColumnSelector(view, getPos, highlight), spec))
+        decos.push(Decoration.widget(cell.pos + 1, (view, getPos) => createColumnSelector(view, getPos, highlight, colIndex), spec))
     })
 
     return DecorationSet.create(doc, decos)

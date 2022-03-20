@@ -1,9 +1,10 @@
 import { css } from "@emotion/css"
 import { CellSelection } from "@remirror/pm/tables"
 import { useCommands, useRemirrorContext } from "@remirror/react-core"
-import React from "react"
+import React, { useCallback, useRef } from "react"
 
 import { getTableSelectorMeta } from "./table-selector-transaction"
+import { CellSelectionType } from "./table-utils"
 
 const TableRowMenuOptions: React.FC = () => {
     const commands = useCommands()
@@ -80,12 +81,26 @@ const TableMenuOptions: React.FC<{ selection: CellSelection }> = ({ selection })
     }
 }
 
-function useSelectorEvent() {
+function useSelectorEvent(clickSelectorHandler: (type: CellSelectionType) => void) {
+    const posRef = useRef<number>()
+    const selectionTypeRef = useRef<CellSelectionType>()
+
     useRemirrorContext(({ tr }) => {
         if (tr) {
             const meta = getTableSelectorMeta(tr)
             if (meta) {
-                console.log("[useSelectorEvent] meta:", meta)
+                if (meta.type === "mousedown") {
+                    posRef.current = meta.pos
+                    selectionTypeRef.current = meta.selectionType
+                } else if (meta.type === "mouseup") {
+                    if (posRef.current === meta.pos && selectionTypeRef.current === meta.selectionType) {
+                        // The target of the mouseup event is the same as the target of the mousedown event. This means
+                        // that the user clicked on the same selector. We can show the menu.
+                        clickSelectorHandler(meta.selectionType)
+                    }
+                    posRef.current = undefined
+                    selectionTypeRef.current = undefined
+                }
             }
         }
     })
@@ -95,7 +110,10 @@ export function TableContextMenu(): JSX.Element | null {
     const { view } = useRemirrorContext({ autoUpdate: true })
     const selection = view.state.selection
 
-    useSelectorEvent()
+    const clickSelectorHandler = useCallback(() => {
+        console.log("clickSelectorHandler")
+    }, [])
+    useSelectorEvent(clickSelectorHandler)
 
     if (!(selection instanceof CellSelection)) {
         return null
