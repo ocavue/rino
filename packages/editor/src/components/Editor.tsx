@@ -165,7 +165,7 @@ const Editor: React.ForwardRefRenderFunction<EditorHandle, EditorProps> = (
 
     const remirrorProps: RemirrorProps = {
         manager: state.delegate.manager,
-        autoFocus: autoFocus,
+        autoFocus: autoFocus ? "start" : false,
         initialContent: state.initialDoc,
         onChange: onChange,
         editable: !state.note.deleted,
