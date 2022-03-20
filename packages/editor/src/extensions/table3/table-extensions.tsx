@@ -22,7 +22,7 @@ export class TableExtension extends BaseTableExtension {
     }
 
     createDecorations(state: EditorState): DecorationSet {
-        return createSelectorDecorations(state)
+        return createSelectorDecorations(state, this.store.view)
     }
 }
 

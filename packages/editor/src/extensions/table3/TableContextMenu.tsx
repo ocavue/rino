@@ -1,9 +1,10 @@
 import { css } from "@emotion/css"
+import { shift, useFloating } from "@floating-ui/react-dom"
 import { CellSelection } from "@remirror/pm/tables"
 import { useCommands, useRemirrorContext } from "@remirror/react-core"
 import React, { useCallback } from "react"
 
-import { useSelectorEvent } from "./use-selector-event"
+import { ClickSelectorHandler, useSelectorEvent } from "./use-selector-event"
 
 const TableRowMenuOptions: React.FC = () => {
     const commands = useCommands()
@@ -81,32 +82,71 @@ const TableMenuOptions: React.FC<{ selection: CellSelection }> = ({ selection })
 }
 
 export function TableContextMenu(): JSX.Element | null {
+    const [showMenu, setShowMenu] = React.useState(false)
     const { view } = useRemirrorContext({ autoUpdate: true })
     const selection = view.state.selection
 
-    const clickSelectorHandler = useCallback(() => {
-        console.log("clickSelectorHandler")
-    }, [])
+    const { x, y, reference, floating, strategy } = useFloating({
+        placement: "right",
+        middleware: [shift()],
+    })
+
+    console.log("[TableContextMenu]", { x, y })
+
+    const clickSelectorHandler: ClickSelectorHandler = useCallback(
+        (type, event) => {
+            const selector = event.target as HTMLElement
+
+            console.log("[TableContextMenu] getBoundingClientRect", selector.getBoundingClientRect())
+
+            console.log("clickSelectorHandler")
+            setShowMenu(true)
+            reference(selector)
+        },
+        [reference],
+    )
+
     useSelectorEvent(clickSelectorHandler)
 
     if (!(selection instanceof CellSelection)) {
+        if (showMenu) {
+            setShowMenu(false)
+        }
+        return null
+    }
+
+    if (!showMenu) {
         return null
     }
 
     return (
         <div
-            className={css`
-                position: absolute;
-                display: flex;
-                flex-direction: column;
-                top: 0;
-                left: 0;
-                background: lightcoral;
-                z-index: 100;
-                padding: 8px;
-            `}
+            ref={floating}
+            style={{
+                zIndex: 10000,
+                position: strategy,
+                top: y ?? "",
+                left: x ?? "",
+            }}
         >
-            <TableMenuOptions selection={selection} />
+            Tooltip
         </div>
     )
+
+    // return (
+    //     <div
+    //         className={css`
+    //             position: absolute;
+    //             display: flex;
+    //             flex-direction: column;
+    //             top: 0;
+    //             left: 0;
+    //             background: lightcoral;
+    //             z-index: 100;
+    //             padding: 8px;
+    //         `}
+    //     >
+    //         <TableMenuOptions selection={selection} />
+    //     </div>
+    // )
 }
