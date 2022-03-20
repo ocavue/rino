@@ -1,4 +1,3 @@
-import { css } from "@emotion/css"
 import { autoUpdate, shift, useFloating } from "@floating-ui/react-dom"
 import { CellSelection } from "@remirror/pm/tables"
 import { useCommands, useRemirrorContext } from "@remirror/react-core"
