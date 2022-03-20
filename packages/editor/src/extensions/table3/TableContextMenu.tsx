@@ -107,12 +107,6 @@ export function TableContextMenu(): JSX.Element | null {
 
     useSelectorEvent(clickSelectorHandler)
 
-    // if (!(selection instanceof CellSelection)) {
-    //     if (showMenu) {
-    //         setShowMenu(false)
-    //     }
-    // }
-
     useEffect(() => {
         if (!refs.reference.current || !refs.floating.current) {
             return
@@ -124,6 +118,13 @@ export function TableContextMenu(): JSX.Element | null {
 
     if (!showMenu) return null
 
+    if (!(selection instanceof CellSelection)) {
+        if (showMenu) {
+            setShowMenu(false)
+        }
+        return null
+    }
+
     return (
         <div
             ref={floating}
@@ -132,27 +133,13 @@ export function TableContextMenu(): JSX.Element | null {
                 position: strategy,
                 top: y ?? "",
                 left: x ?? "",
-                // display: showMenu ? "block" : "none",
+                padding: "8px",
+                background: "lightcoral",
+                display: "flex",
+                flexDirection: "column",
             }}
         >
-            Tooltip
+            <TableMenuOptions selection={selection} />
         </div>
     )
-
-    // return (
-    //     <div
-    //         className={css`
-    //             position: absolute;
-    //             display: flex;
-    //             flex-direction: column;
-    //             top: 0;
-    //             left: 0;
-    //             background: lightcoral;
-    //             z-index: 100;
-    //             padding: 8px;
-    //         `}
-    //     >
-    //         <TableMenuOptions selection={selection} />
-    //     </div>
-    // )
 }

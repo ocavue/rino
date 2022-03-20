@@ -1,1 +1,1 @@
-export const TABLE_SELECTOR_DATA_TAG_COLUMN = "data-table-selector-column"
+export const DATA_TABLE_SELECTOR_TYPE = "data-table-selector-type"
