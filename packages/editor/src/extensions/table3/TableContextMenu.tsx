@@ -108,16 +108,11 @@ export function TableContextMenu(): JSX.Element | null {
 
     useSelectorEvent(clickSelectorHandler)
 
-    if (!(selection instanceof CellSelection)) {
-        if (showMenu) {
-            setShowMenu(false)
-        }
-        return null
-    }
-
-    if (!showMenu) {
-        return null
-    }
+    // if (!(selection instanceof CellSelection)) {
+    //     if (showMenu) {
+    //         setShowMenu(false)
+    //     }
+    // }
 
     return (
         <div
@@ -127,6 +122,7 @@ export function TableContextMenu(): JSX.Element | null {
                 position: strategy,
                 top: y ?? "",
                 left: x ?? "",
+                display: showMenu ? "block" : "none",
             }}
         >
             Tooltip

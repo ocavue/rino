@@ -62,17 +62,22 @@ export function useSelectorEvent(clickSelectorHandler: ClickSelectorHandler) {
         if ((state.nodeWithPosition.node.type.spec as TableSchemaSpec).tableRole === "table") {
             console.log("[useEvent] click node", state.nodeWithPosition.node)
 
-            clickSelectorHandler("column", event)
+            const element = event.target as HTMLElement
+
+            if (element?.getAttribute(TABLE_SELECTOR_DATA_TAG_COLUMN)) {
+                clickSelectorHandler("column", event)
+            }
         }
     })
 
-    useEvent("mousedown", (event) => {
+    useEvent("mouseup", (event) => {
         const element = event.target as HTMLElement
 
-        // if (element?.getAttribute(TABLE_SELECTOR_DATA_TAG_COLUMN)) {
-        //     console.log("[useEvent] mousedown", element.getBoundingClientRect())
-        // }
-        console.log("[useEvent] event mousedown", element.className, element.getBoundingClientRect())
+        if (element?.getAttribute(TABLE_SELECTOR_DATA_TAG_COLUMN)) {
+            console.log("[useEvent] mouseup", element.getBoundingClientRect())
+            clickSelectorHandler("column", event)
+        }
+        // console.log("[useEvent] event mouseup", element.className, element.getBoundingClientRect())
     })
 
     // useEvent("mousedown", (event) => {

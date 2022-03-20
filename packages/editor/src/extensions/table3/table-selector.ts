@@ -142,11 +142,11 @@ function createRowSelector(view: EditorView, getPos: () => number, highlight: bo
             //     const tr = setTableSelectorMeta(view.state.tr, { type: "mouseup", selectionType: "row", pos, event })
             //     view.dispatch(tr)
 
-            const pos = getPos()
-            const tr = setTableSelectorMeta(view.state.tr, { type: "mousedown", selectionType: "row", pos })
-            if (selectRow(tr, pos)) {
-                view.dispatch(tr)
-            }
+            // const pos = getPos()
+            // const tr = setTableSelectorMeta(view.state.tr, { type: "mousedown", selectionType: "row", pos })
+            // if (selectRow(tr, pos)) {
+            //     view.dispatch(tr)
+            // }
         },
     })
 }
