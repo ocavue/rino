@@ -1,10 +1,9 @@
 import { css } from "@emotion/css"
 import { CellSelection } from "@remirror/pm/tables"
 import { useCommands, useRemirrorContext } from "@remirror/react-core"
-import React, { useCallback, useRef } from "react"
+import React, { useCallback } from "react"
 
-import { getTableSelectorMeta } from "./table-selector-transaction"
-import { CellSelectionType } from "./table-utils"
+import { useSelectorEvent } from "./use-selector-event"
 
 const TableRowMenuOptions: React.FC = () => {
     const commands = useCommands()
@@ -79,32 +78,6 @@ const TableMenuOptions: React.FC<{ selection: CellSelection }> = ({ selection })
     } else {
         return <p>cell</p>
     }
-}
-
-export function useSelectorEvent(clickSelectorHandler: (type: CellSelectionType) => void) {
-    const posRef = useRef<number>()
-    const selectionTypeRef = useRef<CellSelectionType>()
-
-    useRemirrorContext(({ tr }) => {
-        const meta = tr && getTableSelectorMeta(tr)
-
-        if (!meta) {
-            return
-        }
-
-        if (meta.type === "mousedown") {
-            posRef.current = meta.pos
-            selectionTypeRef.current = meta.selectionType
-        } else if (meta.type === "mouseup") {
-            if (posRef.current === meta.pos && selectionTypeRef.current === meta.selectionType) {
-                // The target of the mouseup event is the same as the target of the mousedown event. This means
-                // that the user clicked on the same selector. We can show the menu.
-                clickSelectorHandler(meta.selectionType)
-            }
-            posRef.current = undefined
-            selectionTypeRef.current = undefined
-        }
-    })
 }
 
 export function TableContextMenu(): JSX.Element | null {
