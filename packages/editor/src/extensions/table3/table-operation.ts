@@ -1,51 +1,51 @@
 import { findParentNodeOfType } from "@remirror/core"
+import { Transaction } from "@remirror/pm/state"
 import { CellSelection, TableMap } from "prosemirror-tables"
-import { EditorView } from "prosemirror-view"
 
-export function selectRow(view: EditorView, pos: number) {
-    const cell = findParentNodeOfType({ selection: view.state.doc.resolve(pos), types: "tableCell" })
+export function selectRow(tr: Transaction, pos: number): boolean {
+    const cell = findParentNodeOfType({ selection: tr.doc.resolve(pos), types: "tableCell" })
 
     if (!cell) {
-        return
+        return false
     }
 
-    const tr = view.state.tr
     const selection = CellSelection.rowSelection(tr.doc.resolve(cell.pos))
     // @ts-expect-error CellSelection has incorrect type
-    view.dispatch(tr.setSelection(selection))
+    tr.setSelection(selection)
+    return true
 }
 
-export function selectColumn(view: EditorView, pos: number) {
-    const cell = findParentNodeOfType({ selection: view.state.doc.resolve(pos), types: "tableCell" })
+export function selectColumn(tr: Transaction, pos: number): boolean {
+    const cell = findParentNodeOfType({ selection: tr.doc.resolve(pos), types: "tableCell" })
 
     if (!cell) {
-        return
+        return false
     }
 
-    const tr = view.state.tr
     const selection = CellSelection.colSelection(tr.doc.resolve(cell.pos))
     // @ts-expect-error CellSelection has incorrect type
-    view.dispatch(tr.setSelection(selection))
+    tr.setSelection(selection)
+    return true
 }
 
-export function selectTable(view: EditorView, pos: number) {
-    const table = findParentNodeOfType({ selection: view.state.doc.resolve(pos), types: "table" })
+export function selectTable(tr: Transaction, pos: number): boolean {
+    const table = findParentNodeOfType({ selection: tr.doc.resolve(pos), types: "table" })
 
     if (!table) {
-        return
+        return false
     }
 
     const map = TableMap.get(table.node)
 
     if (!map.map.length) {
-        return
+        return false
     }
 
     const firstCellPos = map.map[0]
     const lastCellPos = map.map[map.map.length - 1]
 
-    const tr = view.state.tr
     const selection = CellSelection.create(tr.doc, table.start + firstCellPos, table.start + lastCellPos)
     // @ts-expect-error CellSelection has incorrect type
-    view.dispatch(tr.setSelection(selection))
+    tr.setSelection(selection)
+    return true
 }

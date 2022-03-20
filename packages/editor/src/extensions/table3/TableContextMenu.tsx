@@ -3,6 +3,8 @@ import { CellSelection } from "@remirror/pm/tables"
 import { useCommands, useRemirrorContext } from "@remirror/react-core"
 import React from "react"
 
+import { getTableSelectorMeta } from "./table-selector-transaction"
+
 const TableRowMenuOptions: React.FC = () => {
     const commands = useCommands()
 
@@ -78,9 +80,22 @@ const TableMenuOptions: React.FC<{ selection: CellSelection }> = ({ selection })
     }
 }
 
+function useSelectorEvent() {
+    useRemirrorContext(({ tr }) => {
+        if (tr) {
+            const meta = getTableSelectorMeta(tr)
+            if (meta) {
+                console.log("[useSelectorEvent] meta:", meta)
+            }
+        }
+    })
+}
+
 export function TableContextMenu(): JSX.Element | null {
     const { view } = useRemirrorContext({ autoUpdate: true })
     const selection = view.state.selection
+
+    useSelectorEvent()
 
     if (!(selection instanceof CellSelection)) {
         return null

@@ -5,6 +5,7 @@ import { CellSelection, TableMap } from "@remirror/pm/tables"
 import { Decoration, DecorationSet, EditorView, WidgetDecorationSpec } from "@remirror/pm/view"
 
 import { selectColumn, selectRow, selectTable } from "./table-operation"
+import { setTableSelectorMeta } from "./table-selector-transaction"
 import {
     createElement as h,
     findTable,
@@ -98,11 +99,20 @@ function createBodySelector(view: EditorView, getPos: () => number, highlight: b
         class: cx("remirror-table-body-selector remirror-table-selector", highlight && "remirror-table-selector-highlight"),
         contenteditable: "false",
         onmousedown: (event) => {
+            console.log("[body-selector] onmousedown")
             event.preventDefault()
+
+            const tr = setTableSelectorMeta(view.state.tr, { type: "mousedown" })
+            if (selectTable(tr, getPos())) {
+                view.dispatch(tr)
+            }
         },
-        onclick: (event) => {
+        onmouseup: (event) => {
+            console.log("[body-selector] onmouseup")
             event.preventDefault()
-            selectTable(view, getPos())
+
+            const tr = setTableSelectorMeta(view.state.tr, { type: "mouseup" })
+            view.dispatch(tr)
         },
     })
 }
@@ -112,11 +122,20 @@ function createRowSelector(view: EditorView, getPos: () => number, highlight: bo
         class: cx("remirror-table-row-selector remirror-table-selector", highlight && "remirror-table-selector-highlight"),
         contenteditable: "false",
         onmousedown: (event) => {
+            console.log("[row-selector] onmousedown")
             event.preventDefault()
+
+            const tr = setTableSelectorMeta(view.state.tr, { type: "mousedown" })
+            if (selectRow(tr, getPos())) {
+                view.dispatch(tr)
+            }
         },
-        onclick: (event) => {
+        onmouseup: (event) => {
+            console.log("[row-selector] onmouseup")
             event.preventDefault()
-            selectRow(view, getPos())
+
+            const tr = setTableSelectorMeta(view.state.tr, { type: "mouseup" })
+            view.dispatch(tr)
         },
     })
 }
@@ -126,11 +145,20 @@ function createColumnSelector(view: EditorView, getPos: () => number, highlight:
         class: cx("remirror-table-column-selector remirror-table-selector", highlight && "remirror-table-selector-highlight"),
         contenteditable: "false",
         onmousedown: (event) => {
+            console.log("[column-selector] onmousedown")
             event.preventDefault()
+
+            const tr = setTableSelectorMeta(view.state.tr, { type: "mousedown" })
+            if (selectColumn(tr, getPos())) {
+                view.dispatch(tr)
+            }
         },
-        onclick: (event) => {
+        onmouseup: (event) => {
+            console.log("[column-selector] onmouseup")
             event.preventDefault()
-            selectColumn(view, getPos())
+
+            const tr = setTableSelectorMeta(view.state.tr, { type: "mouseup" })
+            view.dispatch(tr)
         },
     })
 }
