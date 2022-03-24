@@ -1,6 +1,6 @@
 import { autoUpdate, shift, useFloating } from "@floating-ui/react-dom"
 import { Selection } from "@remirror/core"
-import { CellSelection } from "@remirror/pm/tables"
+import { isCellSelection } from "@remirror/pm/tables"
 import { useCommands, useRemirrorContext } from "@remirror/react-core"
 import React, { useCallback, useEffect } from "react"
 
@@ -67,7 +67,7 @@ const TableBodyMenuOptions: React.FC = () => {
 }
 
 const TableMenuOptions: React.FC<{ selection: Selection }> = ({ selection }) => {
-    if (!(selection instanceof CellSelection)) {
+    if (!isCellSelection(selection)) {
         return null
     }
 
@@ -141,7 +141,7 @@ export function TableContextMenu(): JSX.Element | null {
 
     // if (!showMenu) return null
 
-    if (!(selection instanceof CellSelection)) {
+    if (!isCellSelection(selection)) {
         if (showMenu) {
             setShowMenu(false)
         }

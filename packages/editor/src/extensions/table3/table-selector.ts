@@ -1,7 +1,7 @@
 import { injectGlobal as css } from "@emotion/css"
 import { cx } from "@remirror/core"
 import { EditorState } from "@remirror/pm"
-import { CellSelection, TableMap } from "@remirror/pm/tables"
+import { isCellSelection, TableMap } from "@remirror/pm/tables"
 import { Decoration, DecorationSet, EditorView, WidgetDecorationSpec } from "@remirror/pm/view"
 
 import { DATA_TABLE_SELECTOR_TYPE } from "./table-const"
@@ -169,14 +169,14 @@ export function createSelectorDecorations(state: EditorState): DecorationSet {
 
     const decos: Decoration[] = []
 
-    const selectionType = selection instanceof CellSelection ? getCellSelectionType(selection) : null
+    const selectionType = isCellSelection(selection) ? getCellSelectionType(selection) : null
 
     let minHighlightRow = -1
     let maxHighlightRow = -1
     let minHighlightCol = -1
     let maxHighlightCol = -1
 
-    if (selection instanceof CellSelection) {
+    if (isCellSelection(selection)) {
         if (selectionType === "table") {
             minHighlightRow = 0
             maxHighlightRow = map.height - 1
