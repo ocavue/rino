@@ -2,6 +2,7 @@ import { DropCursorExtension } from "@remirror/extension-drop-cursor"
 import type { ParagraphExtension } from "@remirror/extension-paragraph"
 import { ReactComponentExtension } from "@remirror/extension-react-component"
 import type { TextExtension } from "@remirror/extension-text"
+import { TrailingNodeExtension } from "@remirror/extension-trailing-node"
 import { CorePreset, corePreset } from "@remirror/preset-core"
 
 import {
@@ -72,6 +73,7 @@ export type WysiwygExtension =
     | RinoMarkdownNodeExtension
     | ReactComponentExtension
     | DropCursorExtension
+    | TrailingNodeExtension
     | RinoInlineMarkExtension
     | RinoInlineDecorationExtension
     | RinoListItemSharedExtension
@@ -98,6 +100,7 @@ export function createWysiwygExtension({ imageFileHandler }: WysiwygOptions): Ar
 
         new ReactComponentExtension({}),
         new DropCursorExtension(),
+        new TrailingNodeExtension(),
         new RinoInlineMarkExtension(),
         new RinoInlineDecorationExtension(),
         new RinoListItemSharedExtension(),

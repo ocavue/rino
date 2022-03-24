@@ -99,6 +99,7 @@ importers:
       '@remirror/extension-react-component': ^1.1.8
       '@remirror/extension-tables': ^1.0.20
       '@remirror/extension-text': ^1.0.17
+      '@remirror/extension-trailing-node': ^1.0.17
       '@remirror/pm': ^1.0.14
       '@remirror/preset-core': ^1.0.23
       '@remirror/react': ^1.0.28
@@ -179,6 +180,7 @@ importers:
       '@remirror/extension-react-component': 1.1.8_6660156aab322bd20d903dba51cb95da
       '@remirror/extension-tables': 1.0.20_629bb69c395e6cae3b2276cc62f3041e
       '@remirror/extension-text': 1.0.17_629bb69c395e6cae3b2276cc62f3041e
+      '@remirror/extension-trailing-node': 1.0.17_629bb69c395e6cae3b2276cc62f3041e
       '@remirror/pm': 1.0.14
       '@remirror/preset-core': 1.0.23_629bb69c395e6cae3b2276cc62f3041e
       '@remirror/react': 1.0.28_de152d929602fdda1c4e3eb9d2e0a915
@@ -2747,6 +2749,21 @@ packages:
       - '@types/node'
       - domino
       - jsdom
+
+  /@remirror/extension-trailing-node/1.0.17_629bb69c395e6cae3b2276cc62f3041e:
+    resolution: {integrity: sha512-Jm/MdHVtFAxsBTtJ6GwSaCPxq3AmpsIdYp3e3O30uXV+BMu/iBEDLceskZS+eMueK1BO79TZuydlcVAhjxU25w==}
+    peerDependencies:
+      '@remirror/pm': ^1.0.10
+    dependencies:
+      '@babel/runtime': 7.17.8
+      '@remirror/core': 1.4.0_629bb69c395e6cae3b2276cc62f3041e
+      '@remirror/messages': 1.0.6
+      '@remirror/pm': 1.0.14
+    transitivePeerDependencies:
+      - '@types/node'
+      - domino
+      - jsdom
+    dev: false
 
   /@remirror/i18n/1.0.8:
     resolution: {integrity: sha512-TpMHdb4D4EXvj92RDySeXmL+aVQ1k50YketcLo9uKp2wxeWBOIFTsqA32x0vEKId2CcrdVcLze6WYlVKGmoJDA==}
