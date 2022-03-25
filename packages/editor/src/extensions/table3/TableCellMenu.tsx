@@ -1,7 +1,7 @@
 import { useFloating } from "@floating-ui/react-dom"
 import { TableSchemaSpec } from "@remirror/extension-tables"
 import { NodeType } from "@remirror/pm"
-import { useCommands, useEditorView, useHover } from "@remirror/react"
+import { useCommands, useEditorView, useHover, useRemirrorContext } from "@remirror/react"
 import React, { useCallback, useEffect, useState } from "react"
 
 import { useContextMenuFloating } from "./use-context-menu-floating"
@@ -75,7 +75,7 @@ function useButtonFloating() {
         [reference],
     )
 
-    const view = useEditorView()
+    const { view } = useRemirrorContext({ autoUpdate: true })
 
     const dom = useHoverCell()
 
