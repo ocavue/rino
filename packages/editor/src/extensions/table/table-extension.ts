@@ -1,6 +1,5 @@
 import { ApplySchemaAttributes, KeyBindings, NodeSpecOverride } from "@remirror/core"
 import { TableSchemaSpec } from "@remirror/extension-tables/dist/declarations/src/table-utils"
-import { Fragment } from "prosemirror-model"
 import { TextSelection } from "prosemirror-state"
 
 import { NodeSerializerOptions, ParserRuleType } from "../../transform"
