@@ -11,6 +11,16 @@ const TableRowMenuOptions: React.FC = () => {
 
     return (
         <>
+            <button onMouseDown={(event) => event.preventDefault()} onClick={() => commands.setTableCellBackground("red")}>
+                Set cell to red
+            </button>
+            <button onMouseDown={(event) => event.preventDefault()} onClick={() => commands.setTableCellBackground("green")}>
+                Set cell to green
+            </button>
+            <button onMouseDown={(event) => event.preventDefault()} onClick={() => commands.setTableCellBackground(null)}>
+                Clear cell style
+            </button>
+
             <button onMouseDown={(event) => event.preventDefault()} onClick={() => commands.addTableRowBefore()}>
                 add a row before the current one
             </button>
@@ -38,6 +48,16 @@ const TableColumnMenuOptions: React.FC = () => {
             <button onMouseDown={(event) => event.preventDefault()} onClick={() => commands.deleteTableColumn()}>
                 delete column
             </button>
+
+            <button onMouseDown={(event) => event.preventDefault()} onClick={() => commands.setTableCellBackground("red")}>
+                Set cell to red
+            </button>
+            <button onMouseDown={(event) => event.preventDefault()} onClick={() => commands.setTableCellBackground("green")}>
+                Set cell to green
+            </button>
+            <button onMouseDown={(event) => event.preventDefault()} onClick={() => commands.setTableCellBackground(null)}>
+                Clear cell style
+            </button>
         </>
     )
 }
@@ -47,6 +67,16 @@ const TableBodyMenuOptions: React.FC = () => {
 
     return (
         <>
+            <button onMouseDown={(event) => event.preventDefault()} onClick={() => commands.setTableCellBackground("red")}>
+                Set cell to red
+            </button>
+            <button onMouseDown={(event) => event.preventDefault()} onClick={() => commands.setTableCellBackground("green")}>
+                Set cell to green
+            </button>
+            <button onMouseDown={(event) => event.preventDefault()} onClick={() => commands.setTableCellBackground(null)}>
+                Clear cell style
+            </button>
+
             <button onMouseDown={(event) => event.preventDefault()} onClick={() => commands.addTableRowBefore()}>
                 add a row before the current one
             </button>

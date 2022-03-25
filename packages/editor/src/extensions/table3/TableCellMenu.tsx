@@ -1,7 +1,7 @@
 import { useFloating } from "@floating-ui/react-dom"
 import { TableSchemaSpec } from "@remirror/extension-tables"
 import { NodeType } from "@remirror/pm"
-import { useEditorView, useHover } from "@remirror/react"
+import { useCommands, useEditorView, useHover } from "@remirror/react"
 import React, { useCallback, useEffect, useState } from "react"
 
 import { useContextMenuFloating } from "./use-context-menu-floating"
@@ -86,6 +86,37 @@ function useButtonFloating() {
     return { showMenu, x, y, refs, floating, strategy }
 }
 
+const TableCellMenuOptions: React.FC = () => {
+    const commands = useCommands()
+
+    return (
+        <>
+            <button onMouseDown={(event) => event.preventDefault()} onClick={() => commands.addTableRowBefore()}>
+                add a row before the current one
+            </button>
+            <button onMouseDown={(event) => event.preventDefault()} onClick={() => commands.addTableRowAfter()}>
+                add a row after the current one
+            </button>
+            <button onMouseDown={(event) => event.preventDefault()} onClick={() => commands.addTableColumnBefore()}>
+                add a column before the current one
+            </button>
+            <button onMouseDown={(event) => event.preventDefault()} onClick={() => commands.addTableColumnAfter()}>
+                add a column after the current one
+            </button>
+
+            <button onMouseDown={(event) => event.preventDefault()} onClick={() => commands.setTableCellBackground("red")}>
+                Set cell to red
+            </button>
+            <button onMouseDown={(event) => event.preventDefault()} onClick={() => commands.setTableCellBackground("green")}>
+                Set cell to green
+            </button>
+            <button onMouseDown={(event) => event.preventDefault()} onClick={() => commands.setTableCellBackground(null)}>
+                Clear cell style
+            </button>
+        </>
+    )
+}
+
 const TableCellMenu: React.FC = () => {
     const { showMenu, x, y, floating, strategy } = useButtonFloating()
 
@@ -111,16 +142,18 @@ const TableCellMenu: React.FC = () => {
             <div
                 ref={menuFloating.floating}
                 style={{
-                    display: menuFloating.show ? "block" : "none",
+                    display: menuFloating.show ? "flex" : "none",
+                    flexDirection: "column",
                     zIndex: 10000,
                     position: menuFloating.strategy,
                     top: menuFloating.y ?? "",
                     left: menuFloating.x ?? "",
                     background: "lightgreen",
                     borderRadius: "4px",
+                    padding: "8px",
                 }}
             >
-                MENU!
+                <TableCellMenuOptions />
             </div>
         </>
     )
