@@ -1,8 +1,8 @@
-import { autoUpdate, shift, useFloating } from "@floating-ui/react-dom"
+import { autoUpdate, offset, shift, useFloating } from "@floating-ui/react-dom"
 import { Selection } from "@remirror/core"
 import { isCellSelection } from "@remirror/pm/tables"
 import { useCommands, useRemirrorContext } from "@remirror/react-core"
-import React, { useCallback, useEffect } from "react"
+import React, { useCallback, useEffect, useLayoutEffect } from "react"
 
 import { ClickSelectorHandler, useSelectorEvent } from "./use-selector-event"
 
@@ -92,7 +92,12 @@ export function TableContextMenu(): JSX.Element | null {
 
     const { x, y, reference, floating, strategy, refs, update } = useFloating({
         placement: "right-start",
-        middleware: [shift()],
+        middleware: [
+            shift({
+                mainAxis: true,
+                crossAxis: true,
+            }),
+        ],
     })
 
     console.log("[TableContextMenu]", { x, y, showMenu })
@@ -160,6 +165,9 @@ export function TableContextMenu(): JSX.Element | null {
                 background: "lightcoral",
                 display: showMenu ? "flex" : "none",
                 flexDirection: "column",
+                width: "240px",
+                maxWidth: "calc(100vw - 16px)",
+                borderRadius: "4px",
             }}
         >
             <TableMenuOptions selection={selection} />
