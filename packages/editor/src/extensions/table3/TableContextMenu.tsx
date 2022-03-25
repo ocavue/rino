@@ -107,8 +107,8 @@ function useContextMenuFloating() {
 
     useOnClickOutside(refs.floating, closeMenu)
 
-    const clickSelectorHandler: ClickSelectorHandler = useCallback(
-        (type, event) => {
+    const clickHandler = useCallback(
+        (event: MouseEvent | React.MouseEvent) => {
             const selector = event.target as HTMLElement
             console.log("selector:", selector.getBoundingClientRect())
 
@@ -142,7 +142,7 @@ function useContextMenuFloating() {
         floating,
         strategy,
         refs,
-        clickSelectorHandler,
+        clickHandler,
     }
 }
 
@@ -150,9 +150,9 @@ export function TableContextMenu(): JSX.Element | null {
     const { view } = useRemirrorContext({ autoUpdate: true })
     const selection = view.state.selection
 
-    const { x, y, floating, strategy, clickSelectorHandler, showMenu } = useContextMenuFloating()
+    const { x, y, floating, strategy, clickHandler, showMenu } = useContextMenuFloating()
 
-    useSelectorEvent(clickSelectorHandler)
+    useSelectorEvent(clickHandler)
 
     return (
         <div
