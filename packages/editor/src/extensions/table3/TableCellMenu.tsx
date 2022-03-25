@@ -4,7 +4,7 @@ import { TableSchemaSpec } from "@remirror/extension-tables"
 import { NodeType } from "@remirror/pm"
 import { isCellSelection } from "@remirror/pm/tables"
 import { useEditorView, useEvent, useRemirrorContext } from "@remirror/react"
-import React, { useEffect, useMemo } from "react"
+import React, { useCallback, useEffect, useMemo } from "react"
 
 const TableCellMenuButton: React.FC = () => {
     return <button>...</button>
@@ -21,84 +21,55 @@ function isCellType(type: NodeType): boolean {
     return (type.spec as TableSchemaSpec).tableRole === "cell"
 }
 
-function useHoveredCell() {
-    const [cellNode, setCellNode] = React.useState<NodeWithPosition | null>(null)
+function useHoveredCell(hoverdCellHandler: (dom: HTMLElement) => void) {
+    const view = useEditorView()
 
     useEvent("hover", (props) => {
-        console.log(
-            "hover-event",
-            props.nodes.map((n) => n.node.type),
-        )
-        console.log(
-            "hover-event",
-            props.nodes.map((n) => isCellType(n.node.type)),
-        )
-
         for (const nodeWithPos of props.nodes) {
             if (isCellType(nodeWithPos.node.type)) {
-                setCellNode(nodeWithPos)
+                const dom = view.nodeDOM(nodeWithPos.pos)
+                if (dom) {
+                    hoverdCellHandler(dom as HTMLElement)
+                }
             }
         }
     })
-
-    return cellNode
-}
-
-function useHoveredCellDom() {
-    const view = useEditorView()
-    const cellNode = useHoveredCell()
-
-    console.log("cellNode:", cellNode)
-
-    if (!cellNode) {
-        return null
-    }
-
-    const dom = view.nodeDOM(cellNode.pos)
-    if (!dom) {
-        return null
-    }
-
-    return dom as HTMLElement
 }
 
 function useButtonFloating() {
-    const dom = useHoveredCellDom()
-
     const { x, y, reference, floating, strategy, refs } = useFloating({
         placement: "bottom-end",
         middleware: [],
     })
 
-    const rect = dom?.getBoundingClientRect() || null
-    const hasRect = !!rect
+    const hoveredCellHandler = useCallback(
+        (dom: HTMLElement) => {
+            const rect = dom.getBoundingClientRect()
 
-    const virtualRect = useMemo(() => {
-        return hasRect
-            ? {
-                  width: rect.width,
-                  height: 0,
-                  x: rect.x,
-                  y: rect.y,
-                  top: rect.top,
-                  left: rect.left,
-                  right: rect.right,
-                  bottom: rect.top,
-              }
-            : null
-    }, [hasRect, rect?.left, rect?.right, rect?.top, rect?.width, rect?.x, rect?.y])
+            const virtualRect = {
+                width: rect.width,
+                height: 0,
+                x: rect.x,
+                y: rect.y,
+                top: rect.top,
+                left: rect.left,
+                right: rect.right,
+                bottom: rect.top,
+            }
 
-    useEffect(() => {
-        if (!virtualRect) return
+            const virtualEl = {
+                getBoundingClientRect() {
+                    return virtualRect
+                },
+                contextElement: dom,
+            }
 
-        const virtualEl = {
-            getBoundingClientRect() {
-                return virtualRect
-            },
-            contextElement: dom,
-        }
-        reference(virtualEl)
-    }, [dom, reference, virtualRect])
+            reference(virtualEl)
+        },
+        [reference],
+    )
+
+    useHoveredCell(hoveredCellHandler)
 
     return { x, y, refs, floating, strategy }
 }
