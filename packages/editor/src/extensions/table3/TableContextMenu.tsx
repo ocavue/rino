@@ -1,11 +1,10 @@
-import { shift, useFloating } from "@floating-ui/react-dom"
 import { Selection } from "@remirror/core"
 import { isCellSelection } from "@remirror/pm/tables"
 import { useCommands, useRemirrorContext } from "@remirror/react-core"
-import React, { useCallback } from "react"
+import React from "react"
 
-import { useOnClickOutside } from "./use-on-click-outside"
-import { ClickSelectorHandler, useSelectorEvent } from "./use-selector-event"
+import { useContextMenuFloating } from "./use-context-menu-floating"
+import { useSelectorEvent } from "./use-selector-event"
 
 const TableRowMenuOptions: React.FC = () => {
     const commands = useCommands()
@@ -83,66 +82,6 @@ const TableMenuOptions: React.FC<{ selection: Selection }> = ({ selection }) => 
         return <TableRowMenuOptions />
     } else {
         return <p>cell</p>
-    }
-}
-
-function useContextMenuFloating() {
-    const [showMenu, setShowMenu] = React.useState(false)
-
-    const closeMenu = useCallback(() => {
-        setShowMenu(false)
-    }, [])
-
-    const { x, y, reference, floating, strategy, refs } = useFloating({
-        placement: "right-start",
-        middleware: [
-            shift({
-                mainAxis: true,
-                crossAxis: true,
-            }),
-        ],
-    })
-
-    console.log("[TableContextMenu]", { x, y, showMenu })
-
-    useOnClickOutside(refs.floating, closeMenu)
-
-    const clickHandler = useCallback(
-        (event: MouseEvent | React.MouseEvent) => {
-            const selector = event.target as HTMLElement
-            console.log("selector:", selector.getBoundingClientRect())
-
-            setShowMenu(true)
-
-            const { clientX, clientY } = event
-            const virtualEl = {
-                getBoundingClientRect() {
-                    return {
-                        width: 0,
-                        height: 0,
-                        x: clientX,
-                        y: clientY,
-                        top: clientY,
-                        left: clientX,
-                        right: clientX,
-                        bottom: clientY,
-                    }
-                },
-                contextElement: selector,
-            }
-            reference(virtualEl)
-        },
-        [reference],
-    )
-
-    return {
-        showMenu,
-        x,
-        y,
-        floating,
-        strategy,
-        refs,
-        clickHandler,
     }
 }
 
