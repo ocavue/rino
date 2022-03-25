@@ -2,6 +2,7 @@ import { Remirror, RemirrorProps, useCommands, useRemirrorContext } from "@remir
 import React, { FC } from "react"
 
 import { TableContextMenu } from "../../extensions/table3"
+import { TableCellMenu } from "../../extensions/table3"
 import DevTools from "../DevTools"
 import ErrorBoundary from "../ErrorBoundary"
 import TableMenu from "./TableMenu"
@@ -16,6 +17,7 @@ const InnerEditor: FC<InnerEditorProps> = ({ className, enableDevTools }) => {
         <>
             <TableMenu commands={commands} />
             <TableContextMenu></TableContextMenu>
+            <TableCellMenu></TableCellMenu>
             <div {...getRootProps()} className={className} spellCheck={false} />
             {enableDevTools ? <DevTools /> : null}
         </>
