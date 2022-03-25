@@ -4,6 +4,7 @@ import { isCellSelection } from "@remirror/pm/tables"
 import { useCommands, useRemirrorContext } from "@remirror/react-core"
 import React, { useCallback } from "react"
 
+import { useOnClickOutside } from "./use-on-click-outside"
 import { ClickSelectorHandler, useSelectorEvent } from "./use-selector-event"
 
 const TableRowMenuOptions: React.FC = () => {
@@ -90,7 +91,7 @@ export function TableContextMenu(): JSX.Element | null {
     const { view } = useRemirrorContext({ autoUpdate: true })
     const selection = view.state.selection
 
-    const { x, y, reference, floating, strategy } = useFloating({
+    const { x, y, reference, floating, strategy, refs } = useFloating({
         placement: "right-start",
         middleware: [
             shift({
@@ -146,6 +147,12 @@ export function TableContextMenu(): JSX.Element | null {
             setShowMenu(false)
         }
     }
+
+    const closeMenu = useCallback(() => {
+        setShowMenu(false)
+    }, [])
+
+    useOnClickOutside(refs.floating, closeMenu)
 
     return (
         <div
