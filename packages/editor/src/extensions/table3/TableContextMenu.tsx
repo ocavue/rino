@@ -91,7 +91,7 @@ export function TableContextMenu(): JSX.Element | null {
     const selection = view.state.selection
 
     const { x, y, reference, floating, strategy, refs, update } = useFloating({
-        placement: "right",
+        placement: "right-start",
         middleware: [shift()],
     })
 
