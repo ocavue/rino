@@ -1,21 +1,8 @@
-import { autoUpdate, useFloating } from "@floating-ui/react-dom"
-import { NodeWithPosition } from "@remirror/core"
+import { useFloating } from "@floating-ui/react-dom"
 import { TableSchemaSpec } from "@remirror/extension-tables"
 import { NodeType } from "@remirror/pm"
-import { isCellSelection } from "@remirror/pm/tables"
-import { useEditorView, useEvent, useHover, useRemirrorContext } from "@remirror/react"
-import React, { useCallback, useEffect, useMemo, useState } from "react"
-
-const TableCellMenuButton: React.FC = () => {
-    return <button>...</button>
-}
-
-function useSelectedCell() {
-    const { view } = useRemirrorContext({ autoUpdate: true })
-    const selection = view.state.selection
-    if (isCellSelection(selection)) return null
-    return null
-}
+import { useEditorView, useHover } from "@remirror/react"
+import React, { useCallback, useEffect, useState } from "react"
 
 function isCellType(type: NodeType): boolean {
     return (type.spec as TableSchemaSpec).tableRole === "cell"
@@ -100,6 +87,8 @@ function useButtonFloating() {
 const TableCellMenu: React.FC = () => {
     const { showMenu, x, y, floating, strategy } = useButtonFloating()
 
+    const clickButtonHandler = useCallback((event: React.MouseEvent) => {}, [])
+
     return (
         <button
             ref={floating}
@@ -112,6 +101,7 @@ const TableCellMenu: React.FC = () => {
                 background: "lightyellow",
                 borderRadius: "4px",
             }}
+            onClick={clickButtonHandler}
         >
             ...
         </button>
