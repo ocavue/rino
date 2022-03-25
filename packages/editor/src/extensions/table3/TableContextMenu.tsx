@@ -86,10 +86,12 @@ const TableMenuOptions: React.FC<{ selection: Selection }> = ({ selection }) => 
     }
 }
 
-export function TableContextMenu(): JSX.Element | null {
+function useContextMenuFloating() {
     const [showMenu, setShowMenu] = React.useState(false)
-    const { view } = useRemirrorContext({ autoUpdate: true })
-    const selection = view.state.selection
+
+    const closeMenu = useCallback(() => {
+        setShowMenu(false)
+    }, [])
 
     const { x, y, reference, floating, strategy, refs } = useFloating({
         placement: "right-start",
@@ -102,6 +104,8 @@ export function TableContextMenu(): JSX.Element | null {
     })
 
     console.log("[TableContextMenu]", { x, y, showMenu })
+
+    useOnClickOutside(refs.floating, closeMenu)
 
     const clickSelectorHandler: ClickSelectorHandler = useCallback(
         (type, event) => {
@@ -131,28 +135,24 @@ export function TableContextMenu(): JSX.Element | null {
         [reference],
     )
 
-    useSelectorEvent(clickSelectorHandler)
-
-    // useEffect(() => {
-    //     if (!refs.reference.current || !refs.floating.current) {
-    //         return
-    //     }
-
-    //     // Only call this when the floating element is rendered
-    //     return autoUpdate(refs.reference.current, refs.floating.current, update)
-    // }, [refs.floating, refs.reference, update])
-
-    if (!isCellSelection(selection)) {
-        if (showMenu) {
-            setShowMenu(false)
-        }
+    return {
+        showMenu,
+        x,
+        y,
+        floating,
+        strategy,
+        refs,
+        clickSelectorHandler,
     }
+}
 
-    const closeMenu = useCallback(() => {
-        setShowMenu(false)
-    }, [])
+export function TableContextMenu(): JSX.Element | null {
+    const { view } = useRemirrorContext({ autoUpdate: true })
+    const selection = view.state.selection
 
-    useOnClickOutside(refs.floating, closeMenu)
+    const { x, y, floating, strategy, clickSelectorHandler, showMenu } = useContextMenuFloating()
+
+    useSelectorEvent(clickSelectorHandler)
 
     return (
         <div
