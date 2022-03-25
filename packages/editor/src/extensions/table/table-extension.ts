@@ -82,10 +82,7 @@ export class RinoTableExtension extends TableExtension {
         node.forEach((rowNode, _, rowIndex) => {
             const row: string[] = []
             rowNode.forEach((cellNode, _, colIndex) => {
-                const fragment: Fragment = cellNode.content
-                const textNode = fragment.firstChild
-                const text = textNode ? (textNode.text || "").trim() : ""
-                row.push(text)
+                row.push(cellNode.textContent.trim())
                 if (rowIndex === 0) {
                     colAligns[colIndex] = TABLE_ALIGEN.DEFAULT // TODO
                 }
