@@ -1,10 +1,10 @@
-import { useFloating } from "@floating-ui/react-dom"
+import { autoUpdate, useFloating } from "@floating-ui/react-dom"
 import { NodeWithPosition } from "@remirror/core"
 import { TableSchemaSpec } from "@remirror/extension-tables"
 import { NodeType } from "@remirror/pm"
 import { isCellSelection } from "@remirror/pm/tables"
 import { useEditorView, useEvent, useHover, useRemirrorContext } from "@remirror/react"
-import React, { useCallback, useEffect, useMemo } from "react"
+import React, { useCallback, useEffect, useMemo, useState } from "react"
 
 const TableCellMenuButton: React.FC = () => {
     return <button>...</button>
@@ -21,29 +21,49 @@ function isCellType(type: NodeType): boolean {
     return (type.spec as TableSchemaSpec).tableRole === "cell"
 }
 
-function useHoverCell(handler: (cell: HTMLElement) => void) {
+function useHoverCell(): HTMLElement | null {
     const view = useEditorView()
+    const [cell, setCell] = React.useState<HTMLElement | null>(null)
+
     useHover((props) => {
+        if (!props.hovering) {
+            return
+        }
+
         for (const { node, pos } of props.nodes) {
             if (isCellType(node.type)) {
                 const dom = view.nodeDOM(pos)
                 if (dom) {
-                    handler(dom as HTMLElement)
-                    break
+                    setCell(dom as HTMLElement)
+                    return
                 }
             }
         }
+
+        setCell(null)
     })
+
+    return cell
 }
 
 function useButtonFloating() {
-    const { x, y, reference, floating, strategy, refs } = useFloating({
+    const [showMenu, setShowMenu] = useState(false)
+
+    const { x, y, reference, floating, strategy, refs, update } = useFloating({
         placement: "bottom-end",
         middleware: [],
     })
 
     const hoveredCellHandler = useCallback(
-        (cell: HTMLElement) => {
+        (cell: HTMLElement | null) => {
+            if (!cell) {
+                setShowMenu(false)
+                reference(null)
+                return
+            }
+
+            setShowMenu(true)
+
             const rect = cell.getBoundingClientRect()
             const virtualRect = {
                 width: rect.width,
@@ -66,23 +86,25 @@ function useButtonFloating() {
         [reference],
     )
 
-    useHoverCell(hoveredCellHandler)
+    const view = useEditorView()
 
-    return { x, y, refs, floating, strategy }
+    const dom = useHoverCell()
+
+    useEffect(() => {
+        hoveredCellHandler(dom)
+    }, [dom, hoveredCellHandler, update, view.state])
+
+    return { showMenu, x, y, refs, floating, strategy }
 }
 
 const TableCellMenu: React.FC = () => {
-    const buttonFloating = useButtonFloating()
-    if (!buttonFloating) return null
-
-    const { x, y, floating, strategy } = buttonFloating
-
-    console.log("[TableCellMenu]", x, y, strategy)
+    const { showMenu, x, y, floating, strategy } = useButtonFloating()
 
     return (
         <button
             ref={floating}
             style={{
+                display: showMenu ? "block" : "none",
                 zIndex: 10000,
                 position: strategy,
                 top: y ?? "",
