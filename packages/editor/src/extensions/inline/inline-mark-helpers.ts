@@ -146,23 +146,23 @@ export function updateNodeMarks<S extends Schema>(tr: Transform<S>, node: Node<S
 /**
  * Apply markdown marks to current selection range.
  */
-export function applyRangeMarks<S extends Schema>(view: EditorView<S>): void {
+export function applyRangeMarks<S extends Schema>(view: EditorView<S>, focusUpdateAll?: boolean): void {
     if (view.isDestroyed) return
 
     const tr = view.state.tr
-    if (updateRangeMarks(tr)) {
+    if (updateRangeMarks(tr, focusUpdateAll)) {
         view.dispatch(tr)
     }
 }
 
-export function updateRangeMarks(tr: Transaction): boolean {
+export function updateRangeMarks(tr: Transaction, focusUpdateAll?: boolean): boolean {
     tr.setMeta("RINO_APPLY_MARKS", true)
 
     const { $from, $to } = tr.selection
     const range = $from.blockRange($to)
     const oldSelection = tr.selection
 
-    if (!range) {
+    if (!range || focusUpdateAll) {
         updateNodeMarks(tr, tr.doc, 0)
     } else {
         for (const [child, pos] of iterNodeRange(range)) {
