@@ -13,6 +13,5 @@ export function useSelectorEvent(clickSelectorHandler: ClickSelectorHandler) {
             console.log("[useEvent] mouseup", element.getBoundingClientRect())
             clickSelectorHandler("column", event)
         }
-        // console.log("[useEvent] event mouseup", element.className, element.getBoundingClientRect())
     })
 }

@@ -1,8 +1,8 @@
-import { autoUpdate, offset, shift, useFloating } from "@floating-ui/react-dom"
+import { autoUpdate, shift, useFloating } from "@floating-ui/react-dom"
 import { Selection } from "@remirror/core"
 import { isCellSelection } from "@remirror/pm/tables"
 import { useCommands, useRemirrorContext } from "@remirror/react-core"
-import React, { useCallback, useEffect, useLayoutEffect } from "react"
+import React, { useCallback, useEffect } from "react"
 
 import { ClickSelectorHandler, useSelectorEvent } from "./use-selector-event"
 
@@ -144,13 +144,10 @@ export function TableContextMenu(): JSX.Element | null {
         return autoUpdate(refs.reference.current, refs.floating.current, update)
     }, [refs.floating, refs.reference, update])
 
-    // if (!showMenu) return null
-
     if (!isCellSelection(selection)) {
         if (showMenu) {
             setShowMenu(false)
         }
-        // return null
     }
 
     return (
