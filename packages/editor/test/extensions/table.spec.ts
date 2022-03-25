@@ -276,7 +276,7 @@ describe("toMarkdown", () => {
         )
     })
 
-    test.only("with inline marks", () => {
+    test("with inline marks", () => {
         const initialDoc = doc(
             buildRegularTable([
                 ["~~strikethrough~~", "**Strong**", "*italic*"],
