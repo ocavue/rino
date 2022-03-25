@@ -396,22 +396,6 @@ export const EDITOR_THEME_GITHUB = css`
         table tr:nth-child(1) {
             font-weight: 700;
         }
-
-        &.markdown-body--dark table tr {
-            background-color: #3b3b3b;
-        }
-
-        &.markdown-body--dark table tr:nth-child(2n) {
-            background-color: #525252;
-        }
-
-        &.markdown-body--light table tr {
-            background-color: #dadee6;
-        }
-
-        &.markdown-body--light table tr:nth-child(2n) {
-            background-color: #f6f8fa;
-        }
     }
 
     & img {
