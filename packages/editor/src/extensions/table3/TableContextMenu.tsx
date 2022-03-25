@@ -89,7 +89,7 @@ export function TableContextMenu(): JSX.Element | null {
     const { view } = useRemirrorContext({ autoUpdate: true })
     const selection = view.state.selection
 
-    const { x, y, floating, strategy, clickHandler, showMenu } = useContextMenuFloating()
+    const { x, y, floating, strategy, clickHandler, show } = useContextMenuFloating()
 
     useSelectorEvent(clickHandler)
 
@@ -103,7 +103,7 @@ export function TableContextMenu(): JSX.Element | null {
                 left: x ?? "",
                 padding: "8px",
                 background: "lightcoral",
-                display: showMenu ? "flex" : "none",
+                display: show ? "flex" : "none",
                 flexDirection: "column",
                 width: "240px",
                 maxWidth: "calc(100vw - 16px)",

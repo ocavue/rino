@@ -1,16 +1,23 @@
-import { shift, useFloating, UseFloatingReturn } from "@floating-ui/react-dom"
+import { shift, useFloating } from "@floating-ui/react-dom"
 import React, { useCallback } from "react"
 
 import { useOnClickOutside } from "./use-on-click-outside"
 
-export function useContextMenuFloating() {
-    const [showMenu, setShowMenu] = React.useState(false)
+type UseFloatingReturn = ReturnType<typeof useFloating>
+
+export type UseContextMenuFloatingReturn = UseFloatingReturn & {
+    show: boolean
+    clickHandler: (event: MouseEvent | React.MouseEvent) => void
+}
+
+export function useContextMenuFloating(): UseContextMenuFloatingReturn {
+    const [show, setShowMenu] = React.useState(false)
 
     const closeMenu = useCallback(() => {
         setShowMenu(false)
     }, [])
 
-    const { x, y, reference, floating, strategy, refs } = useFloating({
+    const useFloatingReturn = useFloating({
         placement: "right-start",
         middleware: [
             shift({
@@ -20,7 +27,7 @@ export function useContextMenuFloating() {
         ],
     })
 
-    console.log("[TableContextMenu]", { x, y, showMenu })
+    const { reference, refs } = useFloatingReturn
 
     useOnClickOutside(refs.floating, closeMenu)
 
@@ -52,13 +59,5 @@ export function useContextMenuFloating() {
         [reference],
     )
 
-    return {
-        showMenu,
-        x,
-        y,
-        floating,
-        strategy,
-        refs,
-        clickHandler,
-    }
+    return { ...useFloatingReturn, show, clickHandler }
 }
