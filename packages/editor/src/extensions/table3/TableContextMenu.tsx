@@ -1,8 +1,8 @@
-import { autoUpdate, shift, useFloating } from "@floating-ui/react-dom"
+import { shift, useFloating } from "@floating-ui/react-dom"
 import { Selection } from "@remirror/core"
 import { isCellSelection } from "@remirror/pm/tables"
 import { useCommands, useRemirrorContext } from "@remirror/react-core"
-import React, { useCallback, useEffect } from "react"
+import React, { useCallback } from "react"
 
 import { ClickSelectorHandler, useSelectorEvent } from "./use-selector-event"
 
@@ -90,7 +90,7 @@ export function TableContextMenu(): JSX.Element | null {
     const { view } = useRemirrorContext({ autoUpdate: true })
     const selection = view.state.selection
 
-    const { x, y, reference, floating, strategy, refs, update } = useFloating({
+    const { x, y, reference, floating, strategy } = useFloating({
         placement: "right-start",
         middleware: [
             shift({
@@ -105,10 +105,8 @@ export function TableContextMenu(): JSX.Element | null {
     const clickSelectorHandler: ClickSelectorHandler = useCallback(
         (type, event) => {
             const selector = event.target as HTMLElement
+            console.log("selector:", selector.getBoundingClientRect())
 
-            console.log("[TableContextMenu] getBoundingClientRect", selector.getBoundingClientRect())
-
-            console.log("clickSelectorHandler")
             setShowMenu(true)
 
             const { clientX, clientY } = event
@@ -127,7 +125,6 @@ export function TableContextMenu(): JSX.Element | null {
                 },
                 contextElement: selector,
             }
-
             reference(virtualEl)
         },
         [reference],
@@ -135,14 +132,14 @@ export function TableContextMenu(): JSX.Element | null {
 
     useSelectorEvent(clickSelectorHandler)
 
-    useEffect(() => {
-        if (!refs.reference.current || !refs.floating.current) {
-            return
-        }
+    // useEffect(() => {
+    //     if (!refs.reference.current || !refs.floating.current) {
+    //         return
+    //     }
 
-        // Only call this when the floating element is rendered
-        return autoUpdate(refs.reference.current, refs.floating.current, update)
-    }, [refs.floating, refs.reference, update])
+    //     // Only call this when the floating element is rendered
+    //     return autoUpdate(refs.reference.current, refs.floating.current, update)
+    // }, [refs.floating, refs.reference, update])
 
     if (!isCellSelection(selection)) {
         if (showMenu) {
