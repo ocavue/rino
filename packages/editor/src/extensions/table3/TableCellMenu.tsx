@@ -4,6 +4,8 @@ import { NodeType } from "@remirror/pm"
 import { useEditorView, useHover } from "@remirror/react"
 import React, { useCallback, useEffect, useState } from "react"
 
+import { useContextMenuFloating } from "./use-context-menu-floating"
+
 function isCellType(type: NodeType): boolean {
     return (type.spec as TableSchemaSpec).tableRole === "cell"
 }
@@ -87,24 +89,40 @@ function useButtonFloating() {
 const TableCellMenu: React.FC = () => {
     const { showMenu, x, y, floating, strategy } = useButtonFloating()
 
-    const clickButtonHandler = useCallback((event: React.MouseEvent) => {}, [])
+    const menuFloating = useContextMenuFloating()
 
     return (
-        <button
-            ref={floating}
-            style={{
-                display: showMenu ? "block" : "none",
-                zIndex: 10000,
-                position: strategy,
-                top: y ?? "",
-                left: x ?? "",
-                background: "lightyellow",
-                borderRadius: "4px",
-            }}
-            onClick={clickButtonHandler}
-        >
-            ...
-        </button>
+        <>
+            <button
+                ref={floating}
+                style={{
+                    display: showMenu ? "block" : "none",
+                    zIndex: 10000,
+                    position: strategy,
+                    top: y ?? "",
+                    left: x ?? "",
+                    background: "lightyellow",
+                    borderRadius: "4px",
+                }}
+                onClick={menuFloating.clickHandler}
+            >
+                ...
+            </button>
+            <div
+                ref={menuFloating.floating}
+                style={{
+                    display: menuFloating.show ? "block" : "none",
+                    zIndex: 10000,
+                    position: menuFloating.strategy,
+                    top: menuFloating.y ?? "",
+                    left: menuFloating.x ?? "",
+                    background: "lightgreen",
+                    borderRadius: "4px",
+                }}
+            >
+                MENU!
+            </div>
+        </>
     )
 }
 
