@@ -15,6 +15,7 @@ export default defineConfig((env) => ({
         },
         deps: {
             fallbackCJS: true,
+            inline: [/floating-ui/],
         },
     },
 }))

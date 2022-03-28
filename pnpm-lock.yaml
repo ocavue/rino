@@ -82,9 +82,9 @@ importers:
       '@emotion/css': ^11.7.1
       '@emotion/react': ^11.8.2
       '@floating-ui/dom': ^0.4.2
+      '@floating-ui/react-dom': ^0.6.0
       '@mui/material': ^5.5.2
       '@remirror/core': ^1.4.1
-      '@remirror/core-utils': ^1.1.7
       '@remirror/dev': ^1.0.29
       '@remirror/extension-blockquote': ^1.0.21
       '@remirror/extension-codemirror6': ^0.2.6
@@ -162,9 +162,9 @@ importers:
       '@emotion/css': 11.7.1_@babel+core@7.17.8
       '@emotion/react': 11.8.2_c1cf67fb40c16c390126f300fc197413
       '@floating-ui/dom': 0.4.2
+      '@floating-ui/react-dom': 0.6.0_b5d7bf22a7b46dd4876f0e926ab0c987
       '@mui/material': 5.5.2_254fe145b89ab5d156ff5dbf462c89a4
       '@remirror/core': 1.4.1_629bb69c395e6cae3b2276cc62f3041e
-      '@remirror/core-utils': 1.1.7_629bb69c395e6cae3b2276cc62f3041e
       '@remirror/dev': 1.0.29_316f6914bd3acb331b45f0986da9120b
       '@remirror/extension-blockquote': 1.0.21_629bb69c395e6cae3b2276cc62f3041e
       '@remirror/extension-codemirror6': 0.2.6_629bb69c395e6cae3b2276cc62f3041e
@@ -1375,6 +1375,20 @@ packages:
     resolution: {integrity: sha512-2/4vOhMAujkMmGqGX1Gut84phe5MNfk1kGeM+RSTJCpeR0SWR2/RR+/f1r1msOvTQa28wn7HEhxGe71CjYY/vw==}
     dependencies:
       '@floating-ui/core': 0.6.1
+    dev: false
+
+  /@floating-ui/react-dom/0.6.0_b5d7bf22a7b46dd4876f0e926ab0c987:
+    resolution: {integrity: sha512-/dF+jpAUtoonjs2lO0F+miqEQlzA9XJGOxWBiJsq/COhK2kz7XzryyJdxfaNEH+RN63vRs9osDolOJXlst50hg==}
+    peerDependencies:
+      react: '>=16.8.0'
+      react-dom: '>=16.8.0'
+    dependencies:
+      '@floating-ui/dom': 0.4.2
+      react: 17.0.2
+      react-dom: 17.0.2_react@17.0.2
+      use-isomorphic-layout-effect: 1.1.1_03a98942b76c57740a9573edba2d1cc1
+    transitivePeerDependencies:
+      - '@types/react'
     dev: false
 
   /@hapi/hoek/9.2.1:
@@ -8553,6 +8567,7 @@ packages:
       chalk: 2.4.2
       diff-match-patch: 1.0.5
     dev: false
+    bundledDependencies: []
 
   /jsonfile/4.0.0:
     resolution: {integrity: sha1-h3Gq4HmbZAdrdmQPygWPnBDjPss=}
