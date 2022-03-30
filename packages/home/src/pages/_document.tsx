@@ -64,9 +64,6 @@ export default function BaseDocument() {
                 <NextMeta hasManifest={hasManifest} host={host} description={description} />
             </Head>
             <body>
-                <noscript>
-                    <strong>We're sorry but Rino doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
-                </noscript>
                 <Main />
                 <NextScript />
             </body>
