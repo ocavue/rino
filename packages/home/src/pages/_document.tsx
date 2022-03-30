@@ -2,7 +2,7 @@
 /* istanbul ignore file */
 
 import createEmotionServer from "@emotion/server/create-instance"
-import Document, { Head, Html, Main, NextScript } from "next/document"
+import Document, { DocumentContext, Head, Html, Main, NextScript } from "next/document"
 import React from "react"
 
 import { createEmotionCache } from "../styles/cache"
@@ -53,34 +53,27 @@ const NextMeta: React.FC<{ host: string; hasManifest: boolean; description: stri
     )
 }
 
-export default class BaseDocument extends Document {
-    render() {
-        const host = "https://www.rino.app"
-        const hasManifest = false
-        const description = "WYSIWYG Markdown Editor"
+export default function BaseDocument() {
+    const host = "https://www.rino.app"
+    const hasManifest = false
+    const description = "WYSIWYG Markdown Editor"
 
-        return (
-            <Html lang="en">
-                <Head>
-                    <NextMeta hasManifest={hasManifest} host={host} description={description} />
-                </Head>
-                <body>
-                    <noscript>
-                        <strong>
-                            We're sorry but Rino doesn't work properly without JavaScript enabled. Please enable it to continue.
-                        </strong>
-                    </noscript>
-                    <Main />
-                    <NextScript />
-                </body>
-            </Html>
-        )
-    }
+    return (
+        <Html lang="en">
+            <Head>
+                <NextMeta hasManifest={hasManifest} host={host} description={description} />
+            </Head>
+            <body>
+                <Main />
+                <NextScript />
+            </body>
+        </Html>
+    )
 }
 
 // `getInitialProps` belongs to `_document` (instead of `_app`),
 // it's compatible with static-site generation (SSG).
-BaseDocument.getInitialProps = async (ctx) => {
+BaseDocument.getInitialProps = async (ctx: DocumentContext) => {
     // Resolution order
     //
     // On the server:
