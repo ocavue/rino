@@ -63,9 +63,9 @@ export const TableMenu: React.FC<TableMenuProps> = ({ event, handleClose }) => {
                 position: strategy,
                 top: y ?? "",
                 left: x ?? "",
+                opacity: typeof x === "number" && typeof y === "number" ? 1 : 0, // TODO: ugly hack
 
                 display: "flex",
-                opacity: typeof x === "number" && typeof y === "number" ? 1 : 0, // TODO: ugly hack
                 flexDirection: "column",
                 maxWidth: "calc(100vw - 16px)",
                 padding: "8px",
