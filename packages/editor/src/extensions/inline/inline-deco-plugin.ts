@@ -1,4 +1,5 @@
 import { PlainExtension } from "@remirror/core"
+import { isCellSelection } from "@remirror/pm/tables"
 import { Node as ProsemirrorNode } from "prosemirror-model"
 import { EditorState } from "prosemirror-state"
 import { Decoration, DecorationSet } from "prosemirror-view"
@@ -74,6 +75,8 @@ function createDecorationPlugin() {
     const pluginSpec = {
         props: {
             decorations: (state: EditorState) => {
+                if (isCellSelection(state.selection)) return
+
                 const $pos = state.selection.$anchor
 
                 // The text block node

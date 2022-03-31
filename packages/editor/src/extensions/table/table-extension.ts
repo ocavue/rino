@@ -1,12 +1,16 @@
 import { ApplySchemaAttributes, KeyBindings, NodeSpecOverride } from "@remirror/core"
-import { TableCellExtension, TableExtension, TableHeaderCellExtension, TableRowExtension } from "@remirror/extension-tables"
-import { TableSchemaSpec } from "@remirror/extension-tables/dist/declarations/src/table-utils"
-import { Fragment } from "prosemirror-model"
+import {
+    TableCellExtension,
+    TableExtension,
+    TableHeaderCellExtension,
+    TableRowExtension,
+    TableSchemaSpec,
+} from "@remirror/extension-tables"
 import { TextSelection } from "prosemirror-state"
 
 import { NodeSerializerOptions, ParserRuleType } from "../../transform"
 import { buildBlockEnterKeymapBindings } from "../../utils"
-import { createTableHeigthlightPlugin } from "./table-plugin"
+import { TableSelectorExtension } from "../table-components"
 
 enum TABLE_ALIGEN {
     DEFAULT = 1,
@@ -82,10 +86,7 @@ export class RinoTableExtension extends TableExtension {
         node.forEach((rowNode, _, rowIndex) => {
             const row: string[] = []
             rowNode.forEach((cellNode, _, colIndex) => {
-                const fragment: Fragment = cellNode.content
-                const textNode = fragment.firstChild
-                const text = textNode ? (textNode.text || "").trim() : ""
-                row.push(text)
+                row.push(cellNode.textContent.trim())
                 if (rowIndex === 0) {
                     colAligns[colIndex] = TABLE_ALIGEN.DEFAULT // TODO
                 }
@@ -153,6 +154,10 @@ export class RinoTableRowExtension extends TableRowExtension {
         return "tableRow" as const
     }
 
+    createNodeSpec(extra: ApplySchemaAttributes, override: NodeSpecOverride): TableSchemaSpec {
+        return { ...super.createNodeSpec(extra, override), allowGapCursor: false }
+    }
+
     public fromMarkdown() {
         return [
             {
@@ -199,8 +204,8 @@ export class RinoTableCellExtension extends TableCellExtension {
         }
     }
 
-    createPlugin() {
-        return createTableHeigthlightPlugin()
+    createExtensions() {
+        return [new TableSelectorExtension()]
     }
 
     public fromMarkdown() {
@@ -221,8 +226,4 @@ export class RinoTableCellExtension extends TableCellExtension {
     }
 
     public toMarkdown() {}
-
-    public createExtensions() {
-        return []
-    }
 }

@@ -3,11 +3,23 @@ import { renderEditor } from "jest-remirror"
 import { dedent } from "@rino.app/common"
 
 import { buildMarkdownParser, buildMarkdownSerializer, createRinoCorePreset } from "../../src/components/wysiwyg"
-import { RinoTableCellExtension, RinoTableExtension, RinoTableHeaderCellExtension, RinoTableRowExtension } from "../../src/extensions"
+import {
+    applyRangeMarks,
+    RinoInlineDecorationExtension,
+    RinoInlineMarkExtension,
+    rinoMarkExtensions,
+    RinoTableCellExtension,
+    RinoTableExtension,
+    RinoTableHeaderCellExtension,
+    RinoTableRowExtension,
+} from "../../src/extensions"
 
 const setup = () => {
     const editor = renderEditor([
         ...createRinoCorePreset(),
+        ...rinoMarkExtensions,
+        new RinoInlineMarkExtension(),
+        new RinoInlineDecorationExtension(),
         new RinoTableExtension(),
         new RinoTableRowExtension(),
         new RinoTableCellExtension(),
@@ -117,7 +129,7 @@ describe("fromMarkdown", () => {
 })
 
 describe("toMarkdown", () => {
-    const { manager, buildRegularTable, doc } = setup()
+    const { manager, buildRegularTable, doc, add, view } = setup()
     const serializer = buildMarkdownSerializer(manager)
 
     test("base case", () => {
@@ -258,6 +270,88 @@ describe("toMarkdown", () => {
                 | --- | --- | --- |
                 | x   |     | x   |
                 | x   | x   |     |
+
+                `,
+            ).trimStart(),
+        )
+    })
+
+    test("with inline marks", () => {
+        const initialDoc = doc(
+            buildRegularTable([
+                ["~~strikethrough~~", "**Strong**", "*italic*"],
+                ["[link](https://rino.app)", "mixed **strong *italic***", "plain text"],
+            ]),
+        )
+
+        add(initialDoc)
+
+        applyRangeMarks(view, true)
+
+        const transformedDoc = view.state.doc
+
+        const firstCell = transformedDoc.firstChild?.firstChild?.firstChild
+
+        expect(firstCell?.toJSON()).toMatchInlineSnapshot(`
+          {
+            "attrs": {
+              "background": null,
+              "colspan": 1,
+              "colwidth": null,
+              "rowspan": 1,
+            },
+            "content": [
+              {
+                "marks": [
+                  {
+                    "attrs": {
+                      "depth": 1,
+                      "first": true,
+                      "last": false,
+                    },
+                    "type": "mdMark",
+                  },
+                ],
+                "text": "~~",
+                "type": "text",
+              },
+              {
+                "marks": [
+                  {
+                    "attrs": {
+                      "depth": 2,
+                    },
+                    "type": "mdDel",
+                  },
+                ],
+                "text": "strikethrough",
+                "type": "text",
+              },
+              {
+                "marks": [
+                  {
+                    "attrs": {
+                      "depth": 1,
+                      "first": false,
+                      "last": true,
+                    },
+                    "type": "mdMark",
+                  },
+                ],
+                "text": "~~",
+                "type": "text",
+              },
+            ],
+            "type": "tableCell",
+          }
+        `)
+
+        expect(serializer.serialize(transformedDoc)).toEqual(
+            dedent(
+                `
+                | ~~strikethrough~~        | **Strong**                | *italic*   |
+                | ------------------------ | ------------------------- | ---------- |
+                | [link](https://rino.app) | mixed **strong *italic*** | plain text |
 
                 `,
             ).trimStart(),

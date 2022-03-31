@@ -4,9 +4,6 @@ set -e
 
 cd $(dirname $0)/..
 
-# clean
-pnpm clean
-
 # create symbolic links
 function lnsf {
     source_dir="$(pwd)/$1"
