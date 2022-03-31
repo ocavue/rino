@@ -29,27 +29,14 @@ function calcCellSelectionBoundingClientRect(
     }
 }
 
-function findTableByCell(cellEl: Element) {
-    let current: Element | null = cellEl
-    while (current) {
-        if (current.nodeName === "TABLE") {
-            return current
-        }
-        current = current.parentElement
-    }
-    return null
-}
-
 type TableMenuButtonProps = {
     handleClick: (event: React.MouseEvent) => void
     anchorCellEl: Element
     headCellEl: Element
 }
 
-const TableMenuButton: React.FC<TableMenuButtonProps> = ({ handleClick, anchorCellEl: cellA, headCellEl: cellB }) => {
-    const rect = calcCellSelectionBoundingClientRect(cellA, cellB)
-    const tableEl = findTableByCell(cellA)
-    const { x, y, floating, strategy, middlewareData } = useFloatingMenuFloating(rect, tableEl)
+const TableMenuButton: React.FC<TableMenuButtonProps> = ({ handleClick, anchorCellEl, headCellEl }) => {
+    const { x, y, floating, strategy, middlewareData } = useFloatingMenuFloating({ anchorCellEl, headCellEl })
     const referenceHidden = middlewareData.hide?.referenceHidden
 
     return (
@@ -79,10 +66,7 @@ const TableMenuButton: React.FC<TableMenuButtonProps> = ({ handleClick, anchorCe
     )
 }
 
-function useFloatingMenuFloating(
-    { top, bottom, left, right }: { top: number; bottom: number; left: number; right: number },
-    contextElement: Element | null,
-) {
+function useFloatingMenuFloating({ anchorCellEl: cellA, headCellEl: cellB }: { anchorCellEl: Element; headCellEl: Element }) {
     const useFloatingReturn = useFloating({
         placement: "top",
         middleware: [offset(20), shift(), flip(), hide()],
@@ -91,6 +75,7 @@ function useFloatingMenuFloating(
     const { reference, refs, update } = useFloatingReturn
 
     const updateFloating = useCallback(() => {
+        const { top, bottom, left, right } = calcCellSelectionBoundingClientRect(cellA, cellB)
         const virtualEl: VirtualElement = {
             getBoundingClientRect() {
                 return {
@@ -105,23 +90,22 @@ function useFloatingMenuFloating(
                     height: bottom - top,
                 }
             },
-            contextElement: contextElement ?? undefined,
         }
 
         reference(virtualEl)
         update()
-    }, [contextElement, reference, update, top, bottom, left, right])
+    }, [cellA, cellB, reference, update])
 
     useEffect(() => {
         updateFloating()
     }, [updateFloating])
 
     useEffect(() => {
-        if (!contextElement || !refs.floating.current) {
+        if (!cellA || !refs.floating.current) {
             return
         }
-        return autoUpdate(contextElement, refs.floating.current, updateFloating)
-    }, [contextElement, refs.floating, updateFloating])
+        return autoUpdate(cellA, refs.floating.current, updateFloating)
+    }, [cellA, refs.floating, updateFloating])
 
     return useFloatingReturn
 }
