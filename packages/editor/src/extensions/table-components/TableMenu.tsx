@@ -69,12 +69,14 @@ export const TableMenu: React.FC<TableMenuProps> = ({ event, handleClose }) => {
                 left: x ?? "",
 
                 padding: "8px",
-                background: "lightcoral",
                 display: "flex",
                 flexDirection: "column",
-                width: "240px",
                 maxWidth: "calc(100vw - 16px)",
                 borderRadius: "4px",
+                borderWidth: "1px",
+                borderStyle: "solid",
+                borderColor: "rgba(0, 0, 0, 0.1)",
+                background: "#fff",
             }}
         >
             <TableMenuOptions selection={selection} />
