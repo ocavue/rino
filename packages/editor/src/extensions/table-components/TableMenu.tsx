@@ -1,144 +1,73 @@
-import { isCellSelection } from "@remirror/pm/tables"
-import { useCommands, useRemirrorContext } from "@remirror/react-core"
+import { CellSelection, isCellSelection } from "@remirror/pm/tables"
+import { useCommands, useEditorView } from "@remirror/react-core"
 import React from "react"
 
 import { useTableMenu, UseTableMenuProps } from "./use-table-menu"
 
-const TableRowMenuOptions: React.FC = () => {
+const TableMenuOption: React.FC<{ text: string; onClick: () => void }> = ({ text, onClick }) => {
+    return (
+        <button onMouseDown={(event) => event.preventDefault()} onClick={onClick}>
+            {text}
+        </button>
+    )
+}
+
+const TableMenuOptions: React.FC<{ selection: CellSelection }> = ({ selection }) => {
+    const isColSelection: boolean = selection.isColSelection()
+    const isRowSelection: boolean = selection.isRowSelection()
+    const isTableSelection: boolean = isColSelection && isRowSelection
+    const isCellsSelection: boolean = !isColSelection && !isRowSelection
+
     const commands = useCommands()
 
     return (
         <>
-            <button onMouseDown={(event) => event.preventDefault()} onClick={() => commands.setTableCellBackground("red")}>
-                Set cell to red
-            </button>
-            <button onMouseDown={(event) => event.preventDefault()} onClick={() => commands.setTableCellBackground("green")}>
-                Set cell to green
-            </button>
-            <button onMouseDown={(event) => event.preventDefault()} onClick={() => commands.setTableCellBackground(null)}>
-                Clear cell style
-            </button>
+            {isRowSelection || isCellsSelection ? (
+                <TableMenuOption text="Insert Above" onClick={() => commands.addTableRowBefore()} />
+            ) : null}
 
-            <button onMouseDown={(event) => event.preventDefault()} onClick={() => commands.addTableRowBefore()}>
-                add a row before the current one
-            </button>
-            <button onMouseDown={(event) => event.preventDefault()} onClick={() => commands.addTableRowAfter()}>
-                add a row after the current one
-            </button>
-            <button onMouseDown={(event) => event.preventDefault()} onClick={() => commands.deleteTableRow()}>
-                delete row
-            </button>
+            {isRowSelection || isCellsSelection ? (
+                <TableMenuOption text="Insert Below" onClick={() => commands.addTableRowAfter()} />
+            ) : null}
+
+            {isColSelection || isCellsSelection ? (
+                <TableMenuOption text="Insert Left" onClick={() => commands.addTableColumnBefore()} />
+            ) : null}
+
+            {isColSelection || isCellsSelection ? (
+                <TableMenuOption text="Insert Right" onClick={() => commands.addTableColumnAfter()} />
+            ) : null}
+
+            {isTableSelection ? <TableMenuOption text="Delete" onClick={() => commands.deleteTable()} /> : null}
+
+            {isRowSelection ? <TableMenuOption text="Delete" onClick={() => commands.deleteTableRow()} /> : null}
+
+            {isColSelection ? <TableMenuOption text="Delete" onClick={() => commands.deleteTableColumn()} /> : null}
+
+            <TableMenuOption text="Highlight" onClick={() => commands.setTableCellBackground("yellow")} />
+
+            <TableMenuOption text="Clear style" onClick={() => commands.setTableCellBackground(null)} />
         </>
     )
-}
-
-const TableColumnMenuOptions: React.FC = () => {
-    const commands = useCommands()
-
-    return (
-        <>
-            <button onMouseDown={(event) => event.preventDefault()} onClick={() => commands.addTableColumnBefore()}>
-                add a column before the current one
-            </button>
-            <button onMouseDown={(event) => event.preventDefault()} onClick={() => commands.addTableColumnAfter()}>
-                add a column after the current one
-            </button>
-            <button onMouseDown={(event) => event.preventDefault()} onClick={() => commands.deleteTableColumn()}>
-                delete column
-            </button>
-
-            <button onMouseDown={(event) => event.preventDefault()} onClick={() => commands.setTableCellBackground("red")}>
-                Set cell to red
-            </button>
-            <button onMouseDown={(event) => event.preventDefault()} onClick={() => commands.setTableCellBackground("green")}>
-                Set cell to green
-            </button>
-            <button onMouseDown={(event) => event.preventDefault()} onClick={() => commands.setTableCellBackground(null)}>
-                Clear cell style
-            </button>
-        </>
-    )
-}
-
-const TableBodyMenuOptions: React.FC = () => {
-    const commands = useCommands()
-
-    return (
-        <>
-            <button onMouseDown={(event) => event.preventDefault()} onClick={() => commands.setTableCellBackground("red")}>
-                Set cell to red
-            </button>
-            <button onMouseDown={(event) => event.preventDefault()} onClick={() => commands.setTableCellBackground("green")}>
-                Set cell to green
-            </button>
-            <button onMouseDown={(event) => event.preventDefault()} onClick={() => commands.setTableCellBackground(null)}>
-                Clear cell style
-            </button>
-
-            <button onMouseDown={(event) => event.preventDefault()} onClick={() => commands.addTableRowBefore()}>
-                add a row before the current one
-            </button>
-            <button onMouseDown={(event) => event.preventDefault()} onClick={() => commands.addTableRowAfter()}>
-                add a row after the current one
-            </button>
-            <button onMouseDown={(event) => event.preventDefault()} onClick={() => commands.addTableColumnBefore()}>
-                add a column before the current one
-            </button>
-            <button onMouseDown={(event) => event.preventDefault()} onClick={() => commands.addTableColumnAfter()}>
-                add a column after the current one
-            </button>
-            <button onMouseDown={(event) => event.preventDefault()} onClick={() => commands.deleteTable()}>
-                delete table
-            </button>
-
-            <button onMouseDown={(event) => event.preventDefault()} onClick={() => commands.setTableCellBackground("red")}>
-                Set cell to red
-            </button>
-            <button onMouseDown={(event) => event.preventDefault()} onClick={() => commands.setTableCellBackground("green")}>
-                Set cell to green
-            </button>
-            <button onMouseDown={(event) => event.preventDefault()} onClick={() => commands.setTableCellBackground(null)}>
-                Clear cell style
-            </button>
-        </>
-    )
-}
-
-const TableMenuOptions: React.FC = () => {
-    const { view } = useRemirrorContext({ autoUpdate: true })
-    const selection = view.state.selection
-
-    if (!isCellSelection(selection)) {
-        return <p>No CELL Selection</p>
-    }
-
-    const isColSelection = selection.isColSelection()
-    const isRowSelection = selection.isRowSelection()
-
-    if (isColSelection && isRowSelection) {
-        return <TableBodyMenuOptions />
-    } else if (isColSelection) {
-        return <TableColumnMenuOptions />
-    } else if (isRowSelection) {
-        return <TableRowMenuOptions />
-    } else {
-        return <p>cell</p>
-    }
 }
 
 type TableMenuProps = UseTableMenuProps
 
 export const TableMenu: React.FC<TableMenuProps> = ({ event, handleClose }) => {
+    const selection = useEditorView().state.selection
+
     const open = Boolean(event)
     const { floating, strategy, x, y } = useTableMenu({ event, handleClose })
-    return open ? (
+
+    return open && isCellSelection(selection) ? (
         <div
             ref={floating}
             style={{
-                zIndex: 10000,
+                zIndex: 12,
                 position: strategy,
                 top: y ?? "",
                 left: x ?? "",
+
                 padding: "8px",
                 background: "lightcoral",
                 display: "flex",
@@ -148,7 +77,7 @@ export const TableMenu: React.FC<TableMenuProps> = ({ event, handleClose }) => {
                 borderRadius: "4px",
             }}
         >
-            <TableMenuOptions />
+            <TableMenuOptions selection={selection} />
         </div>
     ) : null
 }
