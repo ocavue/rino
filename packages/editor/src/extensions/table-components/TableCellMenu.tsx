@@ -79,7 +79,7 @@ type TableCellButtonComponentProps = {
 
 const TableCellButtonComponent: React.FC<TableCellButtonComponentProps> = ({ cellEl, handleClick }) => {
     const { x, y, floating, strategy } = useButtonFloating(cellEl)
-    const show = Boolean(cellEl) || true
+    const show = Boolean(cellEl)
 
     return show ? (
         <div
