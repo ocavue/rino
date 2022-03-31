@@ -1,3 +1,3 @@
 export { TableSelectorExtension } from "./table-selector-extension"
-export { TableFloatingMenu } from "./TableFloatingMenu"
+export { TableSelectionMenu } from "./TableSelectionMenu"
 export { TableCellMenu } from "./TableCellMenu"

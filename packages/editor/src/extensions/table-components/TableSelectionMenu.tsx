@@ -77,13 +77,13 @@ function useFloatingMenuFloating(_rect: BoundingClientRect) {
     return useFloatingReturn
 }
 
-function TableFloatingMenuBody({ rect }: { rect: BoundingClientRect }): JSX.Element | null {
+function TableSelectionMenuBody({ rect }: { rect: BoundingClientRect }): JSX.Element | null {
     const { x, y, floating, strategy } = useFloatingMenuFloating(rect)
 
     return <TableMenuButton x={x} y={y} floating={floating} strategy={strategy} />
 }
 
-export function TableFloatingMenu(): JSX.Element | null {
+export const TableSelectionMenu: React.FC = () => {
     const { view } = useRemirrorContext({ autoUpdate: true })
     if (!view) {
         return null
@@ -101,5 +101,5 @@ export function TableFloatingMenu(): JSX.Element | null {
         return null
     }
 
-    return <TableFloatingMenuBody rect={rect} />
+    return <TableSelectionMenuBody rect={rect} />
 }
