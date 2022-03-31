@@ -1,49 +1,10 @@
-import { offset, shift, Strategy, useFloating } from "@floating-ui/react-dom"
+import { offset, shift, useFloating } from "@floating-ui/react-dom"
 import { CellSelection, isCellSelection } from "@remirror/pm/tables"
 import { EditorView } from "@remirror/pm/view"
 import { useRemirrorContext } from "@remirror/react-core"
-import React, { useEffect, useMemo } from "react"
+import React, { useCallback, useEffect, useMemo, useState } from "react"
 
 import { TableMenu } from "./TableMenu"
-
-type TableMenuButtonProps = {
-    x: number | null
-    y: number | null
-    floating: (node: HTMLElement | null) => void
-    strategy: Strategy
-}
-
-export const TableMenuButton: React.FC<TableMenuButtonProps> = ({ x, y, floating, strategy }) => {
-    const [event, setEvent] = React.useState<React.MouseEvent | null>(null)
-
-    const handleClick = (event: React.MouseEvent) => {
-        setEvent(event)
-    }
-
-    const handleClose = () => {
-        setEvent(null)
-    }
-
-    return (
-        <>
-            <button
-                ref={floating}
-                style={{
-                    zIndex: 10000,
-                    position: strategy,
-                    top: y ?? "",
-                    left: x ?? "",
-                    background: "lightgray",
-                    borderRadius: "4px",
-                }}
-                onClick={handleClick}
-            >
-                ...
-            </button>
-            <TableMenu handleClose={handleClose} event={event} />
-        </>
-    )
-}
 
 type BoundingClientRect = {
     bottom: number
@@ -84,6 +45,32 @@ function getCellSelectionBoundingClientRect(view: EditorView, selection: CellSel
     }
 }
 
+type TableMenuButtonProps = {
+    rect: BoundingClientRect
+    handleClick: (event: React.MouseEvent) => void
+}
+
+export const TableMenuButton: React.FC<TableMenuButtonProps> = ({ rect, handleClick }) => {
+    const { x, y, floating, strategy } = useFloatingMenuFloating(rect)
+
+    return (
+        <button
+            ref={floating}
+            style={{
+                zIndex: 10000,
+                position: strategy,
+                top: y ?? "",
+                left: x ?? "",
+                background: "lightgray",
+                borderRadius: "4px",
+            }}
+            onClick={handleClick}
+        >
+            ...
+        </button>
+    )
+}
+
 function useFloatingMenuFloating(_rect: BoundingClientRect) {
     const rectJSON = JSON.stringify(_rect)
     const rect: BoundingClientRect = useMemo(() => JSON.parse(rectJSON), [rectJSON])
@@ -116,16 +103,20 @@ function useFloatingMenuFloating(_rect: BoundingClientRect) {
     return useFloatingReturn
 }
 
-function TableSelectionMenuBody({ rect }: { rect: BoundingClientRect }): JSX.Element | null {
-    const { x, y, floating, strategy } = useFloatingMenuFloating(rect)
-
-    return <TableMenuButton x={x} y={y} floating={floating} strategy={strategy} />
-}
-
 /**
  * A button that floats above the selected table cells. When clicked, it shows a menu to operate on the table.
  */
 export const TableFloatingButton: React.FC = () => {
+    const [event, setEvent] = useState<React.MouseEvent | null>(null)
+
+    const handleClick = useCallback((event: React.MouseEvent) => {
+        setEvent(event)
+    }, [])
+
+    const handleClose = useCallback(() => {
+        setEvent(null)
+    }, [])
+
     const { view } = useRemirrorContext({ autoUpdate: true })
     if (!view) {
         return null
@@ -143,5 +134,10 @@ export const TableFloatingButton: React.FC = () => {
         return null
     }
 
-    return <TableSelectionMenuBody rect={rect} />
+    return (
+        <>
+            <TableMenuButton rect={rect} handleClick={handleClick} />
+            <TableMenu event={event} handleClose={handleClose} />
+        </>
+    )
 }
