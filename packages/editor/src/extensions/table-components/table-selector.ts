@@ -4,17 +4,10 @@ import { EditorState } from "@remirror/pm"
 import { isCellSelection, TableMap } from "@remirror/pm/tables"
 import { Decoration, DecorationSet, EditorView, WidgetDecorationSpec } from "@remirror/pm/view"
 
+import { createElement as h } from "./dom-utils"
 import { DATA_TABLE_SELECTOR_TYPE } from "./table-const"
 import { selectColumn, selectRow, selectTable } from "./table-helpers"
-import {
-    createElement as h,
-    findTable,
-    getCellSelectionRect,
-    getCellSelectionType,
-    getCellsInColumn,
-    getCellsInRect,
-    getCellsInRow,
-} from "./table-utils"
+import { findTable, getCellSelectionRect, getCellSelectionType, getCellsInColumn, getCellsInRect, getCellsInRow } from "./table-utils"
 
 css`
     .remirror-editor.ProseMirror .tableWrapper {
