@@ -1,23 +1,22 @@
+import { VirtualElement } from "@floating-ui/dom"
 import { offset, shift, useFloating } from "@floating-ui/react-dom"
 import { CellSelection, isCellSelection } from "@remirror/pm/tables"
 import { EditorView } from "@remirror/pm/view"
+import { More2LineIcon } from "@remirror/react-components/all-icons"
 import { useRemirrorContext } from "@remirror/react-core"
-import React, { useCallback, useEffect, useMemo, useState } from "react"
+import React, { useCallback, useEffect, useState } from "react"
 
 import { TableMenu } from "./TableMenu"
 
-type BoundingClientRect = {
+function getCellSelectionBoundingClientRect(
+    view: EditorView,
+    selection: CellSelection,
+): {
+    top: number
     bottom: number
-    height: number
     left: number
     right: number
-    top: number
-    width: number
-    x: number
-    y: number
-}
-
-function getCellSelectionBoundingClientRect(view: EditorView, selection: CellSelection): BoundingClientRect | null {
+} | null {
     const cell1 = view.nodeDOM(selection.$anchorCell.pos) as HTMLElement | null
     const cell2 = view.nodeDOM(selection.$headCell.pos) as HTMLElement | null
 
@@ -33,20 +32,11 @@ function getCellSelectionBoundingClientRect(view: EditorView, selection: CellSel
     const right = Math.max(rect1.right, rect2.right)
     const bottom = Math.max(rect1.bottom, rect2.bottom)
 
-    return {
-        bottom,
-        left,
-        right,
-        top,
-        height: bottom - top,
-        width: right - left,
-        x: left,
-        y: top,
-    }
+    return { left, top, right, bottom }
 }
 
 type TableMenuButtonProps = {
-    rect: BoundingClientRect
+    rect: { top: number; left: number; bottom: number; right: number }
     handleClick: (event: React.MouseEvent) => void
 }
 
@@ -54,27 +44,29 @@ export const TableMenuButton: React.FC<TableMenuButtonProps> = ({ rect, handleCl
     const { x, y, floating, strategy } = useFloatingMenuFloating(rect)
 
     return (
-        <button
+        <div
             ref={floating}
             style={{
-                zIndex: 10000,
                 position: strategy,
                 top: y ?? "",
                 left: x ?? "",
-                background: "lightgray",
+
+                zIndex: 11,
+                width: "24px",
+                height: "24px",
+                padding: "8px",
+                cursor: "pointer",
                 borderRadius: "4px",
+                backgroundColor: "lightgray",
             }}
             onClick={handleClick}
         >
-            ...
-        </button>
+            <More2LineIcon size="24px" />
+        </div>
     )
 }
 
-function useFloatingMenuFloating(_rect: BoundingClientRect) {
-    const rectJSON = JSON.stringify(_rect) // TODO: ugly hack
-    const rect: BoundingClientRect = useMemo(() => JSON.parse(rectJSON), [rectJSON])
-
+function useFloatingMenuFloating({ top, bottom, left, right }: { top: number; bottom: number; left: number; right: number }) {
     const useFloatingReturn = useFloating({
         placement: "top",
         middleware: [
@@ -88,17 +80,25 @@ function useFloatingMenuFloating(_rect: BoundingClientRect) {
 
     const { reference } = useFloatingReturn
 
-    const virtualEl = useMemo(
-        () => ({
-            getBoundingClientRect() {
-                return rect
-            },
-        }),
-        [rect],
-    )
     useEffect(() => {
+        const virtualEl: VirtualElement = {
+            getBoundingClientRect() {
+                return {
+                    top,
+                    bottom,
+                    left,
+                    right,
+
+                    x: left,
+                    y: top,
+                    width: right - left,
+                    height: bottom - top,
+                }
+            },
+        }
+
         reference(virtualEl)
-    }, [reference, virtualEl])
+    }, [bottom, left, reference, right, top])
 
     return useFloatingReturn
 }
