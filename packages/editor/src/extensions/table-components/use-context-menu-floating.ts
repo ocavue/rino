@@ -6,11 +6,6 @@ import { useOnClickOutside } from "./use-on-click-outside"
 
 export type UseFloatingReturn = ReturnType<typeof useFloating>
 
-export type UseContextMenuFloatingReturn = UseFloatingReturn & {
-    show: boolean
-    clickHandler: (event: MouseEvent | React.MouseEvent) => void
-}
-
 export type useContextMenuFloatingV2Props = {
     handleClose: () => void
     event: MouseEvent | React.MouseEvent | null
