@@ -106,7 +106,7 @@ function useFloatingMenuFloating({ top, bottom, left, right }: { top: number; bo
 /**
  * A button that floats above the selected table cells. When clicked, it shows a menu to operate on the table.
  */
-export const TableFloatingButton: React.FC = () => {
+export const TableTooltip: React.FC = () => {
     const [event, setEvent] = useState<React.MouseEvent | null>(null)
 
     const handleClick = useCallback((event: React.MouseEvent) => {

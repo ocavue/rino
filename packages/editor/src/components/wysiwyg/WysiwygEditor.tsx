@@ -1,7 +1,7 @@
 import { Remirror, RemirrorProps, useCommands, useRemirrorContext } from "@remirror/react"
 import React, { FC } from "react"
 
-import { TableCellButton, TableFloatingButton } from "../../extensions/table-components"
+import { TableCellButton, TableTooltip } from "../../extensions/table-components"
 import DevTools from "../DevTools"
 import ErrorBoundary from "../ErrorBoundary"
 import TableMenu from "./TableMenu"
@@ -15,7 +15,7 @@ const InnerEditor: FC<InnerEditorProps> = ({ className, enableDevTools }) => {
     return (
         <>
             <TableMenu commands={commands} />
-            <TableFloatingButton />
+            <TableTooltip />
             <TableCellButton />
             <div {...getRootProps()} className={className} spellCheck={false} />
             {enableDevTools ? <DevTools /> : null}
