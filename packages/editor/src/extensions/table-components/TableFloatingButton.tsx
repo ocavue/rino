@@ -122,7 +122,7 @@ function TableSelectionMenuBody({ rect }: { rect: BoundingClientRect }): JSX.Ele
     return <TableMenuButton x={x} y={y} floating={floating} strategy={strategy} />
 }
 
-export const TableSelectionMenu: React.FC = () => {
+export const TableFloatingButton: React.FC = () => {
     const { view } = useRemirrorContext({ autoUpdate: true })
     if (!view) {
         return null
