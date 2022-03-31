@@ -1,6 +1,7 @@
 import { VirtualElement } from "@floating-ui/dom"
 import { useFloating } from "@floating-ui/react-dom"
 import { useEditorView, useHover } from "@remirror/react"
+import { More2LineIcon } from "@remirror/react-components/all-icons"
 import React, { useCallback, useEffect } from "react"
 
 import { isCellType } from "./table-utils"
@@ -78,23 +79,26 @@ type TableCellButtonComponentProps = {
 
 const TableCellButtonComponent: React.FC<TableCellButtonComponentProps> = ({ cellEl, handleClick }) => {
     const { x, y, floating, strategy } = useButtonFloating(cellEl)
-    const show = Boolean(cellEl)
+    const show = Boolean(cellEl) || true
 
     return show ? (
-        <button
+        <div
             ref={floating}
             style={{
-                zIndex: 10000,
                 position: strategy,
                 top: y ?? "",
                 left: x ?? "",
-                background: "lightyellow",
-                borderRadius: "4px",
+
+                zIndex: 10,
+                width: "20px",
+                height: "20px",
+                padding: "8px 0px",
+                cursor: "pointer",
             }}
             onClick={handleClick}
         >
-            ...
-        </button>
+            <More2LineIcon size={"24px"} />
+        </div>
     ) : null
 }
 
