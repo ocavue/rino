@@ -49,3 +49,10 @@ export function selectTable(tr: Transaction, pos: number): boolean {
     tr.setSelection(selection)
     return true
 }
+
+export function selectCell(tr: Transaction, pos: number): boolean {
+    const selection = CellSelection.create(tr.doc, pos)
+    // @ts-expect-error CellSelection has incorrect type
+    tr.setSelection(selection)
+    return true
+}

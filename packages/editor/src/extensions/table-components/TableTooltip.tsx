@@ -6,6 +6,7 @@ import { More2LineIcon } from "@remirror/react-components/all-icons"
 import { useRemirrorContext } from "@remirror/react-core"
 import React, { useCallback, useEffect, useState } from "react"
 
+import { countCellSelection } from "./table-utils"
 import { TableMenu } from "./TableMenu"
 
 function getCellSelectionBoundingClientRect(
@@ -131,6 +132,10 @@ export const TableTooltip: React.FC = () => {
     const rect = getCellSelectionBoundingClientRect(view, selection)
 
     if (!rect) {
+        return null
+    }
+
+    if (countCellSelection(selection) <= 1) {
         return null
     }
 

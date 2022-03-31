@@ -94,6 +94,11 @@ export function getCellSelectionRect(selection: CellSelection): Rect {
     return map.rectBetween(selection.$anchorCell.pos - start, selection.$headCell.pos - start)
 }
 
+export function countCellSelection(selection: CellSelection): number {
+    const rect = getCellSelectionRect(selection)
+    return (rect.right - rect.left) * (rect.bottom - rect.top)
+}
+
 export function isTableType(type: NodeType): boolean {
     return (type.spec as TableSchemaSpec).tableRole === "table"
 }

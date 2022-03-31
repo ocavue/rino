@@ -1,18 +1,20 @@
 import { VirtualElement } from "@floating-ui/dom"
 import { useFloating } from "@floating-ui/react-dom"
+import { ProsemirrorNode } from "@remirror/pm"
 import { useEditorView, useHover } from "@remirror/react"
 import { More2LineIcon } from "@remirror/react-components/all-icons"
 import React, { useCallback, useEffect } from "react"
 
+import { selectCell } from "./table-helpers"
 import { isCellType } from "./table-utils"
 import { TableMenu } from "./TableMenu"
 
 /**
- * Returns the hovered table cell element.
+ * Returns the hovered table cell.
  */
-function useHoeveredCell(): HTMLElement | null {
+function useHoeveredCell(): { dom: HTMLElement; pos: number; node: ProsemirrorNode } | null {
     const view = useEditorView()
-    const [cellEl, setCellEl] = React.useState<HTMLElement | null>(null)
+    const [cell, setCell] = React.useState<{ dom: HTMLElement; pos: number; node: ProsemirrorNode } | null>(null)
 
     useHover((props) => {
         if (!props.hovering) {
@@ -23,22 +25,26 @@ function useHoeveredCell(): HTMLElement | null {
             if (isCellType(node.type)) {
                 const dom = view.nodeDOM(pos)
                 if (dom) {
-                    setCellEl(dom as HTMLElement)
+                    setCell({
+                        dom: dom as HTMLElement,
+                        pos,
+                        node,
+                    })
                     return
                 }
             }
         }
 
-        setCellEl(null)
+        setCell(null)
     })
 
-    return cellEl
+    return cell
 }
 
 /**
  * Returns the position of the cell menu button.
  */
-function useButtonFloating(cellEl: HTMLElement | null) {
+function useButtonFloating(cellEl: Element | null) {
     const floating = useFloating({
         placement: "bottom-end",
         middleware: [],
@@ -73,7 +79,7 @@ function useButtonFloating(cellEl: HTMLElement | null) {
 }
 
 type TableCellButtonComponentProps = {
-    cellEl: HTMLElement | null
+    cellEl: Element | null
     handleClick: (event: React.MouseEvent) => void
 }
 
@@ -106,17 +112,29 @@ const TableCellButtonComponent: React.FC<TableCellButtonComponentProps> = ({ cel
  * A button that floats above the hovered table cell. When clicked, it shows a menu to operate on the table.
  */
 export const TableCellButton: React.FC = () => {
-    const cellEl = useHoeveredCell()
+    const cell = useHoeveredCell()
+    const view = useEditorView()
 
     const [event, setEvent] = React.useState<React.MouseEvent | null>(null)
 
-    const handleClick = useCallback((event: React.MouseEvent) => {
-        setEvent(event)
-    }, [])
+    const handleClick = useCallback(
+        (event: React.MouseEvent) => {
+            if (cell?.pos) {
+                // TODO: move it to a command
+                const tr = view.state.tr
+                selectCell(tr, cell.pos)
+                view.dispatch(tr)
+            }
+            setEvent(event)
+        },
+        [cell?.pos, view],
+    )
 
     const handleClose = useCallback(() => {
         setEvent(null)
     }, [])
+
+    const cellEl = cell?.pos ? (view.nodeDOM(cell.pos) as Element) : null
 
     return (
         <>
