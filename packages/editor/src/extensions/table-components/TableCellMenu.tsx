@@ -105,7 +105,7 @@ const TableCellButtonComponent: React.FC<TableCellButtonComponentProps> = ({ cel
 /**
  * A button that floats above the hovered table cell. When clicked, it shows a menu to operate on the table.
  */
-export const TableCellMenu: React.FC = () => {
+export const TableCellButton: React.FC = () => {
     const cellEl = useHoeveredCell()
 
     const [event, setEvent] = React.useState<React.MouseEvent | null>(null)
