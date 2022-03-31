@@ -2,7 +2,7 @@ import { isCellSelection } from "@remirror/pm/tables"
 import { useCommands, useRemirrorContext } from "@remirror/react-core"
 import React from "react"
 
-import { useContextMenuFloatingV2, useContextMenuFloatingV2Props } from "./use-context-menu-floating"
+import { useTableMenu, UseTableMenuProps } from "./use-table-menu"
 
 const TableRowMenuOptions: React.FC = () => {
     const commands = useCommands()
@@ -90,6 +90,16 @@ const TableBodyMenuOptions: React.FC = () => {
             <button onMouseDown={(event) => event.preventDefault()} onClick={() => commands.deleteTable()}>
                 delete table
             </button>
+
+            <button onMouseDown={(event) => event.preventDefault()} onClick={() => commands.setTableCellBackground("red")}>
+                Set cell to red
+            </button>
+            <button onMouseDown={(event) => event.preventDefault()} onClick={() => commands.setTableCellBackground("green")}>
+                Set cell to green
+            </button>
+            <button onMouseDown={(event) => event.preventDefault()} onClick={() => commands.setTableCellBackground(null)}>
+                Clear cell style
+            </button>
         </>
     )
 }
@@ -116,11 +126,11 @@ const TableMenuOptions: React.FC = () => {
     }
 }
 
-type TableContextMenuV3Props = useContextMenuFloatingV2Props
+type TableMenuProps = UseTableMenuProps
 
-export const TableContextMenuV3: React.FC<TableContextMenuV3Props> = ({ event, handleClose }) => {
+export const TableMenu: React.FC<TableMenuProps> = ({ event, handleClose }) => {
     const open = Boolean(event)
-    const { floating, strategy, x, y } = useContextMenuFloatingV2({ event, handleClose })
+    const { floating, strategy, x, y } = useTableMenu({ event, handleClose })
     return open ? (
         <div
             ref={floating}

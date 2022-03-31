@@ -1,39 +1,7 @@
 import { Strategy } from "@floating-ui/react-dom"
-import { useCommands } from "@remirror/react"
 import React from "react"
 
-import { TableContextMenuV3 } from "./TableContextMenu"
-
-const TableCellMenuOptions: React.FC = () => {
-    const commands = useCommands()
-
-    return (
-        <>
-            <button onMouseDown={(event) => event.preventDefault()} onClick={() => commands.addTableRowBefore()}>
-                add a row before the current one
-            </button>
-            <button onMouseDown={(event) => event.preventDefault()} onClick={() => commands.addTableRowAfter()}>
-                add a row after the current one
-            </button>
-            <button onMouseDown={(event) => event.preventDefault()} onClick={() => commands.addTableColumnBefore()}>
-                add a column before the current one
-            </button>
-            <button onMouseDown={(event) => event.preventDefault()} onClick={() => commands.addTableColumnAfter()}>
-                add a column after the current one
-            </button>
-
-            <button onMouseDown={(event) => event.preventDefault()} onClick={() => commands.setTableCellBackground("red")}>
-                Set cell to red
-            </button>
-            <button onMouseDown={(event) => event.preventDefault()} onClick={() => commands.setTableCellBackground("green")}>
-                Set cell to green
-            </button>
-            <button onMouseDown={(event) => event.preventDefault()} onClick={() => commands.setTableCellBackground(null)}>
-                Clear cell style
-            </button>
-        </>
-    )
-}
+import { TableMenu } from "./TableMenu"
 
 type TableMenuButtonProps = {
     x: number | null
@@ -69,7 +37,7 @@ export const TableMenuButton: React.FC<TableMenuButtonProps> = ({ x, y, floating
             >
                 ...
             </button>
-            <TableContextMenuV3 handleClose={handleClose} event={event} />
+            <TableMenu handleClose={handleClose} event={event} />
         </>
     )
 }
