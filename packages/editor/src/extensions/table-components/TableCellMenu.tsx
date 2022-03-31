@@ -1,18 +1,17 @@
+import { VirtualElement } from "@floating-ui/dom"
 import { useFloating } from "@floating-ui/react-dom"
-import { TableSchemaSpec } from "@remirror/extension-tables"
-import { NodeType } from "@remirror/pm"
-import { useEditorView, useHover, useRemirrorContext } from "@remirror/react"
-import React, { useCallback, useEffect, useState } from "react"
+import { useEditorView, useHover } from "@remirror/react"
+import React, { useCallback, useEffect } from "react"
 
-import { TableMenuButton } from "./TableMenuButton"
+import { isCellType } from "./table-utils"
+import { TableMenu } from "./TableMenu"
 
-function isCellType(type: NodeType): boolean {
-    return (type.spec as TableSchemaSpec).tableRole === "cell"
-}
-
-function useHoverCell(): HTMLElement | null {
+/**
+ * Returns the hovered table cell element.
+ */
+function useHoeveredCell(): HTMLElement | null {
     const view = useEditorView()
-    const [cell, setCell] = React.useState<HTMLElement | null>(null)
+    const [cellEl, setCellEl] = React.useState<HTMLElement | null>(null)
 
     useHover((props) => {
         if (!props.hovering) {
@@ -23,70 +22,102 @@ function useHoverCell(): HTMLElement | null {
             if (isCellType(node.type)) {
                 const dom = view.nodeDOM(pos)
                 if (dom) {
-                    setCell(dom as HTMLElement)
+                    setCellEl(dom as HTMLElement)
                     return
                 }
             }
         }
 
-        setCell(null)
+        setCellEl(null)
     })
 
-    return cell
+    return cellEl
 }
 
-function useButtonFloating() {
-    const [showMenu, setShowMenu] = useState(false)
-
-    const { x, y, reference, floating, strategy, refs, update } = useFloating({
+/**
+ * Returns the position of the cell menu button.
+ */
+function useButtonFloating(cellEl: HTMLElement | null) {
+    const floating = useFloating({
         placement: "bottom-end",
         middleware: [],
     })
 
-    const hoveredCellHandler = useCallback(
-        (cell: HTMLElement | null) => {
-            if (!cell) {
-                setShowMenu(false)
-                reference(null)
-                return
-            }
-
-            setShowMenu(true)
-
-            const rect = cell.getBoundingClientRect()
-            const virtualRect = {
-                width: rect.width,
-                height: 0,
-                x: rect.x,
-                y: rect.y,
-                top: rect.top,
-                left: rect.left,
-                right: rect.right,
-                bottom: rect.top,
-            }
-            const virtualEl = {
-                getBoundingClientRect() {
-                    return virtualRect
-                },
-                contextElement: cell,
-            }
-            reference(virtualEl)
-        },
-        [reference],
-    )
-
-    const { view } = useRemirrorContext({ autoUpdate: true })
-
-    const dom = useHoverCell()
+    const { reference } = floating
 
     useEffect(() => {
-        hoveredCellHandler(dom)
-    }, [dom, hoveredCellHandler, update, view.state])
+        if (!cellEl) return
 
-    return { showMenu, x, y, refs, floating, strategy }
+        const rect = cellEl.getBoundingClientRect()
+        const virtualRect = {
+            width: rect.width,
+            height: 0,
+            x: rect.x,
+            y: rect.y,
+            top: rect.top,
+            left: rect.left,
+            right: rect.right,
+            bottom: rect.top,
+        }
+        const virtualEl: VirtualElement = {
+            getBoundingClientRect() {
+                return virtualRect
+            },
+            contextElement: cellEl,
+        }
+        reference(virtualEl)
+    }, [cellEl, reference])
+
+    return floating
 }
 
+type TableCellButtonComponentProps = {
+    cellEl: HTMLElement | null
+    handleClick: (event: React.MouseEvent) => void
+}
+
+const TableCellButtonComponent: React.FC<TableCellButtonComponentProps> = ({ cellEl, handleClick }) => {
+    const { x, y, floating, strategy } = useButtonFloating(cellEl)
+    const show = Boolean(cellEl)
+
+    return show ? (
+        <button
+            ref={floating}
+            style={{
+                zIndex: 10000,
+                position: strategy,
+                top: y ?? "",
+                left: x ?? "",
+                background: "lightyellow",
+                borderRadius: "4px",
+            }}
+            onClick={handleClick}
+        >
+            ...
+        </button>
+    ) : null
+}
+
+/**
+ * A button that floats above the hovered table cell. When clicked, it shows a menu to operate on the table.
+ */
 export const TableCellMenu: React.FC = () => {
-    const { showMenu, x, y, floating, strategy } = useButtonFloating()
-    return showMenu ? <TableMenuButton x={x} y={y} floating={floating} strategy={strategy} /> : null
+    const cellEl = useHoeveredCell()
+
+    const [event, setEvent] = React.useState<React.MouseEvent | null>(null)
+
+    const handleClick = useCallback((event: React.MouseEvent) => {
+        setEvent(event)
+    }, [])
+
+    const handleClose = useCallback(() => {
+        setEvent(null)
+    }, [])
+
+    return (
+        <>
+            <TableCellButtonComponent cellEl={cellEl} handleClick={handleClick} />
+            <TableMenu handleClose={handleClose} event={event} />
+        </>
+    )
 }

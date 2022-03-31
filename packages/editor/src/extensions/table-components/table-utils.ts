@@ -1,5 +1,6 @@
 import { findParentNodeOfType, FindProsemirrorNodeResult, NodeWithPosition } from "@remirror/core"
-import { EditorState, ResolvedPos, Selection } from "@remirror/pm"
+import { TableSchemaSpec } from "@remirror/extension-tables"
+import { EditorState, NodeType, ResolvedPos, Selection } from "@remirror/pm"
 import { CellSelection, Rect, TableMap } from "@remirror/pm/tables"
 
 export function findTable(selection: EditorState | Selection | ResolvedPos) {
@@ -91,4 +92,16 @@ export function getCellSelectionRect(selection: CellSelection): Rect {
     const map = TableMap.get(table)
     const start = selection.$anchorCell.start(-1)
     return map.rectBetween(selection.$anchorCell.pos - start, selection.$headCell.pos - start)
+}
+
+export function isTableType(type: NodeType): boolean {
+    return (type.spec as TableSchemaSpec).tableRole === "table"
+}
+
+export function isRowType(type: NodeType): boolean {
+    return (type.spec as TableSchemaSpec).tableRole === "row"
+}
+
+export function isCellType(type: NodeType): boolean {
+    return (type.spec as TableSchemaSpec).tableRole === "cell"
 }
