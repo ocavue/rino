@@ -1,5 +1,5 @@
 import { VirtualElement } from "@floating-ui/dom"
-import { useFloating } from "@floating-ui/react-dom"
+import { autoUpdate, useFloating } from "@floating-ui/react-dom"
 import { ProsemirrorNode } from "@remirror/pm"
 import { useEditorView, useHover } from "@remirror/react"
 import { More2LineIcon } from "@remirror/react-components/all-icons"
@@ -50,9 +50,9 @@ function useButtonFloating(cellEl: Element | null) {
         middleware: [],
     })
 
-    const { reference } = floating
+    const { reference, refs, update } = floating
 
-    useEffect(() => {
+    const updateFloating = useCallback(() => {
         if (!cellEl) return
 
         const rect = cellEl.getBoundingClientRect()
@@ -73,7 +73,16 @@ function useButtonFloating(cellEl: Element | null) {
             contextElement: cellEl,
         }
         reference(virtualEl)
-    }, [cellEl, reference])
+        update()
+    }, [cellEl, reference, update])
+
+    useEffect(() => {
+        if (!cellEl || !refs.floating.current) {
+            return
+        }
+
+        return autoUpdate(cellEl, refs.floating.current, updateFloating)
+    }, [cellEl, updateFloating, refs.floating])
 
     return floating
 }
