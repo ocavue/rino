@@ -57,7 +57,7 @@ export const TableMenuButton: React.FC<TableMenuButtonProps> = ({ rect, handleCl
                 padding: "8px",
                 cursor: "pointer",
                 borderRadius: "4px",
-                backgroundColor: "lightgray",
+                backgroundColor: "#dcdcdc",
             }}
             onClick={handleClick}
         >
