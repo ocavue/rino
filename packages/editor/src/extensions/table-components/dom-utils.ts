@@ -24,3 +24,10 @@ export function createElement<TagName extends keyof HTMLElementTagNameMap>(
     }
     return element
 }
+
+export function isTableCellElement(el: Element | null | undefined): el is HTMLTableCellElement {
+    if (!el) {
+        return false
+    }
+    return el.nodeName === "TD" || el.nodeName === "TH"
+}

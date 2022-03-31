@@ -1,30 +1,24 @@
-import { VirtualElement } from "@floating-ui/dom"
-import { offset, shift, useFloating } from "@floating-ui/react-dom"
+import { flip, VirtualElement } from "@floating-ui/dom"
+import { autoUpdate, hide, offset, shift, useFloating } from "@floating-ui/react-dom"
 import { CellSelection, isCellSelection } from "@remirror/pm/tables"
 import { EditorView } from "@remirror/pm/view"
 import { More2LineIcon } from "@remirror/react-components/all-icons"
 import { useRemirrorContext } from "@remirror/react-core"
 import React, { useCallback, useEffect, useState } from "react"
 
+import { isTableCellElement } from "./dom-utils"
 import { countCellSelection } from "./table-utils"
 import { TableMenu } from "./TableMenu"
 
-function getCellSelectionBoundingClientRect(
-    view: EditorView,
-    selection: CellSelection,
+function calcCellSelectionBoundingClientRect(
+    cellA: Element,
+    cellB: Element,
 ): {
     top: number
     bottom: number
     left: number
     right: number
-} | null {
-    const cellA = view.nodeDOM(selection.$anchorCell.pos) as HTMLElement | null
-    const cellB = view.nodeDOM(selection.$headCell.pos) as HTMLElement | null
-
-    if (!cellA || !cellB) return null
-    if (cellA.nodeName !== "TD" && cellA.nodeName !== "TH") return null
-    if (cellB.nodeName !== "TD" && cellB.nodeName !== "TH") return null
-
+} {
     const rectA = cellA.getBoundingClientRect()
     const rectB = cellB.getBoundingClientRect()
 
@@ -36,13 +30,28 @@ function getCellSelectionBoundingClientRect(
     }
 }
 
-type TableMenuButtonProps = {
-    rect: { top: number; left: number; bottom: number; right: number }
-    handleClick: (event: React.MouseEvent) => void
+function findTableByCell(cellEl: Element) {
+    let current: Element | null = cellEl
+    while (current) {
+        if (current.nodeName === "TABLE") {
+            return current
+        }
+        current = current.parentElement
+    }
+    return null
 }
 
-export const TableMenuButton: React.FC<TableMenuButtonProps> = ({ rect, handleClick }) => {
-    const { x, y, floating, strategy } = useFloatingMenuFloating(rect)
+type TableMenuButtonProps = {
+    handleClick: (event: React.MouseEvent) => void
+    anchorCellEl: Element
+    headCellEl: Element
+}
+
+const TableMenuButton: React.FC<TableMenuButtonProps> = ({ handleClick, anchorCellEl: cellA, headCellEl: cellB }) => {
+    const rect = calcCellSelectionBoundingClientRect(cellA, cellB)
+    const tableEl = findTableByCell(cellA)
+    const { x, y, floating, strategy, middlewareData } = useFloatingMenuFloating(rect, tableEl)
+    const referenceHidden = middlewareData.hide?.referenceHidden
 
     return (
         <div
@@ -51,6 +60,7 @@ export const TableMenuButton: React.FC<TableMenuButtonProps> = ({ rect, handleCl
                 position: strategy,
                 top: y ?? "",
                 left: x ?? "",
+                opacity: referenceHidden ? 0 : 1,
 
                 zIndex: 11,
                 width: "24px",
@@ -70,23 +80,18 @@ export const TableMenuButton: React.FC<TableMenuButtonProps> = ({ rect, handleCl
     )
 }
 
-function useFloatingMenuFloating({ top, bottom, left, right }: { top: number; bottom: number; left: number; right: number }) {
-    // TODO: add autoUpdate
-
+function useFloatingMenuFloating(
+    { top, bottom, left, right }: { top: number; bottom: number; left: number; right: number },
+    contextElement: Element | null,
+) {
     const useFloatingReturn = useFloating({
         placement: "top",
-        middleware: [
-            offset(20),
-            shift({
-                mainAxis: true,
-                crossAxis: true,
-            }),
-        ],
+        middleware: [offset(20), shift(), flip(), hide()],
     })
 
-    const { reference } = useFloatingReturn
+    const { reference, refs, update } = useFloatingReturn
 
-    useEffect(() => {
+    const updateFloating = useCallback(() => {
         const virtualEl: VirtualElement = {
             getBoundingClientRect() {
                 return {
@@ -101,10 +106,23 @@ function useFloatingMenuFloating({ top, bottom, left, right }: { top: number; bo
                     height: bottom - top,
                 }
             },
+            contextElement: contextElement ?? undefined,
         }
 
         reference(virtualEl)
-    }, [bottom, left, reference, right, top])
+        update()
+    }, [contextElement, reference, update, top, bottom, left, right])
+
+    useEffect(() => {
+        updateFloating()
+    }, [updateFloating])
+
+    useEffect(() => {
+        if (!contextElement || !refs.floating.current) {
+            return
+        }
+        return autoUpdate(contextElement, refs.floating.current, updateFloating)
+    }, [contextElement, refs.floating, updateFloating])
 
     return useFloatingReturn
 }
@@ -134,9 +152,10 @@ export const TableTooltip: React.FC = () => {
         return null
     }
 
-    const rect = getCellSelectionBoundingClientRect(view, selection)
+    const anchorCellEl = view.nodeDOM(selection.$anchorCell.pos) as HTMLElement | null
+    const headCellEl = view.nodeDOM(selection.$headCell.pos) as HTMLElement | null
 
-    if (!rect) {
+    if (!isTableCellElement(anchorCellEl) || !isTableCellElement(headCellEl)) {
         return null
     }
 
@@ -146,7 +165,7 @@ export const TableTooltip: React.FC = () => {
 
     return (
         <>
-            <TableMenuButton rect={rect} handleClick={handleClick} />
+            <TableMenuButton handleClick={handleClick} anchorCellEl={anchorCellEl} headCellEl={headCellEl} />
             <TableMenu event={event} handleClose={handleClose} />
         </>
     )
