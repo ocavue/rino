@@ -89,16 +89,13 @@ export function TableFloatingMenu(): JSX.Element | null {
         return null
     }
 
-    console.log("[TableFloatingMenu] 1")
-
     const selection = view.state.selection
 
     if (!isCellSelection(selection)) {
         return null
     }
-    console.log("[TableFloatingMenu] 2")
 
-    const rect = getCellSelectionBoundingClientRect(view, selection as any)
+    const rect = getCellSelectionBoundingClientRect(view, selection)
 
     if (!rect) {
         return null
