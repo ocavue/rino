@@ -56,8 +56,8 @@ type TableMenuProps = UseTableMenuProps
 export const TableMenu: React.FC<TableMenuProps> = ({ event, handleClose }) => {
     const selection = useEditorView().state.selection
 
-    const open = Boolean(event)
     const { floating, strategy, x, y } = useTableMenu({ event, handleClose })
+    const open = Boolean(event) ?? x ?? y
 
     return open && isCellSelection(selection) ? (
         <div
