@@ -4,7 +4,7 @@ import { useCommands, useRemirrorContext } from "@remirror/react-core"
 import React from "react"
 
 import { useContextMenuFloating } from "./use-context-menu-floating"
-import { useSelectorEvent } from "./use-selector-event"
+import { useTableSelector } from "./use-table-selector"
 
 const TableRowMenuOptions: React.FC = () => {
     const commands = useCommands()
@@ -121,7 +121,7 @@ export function TableContextMenu(): JSX.Element | null {
 
     const { x, y, floating, strategy, clickHandler, show } = useContextMenuFloating()
 
-    useSelectorEvent(clickHandler)
+    useTableSelector({ clickHandler })
 
     return (
         <div

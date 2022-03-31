@@ -1,10 +1,16 @@
 import { ApplySchemaAttributes, KeyBindings, NodeSpecOverride } from "@remirror/core"
-import { TableSchemaSpec } from "@remirror/extension-tables/dist/declarations/src/table-utils"
+import {
+    TableCellExtension,
+    TableExtension,
+    TableHeaderCellExtension,
+    TableRowExtension,
+    TableSchemaSpec,
+} from "@remirror/extension-tables"
 import { TextSelection } from "prosemirror-state"
 
 import { NodeSerializerOptions, ParserRuleType } from "../../transform"
 import { buildBlockEnterKeymapBindings } from "../../utils"
-import { TableCellExtension, TableExtension, TableHeaderCellExtension, TableRowExtension } from "../table3"
+import { TableSelectorExtension } from "../table-components"
 import { createTableHeigthlightPlugin } from "./table-plugin"
 
 enum TABLE_ALIGEN {
@@ -149,6 +155,10 @@ export class RinoTableRowExtension extends TableRowExtension {
         return "tableRow" as const
     }
 
+    createNodeSpec(extra: ApplySchemaAttributes, override: NodeSpecOverride): TableSchemaSpec {
+        return { ...super.createNodeSpec(extra, override), allowGapCursor: false }
+    }
+
     public fromMarkdown() {
         return [
             {
@@ -199,6 +209,10 @@ export class RinoTableCellExtension extends TableCellExtension {
         return createTableHeigthlightPlugin()
     }
 
+    createExtensions() {
+        return [new TableSelectorExtension()]
+    }
+
     public fromMarkdown() {
         return [
             {
@@ -217,8 +231,4 @@ export class RinoTableCellExtension extends TableCellExtension {
     }
 
     public toMarkdown() {}
-
-    public createExtensions() {
-        return []
-    }
 }
