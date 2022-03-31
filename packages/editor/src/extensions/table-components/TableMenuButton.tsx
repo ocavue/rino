@@ -2,7 +2,7 @@ import { Strategy } from "@floating-ui/react-dom"
 import { useCommands } from "@remirror/react"
 import React from "react"
 
-import { useContextMenuFloating } from "./use-context-menu-floating"
+import { useContextMenuFloatingV2 } from "./use-context-menu-floating"
 
 const TableCellMenuOptions: React.FC = () => {
     const commands = useCommands()
@@ -43,7 +43,19 @@ type TableMenuButtonProps = {
 }
 
 export const TableMenuButton: React.FC<TableMenuButtonProps> = ({ x, y, floating, strategy }) => {
-    const menuFloating = useContextMenuFloating()
+    const [event, setEvent] = React.useState<React.MouseEvent | null>(null)
+
+    const handleClick = (event: React.MouseEvent) => {
+        setEvent(event)
+    }
+
+    const handleClose = () => {
+        setEvent(null)
+    }
+
+    const open = Boolean(event)
+
+    const menuFloating = useContextMenuFloatingV2(handleClose, event)
 
     return (
         <>
@@ -57,26 +69,28 @@ export const TableMenuButton: React.FC<TableMenuButtonProps> = ({ x, y, floating
                     background: "lightyellow",
                     borderRadius: "4px",
                 }}
-                onClick={menuFloating.clickHandler}
+                onClick={handleClick}
             >
                 ...
             </button>
-            <div
-                ref={menuFloating.floating}
-                style={{
-                    display: menuFloating.show ? "flex" : "none",
-                    flexDirection: "column",
-                    zIndex: 10000,
-                    position: menuFloating.strategy,
-                    top: menuFloating.y ?? "",
-                    left: menuFloating.x ?? "",
-                    background: "lightgreen",
-                    borderRadius: "4px",
-                    padding: "8px",
-                }}
-            >
-                <TableCellMenuOptions />
-            </div>
+            {open ? (
+                <div
+                    ref={menuFloating.floating}
+                    style={{
+                        display: "flex",
+                        flexDirection: "column",
+                        zIndex: 10000,
+                        position: menuFloating.strategy,
+                        top: menuFloating.y ?? "",
+                        left: menuFloating.x ?? "",
+                        background: "lightgreen",
+                        borderRadius: "4px",
+                        padding: "8px",
+                    }}
+                >
+                    <TableCellMenuOptions />
+                </div>
+            ) : null}
         </>
     )
 }

@@ -4,7 +4,6 @@ import { useCommands, useRemirrorContext } from "@remirror/react-core"
 import React from "react"
 
 import { useContextMenuFloating } from "./use-context-menu-floating"
-import { useTableSelector } from "./use-table-selector"
 
 const TableRowMenuOptions: React.FC = () => {
     const commands = useCommands()
