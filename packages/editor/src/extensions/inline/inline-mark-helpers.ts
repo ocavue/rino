@@ -43,9 +43,7 @@ function parseTextBlock(schema: Schema, node: Node<Schema>, startPos: number): M
         const expectedFrom = token.start
         const expectedTo = token.end
         const expectedMarks = token.marks.map((markName) => {
-            const markType = schema.marks[markName]
-            if (!markType) throw new Error(`failed to find mark type: ${markName}`)
-            return markType.create(token.attrs)
+            return schema.marks[markName].create(token.attrs)
         })
         let needStep = true
 

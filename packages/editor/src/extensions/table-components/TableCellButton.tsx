@@ -143,7 +143,7 @@ export const TableCellButton: React.FC = () => {
         setEvent(null)
     }, [])
 
-    const cellEl = cell?.pos ? (view.nodeDOM(cell.pos) as Element) : null
+    const cellEl = cell?.pos ? (view.nodeDOM(cell.pos) as Element | null) : null
 
     return (
         <>

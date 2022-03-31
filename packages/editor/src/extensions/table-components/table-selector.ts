@@ -73,7 +73,7 @@ function createBodySelector(view: EditorView, getPos: () => number, highlight: b
     return h("div", {
         class: cx("remirror-table-body-selector remirror-table-selector", highlight && "remirror-table-selector-highlight"),
         contenteditable: "false",
-        [DATA_TABLE_SELECTOR_TYPE]: "true",
+        [DATA_TABLE_SELECTOR_TYPE]: "body",
         onmousedown: preventDefaultMouseEventHandler,
         onmouseup: preventDefaultMouseEventHandler,
         onclick: (event) => {
@@ -91,7 +91,7 @@ function createRowSelector(view: EditorView, getPos: () => number, highlight: bo
     return h("div", {
         class: cx("remirror-table-row-selector remirror-table-selector", highlight && "remirror-table-selector-highlight"),
         contenteditable: "false",
-        [DATA_TABLE_SELECTOR_TYPE]: "true",
+        [DATA_TABLE_SELECTOR_TYPE]: "row",
         onmousedown: preventDefaultMouseEventHandler,
         onmouseup: preventDefaultMouseEventHandler,
         onclick: (event) => {
@@ -109,7 +109,7 @@ function createColumnSelector(view: EditorView, getPos: () => number, highlight:
     return h("div", {
         class: cx("remirror-table-column-selector remirror-table-selector", highlight && "remirror-table-selector-highlight"),
         contenteditable: "false",
-        [DATA_TABLE_SELECTOR_TYPE]: "true",
+        [DATA_TABLE_SELECTOR_TYPE]: "column",
         onmousedown: preventDefaultMouseEventHandler,
         onmouseup: preventDefaultMouseEventHandler,
         onclick: (event) => {

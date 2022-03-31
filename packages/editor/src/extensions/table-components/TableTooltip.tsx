@@ -18,22 +18,22 @@ function getCellSelectionBoundingClientRect(
     left: number
     right: number
 } | null {
-    const cell1 = view.nodeDOM(selection.$anchorCell.pos) as HTMLElement | null
-    const cell2 = view.nodeDOM(selection.$headCell.pos) as HTMLElement | null
+    const cellA = view.nodeDOM(selection.$anchorCell.pos) as HTMLElement | null
+    const cellB = view.nodeDOM(selection.$headCell.pos) as HTMLElement | null
 
-    if (!cell1 || !cell2) return null
-    if (cell1.nodeName !== "TD" && cell1.nodeName !== "TH") return null
-    if (cell2.nodeName !== "TD" && cell2.nodeName !== "TH") return null
+    if (!cellA || !cellB) return null
+    if (cellA.nodeName !== "TD" && cellA.nodeName !== "TH") return null
+    if (cellB.nodeName !== "TD" && cellB.nodeName !== "TH") return null
 
-    const rect1 = cell1.getBoundingClientRect()
-    const rect2 = cell2.getBoundingClientRect()
+    const rectA = cellA.getBoundingClientRect()
+    const rectB = cellB.getBoundingClientRect()
 
-    const left = Math.min(rect1.left, rect2.left)
-    const top = Math.min(rect1.top, rect2.top)
-    const right = Math.max(rect1.right, rect2.right)
-    const bottom = Math.max(rect1.bottom, rect2.bottom)
-
-    return { left, top, right, bottom }
+    return {
+        top: Math.min(rectA.top, rectB.top),
+        bottom: Math.max(rectA.bottom, rectB.bottom),
+        left: Math.min(rectA.left, rectB.left),
+        right: Math.max(rectA.right, rectB.right),
+    }
 }
 
 type TableMenuButtonProps = {
@@ -71,6 +71,8 @@ export const TableMenuButton: React.FC<TableMenuButtonProps> = ({ rect, handleCl
 }
 
 function useFloatingMenuFloating({ top, bottom, left, right }: { top: number; bottom: number; left: number; right: number }) {
+    // TODO: add autoUpdate
+
     const useFloatingReturn = useFloating({
         placement: "top",
         middleware: [

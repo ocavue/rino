@@ -1,6 +1,7 @@
 type ElementEventHandlers = Partial<
     Omit<GlobalEventHandlers, "addEventListener" | "addEventListener" | "removeEventListener" | "removeEventListener">
 >
+
 type ElementAttributes = ElementEventHandlers | Record<string, string>
 
 export function createElement<TagName extends keyof HTMLElementTagNameMap>(

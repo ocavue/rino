@@ -48,6 +48,5 @@ export function useTableMenu({ handleClose, event }: UseTableMenuProps): UseFloa
         reference(virtualEl)
     }, [event, reference])
 
-
     return useFloatingReturn
 }

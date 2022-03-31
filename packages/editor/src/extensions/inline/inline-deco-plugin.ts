@@ -74,7 +74,7 @@ function findVisibleMarks(textBlock: ProsemirrorNode, cursorPos: number, textInd
 function createDecorationPlugin() {
     const pluginSpec = {
         props: {
-            decorations: (state: EditorState): DecorationSet | undefined => {
+            decorations: (state: EditorState) => {
                 if (isCellSelection(state.selection)) return
 
                 const $pos = state.selection.$anchor
