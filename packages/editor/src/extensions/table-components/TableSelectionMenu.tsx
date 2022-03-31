@@ -1,10 +1,49 @@
-import { offset, shift, useFloating } from "@floating-ui/react-dom"
+import { offset, shift, Strategy, useFloating } from "@floating-ui/react-dom"
 import { CellSelection, isCellSelection } from "@remirror/pm/tables"
 import { EditorView } from "@remirror/pm/view"
 import { useRemirrorContext } from "@remirror/react-core"
 import React, { useEffect, useMemo } from "react"
 
-import { TableMenuButton } from "./TableMenuButton"
+import { TableMenu } from "./TableMenu"
+
+type TableMenuButtonProps = {
+    x: number | null
+    y: number | null
+    floating: (node: HTMLElement | null) => void
+    strategy: Strategy
+}
+
+export const TableMenuButton: React.FC<TableMenuButtonProps> = ({ x, y, floating, strategy }) => {
+    const [event, setEvent] = React.useState<React.MouseEvent | null>(null)
+
+    const handleClick = (event: React.MouseEvent) => {
+        setEvent(event)
+    }
+
+    const handleClose = () => {
+        setEvent(null)
+    }
+
+    return (
+        <>
+            <button
+                ref={floating}
+                style={{
+                    zIndex: 10000,
+                    position: strategy,
+                    top: y ?? "",
+                    left: x ?? "",
+                    background: "lightgray",
+                    borderRadius: "4px",
+                }}
+                onClick={handleClick}
+            >
+                ...
+            </button>
+            <TableMenu handleClose={handleClose} event={event} />
+        </>
+    )
+}
 
 type BoundingClientRect = {
     bottom: number
