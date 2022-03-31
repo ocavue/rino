@@ -2,8 +2,7 @@ import { Strategy } from "@floating-ui/react-dom"
 import { useCommands } from "@remirror/react"
 import React from "react"
 
-import { TableContextMenuV2 } from "./TableContextMenu"
-import { useContextMenuFloatingV2 } from "./use-context-menu-floating"
+import { TableContextMenuV3 } from "./TableContextMenu"
 
 const TableCellMenuOptions: React.FC = () => {
     const commands = useCommands()
@@ -54,10 +53,6 @@ export const TableMenuButton: React.FC<TableMenuButtonProps> = ({ x, y, floating
         setEvent(null)
     }
 
-    const open = Boolean(event)
-
-    const menuFloating = useContextMenuFloatingV2(handleClose, event)
-
     return (
         <>
             <button
@@ -74,13 +69,7 @@ export const TableMenuButton: React.FC<TableMenuButtonProps> = ({ x, y, floating
             >
                 ...
             </button>
-            <TableContextMenuV2
-                x={menuFloating.x}
-                y={menuFloating.y}
-                strategy={menuFloating.strategy}
-                floating={menuFloating.floating}
-                open={open}
-            />
+            <TableContextMenuV3 handleClose={handleClose} event={event} />
         </>
     )
 }

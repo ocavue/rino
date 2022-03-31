@@ -2,7 +2,12 @@ import { isCellSelection } from "@remirror/pm/tables"
 import { useCommands, useRemirrorContext } from "@remirror/react-core"
 import React from "react"
 
-import { useContextMenuFloating, UseFloatingReturn } from "./use-context-menu-floating"
+import {
+    useContextMenuFloating,
+    useContextMenuFloatingV2,
+    useContextMenuFloatingV2Props,
+    UseFloatingReturn,
+} from "./use-context-menu-floating"
 
 const TableRowMenuOptions: React.FC = () => {
     const commands = useCommands()
@@ -141,14 +146,12 @@ export function TableContextMenu(): JSX.Element | null {
     )
 }
 
-type TableContextMenuV2Props = Pick<UseFloatingReturn, "floating" | "strategy" | "x" | "y"> & { open: boolean }
+type TableContextMenuV3Props = useContextMenuFloatingV2Props
 
-export const TableContextMenuV2: React.FC<TableContextMenuV2Props> = ({ floating, strategy, x, y, open }) => {
-    if (!open) {
-        return null
-    }
-
-    return (
+export const TableContextMenuV3: React.FC<TableContextMenuV3Props> = ({ event, handleClose }) => {
+    const open = Boolean(event)
+    const { floating, strategy, x, y } = useContextMenuFloatingV2({ event, handleClose })
+    return open ? (
         <div
             ref={floating}
             style={{
@@ -167,5 +170,5 @@ export const TableContextMenuV2: React.FC<TableContextMenuV2Props> = ({ floating
         >
             <TableMenuOptions />
         </div>
-    )
+    ) : null
 }

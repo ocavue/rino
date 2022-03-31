@@ -63,7 +63,12 @@ export function useContextMenuFloating(): UseContextMenuFloatingReturn {
     return { ...useFloatingReturn, show, clickHandler }
 }
 
-export function useContextMenuFloatingV2(handleClose: () => void, event: MouseEvent | React.MouseEvent | null): UseFloatingReturn {
+export type useContextMenuFloatingV2Props = {
+    handleClose: () => void
+    event: MouseEvent | React.MouseEvent | null
+}
+
+export function useContextMenuFloatingV2({ handleClose, event }: useContextMenuFloatingV2Props): UseFloatingReturn {
     const useFloatingReturn = useFloating({
         placement: "right-start",
         middleware: [
