@@ -63,10 +63,10 @@ export const TableMenu: React.FC<TableMenuProps> = ({ event, handleClose }) => {
                 top: y ?? "",
                 left: x ?? "",
 
-                padding: "8px",
                 display: "flex",
                 flexDirection: "column",
                 maxWidth: "calc(100vw - 16px)",
+                padding: "8px",
                 borderRadius: "4px",
                 borderWidth: "1px",
                 borderStyle: "solid",

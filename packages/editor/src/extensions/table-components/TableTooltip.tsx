@@ -55,10 +55,13 @@ export const TableMenuButton: React.FC<TableMenuButtonProps> = ({ rect, handleCl
                 zIndex: 11,
                 width: "24px",
                 height: "24px",
-                padding: "8px",
                 cursor: "pointer",
+                padding: "8px",
                 borderRadius: "4px",
-                backgroundColor: "#dcdcdc",
+                borderWidth: "1px",
+                borderStyle: "solid",
+                borderColor: "rgba(0, 0, 0, 0.1)",
+                background: "#fff",
             }}
             onClick={handleClick}
         >
