@@ -5,7 +5,7 @@ import { isCellSelection, TableMap } from "@remirror/pm/tables"
 import { Decoration, DecorationSet, EditorView, WidgetDecorationSpec } from "@remirror/pm/view"
 
 import { DATA_TABLE_SELECTOR_TYPE } from "./table-const"
-import { selectColumn, selectRow, selectTable } from "./table-operation"
+import { selectColumn, selectRow, selectTable } from "./table-helpers"
 import {
     createElement as h,
     findTable,
