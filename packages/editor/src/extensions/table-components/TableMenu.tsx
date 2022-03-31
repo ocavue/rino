@@ -2,6 +2,7 @@ import { CellSelection, isCellSelection } from "@remirror/pm/tables"
 import { useCommands, useEditorView } from "@remirror/react-core"
 import React from "react"
 
+import { getCellSelectionType } from "./table-utils"
 import { useTableMenu, UseTableMenuProps } from "./use-table-menu"
 
 const TableMenuOption: React.FC<{ text: string; onClick: () => void }> = ({ text, onClick }) => {
@@ -13,36 +14,30 @@ const TableMenuOption: React.FC<{ text: string; onClick: () => void }> = ({ text
 }
 
 const TableMenuOptions: React.FC<{ selection: CellSelection }> = ({ selection }) => {
-    const isColSelection: boolean = selection.isColSelection()
-    const isRowSelection: boolean = selection.isRowSelection()
-    const isTableSelection: boolean = isColSelection && isRowSelection
-    const isCellsSelection: boolean = !isColSelection && !isRowSelection
-
+    const type = getCellSelectionType(selection)
     const commands = useCommands()
 
     return (
         <>
-            {isRowSelection || isCellsSelection ? (
+            {type === "row" || type === "cell" ? (
                 <TableMenuOption text="Insert Above" onClick={() => commands.addTableRowBefore()} />
             ) : null}
 
-            {isRowSelection || isCellsSelection ? (
-                <TableMenuOption text="Insert Below" onClick={() => commands.addTableRowAfter()} />
-            ) : null}
+            {type === "row" || type === "cell" ? <TableMenuOption text="Insert Below" onClick={() => commands.addTableRowAfter()} /> : null}
 
-            {isColSelection || isCellsSelection ? (
+            {type === "column" || type === "cell" ? (
                 <TableMenuOption text="Insert Left" onClick={() => commands.addTableColumnBefore()} />
             ) : null}
 
-            {isColSelection || isCellsSelection ? (
+            {type === "column" || type === "cell" ? (
                 <TableMenuOption text="Insert Right" onClick={() => commands.addTableColumnAfter()} />
             ) : null}
 
-            {isTableSelection ? <TableMenuOption text="Delete" onClick={() => commands.deleteTable()} /> : null}
+            {type === "table" ? <TableMenuOption text="Delete" onClick={() => commands.deleteTable()} /> : null}
 
-            {isRowSelection ? <TableMenuOption text="Delete" onClick={() => commands.deleteTableRow()} /> : null}
+            {type === "row" ? <TableMenuOption text="Delete" onClick={() => commands.deleteTableRow()} /> : null}
 
-            {isColSelection ? <TableMenuOption text="Delete" onClick={() => commands.deleteTableColumn()} /> : null}
+            {type === "column" ? <TableMenuOption text="Delete" onClick={() => commands.deleteTableColumn()} /> : null}
 
             <TableMenuOption text="Highlight" onClick={() => commands.setTableCellBackground("yellow")} />
 
