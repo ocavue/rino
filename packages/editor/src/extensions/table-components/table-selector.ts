@@ -54,27 +54,6 @@ css`
             left: -17px;
         }
 
-        /* First implementation  */
-        /* .remirror-table-row-selector {
-                position: absolute;
-                top: 0;
-                bottom: 0;
-                left: 0;
-                width: 0;
-
-                &::after {
-                    background-color: red;
-                    cursor: pointer;
-                    position: absolute;
-                    width: 16px;
-                    top: 0;
-                    bottom: 0;
-                    left: -24px;
-                    display: block;
-                    content: "";
-                }
-            } */
-
         .remirror-table-row-selector {
             position: absolute;
             width: 16px;
@@ -83,7 +62,6 @@ css`
             left: -17px;
         }
 
-        /* Second implementation */
         .remirror-table-column-selector {
             position: absolute;
             height: 16px;
