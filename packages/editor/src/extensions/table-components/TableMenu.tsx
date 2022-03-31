@@ -52,7 +52,8 @@ export const TableMenu: React.FC<TableMenuProps> = ({ event, handleClose }) => {
     const selection = useEditorView().state.selection
 
     const { floating, strategy, x, y } = useTableMenu({ event, handleClose })
-    const open = Boolean(event) ?? x ?? y
+
+    const open = Boolean(event)
 
     return open && isCellSelection(selection) ? (
         <div
@@ -64,6 +65,7 @@ export const TableMenu: React.FC<TableMenuProps> = ({ event, handleClose }) => {
                 left: x ?? "",
 
                 display: "flex",
+                opacity: typeof x === "number" && typeof y === "number" ? 1 : 0, // TODO: ugly hack
                 flexDirection: "column",
                 maxWidth: "calc(100vw - 16px)",
                 padding: "8px",
