@@ -1,7 +1,6 @@
 import { flip, VirtualElement } from "@floating-ui/dom"
 import { autoUpdate, hide, offset, shift, useFloating } from "@floating-ui/react-dom"
-import { CellSelection, isCellSelection } from "@remirror/pm/tables"
-import { EditorView } from "@remirror/pm/view"
+import { isCellSelection } from "@remirror/pm/tables"
 import { More2LineIcon } from "@remirror/react-components/all-icons"
 import { useRemirrorContext } from "@remirror/react-core"
 import React, { useCallback, useEffect, useState } from "react"
