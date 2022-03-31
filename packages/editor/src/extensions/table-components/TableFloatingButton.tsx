@@ -122,6 +122,9 @@ function TableSelectionMenuBody({ rect }: { rect: BoundingClientRect }): JSX.Ele
     return <TableMenuButton x={x} y={y} floating={floating} strategy={strategy} />
 }
 
+/**
+ * A button that floats above the selected table cells. When clicked, it shows a menu to operate on the table.
+ */
 export const TableFloatingButton: React.FC = () => {
     const { view } = useRemirrorContext({ autoUpdate: true })
     if (!view) {
