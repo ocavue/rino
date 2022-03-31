@@ -72,7 +72,7 @@ export const TableMenuButton: React.FC<TableMenuButtonProps> = ({ rect, handleCl
 }
 
 function useFloatingMenuFloating(_rect: BoundingClientRect) {
-    const rectJSON = JSON.stringify(_rect)
+    const rectJSON = JSON.stringify(_rect) // TODO: ugly hack
     const rect: BoundingClientRect = useMemo(() => JSON.parse(rectJSON), [rectJSON])
 
     const useFloatingReturn = useFloating({
