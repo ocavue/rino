@@ -11,7 +11,6 @@ import { TextSelection } from "prosemirror-state"
 import { NodeSerializerOptions, ParserRuleType } from "../../transform"
 import { buildBlockEnterKeymapBindings } from "../../utils"
 import { TableSelectorExtension } from "../table-components"
-import { createTableHeigthlightPlugin } from "./table-plugin"
 
 enum TABLE_ALIGEN {
     DEFAULT = 1,
@@ -203,10 +202,6 @@ export class RinoTableCellExtension extends TableCellExtension {
             ...super.createNodeSpec(extra, override),
             content: "inline*",
         }
-    }
-
-    createPlugin() {
-        return createTableHeigthlightPlugin()
     }
 
     createExtensions() {
