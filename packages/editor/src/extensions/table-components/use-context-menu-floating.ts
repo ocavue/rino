@@ -4,7 +4,7 @@ import React, { useCallback, useEffect } from "react"
 
 import { useOnClickOutside } from "./use-on-click-outside"
 
-type UseFloatingReturn = ReturnType<typeof useFloating>
+export type UseFloatingReturn = ReturnType<typeof useFloating>
 
 export type UseContextMenuFloatingReturn = UseFloatingReturn & {
     show: boolean

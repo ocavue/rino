@@ -1,9 +1,8 @@
-import { Selection } from "@remirror/core"
 import { isCellSelection } from "@remirror/pm/tables"
 import { useCommands, useRemirrorContext } from "@remirror/react-core"
 import React from "react"
 
-import { useContextMenuFloating } from "./use-context-menu-floating"
+import { useContextMenuFloating, UseFloatingReturn } from "./use-context-menu-floating"
 
 const TableRowMenuOptions: React.FC = () => {
     const commands = useCommands()
@@ -95,9 +94,12 @@ const TableBodyMenuOptions: React.FC = () => {
     )
 }
 
-const TableMenuOptions: React.FC<{ selection: Selection }> = ({ selection }) => {
+const TableMenuOptions: React.FC = () => {
+    const { view } = useRemirrorContext({ autoUpdate: true })
+    const selection = view.state.selection
+
     if (!isCellSelection(selection)) {
-        return null
+        return <p>No CELL Selection</p>
     }
 
     const isColSelection = selection.isColSelection()
@@ -115,9 +117,6 @@ const TableMenuOptions: React.FC<{ selection: Selection }> = ({ selection }) => 
 }
 
 export function TableContextMenu(): JSX.Element | null {
-    const { view } = useRemirrorContext({ autoUpdate: true })
-    const selection = view.state.selection
-
     const { x, y, floating, strategy, show } = useContextMenuFloating()
 
     return (
@@ -137,7 +136,36 @@ export function TableContextMenu(): JSX.Element | null {
                 borderRadius: "4px",
             }}
         >
-            <TableMenuOptions selection={selection} />
+            <TableMenuOptions />
+        </div>
+    )
+}
+
+type TableContextMenuV2Props = Pick<UseFloatingReturn, "floating" | "strategy" | "x" | "y"> & { open: boolean }
+
+export const TableContextMenuV2: React.FC<TableContextMenuV2Props> = ({ floating, strategy, x, y, open }) => {
+    if (!open) {
+        return null
+    }
+
+    return (
+        <div
+            ref={floating}
+            style={{
+                zIndex: 10000,
+                position: strategy,
+                top: y ?? "",
+                left: x ?? "",
+                padding: "8px",
+                background: "lightcoral",
+                display: "flex",
+                flexDirection: "column",
+                width: "240px",
+                maxWidth: "calc(100vw - 16px)",
+                borderRadius: "4px",
+            }}
+        >
+            <TableMenuOptions />
         </div>
     )
 }
