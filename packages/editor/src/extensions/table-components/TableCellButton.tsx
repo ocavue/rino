@@ -1,5 +1,4 @@
-import { VirtualElement } from "@floating-ui/dom"
-import { autoUpdate, useFloating } from "@floating-ui/react-dom"
+import { autoUpdate, useFloating, VirtualElement } from "@floating-ui/react-dom"
 import { ProsemirrorNode } from "@remirror/pm"
 import { useEditorView, useHover } from "@remirror/react"
 import { More2LineIcon } from "@remirror/react-components/all-icons"

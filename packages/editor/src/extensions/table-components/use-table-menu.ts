@@ -1,5 +1,4 @@
-import type { VirtualElement } from "@floating-ui/dom"
-import { shift, useFloating } from "@floating-ui/react-dom"
+import { shift, useFloating, VirtualElement } from "@floating-ui/react-dom"
 import React, { useEffect } from "react"
 
 import { useOnClickOutside } from "./use-on-click-outside"
