@@ -331,7 +331,7 @@ importers:
       '@mui/system': ^5.5.3
       '@next/bundle-analyzer': ^12.1.4
       '@testing-library/jest-dom': ^5.16.3
-      '@testing-library/react': ^12.1.4
+      '@testing-library/react': ^13.0.0
       '@types/react': ^17.0.43
       '@types/react-dom': ^17.0.14
       lodash-es: ^4.17.21
@@ -351,7 +351,7 @@ importers:
       '@mui/system': 5.5.3_b000a94f0ef273a9b328edd628110a5b
       '@next/bundle-analyzer': 12.1.4
       '@testing-library/jest-dom': 5.16.3
-      '@testing-library/react': 12.1.4_react-dom@18.0.0+react@18.0.0
+      '@testing-library/react': 13.0.0_react-dom@18.0.0+react@18.0.0
       '@types/react': 17.0.43
       '@types/react-dom': 17.0.14
       lodash-es: 4.17.21
@@ -3438,12 +3438,12 @@ packages:
       redent: 3.0.0
     dev: true
 
-  /@testing-library/react/12.1.4_react-dom@18.0.0+react@18.0.0:
-    resolution: {integrity: sha512-jiPKOm7vyUw311Hn/HlNQ9P8/lHNtArAx0PisXyFixDDvfl8DbD6EUdbshK5eqauvBSvzZd19itqQ9j3nferJA==}
+  /@testing-library/react/13.0.0_react-dom@18.0.0+react@18.0.0:
+    resolution: {integrity: sha512-p0lYA1M7uoEmk2LnCbZLGmHJHyH59sAaZVXChTXlyhV/PRW9LoIh4mdf7tiXsO8BoNG+vN8UnFJff1hbZeXv+w==}
     engines: {node: '>=12'}
     peerDependencies:
-      react: '*'
-      react-dom: '*'
+      react: ^18.0.0
+      react-dom: ^18.0.0
     dependencies:
       '@babel/runtime': 7.17.8
       '@testing-library/dom': 8.12.0
@@ -4327,6 +4327,7 @@ packages:
   /astral-regex/2.0.0:
     resolution: {integrity: sha512-Z7tMw1ytTXt5jqMcOP+OQteU1VuNK9Y02uuJtKQ1Sv69jXQKKg5cibLwGJow8yzZP+eAc18EmLGPal0bp36rvQ==}
     engines: {node: '>=8'}
+    requiresBuild: true
     dev: true
 
   /async-exit-hook/2.0.1:
@@ -8537,6 +8538,7 @@ packages:
 
   /json-schema-traverse/0.4.1:
     resolution: {integrity: sha512-xbbCH5dCYU5T8LcEhhuh7HJ88HXuW3qsI3Y0zOZFKfZEHcpWiHU/Jxzk629Brsab/mMiHQti9wMP+845RPe3Vg==}
+    requiresBuild: true
     dev: true
 
   /json-schema-traverse/1.0.0:
@@ -8570,6 +8572,7 @@ packages:
       chalk: 2.4.2
       diff-match-patch: 1.0.5
     dev: false
+    bundledDependencies: []
 
   /jsonfile/4.0.0:
     resolution: {integrity: sha1-h3Gq4HmbZAdrdmQPygWPnBDjPss=}
@@ -11283,6 +11286,7 @@ packages:
   /slice-ansi/3.0.0:
     resolution: {integrity: sha512-pSyv7bSTC7ig9Dcgbw9AuRNUb5k5V6oDudjZoMBSr13qpLBG7tB+zgCkARjq7xIUgdz5P1Qe8u+rSGdouOOIyQ==}
     engines: {node: '>=8'}
+    requiresBuild: true
     dependencies:
       ansi-styles: 4.3.0
       astral-regex: 2.0.0
