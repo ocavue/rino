@@ -1059,7 +1059,7 @@ packages:
       '@codemirror/lang-xml': 0.19.2
       '@codemirror/language': 0.19.10
       '@codemirror/legacy-modes': 0.19.1
-      '@codemirror/stream-parser': 0.19.8
+      '@codemirror/stream-parser': 0.19.9
     dev: false
 
   /@codemirror/language/0.19.10:
@@ -1075,7 +1075,7 @@ packages:
   /@codemirror/legacy-modes/0.19.1:
     resolution: {integrity: sha512-vYPLsD/ON+3SXhlGj9Qb3fpFNNU3Ya/AtDiv/g3OyqVzhh5vs5rAnOvk8xopGWRwppdhlNPD9VyXjiOmZUQtmQ==}
     dependencies:
-      '@codemirror/stream-parser': 0.19.8
+      '@codemirror/stream-parser': 0.19.9
     dev: false
 
   /@codemirror/lint/0.19.6:
@@ -1137,8 +1137,8 @@ packages:
       '@codemirror/text': 0.19.6
     dev: false
 
-  /@codemirror/stream-parser/0.19.8:
-    resolution: {integrity: sha512-doBqJhDc+r+Fdy2kclU3RpfZIPwk25b/eQmKBT12oZOm3Js0/dS5ZMeQFq/fB5R8Osn7xZr9WZILPO0gM1tpyQ==}
+  /@codemirror/stream-parser/0.19.9:
+    resolution: {integrity: sha512-WTmkEFSRCetpk8xIOvV2yyXdZs3DgYckM0IP7eFi4ewlxWnJO/H4BeJZLs4wQaydWsAqTQoDyIwNH1BCzK5LUQ==}
     dependencies:
       '@codemirror/highlight': 0.19.8
       '@codemirror/language': 0.19.10
@@ -1388,7 +1388,7 @@ packages:
       '@floating-ui/dom': 0.4.2
       react: 18.0.0
       react-dom: 18.0.0_react@18.0.0
-      use-isomorphic-layout-effect: 1.1.1_00a11a054056e3746b551a83b9229751
+      use-isomorphic-layout-effect: 1.1.2_00a11a054056e3746b551a83b9229751
     transitivePeerDependencies:
       - '@types/react'
     dev: false
@@ -2910,7 +2910,7 @@ packages:
       reakit: 1.3.11_react-dom@18.0.0+react@18.0.0
       reakit-system-palette: 0.14.2_6ce68794d8a4199f38712f8527fc368a
       reakit-utils: 0.15.2_react-dom@18.0.0+react@18.0.0
-      use-isomorphic-layout-effect: 1.1.1_00a11a054056e3746b551a83b9229751
+      use-isomorphic-layout-effect: 1.1.2_00a11a054056e3746b551a83b9229751
       use-previous: 1.1.0_00a11a054056e3746b551a83b9229751
     transitivePeerDependencies:
       - '@types/node'
@@ -2954,7 +2954,7 @@ packages:
       react-dom: 18.0.0_react@18.0.0
       resize-observer-polyfill: 1.5.1
       tiny-warning: 1.0.3
-      use-isomorphic-layout-effect: 1.1.1_00a11a054056e3746b551a83b9229751
+      use-isomorphic-layout-effect: 1.1.2_00a11a054056e3746b551a83b9229751
       use-previous: 1.1.0_00a11a054056e3746b551a83b9229751
     transitivePeerDependencies:
       - '@types/node'
@@ -2997,7 +2997,7 @@ packages:
       multishift: 1.0.6_5e0a66aa2ca55ccd2f677c72ff834cd9
       react: 18.0.0
       react-dom: 18.0.0_react@18.0.0
-      use-isomorphic-layout-effect: 1.1.1_00a11a054056e3746b551a83b9229751
+      use-isomorphic-layout-effect: 1.1.2_00a11a054056e3746b551a83b9229751
       use-previous: 1.1.0_00a11a054056e3746b551a83b9229751
     transitivePeerDependencies:
       - '@types/node'
@@ -4076,7 +4076,7 @@ packages:
     resolution: {integrity: sha512-RZNwNclF7+MS/8bDg70amg32dyeZGZxiDuQmZxKLAlQjr3jGyLx+4Kkk58UO7D2QdgFIQCovuSuZESne6RG6XQ==}
     engines: {node: '>= 6.0.0'}
     dependencies:
-      debug: 4.3.3
+      debug: 4.3.4
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -4327,7 +4327,6 @@ packages:
   /astral-regex/2.0.0:
     resolution: {integrity: sha512-Z7tMw1ytTXt5jqMcOP+OQteU1VuNK9Y02uuJtKQ1Sv69jXQKKg5cibLwGJow8yzZP+eAc18EmLGPal0bp36rvQ==}
     engines: {node: '>=8'}
-    requiresBuild: true
     dev: true
 
   /async-exit-hook/2.0.1:
@@ -4582,8 +4581,8 @@ packages:
     engines: {node: ^6 || ^7 || ^8 || ^9 || ^10 || ^11 || ^12 || >=13.7}
     hasBin: true
     dependencies:
-      caniuse-lite: 1.0.30001322
-      electron-to-chromium: 1.4.99
+      caniuse-lite: 1.0.30001323
+      electron-to-chromium: 1.4.103
       escalade: 3.1.1
       node-releases: 2.0.2
       picocolors: 1.0.0
@@ -4747,8 +4746,8 @@ packages:
     engines: {node: '>=10'}
     dev: true
 
-  /caniuse-lite/1.0.30001322:
-    resolution: {integrity: sha512-neRmrmIrCGuMnxGSoh+x7zYtQFFgnSY2jaomjU56sCkTA6JINqQrxutF459JpWcWRajvoyn95sOXq4Pqrnyjew==}
+  /caniuse-lite/1.0.30001323:
+    resolution: {integrity: sha512-e4BF2RlCVELKx8+RmklSEIVub1TWrmdhvA5kEUueummz1XyySW0DVk+3x9HyhU9MuWTa2BhqLgEuEmUwASAdCA==}
     dev: true
 
   /case-anything/1.1.5:
@@ -5074,8 +5073,8 @@ packages:
       readable-stream: 2.3.7
       typedarray: 0.0.6
 
-  /conf/10.1.1:
-    resolution: {integrity: sha512-z2civwq/k8TMYtcn3SVP0Peso4otIWnHtcTuHhQ0zDZDdP4NTxqEc8owfkz4zBsdMYdn/LFcE+ZhbCeqkhtq3Q==}
+  /conf/10.1.2:
+    resolution: {integrity: sha512-o9Fv1Mv+6A0JpoayQ8JleNp3hhkbOJP/Re/Q+QqxMPHPkABVsRjQGWZn9A5GcqLiTNC6d89p2PB5ZhHVDSMwyg==}
     engines: {node: '>=12'}
     dependencies:
       ajv: 8.11.0
@@ -5307,7 +5306,7 @@ packages:
     resolution: {integrity: sha512-wPpOYtnsVontu2mODhA19JrqWxNsfdatRKd64kmpRbQgh1KtItko5sTnEpPdpSaJszTOhEMlF/RPz28qj4HqhQ==}
     dependencies:
       boolbase: 1.0.0
-      css-what: 6.0.1
+      css-what: 6.1.0
       domhandler: 4.3.1
       domutils: 2.8.0
       nth-check: 2.0.1
@@ -5320,8 +5319,8 @@ packages:
       mdn-data: 2.0.14
       source-map: 0.6.1
 
-  /css-what/6.0.1:
-    resolution: {integrity: sha512-z93ZGFLNc6yaoXAmVhqoSIb+BduplteCt1fepvwhBUQK6MNE4g6fgjpuZKJKp0esUe+vXWlIkwZZjNWoOKw0ZA==}
+  /css-what/6.1.0:
+    resolution: {integrity: sha512-HTUrgRJ7r4dsZKU6GjmpfRK1O76h97Z8MfS1G0FozR+oF2kG6Vfe8JE6zwrkbxigziPHinCJ+gCPjA9EaBDtRw==}
     engines: {node: '>= 6'}
     dev: true
 
@@ -5818,12 +5817,12 @@ packages:
   /electron-store/8.0.1:
     resolution: {integrity: sha512-ZyLvNywiqSpbwC/pp89O/AycVWY/UJIkmtyzF2Bd0Nm/rLmcFc0NTGuLdg6+LE8mS8qsiK5JMoe4PnrecLHH5w==}
     dependencies:
-      conf: 10.1.1
+      conf: 10.1.2
       type-fest: 1.4.0
     dev: true
 
-  /electron-to-chromium/1.4.99:
-    resolution: {integrity: sha512-YXMzbvlo6pW12KWw0bj6cIGCJi1Moy8PLCuuzgRzg6WYIcHILK3szU+HHnHFx2b373qRv+cfmHhbmRbatyAbPA==}
+  /electron-to-chromium/1.4.103:
+    resolution: {integrity: sha512-c/uKWR1Z/W30Wy/sx3dkZoj4BijbXX85QKWu9jJfjho3LBAXNEGAEW3oWiGb+dotA6C6BzCTxL2/aLes7jlUeg==}
     dev: true
 
   /electron-updater/4.6.5:
@@ -6285,7 +6284,7 @@ packages:
       doctrine: 2.1.0
       eslint: 8.12.0
       estraverse: 5.3.0
-      jsx-ast-utils: 3.2.1
+      jsx-ast-utils: 3.2.2
       minimatch: 3.1.2
       object.entries: 1.1.5
       object.fromentries: 2.0.5
@@ -8538,7 +8537,6 @@ packages:
 
   /json-schema-traverse/0.4.1:
     resolution: {integrity: sha512-xbbCH5dCYU5T8LcEhhuh7HJ88HXuW3qsI3Y0zOZFKfZEHcpWiHU/Jxzk629Brsab/mMiHQti9wMP+845RPe3Vg==}
-    requiresBuild: true
     dev: true
 
   /json-schema-traverse/1.0.0:
@@ -8572,7 +8570,6 @@ packages:
       chalk: 2.4.2
       diff-match-patch: 1.0.5
     dev: false
-    bundledDependencies: []
 
   /jsonfile/4.0.0:
     resolution: {integrity: sha1-h3Gq4HmbZAdrdmQPygWPnBDjPss=}
@@ -8588,8 +8585,8 @@ packages:
       graceful-fs: 4.2.9
     dev: true
 
-  /jsx-ast-utils/3.2.1:
-    resolution: {integrity: sha512-uP5vu8xfy2F9A6LGC22KO7e2/vGTS1MhP+18f++ZNlf0Ohaxbc9nIEwHAsejlJKyzfZzU5UIhe5ItYkitcZnZA==}
+  /jsx-ast-utils/3.2.2:
+    resolution: {integrity: sha512-HDAyJ4MNQBboGpUnHAVUNJs6X0lh058s6FuixsFGP7MgJYpD6Vasd6nzSG5iIfXu1zAYlHJ/zsOKNlrenTUBnw==}
     engines: {node: '>=4.0'}
     dependencies:
       array-includes: 3.1.4
@@ -9440,7 +9437,7 @@ packages:
         optional: true
     dependencies:
       '@next/env': 12.1.4
-      caniuse-lite: 1.0.30001322
+      caniuse-lite: 1.0.30001323
       postcss: 8.4.5
       react: 18.0.0
       react-dom: 18.0.0_react@18.0.0
@@ -11286,7 +11283,6 @@ packages:
   /slice-ansi/3.0.0:
     resolution: {integrity: sha512-pSyv7bSTC7ig9Dcgbw9AuRNUb5k5V6oDudjZoMBSr13qpLBG7tB+zgCkARjq7xIUgdz5P1Qe8u+rSGdouOOIyQ==}
     engines: {node: '>=8'}
-    requiresBuild: true
     dependencies:
       ansi-styles: 4.3.0
       astral-regex: 2.0.0
@@ -12239,11 +12235,11 @@ packages:
       prepend-http: 2.0.0
     dev: true
 
-  /use-isomorphic-layout-effect/1.1.1_00a11a054056e3746b551a83b9229751:
-    resolution: {integrity: sha512-L7Evj8FGcwo/wpbv/qvSfrkHFtOpCzvM5yl2KVyDJoylVuSvzphiiasmjgQPttIGBAy2WKiBNR98q8w7PiNgKQ==}
+  /use-isomorphic-layout-effect/1.1.2_00a11a054056e3746b551a83b9229751:
+    resolution: {integrity: sha512-49L8yCO3iGT/ZF9QttjwLF/ZD9Iwto5LnH5LmEdk/6cFmXddqi2ulF0edxTwjj+7mqvpVVGQWvbXZdn32wRSHA==}
     peerDependencies:
       '@types/react': '*'
-      react: ^16.8.0 || ^17.0.0
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0
     peerDependenciesMeta:
       '@types/react':
         optional: true
@@ -12258,7 +12254,7 @@ packages:
       react: ^16.8.0 || ^17.0.0
     dependencies:
       react: 18.0.0
-      use-isomorphic-layout-effect: 1.1.1_00a11a054056e3746b551a83b9229751
+      use-isomorphic-layout-effect: 1.1.2_00a11a054056e3746b551a83b9229751
     transitivePeerDependencies:
       - '@types/react'
     dev: false
