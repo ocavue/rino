@@ -1,4 +1,4 @@
-import { ApplySchemaAttributes, KeyBindings, NodeSpecOverride } from "@remirror/core"
+import { ApplySchemaAttributes, CommandFunction, KeyBindings, NodeSpecOverride } from "@remirror/core"
 import {
     TableCellExtension,
     TableExtension,
@@ -11,6 +11,7 @@ import { TextSelection } from "prosemirror-state"
 import { NodeSerializerOptions, ParserRuleType } from "../../transform"
 import { buildBlockEnterKeymapBindings } from "../../utils"
 import { TableSelectorExtension } from "../table-components"
+import { selectCell } from "../table-components/table-helpers"
 
 enum TABLE_ALIGEN {
     DEFAULT = 1,
@@ -206,6 +207,20 @@ export class RinoTableCellExtension extends TableCellExtension {
 
     createExtensions() {
         return [new TableSelectorExtension()]
+    }
+
+    createCommands() {
+        return {
+            selectTableCell: ({ pos }: { pos: number }): CommandFunction => {
+                return ({ tr, dispatch }): boolean => {
+                    if (selectCell(tr, pos)) {
+                        dispatch?.(tr)
+                        return true
+                    }
+                    return false
+                }
+            },
+        }
     }
 
     public fromMarkdown() {

@@ -94,6 +94,10 @@ export function getCellSelectionRect(selection: CellSelection): Rect {
     return map.rectBetween(selection.$anchorCell.pos - start, selection.$headCell.pos - start)
 }
 
+/**
+ * Count the number of cells in the given cell selection. Noting that this
+ * may be inaccurate if the selection contains merged cells.
+ */
 export function countCellSelection(selection: CellSelection): number {
     const rect = getCellSelectionRect(selection)
     return (rect.right - rect.left) * (rect.bottom - rect.top)

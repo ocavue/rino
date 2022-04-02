@@ -1,44 +1,11 @@
 import { autoUpdate, useFloating, VirtualElement } from "@floating-ui/react-dom"
-import { ProsemirrorNode } from "@remirror/pm"
-import { useEditorView, useHover } from "@remirror/react"
+import { useCommands } from "@remirror/react"
 import { More2LineIcon } from "@remirror/react-components/all-icons"
 import React, { useCallback, useEffect } from "react"
 
-import { selectCell } from "./table-helpers"
-import { isCellType } from "./table-utils"
+import type { RinoTableCellExtension } from "../table/table-extension"
 import { TableMenu } from "./TableMenu"
-
-/**
- * Returns the hovered table cell.
- */
-function useHoeveredCell(): { dom: HTMLElement; pos: number; node: ProsemirrorNode } | null {
-    const view = useEditorView()
-    const [cell, setCell] = React.useState<{ dom: HTMLElement; pos: number; node: ProsemirrorNode } | null>(null)
-
-    useHover((props) => {
-        if (!props.hovering) {
-            return
-        }
-
-        for (const { node, pos } of props.nodes) {
-            if (isCellType(node.type)) {
-                const dom = view.nodeDOM(pos)
-                if (dom) {
-                    setCell({
-                        dom: dom as HTMLElement,
-                        pos,
-                        node,
-                    })
-                    return
-                }
-            }
-        }
-
-        setCell(null)
-    })
-
-    return cell
-}
+import { useHoveringCellDom } from "./use-hovering-cell-dom"
 
 /**
  * Returns the position of the cell menu button.
@@ -87,7 +54,7 @@ function useButtonFloating(cellEl: Element | null) {
 }
 
 type TableCellButtonComponentProps = {
-    cellEl: Element | null
+    cellEl: HTMLElement | null
     handleClick: (event: React.MouseEvent) => void
 }
 
@@ -120,34 +87,30 @@ const TableCellButtonComponent: React.FC<TableCellButtonComponentProps> = ({ cel
  * A button that floats above the hovered table cell. When clicked, it shows a menu to operate on the table.
  */
 export const TableCellButton: React.FC = () => {
-    const cell = useHoeveredCell()
-    const view = useEditorView()
+    const cell = useHoveringCellDom()
+    const pos = cell?.pos
 
-    const [event, setEvent] = React.useState<React.MouseEvent | null>(null)
+    const [coords, setCoords] = React.useState<{ x: number; y: number } | null>(null)
+    const { selectTableCell } = useCommands<RinoTableCellExtension>()
 
     const handleClick = useCallback(
         (event: React.MouseEvent) => {
-            if (cell?.pos) {
-                // TODO: move it to a command
-                const tr = view.state.tr
-                selectCell(tr, cell.pos)
-                view.dispatch(tr)
+            if (pos) {
+                selectTableCell({ pos })
+                setCoords({ x: event.clientX, y: event.clientY })
             }
-            setEvent(event)
         },
-        [cell?.pos, view],
+        [pos, selectTableCell],
     )
 
     const handleClose = useCallback(() => {
-        setEvent(null)
+        setCoords(null)
     }, [])
-
-    const cellEl = cell?.pos ? (view.nodeDOM(cell.pos) as Element | null) : null
 
     return (
         <>
-            <TableCellButtonComponent cellEl={cellEl} handleClick={handleClick} />
-            <TableMenu handleClose={handleClose} event={event} />
+            <TableCellButtonComponent cellEl={cell?.dom ?? null} handleClick={handleClick} />
+            <TableMenu handleClose={handleClose} coords={coords} />
         </>
     )
 }
