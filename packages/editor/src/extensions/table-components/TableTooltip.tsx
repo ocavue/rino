@@ -1,12 +1,9 @@
 import { autoUpdate, flip, hide, offset, shift, useFloating, VirtualElement } from "@floating-ui/react-dom"
-import { isCellSelection } from "@remirror/pm/tables"
 import { More2LineIcon } from "@remirror/react-components/all-icons"
-import { useRemirrorContext } from "@remirror/react-core"
 import React, { useCallback, useEffect, useState } from "react"
 
-import { isTableCellElement } from "./dom-utils"
-import { countCellSelection } from "./table-utils"
 import { TableMenu } from "./TableMenu"
+import { useCellSelectionDom } from "./use-cell-selection-dom"
 
 function calcCellSelectionBoundingClientRect(
     cellA: Element,
@@ -113,42 +110,27 @@ function useFloatingMenuFloating({ anchorCellEl: cellA, headCellEl: cellB }: { a
  * A button that floats above the selected table cells. When clicked, it shows a menu to operate on the table.
  */
 export const TableTooltip: React.FC = () => {
-    const [event, setEvent] = useState<React.MouseEvent | null>(null)
+    const [coords, setCoords] = useState<{ x: number; y: number } | null>(null)
 
     const handleClick = useCallback((event: React.MouseEvent) => {
-        setEvent(event)
+        setCoords({ x: event.clientX, y: event.clientY })
     }, [])
 
     const handleClose = useCallback(() => {
-        setEvent(null)
+        setCoords(null)
     }, [])
 
-    const { view } = useRemirrorContext({ autoUpdate: true })
-    if (!view) {
-        return null
-    }
+    const cells = useCellSelectionDom()
 
-    const selection = view.state.selection
-
-    if (!isCellSelection(selection)) {
-        return null
-    }
-
-    const anchorCellEl = view.nodeDOM(selection.$anchorCell.pos) as HTMLElement | null
-    const headCellEl = view.nodeDOM(selection.$headCell.pos) as HTMLElement | null
-
-    if (!isTableCellElement(anchorCellEl) || !isTableCellElement(headCellEl)) {
-        return null
-    }
-
-    if (countCellSelection(selection) <= 1) {
+    // If there is only one cell selected, we don't show the tooltip.
+    if (!cells || cells.head === cells.anchor) {
         return null
     }
 
     return (
         <>
-            <TableMenuButton handleClick={handleClick} anchorCellEl={anchorCellEl} headCellEl={headCellEl} />
-            <TableMenu event={event} handleClose={handleClose} />
+            <TableMenuButton handleClick={handleClick} anchorCellEl={cells.anchor} headCellEl={cells.head} />
+            <TableMenu coords={coords} handleClose={handleClose} />
         </>
     )
 }

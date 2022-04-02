@@ -1,5 +1,5 @@
 import { shift, useFloating, VirtualElement } from "@floating-ui/react-dom"
-import React, { useEffect } from "react"
+import { useEffect } from "react"
 
 import { useOnClickOutside } from "./use-on-click-outside"
 
@@ -7,10 +7,10 @@ export type UseFloatingReturn = ReturnType<typeof useFloating>
 
 export type UseTableMenuProps = {
     handleClose: () => void
-    event: MouseEvent | React.MouseEvent | null
+    coords?: { x: number; y: number } | null
 }
 
-export function useTableMenu({ handleClose, event }: UseTableMenuProps): UseFloatingReturn {
+export function useTableMenu({ handleClose, coords }: UseTableMenuProps): UseFloatingReturn {
     const useFloatingReturn = useFloating({
         placement: "right-start",
         middleware: [
@@ -26,26 +26,24 @@ export function useTableMenu({ handleClose, event }: UseTableMenuProps): UseFloa
     useOnClickOutside(refs.floating, handleClose)
 
     useEffect(() => {
-        if (!event) return
-
-        const { clientX, clientY, target: selectorEl } = event
+        if (!coords) return
+        const { x, y } = coords
         const virtualEl: VirtualElement = {
             getBoundingClientRect() {
                 return {
                     width: 0,
                     height: 0,
-                    x: clientX,
-                    y: clientY,
-                    top: clientY,
-                    left: clientX,
-                    right: clientX,
-                    bottom: clientY,
+                    x: x,
+                    y: y,
+                    top: y,
+                    left: x,
+                    right: x,
+                    bottom: y,
                 }
             },
-            contextElement: selectorEl as Element,
         }
         reference(virtualEl)
-    }, [event, reference])
+    }, [coords, reference])
 
     return useFloatingReturn
 }
