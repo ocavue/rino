@@ -270,9 +270,14 @@ jobs:
           name: home_dist
           path: ./packages/home/dist
 
+      - name: Download dist (playground)
+        uses: actions/download-artifact@v3
+        with:
+          name: editor_playground_dist
+          path: ./packages/playground/dist
+
       - id: step_vercel_home
         name: Deploy @rino.app/home to Vercel
-        continue-on-error: true
         timeout-minutes: 10
         uses: amondnet/vercel-action@v20
         with:
@@ -287,7 +292,6 @@ jobs:
 
       - id: step_vercel_editor
         name: Deploy @rino.app/editor to Vercel
-        continue-on-error: true
         timeout-minutes: 10
         uses: amondnet/vercel-action@v20
         with:
