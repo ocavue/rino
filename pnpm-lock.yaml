@@ -1,5 +1,8 @@
 lockfileVersion: 5.3
 
+overrides:
+  '@electron/universal': ^1.2.1
+
 importers:
 
   .:
@@ -1203,8 +1206,8 @@ packages:
       - supports-color
     dev: true
 
-  /@electron/universal/1.0.5:
-    resolution: {integrity: sha512-zX9O6+jr2NMyAdSkwEUlyltiI4/EBLu2Ls/VD3pUQdi3cAYeYfdQnT2AJJ38HE4QxLccbU13LSpccw1IWlkyag==}
+  /@electron/universal/1.2.1:
+    resolution: {integrity: sha512-7323HyMh7KBAl/nPDppdLsC87G6RwRU02dy5FPeGB1eS7rUePh55+WNWiDPLhFQqqVPHzh77M69uhmoT8XnwMQ==}
     engines: {node: '>=8.6'}
     dependencies:
       '@malept/cross-spawn-promise': 1.1.1
@@ -1212,6 +1215,8 @@ packages:
       debug: 4.3.4
       dir-compare: 2.4.0
       fs-extra: 9.1.0
+      minimatch: 3.1.2
+      plist: 3.0.5
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -4207,7 +4212,7 @@ packages:
     engines: {node: '>=14.0.0'}
     dependencies:
       '@develar/schema-utils': 2.6.5
-      '@electron/universal': 1.0.5
+      '@electron/universal': 1.2.1
       '@malept/flatpak-bundler': 0.4.0
       7zip-bin: 5.1.1
       async-exit-hook: 2.0.1
@@ -8572,6 +8577,7 @@ packages:
       chalk: 2.4.2
       diff-match-patch: 1.0.5
     dev: false
+    bundledDependencies: []
 
   /jsonfile/4.0.0:
     resolution: {integrity: sha1-h3Gq4HmbZAdrdmQPygWPnBDjPss=}
