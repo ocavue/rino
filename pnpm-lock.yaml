@@ -230,12 +230,12 @@ importers:
 
   packages/electron:
     specifiers:
-      electron: 17.3.1
+      electron: 18.0.1
       electron-builder: ^22.14.13
       electron-notarize: ^1.2.1
       wait-on: ^6.0.1
     devDependencies:
-      electron: 17.3.1
+      electron: 18.0.1
       electron-builder: 22.14.13
       electron-notarize: 1.2.1
       wait-on: 6.0.1
@@ -244,7 +244,7 @@ importers:
     specifiers:
       '@rino.app/common': workspace:0.0.0
       '@rino.app/electron-types': workspace:0.0.0
-      electron: 17.3.1
+      electron: 18.0.1
       electron-context-menu: ^3.1.2
       electron-log: ^4.4.6
       electron-store: ^8.0.1
@@ -256,7 +256,7 @@ importers:
     devDependencies:
       '@rino.app/common': link:../common
       '@rino.app/electron-types': link:../electron-types
-      electron: 17.3.1
+      electron: 18.0.1
       electron-context-menu: 3.1.2
       electron-log: 4.4.6
       electron-store: 8.0.1
@@ -269,13 +269,13 @@ importers:
   packages/electron-preload:
     specifiers:
       '@rino.app/electron-types': workspace:0.0.0
-      electron: 17.3.1
+      electron: 18.0.1
       electron-log: ^4.4.6
       esbuild: ^0.14.31
       typescript: ^4.6.3
     devDependencies:
       '@rino.app/electron-types': link:../electron-types
-      electron: 17.3.1
+      electron: 18.0.1
       electron-log: 4.4.6
       esbuild: 0.14.31
       typescript: 4.6.3
@@ -288,7 +288,7 @@ importers:
       '@types/react': ^17.0.43
       '@types/react-dom': ^17.0.14
       '@vitejs/plugin-react': ^1.3.0
-      electron: 17.3.1
+      electron: 18.0.1
       electron-log: ^4.4.6
       immer: ^9.0.12
       is-promise: ^4.0.0
@@ -304,7 +304,7 @@ importers:
       '@types/react': 17.0.43
       '@types/react-dom': 17.0.14
       '@vitejs/plugin-react': 1.3.0
-      electron: 17.3.1
+      electron: 18.0.1
       electron-log: 4.4.6
       immer: 9.0.12
       is-promise: 4.0.0
@@ -317,10 +317,10 @@ importers:
   packages/electron-types:
     specifiers:
       '@rino.app/editor': workspace:0.0.0
-      electron: 17.3.1
+      electron: 18.0.1
     devDependencies:
       '@rino.app/editor': link:../editor
-      electron: 17.3.1
+      electron: 18.0.1
 
   packages/home:
     specifiers:
@@ -3628,10 +3628,6 @@ packages:
   /@types/ms/0.7.31:
     resolution: {integrity: sha512-iiUgKzV9AuaEkZqkOLDIvlQiL6ltuZd9tGcW3gwpnX8JbuiuhFlEGmmFXEXkN50Cvq7Os88IY2v0dkDqXYWVgA==}
 
-  /@types/node/14.18.12:
-    resolution: {integrity: sha512-q4jlIR71hUpWTnGhXWcakgkZeHa3CCjcQcnuzU8M891BAWA2jHiziiWEPEkdS5pFsz7H9HJiy8BrK7tBRNrY7A==}
-    dev: true
-
   /@types/node/16.11.26:
     resolution: {integrity: sha512-GZ7bu5A6+4DtG7q9GsoHXy3ALcgeIHP4NnL0Vv2wu0uUB/yQex26v0tf6/na1mm0+bS9Uw+0DFex7aaKr2qawQ==}
     dev: true
@@ -4481,7 +4477,6 @@ packages:
 
   /base64-js/1.5.1:
     resolution: {integrity: sha512-AKpaYlHn8t4SVbOHCy+b5+KKgvR4vrsD8vbvrbiQJps7fKDTkjkDry6ji0rUJjC0kzbNePLwzxq8iypo41qeWA==}
-    requiresBuild: true
     dev: true
 
   /big.js/5.2.2:
@@ -5845,14 +5840,14 @@ packages:
       - supports-color
     dev: true
 
-  /electron/17.3.1:
-    resolution: {integrity: sha512-C5E3uvXo1cmI+xYtbiMCW8AAGhBL0HbLA6cqD7FJmBoPtY88W/3A/km5z8oPGORyBNgSe7tSoHx4a6jWJIR+og==}
+  /electron/18.0.1:
+    resolution: {integrity: sha512-8y3nxmK+v/tiuaR8yd4K83ApHxgomMIPAEl3J+2Jfv/D5G6M3KnvxNlNiNoTXI8uOegfmoqiDm5/2xlWFLzfLQ==}
     engines: {node: '>= 8.6'}
     hasBin: true
     requiresBuild: true
     dependencies:
       '@electron/get': 1.14.1
-      '@types/node': 14.18.12
+      '@types/node': 16.11.26
       extract-zip: 1.7.0
     transitivePeerDependencies:
       - supports-color
@@ -8577,7 +8572,6 @@ packages:
       chalk: 2.4.2
       diff-match-patch: 1.0.5
     dev: false
-    bundledDependencies: []
 
   /jsonfile/4.0.0:
     resolution: {integrity: sha1-h3Gq4HmbZAdrdmQPygWPnBDjPss=}
@@ -12681,7 +12675,6 @@ packages:
   /xmlbuilder/9.0.7:
     resolution: {integrity: sha1-Ey7mPS7FVlxVfiD0wi35rKaGsQ0=}
     engines: {node: '>=4.0'}
-    requiresBuild: true
     dev: true
 
   /xmlchars/2.2.0:
