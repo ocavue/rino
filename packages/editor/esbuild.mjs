@@ -37,4 +37,5 @@ main({
     bundle: true,
     format: "esm",
     sourcemap: true,
+    platform: "neutral", // Tell esbuild not to replace `process.env.NODE_ENV`
 })
