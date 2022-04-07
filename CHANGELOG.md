@@ -1,5 +1,12 @@
 # Changelog
 
+### [0.42.1](https://github.com/ocavue/rino/compare/v0.42.0...v0.42.1) (2022-04-07)
+
+
+### Bug Fixes
+
+* don't show the dev tools in production build ([#999](https://github.com/ocavue/rino/issues/999)) ([3cf5465](https://github.com/ocavue/rino/commit/3cf546591c245124923ce9c004b5c35272cb22c9))
+
 ## [0.42.0](https://github.com/ocavue/rino/compare/v0.41.0...v0.42.0) (2022-04-07)
 
 
