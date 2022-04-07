@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.42.0](https://github.com/ocavue/rino/compare/v0.41.0...v0.42.0) (2022-04-07)
+
+
+### Features
+
+* **editor:** refactor Markdown table ([#976](https://github.com/ocavue/rino/issues/976)) ([49e11a1](https://github.com/ocavue/rino/commit/49e11a17baa2c725dfb252d2c0bc0f8546837eed))
+
+
+### Bug Fixes
+
+* **editor:** improve table tooltip performance during scrolling ([#989](https://github.com/ocavue/rino/issues/989)) ([94213a0](https://github.com/ocavue/rino/commit/94213a09428dcaa77ce56af139ad73393a987896))
+
 ## [0.41.0](https://github.com/ocavue/rino/compare/v0.40.1...v0.41.0) (2022-01-30)
 
 
