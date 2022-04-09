@@ -248,7 +248,7 @@ importers:
       electron-context-menu: ^3.1.2
       electron-log: ^4.4.6
       electron-store: ^8.0.1
-      electron-updater: ^4.6.5
+      electron-updater: ^5.0.1
       esbuild: ^0.14.34
       lodash-es: ^4.17.21
       node-fetch: ^3.2.3
@@ -260,7 +260,7 @@ importers:
       electron-context-menu: 3.1.2
       electron-log: 4.4.6
       electron-store: 8.0.1
-      electron-updater: 4.6.5
+      electron-updater: 5.0.1
       esbuild: 0.14.34
       lodash-es: 4.17.21
       node-fetch: 3.2.3
@@ -4320,6 +4320,7 @@ packages:
   /astral-regex/2.0.0:
     resolution: {integrity: sha512-Z7tMw1ytTXt5jqMcOP+OQteU1VuNK9Y02uuJtKQ1Sv69jXQKKg5cibLwGJow8yzZP+eAc18EmLGPal0bp36rvQ==}
     engines: {node: '>=8'}
+    requiresBuild: true
     dev: true
 
   /async-exit-hook/2.0.1:
@@ -4630,16 +4631,6 @@ packages:
     dependencies:
       base64-js: 1.5.1
       ieee754: 1.2.1
-    dev: true
-
-  /builder-util-runtime/8.9.2:
-    resolution: {integrity: sha512-rhuKm5vh7E0aAmT6i8aoSfEjxzdYEFX7zDApK+eNgOhjofnWb74d9SRJv0H/8nsgOkos0TZ4zxW0P8J4N7xQ2A==}
-    engines: {node: '>=12.0.0'}
-    dependencies:
-      debug: 4.3.4
-      sax: 1.2.4
-    transitivePeerDependencies:
-      - supports-color
     dev: true
 
   /builder-util-runtime/9.0.0:
@@ -5828,11 +5819,11 @@ packages:
     resolution: {integrity: sha512-ZYfpVLULm67K7CaaGP7DmjyeMY4naxsbTy+syVVxT6QHI1Ww8XbJjmr9fDckrhq44WzCrcC5kH3zGpdusxwwqg==}
     dev: true
 
-  /electron-updater/4.6.5:
-    resolution: {integrity: sha512-kdTly8O9mSZfm9fslc1mnCY+mYOeaYRy7ERa2Fed240u01BKll3aiupzkd07qKw69KvhBSzuHroIW3mF0D8DWA==}
+  /electron-updater/5.0.1:
+    resolution: {integrity: sha512-dNnXPCqYmergXy3jgg4UICuD50Orug9GQe/5xfHy+BE2Fy0icB0QE+y6iQWdCDf7yeONxwMBf4HgIkGG5pIaVg==}
     dependencies:
       '@types/semver': 7.3.9
-      builder-util-runtime: 8.9.2
+      builder-util-runtime: 9.0.0
       fs-extra: 10.0.1
       js-yaml: 4.1.0
       lazy-val: 1.0.5
@@ -8542,6 +8533,7 @@ packages:
 
   /json-schema-traverse/0.4.1:
     resolution: {integrity: sha512-xbbCH5dCYU5T8LcEhhuh7HJ88HXuW3qsI3Y0zOZFKfZEHcpWiHU/Jxzk629Brsab/mMiHQti9wMP+845RPe3Vg==}
+    requiresBuild: true
     dev: true
 
   /json-schema-traverse/1.0.0:
@@ -8575,6 +8567,7 @@ packages:
       chalk: 2.4.2
       diff-match-patch: 1.0.5
     dev: false
+    bundledDependencies: []
 
   /jsonfile/4.0.0:
     resolution: {integrity: sha1-h3Gq4HmbZAdrdmQPygWPnBDjPss=}
@@ -11293,6 +11286,7 @@ packages:
   /slice-ansi/3.0.0:
     resolution: {integrity: sha512-pSyv7bSTC7ig9Dcgbw9AuRNUb5k5V6oDudjZoMBSr13qpLBG7tB+zgCkARjq7xIUgdz5P1Qe8u+rSGdouOOIyQ==}
     engines: {node: '>=8'}
+    requiresBuild: true
     dependencies:
       ansi-styles: 4.3.0
       astral-regex: 2.0.0
