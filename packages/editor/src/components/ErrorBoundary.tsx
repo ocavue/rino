@@ -1,8 +1,8 @@
 /* istanbul ignore file */
-import type { ErrorInfo } from "react"
+import type { ErrorInfo, PropsWithChildren } from "react"
 import React from "react"
 
-class ErrorBoundary<Props> extends React.Component<Props, { hasError: boolean }> {
+class ErrorBoundary<Props> extends React.Component<PropsWithChildren<Props>, { hasError: boolean }> {
     constructor(props: Props) {
         super(props)
         this.state = { hasError: false }
@@ -21,7 +21,7 @@ class ErrorBoundary<Props> extends React.Component<Props, { hasError: boolean }>
     render() {
         if (this.state.hasError) {
             // You can render any custom fallback UI
-            return <h1 data-testid="editor_error">Something went wrong.</h1>
+            return <h1 data-testid="editor_error">Sorry, something went wrong!</h1>
         }
 
         return this.props.children
