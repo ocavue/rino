@@ -1,8 +1,14 @@
-import { ProsemirrorDevTools } from "@remirror/dev"
-import React from "react"
+import { useRemirrorContext } from "@remirror/react-core"
+import { applyDevTools, removeDevTools } from "prosemirror-dev-toolkit"
+import React, { useEffect } from "react"
 
 const DevTools: React.FC = () => {
-    return <ProsemirrorDevTools />
+    const { view } = useRemirrorContext()
+    useEffect(() => {
+        applyDevTools(view)
+        return () => removeDevTools()
+    }, [view])
+    return null
 }
 
 export default DevTools
