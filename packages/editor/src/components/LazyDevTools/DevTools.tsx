@@ -1,7 +1,7 @@
 import { ProsemirrorDevTools } from "@remirror/dev"
-import React, { FC } from "react"
+import React from "react"
 
-const DevTools: FC = () => {
+const DevTools: React.FC = () => {
     return <ProsemirrorDevTools />
 }
 
