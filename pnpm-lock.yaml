@@ -88,7 +88,6 @@ importers:
       '@floating-ui/react-dom': ^0.6.1
       '@mui/material': ^5.6.0
       '@remirror/core': ^1.4.1
-      '@remirror/dev': ^1.0.31
       '@remirror/extension-blockquote': ^1.0.21
       '@remirror/extension-codemirror6': ^0.2.6
       '@remirror/extension-doc': ^1.0.19
@@ -170,7 +169,6 @@ importers:
       '@floating-ui/react-dom': 0.6.1_d1b655986da7bf62d1172c7ae6e89165
       '@mui/material': 5.6.0_9932ff1b39c26208c1a2bb976b569856
       '@remirror/core': 1.4.1_bd478caad3705be874e18eb0710f30a8
-      '@remirror/dev': 1.0.31_82003035c5290b7e68af30eaef6a62cf
       '@remirror/extension-blockquote': 1.0.21_bd478caad3705be874e18eb0710f30a8
       '@remirror/extension-codemirror6': 0.2.6_bd478caad3705be874e18eb0710f30a8
       '@remirror/extension-doc': 1.0.19_bd478caad3705be874e18eb0710f30a8
@@ -1341,6 +1339,7 @@ packages:
       '@emotion/utils': 1.1.0
       '@types/react': 18.0.1
       react: 18.0.0
+    dev: true
 
   /@emotion/unitless/0.7.5:
     resolution: {integrity: sha512-OWORNpfjMsSSUBVrRBVGECkhWcULOAJz9ZW8uK9qgxD+87M7jHRcvh/A96XXNhXTLmKcoYSQtBEX7lHMO7YRwg==}
@@ -2302,37 +2301,6 @@ packages:
       - '@types/node'
       - domino
       - jsdom
-
-  /@remirror/dev/1.0.31_82003035c5290b7e68af30eaef6a62cf:
-    resolution: {integrity: sha512-65xEDfHUhcm2ChFEKdURLxpvwqrTYFp5UoDSDVFyS7Eg6XrHM4MW3TaFf6nGO3y5+E03ZYSIxK75BEF8xCn5eg==}
-    peerDependencies:
-      '@remirror/pm': ^1.0.10
-      '@types/react': ^16.14.0 || ^17 || ^18
-      '@types/react-dom': ^16.9.0 || ^17 || ^18
-      react: ^16.14.0 || ^17 || ^18
-      react-dom: ^16.14.0 || ^17 || ^18
-    peerDependenciesMeta:
-      '@types/react':
-        optional: true
-      '@types/react-dom':
-        optional: true
-    dependencies:
-      '@babel/runtime': 7.17.9
-      '@remirror/pm': 1.0.16
-      '@remirror/react': 1.0.31_82003035c5290b7e68af30eaef6a62cf
-      '@types/prosemirror-dev-tools': 3.0.2
-      '@types/react': 18.0.1
-      '@types/react-dom': 18.0.0
-      prosemirror-dev-tools: 3.1.0_8132db92e5b34bad6a9b6cadb2a38abc
-      react: 18.0.0
-      react-dom: 18.0.0_react@18.0.0
-    transitivePeerDependencies:
-      - '@babel/core'
-      - '@types/node'
-      - babel-runtime
-      - domino
-      - jsdom
-    dev: false
 
   /@remirror/dom/1.0.25_bd478caad3705be874e18eb0710f30a8:
     resolution: {integrity: sha512-J8fVDdn1ezXacbsvRsPWJGvqtwifDD3gxwVhGqpAggs6ybzzvYtdnAtVzNJFfahtbS0oxXA2l+AmzIFm+TGLxQ==}
@@ -3678,12 +3646,6 @@ packages:
       '@types/prosemirror-state': 1.2.8
       '@types/prosemirror-view': 1.23.1
 
-  /@types/prosemirror-dev-tools/3.0.2:
-    resolution: {integrity: sha512-lZiu4pZ3JfZKdWJDj6e1Gy28Ee3wIH3bOoAG432B7PuEPaV+S5oRMsZMdiuolNyD3T4XylJxAE3ARFxAAT+Jkg==}
-    dependencies:
-      '@types/prosemirror-view': 1.23.1
-    dev: false
-
   /@types/prosemirror-dropcursor/1.0.3:
     resolution: {integrity: sha512-b0/8njnJ4lwyHKcGuCMf3x7r1KjxyugB1R/c2iMCjplsJHSC7UY9+OysqgJR5uUXRekUSGniiLgBtac/lvH6wg==}
     dependencies:
@@ -4454,20 +4416,9 @@ packages:
       babel-preset-current-node-syntax: 1.0.1_@babel+core@7.17.9
     dev: true
 
-  /babel-runtime/6.26.0:
-    resolution: {integrity: sha1-llxwWGaOgrVde/4E/yM3vItWR/4=}
-    dependencies:
-      core-js: 2.6.12
-      regenerator-runtime: 0.11.1
-    dev: false
-
   /balanced-match/1.0.2:
     resolution: {integrity: sha512-3oSeUO0TMV67hN1AmbXsK4yaqU7tjiHlbxRDZOpH0KW9+CeX4bRAaX0Anxt0tx2MrpRpWwQaPwIlISEJhYU5Pw==}
     dev: true
-
-  /base16/1.0.0:
-    resolution: {integrity: sha1-4pf2DX7BAUp6lxo568ipjAtoHnA=}
-    dev: false
 
   /base64-js/1.5.1:
     resolution: {integrity: sha512-AKpaYlHn8t4SVbOHCy+b5+KKgvR4vrsD8vbvrbiQJps7fKDTkjkDry6ji0rUJjC0kzbNePLwzxq8iypo41qeWA==}
@@ -5166,12 +5117,6 @@ packages:
       toggle-selection: 1.0.6
     dev: false
 
-  /core-js/2.6.12:
-    resolution: {integrity: sha512-Kb2wC0fvsWfQrgk8HU5lW6U/Lcs8+9aaYcy4ZFc6DDlo4nZ7n70dEgE5rtR0oG6ufKDUnrwfWL1mXR5ljDatrQ==}
-    deprecated: core-js@<3.4 is no longer maintained and not recommended for usage due to the number of issues. Because of the V8 engine whims, feature detection in old core-js versions could cause a slowdown up to 100x even if nothing is polyfilled. Please, upgrade your dependencies to the actual version of core-js.
-    requiresBuild: true
-    dev: false
-
   /core-util-is/1.0.2:
     resolution: {integrity: sha1-tf1UIgqivFq1eqtxQMlAdUUDwac=}
     requiresBuild: true
@@ -5221,16 +5166,6 @@ packages:
     dependencies:
       '@babel/runtime': 7.17.9
       '@types/react': 18.0.1
-      react: 18.0.0
-    dev: false
-
-  /create-react-context/0.1.6_prop-types@15.8.1+react@18.0.0:
-    resolution: {integrity: sha512-eCnYYEUEc5i32LHwpE/W7NlddOB9oHwsPaWtWzYtflNkkwa3IfindIcoXdVWs12zCbwaMCavKNu84EXogVIWHw==}
-    peerDependencies:
-      prop-types: ^15.0.0
-      react: ^14.0.0 || ^15.0.0 || ^16.0.0
-    dependencies:
-      prop-types: 15.8.1
       react: 18.0.0
     dev: false
 
@@ -5544,10 +5479,6 @@ packages:
     resolution: {integrity: sha512-T0NIuQpnTvFDATNuHN5roPwSBG83rFsuO+MXXH9/3N1eFbn4wcPjttvjMLEPWJ0RGUYgQE7cGgS3tNxbqCGM7g==}
     dev: true
     optional: true
-
-  /diff-match-patch/1.0.5:
-    resolution: {integrity: sha512-IayShXAgj/QMXgB0IWmKx+rOPuGMhqm5w6jvFxmVenXKIzRqTAAsbBPT3kWQeGANj3jGgvcvv4yK6SxqYmikgw==}
-    dev: false
 
   /diff-sequences/27.5.1:
     resolution: {integrity: sha512-k1gCAXAsNgLwEL+Y8Wvl+M6oEFj5bgazfZULpS5CneoPPXRaCCW7dm+q21Ky2VEE5X+VeRDBVg1Pcvvsr4TtNQ==}
@@ -8557,16 +8488,6 @@ packages:
     hasBin: true
     dev: true
 
-  /jsondiffpatch/0.4.1:
-    resolution: {integrity: sha512-t0etAxTUk1w5MYdNOkZBZ8rvYYN5iL+2dHCCx/DpkFm/bW28M6y5nUS83D4XdZiHy35Fpaw6LBb+F88fHZnVCw==}
-    engines: {node: '>=8.17.0'}
-    hasBin: true
-    dependencies:
-      chalk: 2.4.2
-      diff-match-patch: 1.0.5
-    dev: false
-    bundledDependencies: []
-
   /jsonfile/4.0.0:
     resolution: {integrity: sha1-h3Gq4HmbZAdrdmQPygWPnBDjPss=}
     optionalDependencies:
@@ -8758,23 +8679,9 @@ packages:
   /lodash-es/4.17.21:
     resolution: {integrity: sha512-mKnC+QJ9pWVzv+C4/U3rRsHapFfHvQFoFB92e52xeyGMcX6/OlIl78je1u8vePzYZSkkogMPJ2yjxxsb89cxyw==}
 
-  /lodash._getnative/3.9.1:
-    resolution: {integrity: sha1-VwvH3t5G1hzc3mh9ZdPuy6o6r/U=}
-    dev: false
-
   /lodash.clonedeep/4.5.0:
     resolution: {integrity: sha1-4j8/nE+Pvd6HJSnBBxhXoIblzO8=}
     dev: true
-
-  /lodash.curry/4.1.1:
-    resolution: {integrity: sha1-JI42By7ekGUB11lmIAqG2riyMXA=}
-    dev: false
-
-  /lodash.debounce/3.1.1:
-    resolution: {integrity: sha1-gSIRw3ipTMKdWqTjNGzwv846ffU=}
-    dependencies:
-      lodash._getnative: 3.9.1
-    dev: false
 
   /lodash.escaperegexp/4.1.2:
     resolution: {integrity: sha1-ZHYsSGGAglGKw99Mz11YhtriA0c=}
@@ -8783,10 +8690,6 @@ packages:
   /lodash.flattendeep/4.4.0:
     resolution: {integrity: sha1-+wMJF/hqMTTlvJvsDWngAT3f7bI=}
     dev: true
-
-  /lodash.flow/3.5.0:
-    resolution: {integrity: sha1-h79AKSuM+D5OjOGjrkIJ4gBxZ1o=}
-    dev: false
 
   /lodash.get/4.4.2:
     resolution: {integrity: sha1-LRd/ZS+jHpObRDjVNBSZ36OCXpk=}
@@ -9396,10 +9299,6 @@ packages:
   /nanoevents/5.1.13:
     resolution: {integrity: sha512-JFAeG9fp0QZnRoESHjkbVFbZ9BkOXkkagUVwZVo/pkSX+Fq1VKlY+5og/8X9CYc6C7vje/CV+bwJ5M2X0+IY9Q==}
     engines: {node: '>=6.0.0'}
-
-  /nanoid/2.1.11:
-    resolution: {integrity: sha512-s/snB+WGm6uwi0WjsZdaVcuf3KJXlfGl2LcxgwkEwJF0D/BWzVWAZW/XY4bFaiR7s0Jk3FPvlnepg1H1b1UwlA==}
-    dev: false
 
   /nanoid/3.3.2:
     resolution: {integrity: sha512-CuHBogktKwpm5g2sRgv83jEy2ijFzBwMoYA60orPDR7ynsLijJDqgsi4RDGj3OJpy3Ieb+LYwiRmIOGyytgITA==}
@@ -10222,34 +10121,6 @@ packages:
       svelte-tree-view: 1.3.0
     dev: false
 
-  /prosemirror-dev-tools/3.1.0_8132db92e5b34bad6a9b6cadb2a38abc:
-    resolution: {integrity: sha512-ghuxb6QD3WWl3EE8OK1O3P67OKjbTxt5mvagAUK6xd0kS7SBysSS4KE+HiNPxC8r812EEFFJ2S6asIs9i7rvkQ==}
-    engines: {node: '>=10'}
-    peerDependencies:
-      react: '>=16.8.0'
-      react-dom: '>=16.8.0'
-    dependencies:
-      '@babel/runtime': 7.17.9
-      '@emotion/css': 11.9.0_@babel+core@7.17.9
-      '@emotion/react': 11.9.0_95155894633fe9afea63bc8a06a8d103
-      '@emotion/styled': 11.8.1_4f9ab86287aa3c4fca971d631f03c563
-      html: 1.0.0
-      jsondiffpatch: 0.4.1
-      nanoid: 2.1.11
-      prop-types: 15.8.1
-      prosemirror-model: 1.16.1
-      prosemirror-state: 1.3.4
-      react: 18.0.0
-      react-dock: 0.2.4_react@18.0.0
-      react-dom: 18.0.0_react@18.0.0
-      react-json-tree: 0.11.2_react-dom@18.0.0+react@18.0.0
-      unstated: 2.1.1_prop-types@15.8.1+react@18.0.0
-    transitivePeerDependencies:
-      - '@babel/core'
-      - '@types/react'
-      - babel-runtime
-    dev: false
-
   /prosemirror-dropcursor/1.4.0:
     resolution: {integrity: sha512-6+YwTjmqDwlA/Dm+5wK67ezgqgjA/MhSDgaNxKUzH97SmeuWFXyLeDRxxOPZeSo7yTxcDGUCWTEjmQZsVBuMrQ==}
     dependencies:
@@ -10470,10 +10341,6 @@ packages:
       escape-goat: 2.1.1
     dev: true
 
-  /pure-color/1.3.0:
-    resolution: {integrity: sha1-H+Bk+wrIUfDeYTIKi/eWg2Qi8z4=}
-    dev: false
-
   /qs/6.9.7:
     resolution: {integrity: sha512-IhMFgUmuNpyRfxA90umL7ByLlgRXu6tIfKPpF5TmcfRLlLCckfP/g3IQmju6jjpu+Hh8rA+2p6A27ZSPOOHdKw==}
     engines: {node: '>=0.6'}
@@ -10520,15 +10387,6 @@ packages:
       strip-json-comments: 2.0.1
     dev: true
 
-  /react-base16-styling/0.5.3:
-    resolution: {integrity: sha1-OFjyTpxN2MvT9wLz901YHKKRcmk=}
-    dependencies:
-      base16: 1.0.0
-      lodash.curry: 4.1.1
-      lodash.flow: 3.5.0
-      pure-color: 1.3.0
-    dev: false
-
   /react-color/2.19.3_react@18.0.0:
     resolution: {integrity: sha512-LEeGE/ZzNLIsFWa1TMe8y5VYqr7bibneWmvJwm1pCn/eNmrabWDh659JSPn9BuaMpEfU83WTOJfnCcjDZwNQTA==}
     peerDependencies:
@@ -10542,17 +10400,6 @@ packages:
       react: 18.0.0
       reactcss: 1.2.3
       tinycolor2: 1.4.2
-    dev: false
-
-  /react-dock/0.2.4_react@18.0.0:
-    resolution: {integrity: sha1-5yfcdVCztzEWY13LnA4E0Lev4Xw=}
-    peerDependencies:
-      babel-runtime: ^6.3.13
-      react: '>=0.13.0'
-    dependencies:
-      lodash.debounce: 3.1.1
-      prop-types: 15.8.1
-      react: 18.0.0
     dev: false
 
   /react-dom/18.0.0_react@18.0.0:
@@ -10589,19 +10436,6 @@ packages:
 
   /react-is/17.0.2:
     resolution: {integrity: sha512-w2GsyukL62IJnlaff/nRegPQR94C/XXamvMWmSHRJ4y7Ts/4ocGRmTHvOs8PSE6pB3dWOrD/nueuU5sduBsQ4w==}
-
-  /react-json-tree/0.11.2_react-dom@18.0.0+react@18.0.0:
-    resolution: {integrity: sha512-aYhUPj1y5jR3ZQ+G3N7aL8FbTyO03iLwnVvvEikLcNFqNTyabdljo9xDftZndUBFyyyL0aK3qGO9+8EilILHUw==}
-    peerDependencies:
-      react: ^15.0.0 || ^16.0.0
-      react-dom: ^15.0.0 || ^16.0.0
-    dependencies:
-      babel-runtime: 6.26.0
-      prop-types: 15.8.1
-      react: 18.0.0
-      react-base16-styling: 0.5.3
-      react-dom: 18.0.0_react@18.0.0
-    dev: false
 
   /react-popper/2.2.5_ddeceac54e80ad082dd3259289d97632:
     resolution: {integrity: sha512-kxGkS80eQGtLl18+uig1UIf9MKixFSyPxglsgLBxlYnyDf65BiY9B3nZSc6C9XUNDgStROB0fMQlTEz1KxGddw==}
@@ -10816,10 +10650,6 @@ packages:
       indent-string: 4.0.0
       strip-indent: 3.0.0
     dev: true
-
-  /regenerator-runtime/0.11.1:
-    resolution: {integrity: sha512-MguG95oij0fC3QV3URf4V2SDYGJhJnJGqvIIgdECeODCT98wSWDAJ94SSuVpYQUoTcGUIL6L4yNB7j1DFFHSBg==}
-    dev: false
 
   /regenerator-runtime/0.13.9:
     resolution: {integrity: sha512-p3VT+cOEgxFsRRA9X4lkI1E+k2/CtnKtU4gcxyaCUreilL/vqI6CdZ3wxVUx3UOUg+gnUOQQcRI7BmSI656MYA==}
@@ -12181,17 +12011,6 @@ packages:
 
   /unstated-next/1.1.0:
     resolution: {integrity: sha512-AAn47ZncPvgBGOvMcn8tSRxsrqwf2VdAPxLASTuLJvZt4rhKfDvUkmYZLGfclImSfTVMv7tF4ynaVxin0JjDCA==}
-
-  /unstated/2.1.1_prop-types@15.8.1+react@18.0.0:
-    resolution: {integrity: sha512-fORlTWMZxq7NuMJDxyIrrYIZKN7wEWYQ9SiaJfIRcSpsowr6Ph/JIfK2tgtXLW614JfPG/t5q9eEIhXRCf55xg==}
-    peerDependencies:
-      react: ^15.0.0 || ^16.0.0
-    dependencies:
-      create-react-context: 0.1.6_prop-types@15.8.1+react@18.0.0
-      react: 18.0.0
-    transitivePeerDependencies:
-      - prop-types
-    dev: false
 
   /unused-filename/2.1.0:
     resolution: {integrity: sha512-BMiNwJbuWmqCpAM1FqxCTD7lXF97AvfQC8Kr/DIeA6VtvhJaMDupZ82+inbjl5yVP44PcxOuCSxye1QMS0wZyg==}
