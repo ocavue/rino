@@ -4,6 +4,7 @@ import Token from "markdown-it/lib/token"
 import { EditorState } from "prosemirror-state"
 import { Decoration, DecorationSet, WidgetDecorationSpec } from "prosemirror-view"
 
+import { ENABLE_REACT_CODE_LANGUAGE_SELECTOR } from "../../components/flags"
 import { NodeSerializerOptions, ParserRuleType } from "../../transform"
 import { fakeIndentedLanguage } from "./code-mirror-const"
 import { setupLanguageMenu } from "./codemirror-language-menu"
@@ -54,6 +55,10 @@ export class RinoCodeMirrorExtension extends CodeMirrorExtension {
     }
 
     createDecorations(state: EditorState): DecorationSet {
+        if (ENABLE_REACT_CODE_LANGUAGE_SELECTOR) {
+            return DecorationSet.empty
+        }
+
         const languages = this.options.languages?.length ?? 0
         if (languages <= 1) {
             return DecorationSet.empty
