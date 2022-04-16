@@ -23,6 +23,7 @@ async function main(options) {
               }
             : false,
         plugins: [nodeExternalsPlugin()],
+        splitting: true,
         ...options,
     })
 
@@ -32,10 +33,10 @@ async function main(options) {
 }
 
 main({
-    entryPoints: ["./src/index.ts"],
-    outfile: "./dist/rino-editor.mjs",
+    entryPoints: { "rino-editor": "./src/index.ts" },
+    outExtension: { ".js": ".mjs" },
+    outdir: "./dist/",
     bundle: true,
     format: "esm",
     sourcemap: true,
-    platform: "neutral", // Tell esbuild not to replace `process.env.NODE_ENV`
 })
