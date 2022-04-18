@@ -7,7 +7,7 @@ const CodeLanguageInput: React.FC = () => {
     const { dom: codeBlock, language, setLanguage } = useCodeBlock()
     const { x, y, reference, floating, strategy, update, refs } = useFloating({
         placement: "top-end",
-        middleware: [flip({ padding: 8 }), offset(3)],
+        middleware: [flip({ padding: 8 }), offset(4)],
     })
 
     useEffect(() => {
