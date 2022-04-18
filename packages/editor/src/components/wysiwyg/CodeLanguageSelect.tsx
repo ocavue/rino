@@ -1,20 +1,54 @@
-import React from "react"
+import { autoUpdate, flip, offset, useFloating } from "@floating-ui/react-dom"
+import React, { useEffect } from "react"
 
 import { useCodeBlock } from "../../hooks/use-code-block"
 
 const CodeLanguageInput: React.FC = () => {
-    const { dom: reference, language, setLanguage } = useCodeBlock()
+    const { dom: codeBlock, language, setLanguage } = useCodeBlock()
+    const { x, y, reference, floating, strategy, update, refs } = useFloating({
+        placement: "top-end",
+        middleware: [flip({ padding: 8 }), offset(3)],
+    })
 
-    if (reference) {
-        const { top, left, right, bottom } = reference.getBoundingClientRect()
-        console.log("[CodeLanguageSelect] referance:", { top, left, right, bottom })
-        console.log("[CodeLanguageSelect] language:", language)
-    }
+    useEffect(() => {
+        // use `useEffect` instead of `useLayoutEffect` same as floating-ui doc here
+        // because playground renders wrong when clicking debug button when using useLayoutEffect
+        reference(codeBlock)
+        if (!refs.reference.current || !refs.floating.current) {
+            return
+        }
+        // Only call this when the floating element is rendered
+        return autoUpdate(refs.reference.current, refs.floating.current, update)
+    }, [refs.reference, refs.floating, update, reference, codeBlock])
 
     return (
-        <div>
-            <input placeholder="Language" value={language} onChange={(event) => setLanguage(event.target.value)} />
-        </div>
+        <>
+            {codeBlock ? (
+                <input
+                    ref={floating}
+                    style={{
+                        position: strategy,
+                        zIndex: 1000,
+                        top: Math.round(y ? y : -9999),
+                        left: Math.round(x ? x : -9999),
+                        color: "#abb2bf",
+                        backgroundColor: "#282c34",
+                        padding: "4px 4px",
+                        borderRadius: "4px",
+                        fontSize: "14px",
+                        width: "150px",
+                        textAlign: "center",
+                        fontFamily: "monospace",
+                        border: "none",
+                        outlineColor: "#abb2bf",
+                        outlineWidth: "thin",
+                    }}
+                    placeholder="Language"
+                    value={language}
+                    onChange={(event) => setLanguage(event.target.value)}
+                />
+            ) : null}
+        </>
     )
 }
 
