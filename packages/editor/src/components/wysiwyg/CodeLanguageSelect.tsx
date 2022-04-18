@@ -1,5 +1,5 @@
 import { autoUpdate, flip, offset, useFloating } from "@floating-ui/react-dom"
-import React, { useEffect } from "react"
+import React, { useEffect, useLayoutEffect } from "react"
 
 import { useCodeBlock } from "../../hooks/use-code-block"
 
@@ -11,15 +11,16 @@ const CodeLanguageInput: React.FC = () => {
     })
 
     useEffect(() => {
-        // use `useEffect` instead of `useLayoutEffect` same as floating-ui doc here
-        // because playground renders wrong when clicking debug button when using useLayoutEffect
-        reference(codeBlock)
-        if (!refs.reference.current || !refs.floating.current) {
+        if (!codeBlock || !refs.floating.current) {
             return
         }
         // Only call this when the floating element is rendered
-        return autoUpdate(refs.reference.current, refs.floating.current, update)
-    }, [refs.reference, refs.floating, update, reference, codeBlock])
+        return autoUpdate(codeBlock, refs.floating.current, update)
+    }, [refs.floating, update, reference, codeBlock])
+
+    useLayoutEffect(() => {
+        reference(codeBlock)
+    }, [reference, codeBlock])
 
     return (
         <>
@@ -29,8 +30,8 @@ const CodeLanguageInput: React.FC = () => {
                     style={{
                         position: strategy,
                         zIndex: 1000,
-                        top: Math.round(y ? y : -9999),
-                        left: Math.round(x ? x : -9999),
+                        top: y ? Math.round(y) : "",
+                        left: x ? Math.round(x) : "",
                         color: "#abb2bf",
                         backgroundColor: "#282c34",
                         padding: "4px 4px",
