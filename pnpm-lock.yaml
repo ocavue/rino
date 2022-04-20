@@ -89,6 +89,7 @@ importers:
       '@floating-ui/react-dom-interactions': ^0.3.1
       '@mui/material': ^5.6.2
       '@remirror/core': ^1.4.2
+      '@remirror/dev': ^1.1.0
       '@remirror/extension-blockquote': ^1.0.22
       '@remirror/extension-codemirror6': ^0.2.7
       '@remirror/extension-doc': ^1.0.20
@@ -128,7 +129,6 @@ importers:
       micromark-extension-gfm-strikethrough: ^1.0.4
       npm-run-all: ^4.1.5
       prosemirror-commands: ^1.2.2
-      prosemirror-dev-toolkit: ^0.0.10
       prosemirror-dropcursor: ^1.4.0
       prosemirror-history: ^1.2.0
       prosemirror-inputrules: ^1.1.3
@@ -171,6 +171,7 @@ importers:
       '@floating-ui/react-dom-interactions': 0.3.1_4ba69c7787dfd9a3579e23e97d93e7b4
       '@mui/material': 5.6.2_3fc3524d3e2d0c0b11646b4e16354eb5
       '@remirror/core': 1.4.2_e826fc2591e602898751c1238d99ade2
+      '@remirror/dev': 1.1.0_9d5e39d93b277d24a810ecb1bf96076a
       '@remirror/extension-blockquote': 1.0.22_e826fc2591e602898751c1238d99ade2
       '@remirror/extension-codemirror6': 0.2.7_e826fc2591e602898751c1238d99ade2
       '@remirror/extension-doc': 1.0.20_e826fc2591e602898751c1238d99ade2
@@ -198,7 +199,6 @@ importers:
       mdast-util-gfm-strikethrough: 1.0.1
       micromark-extension-gfm-strikethrough: 1.0.4
       prosemirror-commands: 1.2.2
-      prosemirror-dev-toolkit: 0.0.10
       prosemirror-dropcursor: 1.4.0
       prosemirror-history: 1.2.0
       prosemirror-inputrules: 1.1.3
@@ -2316,6 +2316,35 @@ packages:
       - '@types/node'
       - domino
       - jsdom
+
+  /@remirror/dev/1.1.0_9d5e39d93b277d24a810ecb1bf96076a:
+    resolution: {integrity: sha512-rG96CUAX9KbJyw84O9NjUqVZrHMiLkA/Wr17h1VvfFLKiqbOQLosoZ7dhRfUkTB80eja9ZaagVCzWlBLIAs6hQ==}
+    peerDependencies:
+      '@remirror/pm': ^1.0.10
+      '@types/react': ^16.14.0 || ^17 || ^18
+      '@types/react-dom': ^16.9.0 || ^17 || ^18
+      react: ^16.14.0 || ^17 || ^18
+      react-dom: ^16.14.0 || ^17 || ^18
+    peerDependenciesMeta:
+      '@types/react':
+        optional: true
+      '@types/react-dom':
+        optional: true
+    dependencies:
+      '@babel/runtime': 7.17.9
+      '@remirror/pm': 1.0.16
+      '@remirror/react': 1.0.32_9d5e39d93b277d24a810ecb1bf96076a
+      '@types/react': 18.0.5
+      '@types/react-dom': 18.0.1
+      prosemirror-dev-toolkit: 0.0.10
+      react: 18.0.0
+      react-dom: 18.0.0_react@18.0.0
+    transitivePeerDependencies:
+      - '@babel/core'
+      - '@types/node'
+      - domino
+      - jsdom
+    dev: false
 
   /@remirror/dom/1.0.26_e826fc2591e602898751c1238d99ade2:
     resolution: {integrity: sha512-bqCOacm5WQshT420Eam5Z9tESoDF3YNy8v2G/4dLRI16WTw6EC3xJwHYHkcFLu2KcU2o9Gw+9l07bntIJcxYtA==}
