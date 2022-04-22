@@ -457,7 +457,7 @@ packages:
     resolution: {integrity: sha512-hoyByceqwKirw7w3Z7gnIIZC3Wx3J484Y3L/cMpXFbr7d9ZQj2mODrirNzcJa+SM3UlpWXYvKV4RlRpFXlWgXg==}
     engines: {node: '>=6.0.0'}
     dependencies:
-      '@jridgewell/trace-mapping': 0.3.7
+      '@jridgewell/trace-mapping': 0.3.9
     dev: true
 
   /@babel/code-frame/7.16.7:
@@ -1539,7 +1539,7 @@ packages:
       glob: 7.2.0
       graceful-fs: 4.2.10
       istanbul-lib-coverage: 3.2.0
-      istanbul-lib-instrument: 5.1.0
+      istanbul-lib-instrument: 5.2.0
       istanbul-lib-report: 3.0.0
       istanbul-lib-source-maps: 4.0.1
       istanbul-reports: 3.1.4
@@ -1630,8 +1630,8 @@ packages:
     resolution: {integrity: sha512-Fg32GrJo61m+VqYSdRSjRXMjQ06j8YIYfcTqndLYVAaHmroZHLJZCydsWBOTDqXS2v+mjxohBWEMfg97GXmYQg==}
     dev: true
 
-  /@jridgewell/trace-mapping/0.3.7:
-    resolution: {integrity: sha512-8XC0l0PwCbdg2Uc8zIIf6djNX3lYiz9GqQlC1LJ9WQvTYvcfP8IA9K2IKRnPm5tAX6X/+orF+WwKZ0doGcgJlg==}
+  /@jridgewell/trace-mapping/0.3.9:
+    resolution: {integrity: sha512-3Belt6tdc8bPgAtbcmdtNJlirVoTmEb5e2gC94PnkwEW9jI6CAHUeoG85tjWP5WquqfavoMtMwiG4P926ZKKuQ==}
     dependencies:
       '@jridgewell/resolve-uri': 3.0.5
       '@jridgewell/sourcemap-codec': 1.4.11
@@ -2223,7 +2223,7 @@ packages:
       '@reach/utils': 0.16.0_react-dom@18.0.0+react@18.0.0
       react: 18.0.0
       react-dom: 18.0.0_react@18.0.0
-      tslib: 2.3.1
+      tslib: 2.4.0
     dev: false
 
   /@reach/utils/0.16.0_react-dom@18.0.0+react@18.0.0:
@@ -2235,7 +2235,7 @@ packages:
       react: 18.0.0
       react-dom: 18.0.0_react@18.0.0
       tiny-warning: 1.0.3
-      tslib: 2.3.1
+      tslib: 2.4.0
     dev: false
 
   /@remirror/core-constants/1.0.2:
@@ -4219,7 +4219,7 @@ packages:
       builder-util-runtime: 9.0.0
       chromium-pickle-js: 0.2.0
       debug: 4.3.4
-      ejs: 3.1.6
+      ejs: 3.1.7
       electron-osx-sign: 0.6.0
       electron-publish: 23.0.2
       form-data: 4.0.0
@@ -4338,7 +4338,6 @@ packages:
   /astral-regex/2.0.0:
     resolution: {integrity: sha512-Z7tMw1ytTXt5jqMcOP+OQteU1VuNK9Y02uuJtKQ1Sv69jXQKKg5cibLwGJow8yzZP+eAc18EmLGPal0bp36rvQ==}
     engines: {node: '>=8'}
-    requiresBuild: true
     dev: true
 
   /async-exit-hook/2.0.1:
@@ -4417,7 +4416,7 @@ packages:
       '@babel/helper-plugin-utils': 7.16.7
       '@istanbuljs/load-nyc-config': 1.1.0
       '@istanbuljs/schema': 0.1.3
-      istanbul-lib-instrument: 5.1.0
+      istanbul-lib-instrument: 5.2.0
       test-exclude: 6.0.0
     transitivePeerDependencies:
       - supports-color
@@ -4477,7 +4476,6 @@ packages:
 
   /base64-js/1.5.1:
     resolution: {integrity: sha512-AKpaYlHn8t4SVbOHCy+b5+KKgvR4vrsD8vbvrbiQJps7fKDTkjkDry6ji0rUJjC0kzbNePLwzxq8iypo41qeWA==}
-    requiresBuild: true
     dev: true
 
   /big.js/5.2.2:
@@ -4589,7 +4587,7 @@ packages:
     hasBin: true
     dependencies:
       caniuse-lite: 1.0.30001332
-      electron-to-chromium: 1.4.114
+      electron-to-chromium: 1.4.118
       escalade: 3.1.1
       node-releases: 2.0.3
       picocolors: 1.0.0
@@ -5712,8 +5710,8 @@ packages:
   /ee-first/1.1.1:
     resolution: {integrity: sha1-WQxhFWsK4vTwJVcyoViyZrxWsh0=}
 
-  /ejs/3.1.6:
-    resolution: {integrity: sha512-9lt9Zse4hPucPkoP7FHDF0LQAlGyF9JVpnClFLFH3aSSbxmyoqINRpp/9wePWJTUl4KOQwRL72Iw3InHPDkoGw==}
+  /ejs/3.1.7:
+    resolution: {integrity: sha512-BIar7R6abbUxDA3bfXrO4DSgwo8I+fB5/1zgujl3HLLjwd6+9iOnrT+t3grn2qbk9vOgBubXOFwX2m9axoFaGw==}
     engines: {node: '>=0.10.0'}
     hasBin: true
     dependencies:
@@ -5809,8 +5807,8 @@ packages:
       type-fest: 1.4.0
     dev: true
 
-  /electron-to-chromium/1.4.114:
-    resolution: {integrity: sha512-gRwLpVYWHGbERPU6o8pKfR168V6enWEXzZc6zQNNXbgJ7UJna+9qzAIHY94+9KOv71D/CH+QebLA9pChD2q8zA==}
+  /electron-to-chromium/1.4.118:
+    resolution: {integrity: sha512-maZIKjnYDvF7Fs35nvVcyr44UcKNwybr93Oba2n3HkKDFAtk0svERkLN/HyczJDS3Fo4wU9th9fUQd09ZLtj1w==}
     dev: true
 
   /electron-updater/5.0.1:
@@ -7790,8 +7788,8 @@ packages:
       - supports-color
     dev: true
 
-  /istanbul-lib-instrument/5.1.0:
-    resolution: {integrity: sha512-czwUz525rkOFDJxfKK6mYfIs9zBKILyrZQxjz3ABhjQXhbhFsSbo1HW/BFcsDnfJYJWA6thRR5/TUY2qs5W99Q==}
+  /istanbul-lib-instrument/5.2.0:
+    resolution: {integrity: sha512-6Lthe1hqXHBNsqvgDzGO6l03XNeu3CrG4RqQ1KM9+l5+jNGpEJfIELx1NS3SEHmJQA8np/u+E4EPRKRiu6m19A==}
     engines: {node: '>=8'}
     dependencies:
       '@babel/core': 7.17.9
@@ -8553,7 +8551,6 @@ packages:
 
   /json-schema-traverse/0.4.1:
     resolution: {integrity: sha512-xbbCH5dCYU5T8LcEhhuh7HJ88HXuW3qsI3Y0zOZFKfZEHcpWiHU/Jxzk629Brsab/mMiHQti9wMP+845RPe3Vg==}
-    requiresBuild: true
     dev: true
 
   /json-schema-traverse/1.0.0:
@@ -10583,14 +10580,14 @@ packages:
       react: 18.0.0
       react-dom: 18.0.0_react@18.0.0
 
-  /react-universal-interface/0.6.2_react@18.0.0+tslib@2.3.1:
+  /react-universal-interface/0.6.2_react@18.0.0+tslib@2.4.0:
     resolution: {integrity: sha512-dg8yXdcQmvgR13RIlZbTRQOoUrDciFVoSBZILwjE2LFISxZZ8loVJKAkuzswl5js8BHda79bIb2b84ehU8IjXw==}
     peerDependencies:
       react: '*'
       tslib: '*'
     dependencies:
       react: 18.0.0
-      tslib: 2.3.1
+      tslib: 2.4.0
     dev: false
 
   /react-use/17.3.2_react-dom@18.0.0+react@18.0.0:
@@ -10608,13 +10605,13 @@ packages:
       nano-css: 5.3.4_react-dom@18.0.0+react@18.0.0
       react: 18.0.0
       react-dom: 18.0.0_react@18.0.0
-      react-universal-interface: 0.6.2_react@18.0.0+tslib@2.3.1
+      react-universal-interface: 0.6.2_react@18.0.0+tslib@2.4.0
       resize-observer-polyfill: 1.5.1
       screenfull: 5.2.0
       set-harmonic-interval: 1.0.1
       throttle-debounce: 3.0.1
       ts-easing: 0.2.0
-      tslib: 2.3.1
+      tslib: 2.4.0
     dev: false
 
   /react/18.0.0:
@@ -10963,7 +10960,7 @@ packages:
   /rxjs/7.5.5:
     resolution: {integrity: sha512-sy+H0pQofO95VDmFLzyaw9xNJU4KTRSwQIGM6+iG3SypAtCiLDzpeG8sJrNCWn2Up9km+KhkvTdbkrdy+yzZdw==}
     dependencies:
-      tslib: 2.3.1
+      tslib: 2.4.0
     dev: true
 
   /sade/1.8.1:
@@ -11220,7 +11217,6 @@ packages:
   /slice-ansi/3.0.0:
     resolution: {integrity: sha512-pSyv7bSTC7ig9Dcgbw9AuRNUb5k5V6oDudjZoMBSr13qpLBG7tB+zgCkARjq7xIUgdz5P1Qe8u+rSGdouOOIyQ==}
     engines: {node: '>=8'}
-    requiresBuild: true
     dependencies:
       ansi-styles: 4.3.0
       astral-regex: 2.0.0
@@ -11946,6 +11942,10 @@ packages:
 
   /tslib/2.3.1:
     resolution: {integrity: sha512-77EbyPPpMz+FRFRuAFlWMtmgUWGe9UOG2Z25NqCwiIjRhOf5iKGuzSe5P2w1laq+FkRy4p+PCuVkJSGkzTEKVw==}
+    dev: true
+
+  /tslib/2.4.0:
+    resolution: {integrity: sha512-d6xOpEDfsi2CZVlPQzGeux8XMwLT9hssAsaPYExaQMuYskwb+x1x7J371tWlbBdWHroy99KnVB6qIkUbs5X3UQ==}
 
   /tsutils/3.21.0_typescript@4.6.3:
     resolution: {integrity: sha512-mHKK3iUXL+3UF6xL5k0PEhKRUBKPBCv/+RkEOpjRWxxx27KKRBmmA60A9pgOUvMi8GKhRMPEmjBRPzs2W7O1OA==}
@@ -12249,7 +12249,7 @@ packages:
     resolution: {integrity: sha512-HcvgY/xaRm7isYmyx+lFKA4uQmfUbN0J4M0nNItvzTvH/iQ9kW5j/t4YSR+Ge323/lrgDAWJoF46tzGQHwBHFw==}
     engines: {node: '>=10.12.0'}
     dependencies:
-      '@jridgewell/trace-mapping': 0.3.7
+      '@jridgewell/trace-mapping': 0.3.9
       '@types/istanbul-lib-coverage': 2.0.4
       convert-source-map: 1.8.0
     dev: true
@@ -12612,7 +12612,6 @@ packages:
   /xmlbuilder/9.0.7:
     resolution: {integrity: sha1-Ey7mPS7FVlxVfiD0wi35rKaGsQ0=}
     engines: {node: '>=4.0'}
-    requiresBuild: true
     dev: true
 
   /xmlchars/2.2.0:
