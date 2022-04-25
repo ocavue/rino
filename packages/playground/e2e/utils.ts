@@ -286,3 +286,13 @@ export async function getDocJson() {
         return view.state.doc.toJSON()
     })
 }
+
+export async function expectWysiwygMode() {
+    await wait("wysiwyg_mode_textarea")
+    await wait("source_code_mode_textarea", { state: "hidden" })
+}
+
+export async function expectSourceCodeMode() {
+    await wait("source_code_mode_textarea")
+    await wait("wysiwyg_mode_textarea", { state: "hidden" })
+}

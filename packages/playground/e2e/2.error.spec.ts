@@ -1,22 +1,28 @@
-import { switchMode } from "./actions"
-import { getInnerText, getSourceCodeModeText, setupEmptyEditor, typeSourceCodeEditor, wait } from "./utils"
+import { switchMode, switchToSourceCodeMode, switchToWysiwygMode } from "./actions"
+import { expectWysiwygMode, getInnerText, getSourceCodeModeText, setupEmptyEditor, typeSourceCodeEditor, wait } from "./utils"
 
 describe("ProsemirrorView constructor error", () => {
     test("Prepare", async () => {
         await setupEmptyEditor()
+        await expectWysiwygMode()
     })
 
     test("Make the alert message", async () => {
-        await switchMode() // Switch to source code mode
+        // Switch to source code mode
+        await switchToSourceCodeMode()
 
         await typeSourceCodeEditor("HOOK:FAILED_TO_INIT_PROSEMIRROR_VIEW")
-        await switchMode() // Switch back to wysiwyg code mode
+
+        // Switch back to wysiwyg code mode. This should show the alert message.
+        await switchMode()
         const error = await getInnerText("wysiwyg_mode_error")
         expect(error).toContain("Something went wrong.\n\nError: Found error hook for testing")
     })
 
     test("Compare the text in source code mode", async () => {
-        await switchMode() // Switch to source code mode, which should works
+        // Switch to source code mode. This should work.
+        await switchToSourceCodeMode()
+
         const text = await getSourceCodeModeText()
         expect(text.trim()).toEqual("HOOK:FAILED_TO_INIT_PROSEMIRROR_VIEW")
     })
@@ -26,7 +32,7 @@ describe("ProsemirrorView constructor error", () => {
     })
 
     test("Switch back to wysiwyg mode", async () => {
-        await switchMode()
+        await switchToWysiwygMode()
         await wait("wysiwyg_mode_error", { state: "hidden" })
     })
 })
