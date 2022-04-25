@@ -1,6 +1,15 @@
-import { pressKey, sleep } from "./utils"
+import { expectSourceCodeMode, expectWysiwygMode, pressKey } from "./utils"
 
 export async function switchMode() {
     await pressKey("Meta", "Slash")
-    await sleep(500)
+}
+
+export async function switchToSourceCodeMode() {
+    await switchMode()
+    await expectSourceCodeMode()
+}
+
+export async function switchToWysiwygMode() {
+    await switchMode()
+    await expectWysiwygMode()
 }

@@ -1,10 +1,9 @@
 import { toMatchImageSnapshot } from "jest-image-snapshot"
 
-import { switchMode } from "./actions"
+import { switchToSourceCodeMode } from "./actions"
+import { setupEditor } from "./utils"
 
 expect.extend({ toMatchImageSnapshot })
-
-import { setupEditor } from "./utils"
 
 const content = `# first heading in the document (zero margin-top)
 
@@ -43,17 +42,24 @@ A long long long long long long long long long long long long long long long lon
 
 `
 
-test("default", async () => {
-    if (process.platform !== "darwin") {
-        return
-    }
+describe("macOS", () => {
+    test("wysiwyg mode", async () => {
+        if (process.platform !== "darwin") {
+            return
+        }
 
-    await setupEditor(content)
-    await page.focus(".blur-helper") // hide the cursor
+        await setupEditor(content)
+        await page.focus(".blur-helper") // hide the cursor
+        expect(await page.screenshot({ fullPage: true })).toMatchImageSnapshot()
+    })
 
-    expect(await page.screenshot({ fullPage: true })).toMatchImageSnapshot()
+    test("source code mode", async () => {
+        if (process.platform !== "darwin") {
+            return
+        }
 
-    await switchMode()
-    await page.focus(".blur-helper")
-    expect(await page.screenshot({ fullPage: true })).toMatchImageSnapshot()
+        await switchToSourceCodeMode()
+        await page.focus(".blur-helper")
+        expect(await page.screenshot({ fullPage: true })).toMatchImageSnapshot()
+    })
 })

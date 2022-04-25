@@ -1,4 +1,4 @@
-import { switchMode } from "./actions"
+import { switchToSourceCodeMode, switchToWysiwygMode } from "./actions"
 import { getSourceCodeModeText, setupEditor, typeWysiwygEditor as type } from "./utils"
 
 beforeAll(async () => {
@@ -51,9 +51,9 @@ describe("Source code text", () => {
     })
 
     test("Check result", async () => {
-        await switchMode() // Switch to the source code mode
+        await switchToSourceCodeMode()
         const received = await getSourceCodeModeText()
         expect(received.trim()).toMatchSnapshot()
-        await switchMode() // Switch back to the WYSIWYG mode
+        await switchToWysiwygMode()
     })
 })
