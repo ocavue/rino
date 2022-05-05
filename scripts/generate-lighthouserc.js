@@ -4,7 +4,7 @@ const fs = require("fs")
 const path = require("path")
 const slugifyBranch = require("./slugify-branch").slugify
 
-const commonAssertions = {
+const assertions = {
     // I don't know how to fix this.
     "uses-responsive-images": "warn",
 
@@ -26,9 +26,7 @@ const homeConfig = {
         },
         assert: {
             preset: "lighthouse:no-pwa",
-            assertions: {
-                ...commonAssertions,
-            },
+            assertions,
         },
     },
 }
