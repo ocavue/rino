@@ -31,7 +31,7 @@ const config = {
 
     testSequencer: "./tests/jest-sequencer.js",
 
-    projects: ["./packages/*/test/jest.config.mjs", "./packages/*/e2e/jest.config.mjs"],
+    projects: ["./packages/*/test/jest.config.mjs"],
 }
 
 export default config

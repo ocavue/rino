@@ -20,7 +20,7 @@ jobs:
         if: ${{ steps.step_find_pr.outputs.number }}
 
       - name: Install pnpm
-        run: npm install -g pnpm
+        run: npm install -g pnpm@6
         if: ${{ steps.step_find_pr.outputs.number }}
 
       - name: Regenerate the lock file

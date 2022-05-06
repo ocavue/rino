@@ -1,10 +1,6 @@
 import { switchToSourceCodeMode, switchToWysiwygMode } from "./actions"
 import { getSourceCodeModeText, setupEditor, typeWysiwygEditor as type } from "./utils"
 
-beforeAll(async () => {
-    await setupEditor()
-})
-
 describe("Source code text", () => {
     test("Create a note", async () => {
         await setupEditor("# ")

@@ -42,6 +42,6 @@ runs:
       run: npm install -g pnpm@6
       shell: bash
 
-    - name: Install pnpm dependencies
+    - name: Install dependencies
       run: pnpm install --loglevel debug --reporter append-only
       shell: bash

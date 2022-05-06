@@ -10,6 +10,9 @@
     "scripts": {
         "dev": "run-s _dep _dev",
         "build": "run-s _dep _build",
+        "test:vitest": "pnpm build && vitest run --no-threads",
+        "test:vitest:dev": "pnpm build && vitest dev --no-threads",
+        "test:vitest:coverage": "pnpm build && vitest run --no-threads --coverage",
         "_dep": "pnpm -F '@rino.app/playground^...' build",
         "_dev": "vite dev --clearScreen=false",
         "_build": "vite build"
@@ -23,6 +26,7 @@
         "jest-remirror": "^1.0.41",
         "lodash-es": "^4.17.21",
         "npm-run-all": "^4.1.5",
+        "playwright-chromium": "^1.21.1",
         "react": "^18.1.0",
         "react-dom": "^18.1.0",
         "typescript": "^4.6.4",
