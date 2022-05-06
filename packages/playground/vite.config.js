@@ -17,13 +17,14 @@ export default defineConfig((env) => ({
         emptyOutDir: true,
     },
     test: {
-        globals: true,
         environment: "jsdom",
-        setupFiles: ["./test/setup-vitest.ts"],
-        include: ["./test/**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}"],
+        include: ["../test/**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}"],
         coverage: {
             reporter: ["text-summary", "json", "html"],
         },
+        globals: true,
+        testTimeout: 30_000,
+        globalSetup: "./test/setup-playwright.ts",
     },
     plugins: [react()],
 }))

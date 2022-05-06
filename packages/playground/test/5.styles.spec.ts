@@ -1,9 +1,5 @@
-import { toMatchImageSnapshot } from "jest-image-snapshot"
-
 import { switchToSourceCodeMode } from "./actions"
-import { setupEditor } from "./utils"
-
-expect.extend({ toMatchImageSnapshot })
+import { setupEditor, writeSnapshotImage } from "./utils"
 
 const content = `# first heading in the document (zero margin-top)
 
@@ -50,7 +46,7 @@ describe("macOS", () => {
 
         await setupEditor(content)
         await page.focus(".blur-helper") // hide the cursor
-        expect(await page.screenshot({ fullPage: true })).toMatchImageSnapshot()
+        await writeSnapshotImage("macOS.wysiwyg.png")
     })
 
     test("source code mode", async () => {
@@ -59,7 +55,6 @@ describe("macOS", () => {
         }
 
         await switchToSourceCodeMode()
-        await page.focus(".blur-helper")
-        expect(await page.screenshot({ fullPage: true })).toMatchImageSnapshot()
+        await writeSnapshotImage("macOS.sourcecode.png")
     })
 })
