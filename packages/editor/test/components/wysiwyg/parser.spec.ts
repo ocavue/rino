@@ -1,6 +1,7 @@
 import { RemirrorManager } from "@remirror/core"
 // @ts-expect-error commonmark-spec has not types
 import { tests } from "commonmark-spec"
+import { describe, expect, test } from "vitest"
 
 import { dedent } from "@rino.app/common"
 

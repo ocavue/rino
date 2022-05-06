@@ -114,10 +114,6 @@ jobs:
 
       - name: Run vitest
         run: |
-          pnpm -F '*' test:vitest:coverage
-
-      - name: Run jest
-        run: |
           pnpm test:coverage
 
       - name: Upload coverage information to codecov

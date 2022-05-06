@@ -1,3 +1,5 @@
+import { expect, test } from "vitest"
+
 import { basename, generateRandomId } from "../src"
 
 test("generateRandomId", async () => {

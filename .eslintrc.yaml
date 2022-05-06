@@ -80,13 +80,6 @@ overrides:
   - files:
       - "**/tests/**/*"
       - "**/__test__/*"
-    env:
-      jest: true
-    extends:
-      - "plugin:jest/style"
-      - "plugin:jest/recommended"
-    rules:
-      "jest/expect-expect": "off"
   - files: "*.js"
     rules:
       "@typescript-eslint/no-var-requires": off
