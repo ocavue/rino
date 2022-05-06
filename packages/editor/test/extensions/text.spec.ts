@@ -1,4 +1,5 @@
 import { renderEditor } from "jest-remirror"
+import { describe, expect, test } from "vitest"
 
 import { buildMarkdownParser } from "../../src/components/wysiwyg"
 import { RinoParagraphExtension, RinoTextExtension } from "../../src/extensions"

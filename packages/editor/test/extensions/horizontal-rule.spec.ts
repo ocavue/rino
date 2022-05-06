@@ -1,4 +1,5 @@
 import { renderEditor } from "jest-remirror"
+import { describe, expect, test } from "vitest"
 
 import { buildMarkdownParser, buildMarkdownSerializer, createRinoCorePreset } from "../../src/components/wysiwyg"
 import { RinoHorizontalRuleExtension } from "../../src/extensions"

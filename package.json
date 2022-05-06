@@ -5,31 +5,24 @@
     "scripts": {
         "lint": "eslint --ignore-path .gitignore --ext '.js,.jsx,.ts,.tsx'",
         "fix": "eslint --ignore-path .gitignore --ext '.js,.jsx,.ts,.tsx' --fix .",
-        "test": "NODE_OPTIONS=--experimental-vm-modules jest --runInBand",
-        "test:coverage": "NODE_OPTIONS=--experimental-vm-modules jest --runInBand --coverage",
         "postinstall": "./scripts/post-install.sh && husky install",
+        "test:coverage": "pnpm -F '*' test:vitest:coverage",
         "clean": "./scripts/clean.mjs"
     },
     "devDependencies": {
         "@lhci/cli": "^0.9.0",
         "@svgr/cli": "^6.2.1",
-        "@types/jest": "^27.5.0",
-        "@types/jest-image-snapshot": "^4.3.1",
         "@types/node": "^16.11.33",
         "@typescript-eslint/eslint-plugin": "^5.22.0",
         "@typescript-eslint/parser": "^5.22.0",
         "eslint": "^8.14.0",
         "eslint-config-prettier": "^8.5.0",
-        "eslint-plugin-jest": "^26.1.5",
         "eslint-plugin-prettier": "^4.0.0",
         "eslint-plugin-react": "^7.29.4",
         "eslint-plugin-react-hooks": "^4.5.0",
         "eslint-plugin-simple-import-sort": "^7.0.0",
         "husky": "^7.0.4",
-        "jest": "^27.5.1",
-        "jest-transform-stub": "^2.0.0",
         "prettier": "^2.6.2",
-        "ts-jest": "^27.1.4",
         "typescript": "^4.6.4"
     },
     "renovate": {

@@ -1,3 +1,5 @@
+import { describe, expect, test } from "vitest"
+
 import { fromInlineMarkdown } from "../../../src/extensions/inline/from-inline-markdown"
 
 describe("text", function () {

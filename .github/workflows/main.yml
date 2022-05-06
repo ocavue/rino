@@ -114,11 +114,11 @@ jobs:
 
       - name: Run vitest
         run: |
-          pnpm -F '*' test:vitest:coverage
-
-      - name: Run jest
-        run: |
           pnpm test:coverage
+
+      - name: Merge coverage reporter
+        run: |
+          pnpm -F rig merge-coverage
 
       - name: Upload coverage information to codecov
         uses: codecov/codecov-action@v3

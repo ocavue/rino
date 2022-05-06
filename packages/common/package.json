@@ -8,12 +8,16 @@
     "module": "dist/index.js",
     "types": "dist/index.d.ts",
     "scripts": {
+        "test:vitest": "vitest run",
+        "test:vitest:dev": "vitest dev",
+        "test:vitest:coverage": "vitest run --coverage",
         "build": "tsc --build src/tsconfig.json"
     },
     "publishConfig": {
         "access": "public"
     },
     "devDependencies": {
-        "typescript": "^4.6.4"
+        "typescript": "^4.6.4",
+        "vitest": "^0.10.2"
     }
 }
