@@ -10,9 +10,9 @@
     "scripts": {
         "dev": "run-s _dep _dev",
         "build": "run-s _dep _build",
-        "test:vitest": "pnpm _build && vitest run --no-threads",
-        "test:vitest:dev": "pnpm _build && vitest dev --no-threads",
-        "test:vitest:coverage": "pnpm _build && vitest run --no-threads --coverage",
+        "test:vitest": "pnpm build && vitest run --no-threads",
+        "test:vitest:dev": "pnpm build && vitest dev --no-threads",
+        "test:vitest:coverage": "pnpm build && vitest run --no-threads --coverage",
         "_dep": "pnpm -F '@rino.app/playground^...' build",
         "_dev": "vite dev --clearScreen=false",
         "_build": "vite build"
