@@ -40,10 +40,10 @@ importers:
   packages/common:
     specifiers:
       typescript: ^4.6.4
-      vitest: ^0.10.2
+      vitest: ^0.10.5
     devDependencies:
       typescript: 4.6.4
-      vitest: 0.10.2
+      vitest: 0.10.5
 
   packages/editor:
     specifiers:
@@ -120,7 +120,7 @@ importers:
       typescript: ^4.6.4
       unstated-next: ^1.1.0
       vite: ^2.9.8
-      vitest: ^0.10.2
+      vitest: ^0.10.5
     dependencies:
       '@codemirror/autocomplete': 0.20.0
       '@codemirror/commands': 0.20.0
@@ -196,7 +196,7 @@ importers:
       react-dom: 18.1.0_react@18.1.0
       typescript: 4.6.4
       vite: 2.9.8
-      vitest: 0.10.2_c8@7.11.2+jsdom@19.0.0
+      vitest: 0.10.5_c8@7.11.2+jsdom@19.0.0
 
   packages/electron:
     specifiers:
@@ -313,7 +313,7 @@ importers:
       react-dom: ^18.1.0
       responsive-loader: ^2.3.0
       sharp: ^0.30.4
-      vitest: ^0.10.2
+      vitest: ^0.10.5
     devDependencies:
       '@babel/core': 7.17.10
       '@emotion/cache': 11.7.1
@@ -334,7 +334,7 @@ importers:
       react-dom: 18.1.0_react@18.1.0
       responsive-loader: 2.3.0_sharp@0.30.4
       sharp: 0.30.4
-      vitest: 0.10.2_happy-dom@3.1.1
+      vitest: 0.10.5_happy-dom@3.1.1
 
   packages/home2:
     specifiers:
@@ -369,7 +369,7 @@ importers:
       react-dom: ^18.1.0
       typescript: ^4.6.4
       vite: ^2.9.8
-      vitest: ^0.10.2
+      vitest: ^0.10.5
     devDependencies:
       '@rino.app/editor': link:../editor
       '@vitejs/plugin-react': 1.3.2
@@ -382,14 +382,14 @@ importers:
       react-dom: 18.1.0_react@18.1.0
       typescript: 4.6.4
       vite: 2.9.8
-      vitest: 0.10.2_c8@7.11.2
+      vitest: 0.10.5_c8@7.11.2
 
   packages/rig:
     specifiers:
-      merge-istanbul: ^1.1.3
+      merge-istanbul: ^1.1.4
       monorepo-license-checker: ^0.3.0
     devDependencies:
-      merge-istanbul: 1.1.3
+      merge-istanbul: 1.1.4
       monorepo-license-checker: 0.3.0
 
   packages/visite:
@@ -4157,6 +4157,7 @@ packages:
   /astral-regex/2.0.0:
     resolution: {integrity: sha512-Z7tMw1ytTXt5jqMcOP+OQteU1VuNK9Y02uuJtKQ1Sv69jXQKKg5cibLwGJow8yzZP+eAc18EmLGPal0bp36rvQ==}
     engines: {node: '>=8'}
+    requiresBuild: true
     dev: true
 
   /async-exit-hook/2.0.1:
@@ -4241,6 +4242,7 @@ packages:
 
   /base64-js/1.5.1:
     resolution: {integrity: sha512-AKpaYlHn8t4SVbOHCy+b5+KKgvR4vrsD8vbvrbiQJps7fKDTkjkDry6ji0rUJjC0kzbNePLwzxq8iypo41qeWA==}
+    requiresBuild: true
     dev: true
 
   /big.js/5.2.2:
@@ -6347,10 +6349,6 @@ packages:
         optional: true
     dev: true
 
-  /foreach/2.0.5:
-    resolution: {integrity: sha1-C+4AUBiusmDQo6865ljdATbsG5k=}
-    dev: true
-
   /foreground-child/2.0.0:
     resolution: {integrity: sha512-dCIq9FpEcyQyXKCkyzmlPTFNgrCzPudOe+mhvJU5zAtlBnGVy2yKxtfsxK2tQBThwq225jcvBjpw1Gr40uzZCA==}
     engines: {node: '>=8.0.0'}
@@ -6901,6 +6899,7 @@ packages:
 
   /ieee754/1.2.1:
     resolution: {integrity: sha512-dcyqhDvX1C46lXZcVqCpK+FtMRQVdIMN6/Df5js2zouUsqG7I6sFxitIC+7KYK29KdXOLHdu9zL4sFnoVQnqaA==}
+    requiresBuild: true
     dev: true
 
   /ignore/5.2.0:
@@ -7676,6 +7675,7 @@ packages:
 
   /json-schema-traverse/0.4.1:
     resolution: {integrity: sha512-xbbCH5dCYU5T8LcEhhuh7HJ88HXuW3qsI3Y0zOZFKfZEHcpWiHU/Jxzk629Brsab/mMiHQti9wMP+845RPe3Vg==}
+    requiresBuild: true
     dev: true
 
   /json-schema-traverse/1.0.0:
@@ -8089,15 +8089,13 @@ packages:
     resolution: {integrity: sha1-sAqqVW3YtEVoFQ7J0blT8/kMu2E=}
     dev: true
 
-  /merge-istanbul/1.1.3:
-    resolution: {integrity: sha512-OebZ0ta7f37oxFd6QXpJS9JBlMy4Y+jDtefEOWUe8ogSaXrTlTrwExzdC6HxzHyHOO5bMFEMapfy7QMhWIBd7A==}
+  /merge-istanbul/1.1.4:
+    resolution: {integrity: sha512-2ILUC7dKHm3XQNLoGC2y+g8FLIC5yKEjrGPyrR0xLu2E0sH45U9EWLTT6Gvn65dmOREsoX2ltXfi94RCL7nq7Q==}
     engines: {node: '>= 0.4'}
     hasBin: true
     dependencies:
-      foreach: 2.0.5
       glob: 8.0.1
       istanbul-lib-coverage: 3.2.0
-      mkdirp: 1.0.4
       yargs: 17.4.1
     dev: true
 
@@ -8409,12 +8407,6 @@ packages:
     hasBin: true
     dependencies:
       minimist: 1.2.6
-    dev: true
-
-  /mkdirp/1.0.4:
-    resolution: {integrity: sha512-vVqVZQyf3WLx2Shd0qJ9xuvqgAyKPLAiqITEtqW0oIUjzo3PePDd6fW9iFz30ef7Ysp/oiWqbhszeGWW2T6Gzw==}
-    engines: {node: '>=10'}
-    hasBin: true
     dev: true
 
   /modify-filename/1.1.0:
@@ -10208,6 +10200,7 @@ packages:
   /slice-ansi/3.0.0:
     resolution: {integrity: sha512-pSyv7bSTC7ig9Dcgbw9AuRNUb5k5V6oDudjZoMBSr13qpLBG7tB+zgCkARjq7xIUgdz5P1Qe8u+rSGdouOOIyQ==}
     engines: {node: '>=8'}
+    requiresBuild: true
     dependencies:
       ansi-styles: 4.3.0
       astral-regex: 2.0.0
@@ -11182,8 +11175,8 @@ packages:
     optionalDependencies:
       fsevents: 2.3.2
 
-  /vitest/0.10.2:
-    resolution: {integrity: sha512-41D+nhswCco5vy1NXmpAjZX11Aj+HMnyhjWQD12piwHibf4bvdTGtni56UcFWcvONVoIForgDuLrKSohHJjwQA==}
+  /vitest/0.10.5:
+    resolution: {integrity: sha512-4qXdNbHwAd9YcsztJoVMWUQGcMATVlY9Xd95I3KQ2JJwDLTL97f/jgfGRotqptvNxdlmme5TBY0Gv+l6+JSYvA==}
     engines: {node: '>=v14.16.0'}
     hasBin: true
     peerDependencies:
@@ -11214,8 +11207,8 @@ packages:
       - stylus
     dev: true
 
-  /vitest/0.10.2_c8@7.11.2:
-    resolution: {integrity: sha512-41D+nhswCco5vy1NXmpAjZX11Aj+HMnyhjWQD12piwHibf4bvdTGtni56UcFWcvONVoIForgDuLrKSohHJjwQA==}
+  /vitest/0.10.5_c8@7.11.2:
+    resolution: {integrity: sha512-4qXdNbHwAd9YcsztJoVMWUQGcMATVlY9Xd95I3KQ2JJwDLTL97f/jgfGRotqptvNxdlmme5TBY0Gv+l6+JSYvA==}
     engines: {node: '>=v14.16.0'}
     hasBin: true
     peerDependencies:
@@ -11247,8 +11240,8 @@ packages:
       - stylus
     dev: true
 
-  /vitest/0.10.2_c8@7.11.2+jsdom@19.0.0:
-    resolution: {integrity: sha512-41D+nhswCco5vy1NXmpAjZX11Aj+HMnyhjWQD12piwHibf4bvdTGtni56UcFWcvONVoIForgDuLrKSohHJjwQA==}
+  /vitest/0.10.5_c8@7.11.2+jsdom@19.0.0:
+    resolution: {integrity: sha512-4qXdNbHwAd9YcsztJoVMWUQGcMATVlY9Xd95I3KQ2JJwDLTL97f/jgfGRotqptvNxdlmme5TBY0Gv+l6+JSYvA==}
     engines: {node: '>=v14.16.0'}
     hasBin: true
     peerDependencies:
@@ -11281,8 +11274,8 @@ packages:
       - stylus
     dev: true
 
-  /vitest/0.10.2_happy-dom@3.1.1:
-    resolution: {integrity: sha512-41D+nhswCco5vy1NXmpAjZX11Aj+HMnyhjWQD12piwHibf4bvdTGtni56UcFWcvONVoIForgDuLrKSohHJjwQA==}
+  /vitest/0.10.5_happy-dom@3.1.1:
+    resolution: {integrity: sha512-4qXdNbHwAd9YcsztJoVMWUQGcMATVlY9Xd95I3KQ2JJwDLTL97f/jgfGRotqptvNxdlmme5TBY0Gv+l6+JSYvA==}
     engines: {node: '>=v14.16.0'}
     hasBin: true
     peerDependencies:
@@ -11572,6 +11565,7 @@ packages:
   /xmlbuilder/9.0.7:
     resolution: {integrity: sha1-Ey7mPS7FVlxVfiD0wi35rKaGsQ0=}
     engines: {node: '>=4.0'}
+    requiresBuild: true
     dev: true
 
   /xmlchars/2.2.0:
