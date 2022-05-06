@@ -379,7 +379,6 @@ importers:
       react-dom: ^18.1.0
       typescript: ^4.6.4
       vite: ^2.9.8
-      vite-plugin-istanbul: ^2.7.3
       vitest: ^0.10.2
     devDependencies:
       '@rino.app/editor': link:../editor
@@ -395,7 +394,6 @@ importers:
       react-dom: 18.1.0_react@18.1.0
       typescript: 4.6.4
       vite: 2.9.8
-      vite-plugin-istanbul: 2.7.3
       vitest: 0.10.2_c8@7.11.2
 
   packages/rig:
@@ -11752,16 +11750,6 @@ packages:
       extsprintf: 1.4.1
     dev: true
     optional: true
-
-  /vite-plugin-istanbul/2.7.3:
-    resolution: {integrity: sha512-IYCVKko3SInmsuS1Pymw0M6We4N1RZUlf2hB34/mKkG52IHelaP3oN5AKUFUywgglpx/Gs9H5CK+sxnMbEfT0g==}
-    dependencies:
-      istanbul-lib-instrument: 5.2.0
-      picocolors: 1.0.0
-      test-exclude: 6.0.0
-    transitivePeerDependencies:
-      - supports-color
-    dev: true
 
   /vite/2.9.8:
     resolution: {integrity: sha512-zsBGwn5UT3YS0NLSJ7hnR54+vUKfgzMUh/Z9CxF1YKEBVIe213+63jrFLmZphgGI5zXwQCSmqIdbPuE8NJywPw==}
