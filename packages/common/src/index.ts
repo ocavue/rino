@@ -1,17 +1,3 @@
-export function all(items: unknown[]) {
-    for (const item of items) {
-        if (!item) return false
-    }
-    return true
-}
-
-export function any(items: unknown[]) {
-    for (const item of items) {
-        if (item) return true
-    }
-    return false
-}
-
 export function generateRandomId(): string {
     // https://stackoverflow.com/a/13403498
     return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)

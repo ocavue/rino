@@ -116,15 +116,11 @@ jobs:
         run: |
           pnpm test:coverage
 
-      - name: Merge coverage reporter
-        run: |
-          pnpm -F rig merge-coverage
-
       - name: Upload coverage information to codecov
         uses: codecov/codecov-action@v3
         with:
           file: ./coverage/coverage-final.json
-          fail_ci_if_error: false # Specify if CI pipeline should fail when Codecov runs into errors during upload. Defaults to false
+          fail_ci_if_error: true # Specify if CI pipeline should fail when Codecov runs into errors during upload. Defaults to false
 
   lint:
     runs-on: ubuntu-latest

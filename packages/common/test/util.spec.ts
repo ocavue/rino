@@ -1,6 +1,6 @@
 import { expect, test } from "vitest"
 
-import { basename, generateRandomId } from "../src"
+import { basename, dedent, generateRandomId } from "../src"
 
 test("generateRandomId", async () => {
     const id = generateRandomId()
@@ -13,4 +13,23 @@ test("basename", () => {
     expect(basename("a")).toEqual("a")
     expect(basename("hello/data.json.tar.gz")).toEqual("data.json.tar.gz")
     expect(basename("")).toEqual("")
+})
+
+test("dedent", () => {
+    const input = [
+        //
+        "  2 spaces",
+        "   3 spaces",
+        "  2 spaces",
+        "    4 spaces",
+    ].join("\n")
+    const expected = [
+        //
+        "2 spaces",
+        " 3 spaces",
+        "2 spaces",
+        "  4 spaces",
+    ].join("\n")
+
+    expect(dedent(input)).toEqual(expected)
 })

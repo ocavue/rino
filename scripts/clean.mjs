@@ -4,7 +4,7 @@ import fs from "node:fs/promises"
 import path from "node:path"
 import { fileURLToPath } from "node:url"
 
-const TO_CLEAN = [".next", "dist", "dist-types", ".cache", "coverage", "out", "build"]
+const TO_CLEAN = [".next", "dist", "dist-types", ".cache", "coverage", "coverage_e2e", "out", "build"]
 const TO_IGNORE = ["node_modules"]
 
 async function clean(dir) {
@@ -15,8 +15,8 @@ async function clean(dir) {
         if (TO_IGNORE.includes(d.name)) {
             continue
         } else if (TO_CLEAN.includes(d.name)) {
-            console.log(`deleting ${entry}`)
             fs.rm(entry, { recursive: true, force: true })
+            console.log(`deleted ${entry}`)
             cleanNumber += 1
         } else if (d.isDirectory()) {
             cleanNumber += await clean(entry)
@@ -27,9 +27,9 @@ async function clean(dir) {
 
 async function main() {
     const root = path.join(fileURLToPath(import.meta.url), "..", "..")
-    console.log(`cleaning ${root}`)
+    console.log(`scanning ${root}`)
     const cleanNumber = await clean(root)
-    console.log(`cleaned ${cleanNumber} items`)
+    console.log(`deleted ${cleanNumber} items in total`)
 }
 
 main()

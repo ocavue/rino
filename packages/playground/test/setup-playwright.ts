@@ -1,6 +1,8 @@
 import Playwright from "playwright-chromium"
 import { preview, PreviewServer } from "vite"
 
+import { setupCoverageDir } from "./coverage"
+
 async function setupServer() {
     let server: PreviewServer | null = null
     try {
@@ -13,8 +15,14 @@ async function setupServer() {
         }
     }
 
-    return () => {
-        server?.httpServer.close()
+    return async () => {
+        await new Promise<void>((resolve, reject) => {
+            if (server) {
+                server.httpServer.close((error) => (error ? reject(error) : resolve()))
+            } else {
+                resolve()
+            }
+        })
     }
 }
 
@@ -36,9 +44,10 @@ async function setupBrowser() {
 async function setup() {
     const teardownServer = await setupServer()
     const teardownBrowser = await setupBrowser()
+    await setupCoverageDir()
+
     return () => {
-        teardownServer()
-        teardownBrowser()
+        return Promise.all([teardownServer(), teardownBrowser()])
     }
 }
 

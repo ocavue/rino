@@ -12,6 +12,8 @@ export default defineConfig((env) => ({
         include: ["./test/**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}"],
         coverage: {
             reporter: ["text-summary", "json", "html"],
+            all: true,
+            src: ["./src"],
         },
         deps: {
             fallbackCJS: true,

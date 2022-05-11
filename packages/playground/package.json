@@ -9,6 +9,7 @@
     "types": "dist/index.d.ts",
     "scripts": {
         "dev": "run-s _dep _dev",
+        "preview": "vite preview --port 3001",
         "build": "run-s _dep _build",
         "test:vitest": "pnpm build && vitest run --no-threads",
         "test:vitest:dev": "pnpm build && vitest dev --no-threads",
@@ -27,7 +28,9 @@
         "playwright-chromium": "^1.21.1",
         "react": "^18.1.0",
         "react-dom": "^18.1.0",
+        "rollup-plugin-sourcemaps": "^0.6.3",
         "typescript": "^4.6.4",
+        "v8-to-istanbul": "^9.0.0",
         "vite": "^2.9.8",
         "vitest": "^0.10.5"
     },
