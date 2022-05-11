@@ -10,9 +10,9 @@
     "scripts": {
         "dev": "run-s _dep _dev",
         "build": "run-s _dep _build",
-        "test:vitest": "pnpm _dep && pnpm _typecheck && vitest run",
-        "test:vitest:dev": "pnpm _dep && pnpm _typecheck && vitest dev",
-        "test:vitest:coverage": "pnpm _dep && pnpm _typecheck && vitest run --coverage",
+        "test:vitest": "pnpm _dep && vitest run && pnpm _typecheck",
+        "test:vitest:dev": "pnpm _dep && vitest dev",
+        "test:vitest:coverage": "pnpm _dep && vitest run --coverage && pnpm _typecheck",
         "_dep": "pnpm -F '@rino.app/editor^...' build",
         "_dev": "node esbuild.mjs --watch",
         "_build": "node esbuild.mjs",

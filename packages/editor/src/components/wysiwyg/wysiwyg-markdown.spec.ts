@@ -5,7 +5,7 @@ import { describe, expect, test } from "vitest"
 
 import { dedent } from "@rino.app/common"
 
-import { buildMarkdownParser, createWysiwygExtension } from "../../../src/components/wysiwyg"
+import { buildMarkdownParser, createWysiwygExtension } from "./"
 
 /**
  * The test case format from CommonMark

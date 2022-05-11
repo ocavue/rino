@@ -6,7 +6,7 @@ import { Decoration, DecorationSet, WidgetDecorationSpec } from "prosemirror-vie
 
 import { ENABLE_REACT_CODE_LANGUAGE_SELECTOR } from "../../components/flags"
 import { NodeSerializerOptions, ParserRuleType } from "../../transform"
-import { fakeIndentedLanguage } from "./code-mirror-const"
+import { fakeIndentedLanguage } from "./codemirror-const"
 import { setupLanguageMenu } from "./codemirror-language-menu"
 
 export class RinoCodeMirrorExtension extends CodeMirrorExtension {

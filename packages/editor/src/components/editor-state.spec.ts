@@ -1,6 +1,6 @@
 import { test } from "vitest"
 
-import { editorReducer } from "../../../src/components/editor-state"
+import { editorReducer } from "./editor-state"
 
 test("editorReducer", () => {
     expect(() => {

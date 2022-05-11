@@ -1,7 +1,7 @@
 import { computePosition, flip, offset } from "@floating-ui/dom"
 import { EditorView, ProsemirrorNode } from "@remirror/core"
 
-import { fakeIndentedLanguage } from "./code-mirror-const"
+import { fakeIndentedLanguage } from "./codemirror-const"
 import { allLanguages } from "./codemirror-languages"
 
 const languageNames = allLanguages.map((language) => language.name)

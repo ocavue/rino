@@ -3,7 +3,7 @@ import { describe, expect, test } from "vitest"
 
 import { dedent } from "@rino.app/common"
 
-import { buildMarkdownParser, buildMarkdownSerializer, createRinoCorePreset } from "../../src/components/wysiwyg"
+import { buildMarkdownParser, buildMarkdownSerializer, createRinoCorePreset } from "../../components/wysiwyg"
 import {
     applyRangeMarks,
     RinoInlineDecorationExtension,
@@ -13,7 +13,7 @@ import {
     RinoTableExtension,
     RinoTableHeaderCellExtension,
     RinoTableRowExtension,
-} from "../../src/extensions"
+} from ".."
 
 const setup = () => {
     const editor = renderEditor([
