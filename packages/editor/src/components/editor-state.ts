@@ -8,8 +8,8 @@ import { createWysiwygDelegate } from "./wysiwyg/wysiwyg-delegate"
 
 type EditorAction = SwitchModeAction | SaveContentAction | EditContentAction
 
-function throwUnknownActionError(action: never): never {
-    throw new Error(`Unknown action type ${action}`)
+function throwUnknownActionError(): never {
+    throw new Error(`Unknown action type`)
 }
 
 function editorReducer(state: EditorState, action: EditorAction): EditorState {
@@ -21,7 +21,7 @@ function editorReducer(state: EditorState, action: EditorAction): EditorState {
         case "EDIT_CONTENT":
             return editContent(state, action)
         default:
-            throwUnknownActionError(action)
+            throwUnknownActionError()
     }
 }
 

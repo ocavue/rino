@@ -4,6 +4,7 @@ import {
     getSourceCodeModeText,
     pressKey,
     setupEmptyEditor,
+    sleep,
     typeSourceCodeEditor,
     typeWysiwygEditor,
 } from "./utils"
@@ -37,6 +38,7 @@ describe("Mode switch", function () {
     test("Switch back to source code mode", async () => {
         await pressHotkey()
         await expectSourceCodeMode()
+        await sleep(500)
         await typeSourceCodeEditor("D", false)
         const text = await getSourceCodeModeText()
         expect(text.trim()).toEqual("ABCD")
