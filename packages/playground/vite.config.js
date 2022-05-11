@@ -23,6 +23,7 @@ export default defineConfig((env) => ({
     },
     test: {
         environment: "jsdom",
+        include: ["../test/**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}"],
         coverage: {
             reporter: ["json"],
         },
