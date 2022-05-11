@@ -2,6 +2,7 @@
 // @ts-check
 
 import react from "@vitejs/plugin-react"
+import sourcemaps from "rollup-plugin-sourcemaps"
 import { defineConfig } from "vite"
 
 // https://vitejs.dev/config/
@@ -15,6 +16,10 @@ export default defineConfig((env) => ({
     build: {
         outDir: "../dist",
         emptyOutDir: true,
+        sourcemap: true,
+        rollupOptions: {
+            plugins: [sourcemaps({ include: /editor/ })],
+        },
     },
     test: {
         environment: "jsdom",
@@ -25,6 +30,7 @@ export default defineConfig((env) => ({
         globals: true,
         testTimeout: 30_000,
         globalSetup: "./test/setup-playwright.ts",
+        setupFiles: "../test/setup-playwright-coverage.ts",
     },
     plugins: [react()],
 }))

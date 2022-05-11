@@ -4,11 +4,11 @@
     "private": true,
     "license": "GPL-3.0",
     "scripts": {
-        "output-licenses": "monorepo-license-checker --markdown --exclude-private-packages > dependency-licenses.md",
-        "merge-coverage": "merge-istanbul --out ../../coverage/coverage-final.json '../../packages/*/coverage/coverage-final.json'"
+        "output-licenses": "monorepo-license-checker --markdown --exclude-private-packages > dependency-licenses.md"
     },
     "devDependencies": {
         "merge-istanbul": "^1.1.4",
-        "monorepo-license-checker": "^0.3.0"
+        "monorepo-license-checker": "^0.3.0",
+        "nyc": "^15.1.0"
     }
 }
