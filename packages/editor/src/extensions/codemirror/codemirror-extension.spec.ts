@@ -3,8 +3,8 @@ import { describe, expect, test } from "vitest"
 
 import { dedent } from "@rino.app/common"
 
-import { buildMarkdownParser, buildMarkdownSerializer } from "../../src/components/wysiwyg"
-import { fakeIndentedLanguage, RinoCodeMirrorExtension, RinoParagraphExtension, RinoTextExtension } from "../../src/extensions"
+import { buildMarkdownParser, buildMarkdownSerializer } from "../../components/wysiwyg"
+import { fakeIndentedLanguage, RinoCodeMirrorExtension, RinoParagraphExtension, RinoTextExtension } from ".."
 
 const setup = () => {
     const editor = renderEditor([new RinoParagraphExtension(), new RinoTextExtension(), new RinoCodeMirrorExtension()])

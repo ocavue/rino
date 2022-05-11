@@ -3,7 +3,7 @@ import { describe, expect, test } from "vitest"
 
 import { dedent } from "@rino.app/common"
 
-import { buildMarkdownParser, buildMarkdownSerializer } from "../../src/components/wysiwyg"
+import { buildMarkdownParser, buildMarkdownSerializer } from "../../components/wysiwyg"
 import {
     RinoBulletListExtension,
     RinoHardBreakExtension,
@@ -14,7 +14,7 @@ import {
     RinoTaskListExtension,
     RinoTaskListItemExtension,
     RinoTextExtension,
-} from "../../src/extensions"
+} from ".."
 
 const setup = () => {
     const extensions = [

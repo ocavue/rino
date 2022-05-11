@@ -25,7 +25,7 @@ export default defineConfig((env) => ({
         environment: "jsdom",
         include: ["../test/**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}"],
         coverage: {
-            reporter: ["text-summary", "json", "html"],
+            reporter: ["json"],
         },
         globals: true,
         testTimeout: 30_000,

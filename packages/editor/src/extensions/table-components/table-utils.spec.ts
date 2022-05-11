@@ -11,8 +11,8 @@ import {
     RinoTableHeaderCellExtension,
     RinoTableRowExtension,
     RinoTextExtension,
-} from "../../../src/extensions"
-import { getCellsInColumn, getCellsInRow } from "../../../src/extensions/table-components/table-utils"
+} from ".."
+import { getCellsInColumn, getCellsInRow } from "./table-utils"
 
 const setup = () => {
     const editor = renderEditor([

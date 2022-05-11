@@ -1,6 +1,6 @@
 import { describe, expect, test } from "vitest"
 
-import { formatHref } from "../../../src/extensions/inline/format-href"
+import { formatHref } from "./format-href"
 
 const cases: Array<[string, string]> = [
     ["/tmp/image.png", "file:///tmp/image.png"],

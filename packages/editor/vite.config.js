@@ -9,15 +9,14 @@ export default defineConfig((env) => ({
         environment: "jsdom",
         globals: true,
         setupFiles: ["./test/setup-vitest.ts"],
-        include: ["./test/**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}"],
         coverage: {
-            reporter: ["text-summary", "json", "html"],
+            reporter: ["json"],
             all: true,
             src: ["./src"],
+            exclude: ["**/*.spec.*"],
         },
         deps: {
-            fallbackCJS: true,
-            inline: [/floating-ui/],
+            inline: ["@lingui/detect-locale"],
         },
     },
 }))

@@ -10,7 +10,7 @@ import {
     rinoMarkExtensions,
     RinoParagraphExtension,
     RinoTextExtension,
-} from "../../src/extensions"
+} from ".."
 
 const setup = () => {
     const editor = renderEditor([
