@@ -2,19 +2,19 @@ import { PlainExtension } from "@remirror/core"
 import { EditorState, PluginSpec, Transaction } from "prosemirror-state"
 import { EditorView } from "prosemirror-view"
 
-import { applyRangeMarks, updateRangeMarks } from "./inline-mark-helpers"
+import { applySelectionMarks, updateRangeMarks } from "./inline-mark-helpers"
 
 function createInlineMarkPlugin(isUnitTest = false): PluginSpec {
     let timeoutId: ReturnType<typeof setTimeout> | null = null
 
     const debounceApplyMarks: (view: EditorView) => void = isUnitTest
-        ? applyRangeMarks
+        ? applySelectionMarks
         : (view: EditorView) => {
               if (timeoutId) {
                   clearTimeout(timeoutId)
               }
               timeoutId = setTimeout(() => {
-                  applyRangeMarks(view)
+                  applySelectionMarks(view)
                   timeoutId = null
               }, 100)
           }

@@ -1,6 +1,6 @@
-export * from "./inline-deco-plugin"
+export * from "./inline-deco-extension"
 export * from "./inline-mark-extensions"
 export { RinoInlineMarkExtension } from "./inline-mark-plugin"
-export { applyRangeMarks, updateNodeMarks } from "./inline-mark-helpers"
+export { applySelectionMarks, applyDocMarks, updateNodeMarks, initDocMarks } from "./inline-mark-helpers"
 export type { ToggleableInlineMarkName, ToggleInlineMark } from "./inline-mark-commands"
 export * from "./inline-types"
