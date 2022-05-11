@@ -16,8 +16,7 @@ export default defineConfig((env) => ({
             exclude: ["**/*.spec.*"],
         },
         deps: {
-            fallbackCJS: true,
-            inline: [/floating-ui/],
+            inline: ["@lingui/detect-locale"],
         },
     },
 }))
