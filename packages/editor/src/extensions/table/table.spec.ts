@@ -5,7 +5,7 @@ import { dedent } from "@rino.app/common"
 
 import { buildMarkdownParser, buildMarkdownSerializer, createRinoCorePreset } from "../../components/wysiwyg"
 import {
-    applyRangeMarks,
+    applyDocMarks,
     RinoInlineDecorationExtension,
     RinoInlineMarkExtension,
     rinoMarkExtensions,
@@ -287,7 +287,7 @@ describe("toMarkdown", () => {
 
         add(initialDoc)
 
-        applyRangeMarks(view, true)
+        applyDocMarks(view)
 
         const transformedDoc = view.state.doc
 

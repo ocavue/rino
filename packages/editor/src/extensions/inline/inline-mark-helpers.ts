@@ -1,3 +1,4 @@
+import { ProsemirrorNode } from "@remirror/pm"
 import { Mark, Node, Schema } from "prosemirror-model"
 import { Transaction } from "prosemirror-state"
 import { Mappable, Transform } from "prosemirror-transform"
@@ -142,13 +143,34 @@ export function updateNodeMarks<S extends Schema>(tr: Transform<S>, node: Node<S
 }
 
 /**
+ * Return a new document with all inline marks updated.
+ */
+export function initDocMarks<S extends Schema>(doc: ProsemirrorNode<S>): ProsemirrorNode<S> {
+    const tr = new Transform<S>(doc)
+    updateNodeMarks(tr, doc, 0)
+    return tr.doc
+}
+
+/**
  * Apply markdown marks to current selection range.
  */
-export function applyRangeMarks<S extends Schema>(view: EditorView<S>, forceUpdateAll?: boolean): void {
+export function applySelectionMarks<S extends Schema>(view: EditorView<S>): void {
     if (view.isDestroyed) return
 
     const tr = view.state.tr
-    if (updateRangeMarks(tr, forceUpdateAll)) {
+    if (updateRangeMarks(tr)) {
+        view.dispatch(tr)
+    }
+}
+
+/**
+ * Apply markdown marks to current document.
+ */
+export function applyDocMarks<S extends Schema>(view: EditorView<S>): void {
+    if (view.isDestroyed) return
+
+    const tr = view.state.tr
+    if (updateRangeMarks(tr, true)) {
         view.dispatch(tr)
     }
 }

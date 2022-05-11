@@ -1,5 +1,6 @@
 import { AnyExtension } from "@remirror/core"
-import { RemirrorTestChain, renderEditor } from "jest-remirror"
+import { RemirrorTestChain, renderEditor, TaggedProsemirrorNode } from "jest-remirror"
+import prettier from "prettier"
 import { EditorState } from "prosemirror-state"
 import { describe, expect, test } from "vitest"
 
@@ -11,6 +12,7 @@ import {
     RinoParagraphExtension,
     RinoTextExtension,
 } from ".."
+import { applyDocMarks } from "./inline-mark-helpers"
 
 const setup = () => {
     const editor = renderEditor([
@@ -37,7 +39,11 @@ const setup = () => {
         manager,
         view,
         schema,
-        add,
+        add: (node: TaggedProsemirrorNode) => {
+            const result = add(node)
+            applyDocMarks(view)
+            return result
+        },
         doc,
         p,
         h1,
@@ -55,7 +61,7 @@ describe("Mark transform", () => {
     const { doc, p, add, mdCodeText, mdText, mdMark } = setup()
 
     describe("inline code", () => {
-        test("base case", async (ctx) => {
+        test("base case", async () => {
             const root = doc(p("text`code`text<cursor>"))
 
             const editor = add(root).insertText(" ")
@@ -218,6 +224,200 @@ describe("Toggle inline marks by using shortcuts", () => {
                 }
             }
         })
+    })
+})
+
+describe("Decoration", () => {
+    const { doc, p, add, view } = setup()
+
+    const getHTML = () => prettier.format(view.dom.innerHTML, { parser: "html" }).trim()
+
+    test("plain text", () => {
+        add(doc(p("plain text")))
+        expect(getHTML()).toMatchInlineSnapshot('"<p><span>plain text</span></p>"')
+    })
+
+    test("single mark, empty selection", async () => {
+        const editor = add(doc(p()))
+
+        editor.add(doc(p("**strong** plain<cursor>")))
+        const hiddenMarkHTML = getHTML()
+        expect(hiddenMarkHTML).toMatchInlineSnapshot(
+            `
+          "<p>
+            <span class=\\"md-mark\\">**</span><strong>strong</strong
+            ><span class=\\"md-mark\\">**</span><span> plain</span>
+          </p>"
+        `,
+        )
+
+        editor.add(doc(p("**str<cursor>ong** plain")))
+        const shownMarkHTML = getHTML()
+        expect(shownMarkHTML).toMatchInlineSnapshot(
+            `
+          "<p>
+            <span class=\\"md-mark\\"><span class=\\"show\\">**</span></span
+            ><strong>strong</strong
+            ><span class=\\"md-mark\\"><span class=\\"show\\">**</span></span
+            ><span> plain</span>
+          </p>"
+        `,
+        )
+
+        editor.add(doc(p("**strong** plai<cursor>n")))
+        expect(getHTML()).toEqual(hiddenMarkHTML)
+
+        editor.add(doc(p("**strong** pl<cursor>ain")))
+        expect(getHTML()).toEqual(hiddenMarkHTML)
+
+        editor.add(doc(p("**strong** p<cursor>lain")))
+        expect(getHTML()).toEqual(hiddenMarkHTML)
+
+        editor.add(doc(p("**strong** <cursor>plain")))
+        expect(getHTML()).toEqual(hiddenMarkHTML)
+
+        editor.add(doc(p("**strong**<cursor> plain")))
+        expect(getHTML()).toEqual(shownMarkHTML)
+
+        editor.add(doc(p("**strong*<cursor>* plain")))
+        expect(getHTML()).toEqual(shownMarkHTML)
+
+        editor.add(doc(p("**stron<cursor>g** plain")))
+        expect(getHTML()).toEqual(shownMarkHTML)
+
+        editor.add(doc(p("**st<cursor>rong** plain")))
+        expect(getHTML()).toEqual(shownMarkHTML)
+
+        editor.add(doc(p("**<cursor>strong** plain")))
+        expect(getHTML()).toEqual(shownMarkHTML)
+
+        editor.add(doc(p("*<cursor>*strong** plain")))
+        expect(getHTML()).toEqual(shownMarkHTML)
+
+        editor.add(doc(p("<cursor>**strong** plain")))
+        expect(getHTML()).toEqual(shownMarkHTML)
+    })
+
+    test("nested mark, empty selection", async () => {
+        const editor = add(doc(p()))
+
+        editor.add(doc(p("plain **strong  ~~code~~** plain<cursor>")))
+        const hiddenMarkHTML = getHTML()
+        expect(hiddenMarkHTML).toMatchInlineSnapshot(
+            `
+          "<p>
+            <span>plain </span><span class=\\"md-mark\\">**</span><strong>strong </strong
+            ><span class=\\"md-mark\\">~~</span><strong><del>code</del></strong
+            ><span class=\\"md-mark\\">~~</span><span class=\\"md-mark\\">**</span
+            ><span> plain</span>
+          </p>"
+        `,
+        )
+
+        editor.add(doc(p("plain **strong  ~~co<cursor>de~~** plain")))
+        const shownMarkHTML = getHTML()
+        expect(shownMarkHTML).toMatchInlineSnapshot(
+            `
+          "<p>
+            <span>plain </span><span class=\\"md-mark\\"><span class=\\"show\\">**</span></span
+            ><strong>strong </strong
+            ><span class=\\"md-mark\\"><span class=\\"show\\">~~</span></span
+            ><strong><del>code</del></strong
+            ><span class=\\"md-mark\\"><span class=\\"show\\">~~</span></span
+            ><span class=\\"md-mark\\"><span class=\\"show\\">**</span></span
+            ><span> plain</span>
+          </p>"
+        `,
+        )
+
+        editor.add(doc(p("plain **strong  ~~code~~** <cursor>plain")))
+        expect(getHTML()).toEqual(hiddenMarkHTML)
+
+        editor.add(doc(p("plain **strong  ~~code~~**<cursor> plain")))
+        expect(getHTML()).toEqual(shownMarkHTML)
+
+        editor.add(doc(p("plain **strong  ~~code~~*<cursor>* plain")))
+        expect(getHTML()).toEqual(shownMarkHTML)
+
+        editor.add(doc(p("plain **strong  ~~code~~<cursor>** plain")))
+        expect(getHTML()).toEqual(shownMarkHTML)
+
+        editor.add(doc(p("plain **strong  ~~code~<cursor>~** plain")))
+        expect(getHTML()).toEqual(shownMarkHTML)
+
+        editor.add(doc(p("plain **strong  ~~code<cursor>~~** plain")))
+        expect(getHTML()).toEqual(shownMarkHTML)
+
+        editor.add(doc(p("plain **strong  <cursor>~~code~~** plain")))
+        expect(getHTML()).toEqual(shownMarkHTML)
+
+        editor.add(doc(p("plain **strong <cursor> ~~code~~** plain")))
+        expect(getHTML()).toEqual(shownMarkHTML)
+
+        editor.add(doc(p("plain **stro<cursor>ng ~~code~~** plain")))
+        expect(getHTML()).toEqual(shownMarkHTML)
+
+        editor.add(doc(p("plain **<cursor>strong ~~code~~** plain")))
+        expect(getHTML()).toEqual(shownMarkHTML)
+
+        editor.add(doc(p("plain *<cursor>*strong ~~code~~** plain")))
+        expect(getHTML()).toEqual(shownMarkHTML)
+
+        editor.add(doc(p("plain <cursor>**strong ~~code~~** plain")))
+        expect(getHTML()).toEqual(shownMarkHTML)
+
+        editor.add(doc(p("plain<cursor> **strong ~~code~~** plain")))
+        expect(getHTML()).toEqual(hiddenMarkHTML)
+    })
+
+    test("multiple nodes, empty selection", async () => {
+        add(doc(p("<cursor>A *B*"), p("C *D*"), p("E *F*")))
+        expect(getHTML()).toMatchInlineSnapshot(`
+          "<p>
+            <span>A </span><span class=\\"md-mark\\">*</span><em>B</em
+            ><span class=\\"md-mark\\">*</span>
+          </p>
+          <p>
+            <span>C </span><span class=\\"md-mark\\">*</span><em>D</em
+            ><span class=\\"md-mark\\">*</span>
+          </p>
+          <p>
+            <span>E </span><span class=\\"md-mark\\">*</span><em>F</em
+            ><span class=\\"md-mark\\">*</span>
+          </p>"
+        `)
+
+        add(doc(p("A *B*"), p("C *<cursor>D*"), p("E *F*")))
+        expect(getHTML()).toMatchInlineSnapshot(`
+          "<p>
+            <span>A </span><span class=\\"md-mark\\">*</span><em>B</em
+            ><span class=\\"md-mark\\">*</span>
+          </p>
+          <p>
+            <span>C </span><span class=\\"md-mark\\"><span class=\\"show\\">*</span></span
+            ><em>D</em><span class=\\"md-mark\\"><span class=\\"show\\">*</span></span>
+          </p>
+          <p>
+            <span>E </span><span class=\\"md-mark\\">*</span><em>F</em
+            ><span class=\\"md-mark\\">*</span>
+          </p>"
+        `)
+
+        add(doc(p("A *B*"), p("C *D*"), p("E *F*<cursor>")))
+        expect(getHTML()).toMatchInlineSnapshot(`
+          "<p>
+            <span>A </span><span class=\\"md-mark\\">*</span><em>B</em
+            ><span class=\\"md-mark\\">*</span>
+          </p>
+          <p>
+            <span>C </span><span class=\\"md-mark\\">*</span><em>D</em
+            ><span class=\\"md-mark\\">*</span>
+          </p>
+          <p>
+            <span>E </span><span class=\\"md-mark\\"><span class=\\"show\\">*</span></span
+            ><em>F</em><span class=\\"md-mark\\"><span class=\\"show\\">*</span></span>
+          </p>"
+        `)
     })
 })
 
