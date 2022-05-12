@@ -16,9 +16,11 @@ export default defineConfig((env) => ({
     build: {
         outDir: "../dist",
         emptyOutDir: true,
+        // Disable minify during test to get more precise coverage result.
+        minify: process.env.VITEST_PLAYWRIGHT_ENABLE_COVERAGE ? false : "esbuild",
         sourcemap: true,
         rollupOptions: {
-            plugins: [sourcemaps({ include: /editor/ })],
+            plugins: [sourcemaps({ include: /\.[cm]?(js|ts)x?$/, exclude: /node_modules/ })],
         },
     },
     test: {

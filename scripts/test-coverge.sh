@@ -5,6 +5,8 @@ cd $(dirname $0)/..
 
 pnpm clean
 
+export VITEST_PLAYWRIGHT_ENABLE_COVERAGE=yes
+
 pnpm -F '*' test:vitest:coverage
 
 export PATH=$PATH:$PWD/packages/rig/node_modules/.bin

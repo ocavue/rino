@@ -434,7 +434,7 @@ packages:
     engines: {node: '>=6.0.0'}
     dependencies:
       '@jridgewell/gen-mapping': 0.1.1
-      '@jridgewell/trace-mapping': 0.3.11
+      '@jridgewell/trace-mapping': 0.3.13
     dev: true
 
   /@babel/code-frame/7.16.7:
@@ -1357,8 +1357,8 @@ packages:
     resolution: {integrity: sha512-GryiOJmNcWbovBxTfZSF71V/mXbgcV3MewDe3kIMCLyIh5e7SKAeUZs+rMnJ8jkMolZ/4/VsdBmMrw3l+VdZ3w==}
     dev: true
 
-  /@jridgewell/trace-mapping/0.3.11:
-    resolution: {integrity: sha512-RllI476aSMsxzeI9TtlSMoNTgHDxEmnl6GkkHwhr0vdL8W+0WuesyI8Vd3rBOfrwtPXbPxdT9ADJdiOKgzxPQA==}
+  /@jridgewell/trace-mapping/0.3.13:
+    resolution: {integrity: sha512-o1xbKhp9qnIAoHJSWd6KlCZfqslL4valSF81H8ImioOAxluWYWOpWkpyktY2vnt4tbrX9XYaxovq6cgowaJp2w==}
     dependencies:
       '@jridgewell/resolve-uri': 3.0.7
       '@jridgewell/sourcemap-codec': 1.4.13
@@ -4348,8 +4348,6 @@ packages:
       raw-body: 2.5.1
       type-is: 1.6.18
       unpipe: 1.0.0
-    transitivePeerDependencies:
-      - supports-color
     dev: true
 
   /body-scroll-lock/3.1.5:
@@ -4649,8 +4647,6 @@ packages:
       lighthouse-logger: 1.2.0
       mkdirp: 0.5.6
       rimraf: 3.0.2
-    transitivePeerDependencies:
-      - supports-color
     dev: true
 
   /chrome-launcher/0.15.0:
@@ -4662,8 +4658,6 @@ packages:
       escape-string-regexp: 4.0.0
       is-wsl: 2.2.0
       lighthouse-logger: 1.3.0
-    transitivePeerDependencies:
-      - supports-color
     dev: true
 
   /chromium-pickle-js/0.2.0:
@@ -4855,8 +4849,6 @@ packages:
       on-headers: 1.0.2
       safe-buffer: 5.1.2
       vary: 1.1.2
-    transitivePeerDependencies:
-      - supports-color
     dev: true
 
   /compute-scroll-into-view/1.0.17:
@@ -4932,8 +4924,6 @@ packages:
       finalhandler: 1.1.2
       parseurl: 1.3.3
       utils-merge: 1.0.1
-    transitivePeerDependencies:
-      - supports-color
     dev: false
 
   /console-control-strings/1.1.0:
@@ -5179,11 +5169,6 @@ packages:
 
   /debug/2.6.9:
     resolution: {integrity: sha512-bC7ElrdJaJnPbAP+1EotYvqZsb3ecl5wi6Bfi6BJTUcNowp6cvspg0jXznRTKDjm/E7AdgFBVeAPVMNcKGsHMA==}
-    peerDependencies:
-      supports-color: '*'
-    peerDependenciesMeta:
-      supports-color:
-        optional: true
     dependencies:
       ms: 2.0.0
 
@@ -5565,8 +5550,6 @@ packages:
       isbinaryfile: 3.0.3
       minimist: 1.2.6
       plist: 3.0.5
-    transitivePeerDependencies:
-      - supports-color
     dev: true
 
   /electron-publish/23.0.2:
@@ -6250,8 +6233,6 @@ packages:
       type-is: 1.6.18
       utils-merge: 1.0.1
       vary: 1.1.2
-    transitivePeerDependencies:
-      - supports-color
     dev: true
 
   /ext-list/2.2.2:
@@ -6286,8 +6267,6 @@ packages:
       debug: 2.6.9
       mkdirp: 0.5.6
       yauzl: 2.10.0
-    transitivePeerDependencies:
-      - supports-color
     dev: true
 
   /extract-zip/2.0.1:
@@ -6409,8 +6388,6 @@ packages:
       parseurl: 1.3.3
       statuses: 1.5.0
       unpipe: 1.0.0
-    transitivePeerDependencies:
-      - supports-color
     dev: false
 
   /finalhandler/1.2.0:
@@ -6424,8 +6401,6 @@ packages:
       parseurl: 1.3.3
       statuses: 2.0.1
       unpipe: 1.0.0
-    transitivePeerDependencies:
-      - supports-color
     dev: true
 
   /find-cache-dir/3.3.2:
@@ -7988,8 +7963,6 @@ packages:
     dependencies:
       debug: 2.6.9
       marky: 1.2.4
-    transitivePeerDependencies:
-      - supports-color
     dev: true
 
   /lighthouse-logger/1.3.0:
@@ -7997,8 +7970,6 @@ packages:
     dependencies:
       debug: 2.6.9
       marky: 1.2.4
-    transitivePeerDependencies:
-      - supports-color
     dev: true
 
   /lighthouse-stack-packs/1.8.1:
@@ -8041,7 +8012,6 @@ packages:
       yargs-parser: 21.0.1
     transitivePeerDependencies:
       - bufferutil
-      - supports-color
       - utf-8-validate
     dev: true
 
@@ -9811,7 +9781,7 @@ packages:
       material-colors: 1.2.6
       prop-types: 15.8.1
       react: 18.1.0
-      reactcss: 1.2.3_react@18.1.0
+      reactcss: 1.2.3
       tinycolor2: 1.4.2
     dev: false
 
@@ -9942,13 +9912,10 @@ packages:
       loose-envify: 1.4.0
     dev: true
 
-  /reactcss/1.2.3_react@18.1.0:
+  /reactcss/1.2.3:
     resolution: {integrity: sha512-KiwVUcFu1RErkI97ywr8nvx8dNOpT03rbnma0SSalTYjkrPYaEajR4a/MRt6DZ46K6arDRbWMNHF+xH7G7n/8A==}
-    peerDependencies:
-      react: '*'
     dependencies:
       lodash: 4.17.21
-      react: 18.1.0
     dev: false
 
   /read-config-file/6.2.0:
@@ -10398,8 +10365,6 @@ packages:
       on-finished: 2.4.1
       range-parser: 1.2.1
       statuses: 2.0.1
-    transitivePeerDependencies:
-      - supports-color
     dev: true
 
   /serialize-error/7.0.1:
@@ -10418,8 +10383,6 @@ packages:
       escape-html: 1.0.3
       parseurl: 1.3.3
       send: 0.18.0
-    transitivePeerDependencies:
-      - supports-color
     dev: true
 
   /set-blocking/2.0.0:
@@ -11487,7 +11450,7 @@ packages:
     resolution: {integrity: sha512-HcvgY/xaRm7isYmyx+lFKA4uQmfUbN0J4M0nNItvzTvH/iQ9kW5j/t4YSR+Ge323/lrgDAWJoF46tzGQHwBHFw==}
     engines: {node: '>=10.12.0'}
     dependencies:
-      '@jridgewell/trace-mapping': 0.3.11
+      '@jridgewell/trace-mapping': 0.3.13
       '@types/istanbul-lib-coverage': 2.0.4
       convert-source-map: 1.8.0
     dev: true
