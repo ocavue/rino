@@ -14,6 +14,7 @@ const DebugButton: FC<{ enableDevTools: boolean; toggleEnableDevTools: () => voi
         <button
             className={enableDevTools ? "playground-debug-button-enable" : "playground-debug-button-disable"}
             onClick={(e) => toggleEnableDevTools()}
+            data-testid="playground_debug_button"
         >
             Debug
         </button>
@@ -56,6 +57,7 @@ const DebugConsole: FC<{ hasUnsavedChanges: boolean; contentId: string; content:
                 fontSize: "16px",
                 lineHeight: "1.5",
             }}
+            data-testid="playground_debug_console"
         >
             <p>
                 <strong>hasUnsavedChanges: </strong>

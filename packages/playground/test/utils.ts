@@ -304,7 +304,7 @@ export async function expectSourceCodeMode() {
 }
 
 export async function writeSnapshotImage(fileName: string) {
-    const filePath = join(__dirname, "__snapshots__", fileName)
+    const filePath = join(__dirname, "__img_snapshots__", fileName)
     await fs.mkdir(dirname(filePath), { recursive: true })
     const screenshot = await page.screenshot({ type: "png", fullPage: true })
     await fs.writeFile(filePath, screenshot)
