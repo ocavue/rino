@@ -3,7 +3,7 @@ import Token from "markdown-it/lib/token"
 import { Mark, Node, NodeType, Schema } from "prosemirror-model"
 
 import markdownItListCheckbox from "./markdown-it-list-checkbox"
-import { BlockParserRule, ParserRule, ParserRuleType, TextParserRule } from "./parser-type"
+import { BlockParserRule, ContextParserRule, ParserRule, ParserRuleContext, ParserRuleType, TextParserRule } from "./parser-type"
 
 interface StackItem {
     type: NodeType
@@ -29,11 +29,14 @@ export class MarkdownParseState {
     private schema: Schema
     private marks: Mark[]
     private tokenHandlers: TokenHandlers
+    private contextStack: ParserRuleContext[]
+
     public stack: StackItem[]
 
     public constructor(schema: Schema, tokenHandlers: TokenHandlers) {
         this.schema = schema
         this.stack = [{ type: schema.topNodeType, content: [] }]
+        this.contextStack = []
         this.marks = Mark.none
         this.tokenHandlers = tokenHandlers
     }
@@ -89,7 +92,7 @@ export class MarkdownParseState {
     public addNode(type: NodeType, attrs?: Record<string, any>, content?: Node[]): Node {
         const node = type.createAndFill(attrs, content, this.marks)
         if (!node) {
-            throw new Error("unexpected error: node is empty ")
+            throw new Error(`unexpected error: node is empty while creating ${type.name} node`)
         }
         this.push(node)
         return node
@@ -108,6 +111,18 @@ export class MarkdownParseState {
             throw new Error("unexpected error: info is empty")
         }
         return this.addNode(info.type, info.attrs, info.content)
+    }
+
+    public openContext(context: ParserRuleContext): void {
+        this.contextStack.push(context)
+    }
+
+    public closeContext() {
+        this.contextStack.pop()
+    }
+
+    public topContext(): ParserRuleContext | undefined {
+        return this.contextStack[this.contextStack.length - 1]
     }
 }
 
@@ -138,6 +153,15 @@ function buildBlockTokenHandler(parserRule: BlockParserRule, handlers: TokenHand
     }
 }
 
+function buildContextTokenHandler(parserRule: ContextParserRule, handlers: TokenHandlers): void {
+    handlers[parserRule.token + "_open"] = (state: MarkdownParseState, tok: Token) => {
+        state.openContext(parserRule.context)
+    }
+    handlers[parserRule.token + "_close"] = (state: MarkdownParseState, tok: Token) => {
+        state.closeContext()
+    }
+}
+
 function buildTextTokenHandler(parserRule: TextParserRule, handlers: TokenHandlers): void {
     handlers[parserRule.token] = (state: MarkdownParseState, tok: Token) => {
         state.addText(parserRule.getText(tok))
@@ -154,11 +178,17 @@ function buildTokenHandlers(schema: Schema, parserRules: ParserRule[]): TokenHan
             case ParserRuleType.block:
                 buildBlockTokenHandler(parserRule, handlers, schema)
                 break
+            case ParserRuleType.context:
+                buildContextTokenHandler(parserRule, handlers)
+                break
             case ParserRuleType.ignore:
                 handlers[parserRule.token] = () => {}
                 break
             case ParserRuleType.free:
                 handlers[parserRule.token] = parserRule.handler
+                break
+            default:
+                throw new Error(`unknown parser rule type`)
         }
     }
 

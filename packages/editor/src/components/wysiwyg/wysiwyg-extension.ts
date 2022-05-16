@@ -20,6 +20,7 @@ import {
     RinoMarkExtension,
     rinoMarkExtensions,
     RinoOrderedListExtension,
+    RinoOrderedListItemExtension,
     RinoParagraphExtension,
     RinoTableCellExtension,
     RinoTableExtension,
@@ -53,6 +54,7 @@ function createRinoMarkdownNodeExtensions() {
         new RinoTaskListExtension(),
         new RinoTaskListItemExtension(),
         new RinoListItemExtension({}),
+        new RinoOrderedListItemExtension(),
         new RinoBulletListExtension({}),
         new RinoOrderedListExtension(),
 

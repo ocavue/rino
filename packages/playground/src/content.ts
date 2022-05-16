@@ -60,10 +60,33 @@ const tableContent = `
 
 `
 
+const nestedList = `
+1. A1
+    1. B1
+
+---
+
+1. 1. 1. 1. nested items
+
+---
+
+1. ## H1
+1. ## H2
+
+`
+
+const simpleList = `
+1. A1
+1. A2
+1. A3
+`
+
 export const contentMap: { [key: string]: string } = {
     default: defaultContent,
     "just-code": justCodeContent,
     long: longContent,
     table: tableContent,
+    nestedList,
+    simpleList,
     customize: "",
 }

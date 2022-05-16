@@ -9,7 +9,10 @@ export enum ParserRuleType {
     block,
     ignore,
     free,
+    context,
 }
+
+export type ParserRuleContext = "bullet_list" | "ordered_list"
 
 export type TextParserRule = {
     type: ParserRuleType.text
@@ -30,6 +33,13 @@ export type BlockParserRule = {
     getAttrs?: (token: Token) => Record<string, any>
 }
 
+export type ContextParserRule = {
+    type: ParserRuleType.context
+    context: ParserRuleContext
+    /** The name of the markdown-it token */
+    token: MarkdownItToken
+}
+
 export type IgnoreParserRule = {
     type: ParserRuleType.ignore
     /** The name of the markdown-it token */
@@ -44,4 +54,4 @@ export type FreeParserRule = {
     handler: TokenHandler
 }
 
-export type ParserRule = TextParserRule | BlockParserRule | IgnoreParserRule | FreeParserRule
+export type ParserRule = TextParserRule | BlockParserRule | IgnoreParserRule | FreeParserRule | ContextParserRule
