@@ -1,8 +1,5 @@
 lockfileVersion: 5.3
 
-overrides:
-  '@electron/universal': ^1.2.1
-
 importers:
 
   .:
@@ -201,12 +198,12 @@ importers:
   packages/electron:
     specifiers:
       electron: 18.2.3
-      electron-builder: ^23.0.3
+      electron-builder: ^23.0.9
       electron-notarize: ^1.2.1
       wait-on: ^6.0.1
     devDependencies:
       electron: 18.2.3
-      electron-builder: 23.0.3
+      electron-builder: 23.0.9
       electron-notarize: 1.2.1
       wait-on: 6.0.1
 
@@ -4073,8 +4070,8 @@ packages:
     resolution: {integrity: sha512-xwdG0FJPQMe0M0UA4Tz0zEB8rBJTRA5a476ZawAqiBkMv16GRK5xpXThOjMaEOFnZ6zabejjG4J3da0SXG63KA==}
     dev: true
 
-  /app-builder-lib/23.0.3:
-    resolution: {integrity: sha512-1qrtXYHXJfXhzJnMtVGjIva3067F1qYQubl2oBjI61gCBoCHvhghdYJ57XxXTQQ0VxnUhg1/Iaez87uXp8mD8w==}
+  /app-builder-lib/23.0.9:
+    resolution: {integrity: sha512-2JboeCVrL+PksZ7IHp2teXbMUBnlucc3LhKGV+irxEA0l36bHs939AVtcaiATqyGnJcZkRdaB6TDd7SZfu+pxQ==}
     engines: {node: '>=14.0.0'}
     dependencies:
       '@develar/schema-utils': 2.6.5
@@ -4083,13 +4080,13 @@ packages:
       7zip-bin: 5.1.1
       async-exit-hook: 2.0.1
       bluebird-lst: 1.0.9
-      builder-util: 23.0.2
-      builder-util-runtime: 9.0.0
+      builder-util: 23.0.9
+      builder-util-runtime: 9.0.2
       chromium-pickle-js: 0.2.0
       debug: 4.3.4
       ejs: 3.1.8
       electron-osx-sign: 0.6.0
-      electron-publish: 23.0.2
+      electron-publish: 23.0.9
       form-data: 4.0.0
       fs-extra: 10.1.0
       hosted-git-info: 4.1.0
@@ -4101,6 +4098,7 @@ packages:
       read-config-file: 6.2.0
       sanitize-filename: 1.6.3
       semver: 7.3.7
+      tar: 6.1.11
       temp-file: 3.4.0
     transitivePeerDependencies:
       - supports-color
@@ -4341,8 +4339,6 @@ packages:
       raw-body: 2.5.1
       type-is: 1.6.18
       unpipe: 1.0.0
-    transitivePeerDependencies:
-      - supports-color
     dev: true
 
   /body-scroll-lock/3.1.5:
@@ -4476,15 +4472,25 @@ packages:
       - supports-color
     dev: true
 
-  /builder-util/23.0.2:
-    resolution: {integrity: sha512-HaNHL3axNW/Ms8O1mDx3I07G+ZnZ/TKSWWvorOAPau128cdt9S+lNx5ocbx8deSaHHX4WFXSZVHh3mxlaKJNgg==}
+  /builder-util-runtime/9.0.2:
+    resolution: {integrity: sha512-xF55W/8mgfT6+sMbX0TeiJkTusA5GMOzckM4rajN4KirFcUIuLTH8oEaTYmM86YwVCZaTwa/7GyFhauXaEICwA==}
+    engines: {node: '>=12.0.0'}
+    dependencies:
+      debug: 4.3.4
+      sax: 1.2.4
+    transitivePeerDependencies:
+      - supports-color
+    dev: true
+
+  /builder-util/23.0.9:
+    resolution: {integrity: sha512-ccPFwI1Sex4yLt8R3LI+H07p2jHICKwEWtxkFkb6jiU/g/VJnF1wazW7I1oMcCFcPTEl30GhqoRv9rfDD9VAiQ==}
     dependencies:
       '@types/debug': 4.1.7
       '@types/fs-extra': 9.0.13
       7zip-bin: 5.1.1
       app-builder-bin: 4.0.0
       bluebird-lst: 1.0.9
-      builder-util-runtime: 9.0.0
+      builder-util-runtime: 9.0.2
       chalk: 4.1.2
       cross-spawn: 7.0.3
       debug: 4.3.4
@@ -4633,6 +4639,11 @@ packages:
     resolution: {integrity: sha512-jJ0bqzaylmJtVnNgzTeSOs8DPavpbYgEr/b0YL8/2GO3xJEhInFmhKMUnEJQjZumK7KXGFhUy89PrsJWlakBVg==}
     dev: true
 
+  /chownr/2.0.0:
+    resolution: {integrity: sha512-bIomtDF5KGpdogkLd9VspvFzk9KfpyyGlS8YFVZl7TGPBHL5snIOnxeshwVgPteQ9b4Eydl+pVbIyE1DcvCWgQ==}
+    engines: {node: '>=10'}
+    dev: true
+
   /chrome-launcher/0.13.4:
     resolution: {integrity: sha512-nnzXiDbGKjDSK6t2I+35OAPBy5Pw/39bgkb/ZAFwMhwJbdYBp6aH+vW28ZgtjdU890Q7D+3wN/tB8N66q5Gi2A==}
     dependencies:
@@ -4642,8 +4653,6 @@ packages:
       lighthouse-logger: 1.2.0
       mkdirp: 0.5.6
       rimraf: 3.0.2
-    transitivePeerDependencies:
-      - supports-color
     dev: true
 
   /chrome-launcher/0.15.0:
@@ -4655,8 +4664,6 @@ packages:
       escape-string-regexp: 4.0.0
       is-wsl: 2.2.0
       lighthouse-logger: 1.3.0
-    transitivePeerDependencies:
-      - supports-color
     dev: true
 
   /chromium-pickle-js/0.2.0:
@@ -4843,8 +4850,6 @@ packages:
       on-headers: 1.0.2
       safe-buffer: 5.1.2
       vary: 1.1.2
-    transitivePeerDependencies:
-      - supports-color
     dev: true
 
   /compute-scroll-into-view/1.0.17:
@@ -4920,8 +4925,6 @@ packages:
       finalhandler: 1.1.2
       parseurl: 1.3.3
       utils-merge: 1.0.1
-    transitivePeerDependencies:
-      - supports-color
     dev: false
 
   /console-control-strings/1.1.0:
@@ -5167,11 +5170,6 @@ packages:
 
   /debug/2.6.9:
     resolution: {integrity: sha512-bC7ElrdJaJnPbAP+1EotYvqZsb3ecl5wi6Bfi6BJTUcNowp6cvspg0jXznRTKDjm/E7AdgFBVeAPVMNcKGsHMA==}
-    peerDependencies:
-      supports-color: '*'
-    peerDependenciesMeta:
-      supports-color:
-        optional: true
     dependencies:
       ms: 2.0.0
 
@@ -5325,12 +5323,12 @@ packages:
       path-type: 4.0.0
     dev: true
 
-  /dmg-builder/23.0.3:
-    resolution: {integrity: sha512-mBYrHHnSM5PC656TDE+xTGmXIuWHAGmmRfyM+dV0kP+AxtwPof4pAXNQ8COd0/exZQ4dqf72FiPS3B9G9aB5IA==}
+  /dmg-builder/23.0.9:
+    resolution: {integrity: sha512-a9mq85K31czOjso+T0aN9pWlmydzhehapU+ussFMD5FwD3l3JCK2ILlRfXuR3penbZT6LKCHuQFDIaZvsusY1w==}
     dependencies:
-      app-builder-lib: 23.0.3
-      builder-util: 23.0.2
-      builder-util-runtime: 9.0.0
+      app-builder-lib: 23.0.9
+      builder-util: 23.0.9
+      builder-util-runtime: 9.0.2
       fs-extra: 10.1.0
       iconv-lite: 0.6.3
       js-yaml: 4.1.0
@@ -5475,17 +5473,17 @@ packages:
       jake: 10.8.5
     dev: true
 
-  /electron-builder/23.0.3:
-    resolution: {integrity: sha512-0lnTsljAgcOMuIiOjPcoFf+WxOOe/O04hZPgIvvUBXIbz3kolbNu0Xdch1f5WuQ40NdeZI7oqs8Eo395PcuGHQ==}
+  /electron-builder/23.0.9:
+    resolution: {integrity: sha512-qeAbUfgVOBMjrDfGaTDsM2wuiPsISbADKLaMM27HAeVTjs6o4UuUFl+DzDVPal3v61W6nAB9kvBTeU9RZ/jH7g==}
     engines: {node: '>=14.0.0'}
     hasBin: true
     dependencies:
       '@types/yargs': 17.0.10
-      app-builder-lib: 23.0.3
-      builder-util: 23.0.2
-      builder-util-runtime: 9.0.0
+      app-builder-lib: 23.0.9
+      builder-util: 23.0.9
+      builder-util-runtime: 9.0.2
       chalk: 4.1.2
-      dmg-builder: 23.0.3
+      dmg-builder: 23.0.9
       fs-extra: 10.1.0
       is-ci: 3.0.1
       lazy-val: 1.0.5
@@ -5541,16 +5539,14 @@ packages:
       isbinaryfile: 3.0.3
       minimist: 1.2.6
       plist: 3.0.5
-    transitivePeerDependencies:
-      - supports-color
     dev: true
 
-  /electron-publish/23.0.2:
-    resolution: {integrity: sha512-8gMYgWqv96lc83FCm85wd+tEyxNTJQK7WKyPkNkO8GxModZqt1GO8S+/vAnFGxilS/7vsrVRXFfqiCDUCSuxEg==}
+  /electron-publish/23.0.9:
+    resolution: {integrity: sha512-afr2z6L07/elgDX+6I/G/0vzXOP6xYUd/aXx9tnTPSVZ/3AuvCegHrKiuh8sKYHmzoAcNGXe3ikISYIu961IfA==}
     dependencies:
       '@types/fs-extra': 9.0.13
-      builder-util: 23.0.2
-      builder-util-runtime: 9.0.0
+      builder-util: 23.0.9
+      builder-util-runtime: 9.0.2
       chalk: 4.1.2
       fs-extra: 10.1.0
       lazy-val: 1.0.5
@@ -6226,8 +6222,6 @@ packages:
       type-is: 1.6.18
       utils-merge: 1.0.1
       vary: 1.1.2
-    transitivePeerDependencies:
-      - supports-color
     dev: true
 
   /ext-list/2.2.2:
@@ -6262,8 +6256,6 @@ packages:
       debug: 2.6.9
       mkdirp: 0.5.6
       yauzl: 2.10.0
-    transitivePeerDependencies:
-      - supports-color
     dev: true
 
   /extsprintf/1.4.1:
@@ -6371,8 +6363,6 @@ packages:
       parseurl: 1.3.3
       statuses: 1.5.0
       unpipe: 1.0.0
-    transitivePeerDependencies:
-      - supports-color
     dev: false
 
   /finalhandler/1.2.0:
@@ -6386,8 +6376,6 @@ packages:
       parseurl: 1.3.3
       statuses: 2.0.1
       unpipe: 1.0.0
-    transitivePeerDependencies:
-      - supports-color
     dev: true
 
   /find-cache-dir/3.3.2:
@@ -6524,6 +6512,13 @@ packages:
       graceful-fs: 4.2.10
       jsonfile: 6.1.0
       universalify: 2.0.0
+    dev: true
+
+  /fs-minipass/2.1.0:
+    resolution: {integrity: sha512-V/JgOLFCS+R6Vcq0slCuaeWEdNC3ouDlJMNIsacH2VtALiu9mV4LPrHc5cDl8k5aw6J8jwgWWpiTo5RYhmIzvg==}
+    engines: {node: '>= 8'}
+    dependencies:
+      minipass: 3.1.6
     dev: true
 
   /fs.realpath/1.0.0:
@@ -7936,8 +7931,6 @@ packages:
     dependencies:
       debug: 2.6.9
       marky: 1.2.4
-    transitivePeerDependencies:
-      - supports-color
     dev: true
 
   /lighthouse-logger/1.3.0:
@@ -7945,8 +7938,6 @@ packages:
     dependencies:
       debug: 2.6.9
       marky: 1.2.4
-    transitivePeerDependencies:
-      - supports-color
     dev: true
 
   /lighthouse-stack-packs/1.8.1:
@@ -7989,7 +7980,6 @@ packages:
       yargs-parser: 21.0.1
     transitivePeerDependencies:
       - bufferutil
-      - supports-color
       - utf-8-validate
     dev: true
 
@@ -8565,6 +8555,21 @@ packages:
     resolution: {integrity: sha512-Jsjnk4bw3YJqYzbdyBiNsPWHPfO++UGG749Cxs6peCu5Xg4nrena6OVxOYxrQTqww0Jmwt+Ref8rggumkTLz9Q==}
     dev: true
 
+  /minipass/3.1.6:
+    resolution: {integrity: sha512-rty5kpw9/z8SX9dmxblFA6edItUmwJgMeYDZRrwlIVN27i8gysGbznJwUggw2V/FVqFSDdWy040ZPS811DYAqQ==}
+    engines: {node: '>=8'}
+    dependencies:
+      yallist: 4.0.0
+    dev: true
+
+  /minizlib/2.1.2:
+    resolution: {integrity: sha512-bAxsR8BVfj60DWXHE3u30oHzfl4G7khkSuPW+qvpd7jFRHm7dLxOjUk1EHACJ/hxLY8phGJ0YhYHZo7jil7Qdg==}
+    engines: {node: '>= 8'}
+    dependencies:
+      minipass: 3.1.6
+      yallist: 4.0.0
+    dev: true
+
   /mkdirp-classic/0.5.3:
     resolution: {integrity: sha512-gKLcREMhtuZRwRAfqP3RFW+TK4JqApVBtOIftVgjuABpAtpxhPGaDcfvbhNvD0B8iD1oUr/txX35NjcaY6Ns/A==}
     dev: true
@@ -8574,6 +8579,12 @@ packages:
     hasBin: true
     dependencies:
       minimist: 1.2.6
+    dev: true
+
+  /mkdirp/1.0.4:
+    resolution: {integrity: sha512-vVqVZQyf3WLx2Shd0qJ9xuvqgAyKPLAiqITEtqW0oIUjzo3PePDd6fW9iFz30ef7Ysp/oiWqbhszeGWW2T6Gzw==}
+    engines: {node: '>=10'}
+    hasBin: true
     dev: true
 
   /modify-filename/1.1.0:
@@ -9697,7 +9708,7 @@ packages:
       material-colors: 1.2.6
       prop-types: 15.8.1
       react: 18.1.0
-      reactcss: 1.2.3_react@18.1.0
+      reactcss: 1.2.3
       tinycolor2: 1.4.2
     dev: false
 
@@ -9828,13 +9839,10 @@ packages:
       loose-envify: 1.4.0
     dev: true
 
-  /reactcss/1.2.3_react@18.1.0:
+  /reactcss/1.2.3:
     resolution: {integrity: sha512-KiwVUcFu1RErkI97ywr8nvx8dNOpT03rbnma0SSalTYjkrPYaEajR4a/MRt6DZ46K6arDRbWMNHF+xH7G7n/8A==}
-    peerDependencies:
-      react: '*'
     dependencies:
       lodash: 4.17.21
-      react: 18.1.0
     dev: false
 
   /read-config-file/6.2.0:
@@ -10279,8 +10287,6 @@ packages:
       on-finished: 2.4.1
       range-parser: 1.2.1
       statuses: 2.0.1
-    transitivePeerDependencies:
-      - supports-color
     dev: true
 
   /serialize-error/7.0.1:
@@ -10299,8 +10305,6 @@ packages:
       escape-html: 1.0.3
       parseurl: 1.3.3
       send: 0.18.0
-    transitivePeerDependencies:
-      - supports-color
     dev: true
 
   /set-blocking/2.0.0:
@@ -10860,6 +10864,18 @@ packages:
       fs-constants: 1.0.0
       inherits: 2.0.4
       readable-stream: 3.6.0
+    dev: true
+
+  /tar/6.1.11:
+    resolution: {integrity: sha512-an/KZQzQUkZCkuoAA64hM92X0Urb6VpRhAFllDzz44U2mcD5scmT3zBc4VgVpkugF580+DQn8eAFSyoQt0tznA==}
+    engines: {node: '>= 10'}
+    dependencies:
+      chownr: 2.0.0
+      fs-minipass: 2.1.0
+      minipass: 3.1.6
+      minizlib: 2.1.2
+      mkdirp: 1.0.4
+      yallist: 4.0.0
     dev: true
 
   /temp-file/3.4.0:
