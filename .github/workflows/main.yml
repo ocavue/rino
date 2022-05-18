@@ -43,9 +43,9 @@ jobs:
 
       - uses: ./.github/actions/dependencies
 
-      - name: Build electron dependencies
+      - name: Build packages
         run: |
-          pnpm build electron-renderer electron-main electron-preload
+          pnpm build electron-renderer electron-main electron-preload common editor
 
   build_electron:
     runs-on: macos-latest
