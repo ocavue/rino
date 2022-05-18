@@ -7,7 +7,7 @@ const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
 
 const playgroundRoot = resolve(__dirname, "..")
-const coverageDir = resolve(playgroundRoot, "coverage_e2e")
+const coverageDir = resolve(playgroundRoot, "coverage-e2e")
 const playgroundDistAssetsDir = resolve(playgroundRoot, "dist", "assets")
 
 function isCoverageEnable(): boolean {

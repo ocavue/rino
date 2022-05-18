@@ -4,8 +4,6 @@
         "target": "ES2021",
         "module": "ESNext",
         "strict": true,
-        "noEmit": true,
-        "noEmitOnError": true,
         "moduleResolution": "node",
         "allowJs": true,
         "esModuleInterop": true,
@@ -15,11 +13,18 @@
         "declarationMap": true, // Generates `.d.ts.map` files.
         "forceConsistentCasingInFileNames": true,
         "jsx": "react",
+
+        // if we just want incremental checking, we need to set `emitDeclarationOnly` to true.
+        // https://github.com/microsoft/TypeScript/issues/33809#issuecomment-589446027
+        "noEmit": false,
+        "noEmitOnError": true,
+        "emitDeclarationOnly": true,
         "incremental": true,
     },
     "exclude": [
         "node_modules",
         "dist",
+        "dist-types",
         ".next",
         "coverage",
         "out",
@@ -27,6 +32,7 @@
 
         "**/node_modules",
         "**/dist",
+        "**/dist-types",
         "**/.next",
         "**/coverage",
         "**/out",

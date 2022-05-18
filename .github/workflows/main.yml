@@ -18,11 +18,11 @@ jobs:
 
       - name: Build home
         run: |
-          pnpm -F '@rino.app/home' build
+          pnpm build home
 
       - name: Build editor playground
         run: |
-          pnpm -F '@rino.app/playground' build
+          pnpm build playground
 
       - name: Upload dist (home)
         uses: actions/upload-artifact@v3
@@ -43,9 +43,9 @@ jobs:
 
       - uses: ./.github/actions/dependencies
 
-      - name: Build electron dependencies
+      - name: Build packages
         run: |
-          pnpm --filter '@rino.app/electron-*...' build
+          pnpm build electron-renderer electron-main electron-preload common editor
 
   build_electron:
     runs-on: macos-latest
@@ -61,13 +61,9 @@ jobs:
           echo "$pkgjson" > ./packages/electron/package.json
           cat ./packages/electron/package.json
 
-      - name: Build electron dependencies
-        run: |
-          pnpm --filter '@rino.app/electron-*...' build
-
       - name: Build electron
         run: |
-          pnpm --filter '@rino.app/electron' build:all
+          pnpx turbo run build:all --filter='electron'
         env:
           ELECTRON_APPLE_ID_NAME: ${{ secrets.ELECTRON_APPLE_ID_NAME }}
           ELECTRON_APPLE_ID: ${{ secrets.ELECTRON_APPLE_ID }}
@@ -132,6 +128,9 @@ jobs:
       - name: Lint
         run: pnpm lint .
 
+      - name: Check typescript types
+        run: pnpm typecheck
+
   preview: # Preview deployment
     runs-on: ubuntu-latest
     steps:
@@ -141,11 +140,11 @@ jobs:
 
       - name: Build home
         run: |
-          pnpm -F '@rino.app/home' build
+          pnpm build home
 
       - name: Build editor playground
         run: |
-          pnpm -F '@rino.app/playground' build
+          pnpm build playground
 
       - id: step_branch
         name: Get the branch name

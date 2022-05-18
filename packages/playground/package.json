@@ -8,15 +8,12 @@
     "module": "dist/index.js",
     "types": "dist/index.d.ts",
     "scripts": {
-        "dev": "run-s _dep _dev",
+        "dev": "vite dev --clearScreen=false",
         "preview": "vite preview --port 3001",
-        "build": "run-s _dep _build",
-        "test:vitest": "pnpm build && vitest run --no-threads",
-        "test:vitest:dev": "pnpm build && vitest dev --no-threads",
-        "test:vitest:coverage": "pnpm build && vitest run --no-threads --coverage",
-        "_dep": "pnpm -F '@rino.app/playground^...' build",
-        "_dev": "vite dev --clearScreen=false",
-        "_build": "vite build"
+        "build": "vite build",
+        "test:vitest": "vitest run --no-threads",
+        "test:vitest:dev": "vitest dev --no-threads",
+        "test:vitest:coverage": "vitest run --no-threads --coverage"
     },
     "devDependencies": {
         "@rino.app/editor": "workspace:*",
