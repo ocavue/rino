@@ -11,6 +11,7 @@
         "test:vitest": "vitest run",
         "test:vitest:dev": "vitest dev",
         "test:vitest:coverage": "vitest run --coverage",
+        "dev":  "tsc --build --watch --preserveWatchOutput src/tsconfig.json",
         "build": "tsc --build src/tsconfig.json"
     },
     "publishConfig": {

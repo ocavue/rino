@@ -1,6 +1,45 @@
 {
-    "extends": "./tsconfig.base.json",
-    "include": [
-        "./"
+    "include": [],
+    "files": [],
+    "references": [
+        {
+            "path": "packages/cli/src/tsconfig.json"
+        },
+        {
+            "path": "packages/common/src/tsconfig.json"
+        },
+        {
+            "path": "packages/editor/src/tsconfig.json"
+        },
+        {
+            "path": "packages/editor/test/tsconfig.json"
+        },
+        {
+            "path": "packages/electron-main/src/tsconfig.json"
+        },
+        {
+            "path": "packages/electron-preload/src/tsconfig.json"
+        },
+        {
+            "path": "packages/electron-renderer/src/tsconfig.json"
+        },
+        {
+            "path": "packages/electron-types/types/tsconfig.json"
+        },
+        {
+            "path": "packages/home/src/tsconfig.json"
+        },
+        {
+            "path": "packages/home/test/tsconfig.json"
+        },
+        {
+            "path": "packages/playground/src/tsconfig.json"
+        },
+        {
+            "path": "packages/playground/test/tsconfig.json"
+        },
+        {
+            "path": "packages/visite/src/tsconfig.json"
+        }
     ]
 }

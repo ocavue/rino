@@ -6,17 +6,13 @@
     "type": "module",
     "main": "dist/rino-editor.mjs",
     "module": "dist/rino-editor.mjs",
-    "types": "src/index.ts",
+    "types": "dist-types/index.d.ts",
     "scripts": {
-        "dev": "run-s _dep _dev",
-        "build": "run-s _dep _build",
-        "test:vitest": "pnpm _dep && vitest run && pnpm _typecheck",
-        "test:vitest:dev": "pnpm _dep && vitest dev",
-        "test:vitest:coverage": "pnpm _dep && vitest run --coverage",
-        "_dep": "pnpm -F '@rino.app/editor^...' build",
-        "_dev": "node esbuild.mjs --watch",
-        "_build": "node esbuild.mjs",
-        "_typecheck": "tsc --build ./src/tsconfig.json ./test/tsconfig.json"
+        "dev": "node esbuild.mjs --watch",
+        "build": "node esbuild.mjs",
+        "test:vitest": "vitest run",
+        "test:vitest:dev": "vitest dev",
+        "test:vitest:coverage": "vitest run --coverage"
     },
     "dependencies": {
         "@codemirror/autocomplete": "^0.20.1",

@@ -1,0 +1,52 @@
+{
+    "$schema": "https://turborepo.org/schema.json",
+    "baseBranch": "origin/master",
+    "pipeline": {
+        "build": {
+            "dependsOn": ["^build"],
+            "outputs": ["dist/**"]
+        },
+        "build:all": {
+            "dependsOn": ["^build"],
+            "outputs": ["dist/**"]
+        },
+
+        "dev": {
+            "dependsOn": ["^build"],
+            "cache": false
+        },
+        "preview": {
+            "dependsOn": ["^build"]
+        },
+
+        "test:vitest": {
+            "dependsOn": ["^build"]
+        },
+        "test:vitest:dev": {
+            "dependsOn": ["^build"]
+        },
+        "test:vitest:coverage": {
+            "dependsOn": ["^build"],
+            "outputs": ["coverage/**", "coverage-e2e/**"]
+        },
+
+        "@rino.app/playground#test:vitest": {
+            "dependsOn": ["build"]
+        },
+        "@rino.app/playground#test:vitest:dev": {
+            "dependsOn": ["build"]
+        },
+        "@rino.app/playground#test:vitest:coverage": {
+            "dependsOn": ["build"],
+            "outputs": ["coverage/**", "coverage-e2e/**"]
+        },
+        "@rino.app/electron#build": {
+            "dependsOn": ["@rino.app/electron-renderer#build", "@rino.app/electron-main#build", "@rino.app/electron-preload#build"],
+            "outputs": []
+        },
+        "@rino.app/electron#build:all": {
+            "dependsOn": ["@rino.app/electron-renderer#build", "@rino.app/electron-main#build", "@rino.app/electron-preload#build"],
+            "outputs": []
+        }
+    }
+}

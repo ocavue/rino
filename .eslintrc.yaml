@@ -4,8 +4,8 @@ parserOptions:
   parser: "@typescript-eslint/parser"
   ecmaVersion: 2018 # Allows for the parsing of modern ECMAScript features
   project:
-    - "./packages/*/*/tsconfig.json"
     - "./tsconfig.json"
+    - "./tsconfig.eslint.json"
   ecmaFeatures:
     jsx: true
   extraFileExtensions:
@@ -77,9 +77,6 @@ rules:
       ["^\\."],
     ]
 overrides:
-  - files:
-      - "**/tests/**/*"
-      - "**/__test__/*"
   - files: "*.js"
     rules:
       "@typescript-eslint/no-var-requires": off

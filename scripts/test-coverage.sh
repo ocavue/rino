@@ -7,11 +7,11 @@ pnpm clean
 
 export VITEST_PLAYWRIGHT_ENABLE_COVERAGE=yes
 
-pnpm -F '*' test:vitest:coverage
+pnpx turbo run test:vitest:coverage
 
 export PATH=$PATH:$PWD/packages/rig/node_modules/.bin
 
-merge-istanbul --out ./coverage/e2e/coverage-e2e.json './packages/*/coverage_e2e/coverage*.json'
+merge-istanbul --out ./coverage/e2e/coverage-e2e.json './packages/*/coverage-e2e/coverage*.json'
 merge-istanbul --out ./coverage/uni/coverage-uni.json './packages/*/coverage/coverage-final.json'
 merge-istanbul --out ./coverage/all/coverage-all.json ./coverage/e2e/coverage-e2e.json ./coverage/uni/coverage-uni.json
 
