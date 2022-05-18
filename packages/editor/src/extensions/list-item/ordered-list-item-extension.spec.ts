@@ -257,6 +257,129 @@ describe("keymap", () => {
             })
         })
 
+        describe("multiple paragraphs", () => {
+            it("escapes the item when the cursor is in the first paragraph of the item", () => {
+                editor = add(
+                    doc(
+                        oli(
+                            //
+                            p("123<cursor>"),
+                            p("456"),
+                            p("789"),
+                        ),
+                    ),
+                )
+                editor.press("Enter")
+                expect(editor.doc).toEqualRemirrorDocument(
+                    doc(
+                        oli(
+                            //
+                            p("123"),
+                        ),
+                        oli(
+                            //
+                            p(""),
+                            p("456"),
+                            p("789"),
+                        ),
+                    ),
+                )
+                editor.insertText("X")
+                expect(editor.doc).toEqualRemirrorDocument(
+                    doc(
+                        oli(
+                            //
+                            p("123"),
+                        ),
+                        oli(
+                            //
+                            p("X"),
+                            p("456"),
+                            p("789"),
+                        ),
+                    ),
+                )
+            })
+
+            it("does not escapes the item when the cursor is in the non-first paragraph of the item", () => {
+                editor = add(
+                    doc(
+                        oli(
+                            //
+                            p("123"),
+                            p("456<cursor>"),
+                            p("789"),
+                        ),
+                    ),
+                )
+                editor.press("Enter")
+                expect(editor.doc).toEqualRemirrorDocument(
+                    doc(
+                        oli(
+                            //
+                            p("123"),
+                            p("456"),
+                            p(""),
+                            p("789"),
+                        ),
+                    ),
+                )
+                editor.insertText("X")
+                expect(editor.doc).toEqualRemirrorDocument(
+                    doc(
+                        oli(
+                            //
+                            p("123"),
+                            p("456"),
+                            p("X"),
+                            p("789"),
+                        ),
+                    ),
+                )
+            })
+
+            it("escapes the item when the cursor is in an empty item", () => {
+                editor = add(
+                    doc(
+                        oli(
+                            //
+                            p("123"),
+                            p("<cursor>"),
+                            p("789"),
+                        ),
+                    ),
+                )
+                editor.press("Enter")
+                expect(editor.doc).toEqualRemirrorDocument(
+                    doc(
+                        oli(
+                            //
+                            p("123"),
+                        ),
+                        oli(
+                            //
+                            p(""),
+                            p("789"),
+                        ),
+                    ),
+                )
+                editor.insertText("X")
+                expect(editor.doc).toEqualRemirrorDocument(
+                    doc(
+                        oli(
+                            //
+                            p("123"),
+                        ),
+                        oli(
+                            //
+                            p("X"),
+                            p("789"),
+                        ),
+                    ),
+                )
+            })
+        })
+
         describe("extra cases", () => {
             it("won't break non-list document", () => {
                 editor = add(

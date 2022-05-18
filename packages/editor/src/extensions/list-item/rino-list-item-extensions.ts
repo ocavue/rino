@@ -17,7 +17,7 @@ export class RinoOrderedListItemExtension extends OrderedListItemExtension imple
                             state.openNode(this.type)
                             break
                         case "bullet_list":
-                            state.openNode(this.type) // TODO
+                            state.openNode(this.type) // TODO: I should use bullet list type instead of `this.type` here
                             break
                         default:
                             throw new Error("unknown context")

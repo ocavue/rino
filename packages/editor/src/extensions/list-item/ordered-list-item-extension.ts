@@ -56,6 +56,8 @@ export class OrderedListItemExtension extends NodeExtension {
     createNodeSpec(extra: ApplySchemaAttributes, override: NodeSpecOverride): NodeExtensionSpec {
         return {
             content: "block+",
+            // TODO: If I change the content as follows, it breaks the `Enter` keybind because of `canSplit` return false.
+            // content: "paragraph block*",
             defining: true,
             toDOM(node) {
                 return [
@@ -111,6 +113,7 @@ export class OrderedListItemExtension extends NodeExtension {
                         // Build a fragment containing empty versions of the structure
                         // from the outer list item to the parent node of the cursor
                         for (let d = $from.depth - depthBefore; d >= $from.depth - 2; d--) wrap = Fragment.from($from.node(d).copy(wrap))
+                        // TODO: I don't understand code here
 
                         // console.debug("wrap:", wrap)
 
@@ -136,6 +139,12 @@ export class OrderedListItemExtension extends NodeExtension {
                     return true
                 }
 
+                // If the cursor is not at the end of the parent list item, don't split the list item.
+                if ($from.index(-1) !== 0) {
+                    return false
+                }
+
+                // Split the list item
                 const nextType = $to.pos == $from.end() ? currItem.contentMatchAt(0).defaultType : undefined
                 tr.delete($from.pos, $to.pos)
                 const typesAfter = [{ type: currItem.type, attrs: currItem.attrs }, nextType && { type: nextType }]
