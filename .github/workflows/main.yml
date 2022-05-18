@@ -18,11 +18,11 @@ jobs:
 
       - name: Build home
         run: |
-          pnpm -F '@rino.app/home' build
+          pnpm build home
 
       - name: Build editor playground
         run: |
-          pnpm -F '@rino.app/playground' build
+          pnpm build playground
 
       - name: Upload dist (home)
         uses: actions/upload-artifact@v3
@@ -45,7 +45,7 @@ jobs:
 
       - name: Build electron dependencies
         run: |
-          pnpm --filter '@rino.app/electron-*...' build
+          pnpm build electron-renderer electron-main electron-preload
 
   build_electron:
     runs-on: macos-latest
@@ -140,11 +140,11 @@ jobs:
 
       - name: Build home
         run: |
-          pnpm -F '@rino.app/home' build
+          pnpm build home
 
       - name: Build editor playground
         run: |
-          pnpm -F '@rino.app/playground' build
+          pnpm build playground
 
       - id: step_branch
         name: Get the branch name
