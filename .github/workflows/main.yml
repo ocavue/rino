@@ -61,13 +61,9 @@ jobs:
           echo "$pkgjson" > ./packages/electron/package.json
           cat ./packages/electron/package.json
 
-      - name: Build electron dependencies
-        run: |
-          pnpm --filter '@rino.app/electron-*...' build
-
       - name: Build electron
         run: |
-          pnpm --filter '@rino.app/electron' build:all
+          pnpx turbo run build:all --filter='electron'
         env:
           ELECTRON_APPLE_ID_NAME: ${{ secrets.ELECTRON_APPLE_ID_NAME }}
           ELECTRON_APPLE_ID: ${{ secrets.ELECTRON_APPLE_ID }}
