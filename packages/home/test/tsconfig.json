@@ -1,6 +1,12 @@
 {
     "extends": "../../../tsconfig.base.json",
-    "include": ["./"],
+    "include": [
+        "./"
+    ],
+    "compilerOptions": {
+        "composite": true,
+        "outDir": "./.cache/typescript/"
+    },
     "references": [
         {
             "path": "../src/tsconfig.json"

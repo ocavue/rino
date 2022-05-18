@@ -132,6 +132,9 @@ jobs:
       - name: Lint
         run: pnpm lint .
 
+      - name: Check typescript types
+        run: pnpm typecheck
+
   preview: # Preview deployment
     runs-on: ubuntu-latest
     steps:

@@ -1,12 +1,10 @@
 {
     "extends": "../../../tsconfig.base.json",
+    "include": [
+        "./"
+    ],
     "compilerOptions": {
         "composite": true,
-        "noEmit": false,
-        "emitDeclarationOnly": true,
-        "outDir": "./.cache/typescript",
-    },
-    "include": [
-        "./",
-    ],
+        "outDir": "../dist-types/"
+    }
 }

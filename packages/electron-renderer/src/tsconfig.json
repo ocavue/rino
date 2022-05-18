@@ -2,13 +2,11 @@
     "extends": "../../../tsconfig.base.json",
     "compilerOptions": {
         "composite": true,
-        // if we just want incremental checking, we need to set `emitDeclarationOnly` to true.
-        // https://github.com/microsoft/TypeScript/issues/33809#issuecomment-589446027
-        "noEmit": false,
-        "emitDeclarationOnly": true,
-        "outDir": "./.cache/typescript"
+        "outDir": "../dist-types/"
     },
-    "include": ["./"],
+    "include": [
+        "./"
+    ],
     "references": [
         {
             "path": "../../editor/src/tsconfig.json"
