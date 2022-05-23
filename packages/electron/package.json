@@ -11,6 +11,9 @@
         "build:all": "./setup.sh && electron-builder -p never --mac --win --linux"
     },
     "devDependencies": {
+        "@rino.app/electron-main": "workspace:*",
+        "@rino.app/electron-preload": "workspace:*",
+        "@rino.app/electron-renderer": "workspace:*",
         "electron": "18.2.4",
         "electron-builder": "^23.0.9",
         "electron-notarize": "^1.2.1",
