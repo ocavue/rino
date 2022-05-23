@@ -3,8 +3,8 @@
     "version": "0.0.0",
     "private": true,
     "scripts": {
-        "dev": "tsc --build ./src/tsconfig.json && node esbuild.mjs --watch",
-        "build": "tsc --build ./src/tsconfig.json && node esbuild.mjs"
+        "dev": "node esbuild.mjs --watch",
+        "build": "node esbuild.mjs"
     },
     "devDependencies": {
         "@rino.app/electron-types": "workspace:0.0.0",

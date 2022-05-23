@@ -8,7 +8,7 @@
         "source.fixAll.eslint": true
     },
     "editor.defaultFormatter": "dbaeumer.vscode-eslint",
-    "editor.rulers": [80,140],
+    "editor.rulers": [80, 140],
     "typescript.tsdk": "node_modules/typescript/lib",
     "python.pythonPath": ".venv/bin/python",
     "eslint.codeActionsOnSave.mode": "problems",
@@ -25,5 +25,6 @@
     },
     "[css]": {
         "editor.defaultFormatter": "esbenp.prettier-vscode"
-    }
+    },
+    "vitest.commandLine": "./node_modules/.bin/rino-cli test"
 }

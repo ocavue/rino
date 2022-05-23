@@ -1,3 +1,5 @@
+import "../components/styles.css"
+
 import React from "react"
 import { Link } from "react-router-dom"
 import { Head } from "visite/head"

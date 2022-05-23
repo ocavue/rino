@@ -39,14 +39,6 @@
         "@rino.app/playground#test:vitest:coverage": {
             "dependsOn": ["build"],
             "outputs": ["coverage/**", "coverage-e2e/**"]
-        },
-        "@rino.app/electron#build": {
-            "dependsOn": ["@rino.app/electron-renderer#build", "@rino.app/electron-main#build", "@rino.app/electron-preload#build"],
-            "outputs": []
-        },
-        "@rino.app/electron#build:all": {
-            "dependsOn": ["@rino.app/electron-renderer#build", "@rino.app/electron-main#build", "@rino.app/electron-preload#build"],
-            "outputs": []
         }
     }
 }

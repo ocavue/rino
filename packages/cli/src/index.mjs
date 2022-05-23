@@ -38,11 +38,14 @@ export function run() {
         })
 
     program
+        .enablePositionalOptions()
         .command("test")
         .description("Test")
         .argument("[path]", "File path or directory path", process.cwd())
-        .action((path) => {
-            test(path)
+        .argument("[args...]", "Extra arguments which will be passed to vitest")
+        .passThroughOptions()
+        .action((path, args) => {
+            test(path, args)
         })
 
     program.parse()

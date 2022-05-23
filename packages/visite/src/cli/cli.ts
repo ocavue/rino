@@ -5,7 +5,7 @@ import { createDisableLogPlugin } from "./disable-log-plugin"
 import plugin from "./plugin"
 import { createServer } from "./server.js"
 
-console.log("Welcome to Visite! v8")
+console.log("Welcome to Visite! v10")
 
 const command = process.argv[2]
 
