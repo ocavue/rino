@@ -361,21 +361,21 @@ importers:
     specifiers:
       '@types/react': ^18.0.9
       '@types/react-dom': ^18.0.4
-      '@vitejs/plugin-react': ^1.3.2
+      '@vitejs/plugin-react': ^2.0.0-alpha.1
       react: ^18.1.0
       react-dom: ^18.1.0
       react-router-dom: ^6.3.0
       visite: workspace:*
-      vite: ^2.9.9
+      vite: ^3.0.0-alpha.1
     devDependencies:
       '@types/react': 18.0.9
       '@types/react-dom': 18.0.4
-      '@vitejs/plugin-react': 1.3.2
+      '@vitejs/plugin-react': 2.0.0-alpha.1_vite@3.0.0-alpha.1
       react: 18.1.0
       react-dom: 18.1.0_react@18.1.0
       react-router-dom: 6.3.0_react-dom@18.1.0+react@18.1.0
       visite: link:../visite
-      vite: 2.9.9
+      vite: 3.0.0-alpha.1
 
   packages/playground:
     specifiers:
@@ -430,12 +430,12 @@ importers:
       react-helmet-async: ^1.3.0
       react-router-dom: ^6.3.0
       rimraf: ^3.0.2
-      vite: ^2.9.9
+      vite: ^3.0.0-alpha.1
     dependencies:
       connect: 3.7.0
       react-helmet-async: 1.3.0_react-dom@18.1.0+react@18.1.0
       react-router-dom: 6.3.0_react-dom@18.1.0+react@18.1.0
-      vite: 2.9.9
+      vite: 3.0.0-alpha.1
     devDependencies:
       '@types/connect': 3.4.35
       esbuild: 0.14.39
@@ -3916,6 +3916,25 @@ packages:
       '@rollup/pluginutils': 4.2.1
       react-refresh: 0.13.0
       resolve: 1.22.0
+    transitivePeerDependencies:
+      - supports-color
+    dev: true
+
+  /@vitejs/plugin-react/2.0.0-alpha.1_vite@3.0.0-alpha.1:
+    resolution: {integrity: sha512-Vks60nBAt7lt7fOViqE/SgaMIWcuQS5jWgPGlHaQrX2ASzdUNPJlIwA9fDXFAPfeSrV+ChfnHQIEPbssjlm5vQ==}
+    engines: {node: '>=14.6.0'}
+    peerDependencies:
+      vite: ^3.0.0-alpha
+    dependencies:
+      '@babel/core': 7.18.0
+      '@babel/plugin-transform-react-jsx': 7.17.12_@babel+core@7.18.0
+      '@babel/plugin-transform-react-jsx-development': 7.16.7_@babel+core@7.18.0
+      '@babel/plugin-transform-react-jsx-self': 7.17.12_@babel+core@7.18.0
+      '@babel/plugin-transform-react-jsx-source': 7.16.7_@babel+core@7.18.0
+      '@rollup/pluginutils': 4.2.1
+      react-refresh: 0.13.0
+      resolve: 1.22.0
+      vite: 3.0.0-alpha.1
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -11596,6 +11615,30 @@ packages:
   /vite/2.9.9:
     resolution: {integrity: sha512-ffaam+NgHfbEmfw/Vuh6BHKKlI/XIAhxE5QSS7gFLIngxg171mg1P3a4LSRME0z2ZU1ScxoKzphkipcYwSD5Ew==}
     engines: {node: '>=12.2.0'}
+    hasBin: true
+    peerDependencies:
+      less: '*'
+      sass: '*'
+      stylus: '*'
+    peerDependenciesMeta:
+      less:
+        optional: true
+      sass:
+        optional: true
+      stylus:
+        optional: true
+    dependencies:
+      esbuild: 0.14.39
+      postcss: 8.4.14
+      resolve: 1.22.0
+      rollup: 2.74.1
+    optionalDependencies:
+      fsevents: 2.3.2
+    dev: true
+
+  /vite/3.0.0-alpha.1:
+    resolution: {integrity: sha512-m2CAqsFoYL2qogueochGS8z3r+kC0S5Bz4tbs13wswDMbBK+Wy7+524OFXerefEVs9sh4koDzdu+nCg7ZYiKGw==}
+    engines: {node: '>=14.6.0'}
     hasBin: true
     peerDependencies:
       less: '*'

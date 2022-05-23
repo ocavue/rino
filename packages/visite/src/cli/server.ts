@@ -2,7 +2,7 @@ import connect from "connect"
 import path from "node:path"
 import { fileURLToPath } from "node:url"
 import { resolve } from "path"
-import { createServer as createViteServer } from "vite"
+import { createServer as createViteServer, ModuleNode } from "vite"
 
 import { html as htmlTemplate } from "./html.js"
 import { injectHtml } from "./inject-html.js"
@@ -45,19 +45,19 @@ async function createServer(root = process.cwd()) {
 
             console.log("[server.mjs] url:", url)
 
-            let template
-            // always read fresh template in dev
-            template = htmlTemplate
-            template = await vite.transformIndexHtml(url, template)
-            // const myComponent = (await vite.ssrLoadModule("/src/components/counter.jsx")).default
-            // console.log("myComponent:", myComponent)
-            // console.log("myComponent.viteHOOKS:", myComponent.viteHOOKS)
-            const render: ServerEntry = (await vite.ssrLoadModule(toAbsolute("../../app/entry-server.jsx"))).render
-            const html = await injectHtml(render, url, template)
-            // if (context.url) {
-            //     // Somewhere a `<Redirect>` was rendered
-            //     return res.redirect(301, context.url)
-            // }
+            let html = htmlTemplate
+
+            html = await vite.transformIndexHtml(url, html)
+
+            const entryServerPath = toAbsolute("../../app/entry-server.jsx")
+            const mod = await vite.ssrLoadModule(entryServerPath)
+
+            const modules = vite.moduleGraph.getModulesByFile(entryServerPath)
+            const preloadLinks = modules ? renderPreloadLinks(modules) : ""
+
+            const render: ServerEntry = mod.render
+            html = await injectHtml(render, url, html)
+            html = html.replace("<!--visite-placeholder-preload-links-->", preloadLinks)
             res.statusCode = 200
             res.setHeader("Content-Type", "text/html")
             res.end(html)
@@ -75,6 +75,55 @@ async function createServer(root = process.cwd()) {
     })
 
     return { app, vite }
+}
+
+function renderPreloadLinks(modules: Set<ModuleNode>) {
+    const results: string[] = []
+    const deps = new Set<string>()
+    modules.forEach((mod) => deps.add(mod.url))
+    collectPreloadLinks(modules, deps).forEach((url) => {
+        results.push(renderPreloadLink(url))
+    })
+    return results.join("\n    ")
+}
+
+function collectPreloadLinks(modules: Set<ModuleNode>, deps = new Set<string>(), urls = new Set<string>()) {
+    for (const mod of modules) {
+        if (urls.has(mod.url) || !deps.has(mod.url)) {
+            continue
+        }
+        urls.add(mod.url)
+        for (const dep of mod.ssrTransformResult?.deps ?? []) {
+            deps.add(dep)
+        }
+        if (mod.importedModules.size > 0) {
+            collectPreloadLinks(mod.importedModules, deps, urls)
+        }
+    }
+    return urls
+}
+
+const JS_FILE_REGEX = /[mc]?[tj]sx?$/
+
+// Copied from https://github.com/vitejs/vite/blob/875fc116a0c74d5485e61a3b8c4b5bcc5d8bc842/playground/ssr-vue/src/entry-server.js#L50
+function renderPreloadLink(url: string) {
+    if (JS_FILE_REGEX.test(url)) {
+        return `<link rel="modulepreload" crossorigin href="${url}">`
+    } else if (url.endsWith(".css")) {
+        return `<link rel="stylesheet" href="${url}">`
+    } else if (url.endsWith(".woff")) {
+        return `<link rel="preload" href="${url}" as="font" type="font/woff" crossorigin>`
+    } else if (url.endsWith(".woff2")) {
+        return `<link rel="preload" href="${url}" as="font" type="font/woff2" crossorigin>`
+    } else if (url.endsWith(".gif")) {
+        return `<link rel="preload" href="${url}" as="image" type="image/gif">`
+    } else if (url.endsWith(".jpg") || url.endsWith(".jpeg")) {
+        return `<link rel="preload" href="${url}" as="image" type="image/jpeg">`
+    } else if (url.endsWith(".png")) {
+        return `<link rel="preload" href="${url}" as="image" type="image/png">`
+    } else {
+        return `<!--unknown preload link ${url}-->`
+    }
 }
 
 export { createServer }

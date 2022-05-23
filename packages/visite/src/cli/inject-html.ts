@@ -28,5 +28,5 @@ export async function injectHtml(renderFunc: ServerEntry, url: string, template:
         template = template.replace(/<body([^>]*)>/, `<body$1 ${bodyAttrs}>`)
     }
 
-    return template.replace(`<!--visite-app-html-->`, appHtml).replace(`<!--visite-app-head-->`, headHtml)
+    return template.replace(`<!--visite-placeholder-app-->`, appHtml).replace(`<!--visite-placeholder-head-->`, headHtml)
 }

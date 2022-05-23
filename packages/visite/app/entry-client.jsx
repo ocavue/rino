@@ -1,5 +1,5 @@
 import React, { StrictMode } from "react"
-import ReactDOM from "react-dom"
+import { hydrateRoot } from "react-dom/client"
 import { HelmetProvider } from "react-helmet-async"
 import { BrowserRouter } from "react-router-dom"
 
@@ -9,7 +9,7 @@ import { buildPageRoutes } from "./routes.jsx"
 async function main() {
     const url = window.location.pathname
     const PageRoutes = await buildPageRoutes(url)
-    ReactDOM.hydrateRoot(
+    hydrateRoot(
         document.getElementById("app"),
         <StrictMode>
             <HelmetProvider>
