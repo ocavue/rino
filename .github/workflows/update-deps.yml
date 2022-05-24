@@ -19,9 +19,10 @@ jobs:
           token: ${{ secrets.RELEASE_PLEASE_GITHUB_TOKEN }}
         if: ${{ steps.step_find_pr.outputs.number }}
 
-      - name: Install pnpm
-        run: npm install -g pnpm@6
-        if: ${{ steps.step_find_pr.outputs.number }}
+      - name: Enable Corepack
+        run: |
+          corepack enable
+          pnpm --version
 
       - name: Regenerate the lock file
         continue-on-error: true
