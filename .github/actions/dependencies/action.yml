@@ -19,7 +19,7 @@ runs:
           ~/cache_electron_builder
           ~/cache_playwright_browsers
 
-        key: ${{ runner.os }}-deps-v27-${{ hashFiles('pnpm-lock.yaml') }}
+        key: ${{ runner.os }}-deps-v28-${{ hashFiles('pnpm-lock.yaml') }}
 
     - name: Setup cache directory
       run: |
@@ -38,8 +38,10 @@ runs:
         CACHE_HIT: ${{ steps.step_cache_deps.outputs.cache-hit }}
       shell: bash
 
-    - name: Install pnpm
-      run: npm install -g pnpm@6
+    - name: Enable Corepack
+      run: |
+        corepack enable
+        pnpm --version
       shell: bash
 
     - name: Install dependencies
