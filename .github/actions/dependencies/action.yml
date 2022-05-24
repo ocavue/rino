@@ -38,8 +38,10 @@ runs:
         CACHE_HIT: ${{ steps.step_cache_deps.outputs.cache-hit }}
       shell: bash
 
-    - name: Install pnpm
-      run: npm install -g pnpm@6
+    - name: Enable Corepack
+      run: |
+        corepack enable
+        pnpm --version
       shell: bash
 
     - name: Install dependencies
