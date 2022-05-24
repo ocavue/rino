@@ -1,4 +1,3 @@
-import { ProsemirrorNode } from "@remirror/pm"
 import { NodeType, ResolvedPos } from "prosemirror-model"
 import { NodeSelection, Selection } from "prosemirror-state"
 
@@ -13,8 +12,4 @@ export function isLastChild($pos: ResolvedPos, depth: number): boolean {
 export function isListItemType(type: NodeType): boolean {
     // TODO: use remirror tag instead of node name
     return ["orderedListItem"].includes(type.name)
-}
-
-export function createNearSelection(selection: Selection, doc: ProsemirrorNode, pos: number): Selection {
-    return (selection.constructor as typeof Selection).near(doc.resolve(pos))
 }

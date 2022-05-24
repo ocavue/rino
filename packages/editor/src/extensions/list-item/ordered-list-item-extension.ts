@@ -1,9 +1,10 @@
 import { css } from "@emotion/css"
 import { ApplySchemaAttributes, ExtensionTag, KeyBindings, NodeExtension, NodeExtensionSpec, NodeSpecOverride } from "@remirror/core"
 import { Fragment, Slice } from "prosemirror-model"
+import { Selection } from "prosemirror-state"
 import { canSplit, liftTarget } from "prosemirror-transform"
 
-import { createNearSelection, isBlockNodeSelection, isLastChild, isListItemType } from "./list-utils"
+import { isBlockNodeSelection, isLastChild, isListItemType } from "./list-utils"
 
 const orderedListItem = css`
     border: 1px solid red;
@@ -132,7 +133,7 @@ export class OrderedListItemExtension extends NodeExtension {
                             if (node.isTextblock && node.content.size == 0) sel = pos + 1
                         })
                         if (sel > -1) {
-                            tr.setSelection(createNearSelection(selection, tr.doc, sel))
+                            tr.setSelection(Selection.near(tr.doc.resolve(sel)))
                         }
                         dispatch(tr.scrollIntoView())
                     }
@@ -147,11 +148,10 @@ export class OrderedListItemExtension extends NodeExtension {
                 // Split the list item
                 const nextType = $to.pos == $from.end() ? currItem.contentMatchAt(0).defaultType : undefined
                 tr.delete($from.pos, $to.pos)
-                const typesAfter = [{ type: currItem.type, attrs: currItem.attrs }, nextType && { type: nextType }]
+                const typesAfter = [{ type: currItem.type, attrs: currItem.attrs }, nextType ? { type: nextType } : null]
                 if (!canSplit(tr.doc, $from.pos, 2, typesAfter)) {
                     return false
                 }
-                // @ts-expect-error typesAfter has wrong type
                 dispatch?.(tr.split($from.pos, 2, typesAfter).scrollIntoView())
                 return true
             },
