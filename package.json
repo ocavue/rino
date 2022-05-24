@@ -56,6 +56,17 @@
         "dependencyDashboard": true
     },
     "pnpm": {
-        "overrides": {}
+        "overrides": {},
+        "peerDependencyRules": {
+            "ignoreMissing": [
+                "jest",
+                "webpack",
+                "rollup"
+            ],
+            "allowedVersions": {
+                "react": "18",
+                "react-dom": "18"
+            }
+        }
     }
 }
