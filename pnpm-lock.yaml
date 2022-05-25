@@ -921,7 +921,7 @@ packages:
     resolution: {integrity: sha512-P2mIyjqBexRTaYbLmAf1HpIyNDw6nWsh2K5MiDi80+6oYwnRggU9dR3Yn9Lv0RM5ph3xJzayMbW0IpicIfA87w==}
     dependencies:
       '@codemirror/language': 0.20.2
-      '@lezer/python': 0.16.0
+      '@lezer/python': 0.16.1
     dev: false
 
   /@codemirror/lang-rust/0.20.0:
@@ -931,8 +931,8 @@ packages:
       '@lezer/rust': 0.16.1
     dev: false
 
-  /@codemirror/lang-sql/0.20.0:
-    resolution: {integrity: sha512-/0ocIoMeTusoNsBoUsYH1DFIPRH/QFEcdGwMCkQ3ojdKrT5gJ3JPIlbPAkKadCBEqT5MWZ9nOJYvxS5eaKeP+w==}
+  /@codemirror/lang-sql/0.20.2:
+    resolution: {integrity: sha512-lHBcWE/j7tRDVptc7unDujqSEOJd6FL77ImfhNSgOCSN9oNo++aWlghzeR+pNuKXTK8IL/g9C3EcjGCUNPTtFg==}
     dependencies:
       '@codemirror/autocomplete': 0.20.2
       '@codemirror/language': 0.20.2
@@ -972,7 +972,7 @@ packages:
       '@codemirror/lang-php': 0.20.0
       '@codemirror/lang-python': 0.20.0
       '@codemirror/lang-rust': 0.20.0
-      '@codemirror/lang-sql': 0.20.0
+      '@codemirror/lang-sql': 0.20.2
       '@codemirror/lang-wast': 0.20.0
       '@codemirror/lang-xml': 0.20.0
       '@codemirror/language': 0.20.2
@@ -1451,8 +1451,8 @@ packages:
       '@lezer/lr': 0.16.3
     dev: false
 
-  /@lezer/python/0.16.0:
-    resolution: {integrity: sha512-jbcidwKGE1TwmozoHel6RwqHc6/gC8KAx8ZwFYUNcIuar20dQTGgyj6MVn85njhm2ZtejUJpTkVr5KS8KGh1CQ==}
+  /@lezer/python/0.16.1:
+    resolution: {integrity: sha512-xwnKG3CjUWRyG9TJCquLohDKgQYckLJoy4Y3cOrTWaxw+1cPhUJKqXxTq8ciseJI68XrgpUsjd724Ly+e8JLxg==}
     dependencies:
       '@lezer/highlight': 0.16.0
       '@lezer/lr': 0.16.3
@@ -1983,7 +1983,7 @@ packages:
       '@remirror/core-constants': 1.0.2
       '@remirror/types': 0.1.1
       '@types/object.omit': 3.0.0
-      '@types/object.pick': 1.3.1
+      '@types/object.pick': 1.3.2
       '@types/throttle-debounce': 2.1.0
       case-anything: 1.1.5
       dash-get: 1.0.2
@@ -3554,8 +3554,8 @@ packages:
   /@types/object.omit/3.0.0:
     resolution: {integrity: sha512-I27IoPpH250TUzc9FzXd0P1BV/BMJuzqD3jOz98ehf9dQqGkxlq+hO1bIqZGWqCg5bVOy0g4AUVJtnxe0klDmw==}
 
-  /@types/object.pick/1.3.1:
-    resolution: {integrity: sha512-YJ22uXcv4EyAlbUtXsfU50IW5wWcUQtauLH8nemV+EUABxE6DvNVGueq2fJWisxyfola17SrsUBBWNIFotuX3w==}
+  /@types/object.pick/1.3.2:
+    resolution: {integrity: sha512-sn7L+qQ6RLPdXRoiaE7bZ/Ek+o4uICma/lBFPyJEKDTPTBP1W8u0c4baj3EiS4DiqLs+Hk+KUGvMVJtAw3ePJg==}
 
   /@types/orderedmap/1.0.0:
     resolution: {integrity: sha512-dxKo80TqYx3YtBipHwA/SdFmMMyLCnP+5mkEqN0eMjcTBzHkiiX0ES118DsjDBjvD+zeSsSU9jULTZ+frog+Gw==}
@@ -4304,7 +4304,6 @@ packages:
 
   /base64-js/1.5.1:
     resolution: {integrity: sha512-AKpaYlHn8t4SVbOHCy+b5+KKgvR4vrsD8vbvrbiQJps7fKDTkjkDry6ji0rUJjC0kzbNePLwzxq8iypo41qeWA==}
-    requiresBuild: true
     dev: true
 
   /big.js/5.2.2:
@@ -4419,9 +4418,9 @@ packages:
     hasBin: true
     dependencies:
       caniuse-lite: 1.0.30001342
-      electron-to-chromium: 1.4.137
+      electron-to-chromium: 1.4.138
       escalade: 3.1.1
-      node-releases: 2.0.4
+      node-releases: 2.0.5
       picocolors: 1.0.0
 
   /bser/2.1.1:
@@ -5578,8 +5577,8 @@ packages:
       type-fest: 1.4.0
     dev: true
 
-  /electron-to-chromium/1.4.137:
-    resolution: {integrity: sha512-0Rcpald12O11BUogJagX3HsCN3FE83DSqWjgXoHo5a72KUKMSfI39XBgJpgNNxS9fuGzytaFjE06kZkiVFy2qA==}
+  /electron-to-chromium/1.4.138:
+    resolution: {integrity: sha512-IOyp2Seq3w4QLln+yZWcMF3VXhhduz4bwg9gfI+CnP5TkzwNXQ8FCZuwwPsnes73AfWdf5J2n2OXdUwDUspDPQ==}
 
   /electron-updater/5.0.1:
     resolution: {integrity: sha512-dNnXPCqYmergXy3jgg4UICuD50Orug9GQe/5xfHy+BE2Fy0icB0QE+y6iQWdCDf7yeONxwMBf4HgIkGG5pIaVg==}
@@ -7015,7 +7014,6 @@ packages:
 
   /ieee754/1.2.1:
     resolution: {integrity: sha512-dcyqhDvX1C46lXZcVqCpK+FtMRQVdIMN6/Df5js2zouUsqG7I6sFxitIC+7KYK29KdXOLHdu9zL4sFnoVQnqaA==}
-    requiresBuild: true
     dev: true
 
   /ignore/5.2.0:
@@ -7852,7 +7850,6 @@ packages:
 
   /json-schema-traverse/0.4.1:
     resolution: {integrity: sha512-xbbCH5dCYU5T8LcEhhuh7HJ88HXuW3qsI3Y0zOZFKfZEHcpWiHU/Jxzk629Brsab/mMiHQti9wMP+845RPe3Vg==}
-    requiresBuild: true
     dev: true
 
   /json-schema-traverse/1.0.0:
@@ -8763,8 +8760,8 @@ packages:
     resolution: {integrity: sha512-1nh45deeb5olNY7eX82BkPO7SSxR5SSYJiPTrTdFUVYwAl8CKMA5N9PjTYkHiRjisVcxcQ1HXdLhx2qxxJzLNQ==}
     dev: true
 
-  /node-abi/3.15.0:
-    resolution: {integrity: sha512-Ic6z/j6I9RLm4ov7npo1I48UQr2BEyFCqh6p7S1dhEx9jPO0GPGq/e2Rb7x7DroQrmiVMz/Bw1vJm9sPAl2nxA==}
+  /node-abi/3.21.0:
+    resolution: {integrity: sha512-0ChvtQmmNYzXju0fjG0Vfg72q2D8FxUhluvV9uqivtXsKblSekJE2juxfg+9HoSgqPMqCmVEC/GHHtGzi4xYTg==}
     engines: {node: '>=10'}
     dependencies:
       semver: 7.3.7
@@ -8817,8 +8814,8 @@ packages:
       process-on-spawn: 1.0.0
     dev: true
 
-  /node-releases/2.0.4:
-    resolution: {integrity: sha512-gbMzqQtTtDz/00jQzZ21PQzdI9PyLYqUSvD0p3naOhX4odFji0ZxYdnVwPTxmSwkmxhcFImpozceidSG+AgoPQ==}
+  /node-releases/2.0.5:
+    resolution: {integrity: sha512-U9h1NLROZTq9uE1SNffn6WuPDg8icmi3ns4rEl/oTfIle4iLjTliCzgTsbaIFMq/Xn078/lfY/BL0GWZ+psK4Q==}
 
   /normalize-package-data/2.5.0:
     resolution: {integrity: sha512-/5CMN3T0R4XTj4DcGaexo+roZSdSFW/0AOOTROrjxzCG1wrWXEsGbRKevjlIL+ZDE4sZlJr5ED4YW0yqmkK+eA==}
@@ -9357,7 +9354,7 @@ packages:
       minimist: 1.2.6
       mkdirp-classic: 0.5.3
       napi-build-utils: 1.0.2
-      node-abi: 3.15.0
+      node-abi: 3.21.0
       npmlog: 4.1.2
       pump: 3.0.0
       rc: 1.2.8
@@ -11945,7 +11942,6 @@ packages:
   /xmlbuilder/9.0.7:
     resolution: {integrity: sha1-Ey7mPS7FVlxVfiD0wi35rKaGsQ0=}
     engines: {node: '>=4.0'}
-    requiresBuild: true
     dev: true
 
   /xmlchars/2.2.0:
