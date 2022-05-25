@@ -148,7 +148,7 @@ importers:
       '@codemirror/lang-markdown': 0.20.1
       '@codemirror/language': 0.20.2
       '@codemirror/language-data': 0.20.0
-      '@codemirror/lint': 0.20.2
+      '@codemirror/lint': 0.20.3
       '@codemirror/search': 0.20.1
       '@codemirror/state': 0.20.0
       '@codemirror/theme-one-dark': 0.20.0
@@ -883,7 +883,7 @@ packages:
     dependencies:
       '@codemirror/autocomplete': 0.20.2
       '@codemirror/language': 0.20.2
-      '@codemirror/lint': 0.20.2
+      '@codemirror/lint': 0.20.3
       '@codemirror/state': 0.20.0
       '@codemirror/view': 0.20.6
       '@lezer/javascript': 0.16.0
@@ -996,8 +996,8 @@ packages:
       '@codemirror/language': 0.20.2
     dev: false
 
-  /@codemirror/lint/0.20.2:
-    resolution: {integrity: sha512-xEH3wlzoFLEhPEeMVRNoQIhoTCMEtXhVxemGh3FYjLfl/CL3B2Wz+CU7ooP5SKhN1le7JqUNSfiTArFP+IzFuw==}
+  /@codemirror/lint/0.20.3:
+    resolution: {integrity: sha512-06xUScbbspZ8mKoODQCEx6hz1bjaq9m8W8DxdycWARMiiX1wMtfCh/MoHpaL7ws/KUMwlsFFfp2qhm32oaCvVA==}
     dependencies:
       '@codemirror/state': 0.20.0
       '@codemirror/view': 0.20.6
@@ -3491,7 +3491,7 @@ packages:
   /@types/keyv/3.1.4:
     resolution: {integrity: sha512-BQ5aZNSCpj7D6K2ksrRCTmKRLEpnPvWDiLPfoGyhZ++8YtiK9d/3DBKPJgry359X/P1PfruyYwvnvwFjuEiEIg==}
     dependencies:
-      '@types/node': 17.0.35
+      '@types/node': 16.11.36
     dev: true
 
   /@types/linkify-it/3.0.2:
@@ -3709,7 +3709,7 @@ packages:
   /@types/responselike/1.0.0:
     resolution: {integrity: sha512-85Y2BjiufFzaMIlvJDvTTB8Fxl2xfLo4HgmHzVBz08w4wDePCTjYw66PdrolO0kzli3yam/YCgRufyo1DdQVTA==}
     dependencies:
-      '@types/node': 17.0.35
+      '@types/node': 16.11.36
     dev: true
 
   /@types/sanitize-html/2.6.2:
@@ -4215,7 +4215,6 @@ packages:
   /astral-regex/2.0.0:
     resolution: {integrity: sha512-Z7tMw1ytTXt5jqMcOP+OQteU1VuNK9Y02uuJtKQ1Sv69jXQKKg5cibLwGJow8yzZP+eAc18EmLGPal0bp36rvQ==}
     engines: {node: '>=8'}
-    requiresBuild: true
     dev: true
 
   /async-exit-hook/2.0.1:
@@ -4305,7 +4304,6 @@ packages:
 
   /base64-js/1.5.1:
     resolution: {integrity: sha512-AKpaYlHn8t4SVbOHCy+b5+KKgvR4vrsD8vbvrbiQJps7fKDTkjkDry6ji0rUJjC0kzbNePLwzxq8iypo41qeWA==}
-    requiresBuild: true
     dev: true
 
   /big.js/5.2.2:
@@ -7016,7 +7014,6 @@ packages:
 
   /ieee754/1.2.1:
     resolution: {integrity: sha512-dcyqhDvX1C46lXZcVqCpK+FtMRQVdIMN6/Df5js2zouUsqG7I6sFxitIC+7KYK29KdXOLHdu9zL4sFnoVQnqaA==}
-    requiresBuild: true
     dev: true
 
   /ignore/5.2.0:
@@ -7853,7 +7850,6 @@ packages:
 
   /json-schema-traverse/0.4.1:
     resolution: {integrity: sha512-xbbCH5dCYU5T8LcEhhuh7HJ88HXuW3qsI3Y0zOZFKfZEHcpWiHU/Jxzk629Brsab/mMiHQti9wMP+845RPe3Vg==}
-    requiresBuild: true
     dev: true
 
   /json-schema-traverse/1.0.0:
@@ -10434,7 +10430,6 @@ packages:
   /slice-ansi/3.0.0:
     resolution: {integrity: sha512-pSyv7bSTC7ig9Dcgbw9AuRNUb5k5V6oDudjZoMBSr13qpLBG7tB+zgCkARjq7xIUgdz5P1Qe8u+rSGdouOOIyQ==}
     engines: {node: '>=8'}
-    requiresBuild: true
     dependencies:
       ansi-styles: 4.3.0
       astral-regex: 2.0.0
