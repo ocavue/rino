@@ -24,17 +24,17 @@ jobs:
           corepack enable
           pnpm --version
 
-      - name: Regenerate the lock file
+      - name: Run pnpm-deduplicate
         continue-on-error: true
         run: |
           if $(git log -1 --pretty=format:'%an' | egrep -q 'Renovate'); then
-            echo "Regenerating lock file"
-            rm -rf pnpm-lock.yaml
-            pnpm i
-            cd packages/rig
-            pnpm output-licenses
+            echo "deduplicate lockfile"
+            pnpm install -g pnpm-deduplicate
+            pnpm-deduplicate --version
+            pnpm-deduplicate --list
+            pnpm-deduplicate
           else
-            echo "Skipping lockfile regeneration"
+            echo "Skipping lockfile deduplication"
           fi
         if: ${{ steps.step_find_pr.outputs.number }}
 
