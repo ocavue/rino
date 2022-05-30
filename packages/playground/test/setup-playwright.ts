@@ -1,4 +1,3 @@
-import Playwright from "playwright-chromium"
 import { preview, PreviewServer } from "vite"
 
 import { setupCoverageDir } from "./coverage"
@@ -26,28 +25,12 @@ async function setupServer() {
     }
 }
 
-async function setupBrowser() {
-    const browser = await Playwright.chromium.launch({
-        headless: !!process.env.CI,
-        executablePath: process.env.PLAYWRIGHT_CHROME_EXECUTABLE_PATH,
-    })
-    const page = await browser.newPage()
-
-    globalThis.browser = browser
-    globalThis.page = page
-
-    return async () => {
-        await browser.close()
-    }
-}
-
 async function setup() {
     const teardownServer = await setupServer()
-    const teardownBrowser = await setupBrowser()
     await setupCoverageDir()
 
     return () => {
-        return Promise.all([teardownServer(), teardownBrowser()])
+        return teardownServer()
     }
 }
 
