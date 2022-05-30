@@ -18,10 +18,10 @@ if (!globalThis.browser) {
     await setupBrowser()
 }
 
-beforeAll(async (ctx) => {
+beforeAll(async () => {
     await startJSCoverage()
 })
 
-afterAll(async (ctx) => {
+afterAll(async () => {
     await collectJSCoverage()
 })
