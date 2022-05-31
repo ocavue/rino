@@ -53,12 +53,11 @@ export class RinoTableExtension extends TableExtension {
                     // The selection is not an empty TextSelection. Do nothing.
                     return tr
                 } else {
-                    // $cursor.before(-1) is the end of the first tableRow
-                    // $cursor.before(-1) + 1 is the start of the second tableRow
-                    // $cursor.before(-1) + 2 is the start of the first cell in the second tableRow
-                    const pos = $cursor.before(-1) + 2
+                    // TODO: set the cursor to the first empty cell of the table
+                    const depth = $cursor.depth - 1
+                    const pos = $cursor.posAtIndex($cursor.index(depth) - 1, depth)
                     const $pos = tr.doc.resolve(pos)
-                    return tr.setSelection(new TextSelection($pos))
+                    return tr.setSelection(TextSelection.near($pos))
                 }
             },
         )

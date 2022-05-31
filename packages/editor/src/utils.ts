@@ -1,6 +1,6 @@
-import { convertCommand, DispatchFunction, KeyBindings, ProsemirrorNode } from "@remirror/core"
+import { convertCommand, DispatchFunction, isTextSelection, KeyBindings, ProsemirrorNode } from "@remirror/core"
 import { Fragment, NodeRange } from "prosemirror-model"
-import { EditorState, TextSelection, Transaction } from "prosemirror-state"
+import { EditorState, Transaction } from "prosemirror-state"
 
 import { NodeSerializerSpec, ParserRule } from "./transform"
 
@@ -20,7 +20,7 @@ export function buildBlockEnterKeymapBindings<Node extends ProsemirrorNode>(
     return {
         Enter: convertCommand((state: EditorState, dispatch?: DispatchFunction) => {
             // Ensure that the selection is a TextSelection
-            if (!(state.selection instanceof TextSelection)) return false
+            if (!isTextSelection(state.selection)) return false
 
             // Ensure that the selection is cursor (empty selection)
             const $cursor = state.selection.$cursor
@@ -55,7 +55,9 @@ export function buildBlockEnterKeymapBindings<Node extends ProsemirrorNode>(
             tr = tr.replaceRangeWith(start, end, node)
 
             // Run transact
-            if (transact) tr = transact({ tr })
+            if (transact) {
+                tr = transact({ tr })
+            }
 
             if (dispatch) {
                 // To be able to query whether a command is applicable for a given state, without
