@@ -2,7 +2,7 @@ import { findParentNodeOfType } from "@remirror/core"
 import { CodeMirrorExtension } from "@remirror/extension-codemirror6"
 import Token from "markdown-it/lib/token"
 import { EditorState } from "prosemirror-state"
-import { Decoration, DecorationSet, WidgetDecorationSpec } from "prosemirror-view"
+import { Decoration, DecorationSet } from "prosemirror-view"
 
 import { ENABLE_REACT_CODE_LANGUAGE_SELECTOR } from "../../components/flags"
 import { NodeSerializerOptions, ParserRuleType } from "../../transform"
@@ -71,7 +71,7 @@ export class RinoCodeMirrorExtension extends CodeMirrorExtension {
 
         const [createLanguageMenu, destroyLanguageMenu] = setupLanguageMenu(found.node)
 
-        const deco = Decoration.widget<WidgetDecorationSpec>(found.pos, createLanguageMenu, {
+        const deco = Decoration.widget(found.pos, createLanguageMenu, {
             ignoreSelection: true,
             stopEvent: () => true,
             key: "language-menu",

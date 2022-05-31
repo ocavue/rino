@@ -2,7 +2,7 @@ import { injectGlobal as css } from "@emotion/css"
 import { cx } from "@remirror/core"
 import { EditorState } from "@remirror/pm"
 import { isCellSelection, TableMap } from "@remirror/pm/tables"
-import { Decoration, DecorationSet, EditorView, WidgetDecorationSpec } from "@remirror/pm/view"
+import { Decoration, DecorationSet, EditorView } from "@remirror/pm/view"
 
 import { createElement as h } from "./dom-utils"
 import { DATA_TABLE_SELECTOR_TYPE } from "./table-const"
@@ -69,7 +69,7 @@ const preventDefaultMouseEventHandler = (event: MouseEvent) => {
     event.preventDefault()
 }
 
-function createBodySelector(view: EditorView, getPos: () => number, highlight: boolean): HTMLElement {
+function createBodySelector(view: EditorView, getPos: () => number | undefined, highlight: boolean): HTMLElement {
     return h("div", {
         class: cx("remirror-table-body-selector remirror-table-selector", highlight && "remirror-table-selector-highlight"),
         contenteditable: "false",
@@ -79,6 +79,7 @@ function createBodySelector(view: EditorView, getPos: () => number, highlight: b
         onclick: (event) => {
             event.preventDefault()
             const pos = getPos()
+            if (!pos) return
             const tr = view.state.tr
             if (selectTable(tr, pos)) {
                 view.dispatch(tr)
@@ -87,7 +88,7 @@ function createBodySelector(view: EditorView, getPos: () => number, highlight: b
     })
 }
 
-function createRowSelector(view: EditorView, getPos: () => number, highlight: boolean): HTMLElement {
+function createRowSelector(view: EditorView, getPos: () => number | undefined, highlight: boolean): HTMLElement {
     return h("div", {
         class: cx("remirror-table-row-selector remirror-table-selector", highlight && "remirror-table-selector-highlight"),
         contenteditable: "false",
@@ -97,6 +98,7 @@ function createRowSelector(view: EditorView, getPos: () => number, highlight: bo
         onclick: (event) => {
             event.preventDefault()
             const pos = getPos()
+            if (!pos) return
             const tr = view.state.tr
             if (selectRow(tr, pos)) {
                 view.dispatch(tr)
@@ -105,7 +107,7 @@ function createRowSelector(view: EditorView, getPos: () => number, highlight: bo
     })
 }
 
-function createColumnSelector(view: EditorView, getPos: () => number, highlight: boolean): HTMLElement {
+function createColumnSelector(view: EditorView, getPos: () => number | undefined, highlight: boolean): HTMLElement {
     return h("div", {
         class: cx("remirror-table-column-selector remirror-table-selector", highlight && "remirror-table-selector-highlight"),
         contenteditable: "false",
@@ -115,6 +117,7 @@ function createColumnSelector(view: EditorView, getPos: () => number, highlight:
         onclick: (event) => {
             event.preventDefault()
             const pos = getPos()
+            if (!pos) return
             const tr = view.state.tr
             if (selectColumn(tr, pos)) {
                 view.dispatch(tr)
@@ -164,10 +167,10 @@ export function createSelectorDecorations(state: EditorState): DecorationSet {
         }
     }
 
-    const spec: WidgetDecorationSpec = {
+    const spec = {
         side: -1,
         ignoreSelection: true,
-    }
+    } as const
 
     const cornerCell = getCellsInRect(selection, { top: 0, bottom: 1, left: 0, right: 1 })[0]
 

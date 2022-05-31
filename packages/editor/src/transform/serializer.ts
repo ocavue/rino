@@ -1,9 +1,9 @@
-import { Node, Schema } from "prosemirror-model"
+import { Node } from "prosemirror-model"
 
-export type NodeSerializerOptions<S extends Schema = any> = {
+export type NodeSerializerOptions = {
     state: MarkdownSerializerState
-    node: Node<S>
-    parent: Node<S>
+    node: Node
+    parent: Node
     index: number
 }
 export type NodeSerializerSpec = (options: NodeSerializerOptions) => void

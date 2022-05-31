@@ -27,7 +27,7 @@ export class UnknowMarkdownItTokenError extends Error {
 // Object used to track the context of a running parse.
 export class MarkdownParseState {
     private schema: Schema
-    private marks: Mark[]
+    private marks: readonly Mark[]
     private tokenHandlers: TokenHandlers
     public stack: StackItem[]
 
@@ -60,7 +60,7 @@ export class MarkdownParseState {
         else nodes.push(node)
     }
 
-    private mergeTextNode(a: Node<Schema>, b: Node<Schema>): Node<Schema> | undefined {
+    private mergeTextNode(a: Node, b: Node): Node | undefined {
         if (a.isText && b.isText && Mark.sameSet(a.marks, b.marks)) {
             const text: string = (a.text || "") + (b.text || "")
             return a.type.schema.text(text, a.marks)
