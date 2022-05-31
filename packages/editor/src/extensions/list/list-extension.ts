@@ -1,4 +1,4 @@
-import { ApplySchemaAttributes, assertGet, GetSchema, KeyBindings, NodeExtensionSpec, NodeSpecOverride } from "@remirror/core"
+import { ApplySchemaAttributes, assertGet, KeyBindings, NodeExtensionSpec, NodeSpecOverride } from "@remirror/core"
 import {
     BulletListExtension,
     ListItemExtension,
@@ -9,9 +9,9 @@ import {
     TaskListExtension,
     TaskListItemExtension,
 } from "@remirror/extension-list"
+import { InputRule, wrappingInputRule } from "@remirror/pm/inputrules"
 import { isString } from "lodash-es"
 import Token from "markdown-it/lib/token"
-import { InputRule, wrappingInputRule } from "prosemirror-inputrules"
 
 import type { MarkdownParseState, NodeSerializerOptions } from "../../transform"
 import { ParserRuleType } from "../../transform"
@@ -153,7 +153,7 @@ export class RinoBulletListExtension extends BulletListExtension implements Mark
         ] as const
     }
 
-    public toMarkdown({ state, node }: NodeSerializerOptions<GetSchema<RinoBulletListExtension>>) {
+    public toMarkdown({ state, node }: NodeSerializerOptions) {
         state.renderList(node, "  ", () => ((node.attrs.bullet as string) || "*") + " ")
     }
 }
@@ -173,7 +173,7 @@ export class RinoTaskListExtension extends TaskListExtension implements Markdown
         return [] as const
     }
 
-    public toMarkdown({ state, node }: NodeSerializerOptions<GetSchema<RinoBulletListExtension>>) {
+    public toMarkdown({ state, node }: NodeSerializerOptions) {
         state.renderList(node, "  ", (index) => {
             const taskListItem = node.maybeChild(index)
             return taskListItem?.attrs.checked ? "- [x] " : "- [ ] "

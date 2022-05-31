@@ -1,6 +1,6 @@
 import { PlainExtension } from "@remirror/core"
-import { EditorState } from "prosemirror-state"
-import { DecorationSet } from "prosemirror-view"
+import { EditorState } from "@remirror/pm/state"
+import { DecorationSet } from "@remirror/pm/view"
 
 import { createSelectorDecorations } from "./table-selector"
 

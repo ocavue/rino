@@ -1,17 +1,17 @@
-import { ProsemirrorNode } from "@remirror/pm"
-import { Mark, Node, Schema } from "prosemirror-model"
-import { Transaction } from "prosemirror-state"
-import { Mappable, Transform } from "prosemirror-transform"
-import { EditorView } from "prosemirror-view"
+import { EditorSchema, ProsemirrorNode } from "@remirror/pm"
+import { Mark, Node, Schema } from "@remirror/pm/model"
+import { Transaction } from "@remirror/pm/state"
+import { Mappable, Transform } from "@remirror/pm/transform"
+import { EditorView } from "@remirror/pm/view"
 
 import { iterNode, iterNodeRange } from "../../utils"
 import { fromInlineMarkdown } from "./from-inline-markdown"
 import { InlineDecorateType } from "./inline-types"
 
-type MarkStep<S extends Schema = any> = {
+type MarkStep = {
     start: number
     end: number
-    marks: Mark<S>[]
+    marks: Mark[]
     text: string
 }
 
@@ -25,7 +25,7 @@ type MarkStep<S extends Schema = any> = {
  * @param node A text block node
  * @param startPos The (absolute) position at the start of the node
  */
-function parseTextBlock(schema: Schema, node: Node<Schema>, startPos: number): MarkStep<Schema>[] {
+function parseTextBlock(schema: Schema, node: Node, startPos: number): MarkStep[] {
     if (!node.textContent) {
         return []
     }
@@ -80,7 +80,7 @@ function parseTextBlock(schema: Schema, node: Node<Schema>, startPos: number): M
     return steps
 }
 
-function parseNode<S extends Schema>(schema: S, node: Node<S>, startPos: number): MarkStep<S>[] {
+function parseNode(schema: EditorSchema, node: Node, startPos: number): MarkStep[] {
     if (node.attrs.inlineDecorateType === InlineDecorateType.Ignore) {
         return []
     }
@@ -89,7 +89,7 @@ function parseNode<S extends Schema>(schema: S, node: Node<S>, startPos: number)
     if (node.isTextblock) {
         steps.push(...parseTextBlock(schema, node, startPos))
     } else {
-        node.forEach((child: Node<S>, offset: number, index: number) => {
+        node.forEach((child: Node, offset: number, index: number) => {
             steps.push(...parseNode(schema, child, startPos + offset + 1))
         })
     }
@@ -114,14 +114,14 @@ const unchangedMappable: Mappable = {
  *
  * Notice that this function may change the selection, which may be unexpected.
  */
-export function updateNodeMarks<S extends Schema>(tr: Transform<S>, node: Node<S>, startPos: number): void {
+export function updateNodeMarks(tr: Transform, node: Node, startPos: number): void {
     if (!node.isTextblock) {
         for (const [child, offset] of iterNode(node)) {
             updateNodeMarks(tr, child, startPos + offset + 1)
         }
     } else {
         const schema = tr.doc.type.schema
-        const steps: MarkStep<S>[] = parseNode(schema, node, startPos)
+        const steps: MarkStep[] = parseNode(schema, node, startPos)
         if (steps.length === 0) {
             return
         }
@@ -145,8 +145,8 @@ export function updateNodeMarks<S extends Schema>(tr: Transform<S>, node: Node<S
 /**
  * Return a new document with all inline marks updated.
  */
-export function initDocMarks<S extends Schema>(doc: ProsemirrorNode<S>): ProsemirrorNode<S> {
-    const tr = new Transform<S>(doc)
+export function initDocMarks(doc: ProsemirrorNode): ProsemirrorNode {
+    const tr = new Transform(doc)
     updateNodeMarks(tr, doc, 0)
     return tr.doc
 }
@@ -154,7 +154,7 @@ export function initDocMarks<S extends Schema>(doc: ProsemirrorNode<S>): Prosemi
 /**
  * Apply markdown marks to current selection range.
  */
-export function applySelectionMarks<S extends Schema>(view: EditorView<S>): void {
+export function applySelectionMarks(view: EditorView): void {
     if (view.isDestroyed) return
 
     const tr = view.state.tr
@@ -166,7 +166,7 @@ export function applySelectionMarks<S extends Schema>(view: EditorView<S>): void
 /**
  * Apply markdown marks to current document.
  */
-export function applyDocMarks<S extends Schema>(view: EditorView<S>): void {
+export function applyDocMarks(view: EditorView): void {
     if (view.isDestroyed) return
 
     const tr = view.state.tr

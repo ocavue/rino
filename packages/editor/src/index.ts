@@ -1,5 +1,5 @@
 import "prosemirror-tables/style/tables.css"
-import "prosemirror-view/style/prosemirror.css"
+import "../node_modules/prosemirror-view/style/prosemirror.css"
 
 import Editor from "./components/Editor"
 export { Editor }
