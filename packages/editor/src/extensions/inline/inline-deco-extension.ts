@@ -1,7 +1,7 @@
 import { CreateExtensionPlugin, isTextSelection, PlainExtension } from "@remirror/core"
-import { Node as ProsemirrorNode } from "prosemirror-model"
-import { EditorState } from "prosemirror-state"
-import { Decoration, DecorationSet } from "prosemirror-view"
+import { Node as ProsemirrorNode } from "@remirror/pm/model"
+import { EditorState } from "@remirror/pm/state"
+import { Decoration, DecorationSet } from "@remirror/pm/view"
 
 import { isAutoHideMark, RinnMarkAttrs } from "./inline-mark-extensions"
 

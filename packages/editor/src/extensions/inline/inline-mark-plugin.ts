@@ -1,6 +1,6 @@
 import { PlainExtension } from "@remirror/core"
-import { EditorState, PluginSpec, Transaction } from "prosemirror-state"
-import { EditorView } from "prosemirror-view"
+import { EditorState, PluginSpec, Transaction } from "@remirror/pm/state"
+import { EditorView } from "@remirror/pm/view"
 
 import { applySelectionMarks, updateRangeMarks } from "./inline-mark-helpers"
 

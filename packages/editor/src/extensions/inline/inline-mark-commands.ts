@@ -1,5 +1,5 @@
 import { CommandFunction, CommandFunctionProps, ProsemirrorNode } from "@remirror/core"
-import { TextSelection, Transaction } from "prosemirror-state"
+import { TextSelection, Transaction } from "@remirror/pm/state"
 
 import { updateRangeMarks } from "./inline-mark-helpers"
 

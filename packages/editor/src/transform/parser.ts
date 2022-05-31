@@ -1,6 +1,6 @@
+import { Mark, Node, NodeType, Schema } from "@remirror/pm/model"
 import MarkdownIt from "markdown-it"
 import Token from "markdown-it/lib/token"
-import { Mark, Node, NodeType, Schema } from "prosemirror-model"
 
 import markdownItListCheckbox from "./markdown-it-list-checkbox"
 import { BlockParserRule, ParserRule, ParserRuleType, TextParserRule } from "./parser-type"

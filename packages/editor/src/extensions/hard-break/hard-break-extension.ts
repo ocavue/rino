@@ -1,6 +1,6 @@
 import { chainCommands, convertCommand } from "@remirror/core"
 import { HardBreakExtension } from "@remirror/extension-hard-break"
-import { baseKeymap, exitCode } from "prosemirror-commands"
+import { baseKeymap, exitCode } from "@remirror/pm/commands"
 
 import { NodeSerializerOptions } from "../../transform"
 

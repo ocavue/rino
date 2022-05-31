@@ -1,8 +1,8 @@
 import { EditorSchema, ProsemirrorNode } from "@remirror/pm"
-import { Mark, Node, Schema } from "prosemirror-model"
-import { Transaction } from "prosemirror-state"
-import { Mappable, Transform } from "prosemirror-transform"
-import { EditorView } from "prosemirror-view"
+import { Mark, Node, Schema } from "@remirror/pm/model"
+import { Transaction } from "@remirror/pm/state"
+import { Mappable, Transform } from "@remirror/pm/transform"
+import { EditorView } from "@remirror/pm/view"
 
 import { iterNode, iterNodeRange } from "../../utils"
 import { fromInlineMarkdown } from "./from-inline-markdown"

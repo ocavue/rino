@@ -9,9 +9,9 @@ import {
     TaskListExtension,
     TaskListItemExtension,
 } from "@remirror/extension-list"
+import { InputRule, wrappingInputRule } from "@remirror/pm/inputrules"
 import { isString } from "lodash-es"
 import Token from "markdown-it/lib/token"
-import { InputRule, wrappingInputRule } from "prosemirror-inputrules"
 
 import type { MarkdownParseState, NodeSerializerOptions } from "../../transform"
 import { ParserRuleType } from "../../transform"

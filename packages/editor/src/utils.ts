@@ -1,6 +1,6 @@
 import { convertCommand, DispatchFunction, isTextSelection, KeyBindings, ProsemirrorNode } from "@remirror/core"
-import { Fragment, NodeRange } from "prosemirror-model"
-import { EditorState, Transaction } from "prosemirror-state"
+import { Fragment, NodeRange } from "@remirror/pm/model"
+import { EditorState, Transaction } from "@remirror/pm/state"
 
 import { NodeSerializerSpec, ParserRule } from "./transform"
 

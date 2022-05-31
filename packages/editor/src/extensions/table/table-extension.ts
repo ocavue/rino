@@ -6,7 +6,7 @@ import {
     TableRowExtension,
     TableSchemaSpec,
 } from "@remirror/extension-tables"
-import { TextSelection } from "prosemirror-state"
+import { TextSelection } from "@remirror/pm/state"
 
 import { NodeSerializerOptions, ParserRuleType } from "../../transform"
 import { buildBlockEnterKeymapBindings } from "../../utils"

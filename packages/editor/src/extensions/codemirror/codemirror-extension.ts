@@ -1,8 +1,8 @@
 import { findParentNodeOfType } from "@remirror/core"
 import { CodeMirrorExtension } from "@remirror/extension-codemirror6"
+import { EditorState } from "@remirror/pm/state"
+import { Decoration, DecorationSet } from "@remirror/pm/view"
 import Token from "markdown-it/lib/token"
-import { EditorState } from "prosemirror-state"
-import { Decoration, DecorationSet } from "prosemirror-view"
 
 import { ENABLE_REACT_CODE_LANGUAGE_SELECTOR } from "../../components/flags"
 import { NodeSerializerOptions, ParserRuleType } from "../../transform"

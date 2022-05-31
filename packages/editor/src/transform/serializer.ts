@@ -1,4 +1,4 @@
-import { Node } from "prosemirror-model"
+import { Node } from "@remirror/pm/model"
 
 export type NodeSerializerOptions = {
     state: MarkdownSerializerState

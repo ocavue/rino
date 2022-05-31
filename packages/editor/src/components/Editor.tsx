@@ -2,9 +2,9 @@ import "./polyfill"
 
 import { cx } from "@emotion/css"
 import { Extension, RemirrorEventListenerProps, RemirrorManager } from "@remirror/core"
+import { TextSelection } from "@remirror/pm/state"
 import { RemirrorProps } from "@remirror/react-core"
 import { debounce } from "lodash-es"
-import { TextSelection } from "prosemirror-state"
 import React, { useCallback, useEffect, useImperativeHandle, useLayoutEffect, useMemo, useReducer } from "react"
 
 import { metaKey } from "@rino.app/common"
