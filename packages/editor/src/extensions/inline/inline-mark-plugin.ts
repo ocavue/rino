@@ -4,7 +4,7 @@ import { EditorView } from "prosemirror-view"
 
 import { applySelectionMarks, updateRangeMarks } from "./inline-mark-helpers"
 
-function createInlineMarkPlugin(isUnitTest = false): PluginSpec {
+function createInlineMarkPlugin(isUnitTest = false): PluginSpec<void> {
     let timeoutId: ReturnType<typeof setTimeout> | null = null
 
     const debounceApplyMarks: (view: EditorView) => void = isUnitTest
@@ -21,8 +21,12 @@ function createInlineMarkPlugin(isUnitTest = false): PluginSpec {
 
     let globalView: EditorView | null = null
 
-    const pluginSpec: PluginSpec = {
-        appendTransaction: (transactions: Array<Transaction>, oldState: EditorState, newState: EditorState): Transaction | void => {
+    const pluginSpec: PluginSpec<void> = {
+        appendTransaction: (
+            transactions: readonly Transaction[],
+            oldState: EditorState,
+            newState: EditorState,
+        ): Transaction | undefined => {
             let shouldUpdate = false
 
             for (const tr of transactions) {

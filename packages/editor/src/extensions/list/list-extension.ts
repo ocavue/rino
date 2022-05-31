@@ -1,4 +1,4 @@
-import { ApplySchemaAttributes, assertGet, GetSchema, KeyBindings, NodeExtensionSpec, NodeSpecOverride } from "@remirror/core"
+import { ApplySchemaAttributes, assertGet, KeyBindings, NodeExtensionSpec, NodeSpecOverride } from "@remirror/core"
 import {
     BulletListExtension,
     ListItemExtension,
@@ -153,7 +153,7 @@ export class RinoBulletListExtension extends BulletListExtension implements Mark
         ] as const
     }
 
-    public toMarkdown({ state, node }: NodeSerializerOptions<GetSchema<RinoBulletListExtension>>) {
+    public toMarkdown({ state, node }: NodeSerializerOptions) {
         state.renderList(node, "  ", () => ((node.attrs.bullet as string) || "*") + " ")
     }
 }
@@ -173,7 +173,7 @@ export class RinoTaskListExtension extends TaskListExtension implements Markdown
         return [] as const
     }
 
-    public toMarkdown({ state, node }: NodeSerializerOptions<GetSchema<RinoBulletListExtension>>) {
+    public toMarkdown({ state, node }: NodeSerializerOptions) {
         state.renderList(node, "  ", (index) => {
             const taskListItem = node.maybeChild(index)
             return taskListItem?.attrs.checked ? "- [x] " : "- [ ] "

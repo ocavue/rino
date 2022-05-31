@@ -1,4 +1,4 @@
-import { isTextSelection, PlainExtension } from "@remirror/core"
+import { CreateExtensionPlugin, isTextSelection, PlainExtension } from "@remirror/core"
 import { Node as ProsemirrorNode } from "prosemirror-model"
 import { EditorState } from "prosemirror-state"
 import { Decoration, DecorationSet } from "prosemirror-view"
@@ -70,17 +70,17 @@ function findVisibleMarks(textBlock: ProsemirrorNode, cursorPos: number, textInd
     return posPairs
 }
 
-function createDecorationPlugin() {
-    const pluginSpec = {
+function createDecorationPlugin(): CreateExtensionPlugin {
+    return {
         props: {
             decorations: (state: EditorState) => {
-                if (!isTextSelection(state.selection)) return
+                if (!isTextSelection(state.selection)) return null
 
                 const $pos = state.selection.$anchor
 
                 // The text block node
                 const textBlock = $pos.parent
-                if (!textBlock.isTextblock) return
+                if (!textBlock.isTextblock) return null
 
                 let posPairs: [number, number][]
 
@@ -92,10 +92,10 @@ function createDecorationPlugin() {
 
                     const textNodeIndex = $pos.index($pos.depth)
                     const textNode = textBlock.content.maybeChild(textNodeIndex)
-                    if (!textNode) return
+                    if (!textNode) return null
 
                     const tokenDepth = getTextAttrs(textNode).depth
-                    if (!tokenDepth) return
+                    if (!tokenDepth) return null
 
                     posPairs = findVisibleMarks(textBlock, $pos.pos - $pos.textOffset, $pos.index($pos.depth), false)
                 }
@@ -107,7 +107,6 @@ function createDecorationPlugin() {
             },
         },
     }
-    return pluginSpec
 }
 
 export class RinoInlineDecorationExtension extends PlainExtension {
@@ -115,7 +114,7 @@ export class RinoInlineDecorationExtension extends PlainExtension {
         return "inlineDecoration" as const
     }
 
-    createPlugin() {
+    createPlugin(): CreateExtensionPlugin {
         return createDecorationPlugin()
     }
 }
