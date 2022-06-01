@@ -7,11 +7,8 @@ codecov:
   # Should Codecov wait for all other statues to pass before sending it's status.
   # Type: Boolean
   # Default: yes
-  require_ci_to_pass: no
+  require_ci_to_pass: false
 
 coverage:
   status:
-    project:
-      default:
-        threshold: 5%  # allow for X% reduction of coverage without failing
-    patch: off
+    patch: false
