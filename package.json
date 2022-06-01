@@ -8,7 +8,7 @@
         "test": "rino-cli test",
         "lint": "eslint --ignore-path .gitignore --ext '.js,.jsx,.ts,.tsx,.mjs'",
         "fix": "eslint --ignore-path .gitignore --ext '.js,.jsx,.ts,.tsx,.mjs' --fix .",
-        "postinstall": "./scripts/post-install.sh && husky install",
+        "postinstall": "./scripts/post-install.sh",
         "test:coverage": "./scripts/test-coverage.sh",
         "clean": "rino-cli clean",
         "typecheck": "tsc -b tsconfig.json"
@@ -26,7 +26,6 @@
         "eslint-plugin-react": "^7.30.0",
         "eslint-plugin-react-hooks": "^4.5.0",
         "eslint-plugin-simple-import-sort": "^7.0.0",
-        "husky": "^8.0.1",
         "prettier": "^2.6.2",
         "turbo": "^1.2.14",
         "typescript": "^4.7.2"
