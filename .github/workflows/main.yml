@@ -211,7 +211,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }} # Install this GitHub App and get the token: https://github.com/apps/lighthouse-ci
         run: |
-          pnpx lhci autorun --config .lighthouserc.home.json
+          export PATH="$PATH:$PWD/packages/rig/node_modules/.bin"
+          lhci autorun --config .lighthouserc.home.json
         if: steps.step_vercel_home.outcome == 'success'
 
   release:
