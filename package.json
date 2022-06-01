@@ -8,27 +8,24 @@
         "test": "rino-cli test",
         "lint": "eslint --ignore-path .gitignore --ext '.js,.jsx,.ts,.tsx,.mjs'",
         "fix": "eslint --ignore-path .gitignore --ext '.js,.jsx,.ts,.tsx,.mjs' --fix .",
-        "postinstall": "./scripts/post-install.sh && husky install",
+        "postinstall": "./scripts/post-install.sh",
         "test:coverage": "./scripts/test-coverage.sh",
         "clean": "rino-cli clean",
         "typecheck": "tsc -b tsconfig.json"
     },
     "devDependencies": {
-        "@lhci/cli": "^0.9.0",
         "@rino.app/cli": "workspace:*",
-        "@svgr/cli": "^6.2.1",
-        "@types/node": "^16.11.36",
-        "@typescript-eslint/eslint-plugin": "^5.26.0",
-        "@typescript-eslint/parser": "^5.26.0",
+        "@types/node": "^16.11.37",
+        "@typescript-eslint/eslint-plugin": "^5.27.0",
+        "@typescript-eslint/parser": "^5.27.0",
         "eslint": "^8.16.0",
         "eslint-config-prettier": "^8.5.0",
         "eslint-plugin-prettier": "^4.0.0",
         "eslint-plugin-react": "^7.30.0",
         "eslint-plugin-react-hooks": "^4.5.0",
         "eslint-plugin-simple-import-sort": "^7.0.0",
-        "husky": "^8.0.1",
         "prettier": "^2.6.2",
-        "turbo": "^1.2.12",
+        "turbo": "^1.2.14",
         "typescript": "^4.7.2"
     },
     "renovate": {
@@ -55,7 +52,7 @@
         "rangeStrategy": "bump",
         "dependencyDashboard": true
     },
-    "packageManager": "pnpm@6.32.17",
+    "packageManager": "pnpm@7.1.7",
     "pnpm": {
         "overrides": {},
         "peerDependencyRules": {

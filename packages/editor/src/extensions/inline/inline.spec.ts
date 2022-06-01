@@ -1,7 +1,7 @@
 import { AnyExtension } from "@remirror/core"
+import { EditorState } from "@remirror/pm/state"
 import { RemirrorTestChain, renderEditor, TaggedProsemirrorNode } from "jest-remirror"
 import prettier from "prettier"
-import { EditorState } from "prosemirror-state"
 import { describe, expect, test } from "vitest"
 
 import {

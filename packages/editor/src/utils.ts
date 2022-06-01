@@ -1,6 +1,6 @@
-import { convertCommand, DispatchFunction, KeyBindings, ProsemirrorNode } from "@remirror/core"
-import { Fragment, NodeRange, Schema } from "prosemirror-model"
-import { EditorState, TextSelection, Transaction } from "prosemirror-state"
+import { convertCommand, DispatchFunction, isTextSelection, KeyBindings, ProsemirrorNode } from "@remirror/core"
+import { Fragment, NodeRange } from "@remirror/pm/model"
+import { EditorState, Transaction } from "@remirror/pm/state"
 
 import { NodeSerializerSpec, ParserRule } from "./transform"
 
@@ -20,7 +20,7 @@ export function buildBlockEnterKeymapBindings<Node extends ProsemirrorNode>(
     return {
         Enter: convertCommand((state: EditorState, dispatch?: DispatchFunction) => {
             // Ensure that the selection is a TextSelection
-            if (!(state.selection instanceof TextSelection)) return false
+            if (!isTextSelection(state.selection)) return false
 
             // Ensure that the selection is cursor (empty selection)
             const $cursor = state.selection.$cursor
@@ -55,7 +55,9 @@ export function buildBlockEnterKeymapBindings<Node extends ProsemirrorNode>(
             tr = tr.replaceRangeWith(start, end, node)
 
             // Run transact
-            if (transact) tr = transact({ tr })
+            if (transact) {
+                tr = transact({ tr })
+            }
 
             if (dispatch) {
                 // To be able to query whether a command is applicable for a given state, without
@@ -82,7 +84,7 @@ export function buildBlockEnterKeymapBindings<Node extends ProsemirrorNode>(
  * @param node The parent node
  * @yields {[node, offset, index]}
  */
-export function* iterNode<S extends Schema>(node: ProsemirrorNode<S>): Generator<[ProsemirrorNode<S>, number, number]> {
+export function* iterNode(node: ProsemirrorNode): Generator<[ProsemirrorNode, number, number]> {
     const fragment = node.content
     for (let index = 0, offset = 0; index < fragment.childCount; index++) {
         const child = fragment.child(index)
@@ -98,7 +100,7 @@ export function* iterNode<S extends Schema>(node: ProsemirrorNode<S>): Generator
  * @param range
  * @yields {[node, offset]}
  */
-export function* iterNodeRange<S extends Schema>(range: NodeRange<S>): Generator<[ProsemirrorNode<S>, number]> {
+export function* iterNodeRange(range: NodeRange): Generator<[ProsemirrorNode, number]> {
     let pos = range.start + 1
     for (const [child, , index] of iterNode(range.parent)) {
         if (index < range.startIndex) continue

@@ -1,7 +1,7 @@
 import { NodeWithPosition } from "@remirror/core"
+import { TextSelection } from "@remirror/pm/state"
 import { renderEditor } from "jest-remirror"
 import { range } from "lodash-es"
-import { TextSelection } from "prosemirror-state"
 import { expect, test } from "vitest"
 
 import {

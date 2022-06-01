@@ -55,14 +55,17 @@ function createReference() {
 export function setupLanguageMenu(node: ProsemirrorNode) {
     let updatePosition: null | (() => void) = null
 
-    const create = (view: EditorView, getPos: () => number): HTMLElement => {
+    const create = (view: EditorView, getPos: () => number | undefined): HTMLElement => {
         let currentLanguage = node.attrs.language || ""
         if (currentLanguage === fakeIndentedLanguage) {
             currentLanguage = ""
         }
 
         const setLanguage = (language: string) => {
-            view.dispatch(view.state.tr.setNodeMarkup(getPos(), undefined, { language }))
+            const pos = getPos()
+            if (pos) {
+                view.dispatch(view.state.tr.setNodeMarkup(pos, undefined, { language }))
+            }
         }
 
         const reference = createReference()

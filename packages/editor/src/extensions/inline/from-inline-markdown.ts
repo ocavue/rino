@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 
-import mdast from "mdast"
+import type mdast from "mdast"
 import type { Options as FromMarkdownOptions } from "mdast-util-from-markdown"
 import { fromMarkdown } from "mdast-util-from-markdown"
 import { gfmStrikethroughFromMarkdown } from "mdast-util-gfm-strikethrough"

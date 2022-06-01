@@ -1,6 +1,6 @@
 import { findParentNodeOfType } from "@remirror/core"
 import { Transaction } from "@remirror/pm/state"
-import { CellSelection, TableMap } from "prosemirror-tables"
+import { CellSelection, TableMap } from "@remirror/pm/tables"
 
 export function selectRow(tr: Transaction, pos: number): boolean {
     const cell = findParentNodeOfType({ selection: tr.doc.resolve(pos), types: "tableCell" })

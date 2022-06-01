@@ -1,6 +1,6 @@
 import { PlainExtension } from "@remirror/core"
 import { FileHandlerProps, FilePasteRule } from "@remirror/pm/paste-rules"
-import { Selection } from "prosemirror-state"
+import { Selection } from "@remirror/pm/state"
 
 type PastedFile = {
     /**

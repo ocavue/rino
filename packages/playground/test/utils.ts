@@ -3,7 +3,6 @@ import { dirname, join } from "node:path"
 import { fileURLToPath } from "node:url"
 import os from "os"
 import { Dialog, ElementHandle } from "playwright-chromium"
-import type { EditorView } from "prosemirror-view"
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
@@ -285,7 +284,7 @@ export async function debugPrintBodyInnerHTML() {
 
 export async function getDocJson() {
     return await page.$$eval("body", () => {
-        const view = (window as any)._RINO_EDITOR_VIEW as EditorView
+        const view = (window as any)._RINO_EDITOR_VIEW
         if (!view) {
             throw new Error("No editor view found")
         }
