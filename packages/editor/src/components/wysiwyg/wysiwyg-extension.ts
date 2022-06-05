@@ -5,6 +5,7 @@ import type { TextExtension } from "@remirror/extension-text"
 import { CorePreset, corePreset } from "@remirror/preset-core"
 
 import {
+    type MarkdownNodeExtension,
     buildCodeMirrorOptions,
     RinoBlockquoteExtension,
     RinoBulletListExtension,
@@ -29,7 +30,6 @@ import {
     RinoTaskListItemExtension,
     RinoTextExtension,
 } from "../../extensions"
-import { MarkdownNodeExtension } from "../../utils"
 import { WysiwygOptions } from "../types"
 
 export type RinoCorePreset = Exclude<CorePreset, ParagraphExtension | TextExtension> | RinoParagraphExtension | RinoTextExtension
