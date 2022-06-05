@@ -13,9 +13,9 @@ import { InputRule, wrappingInputRule } from "@remirror/pm/inputrules"
 import { isString } from "lodash-es"
 import Token from "markdown-it/lib/token"
 
+import type { MarkdownNodeExtension } from "../../extensions"
 import type { MarkdownParseState, NodeSerializerOptions } from "../../transform"
 import { ParserRuleType } from "../../transform"
-import type { MarkdownNodeExtension } from "../../utils"
 
 export class RinoListItemExtension extends ListItemExtension implements MarkdownNodeExtension {
     static disableExtraAttributes = true

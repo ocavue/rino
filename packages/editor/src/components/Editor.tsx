@@ -1,13 +1,11 @@
 import "./polyfill"
 
 import { cx } from "@emotion/css"
-import { Extension, RemirrorEventListenerProps, RemirrorManager } from "@remirror/core"
+import { environment, Extension, RemirrorEventListenerProps, RemirrorManager } from "@remirror/core"
 import { TextSelection } from "@remirror/pm/state"
 import { RemirrorProps } from "@remirror/react-core"
 import { debounce } from "lodash-es"
 import React, { useCallback, useEffect, useImperativeHandle, useLayoutEffect, useMemo, useReducer } from "react"
-
-import { metaKey } from "@rino.app/common"
 
 import { ToggleableInlineMarkName } from "../extensions"
 import { editorReducer, initializeState } from "./editor-state"
@@ -96,6 +94,7 @@ const Editor: React.ForwardRefRenderFunction<EditorHandle, EditorProps> = (
 
     // Register switch mode shortcut
     useEffect(() => {
+        const metaKey = environment.isApple ? "metaKey" : "ctrlKey"
         const handleKeydown = (event: KeyboardEvent) => {
             if (event[metaKey] && event.code === "Slash") {
                 saveContent()

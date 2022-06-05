@@ -9,7 +9,7 @@ import {
 import { TextSelection } from "@remirror/pm/state"
 
 import { NodeSerializerOptions, ParserRuleType } from "../../transform"
-import { buildBlockEnterKeymapBindings } from "../../utils"
+import { buildBlockEnterKeymap } from "../../utils/build-block-enter-keymap"
 import { TableSelectorExtension } from "../table-components"
 import { selectCell } from "../table-components/table-helpers"
 
@@ -28,7 +28,7 @@ export class RinoTableExtension extends TableExtension {
     createKeymap = (): KeyBindings => {
         const schema = this.store.schema
 
-        return buildBlockEnterKeymapBindings(
+        return buildBlockEnterKeymap(
             /^\|((?:[^\|]+\|){2,})\s*$/,
             ({ match }) => {
                 const texts = match[1]

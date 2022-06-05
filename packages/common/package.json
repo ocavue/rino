@@ -4,20 +4,21 @@
     "private": true,
     "license": "GPL-3.0",
     "type": "module",
-    "main": "dist/index.js",
-    "module": "dist/index.js",
-    "types": "dist/index.d.ts",
+    "main": "dist/rino-common.mjs",
+    "module": "dist/rino-common.mjs",
+    "types": "dist-types/index.d.ts",
     "scripts": {
         "test:vitest": "vitest run",
         "test:vitest:dev": "vitest dev",
         "test:vitest:coverage": "vitest run --coverage",
-        "dev":  "tsc --build --watch --preserveWatchOutput src/tsconfig.json",
-        "build": "tsc --build src/tsconfig.json"
+        "dev": "esbuild --bundle src/index.ts --outfile=dist/rino-common.mjs --format=esm --watch",
+        "build": "esbuild --bundle src/index.ts --outfile=dist/rino-common.mjs --format=esm"
     },
     "publishConfig": {
         "access": "public"
     },
     "devDependencies": {
+        "esbuild": "^0.14.42",
         "typescript": "^4.7.2",
         "vitest": "^0.13.0"
     }
