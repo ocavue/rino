@@ -13,7 +13,7 @@ let _render: ServerEntry | null = null
 function getRender(): ServerEntry {
     if (!_render) {
         const require = createRequire(import.meta.url)
-        const render: ServerEntry = require(toAbsolute("./.visite-tmp/dist/entry-server.js")).render
+        const render: ServerEntry = require(toAbsolute("./.visite/temp/dist/entry-server.js")).render
         _render = render
     }
     return _render
