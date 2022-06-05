@@ -4,7 +4,7 @@ import { Transaction } from "@remirror/pm/state"
 import { Mappable, Transform } from "@remirror/pm/transform"
 import { EditorView } from "@remirror/pm/view"
 
-import { iterNode, iterNodeRange } from "../../utils"
+import { iterNode, iterNodeRange } from "../../utils/iter-node"
 import { fromInlineMarkdown } from "./from-inline-markdown"
 import { InlineDecorateType } from "./inline-types"
 

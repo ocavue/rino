@@ -8,7 +8,10 @@ import { defineConfig } from "vite"
 // https://vitejs.dev/config/
 export default defineConfig((env) => ({
     root: "./src/",
-    server: { port: 3001 },
+    server: {
+        port: 3001,
+        open: !process.env.CI,
+    },
     define: {
         "process.env.NODE_ENV": JSON.stringify(env.mode === "production" ? "production" : "development"),
         "process.process.platform": JSON.stringify(process.platform),

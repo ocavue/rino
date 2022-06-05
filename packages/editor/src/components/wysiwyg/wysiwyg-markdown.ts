@@ -1,7 +1,7 @@
 import { AnyExtension, isExtension, RemirrorManager } from "@remirror/core"
 
+import { MarkdownNodeExtension } from "../../extensions"
 import { MarkdownParser, MarkdownSerializer, NodeSerializerSpecs, ParserRule } from "../../transform"
-import { MarkdownNodeExtension } from "../../utils"
 
 function isMarkdownNodeExtension(extension: unknown): extension is MarkdownNodeExtension {
     return !!(
