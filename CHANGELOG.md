@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.43.0](https://github.com/ocavue/rino/compare/v0.42.1...v0.43.0) (2022-06-05)
+
+
+### Features
+
+* **editor:** add a label before a heading ([#1048](https://github.com/ocavue/rino/issues/1048)) ([8f6ed17](https://github.com/ocavue/rino/commit/8f6ed176e59bb51a6f18118c7330dac13bc2cb81))
+
 ## [0.42.1](https://github.com/ocavue/rino/compare/v0.42.0...v0.42.1) (2022-04-07)
 
 
