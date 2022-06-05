@@ -3,7 +3,7 @@ import fs from "node:fs/promises"
 
 import { findRoot } from "../utils/find-root.mjs"
 
-const TO_CLEAN = [".next", "dist", "dist-types", ".cache", "coverage", "coverage-e2e", "out", "build", ".turbo"]
+const TO_CLEAN = [".next", "dist", "dist-types", ".cache", "coverage", "coverage-e2e", "out", "build", ".turbo", ".visite"]
 const TO_IGNORE = ["node_modules"]
 
 async function cleanAll() {
