@@ -19,7 +19,7 @@ runs:
           ~/cache_electron_builder
           ~/cache_playwright_browsers
 
-        key: ${{ runner.os }}-deps-v28-${{ hashFiles('pnpm-lock.yaml') }}
+        key: ${{ runner.os }}-deps-v29-${{ hashFiles('pnpm-lock.yaml') }}
 
     - name: Setup cache directory
       run: |
