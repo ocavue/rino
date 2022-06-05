@@ -40,12 +40,12 @@ async function buildServer() {
     await vite.build({
         build: {
             ssr: "node_modules/visite/app/entry-server.jsx",
-            outDir: ".visite-tmp/dist/",
+            outDir: ".visite/temp/dist/",
         },
         plugins: [createDisableLogPlugin()],
     })
 }
 
 async function clean() {
-    await fs.rm(".visite-tmp/", { recursive: true, force: true })
+    await fs.rm(".visite/temp", { recursive: true, force: true })
 }
