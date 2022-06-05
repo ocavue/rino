@@ -324,7 +324,6 @@ export const EDITOR_THEME_GITHUB = css`
     h5,
     h6 {
         position: relative;
-        /* display: inline-flex; */
 
         & ::before {
             position: absolute;
