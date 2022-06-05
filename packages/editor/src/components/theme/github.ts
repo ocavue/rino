@@ -298,6 +298,59 @@ export const EDITOR_THEME_GITHUB = css`
         line-height: 1.25;
     }
 
+    & h1 {
+        --rino-heading-before-content: "H1";
+    }
+    & h2 {
+        --rino-heading-before-content: "H2";
+    }
+    & h3 {
+        --rino-heading-before-content: "H3";
+    }
+    & h4 {
+        --rino-heading-before-content: "H4";
+    }
+    & h5 {
+        --rino-heading-before-content: "H5";
+    }
+    & h6 {
+        --rino-heading-before-content: "H6";
+    }
+
+    & h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        position: relative;
+        /* display: inline-flex; */
+
+        & ::before {
+            position: absolute;
+            content: var(--rino-heading-before-content);
+            left: -2rem;
+            top: 50%;
+            transform: translateY(-50%);
+
+            border-radius: 0.4rem;
+            border-color: #707070;
+            border-style: solid;
+            border-width: 1px;
+
+            opacity: 0.6;
+            font-size: 0.8rem;
+            padding: 0.2rem;
+        }
+    }
+
+    & h1,
+    h2 {
+        & ::before {
+            top: 45%;
+        }
+    }
+
     & h1,
     & h2 {
         padding-bottom: 0.3em;
