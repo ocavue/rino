@@ -20,6 +20,8 @@ const wysiwygOptions: WysiwygOptions = {
     },
 }
 
+const isDev = process.env.NODE_ENV === "development"
+
 const Workbench: FC = () => {
     const editorRef = useRef<EditorHandle>(null)
 
@@ -74,6 +76,7 @@ const Workbench: FC = () => {
                 key={path}
                 note={note}
                 ref={editorRef}
+                enableDevTools={isDev}
                 wysiwygOptions={wysiwygOptions}
                 onContentSaveDelay={2000}
                 onHasUnsavedChanges={setIsSerializing}

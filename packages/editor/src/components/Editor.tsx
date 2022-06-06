@@ -41,7 +41,7 @@ const defaultWysiwygOptions: WysiwygOptions = {}
 const Editor: React.ForwardRefRenderFunction<EditorHandle, EditorProps> = (
     {
         note,
-        enableDevTools = true,
+        enableDevTools = false,
         autoFocus = true,
         isDarkMode = false,
         extraClassName = "",
