@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.43.1](https://github.com/ocavue/rino/compare/v0.43.0...v0.43.1) (2022-06-06)
+
+
+### Bug Fixes
+
+* hide the devtools in the desktop app ([#1054](https://github.com/ocavue/rino/issues/1054)) ([85027d1](https://github.com/ocavue/rino/commit/85027d1a8987a340739df4e07a79f7f33bef8003))
+
 ## [0.43.0](https://github.com/ocavue/rino/compare/v0.42.1...v0.43.0) (2022-06-05)
 
 
