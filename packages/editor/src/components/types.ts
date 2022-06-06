@@ -2,18 +2,6 @@ import { AnyExtension, ProsemirrorNode, RemirrorManager } from "@remirror/core"
 
 import { FileHandler } from "../extensions"
 
-export type EditorProps = {
-    className: string
-    autoFocus: boolean
-    editable: boolean
-    initialContent: string
-    onContentSaveDelay: number
-    onContentSave: (content: string) => void
-    onContentEdit: () => void
-    beforeUnmount: (content?: string) => void
-    enableDevTools: boolean
-}
-
 export type StringToDoc = (content: string) => ProsemirrorNode
 export type DocToString = (doc: ProsemirrorNode) => string
 
