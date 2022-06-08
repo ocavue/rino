@@ -18,9 +18,9 @@
             "dependsOn": ["build:tsc"],
             "outputs": ["dist/**/*.d.ts"]
         },
-        "build:all": {
+        "build:linux": {
             "dependsOn": ["^build"],
-            "outputs": ["dist/**"]
+            "outputs": []
         },
 
         "dev": {

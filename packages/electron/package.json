@@ -11,7 +11,7 @@
     "scripts": {
         "dev": "./setup.sh && wait-on --timeout 60000 tcp:127.0.0.1:3004 && NODE_ENV=development electron .",
         "build": "./setup.sh && electron-builder -p never --dir",
-        "build:all": "./setup.sh && electron-builder --mac --win --linux"
+        "build:linux": "./setup.sh && electron-builder --linux"
     },
     "devDependencies": {
         "@rino.app/electron-main": "workspace:*",

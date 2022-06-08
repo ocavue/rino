@@ -74,13 +74,14 @@ jobs:
 
       - name: Build electron
         run: |
-          pnpx turbo run build:all --filter='electron'
+          pnpx turbo run build:linux --filter='electron'
         env:
           ELECTRON_APPLE_ID_NAME: ${{ secrets.ELECTRON_APPLE_ID_NAME }}
           ELECTRON_APPLE_ID: ${{ secrets.ELECTRON_APPLE_ID }}
           ELECTRON_APPLE_ID_PASSWORD: ${{ secrets.ELECTRON_APPLE_ID_PASSWORD }}
           CSC_LINK: ${{ secrets.ELECTRON_MAC_P12_BASE64 }}
           CSC_KEY_PASSWORD: ${{ secrets.ELECTRON_MAC_P12_PASSWORD }}
+          GH_TOKEN: ${{ secrets.RELEASE_PLEASE_GITHUB_TOKEN }}
 
       - name: Clean electron dist
         run: |
