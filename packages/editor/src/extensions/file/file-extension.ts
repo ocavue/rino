@@ -2,7 +2,8 @@ import { PlainExtension } from "@remirror/core"
 import { FileHandlerProps, FilePasteRule } from "@remirror/pm/paste-rules"
 import { Selection } from "@remirror/pm/state"
 
-type PastedFile = {
+/** @public */
+export type FileHandler = (props: FileHandlerProps) => Array<{
     /**
      * The name of the file.
      *
@@ -20,9 +21,7 @@ type PastedFile = {
      * @example "blob:http://localhost:3001/a1b84bff-6e93-4159-8e24-1e132b9c3d7a"
      */
     uri: string
-}
-
-export type FileHandler = (props: FileHandlerProps) => Array<PastedFile>
+}>
 
 export type RinoFileExtensionOptions = {
     imageFileHandler?: FileHandler

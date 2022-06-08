@@ -117,6 +117,7 @@ function toggleSimpleInlineMark({ left, right, mark }: CreateInlineKeyBindingPro
     }
 }
 
+/** @public */
 export type ToggleableInlineMarkName = "mdStrong" | "mdEm" | "mdCodeText" | "mdDel"
 
 export function toggleInlineMark(mark: ToggleableInlineMarkName): CommandFunction {

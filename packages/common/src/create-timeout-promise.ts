@@ -5,6 +5,9 @@ async function sleepBeforeError(timeout: number): Promise<never> {
     throw new Error(`timed out after ${timeout} milliseconds`)
 }
 
+/**
+ * @public
+ */
 export async function createTimeoutPromise<T>(promise: Promise<T>, delay: number): Promise<T> {
     return await Promise.race([promise, sleepBeforeError(delay)])
 }

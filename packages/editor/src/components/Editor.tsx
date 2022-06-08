@@ -14,6 +14,7 @@ import { EDITOR_THEME_GITHUB } from "./theme/github"
 import { Mode, Note, WysiwygOptions } from "./types"
 import { WysiwygEditor, WysiwygExtension } from "./wysiwyg"
 
+/** @public */
 export type EditorProps = {
     note: Readonly<Note>
     enableDevTools?: boolean
@@ -26,6 +27,7 @@ export type EditorProps = {
     onHasUnsavedChanges?: (hasUnsavedChanges: boolean) => void
 }
 
+/** @public */
 export type EditorHandle = {
     switchMode: (mode?: Mode) => void
 
@@ -179,6 +181,7 @@ const Editor: React.ForwardRefRenderFunction<EditorHandle, EditorProps> = (
     }
 }
 
+/** @public */
 const ForwardRefEditor = React.forwardRef(Editor)
 ForwardRefEditor.displayName = "Editor"
 

@@ -9,10 +9,12 @@
     "types": "dist-types/index.d.ts",
     "scripts": {
         "dev": "node esbuild.mjs --watch",
-        "build": "node esbuild.mjs",
         "test:vitest": "vitest run",
         "test:vitest:dev": "vitest dev",
-        "test:vitest:coverage": "vitest run --coverage"
+        "test:vitest:coverage": "vitest run --coverage",
+        "build:esbuild": "node esbuild.mjs",
+        "build:tsc": "tsc -b src/tsconfig.json",
+        "build:api-extractor": "api-extractor run --local --verbose"
     },
     "dependencies": {
         "@codemirror/autocomplete": "^0.20.3",
@@ -65,6 +67,7 @@
     },
     "devDependencies": {
         "@babel/core": "^7.18.2",
+        "@microsoft/api-extractor": "^7.25.0",
         "@types/jest": "^28.1.1",
         "@types/lodash-es": "^4.17.6",
         "@types/markdown-it": "^12.2.3",
