@@ -9,17 +9,28 @@ runs:
       with:
         node-version: 16
 
+    - name: Install pnpm
+      uses: pnpm/action-setup@v2.2.2
+      with:
+        run_install: false
+
+    - id: step_pnpm_cache
+      name: Get pnpm store directory
+      run: |
+        echo "::set-output name=pnpm_cache_dir::$(pnpm store path)"
+      shell: bash
+
     - id: step_cache_deps
       name: Cache dependencies
       uses: actions/cache@v3
       with:
         path: |
-          ~/.pnpm-store
+          ${{ steps.step_pnpm_cache.outputs.pnpm_cache_dir }}
           ~/cache_electron
           ~/cache_electron_builder
           ~/cache_playwright_browsers
 
-        key: ${{ runner.os }}-deps-v30-${{ hashFiles('pnpm-lock.yaml') }}
+        key: ${{ runner.os }}-deps-v31-${{ hashFiles('pnpm-lock.yaml') }}
 
     - name: Setup cache directory
       run: |
@@ -36,12 +47,6 @@ runs:
         du -h -d 1 ~/cache_* || true
       env:
         CACHE_HIT: ${{ steps.step_cache_deps.outputs.cache-hit }}
-      shell: bash
-
-    - name: Enable Corepack
-      run: |
-        corepack enable
-        pnpm --version
       shell: bash
 
     - name: Install dependencies

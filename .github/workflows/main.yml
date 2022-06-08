@@ -64,7 +64,7 @@ jobs:
 
       - name: Create draft GitHub release
         uses: softprops/action-gh-release@v1
-        if: ${{ github.ref == 'refs/heads/master' || github.ref == 'changeset-release/master' }}
+        if: ${{ github.ref == 'refs/heads/master' || github.ref == 'refs/heads/changeset-release/master' }}
         with:
           draft: true
           prerelease: false
