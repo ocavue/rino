@@ -56,12 +56,21 @@ jobs:
 
       - uses: ./.github/actions/dependencies
 
-      - name: Update package.json
+      - name: Get current electron app version
         run: |
-          version=$(cat version.txt)
-          pkgjson=$(jq ".version = \"$version\"" ./packages/electron/package.json)
-          echo "$pkgjson" > ./packages/electron/package.json
-          cat ./packages/electron/package.json
+          RINO_APP_VERSION="v$(cat packages/electron/package.json | jq '.version' --join-output)"
+          echo "Current app version is $RINO_APP_VERSION"
+          echo "RINO_APP_VERSION=$RINO_APP_VERSION" >> $GITHUB_ENV
+
+      - name: Create draft GitHub release
+        uses: softprops/action-gh-release@v1
+        if: ${{ github.ref == 'refs/heads/master' || github.ref == 'changeset-release/master' }}
+        with:
+          draft: true
+          prerelease: false
+          name: "${{ env.RINO_APP_VERSION }}"
+          tag_name: "${{ env.RINO_APP_VERSION }}"
+          append_body: false
 
       - name: Build electron
         run: |
@@ -82,12 +91,6 @@ jobs:
           rm -rf ./dist/*/
           echo '============== after cleaning ==============='
           find ./dist -type f
-
-      - name: Upload dist (electron)
-        uses: actions/upload-artifact@v3
-        with:
-          name: electron_dist
-          path: ./packages/electron/dist
 
       - name: Upload dist (electron dmg)
         uses: actions/upload-artifact@v3
@@ -237,8 +240,11 @@ jobs:
         with:
           version: pnpm ci:version
           publish: pnpm ci:publish
+          commit: "chore: version packages"
+          title: "chore: version packages"
+          createGithubReleases: false
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.RELEASE_PLEASE_GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
     outputs:
       published: ${{ steps.step_changeset.outputs.published }}
@@ -250,23 +256,6 @@ jobs:
       - release
     steps:
       - uses: actions/checkout@v3
-
-      - name: Download dist (electron)
-        uses: actions/download-artifact@v3
-        if: ${{ github.ref == 'refs/heads/master' && needs.release.outputs.published == 'true' }}
-        with:
-          name: electron_dist
-          path: ./packages/electron/dist
-
-      # - name: Upload @rino.app/electron to GitHub Release
-      #   uses: svenstaro/upload-release-action@v2
-      #   if: ${{ github.ref == 'refs/heads/master' && needs.release.outputs.published == 'true' }}
-      #   with:
-      #     repo_token: ${{ secrets.GITHUB_TOKEN }}
-      #     file: ./packages/electron/dist/*
-      #     tag: ${{ needs.release.outputs.tag_name }}
-      #     overwrite: true
-      #     file_glob: true
 
       - name: Download dist (home)
         uses: actions/download-artifact@v3
