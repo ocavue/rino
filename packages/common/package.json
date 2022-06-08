@@ -12,9 +12,9 @@
         "test:vitest:dev": "vitest dev",
         "test:vitest:coverage": "vitest run --coverage",
         "dev": "esbuild --bundle src/index.ts --outfile=dist/rino-common.mjs --format=esm --watch",
-        "build": "esbuild --bundle src/index.ts --outfile=dist/rino-common.mjs --format=esm",
+        "build:esbuild": "esbuild --bundle src/index.ts --outfile=dist/rino-common.mjs --format=esm",
         "build:tsc": "tsc -b src/tsconfig.json",
-        "build:api": "api-extractor run --local --verbose"
+        "build:api-extractor": "api-extractor run --local --verbose"
     },
     "publishConfig": {
         "access": "public"

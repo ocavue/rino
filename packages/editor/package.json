@@ -9,12 +9,12 @@
     "types": "dist-types/index.d.ts",
     "scripts": {
         "dev": "node esbuild.mjs --watch",
-        "build": "node esbuild.mjs",
         "test:vitest": "vitest run",
         "test:vitest:dev": "vitest dev",
         "test:vitest:coverage": "vitest run --coverage",
+        "build:esbuild": "node esbuild.mjs",
         "build:tsc": "tsc -b src/tsconfig.json",
-        "build:api": "api-extractor run --local --verbose"
+        "build:api-extractor": "api-extractor run --local --verbose"
     },
     "dependencies": {
         "@codemirror/autocomplete": "^0.20.3",

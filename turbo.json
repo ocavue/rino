@@ -3,14 +3,18 @@
     "baseBranch": "origin/master",
     "pipeline": {
         "build": {
-            "dependsOn": ["^build", "build:api"],
-            "outputs": ["dist/**/*.js", "dist/**/*.mjs"]
+            "dependsOn": ["build:api-extractor", "build:esbuild"],
+            "outputs": ["dist/**"]
+        },
+        "build:esbuild": {
+            "dependsOn": [],
+            "outputs": ["dist/**/*.js", "dist/**/*.mjs", "dist/**/*.cjs"]
         },
         "build:tsc": {
             "dependsOn": ["^build:tsc"],
             "outputs": ["dist-types"]
         },
-        "build:api": {
+        "build:api-extractor": {
             "dependsOn": ["build:tsc"],
             "outputs": ["dist/**/*.d.ts"]
         },
