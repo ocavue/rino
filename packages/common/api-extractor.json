@@ -46,7 +46,7 @@
      *
      * SUPPORTED TOKENS: <projectFolder>, <packageName>, <unscopedPackageName>
      */
-    "mainEntryPointFilePath": "<projectFolder>/lib/index.d.ts",
+    "mainEntryPointFilePath": "<projectFolder>/packages/<unscopedPackageName>/dist-types/index.d.ts",
 
     /**
      * A list of NPM package names whose exports should be treated as part of this package.
@@ -182,7 +182,7 @@
         /**
          * (REQUIRED) Whether to generate the .d.ts rollup file.
          */
-        "enabled": true
+        "enabled": true,
 
         /**
          * Specifies the output path for a .d.ts rollup file to be generated without any trimming.
@@ -197,6 +197,7 @@
          * DEFAULT VALUE: "<projectFolder>/dist/<unscopedPackageName>.d.ts"
          */
         // "untrimmedFilePath": "<projectFolder>/dist/<unscopedPackageName>.d.ts",
+        "untrimmedFilePath": "<projectFolder>/packages/<unscopedPackageName>/dist/rino-<unscopedPackageName>.d.ts",
 
         /**
          * Specifies the output path for a .d.ts rollup file to be generated with trimming for an "alpha" release.
