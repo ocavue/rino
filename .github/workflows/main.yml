@@ -8,6 +8,8 @@ on:
 env:
   NEXT_TELEMETRY_DISABLED: 1 # https://nextjs.org/telemetry
 
+concurrency: ${{ github.workflow }}-${{ github.ref }}
+
 jobs:
   build_website:
     runs-on: ubuntu-latest
@@ -225,15 +227,21 @@ jobs:
       - preview
     if: github.ref == 'refs/heads/master'
     steps:
-      - id: step_release_please
-        uses: GoogleCloudPlatform/release-please-action@v3
-        with:
-          token: ${{ secrets.RELEASE_PLEASE_GITHUB_TOKEN }}
-          release-type: simple
+      - uses: actions/checkout@v3
 
+      - uses: ./.github/actions/dependencies
+
+      - id: step_changeset
+        name: Create Release Pull Request or Publish to npm
+        uses: changesets/action@v1
+        with:
+          version: pnpm ci:version
+          publish: pnpm ci:publish
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
     outputs:
-      published: ${{ steps.step_release_please.outputs.release_created }}
-      tag_name: ${{ steps.step_release_please.outputs.tag_name }}
+      published: ${{ steps.step_changeset.outputs.published }}
 
   deploy: # Production deployment
     runs-on: ubuntu-latest
@@ -250,15 +258,15 @@ jobs:
           name: electron_dist
           path: ./packages/electron/dist
 
-      - name: Upload @rino.app/electron to GitHub Release
-        uses: svenstaro/upload-release-action@v2
-        if: ${{ github.ref == 'refs/heads/master' && needs.release.outputs.published == 'true' }}
-        with:
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: ./packages/electron/dist/*
-          tag: ${{ needs.release.outputs.tag_name }}
-          overwrite: true
-          file_glob: true
+      # - name: Upload @rino.app/electron to GitHub Release
+      #   uses: svenstaro/upload-release-action@v2
+      #   if: ${{ github.ref == 'refs/heads/master' && needs.release.outputs.published == 'true' }}
+      #   with:
+      #     repo_token: ${{ secrets.GITHUB_TOKEN }}
+      #     file: ./packages/electron/dist/*
+      #     tag: ${{ needs.release.outputs.tag_name }}
+      #     overwrite: true
+      #     file_glob: true
 
       - name: Download dist (home)
         uses: actions/download-artifact@v3

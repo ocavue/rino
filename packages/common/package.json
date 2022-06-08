@@ -1,12 +1,16 @@
 {
     "name": "@rino.app/common",
-    "version": "0.0.0",
-    "private": true,
+    "version": "0.43.4",
+    "private": false,
     "license": "GPL-3.0",
     "type": "module",
     "main": "dist/rino-common.mjs",
     "module": "dist/rino-common.mjs",
     "types": "dist-types/index.d.ts",
+    "publishConfig": {
+        "types": "dist/rino-common.d.ts",
+        "access": "public"
+    },
     "scripts": {
         "test:vitest": "vitest run",
         "test:vitest:dev": "vitest dev",
@@ -16,13 +20,13 @@
         "build:tsc": "tsc -b src/tsconfig.json",
         "build:api-extractor": "api-extractor run --local --verbose"
     },
-    "publishConfig": {
-        "access": "public"
-    },
     "devDependencies": {
         "@microsoft/api-extractor": "^7.25.0",
         "esbuild": "^0.14.42",
         "typescript": "^4.7.3",
         "vitest": "^0.14.1"
-    }
+    },
+    "files": [
+        "dist/**"
+    ]
 }

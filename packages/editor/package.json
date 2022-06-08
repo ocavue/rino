@@ -1,12 +1,16 @@
 {
     "name": "@rino.app/editor",
-    "version": "0.0.0",
-    "private": true,
+    "version": "0.43.4",
+    "private": false,
     "license": "GPL-3.0",
     "type": "module",
     "main": "dist/rino-editor.mjs",
     "module": "dist/rino-editor.mjs",
     "types": "dist-types/index.d.ts",
+    "publishConfig": {
+        "types": "dist/rino-editor.d.ts",
+        "access": "public"
+    },
     "scripts": {
         "dev": "node esbuild.mjs --watch",
         "test:vitest": "vitest run",
@@ -54,7 +58,7 @@
         "@remirror/react-components": "^2.0.0-beta.0",
         "@remirror/react-core": "^2.0.0-beta.0",
         "@remirror/styles": "^2.0.0-beta.0",
-        "@rino.app/common": "workspace:0.0.0",
+        "@rino.app/common": "^0.43.4",
         "clsx": "^1.1.1",
         "lodash-es": "^4.17.21",
         "markdown-it": "^13.0.1",
@@ -97,7 +101,7 @@
         "not dead",
         "not op_mini all"
     ],
-    "publishConfig": {
-        "access": "public"
-    }
+    "files": [
+        "dist/**"
+    ]
 }
