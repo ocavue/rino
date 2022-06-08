@@ -59,11 +59,14 @@ function getNextConfig() {
 
 const baseConfig = withBundleAnalyzer(getNextConfig())
 
+const electronPackageJsonPath = join(__dirname, "..", "electron", "package.json")
+const electronVersion = JSON.parse(readFileSync(electronPackageJsonPath, "utf-8")).version
+
 module.exports = {
     ...baseConfig,
     env: {
         ...baseConfig.env,
-        NEXT_PUBLIC_RINO_VERSION: readFileSync(join(__dirname, "..", "..", "version.txt"), "utf-8").trim(),
+        NEXT_PUBLIC_RINO_VERSION: electronVersion,
     },
 
     // disable the built-in eslint step completely.
