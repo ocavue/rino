@@ -18,7 +18,16 @@
             "dependsOn": ["build:tsc"],
             "outputs": ["dist/**/*.d.ts"]
         },
+
         "build:linux": {
+            "dependsOn": ["^build"],
+            "outputs": []
+        },
+        "build:mac": {
+            "dependsOn": ["^build"],
+            "outputs": []
+        },
+        "build:win": {
             "dependsOn": ["^build"],
             "outputs": []
         },

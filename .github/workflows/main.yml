@@ -50,6 +50,12 @@ jobs:
           pnpm build electron-renderer electron-main electron-preload common editor
 
   build_electron:
+    strategy:
+      matrix:
+        electron_build_command:
+          - build:win
+          - build:mac
+          - build:linux
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v3
@@ -74,7 +80,7 @@ jobs:
 
       - name: Build electron
         run: |
-          pnpx turbo run build:linux --filter='electron'
+          pnpm turbo run ${{ matrix.electron_build_command }} --filter='electron'
         env:
           ELECTRON_APPLE_ID_NAME: ${{ secrets.ELECTRON_APPLE_ID_NAME }}
           ELECTRON_APPLE_ID: ${{ secrets.ELECTRON_APPLE_ID }}

@@ -11,6 +11,8 @@
     "scripts": {
         "dev": "./setup.sh && wait-on --timeout 60000 tcp:127.0.0.1:3004 && NODE_ENV=development electron .",
         "build": "./setup.sh && electron-builder -p never --dir",
+        "build:mac": "./setup.sh && electron-builder --mac",
+        "build:win": "./setup.sh && electron-builder --win",
         "build:linux": "./setup.sh && electron-builder --linux"
     },
     "devDependencies": {
