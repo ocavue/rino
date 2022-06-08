@@ -3,7 +3,7 @@
     "baseBranch": "origin/master",
     "pipeline": {
         "build": {
-            "dependsOn": ["build:api-extractor", "build:esbuild"],
+            "dependsOn": ["build:api-extractor", "build:esbuild", "^build"],
             "outputs": ["dist/**"]
         },
         "build:esbuild": {
