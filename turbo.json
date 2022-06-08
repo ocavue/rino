@@ -3,8 +3,12 @@
     "baseBranch": "origin/master",
     "pipeline": {
         "build": {
-            "dependsOn": ["^build"],
+            "dependsOn": ["^build", "bundle:dts"],
             "outputs": ["dist/**"]
+        },
+        "bundle:dts": {
+            "dependsOn": [],
+            "outputs": ["dist-types"]
         },
         "build:all": {
             "dependsOn": ["^build"],

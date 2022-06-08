@@ -1,17 +1,3 @@
-/**
- * Config file for API Extractor.  For more info, please visit: https://api-extractor.com
- */
 {
-    "$schema": "https://developer.microsoft.com/json-schemas/api-extractor/v7/api-extractor.schema.json",
-    "extends": "../../api-extractor.json",
-    "mainEntryPointFilePath": "./dist-types/index.d.ts",
-    "apiReport": {
-        "enabled": true
-    },
-    "docModel": {
-        "enabled": false
-    },
-    "dtsRollup": {
-        "enabled": true
-    }
+    "extends": "../../api-extractor.json"
 }
