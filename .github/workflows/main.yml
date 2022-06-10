@@ -38,7 +38,7 @@ jobs:
           name: editor_playground_dist
           path: ./packages/playground/dist
 
-  build_packages:
+  build_package:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -78,9 +78,14 @@ jobs:
           tag_name: "${{ env.RINO_APP_VERSION }}"
           append_body: false
 
-      - name: Build electron
+      - name: Build electron and upload to GitHub release if necessary
         run: |
-          pnpm turbo run ${{ matrix.electron_build_command }} --filter='electron'
+          alias build_command="pnpm turbo run ${{ matrix.electron_build_command }} --filter='electron'"
+          echo "build_command: ${build_command}"
+          (echo "==== Attempt: 1 ====" && build_command) || \
+          (echo "==== Attempt: 2 ====" && build_command) || \
+          (echo "==== Attempt: 3 ====" && build_command) || \
+          (echo "====== Failed ======" && exit 1)
         env:
           ELECTRON_APPLE_ID_NAME: ${{ secrets.ELECTRON_APPLE_ID_NAME }}
           ELECTRON_APPLE_ID: ${{ secrets.ELECTRON_APPLE_ID }}
@@ -88,30 +93,6 @@ jobs:
           CSC_LINK: ${{ secrets.ELECTRON_MAC_P12_BASE64 }}
           CSC_KEY_PASSWORD: ${{ secrets.ELECTRON_MAC_P12_PASSWORD }}
           GH_TOKEN: ${{ secrets.RELEASE_PLEASE_GITHUB_TOKEN }}
-
-      - name: Clean electron dist
-        run: |
-          cd packages/electron
-          echo '============== before cleaning =============='
-          find ./dist -type f
-          echo '============== cleaning ====================='
-          rm -rf ./dist/*/
-          echo '============== after cleaning ==============='
-          find ./dist -type f
-
-      - name: Upload dist (electron dmg)
-        uses: actions/upload-artifact@v3
-        if: "contains(github.event.head_commit.message, 'UPLOAD_DMG')"
-        with:
-          name: electron_dist_dmg
-          path: ./packages/electron/dist/*.dmg
-
-      - name: Upload dist (electron exe)
-        uses: actions/upload-artifact@v3
-        if: "contains(github.event.head_commit.message, 'UPLOAD_EXE')"
-        with:
-          name: electron_dist_exe
-          path: ./packages/electron/dist/*.exe
 
   test:
     runs-on: ubuntu-latest
@@ -231,6 +212,7 @@ jobs:
     runs-on: ubuntu-latest
     needs:
       - build_website
+      - build_package
       - build_electron
       - test
       - lint
