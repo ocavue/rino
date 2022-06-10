@@ -52,10 +52,10 @@ jobs:
   build_electron:
     strategy:
       matrix:
-        electron_build_command:
-          - build:win
-          - build:mac
-          - build:linux
+        electron_build_target:
+          - win
+          - mac
+          - linux
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v3
@@ -78,14 +78,17 @@ jobs:
           tag_name: "${{ env.RINO_APP_VERSION }}"
           append_body: false
 
-      - name: Build electron and upload to GitHub release if necessary
+      - name: Build dependencies
         run: |
-          alias build_command="pnpm turbo run ${{ matrix.electron_build_command }} --filter='electron'"
-          echo "build_command: ${build_command}"
-          (echo "==== Attempt: 1 ====" && build_command) || \
-          (echo "==== Attempt: 2 ====" && build_command) || \
-          (echo "==== Attempt: 3 ====" && build_command) || \
-          (echo "====== Failed ======" && exit 1)
+          pnpm build electron^...
+
+      - name: Build electron and upload to GitHub release if necessary
+        run: >
+          cd packages/electron;
+          ( echo "==== Attempt: 1 ====" && pnpm build:${{ matrix.electron_build_target }} ) ||
+          ( echo "==== Attempt: 2 ====" && pnpm build:${{ matrix.electron_build_target }} ) ||
+          ( echo "==== Attempt: 3 ====" && pnpm build:${{ matrix.electron_build_target }} ) ||
+          ( echo "====== Failed ======" && exit 1 )
         env:
           ELECTRON_APPLE_ID_NAME: ${{ secrets.ELECTRON_APPLE_ID_NAME }}
           ELECTRON_APPLE_ID: ${{ secrets.ELECTRON_APPLE_ID }}
