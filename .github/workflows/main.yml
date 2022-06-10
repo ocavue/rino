@@ -160,8 +160,8 @@ jobs:
           vercel-args: "--meta TYPE=PREVIEW"
           working-directory: "./packages/home/dist/"
 
-      - id: step_vercel_editor
-        name: Deploy @rino.app/editor to Vercel
+      - id: step_vercel_playground
+        name: Deploy @rino.app/playground to Vercel
         continue-on-error: true
         timeout-minutes: 10
         uses: amondnet/vercel-action@v25
@@ -192,7 +192,7 @@ jobs:
             - Status: ***${{ steps.step_vercel_home.outcome }}***
             - URL: https://rino-home-${{ steps.step_branch.outputs.branch }}.ocavue.vercel.app
             ### Editor playground
-            - Status: ***${{ steps.step_vercel_editor.outcome }}***
+            - Status: ***${{ steps.step_vercel_playground.outcome }}***
             - URL: https://rino-editor-${{ steps.step_branch.outputs.branch }}.ocavue.vercel.app
 
       - name: Generate configrations for Lighthouse CI
@@ -274,8 +274,8 @@ jobs:
           vercel-args: "--prod --meta TYPE=PRODUCTION"
           working-directory: "./packages/home/dist/"
 
-      - id: step_vercel_editor
-        name: Deploy @rino.app/editor to Vercel
+      - id: step_vercel_playground
+        name: Deploy @rino.app/playground to Vercel
         timeout-minutes: 10
         uses: amondnet/vercel-action@v25
         with:
