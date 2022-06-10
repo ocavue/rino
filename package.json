@@ -12,7 +12,7 @@
         "test:coverage": "./scripts/test-coverage.sh",
         "clean": "rino-cli clean",
         "ci:version": "changeset version && pnpm install --no-frozen-lockfile",
-        "ci:publish": "pnpm publish -r",
+        "ci:publish": "rino-cli build common editor && pnpm publish -r",
         "typecheck": "tsc -b tsconfig.json"
     },
     "devDependencies": {
@@ -50,6 +50,8 @@
             }
         ],
         "ignoreDeps": [
+            "@rino.app/common",
+            "@rino.app/editor",
             "typescript"
         ],
         "prConcurrentLimit": 1,
