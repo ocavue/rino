@@ -13,7 +13,7 @@ export function useHoveringCell(): NodeWithPosition | null {
     const [cell, setCell] = React.useState<NodeWithPosition | null>(null)
 
     useHover(
-        useCallback((props) => {
+        useCallback((_, props) => {
             if (!props.hovering) {
                 return
             }
