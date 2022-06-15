@@ -1,9 +1,9 @@
 import { autoUpdate, useFloating, VirtualElement } from "@floating-ui/react-dom"
 import { useCommands } from "@remirror/react"
-import { More2LineIcon } from "@remirror/react-components/all-icons"
 import React, { useCallback, useEffect } from "react"
 
 import type { RinoTableCellExtension } from "../table/table-extension"
+import { More2LineIcon } from "./More2LineIcon"
 import { TableMenu } from "./TableMenu"
 import { useHoveringCellDom } from "./use-hovering-cell-dom"
 
@@ -78,7 +78,7 @@ const TableCellButtonComponent: React.FC<TableCellButtonComponentProps> = ({ cel
             }}
             onClick={handleClick}
         >
-            <More2LineIcon size={"24px"} />
+            <More2LineIcon />
         </div>
     ) : null
 }
