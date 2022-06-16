@@ -381,6 +381,7 @@ importers:
       '@vitejs/plugin-react': ^1.3.2
       c8: ^7.11.3
       jest-remirror: 0.0.0-pr1713.3
+      jsdom: ^19.0.0
       lodash-es: ^4.17.21
       npm-run-all: ^4.1.5
       playwright-chromium: ^1.22.2
@@ -397,7 +398,8 @@ importers:
       '@types/react-dom': 18.0.5
       '@vitejs/plugin-react': 1.3.2
       c8: 7.11.3
-      jest-remirror: 0.0.0-pr1713.3
+      jest-remirror: 0.0.0-pr1713.3_jsdom@19.0.0
+      jsdom: 19.0.0
       lodash-es: 4.17.21
       npm-run-all: 4.1.5
       playwright-chromium: 1.22.2
@@ -407,7 +409,7 @@ importers:
       typescript: 4.7.3
       v8-to-istanbul: 9.0.0
       vite: 2.9.12
-      vitest: 0.15.1_c8@7.11.3
+      vitest: 0.15.1_c8@7.11.3+jsdom@19.0.0
 
   packages/rig:
     specifiers:
@@ -2269,33 +2271,6 @@ packages:
       min-document: 2.19.0
       parenthesis: 3.1.8
 
-  /@remirror/core-utils/0.0.0-pr1713.3_z5dvpq4vbpzxcnjq6lo6cmaeg4:
-    resolution: {integrity: sha512-izLgOhmn1bZcfOLn6ZWUak2kI1waPfyxv/QpytP64Rt2Pe/FQaircgRthmRbcP9Cs3SKlrT0rEmzCf2Os+yJ7w==}
-    peerDependencies:
-      '@remirror/pm': 0.0.0-pr1713.3
-      '@types/node': '*'
-      domino: '*'
-      jsdom: '*'
-    peerDependenciesMeta:
-      '@types/node':
-        optional: true
-      domino:
-        optional: true
-      jsdom:
-        optional: true
-    dependencies:
-      '@babel/runtime': 7.18.0
-      '@remirror/core-constants': 0.0.0-pr1713.3
-      '@remirror/core-helpers': 0.0.0-pr1713.3
-      '@remirror/core-types': 0.0.0-pr1713.3_z5dvpq4vbpzxcnjq6lo6cmaeg4
-      '@remirror/messages': 0.0.0-pr1713.3
-      '@remirror/pm': 0.0.0-pr1713.3
-      '@types/min-document': 2.19.0
-      css-in-js-utils: 3.1.0
-      min-document: 2.19.0
-      parenthesis: 3.1.8
-    dev: true
-
   /@remirror/core/0.0.0-pr1713.3_j65hwareorisyj5chvnc235hv4:
     resolution: {integrity: sha512-7NNmp0bUm3C6edswePaaLw+a93/6j7wqIWEVnyYkNol1AymVqj3LkLayKA7T4ZS1PlCZvS0L/zQrKRSv8suv6Q==}
     peerDependencies:
@@ -2317,29 +2292,6 @@ packages:
       - '@types/node'
       - domino
       - jsdom
-
-  /@remirror/core/0.0.0-pr1713.3_z5dvpq4vbpzxcnjq6lo6cmaeg4:
-    resolution: {integrity: sha512-7NNmp0bUm3C6edswePaaLw+a93/6j7wqIWEVnyYkNol1AymVqj3LkLayKA7T4ZS1PlCZvS0L/zQrKRSv8suv6Q==}
-    peerDependencies:
-      '@remirror/pm': 0.0.0-pr1713.3
-    dependencies:
-      '@babel/runtime': 7.18.0
-      '@linaria/core': 3.0.0-beta.13
-      '@remirror/core-constants': 0.0.0-pr1713.3
-      '@remirror/core-helpers': 0.0.0-pr1713.3
-      '@remirror/core-types': 0.0.0-pr1713.3_z5dvpq4vbpzxcnjq6lo6cmaeg4
-      '@remirror/core-utils': 0.0.0-pr1713.3_z5dvpq4vbpzxcnjq6lo6cmaeg4
-      '@remirror/i18n': 0.0.0-pr1713.3
-      '@remirror/icons': 0.0.0-pr1713.3
-      '@remirror/messages': 0.0.0-pr1713.3
-      '@remirror/pm': 0.0.0-pr1713.3
-      nanoevents: 5.1.13
-      tiny-warning: 1.0.3
-    transitivePeerDependencies:
-      - '@types/node'
-      - domino
-      - jsdom
-    dev: true
 
   /@remirror/dev/0.0.0-pr1713.3_tm26ev57oz6j2pz3cw2hfgdgsi:
     resolution: {integrity: sha512-M1n+zECQgoE7hUG3fDKRed357fmZ/HXrlPGtmxmIuRckWx9sJBpd6fpCRROENF5Ktf2K5BROVeNXb5FEPCuINA==}
@@ -2378,21 +2330,6 @@ packages:
       '@remirror/core': 0.0.0-pr1713.3_j65hwareorisyj5chvnc235hv4
       '@remirror/pm': 0.0.0-pr1713.3
       '@remirror/preset-core': 0.0.0-pr1713.3_j65hwareorisyj5chvnc235hv4
-    transitivePeerDependencies:
-      - '@types/node'
-      - domino
-      - jsdom
-    dev: true
-
-  /@remirror/dom/0.0.0-pr1713.3_z5dvpq4vbpzxcnjq6lo6cmaeg4:
-    resolution: {integrity: sha512-lE//B9czG5d2ndCctfqAeDOvrY4g0aqaaGoMiUSZLBycVxxpoV+j5bH+COhjDwfoN626pFNqHSdPEvub+1fe/A==}
-    peerDependencies:
-      '@remirror/pm': 0.0.0-pr1713.3
-    dependencies:
-      '@babel/runtime': 7.18.0
-      '@remirror/core': 0.0.0-pr1713.3_z5dvpq4vbpzxcnjq6lo6cmaeg4
-      '@remirror/pm': 0.0.0-pr1713.3
-      '@remirror/preset-core': 0.0.0-pr1713.3_z5dvpq4vbpzxcnjq6lo6cmaeg4
     transitivePeerDependencies:
       - '@types/node'
       - domino
@@ -2446,21 +2383,6 @@ packages:
       - domino
       - jsdom
 
-  /@remirror/extension-doc/0.0.0-pr1713.3_z5dvpq4vbpzxcnjq6lo6cmaeg4:
-    resolution: {integrity: sha512-7L9nwOiOH6MBZB9RHcrvuXt04OSPiYkEUpT2RYeYQro7vBTQite0nVLi61YhnHmXd/AzSumlqTiaC7/zuLXwdg==}
-    peerDependencies:
-      '@remirror/pm': 0.0.0-pr1713.3
-    dependencies:
-      '@babel/runtime': 7.18.0
-      '@remirror/core': 0.0.0-pr1713.3_z5dvpq4vbpzxcnjq6lo6cmaeg4
-      '@remirror/messages': 0.0.0-pr1713.3
-      '@remirror/pm': 0.0.0-pr1713.3
-    transitivePeerDependencies:
-      - '@types/node'
-      - domino
-      - jsdom
-    dev: true
-
   /@remirror/extension-drop-cursor/0.0.0-pr1713.3_j65hwareorisyj5chvnc235hv4:
     resolution: {integrity: sha512-bH4+b1DiTS373ciutALEN6i3DYgoUYBeSGL5ut6iq+pOGp205d2GCFeWnAteg08eMe+9Vl5f9Qn6sunUGCOskQ==}
     peerDependencies:
@@ -2511,21 +2433,6 @@ packages:
       - domino
       - jsdom
 
-  /@remirror/extension-events/0.0.0-pr1713.3_z5dvpq4vbpzxcnjq6lo6cmaeg4:
-    resolution: {integrity: sha512-QbrpRMZYfPZVyW2rdlNcCXRWg3+4NACVMeUfvHAHgVNj4fOi/x0or6j5q5uje5itTVMGbjKX9tRZAZM2uePviw==}
-    peerDependencies:
-      '@remirror/pm': 0.0.0-pr1713.3
-    dependencies:
-      '@babel/runtime': 7.18.0
-      '@remirror/core': 0.0.0-pr1713.3_z5dvpq4vbpzxcnjq6lo6cmaeg4
-      '@remirror/messages': 0.0.0-pr1713.3
-      '@remirror/pm': 0.0.0-pr1713.3
-    transitivePeerDependencies:
-      - '@types/node'
-      - domino
-      - jsdom
-    dev: true
-
   /@remirror/extension-gap-cursor/0.0.0-pr1713.3_j65hwareorisyj5chvnc235hv4:
     resolution: {integrity: sha512-DwI/HNrPOtlfQRq3FvjgCR4llWC9KIzLzm/iRkNm/Xff3dCHwEL5TQBEtJyAUT7Qfmi6w2SwNtA0/5yFg7LaLw==}
     peerDependencies:
@@ -2539,21 +2446,6 @@ packages:
       - '@types/node'
       - domino
       - jsdom
-
-  /@remirror/extension-gap-cursor/0.0.0-pr1713.3_z5dvpq4vbpzxcnjq6lo6cmaeg4:
-    resolution: {integrity: sha512-DwI/HNrPOtlfQRq3FvjgCR4llWC9KIzLzm/iRkNm/Xff3dCHwEL5TQBEtJyAUT7Qfmi6w2SwNtA0/5yFg7LaLw==}
-    peerDependencies:
-      '@remirror/pm': 0.0.0-pr1713.3
-    dependencies:
-      '@babel/runtime': 7.18.0
-      '@remirror/core': 0.0.0-pr1713.3_z5dvpq4vbpzxcnjq6lo6cmaeg4
-      '@remirror/messages': 0.0.0-pr1713.3
-      '@remirror/pm': 0.0.0-pr1713.3
-    transitivePeerDependencies:
-      - '@types/node'
-      - domino
-      - jsdom
-    dev: true
 
   /@remirror/extension-hard-break/0.0.0-pr1713.3_j65hwareorisyj5chvnc235hv4:
     resolution: {integrity: sha512-whIhG+6CeNJ6bLQpz55AZNbaovYeLcpbtjHyJfya0RlYLKI6b6W1U93ro7BbVggty3fvw8WD8dSqsAN7q+tBqA==}
@@ -2598,21 +2490,6 @@ packages:
       - '@types/node'
       - domino
       - jsdom
-
-  /@remirror/extension-history/0.0.0-pr1713.3_z5dvpq4vbpzxcnjq6lo6cmaeg4:
-    resolution: {integrity: sha512-7MBE83IsnLJUE/9a6knjRBXYOfHrUJETHkfFOH68iEY6fSe1oN7iuziXrszzupJZRXcu3nyJ9TTCQva6zopjyQ==}
-    peerDependencies:
-      '@remirror/pm': 0.0.0-pr1713.3
-    dependencies:
-      '@babel/runtime': 7.18.0
-      '@remirror/core': 0.0.0-pr1713.3_z5dvpq4vbpzxcnjq6lo6cmaeg4
-      '@remirror/messages': 0.0.0-pr1713.3
-      '@remirror/pm': 0.0.0-pr1713.3
-    transitivePeerDependencies:
-      - '@types/node'
-      - domino
-      - jsdom
-    dev: true
 
   /@remirror/extension-horizontal-rule/0.0.0-pr1713.3_j65hwareorisyj5chvnc235hv4:
     resolution: {integrity: sha512-/rbmyAHVUkOk+fbOZIGTdVT+4w+RBnoAAcp2U8QZMjTikzTvfla/rhwOkazU5QtEkOYSbPiVHZ+PS1xqwHY04A==}
@@ -2694,21 +2571,6 @@ packages:
       - domino
       - jsdom
 
-  /@remirror/extension-paragraph/0.0.0-pr1713.3_z5dvpq4vbpzxcnjq6lo6cmaeg4:
-    resolution: {integrity: sha512-eJj5/EAQhJsfLo2Vmk0vBm9xZQIis3pnkTYgQq0/nzXjJYQmsaGegg9qqRVy19D2M4apbV0lJo9BYLLd5Oh33Q==}
-    peerDependencies:
-      '@remirror/pm': 0.0.0-pr1713.3
-    dependencies:
-      '@babel/runtime': 7.18.0
-      '@remirror/core': 0.0.0-pr1713.3_z5dvpq4vbpzxcnjq6lo6cmaeg4
-      '@remirror/messages': 0.0.0-pr1713.3
-      '@remirror/pm': 0.0.0-pr1713.3
-    transitivePeerDependencies:
-      - '@types/node'
-      - domino
-      - jsdom
-    dev: true
-
   /@remirror/extension-placeholder/0.0.0-pr1713.3_j65hwareorisyj5chvnc235hv4:
     resolution: {integrity: sha512-3EiFhCVE1D5Y4wOutIkMACEGIpSroC4m3YgkHX/WzKY/Y0HhyAFZbeW5Z7vd7TRH0xTt4eWKxRtnh2MkUGifLQ==}
     peerDependencies:
@@ -2741,24 +2603,6 @@ packages:
       - '@types/node'
       - domino
       - jsdom
-
-  /@remirror/extension-positioner/0.0.0-pr1713.3_z5dvpq4vbpzxcnjq6lo6cmaeg4:
-    resolution: {integrity: sha512-+Ki9wa9G51yTBbpHR84f+bqbe8z84/SYX971f32LEXOR8SB++lOWIWswaf5EV+oapWgEJppSkQl8+f7JuuXS0g==}
-    peerDependencies:
-      '@remirror/pm': 0.0.0-pr1713.3
-    dependencies:
-      '@babel/runtime': 7.18.0
-      '@remirror/core': 0.0.0-pr1713.3_z5dvpq4vbpzxcnjq6lo6cmaeg4
-      '@remirror/extension-events': 0.0.0-pr1713.3_z5dvpq4vbpzxcnjq6lo6cmaeg4
-      '@remirror/messages': 0.0.0-pr1713.3
-      '@remirror/pm': 0.0.0-pr1713.3
-      '@remirror/theme': 0.0.0-pr1713.3_z5dvpq4vbpzxcnjq6lo6cmaeg4
-      nanoevents: 5.1.13
-    transitivePeerDependencies:
-      - '@types/node'
-      - domino
-      - jsdom
-    dev: true
 
   /@remirror/extension-react-component/0.0.0-pr1713.3_tm26ev57oz6j2pz3cw2hfgdgsi:
     resolution: {integrity: sha512-U1W8uWi1lRwX4pKJ4oTe27l/hJragCFt1GjnO3Kfx/UHD57w72g9DWTOw81gVNyE/VxkgGv63qBPx2oDpqKOQg==}
@@ -2876,21 +2720,6 @@ packages:
       - domino
       - jsdom
 
-  /@remirror/extension-text/0.0.0-pr1713.3_z5dvpq4vbpzxcnjq6lo6cmaeg4:
-    resolution: {integrity: sha512-RFLhiL3pYeHa/SRIbvjFmTS11cg3CeF4VZVpQkO108kj1rNB3KIueFWG3X2y32xscarmme4djtLwB+9ZW26eHA==}
-    peerDependencies:
-      '@remirror/pm': 0.0.0-pr1713.3
-    dependencies:
-      '@babel/runtime': 7.18.0
-      '@remirror/core': 0.0.0-pr1713.3_z5dvpq4vbpzxcnjq6lo6cmaeg4
-      '@remirror/messages': 0.0.0-pr1713.3
-      '@remirror/pm': 0.0.0-pr1713.3
-    transitivePeerDependencies:
-      - '@types/node'
-      - domino
-      - jsdom
-    dev: true
-
   /@remirror/i18n/0.0.0-pr1713.3:
     resolution: {integrity: sha512-BeK23blD8MQtOM6vKOOUUAfkzUz8YhJR1y0DwZNm8A99I3GmkmmYoctKlZQn+zRnR0G2JNGG3eczYl1tsMTEvQ==}
     dependencies:
@@ -2955,27 +2784,6 @@ packages:
       - '@types/node'
       - domino
       - jsdom
-
-  /@remirror/preset-core/0.0.0-pr1713.3_z5dvpq4vbpzxcnjq6lo6cmaeg4:
-    resolution: {integrity: sha512-lPFnDt4x4t3jUAc5LZmlkR+LzgI1LyxCRNDgg2BKtJAc7oA6HIORU6zYLBczDxoc2zj5BQ5MqZjkaFmRrMf8kg==}
-    peerDependencies:
-      '@remirror/pm': 0.0.0-pr1713.3
-    dependencies:
-      '@babel/runtime': 7.18.0
-      '@remirror/core': 0.0.0-pr1713.3_z5dvpq4vbpzxcnjq6lo6cmaeg4
-      '@remirror/extension-doc': 0.0.0-pr1713.3_z5dvpq4vbpzxcnjq6lo6cmaeg4
-      '@remirror/extension-events': 0.0.0-pr1713.3_z5dvpq4vbpzxcnjq6lo6cmaeg4
-      '@remirror/extension-gap-cursor': 0.0.0-pr1713.3_z5dvpq4vbpzxcnjq6lo6cmaeg4
-      '@remirror/extension-history': 0.0.0-pr1713.3_z5dvpq4vbpzxcnjq6lo6cmaeg4
-      '@remirror/extension-paragraph': 0.0.0-pr1713.3_z5dvpq4vbpzxcnjq6lo6cmaeg4
-      '@remirror/extension-positioner': 0.0.0-pr1713.3_z5dvpq4vbpzxcnjq6lo6cmaeg4
-      '@remirror/extension-text': 0.0.0-pr1713.3_z5dvpq4vbpzxcnjq6lo6cmaeg4
-      '@remirror/pm': 0.0.0-pr1713.3
-    transitivePeerDependencies:
-      - '@types/node'
-      - domino
-      - jsdom
-    dev: true
 
   /@remirror/preset-react/0.0.0-pr1713.3_tm26ev57oz6j2pz3cw2hfgdgsi:
     resolution: {integrity: sha512-Dq4roT/MuOoXW6DTi83ktCCrcO98mAbL9zerzIR8nNCHXVJohmTilswel0u/7vRm/7H0UbZFt0HbW4wMVfAlKQ==}
@@ -7617,35 +7425,6 @@ packages:
       stack-utils: 2.0.5
     dev: true
 
-  /jest-prosemirror/0.0.0-pr1713.3:
-    resolution: {integrity: sha512-AsWSD1K1uW+GqVwLhLzTcnDXDpIb+l5bDJP3XJMSAjcNgTw2H3s9NCOt/F3ijgxG34Y/07NFhg5vxAJwTGoN9w==}
-    peerDependencies:
-      jest: '>= 24'
-    peerDependenciesMeta:
-      jest:
-        optional: true
-    dependencies:
-      '@babel/runtime': 7.18.0
-      '@remirror/core-constants': 0.0.0-pr1713.3
-      '@remirror/core-helpers': 0.0.0-pr1713.3
-      '@remirror/core-types': 0.0.0-pr1713.3_z5dvpq4vbpzxcnjq6lo6cmaeg4
-      '@remirror/core-utils': 0.0.0-pr1713.3_z5dvpq4vbpzxcnjq6lo6cmaeg4
-      '@remirror/pm': 0.0.0-pr1713.3
-      '@testing-library/dom': 8.13.0
-      '@types/stringify-object': 3.3.1
-      chalk: 4.1.2
-      jest-matcher-utils: 27.5.1
-      prosemirror-schema-basic: 1.2.0
-      prosemirror-tables: 1.1.1
-      prosemirror-test-builder: 1.1.0
-      stringify-object: 3.3.0
-      test-keyboard: 0.0.0-pr1713.3_z5dvpq4vbpzxcnjq6lo6cmaeg4
-    transitivePeerDependencies:
-      - '@types/node'
-      - domino
-      - jsdom
-    dev: true
-
   /jest-prosemirror/0.0.0-pr1713.3_jsdom@19.0.0:
     resolution: {integrity: sha512-AsWSD1K1uW+GqVwLhLzTcnDXDpIb+l5bDJP3XJMSAjcNgTw2H3s9NCOt/F3ijgxG34Y/07NFhg5vxAJwTGoN9w==}
     peerDependencies:
@@ -7678,35 +7457,6 @@ packages:
   /jest-regex-util/27.5.1:
     resolution: {integrity: sha512-4bfKq2zie+x16okqDXjXn9ql2B0dScQu+vcwe4TvFVhkVyuWLqpZrZtXxLLWoXYgn0E87I6r6GRYHF7wFZBUvg==}
     engines: {node: ^10.13.0 || ^12.13.0 || ^14.15.0 || >=15.0.0}
-    dev: true
-
-  /jest-remirror/0.0.0-pr1713.3:
-    resolution: {integrity: sha512-TpjZzXMKMRgHKjqChGwX2Zkxp7gxLTu5w1ULDLWc9BESxdkF7YxUmc10tuPMRxt+hBpO9m2ewcIUOa+mD0q5tA==}
-    peerDependencies:
-      '@types/node': '*'
-      jest: '>= 24'
-    peerDependenciesMeta:
-      '@types/node':
-        optional: true
-      jest:
-        optional: true
-    dependencies:
-      '@babel/runtime': 7.18.0
-      '@remirror/core': 0.0.0-pr1713.3_z5dvpq4vbpzxcnjq6lo6cmaeg4
-      '@remirror/dom': 0.0.0-pr1713.3_z5dvpq4vbpzxcnjq6lo6cmaeg4
-      '@remirror/pm': 0.0.0-pr1713.3
-      '@remirror/preset-core': 0.0.0-pr1713.3_z5dvpq4vbpzxcnjq6lo6cmaeg4
-      '@testing-library/dom': 8.13.0
-      '@types/sanitize-html': 2.6.2
-      jest-prosemirror: 0.0.0-pr1713.3
-      jest-snapshot: 27.5.1
-      mutationobserver-shim: 0.3.7
-      sanitize-html: 2.7.0
-      tiny-warning: 1.0.3
-    transitivePeerDependencies:
-      - domino
-      - jsdom
-      - supports-color
     dev: true
 
   /jest-remirror/0.0.0-pr1713.3_jsdom@19.0.0:
@@ -7981,7 +7731,7 @@ packages:
     dev: true
 
   /levn/0.3.0:
-    resolution: {integrity: sha1-OwmSTt+fCDwEkP3UwLxEIeBHZO4=}
+    resolution: {integrity: sha512-0OO4y2iOHix2W6ujICbKIaEQXvFQHue65vUG3pb5EUomzPI90z9hsA1VsO/dbIIpC53J8gxM9Q4Oho0jrCM/yA==}
     engines: {node: '>= 0.8.0'}
     dependencies:
       prelude-ls: 1.1.2
@@ -9497,7 +9247,7 @@ packages:
     dev: true
 
   /prelude-ls/1.1.2:
-    resolution: {integrity: sha1-IZMqVJ9eUv/ZqCf1cOBL5iqX2lQ=}
+    resolution: {integrity: sha512-ESF23V4SKG6lVSGZgYNpbsiaAkdab6ZgOxe52p7+Kid3W3u3bxR4Vfd/o21dmN7jSt0IwgZ4v5MUd26FEtXE9w==}
     engines: {node: '>= 0.8.0'}
 
   /prelude-ls/1.2.1:
@@ -11444,7 +11194,7 @@ packages:
     dev: true
 
   /type-check/0.3.2:
-    resolution: {integrity: sha1-WITKtRLPHTVeP7eE8wgEsrUg23I=}
+    resolution: {integrity: sha512-ZCmOJdvOWDBYJlzAoFkC+Q0+bUyEOS1ltgp1MGU03fqHG+dbi9tBFU2Rd9QKiDZFAYrhPh2JUf7rZRIuHRKtOg==}
     engines: {node: '>= 0.8.0'}
     dependencies:
       prelude-ls: 1.1.2
@@ -11800,42 +11550,6 @@ packages:
       '@types/chai': 4.3.1
       '@types/chai-subset': 1.3.3
       '@types/node': 17.0.40
-      chai: 4.3.6
-      debug: 4.3.4
-      local-pkg: 0.4.1
-      tinypool: 0.1.3
-      tinyspy: 0.3.2
-      vite: 2.9.12
-    transitivePeerDependencies:
-      - less
-      - sass
-      - stylus
-      - supports-color
-    dev: true
-
-  /vitest/0.15.1_c8@7.11.3:
-    resolution: {integrity: sha512-NaNFi93JKSuvV4YGnfQ0l0GKYxH0EsLcTrrXaCzd6qfVEZM/RJpjwSevg6waNFqu2DyN6e0aHHdrCZW5/vh5NA==}
-    engines: {node: '>=v14.16.0'}
-    hasBin: true
-    peerDependencies:
-      '@vitest/ui': '*'
-      c8: '*'
-      happy-dom: '*'
-      jsdom: '*'
-    peerDependenciesMeta:
-      '@vitest/ui':
-        optional: true
-      c8:
-        optional: true
-      happy-dom:
-        optional: true
-      jsdom:
-        optional: true
-    dependencies:
-      '@types/chai': 4.3.1
-      '@types/chai-subset': 1.3.3
-      '@types/node': 17.0.40
-      c8: 7.11.3
       chai: 4.3.6
       debug: 4.3.4
       local-pkg: 0.4.1
