@@ -107,7 +107,9 @@ jobs:
       - uses: ./.github/actions/dependencies
 
       - name: Run vitest
+        # Sets the max memory size of V8's old memory section as 7168 (7GB)
         run: |
+          export NODE_OPTIONS="--max-old-space-size=7168"
           pnpm test:coverage
 
       - name: Upload coverage information to codecov
