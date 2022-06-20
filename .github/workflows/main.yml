@@ -110,7 +110,7 @@ jobs:
         # Sets the max memory size of V8's old memory section as 7680 (7.5GB)
         run: |
           export NODE_OPTIONS="--max-old-space-size=7680"
-          pnpm test:coverage
+          scripts/test-coverage.sh
 
       - name: Upload coverage information to codecov
         uses: codecov/codecov-action@v3

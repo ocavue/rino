@@ -7,8 +7,15 @@ pnpm clean
 
 export VITEST_PLAYWRIGHT_ENABLE_COVERAGE=yes
 
-pnpx turbo run test:vitest:coverage
+echo "Building..."
+pnpm turbo run --filter "@rino.app/common" --filter "@rino.app/editor" --filter "@rino.app/playground" build
 
+for package in "@rino.app/common" "@rino.app/editor" "@rino.app/playground" "@rino.app/home"; do
+  echo "Testing $package..."
+  pnpm run --filter $package test:vitest:coverage
+done
+
+echo "Collecting coverage..."
 export PATH=$PATH:$PWD/packages/rig/node_modules/.bin
 
 merge-istanbul --out ./coverage/e2e/coverage-e2e.json './packages/*/coverage-e2e/coverage*.json'
