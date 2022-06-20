@@ -1,7 +1,7 @@
 import { EditorSchema, ProsemirrorNode } from "@remirror/pm"
 import { Mark, Node, Schema } from "@remirror/pm/model"
 import { Transaction } from "@remirror/pm/state"
-import { Mappable, Transform } from "@remirror/pm/transform"
+import { Mappable, Mapping, Transform } from "@remirror/pm/transform"
 import { EditorView } from "@remirror/pm/view"
 
 import { iterNode, iterNodeRange } from "../../utils/iter-node"
@@ -100,14 +100,7 @@ function parseNode(schema: EditorSchema, node: Node, startPos: number): MarkStep
 /**
  * A Mappbale object to return the position unchanged.
  */
-const unchangedMappable: Mappable = {
-    map: (pos: number) => {
-        return pos
-    },
-    mapResult: (pos: number) => {
-        return { pos, deleted: false }
-    },
-}
+const unchangedMappable: Mappable = new Mapping()
 
 /**
  * Update the inline marks.
