@@ -50,13 +50,15 @@ jobs:
           pnpm build electron-renderer electron-main electron-preload common editor
 
   build_electron:
+    runs-on: macos-latest
+    needs:
+      - test
     strategy:
       matrix:
         electron_build_target:
           - win
           - mac
           - linux
-    runs-on: macos-latest
     steps:
       - uses: actions/checkout@v3
 
@@ -105,7 +107,9 @@ jobs:
       - uses: ./.github/actions/dependencies
 
       - name: Run vitest
+        # Sets the max memory size of V8's old memory section as 7680 (7.5GB)
         run: |
+          export NODE_OPTIONS="--max-old-space-size=7680"
           pnpm test:coverage
 
       - name: Upload coverage information to codecov

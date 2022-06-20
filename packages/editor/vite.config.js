@@ -15,8 +15,9 @@ export default defineConfig((env) => ({
             src: ["./src"],
             exclude: ["**/*.spec.*"],
         },
-        deps: {
-            inline: ["@lingui/detect-locale"],
-        },
+        deps: {},
+
+        // Limit the resources we used in the CI, to avoid out-of-memory errors.
+        maxConcurrency: process.env.CI ? 1 : 5,
     },
 }))
