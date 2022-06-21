@@ -1,5 +1,11 @@
 # @rino.app/electron
 
+## 0.44.1
+
+### Patch Changes
+
+-   d082519: Update dependency remirror to `v2.0.0-beta.1`.
+
 ## 0.44.0
 
 ### Minor Changes
