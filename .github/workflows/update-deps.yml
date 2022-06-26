@@ -1,4 +1,4 @@
-name: update-deps
+name: dependency
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
       - "renovate/*"
 
 jobs:
-  update:
+  deduplicate:
     runs-on: ubuntu-latest
     steps:
       - id: step_find_pr
@@ -27,7 +27,7 @@ jobs:
       - name: Run pnpm-deduplicate
         continue-on-error: true
         run: |
-          if $(git log -1 --pretty=format:'%an' | egrep -q 'Renovate'); then
+          if $(git log -1 --pretty=format:'%an' | egrep -q 'renovate'); then
             echo "deduplicate lockfile"
             pnpm install -g pnpm-deduplicate
             pnpm-deduplicate --version
