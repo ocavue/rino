@@ -44,20 +44,16 @@
         },
 
         "test:vitest": {
-            "dependsOn": ["^build"]
-        },
-        "test:vitest:dev": {
-            "dependsOn": ["^build"]
+            "dependsOn": ["^build"],
+            "cache": false
         },
         "test:vitest:coverage": {
             "dependsOn": ["^build"],
+            "cache": false,
             "outputs": ["coverage/**", "coverage-e2e/**"]
         },
 
         "@rino.app/playground#test:vitest": {
-            "dependsOn": ["build"]
-        },
-        "@rino.app/playground#test:vitest:dev": {
             "dependsOn": ["build"]
         },
         "@rino.app/playground#test:vitest:coverage": {
