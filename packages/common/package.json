@@ -12,8 +12,7 @@
         "access": "public"
     },
     "scripts": {
-        "test:vitest": "vitest run",
-        "test:vitest:dev": "vitest dev",
+        "test:vitest": "vitest",
         "test:vitest:coverage": "vitest run --coverage",
         "dev": "esbuild --bundle src/index.ts --outfile=dist/rino-common.mjs --format=esm --watch",
         "build:esbuild": "esbuild --bundle src/index.ts --outfile=dist/rino-common.mjs --format=esm",
