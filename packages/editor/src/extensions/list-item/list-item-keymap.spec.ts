@@ -43,21 +43,12 @@ describe("Enter", () => {
                 ),
             )
             editor.press("Enter")
-            expect(editor.doc).toEqualRemirrorDocument(
+            expect(editor.state).toEqualRemirrorState(
                 doc(
                     //
                     oli(p("123")),
                     oli(p("456")),
-                    oli(p("")),
-                ),
-            )
-            editor.insertText("X")
-            expect(editor.doc).toEqualRemirrorDocument(
-                doc(
-                    //
-                    oli(p("123")),
-                    oli(p("456")),
-                    oli(p("X")),
+                    oli(p("<cursor>")),
                 ),
             )
 
@@ -69,21 +60,12 @@ describe("Enter", () => {
                 ),
             )
             editor.press("Enter")
-            expect(editor.doc).toEqualRemirrorDocument(
+            expect(editor.state).toEqualRemirrorState(
                 doc(
                     //
                     oli(p("123")),
                     oli(p("45")),
-                    oli(p("6")),
-                ),
-            )
-            editor.insertText("X")
-            expect(editor.doc).toEqualRemirrorDocument(
-                doc(
-                    //
-                    oli(p("123")),
-                    oli(p("45")),
-                    oli(p("X6")),
+                    oli(p("<cursor>6")),
                 ),
             )
 
@@ -95,20 +77,11 @@ describe("Enter", () => {
                 ),
             )
             editor.press("Enter")
-            expect(editor.doc).toEqualRemirrorDocument(
+            expect(editor.state).toEqualRemirrorState(
                 doc(
                     //
                     oli(p("1")),
-                    oli(p("23")),
-                    oli(p("456")),
-                ),
-            )
-            editor.insertText("X")
-            expect(editor.doc).toEqualRemirrorDocument(
-                doc(
-                    //
-                    oli(p("1")),
-                    oli(p("X23")),
+                    oli(p("<cursor>23")),
                     oli(p("456")),
                 ),
             )
@@ -123,19 +96,11 @@ describe("Enter", () => {
                 ),
             )
             editor.press("Enter")
-            expect(editor.doc).toEqualRemirrorDocument(
+            expect(editor.state).toEqualRemirrorState(
                 doc(
                     //
                     oli(p("123")),
-                    p(""),
-                ),
-            )
-            editor.insertText("X")
-            expect(editor.doc).toEqualRemirrorDocument(
-                doc(
-                    //
-                    oli(p("123")),
-                    p("X"),
+                    p("<cursor>"),
                 ),
             )
 
@@ -148,20 +113,11 @@ describe("Enter", () => {
                 ),
             )
             editor.press("Enter")
-            expect(editor.doc).toEqualRemirrorDocument(
+            expect(editor.state).toEqualRemirrorState(
                 doc(
                     //
                     oli(p("123")),
-                    p(""),
-                    oli(p("456")),
-                ),
-            )
-            editor.insertText("X")
-            expect(editor.doc).toEqualRemirrorDocument(
-                doc(
-                    //
-                    oli(p("123")),
-                    p("X"),
+                    p("<cursor>"),
                     oli(p("456")),
                 ),
             )
@@ -174,18 +130,10 @@ describe("Enter", () => {
                 ),
             )
             editor.press("Enter")
-            expect(editor.doc).toEqualRemirrorDocument(
+            expect(editor.state).toEqualRemirrorState(
                 doc(
                     //
-                    p(""),
-                    oli(p("123")),
-                ),
-            )
-            editor.insertText("X")
-            expect(editor.doc).toEqualRemirrorDocument(
-                doc(
-                    //
-                    p("X"),
+                    p("<cursor>"),
                     oli(p("123")),
                 ),
             )
@@ -204,24 +152,13 @@ describe("Enter", () => {
                 ),
             )
             editor.press("Enter")
-            expect(editor.doc).toEqualRemirrorDocument(
+            expect(editor.state).toEqualRemirrorState(
                 doc(
                     oli(
                         p("123"),
                         //
                         oli(p("456")),
-                        oli(p("")),
-                    ),
-                ),
-            )
-            editor.insertText("X")
-            expect(editor.doc).toEqualRemirrorDocument(
-                doc(
-                    oli(
-                        p("123"),
-                        //
-                        oli(p("456")),
-                        oli(p("X")),
+                        oli(p("<cursor>")),
                     ),
                 ),
             )
@@ -238,19 +175,11 @@ describe("Enter", () => {
                 ),
             )
             editor.press("Enter")
-            expect(editor.doc).toEqualRemirrorDocument(
+            expect(editor.state).toEqualRemirrorState(
                 doc(
                     //
                     oli(p("123")),
-                    oli(p("")),
-                ),
-            )
-            editor.insertText("X")
-            expect(editor.doc).toEqualRemirrorDocument(
-                doc(
-                    //
-                    oli(p("123")),
-                    oli(p("X")),
+                    oli(p("<cursor>")),
                 ),
             )
         })
@@ -269,7 +198,7 @@ describe("Enter", () => {
                 ),
             )
             editor.press("Enter")
-            expect(editor.doc).toEqualRemirrorDocument(
+            expect(editor.state).toEqualRemirrorState(
                 doc(
                     oli(
                         //
@@ -277,22 +206,7 @@ describe("Enter", () => {
                     ),
                     oli(
                         //
-                        p(""),
-                        p("456"),
-                        p("789"),
-                    ),
-                ),
-            )
-            editor.insertText("X")
-            expect(editor.doc).toEqualRemirrorDocument(
-                doc(
-                    oli(
-                        //
-                        p("123"),
-                    ),
-                    oli(
-                        //
-                        p("X"),
+                        p("<cursor>"),
                         p("456"),
                         p("789"),
                     ),
@@ -312,25 +226,13 @@ describe("Enter", () => {
                 ),
             )
             editor.press("Enter")
-            expect(editor.doc).toEqualRemirrorDocument(
+            expect(editor.state).toEqualRemirrorState(
                 doc(
                     oli(
                         //
                         p("123"),
                         p("456"),
-                        p(""),
-                        p("789"),
-                    ),
-                ),
-            )
-            editor.insertText("X")
-            expect(editor.doc).toEqualRemirrorDocument(
-                doc(
-                    oli(
-                        //
-                        p("123"),
-                        p("456"),
-                        p("X"),
+                        p("<cursor>"),
                         p("789"),
                     ),
                 ),
@@ -349,7 +251,7 @@ describe("Enter", () => {
                 ),
             )
             editor.press("Enter")
-            expect(editor.doc).toEqualRemirrorDocument(
+            expect(editor.state).toEqualRemirrorState(
                 doc(
                     oli(
                         //
@@ -357,21 +259,7 @@ describe("Enter", () => {
                     ),
                     oli(
                         //
-                        p(""),
-                        p("789"),
-                    ),
-                ),
-            )
-            editor.insertText("X")
-            expect(editor.doc).toEqualRemirrorDocument(
-                doc(
-                    oli(
-                        //
-                        p("123"),
-                    ),
-                    oli(
-                        //
-                        p("X"),
+                        p("<cursor>"),
                         p("789"),
                     ),
                 ),
@@ -388,7 +276,7 @@ describe("Enter", () => {
                 ),
             )
             editor.press("Enter")
-            expect(editor.doc).toEqualRemirrorDocument(
+            expect(editor.state).toEqualRemirrorState(
                 doc(
                     //
                     p("1"),
@@ -408,14 +296,14 @@ describe("Enter", () => {
                 ),
             )
             editor.press("Enter")
-            expect(editor.doc).toEqualRemirrorDocument(
+            expect(editor.state).toEqualRemirrorState(
                 doc(
                     blockquote(
                         p("123"),
                         blockquote(
                             //
                             p("4"),
-                            p("56"),
+                            p("<cursor>56"),
                         ),
                     ),
                 ),
