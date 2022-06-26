@@ -2,7 +2,7 @@ import type Token from "markdown-it/lib/token"
 
 import type { MarkdownParseState, NodeSerializerOptions } from "../../transform"
 import { ParserRuleType } from "../../transform"
-import type { MarkdownNodeExtension } from "../../utils"
+import type { MarkdownNodeExtension } from "../markdown-node/markdown-node-extension"
 import { OrderedListItemExtension } from "./ordered-list-item-extension"
 
 export class RinoOrderedListItemExtension extends OrderedListItemExtension implements MarkdownNodeExtension {

@@ -1,8 +1,8 @@
 import { css } from "@emotion/css"
 import { ApplySchemaAttributes, ExtensionTag, KeyBindings, NodeExtension, NodeExtensionSpec, NodeSpecOverride } from "@remirror/core"
-import { Fragment, Slice } from "prosemirror-model"
-import { Selection } from "prosemirror-state"
-import { canSplit, liftTarget } from "prosemirror-transform"
+import { Fragment, Slice } from "@remirror/pm/model"
+import { Selection } from "@remirror/pm/state"
+import { canSplit, liftTarget } from "@remirror/pm/transform"
 
 import { isBlockNodeSelection, isLastChild, isListItemType } from "./list-utils"
 
@@ -123,7 +123,6 @@ export class OrderedListItemExtension extends NodeExtension {
                         // console.debug("depthAfter:", depthAfter)
 
                         // Add a second list item with an empty default start node
-                        // @ts-expect-error Fragment.from should accept null and undefined
                         wrap = wrap.append(Fragment.from(itemType.createAndFill()))
                         const start = $from.before($from.depth - (depthBefore - 1))
                         tr.replace(start, $from.after(-depthAfter), new Slice(wrap, 3 - depthBefore, 0))

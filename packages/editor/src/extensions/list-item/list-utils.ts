@@ -1,5 +1,5 @@
-import { NodeType, ResolvedPos } from "prosemirror-model"
-import { NodeSelection, Selection } from "prosemirror-state"
+import { NodeType, ResolvedPos } from "@remirror/pm/model"
+import { NodeSelection, Selection } from "@remirror/pm/state"
 
 export function isBlockNodeSelection(selection: Selection): boolean {
     return (selection as NodeSelection).node && (selection as NodeSelection).node.type.isBlock
