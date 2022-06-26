@@ -5,25 +5,32 @@ import { canSplit, liftTarget } from "@remirror/pm/transform"
 
 import { isBlockNodeSelection, isLastChild, isListItemType } from "./list-utils"
 
-export function createListItemKeymap(type: NodeType): KeyBindings {
+export function createListItemKeymap(itemType: NodeType): KeyBindings {
     return {
         Enter: (props): boolean => {
-            const itemType = type
             const { tr, dispatch } = props
             const { selection } = props.state
             const { $from, $to } = selection
 
-            if (!selection.empty) return false
+            if (!selection.empty) {
+                return false
+            }
 
-            if (isBlockNodeSelection(selection)) return false
+            if (isBlockNodeSelection(selection)) {
+                return false
+            }
 
-            if (!$from.sameParent($to)) return false
+            if (!$from.sameParent($to)) {
+                return false
+            }
 
-            if ($from.depth < 2) return false
+            if ($from.depth < 2) {
+                return false
+            }
 
             const parent = $from.parent
             const currItem = $from.node(-1)
-            if (currItem.type !== type) {
+            if (currItem.type !== itemType) {
                 return false
             }
 
@@ -58,7 +65,9 @@ export function createListItemKeymap(type: NodeType): KeyBindings {
                     tr.replace(start, $from.after(-depthAfter), new Slice(wrap, 3 - depthBefore, 0))
                     let sel = -1
                     tr.doc.nodesBetween(start, tr.doc.content.size, (node, pos) => {
-                        if (sel > -1) return false
+                        if (sel > -1) {
+                            return false
+                        }
                         if (node.isTextblock && node.content.size == 0) sel = pos + 1
                     })
                     if (sel > -1) {
@@ -86,7 +95,6 @@ export function createListItemKeymap(type: NodeType): KeyBindings {
         },
 
         "Shift-Tab": (props): boolean => {
-            const itemType = type
             const { state, dispatch, tr } = props
 
             const { $from, $to } = state.selection
