@@ -9,17 +9,28 @@ runs:
       with:
         node-version: 16
 
+    - name: Install pnpm
+      uses: pnpm/action-setup@v2.2.2
+      with:
+        run_install: false
+
+    - id: step_pnpm_cache
+      name: Get pnpm store directory
+      run: |
+        echo "::set-output name=pnpm_cache_dir::$(pnpm store path)"
+      shell: bash
+
     - id: step_cache_deps
       name: Cache dependencies
       uses: actions/cache@v3
       with:
         path: |
-          ~/.pnpm-store
+          ${{ steps.step_pnpm_cache.outputs.pnpm_cache_dir }}
           ~/cache_electron
           ~/cache_electron_builder
           ~/cache_playwright_browsers
 
-        key: ${{ runner.os }}-deps-v30-${{ hashFiles('pnpm-lock.yaml') }}
+        key: ${{ runner.os }}-deps-v32-${{ hashFiles('pnpm-lock.yaml') }}
 
     - name: Setup cache directory
       run: |
@@ -28,22 +39,34 @@ runs:
         echo "PLAYWRIGHT_BROWSERS_PATH=$HOME/cache_playwright_browsers" >> $GITHUB_ENV
       shell: bash
 
-    - name: Print debug information
+    - name: Print environment information
       run: |
         echo "[DEBUG] CACHE_HIT: $CACHE_HIT"
         echo "[DEBUG] GITHUB_REF: $GITHUB_REF"
+        echo "[DEBUG] node version: $(node --version)"
+        echo "[DEBUG] pnpm version: $(pnpm --version)"
+        echo "[DEBUG] env:"
         env | egrep '^ELECTRON_'
-        du -h -d 1 ~/cache_* || true
       env:
         CACHE_HIT: ${{ steps.step_cache_deps.outputs.cache-hit }}
       shell: bash
 
-    - name: Enable Corepack
+    - name: Print debug information
       run: |
-        corepack enable
-        pnpm --version
+        echo "[DEBUG] git status:"
+        git status
+        echo "[DEBUG] cache directory size:"
+        du -h -d 1 ~/cache_* || true
       shell: bash
 
     - name: Install dependencies
       run: pnpm install --loglevel debug --reporter append-only
+      shell: bash
+
+    - name: Print debug information
+      run: |
+        echo "[DEBUG] git status:"
+        git status
+        echo "[DEBUG] cache directory size:"
+        du -h -d 1 ~/cache_* || true
       shell: bash

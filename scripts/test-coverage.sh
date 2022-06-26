@@ -7,7 +7,7 @@ pnpm clean
 
 export VITEST_PLAYWRIGHT_ENABLE_COVERAGE=yes
 
-pnpx turbo run test:vitest:coverage
+pnpm turbo run test:vitest:coverage
 
 export PATH=$PATH:$PWD/packages/rig/node_modules/.bin
 

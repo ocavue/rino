@@ -17,7 +17,7 @@ const config = {
         name: "Rino",
     },
     // skip notarization in local development
-    afterSign: isCI ? "./notarize.js" : undefined,
+    afterSign: isCI ? "./notarize.cjs" : undefined,
 
     asar: isCI,
 

@@ -2,7 +2,8 @@ const { notarize } = require("electron-notarize")
 
 function log(...args) {
     const date = new Date().toISOString()
-    console.log("[notarize.js]", date, ...args)
+    // Match the log format of the electron-builder
+    console.log(`  • notarize.cjs    ${date}`, ...args)
 }
 
 function loadEnv(name) {
@@ -20,6 +21,7 @@ async function notarizing(context) {
 
     log("electronPlatformName:", electronPlatformName)
     if (electronPlatformName !== "darwin") {
+        log("skip notarizing on non-darwin platform")
         return
     }
 

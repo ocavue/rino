@@ -1,6 +1,8 @@
 /**
  * Remove any common leading whitespace from every line in `text`.
  * Inspired by Python's `textwrap.dedent`.
+ *
+ * @public
  */
 export function dedent(text: string) {
     let minWhitespace = -1

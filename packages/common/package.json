@@ -1,25 +1,32 @@
 {
     "name": "@rino.app/common",
-    "version": "0.0.0",
-    "private": true,
+    "version": "0.44.0",
+    "private": false,
     "license": "GPL-3.0",
     "type": "module",
     "main": "dist/rino-common.mjs",
     "module": "dist/rino-common.mjs",
     "types": "dist-types/index.d.ts",
+    "publishConfig": {
+        "types": "dist/rino-common.d.ts",
+        "access": "public"
+    },
     "scripts": {
         "test:vitest": "vitest run",
         "test:vitest:dev": "vitest dev",
         "test:vitest:coverage": "vitest run --coverage",
         "dev": "esbuild --bundle src/index.ts --outfile=dist/rino-common.mjs --format=esm --watch",
-        "build": "esbuild --bundle src/index.ts --outfile=dist/rino-common.mjs --format=esm"
-    },
-    "publishConfig": {
-        "access": "public"
+        "build:esbuild": "esbuild --bundle src/index.ts --outfile=dist/rino-common.mjs --format=esm",
+        "build:tsc": "tsc -b src/tsconfig.json",
+        "build:api-extractor": "api-extractor run --local --verbose"
     },
     "devDependencies": {
-        "esbuild": "^0.14.42",
+        "@microsoft/api-extractor": "^7.27.0",
+        "esbuild": "^0.14.47",
         "typescript": "^4.7.3",
-        "vitest": "^0.14.1"
-    }
+        "vitest": "^0.16.0"
+    },
+    "files": [
+        "dist/**"
+    ]
 }

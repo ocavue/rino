@@ -1,22 +1,30 @@
 {
     "name": "@rino.app/electron",
-    "version": "0.0.0",
+    "version": "0.44.1",
     "private": true,
     "main": "./build/electron-main/dist/electron-main.js",
+    "publishConfig": {
+        "access": "public"
+    },
     "author": "ocavue",
     "description": "A better way to write Markdown",
     "scripts": {
         "dev": "./setup.sh && wait-on --timeout 60000 tcp:127.0.0.1:3004 && NODE_ENV=development electron .",
         "build": "./setup.sh && electron-builder -p never --dir",
-        "build:all": "./setup.sh && electron-builder -p never --mac --win --linux"
+        "build:mac": "./setup.sh && electron-builder --mac",
+        "build:win": "./setup.sh && electron-builder --win",
+        "build:linux": "./setup.sh && electron-builder --linux"
     },
     "devDependencies": {
         "@rino.app/electron-main": "workspace:*",
         "@rino.app/electron-preload": "workspace:*",
         "@rino.app/electron-renderer": "workspace:*",
-        "electron": "19.0.3",
-        "electron-builder": "^23.1.0",
+        "electron": "19.0.6",
+        "electron-builder": "^23.2.0",
         "electron-notarize": "^1.2.1",
         "wait-on": "^6.0.1"
-    }
+    },
+    "files": [
+        "this_file_does_not_exist"
+    ]
 }

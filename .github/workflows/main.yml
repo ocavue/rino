@@ -8,6 +8,8 @@ on:
 env:
   NEXT_TELEMETRY_DISABLED: 1 # https://nextjs.org/telemetry
 
+concurrency: ${{ github.workflow }}-${{ github.ref }}
+
 jobs:
   build_website:
     runs-on: ubuntu-latest
@@ -36,7 +38,7 @@ jobs:
           name: editor_playground_dist
           path: ./packages/playground/dist
 
-  build_packages:
+  build_package:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -49,57 +51,53 @@ jobs:
 
   build_electron:
     runs-on: macos-latest
+    needs:
+      - test
+    strategy:
+      matrix:
+        electron_build_target:
+          - win
+          - mac
+          - linux
     steps:
       - uses: actions/checkout@v3
 
       - uses: ./.github/actions/dependencies
 
-      - name: Update package.json
+      - name: Get current electron app version
         run: |
-          version=$(cat version.txt)
-          pkgjson=$(jq ".version = \"$version\"" ./packages/electron/package.json)
-          echo "$pkgjson" > ./packages/electron/package.json
-          cat ./packages/electron/package.json
+          RINO_APP_VERSION="v$(cat packages/electron/package.json | jq '.version' --join-output)"
+          echo "Current app version is $RINO_APP_VERSION"
+          echo "RINO_APP_VERSION=$RINO_APP_VERSION" >> $GITHUB_ENV
 
-      - name: Build electron
+      - name: Create draft GitHub release
+        uses: softprops/action-gh-release@v1
+        if: ${{ github.ref == 'refs/heads/master' || github.ref == 'refs/heads/changeset-release/master' }}
+        with:
+          draft: true
+          prerelease: false
+          name: "${{ env.RINO_APP_VERSION }}"
+          tag_name: "${{ env.RINO_APP_VERSION }}"
+          append_body: false
+
+      - name: Build dependencies
         run: |
-          pnpx turbo run build:all --filter='electron'
+          pnpm build electron^...
+
+      - name: Build electron and upload to GitHub release if necessary
+        run: >
+          cd packages/electron;
+          ( echo "==== Attempt: 1 ====" && pnpm build:${{ matrix.electron_build_target }} ) ||
+          ( echo "==== Attempt: 2 ====" && pnpm build:${{ matrix.electron_build_target }} ) ||
+          ( echo "==== Attempt: 3 ====" && pnpm build:${{ matrix.electron_build_target }} ) ||
+          ( echo "====== Failed ======" && exit 1 )
         env:
           ELECTRON_APPLE_ID_NAME: ${{ secrets.ELECTRON_APPLE_ID_NAME }}
           ELECTRON_APPLE_ID: ${{ secrets.ELECTRON_APPLE_ID }}
           ELECTRON_APPLE_ID_PASSWORD: ${{ secrets.ELECTRON_APPLE_ID_PASSWORD }}
           CSC_LINK: ${{ secrets.ELECTRON_MAC_P12_BASE64 }}
           CSC_KEY_PASSWORD: ${{ secrets.ELECTRON_MAC_P12_PASSWORD }}
-
-      - name: Clean electron dist
-        run: |
-          cd packages/electron
-          echo '============== before cleaning =============='
-          find ./dist -type f
-          echo '============== cleaning ====================='
-          rm -rf ./dist/*/
-          echo '============== after cleaning ==============='
-          find ./dist -type f
-
-      - name: Upload dist (electron)
-        uses: actions/upload-artifact@v3
-        with:
-          name: electron_dist
-          path: ./packages/electron/dist
-
-      - name: Upload dist (electron dmg)
-        uses: actions/upload-artifact@v3
-        if: "contains(github.event.head_commit.message, 'UPLOAD_DMG')"
-        with:
-          name: electron_dist_dmg
-          path: ./packages/electron/dist/*.dmg
-
-      - name: Upload dist (electron exe)
-        uses: actions/upload-artifact@v3
-        if: "contains(github.event.head_commit.message, 'UPLOAD_EXE')"
-        with:
-          name: electron_dist_exe
-          path: ./packages/electron/dist/*.exe
+          GH_TOKEN: ${{ secrets.RELEASE_PLEASE_GITHUB_TOKEN }}
 
   test:
     runs-on: ubuntu-latest
@@ -109,7 +107,9 @@ jobs:
       - uses: ./.github/actions/dependencies
 
       - name: Run vitest
+        # Sets the max memory size of V8's old memory section as 7680 (7.5GB)
         run: |
+          export NODE_OPTIONS="--max-old-space-size=7680"
           pnpm test:coverage
 
       - name: Upload coverage information to codecov
@@ -156,7 +156,7 @@ jobs:
         # Vercel only allows a free account to deploy 100 times every day so this step could fail
         continue-on-error: true
         timeout-minutes: 10
-        uses: amondnet/vercel-action@v20
+        uses: amondnet/vercel-action@v25
         with:
           github-comment: false
           vercel-token: ${{ secrets.VERCEL_TOKEN }}
@@ -167,11 +167,11 @@ jobs:
           vercel-args: "--meta TYPE=PREVIEW"
           working-directory: "./packages/home/dist/"
 
-      - id: step_vercel_editor
-        name: Deploy @rino.app/editor to Vercel
+      - id: step_vercel_playground
+        name: Deploy @rino.app/playground to Vercel
         continue-on-error: true
         timeout-minutes: 10
-        uses: amondnet/vercel-action@v20
+        uses: amondnet/vercel-action@v25
         with:
           github-comment: false
           vercel-token: ${{ secrets.VERCEL_TOKEN }}
@@ -199,7 +199,7 @@ jobs:
             - Status: ***${{ steps.step_vercel_home.outcome }}***
             - URL: https://rino-home-${{ steps.step_branch.outputs.branch }}.ocavue.vercel.app
             ### Editor playground
-            - Status: ***${{ steps.step_vercel_editor.outcome }}***
+            - Status: ***${{ steps.step_vercel_playground.outcome }}***
             - URL: https://rino-editor-${{ steps.step_branch.outputs.branch }}.ocavue.vercel.app
 
       - name: Generate configrations for Lighthouse CI
@@ -219,21 +219,33 @@ jobs:
     runs-on: ubuntu-latest
     needs:
       - build_website
+      - build_package
       - build_electron
       - test
       - lint
       - preview
     if: github.ref == 'refs/heads/master'
     steps:
-      - id: step_release_please
-        uses: GoogleCloudPlatform/release-please-action@v3
+      - uses: actions/checkout@v3
         with:
           token: ${{ secrets.RELEASE_PLEASE_GITHUB_TOKEN }}
-          release-type: simple
 
+      - uses: ./.github/actions/dependencies
+
+      - id: step_changeset
+        name: Create Release Pull Request or Publish to npm
+        uses: changesets/action@v1
+        with:
+          version: pnpm ci:version
+          publish: pnpm ci:publish
+          commit: "chore: version packages"
+          title: "chore: version packages"
+          createGithubReleases: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.RELEASE_PLEASE_GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
     outputs:
-      published: ${{ steps.step_release_please.outputs.release_created }}
-      tag_name: ${{ steps.step_release_please.outputs.tag_name }}
+      published: ${{ steps.step_changeset.outputs.published }}
 
   deploy: # Production deployment
     runs-on: ubuntu-latest
@@ -242,23 +254,6 @@ jobs:
       - release
     steps:
       - uses: actions/checkout@v3
-
-      - name: Download dist (electron)
-        uses: actions/download-artifact@v3
-        if: ${{ github.ref == 'refs/heads/master' && needs.release.outputs.published == 'true' }}
-        with:
-          name: electron_dist
-          path: ./packages/electron/dist
-
-      - name: Upload @rino.app/electron to GitHub Release
-        uses: svenstaro/upload-release-action@v2
-        if: ${{ github.ref == 'refs/heads/master' && needs.release.outputs.published == 'true' }}
-        with:
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: ./packages/electron/dist/*
-          tag: ${{ needs.release.outputs.tag_name }}
-          overwrite: true
-          file_glob: true
 
       - name: Download dist (home)
         uses: actions/download-artifact@v3
@@ -275,7 +270,7 @@ jobs:
       - id: step_vercel_home
         name: Deploy @rino.app/home to Vercel
         timeout-minutes: 10
-        uses: amondnet/vercel-action@v20
+        uses: amondnet/vercel-action@v25
         with:
           github-comment: false
           vercel-token: ${{ secrets.VERCEL_TOKEN }}
@@ -286,10 +281,10 @@ jobs:
           vercel-args: "--prod --meta TYPE=PRODUCTION"
           working-directory: "./packages/home/dist/"
 
-      - id: step_vercel_editor
-        name: Deploy @rino.app/editor to Vercel
+      - id: step_vercel_playground
+        name: Deploy @rino.app/playground to Vercel
         timeout-minutes: 10
-        uses: amondnet/vercel-action@v20
+        uses: amondnet/vercel-action@v25
         with:
           github-comment: false
           vercel-token: ${{ secrets.VERCEL_TOKEN }}

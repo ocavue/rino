@@ -11,16 +11,19 @@ export type EditorDelegate<E extends AnyExtension = any> = {
     docToString: DocToString
 }
 
+/** @public */
 export interface Note {
     content: string
     deleted: boolean
 }
 
+/** @public */
 export enum Mode {
     WYSIWYG = 1,
     SOURCE_CODE = 2,
 }
 
+/** @public */
 export type WysiwygOptions = {
     isTesting?: boolean
     imageFileHandler?: FileHandler
