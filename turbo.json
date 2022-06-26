@@ -4,21 +4,24 @@
     "pipeline": {
         "build": {
             "dependsOn": ["build:api-extractor", "build:esbuild", "^build"],
-            "outputs": ["dist/**"]
+            "outputs": ["dist/**"],
+            "outputMode": "new-only"
         },
         "build:esbuild": {
             "dependsOn": [],
-            "outputs": ["dist/**/*.js", "dist/**/*.mjs", "dist/**/*.cjs"]
+            "outputs": ["dist/**/*.js", "dist/**/*.mjs", "dist/**/*.cjs"],
+            "outputMode": "new-only"
         },
         "build:tsc": {
             "dependsOn": ["^build:tsc"],
-            "outputs": ["dist-types"]
+            "outputs": ["dist-types"],
+            "outputMode": "new-only"
         },
         "build:api-extractor": {
             "dependsOn": ["build:tsc"],
-            "outputs": ["dist/**/*.d.ts"]
+            "outputs": ["dist/**/*.d.ts"],
+            "outputMode": "new-only"
         },
-
         "build:linux": {
             "dependsOn": ["^build"],
             "outputs": []
