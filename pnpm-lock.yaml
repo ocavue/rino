@@ -4099,7 +4099,7 @@ packages:
       istanbul-reports: 3.1.4
       rimraf: 3.0.2
       test-exclude: 6.0.0
-      v8-to-istanbul: 9.0.0
+      v8-to-istanbul: 9.0.1
       yargs: 16.2.0
       yargs-parser: 20.2.9
     dev: true
@@ -8937,7 +8937,7 @@ packages:
   /prosemirror-keymap/1.2.0:
     resolution: {integrity: sha512-TdSfu+YyLDd54ufN/ZeD1VtBRYpgZnTPnnbY+4R08DDgs84KrIPEPbJL8t1Lm2dkljFx6xeBE26YWH3aIzkPKg==}
     dependencies:
-      prosemirror-state: 1.4.0
+      prosemirror-state: 1.4.1
       w3c-keyname: 2.2.4
 
   /prosemirror-model/1.18.1:
@@ -8973,12 +8973,6 @@ packages:
       prosemirror-state: 1.4.1
       prosemirror-transform: 1.6.0
 
-  /prosemirror-state/1.4.0:
-    resolution: {integrity: sha512-mVDZdjNX/YT5FvypiwbphJe9psA5h+j9apsSszVRFc6oKFoIInvzdujh8QW9f9lwHtSYajLxNiM1hPhd0Sl1XA==}
-    dependencies:
-      prosemirror-model: 1.18.1
-      prosemirror-transform: 1.6.0
-
   /prosemirror-state/1.4.1:
     resolution: {integrity: sha512-U/LBDW2gNmVa07sz/D229XigSdDQ5CLFwVB1Vb32MJbAHHhWe/6pOc721faI17tqw4pZ49i1xfY/jEZ9tbIhPg==}
     dependencies:
@@ -9006,7 +9000,7 @@ packages:
     dependencies:
       prosemirror-keymap: 1.2.0
       prosemirror-model: 1.18.1
-      prosemirror-state: 1.4.0
+      prosemirror-state: 1.4.1
       prosemirror-transform: 1.6.0
       prosemirror-view: 1.26.2
 
@@ -9042,7 +9036,7 @@ packages:
     resolution: {integrity: sha512-CGKw+GadkfSBEwRAJTHCEKJ4DlV6/3IhAdjpwGyZHUHtbP7jX4Ol4zmi7xa2c6GOabDlIJLYXJydoNYLX7lNeQ==}
     dependencies:
       prosemirror-model: 1.18.1
-      prosemirror-state: 1.4.0
+      prosemirror-state: 1.4.1
       prosemirror-transform: 1.6.0
 
   /proto-list/1.2.4:
@@ -11028,15 +11022,6 @@ packages:
 
   /v8-compile-cache/2.3.0:
     resolution: {integrity: sha512-l8lCEmLcLYZh4nbunNZvQCJc5pv7+RCwa8q/LdUx8u7lsWvPDKmpodJAJNwkAhJC//dFY48KuIEmjtd4RViDrA==}
-    dev: true
-
-  /v8-to-istanbul/9.0.0:
-    resolution: {integrity: sha512-HcvgY/xaRm7isYmyx+lFKA4uQmfUbN0J4M0nNItvzTvH/iQ9kW5j/t4YSR+Ge323/lrgDAWJoF46tzGQHwBHFw==}
-    engines: {node: '>=10.12.0'}
-    dependencies:
-      '@jridgewell/trace-mapping': 0.3.13
-      '@types/istanbul-lib-coverage': 2.0.4
-      convert-source-map: 1.8.0
     dev: true
 
   /v8-to-istanbul/9.0.1:
