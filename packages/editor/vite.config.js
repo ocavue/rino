@@ -10,7 +10,7 @@ export default defineConfig((env) => ({
         globals: true,
         setupFiles: ["./test/setup-vitest.ts"],
         coverage: {
-            reporter: ["json"],
+            reporter: ["json", "html"],
             all: true,
             src: ["./src"],
             exclude: ["**/*.spec.*"],

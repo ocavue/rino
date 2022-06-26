@@ -13,8 +13,7 @@
     },
     "scripts": {
         "dev": "node esbuild.mjs --watch",
-        "test:vitest": "vitest run",
-        "test:vitest:dev": "vitest dev",
+        "test:vitest": "vitest",
         "test:vitest:coverage": "vitest run --coverage",
         "build:esbuild": "node esbuild.mjs",
         "build:tsc": "tsc -b src/tsconfig.json",

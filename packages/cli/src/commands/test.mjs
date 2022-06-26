@@ -11,17 +11,11 @@ export function test(testPath, extraArgs) {
     const turboBin = findTurboBin()
 
     if (packageName) {
-        const args = ["run", "test:vitest", `--filter=${packageName}`, "--", absTestPath]
-        if (extraArgs.length) {
-            args.push("--", ...extraArgs)
-        }
+        const args = ["run", "test:vitest", `--filter=${packageName}`, "--", absTestPath, ...extraArgs]
         console.log("$", turboBin + " " + args.join(" "))
         spawnSync(turboBin, args, { stdio: "inherit", cwd: root })
     } else if (root == absTestPath) {
-        const args = ["run", "test:vitest"]
-        if (extraArgs.length) {
-            args.push("--", ...extraArgs)
-        }
+        const args = ["run", "test:vitest", ...extraArgs]
         console.log("$", turboBin + " " + args.join(" "))
         spawnSync(turboBin, args, { stdio: "inherit", cwd: root })
     } else {
