@@ -36,6 +36,9 @@
             "config:base",
             ":semanticCommitTypeAll(chore)"
         ],
+        "lockFileMaintenance": {
+            "enabled": true
+        },
         "packageRules": [
             {
                 "groupName": "dependencies (non-major)",
@@ -62,16 +65,6 @@
     "packageManager": "pnpm@7.3.0",
     "pnpm": {
         "overrides": {},
-        "peerDependencyRules": {
-            "ignoreMissing": [
-                "jest",
-                "webpack",
-                "rollup"
-            ],
-            "allowedVersions": {
-                "react": "18",
-                "react-dom": "18"
-            }
-        }
+        "peerDependencyRules": {}
     }
 }

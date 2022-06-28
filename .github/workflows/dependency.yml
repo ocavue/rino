@@ -25,11 +25,10 @@ jobs:
           pnpm --version
 
       - name: Run pnpm-deduplicate
-        continue-on-error: true
         run: |
           if $(git log -1 --pretty=format:'%an' | egrep -q 'renovate'); then
             echo "deduplicate lockfile"
-            pnpm install -g pnpm-deduplicate
+            npm install -g pnpm-deduplicate
             pnpm-deduplicate --version
             pnpm-deduplicate --list
             pnpm-deduplicate
