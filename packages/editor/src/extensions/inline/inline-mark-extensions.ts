@@ -208,6 +208,31 @@ class ImgUri extends MarkExtension {
     }
 }
 
+class Break extends MarkExtension {
+    static disableExtraAttributes = true
+    get name() {
+        return "mdBreak" as const
+    }
+    createMarkSpec(): MarkExtensionSpec {
+        return {
+            attrs: commonAttrs,
+            toDOM: (mark, inline) => ["span", { style: "border: 1px solid red; white-space: pre-wrap;" }, 0],
+        }
+    }
+    // createNodeViews = (): NodeViewMethod => {
+    //     return (mark, view): NodeView => {
+    //         const wrapper = document.createElement("span")
+
+    //         const outerContainer = document.createElement("br")
+    //         outerContainer.appendChild(img)
+    //         outerContainer.appendChild(innerContainer)
+    //         outerContainer.setAttribute("class", "md-img-uri")
+
+    //         return { dom: outerContainer, contentDOM: innerContainer }
+    //     }
+    // }
+}
+
 const autoHideMarks: Record<string, true> = {
     mdMark: true,
     mdLinkUri: true,
@@ -232,6 +257,7 @@ export const rinoMarkExtensions = [
     new LinkUri(),
     new ImgText(),
     new ImgUri(),
+    new Break(),
 ]
 export type RinoMarkExtension = typeof rinoMarkExtensions[number]
 export type RinoMarkName = RinoMarkExtension["name"]
@@ -257,8 +283,8 @@ export type RinnMarkAttrs = {
      *          | https://example.com |       |      |
      *          | )                   |       | true |
      */
-    first?: true
-    last?: true
+    first?: boolean
+    last?: boolean
 
     href?: string
 }

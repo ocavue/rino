@@ -19,6 +19,8 @@ export function createWysiwygDelegate(wysiwygOptions: WysiwygOptions) {
         // Get the doc without inline marks
         const doc = parser.parse(content)
 
+        console.log('doc:',doc.toJSON())
+
         // Apply inline marks to the doc
         return initDocMarks(doc)
     }

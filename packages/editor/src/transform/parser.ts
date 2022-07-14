@@ -89,7 +89,7 @@ export class MarkdownParseState {
     public addNode(type: NodeType, attrs?: Record<string, any>, content?: Node[]): Node {
         const node = type.createAndFill(attrs, content, this.marks)
         if (!node) {
-            throw new Error("unexpected error: node is empty ")
+            throw new Error("unexpected error: node is empty")
         }
         this.push(node)
         return node
@@ -183,6 +183,7 @@ export class MarkdownParser {
         const state = new MarkdownParseState(this.schema, this.tokenHandlers)
         let doc: Node
         const mdTokens: Token[] = this.tokenizer.parse(text, {})
+        console.log('')
 
         state.parseTokens(mdTokens)
         do {

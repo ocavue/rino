@@ -18,6 +18,46 @@ function fixMarkNames(marks: RinoMarkName[]): RinoMarkName[] {
 }
 
 function flatText(mdastToken: mdast.Text, depth: number): InlineToken[] {
+    console.log("mdastToken:", mdastToken)
+
+    if (mdastToken.value.includes("\n")) {
+        const lines = mdastToken.value.split("\n")
+        const tokens: InlineToken[] = []
+
+        let start = mdastToken.position!.start.offset!
+        let end: number
+
+        for (let i = 0; i < lines.length; i++) {
+            if (i > 0) {
+                end = start + 1
+                tokens.push({
+                    marks: ["mdBreak"],
+                    attrs: { depth },
+                    start,
+                    end,
+                    text: "",
+                })
+
+                start = end
+            } else if (lines[i]) {
+                end = start + lines[i].length
+                tokens.push({
+                    marks: ["mdText"],
+                    attrs: { depth },
+                    start,
+                    end,
+                    text: "",
+                })
+                start = end
+            }
+        }
+
+        tokens[0].attrs.first = true
+        tokens[tokens.length - 1].attrs.last = true
+
+        return tokens
+    }
+
     return [
         {
             marks: ["mdText"],
@@ -215,6 +255,7 @@ function flatPhrasingContent(mdastToken: mdast.PhrasingContent, depth: number): 
         case "html":
             return []
         case "break":
+            console.log("aaa")
             return []
         case "image":
             return flatImage(mdastToken, depth)

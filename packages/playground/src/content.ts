@@ -8,34 +8,12 @@ while True:
 `.trim()
 
 const defaultContent = [
-    `
+    `# hello
 
-# Title
+Line A
+Line B
 
-hello world!
-
-`.trim(),
-    singleRow,
-    justCodeContent,
-    `
-
-- list item
-- list item
-  - [x] checked
-  - [ ] unchecked
-
-1. first
-1. second
-1. third
-
-
-Table:
-
-| First Header  | Second Header |
-| ------------- | ------------- |
-| Content Cell  | Content Cell  |
-| **Strong**    | [Link](https://rino.app) |
-
+Line C
 `.trim(),
 ].join("\n")
 

@@ -119,19 +119,19 @@ export function updateNodeMarks(tr: Transform, node: Node, startPos: number): vo
             return
         }
 
-        const textNodes: Node[] = steps.map((step) => schema.text(step.text, step.marks))
-        tr.replaceWith(steps[0].start, steps[steps.length - 1].end, textNodes)
+        // const textNodes: Node[] = steps.map((step) => schema.text(step.text, step.marks))
+        // tr.replaceWith(steps[0].start, steps[steps.length - 1].end, textNodes)
 
         // Another way to apply marks, which might be more reliable and won't change the selection but less efficient
         // when the number of "steps" is large.
         // Just put it as a backup.
         //
-        // for (const step of steps) {
-        //     tr.removeMark(step.start, step.end, undefined)
-        //     for (const mark of step.marks) {
-        //         tr.addMark(step.start, step.end, mark)
-        //     }
-        // }
+        for (const step of steps) {
+            tr.removeMark(step.start, step.end, undefined)
+            for (const mark of step.marks) {
+                tr.addMark(step.start, step.end, mark)
+            }
+        }
     }
 }
 

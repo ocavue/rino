@@ -701,20 +701,49 @@ describe("hard break", function () {
         ])
     })
 
-    test("one hard break within text", function () {
-        expect(fromInlineMarkdown("ab\nc")).toStrictEqual([
+    test.only("one hard break within text", function () {
+        expect(fromInlineMarkdown("ab\nd")).toMatchInlineSnapshot(`
+          [
             {
-                start: 0,
-                end: 4,
-                marks: ["mdText"],
-                text: "ab\nc",
-                attrs: {
-                    depth: 1,
-                    first: true,
-                    last: true,
-                },
+              "attrs": {
+                "depth": 1,
+                "first": true,
+                "last": false,
+              },
+              "end": 2,
+              "marks": [
+                "mdText",
+              ],
+              "start": 0,
+              "text": "ab",
             },
-        ])
+            {
+              "attrs": {
+                "depth": 1,
+              },
+              "end": 3,
+              "marks": [
+                "mdBreak",
+              ],
+              "start": 2,
+              "text": "
+          ",
+            },
+            {
+              "attrs": {
+                "depth": 1,
+                "first": false,
+                "last": true,
+              },
+              "end": 4,
+              "marks": [
+                "mdText",
+              ],
+              "start": 3,
+              "text": "d",
+            },
+          ]
+        `)
     })
 
     test("one hard break at the beginning", function () {
@@ -747,5 +776,49 @@ describe("hard break", function () {
                 },
             },
         ])
+    })
+
+    test("delete", function () {
+        expect(fromInlineMarkdown("~~abc~~")).toMatchInlineSnapshot(`
+          [
+            {
+              "attrs": {
+                "depth": 1,
+                "first": true,
+              },
+              "end": 2,
+              "marks": [
+                "mdMark",
+              ],
+              "start": 0,
+              "text": "~~",
+            },
+            {
+              "attrs": {
+                "depth": 2,
+                "first": true,
+                "last": true,
+              },
+              "end": 5,
+              "marks": [
+                "mdDel",
+              ],
+              "start": 2,
+              "text": "abc",
+            },
+            {
+              "attrs": {
+                "depth": 1,
+                "last": true,
+              },
+              "end": 7,
+              "marks": [
+                "mdMark",
+              ],
+              "start": 5,
+              "text": "~~",
+            },
+          ]
+        `)
     })
 })
