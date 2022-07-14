@@ -215,13 +215,21 @@ jobs:
 
       - name: Create draft GitHub release
         uses: softprops/action-gh-release@v1
-        if: ${{ github.ref == 'refs/heads/master' || github.ref == 'refs/heads/changeset-release/master' }}
+        if: ${{ github.ref == 'refs/heads/changeset-release/master' }}
         with:
           draft: true
           prerelease: false
           name: "${{ env.RINO_APP_VERSION }}"
           tag_name: "${{ env.RINO_APP_VERSION }}"
-          append_body: false
+
+      - name: Create prerelease GitHub release
+        uses: softprops/action-gh-release@v1
+        if: ${{ github.ref == 'refs/heads/master' }}
+        with:
+          draft: false
+          prerelease: true
+          name: "${{ env.RINO_APP_VERSION }}"
+          tag_name: "${{ env.RINO_APP_VERSION }}"
 
   release:
     runs-on: ubuntu-latest

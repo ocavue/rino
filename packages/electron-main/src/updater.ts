@@ -136,7 +136,7 @@ export async function checkForUpdatesAutomatically(): Promise<void> {
 
 export async function checkForUpdatesManually(): Promise<void> {
     const foundNewVersion = await checkForUpdatesAndNotify(true)
-    if (foundNewVersion) {
+    if (!foundNewVersion) {
         await showNoUpdateDialog()
     }
 }
