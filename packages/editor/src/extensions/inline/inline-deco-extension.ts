@@ -106,6 +106,12 @@ function createDecorationPlugin(): CreateExtensionPlugin {
                 )
             },
         },
+        appendTransaction(trs) {
+            for (const tr of trs) {
+                console.log(JSON.stringify(tr.doc.textContent))
+            }
+            return null
+        },
     }
 }
 
