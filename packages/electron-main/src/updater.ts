@@ -73,12 +73,16 @@ async function showNewVersionDialog(version: string): Promise<boolean> {
         cancelId: 1,
     })
     if (response === 0) {
+        logger.info(`user chose to download version ${version}`)
         return true
-    }
-    if (response === 2) {
+    } else if (response === 2) {
+        logger.info(`user chose to skip version ${version}`)
         skipVersion(version)
+        return false
+    } else {
+        logger.info(`user chose to remind later`)
+        return false
     }
-    return false
 }
 
 async function showNoUpdateDialog() {
@@ -92,30 +96,33 @@ async function checkForUpdatesAndNotify(isManually: boolean): Promise<boolean> {
 
         await app.whenReady()
 
-        let foundNewVersion = false
         try {
+            const currentVersion = app.getVersion()
+
             autoUpdater.logger = logger
             autoUpdater.autoDownload = false
             const result = await autoUpdater.checkForUpdates()
             if (result) {
-                const version = result.updateInfo.version
-                logger.info(`found new version ${version}`)
-                foundNewVersion = true
+                const latestVersion = result.updateInfo.version
+                const foundNewVersion = currentVersion !== latestVersion
+                logger.info(`current version: ${currentVersion}; latest version: ${latestVersion}`)
+                if (!foundNewVersion) {
+                    return foundNewVersion
+                }
 
-                const download = await showNewVersionDialog(version)
-                logger.info(`user chose to ${download ? "download" : "skip"} version ${version}`)
+                const download = await showNewVersionDialog(latestVersion)
 
                 if (download) {
                     autoUpdater.autoDownload = true
                     await autoUpdater.checkForUpdatesAndNotify()
                 }
+                return foundNewVersion
             }
         } catch (error) {
             logger.error("failed to check or install updates automatically:", error)
-            foundNewVersion = false
         }
 
-        return foundNewVersion
+        return false
     } else {
         logger.log("current environment is not production, skipping update check")
         return false

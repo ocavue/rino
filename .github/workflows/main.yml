@@ -52,6 +52,7 @@ jobs:
     concurrency: ${{ github.workflow }}-${{ github.ref }}-${{ matrix.electron_build_target }}
     needs:
       - test
+      - draft_release
     strategy:
       matrix:
         electron_build_target:
@@ -62,22 +63,6 @@ jobs:
       - uses: actions/checkout@v3
 
       - uses: ./.github/actions/dependencies
-
-      - name: Get current electron app version
-        run: |
-          RINO_APP_VERSION="v$(cat packages/electron/package.json | jq '.version' --join-output)"
-          echo "Current app version is $RINO_APP_VERSION"
-          echo "RINO_APP_VERSION=$RINO_APP_VERSION" >> $GITHUB_ENV
-
-      - name: Create draft GitHub release
-        uses: softprops/action-gh-release@v1
-        if: ${{ github.ref == 'refs/heads/master' || github.ref == 'refs/heads/changeset-release/master' }}
-        with:
-          draft: true
-          prerelease: false
-          name: "${{ env.RINO_APP_VERSION }}"
-          tag_name: "${{ env.RINO_APP_VERSION }}"
-          append_body: false
 
       - name: Build dependencies
         run: |
@@ -213,6 +198,30 @@ jobs:
           export PATH="$PATH:$PWD/packages/rig/node_modules/.bin"
           lhci autorun --config .lighthouserc.home.json
         if: steps.step_vercel_home.outcome == 'success'
+
+  draft_release:
+    runs-on: ubuntu-latest
+    concurrency: global_concurrency_draft_release
+    needs:
+      - test
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Get current electron app version
+        run: |
+          RINO_APP_VERSION="v$(cat packages/electron/package.json | jq '.version' --join-output)"
+          echo "Current app version is $RINO_APP_VERSION"
+          echo "RINO_APP_VERSION=$RINO_APP_VERSION" >> $GITHUB_ENV
+
+      - name: Create draft GitHub release
+        uses: softprops/action-gh-release@v1
+        if: ${{ github.ref == 'refs/heads/master' || github.ref == 'refs/heads/changeset-release/master' }}
+        with:
+          draft: true
+          prerelease: false
+          name: "${{ env.RINO_APP_VERSION }}"
+          tag_name: "${{ env.RINO_APP_VERSION }}"
+          append_body: false
 
   release:
     runs-on: ubuntu-latest
