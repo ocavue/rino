@@ -1,5 +1,11 @@
 # @rino.app/electron
 
+## 0.44.2
+
+### Patch Changes
+
+-   ff332c3: Press `Shift+Enter` to insert a soft break.
+
 ## 0.44.1
 
 ### Patch Changes
