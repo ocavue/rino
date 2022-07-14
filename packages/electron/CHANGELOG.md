@@ -1,5 +1,11 @@
 # @rino.app/electron
 
+## 0.44.3
+
+### Patch Changes
+
+-   e63bb4e: Fix a version update dialog issue when starting the app.
+
 ## 0.44.2
 
 ### Patch Changes
