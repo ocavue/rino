@@ -5,6 +5,9 @@ import { EDITOR_THEME_BASE } from "./base"
 export const EDITOR_THEME_GITHUB = css`
     ${EDITOR_THEME_BASE}
 
+    /* preserve newlines */
+    white-space: pre-wrap;
+
     & .anchor {
         float: left;
         line-height: 1;
