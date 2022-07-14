@@ -18,20 +18,22 @@ export class RinoHardBreakExtension extends HardBreakExtension {
     }
 
     createKeymap() {
-        const type = this.type
+        const disallowBreakNodes = new Set(["heading"])
+
+        const enterCommand = convertCommand(baseKeymap["Enter"])
+
         const command = chainCommands(convertCommand(exitCode), (params) => {
-            const $from = params.state.selection.$from
-            const canReplace = $from.node($from.depth).canReplaceWith($from.index($from.depth), $from.indexAfter($from.depth), type)
+            const { state, tr, dispatch } = params
+            const { $from, $to, from, to } = state.selection
+            const canReplace = !disallowBreakNodes.has($from.parent.type.name) && !disallowBreakNodes.has($to.parent.type.name)
 
             if (canReplace) {
-                const { dispatch } = params
-                if (dispatch) {
-                    dispatch(params.state.tr.replaceSelectionWith(this.type.create()).scrollIntoView())
-                }
+                const schema = state.schema
+                dispatch?.(tr.replaceRangeWith(from, to, schema.text("\n")))
                 return true
             } else {
-                // If the parent doesn't allow HardBreak type (Heading for example), then failback to `Enter` command
-                return convertCommand(baseKeymap["Enter"])(params)
+                // If the parent doesn't allow HardBreak type (Heading for example), then fall back to `Enter` command
+                return enterCommand(params)
             }
         })
 
