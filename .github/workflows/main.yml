@@ -200,7 +200,7 @@ jobs:
 
   create_github_release:
     runs-on: ubuntu-latest
-    concurrency: global_concurrency_draft_release
+    concurrency: global_concurrency_release
     needs:
       - test
     steps:
@@ -229,6 +229,7 @@ jobs:
 
   release:
     runs-on: ubuntu-latest
+    concurrency: global_concurrency_release
     needs:
       - build_website
       - build_package
@@ -261,6 +262,7 @@ jobs:
 
   deploy: # Production deployment
     runs-on: ubuntu-latest
+    concurrency: global_concurrency_release
     needs:
       # make sure that `deploy` only depends on `release` because we don't want `deploy` to skip if `release` succeeded.
       - release
