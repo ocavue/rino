@@ -1,5 +1,11 @@
 # @rino.app/editor
 
+## 0.44.3
+
+### Patch Changes
+
+-   733f3c3: Fix an issue that causes update dialog not to display when checking update manually.
+
 ## 0.44.2
 
 ### Patch Changes
