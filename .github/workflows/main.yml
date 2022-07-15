@@ -216,8 +216,10 @@ jobs:
         uses: ncipollo/release-action@v1
         if: ${{ github.ref == 'refs/heads/changeset-release/master' || github.ref == 'refs/heads/master' }}
         with:
-          allowUpdates: false
+          allowUpdates: true
           prerelease: true
+          omitPrereleaseDuringUpdate: true
+          omitBodyDuringUpdate: true
           name: "${{ env.RINO_APP_VERSION }}"
           tag: "${{ env.RINO_APP_VERSION }}"
           body: |
