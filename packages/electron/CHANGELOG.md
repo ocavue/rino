@@ -1,5 +1,11 @@
 # @rino.app/electron
 
+## 0.44.4
+
+### Patch Changes
+
+-   cd34510: Allow update to a prerelease version.
+
 ## 0.44.3
 
 ### Patch Changes
