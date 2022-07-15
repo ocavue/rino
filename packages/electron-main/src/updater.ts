@@ -6,14 +6,13 @@ import crypto from "node:crypto"
 import { sleep } from "@rino.app/common"
 
 import { env } from "./env"
-import { logger } from "./logger"
+import { autoUpdaterLogger, logger } from "./logger"
 import { showMessageBoxOnFocusedWindow } from "./utils/dialog"
 
 type StoreData = {
     uuid: string
     skippedVersions: string[]
-    acceptAlpha: boolean
-    acceptBeta: boolean
+    allowPrerelease: boolean
 }
 
 let _store: Store<StoreData> | null = null
@@ -28,10 +27,7 @@ function initVersionUpdateStore(): Store<StoreData> {
         skippedVersions: {
             type: "array",
         },
-        acceptAlpha: {
-            type: "boolean",
-        },
-        acceptBeta: {
+        allowPrerelease: {
             type: "boolean",
         },
     } as const
@@ -42,8 +38,7 @@ function initVersionUpdateStore(): Store<StoreData> {
         defaults: {
             uuid: "",
             skippedVersions: [],
-            acceptAlpha: false,
-            acceptBeta: false,
+            allowPrerelease: false,
         },
         schema,
     })
@@ -99,7 +94,9 @@ async function checkForUpdatesAndNotify(isManually: boolean): Promise<boolean> {
         try {
             const currentVersion = app.getVersion()
 
-            autoUpdater.logger = logger
+            autoUpdater.logger = autoUpdaterLogger
+            autoUpdater.allowPrerelease = initVersionUpdateStore().get("allowPrerelease")
+
             autoUpdater.autoDownload = false
             const result = await autoUpdater.checkForUpdates()
             if (result) {
