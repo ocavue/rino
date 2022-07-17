@@ -51,7 +51,7 @@ jobs:
     runs-on: macos-latest
     concurrency: ${{ github.workflow }}-${{ github.ref }}-${{ matrix.electron_build_target }}
     needs:
-      - test
+      - create_github_release
     strategy:
       matrix:
         electron_build_target:
@@ -62,22 +62,6 @@ jobs:
       - uses: actions/checkout@v3
 
       - uses: ./.github/actions/dependencies
-
-      - name: Get current electron app version
-        run: |
-          RINO_APP_VERSION="v$(cat packages/electron/package.json | jq '.version' --join-output)"
-          echo "Current app version is $RINO_APP_VERSION"
-          echo "RINO_APP_VERSION=$RINO_APP_VERSION" >> $GITHUB_ENV
-
-      - name: Create draft GitHub release
-        uses: softprops/action-gh-release@v1
-        if: ${{ github.ref == 'refs/heads/master' || github.ref == 'refs/heads/changeset-release/master' }}
-        with:
-          draft: true
-          prerelease: false
-          name: "${{ env.RINO_APP_VERSION }}"
-          tag_name: "${{ env.RINO_APP_VERSION }}"
-          append_body: false
 
       - name: Build dependencies
         run: |
@@ -214,8 +198,38 @@ jobs:
           lhci autorun --config .lighthouserc.home.json
         if: steps.step_vercel_home.outcome == 'success'
 
+  create_github_release:
+    runs-on: ubuntu-latest
+    concurrency: global_concurrency_release
+    needs:
+      - test
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Get current electron app version
+        run: |
+          RINO_APP_VERSION="v$(cat packages/electron/package.json | jq '.version' --join-output)"
+          echo "Current app version is $RINO_APP_VERSION"
+          echo "RINO_APP_VERSION=$RINO_APP_VERSION" >> $GITHUB_ENV
+
+      - name: Create prerelease GitHub release
+        uses: ncipollo/release-action@v1
+        if: ${{ github.ref == 'refs/heads/changeset-release/master' || github.ref == 'refs/heads/master' }}
+        with:
+          allowUpdates: true
+          prerelease: true
+          omitPrereleaseDuringUpdate: true
+          omitBodyDuringUpdate: true
+          name: "${{ env.RINO_APP_VERSION }}"
+          tag: "${{ env.RINO_APP_VERSION }}"
+          body: |
+            This is a release for the desktop app.
+
+            Please refer to [CHANGELOG.md](https://github.com/ocavue/rino/blob/${{ env.RINO_APP_VERSION }}/packages/electron/CHANGELOG.md) for details."
+
   release:
     runs-on: ubuntu-latest
+    concurrency: global_concurrency_release
     needs:
       - build_website
       - build_package
@@ -248,6 +262,7 @@ jobs:
 
   deploy: # Production deployment
     runs-on: ubuntu-latest
+    concurrency: global_concurrency_release
     needs:
       # make sure that `deploy` only depends on `release` because we don't want `deploy` to skip if `release` succeeded.
       - release

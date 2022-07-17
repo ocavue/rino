@@ -26,13 +26,13 @@ const setup = () => {
 }
 
 describe("shortcut", () => {
-    const { add, doc, p, hardBreak } = setup()
+    const { add, doc, p } = setup()
 
     test("press Shift+Enter", () => {
         add(doc(p("123<cursor>456")))
             .press("Shift-Enter")
             .callback((content) => {
-                expect(content.state.doc).toEqualRemirrorDocument(doc(p("123", hardBreak(), "456")))
+                expect(content.state).toEqualRemirrorState(doc(p("123\n<cursor>456")))
             })
     })
 })

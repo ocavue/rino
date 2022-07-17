@@ -1,35 +1,18 @@
-import { app, shell } from "electron"
+import { app } from "electron"
 import Store from "electron-store"
 import { autoUpdater } from "electron-updater"
-import { find, sortBy } from "lodash-es"
 import crypto from "node:crypto"
-import fetch from "node-fetch"
 
-import { createTimeoutPromise, sleep } from "@rino.app/common"
+import { sleep } from "@rino.app/common"
 
 import { env } from "./env"
-import { logger } from "./logger"
+import { autoUpdaterLogger, logger } from "./logger"
 import { showMessageBoxOnFocusedWindow } from "./utils/dialog"
 
-type ReleasePhase = "alpha" | "beta" | "latest"
 type StoreData = {
     uuid: string
     skippedVersions: string[]
-    acceptAlpha: boolean
-    acceptBeta: boolean
-}
-type AvailableVersion = {
-    version: string
-    releaseDate: string
-    releasePhase: ReleasePhase
-}
-type VersionRequest = {
-    currentVersion: string
-    store: StoreData
-}
-
-type VersionResponse = {
-    availableVersions: AvailableVersion[]
+    allowPrerelease: boolean
 }
 
 let _store: Store<StoreData> | null = null
@@ -44,10 +27,7 @@ function initVersionUpdateStore(): Store<StoreData> {
         skippedVersions: {
             type: "array",
         },
-        acceptAlpha: {
-            type: "boolean",
-        },
-        acceptBeta: {
+        allowPrerelease: {
             type: "boolean",
         },
     } as const
@@ -58,8 +38,7 @@ function initVersionUpdateStore(): Store<StoreData> {
         defaults: {
             uuid: "",
             skippedVersions: [],
-            acceptAlpha: false,
-            acceptBeta: false,
+            allowPrerelease: false,
         },
         schema,
     })
@@ -80,64 +59,6 @@ function skipVersion(version: string) {
     }
 }
 
-async function fetchAvailableVersions(): Promise<AvailableVersion[]> {
-    const currentVersion = app.getVersion()
-    const storeData = initVersionUpdateStore().store
-    const req: VersionRequest = {
-        currentVersion,
-        store: storeData,
-    }
-    const res = await fetch("https://rino-api.vercel.app/api/version", {
-        body: JSON.stringify(req),
-        method: "POST",
-    })
-    const json = (await res.json()) as VersionResponse
-    const availableVersions = sortBy(json.availableVersions, "releaseDate")
-    return availableVersions.reverse()
-}
-
-async function fetchNewVersion(isManually: boolean): Promise<{ availableVersion?: AvailableVersion; shouldCheckForUpdates: boolean }> {
-    try {
-        const currentVersion = app.getVersion()
-        const storeData = initVersionUpdateStore().store
-        const availableVersions = await createTimeoutPromise(fetchAvailableVersions(), 15_000)
-
-        if (availableVersions.length === 0) {
-            return { shouldCheckForUpdates: true }
-        }
-
-        const currentVersionDate = find(availableVersions, (v) => v.version === currentVersion)?.releaseDate
-
-        for (const availableVersion of availableVersions) {
-            if (currentVersionDate && currentVersionDate >= availableVersion.releaseDate) {
-                break
-            }
-            if (!isManually && storeData.skippedVersions.includes(availableVersion.version)) {
-                logger.info(`skipping version ${availableVersion.version}`)
-                break
-            }
-
-            if (availableVersion.releasePhase === "latest") {
-                return { shouldCheckForUpdates: true, availableVersion }
-            } else if (availableVersion.releasePhase === "beta" && storeData.acceptBeta) {
-                return { shouldCheckForUpdates: true, availableVersion }
-            } else if (availableVersion.releasePhase === "alpha" && storeData.acceptAlpha) {
-                return { shouldCheckForUpdates: true, availableVersion }
-            }
-        }
-
-        if (!currentVersionDate) {
-            return { shouldCheckForUpdates: true }
-        }
-
-        const differenceInDays = (Date.now() - Date.parse(currentVersionDate)) / (1000 * 3600 * 24)
-        return { shouldCheckForUpdates: differenceInDays >= 1.0 }
-    } catch (err) {
-        logger.warn("failed to check for new version:", err)
-        return { shouldCheckForUpdates: true }
-    }
-}
-
 async function showNewVersionDialog(version: string): Promise<boolean> {
     const { response } = await showMessageBoxOnFocusedWindow({
         message: `A new version of Rino is available: ${version}. Do you want to download now?`,
@@ -147,12 +68,16 @@ async function showNewVersionDialog(version: string): Promise<boolean> {
         cancelId: 1,
     })
     if (response === 0) {
+        logger.info(`user chose to download version ${version}`)
         return true
-    }
-    if (response === 2) {
+    } else if (response === 2) {
+        logger.info(`user chose to skip version ${version}`)
         skipVersion(version)
+        return false
+    } else {
+        logger.info(`user chose to remind later`)
+        return false
     }
-    return false
 }
 
 async function showNoUpdateDialog() {
@@ -166,36 +91,35 @@ async function checkForUpdatesAndNotify(isManually: boolean): Promise<boolean> {
 
         await app.whenReady()
 
-        const fetchNewVersionResult = await fetchNewVersion(isManually)
-        logger.debug("fetched new version:", fetchNewVersionResult)
-        const { shouldCheckForUpdates, availableVersion } = fetchNewVersionResult
-
-        if (!shouldCheckForUpdates) {
-            logger.info("not available version found")
-            return false
-        }
-
-        let updated = false
         try {
-            autoUpdater.logger = logger
-            const result = await autoUpdater.checkForUpdatesAndNotify()
+            const currentVersion = app.getVersion()
+
+            autoUpdater.logger = autoUpdaterLogger
+            autoUpdater.allowPrerelease = initVersionUpdateStore().get("allowPrerelease")
+
+            autoUpdater.autoDownload = false
+            const result = await autoUpdater.checkForUpdates()
             if (result) {
-                logger.info(`found new version ${result.updateInfo.version}`)
+                const latestVersion = result.updateInfo.version
+                const foundNewVersion = currentVersion !== latestVersion
+                logger.info(`current version: ${currentVersion}; latest version: ${latestVersion}`)
+                if (!foundNewVersion) {
+                    return foundNewVersion
+                }
+
+                const download = await showNewVersionDialog(latestVersion)
+
+                if (download) {
+                    autoUpdater.autoDownload = true
+                    await autoUpdater.checkForUpdatesAndNotify()
+                }
+                return foundNewVersion
             }
-            updated = !!result
-        } catch (e) {
-            logger.error("failed to check or install updates automatically:", e)
-            updated = false
+        } catch (error) {
+            logger.error("failed to check or install updates automatically:", error)
         }
 
-        if (!updated && availableVersion) {
-            const shouldInstall = await showNewVersionDialog(availableVersion.version)
-            if (shouldInstall) {
-                shell.openExternal(`https://rino.app`)
-                return true
-            }
-        }
-        return updated
+        return false
     } else {
         logger.log("current environment is not production, skipping update check")
         return false
@@ -208,8 +132,8 @@ export async function checkForUpdatesAutomatically(): Promise<void> {
 }
 
 export async function checkForUpdatesManually(): Promise<void> {
-    const hasUpdate = await checkForUpdatesAndNotify(true)
-    if (hasUpdate) {
+    const foundNewVersion = await checkForUpdatesAndNotify(true)
+    if (!foundNewVersion) {
         await showNoUpdateDialog()
     }
 }
