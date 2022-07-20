@@ -82,7 +82,7 @@ importers:
       '@emotion/css': ^11.9.0
       '@emotion/react': ^11.9.3
       '@floating-ui/dom': ^1.0.0
-      '@floating-ui/react-dom': ^0.7.2
+      '@floating-ui/react-dom': ^1.0.0
       '@floating-ui/react-dom-interactions': ^0.7.0
       '@microsoft/api-extractor': ^7.28.4
       '@mui/material': ^5.9.1
@@ -152,7 +152,7 @@ importers:
       '@emotion/css': 11.9.0_@babel+core@7.18.9
       '@emotion/react': 11.9.3_szkdlbnthht4v3jvm76fn7u6na
       '@floating-ui/dom': 1.0.0
-      '@floating-ui/react-dom': 0.7.2_bb2bxwco6ptpubzwpazr52qf6i
+      '@floating-ui/react-dom': 1.0.0_biqbaboplfbrettd7655fr4n2y
       '@floating-ui/react-dom-interactions': 0.7.0_bb2bxwco6ptpubzwpazr52qf6i
       '@mui/material': 5.9.1_wl7vpiy4kk7nzieoou6bf3ytpy
       '@remirror/core': 2.0.0-beta.9_z55trcvh7ltmhf3syo7mxfso7m
@@ -1340,6 +1340,17 @@ packages:
       use-isomorphic-layout-effect: 1.1.2_3hx2ussxxho4jajbwrd6gq34qe
     transitivePeerDependencies:
       - '@types/react'
+    dev: false
+
+  /@floating-ui/react-dom/1.0.0_biqbaboplfbrettd7655fr4n2y:
+    resolution: {integrity: sha512-uiOalFKPG937UCLm42RxjESTWUVpbbatvlphQAU6bsv+ence6IoVG8JOUZcy8eW81NkU+Idiwvx10WFLmR4MIg==}
+    peerDependencies:
+      react: '>=16.8.0'
+      react-dom: '>=16.8.0'
+    dependencies:
+      '@floating-ui/dom': 1.0.0
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
     dev: false
 
   /@hapi/hoek/9.3.0:
