@@ -9,9 +9,7 @@ export function selectRow(tr: Transaction, pos: number): boolean {
         return false
     }
 
-    const selection = CellSelection.rowSelection(tr.doc.resolve(cell.pos))
-    // @ts-expect-error CellSelection has incorrect type
-    tr.setSelection(selection)
+    tr.setSelection(CellSelection.rowSelection(tr.doc.resolve(cell.pos)))
     return true
 }
 
@@ -22,9 +20,7 @@ export function selectColumn(tr: Transaction, pos: number): boolean {
         return false
     }
 
-    const selection = CellSelection.colSelection(tr.doc.resolve(cell.pos))
-    // @ts-expect-error CellSelection has incorrect type
-    tr.setSelection(selection)
+    tr.setSelection(CellSelection.colSelection(tr.doc.resolve(cell.pos)))
     return true
 }
 
@@ -44,15 +40,11 @@ export function selectTable(tr: Transaction, pos: number): boolean {
     const firstCellPos = map.map[0]
     const lastCellPos = map.map[map.map.length - 1]
 
-    const selection = CellSelection.create(tr.doc, table.start + firstCellPos, table.start + lastCellPos)
-    // @ts-expect-error CellSelection has incorrect type
-    tr.setSelection(selection)
+    tr.setSelection(CellSelection.create(tr.doc, table.start + firstCellPos, table.start + lastCellPos))
     return true
 }
 
 export function selectCell(tr: Transaction, pos: number): boolean {
-    const selection = CellSelection.create(tr.doc, pos)
-    // @ts-expect-error CellSelection has incorrect type
-    tr.setSelection(selection)
+    tr.setSelection(CellSelection.create(tr.doc, pos))
     return true
 }
