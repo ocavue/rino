@@ -233,13 +233,13 @@ jobs:
           echo "Current app version is $RINO_APP_VERSION"
           echo "RINO_APP_VERSION=$RINO_APP_VERSION" >> $GITHUB_ENV
 
-      - name: Create prerelease GitHub release
+      - name: Create GitHub release
         uses: ncipollo/release-action@v1
         if: ${{ github.ref == 'refs/heads/changeset-release/master' || github.ref == 'refs/heads/master' }}
+        continue-on-error: true
         with:
-          allowUpdates: true
-          prerelease: true
-          omitPrereleaseDuringUpdate: true
+          allowUpdates: false
+          draft: true
           omitBodyDuringUpdate: true
           name: "${{ env.RINO_APP_VERSION }}"
           tag: "${{ env.RINO_APP_VERSION }}"
