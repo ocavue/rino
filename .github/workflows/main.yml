@@ -96,7 +96,7 @@ jobs:
           pnpm test:coverage
 
       - name: Push changed files
-        if: ${{ github.ref_name != 'master' }}
+        if: ${{ github.ref_name != 'master' && always() }}
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
