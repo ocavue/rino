@@ -301,10 +301,3 @@ export async function expectSourceCodeMode() {
     await wait("source_code_mode_textarea")
     await wait("wysiwyg_mode_textarea", { state: "hidden" })
 }
-
-export async function writeSnapshotImage(fileName: string) {
-    const filePath = join(__dirname, "__img_snapshots__", fileName)
-    await fs.mkdir(dirname(filePath), { recursive: true })
-    const screenshot = await page.screenshot({ type: "png", fullPage: true })
-    await fs.writeFile(filePath, screenshot)
-}

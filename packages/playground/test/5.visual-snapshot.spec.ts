@@ -1,5 +1,9 @@
+import { toMatchImageSnapshot } from "jest-image-snapshot"
+
 import { switchToSourceCodeMode } from "./actions"
-import { setupEditor, writeSnapshotImage } from "./utils"
+import { setupEditor } from "./utils"
+
+expect.extend({ toMatchImageSnapshot })
 
 const content = `# first heading in the document (zero margin-top)
 
@@ -10,11 +14,11 @@ A long long long long long long long long long long long long long long long lon
 - list
   ## heading in a list item (normal margin-top and margin-bottom)
 
-> ### first heading in a quotablock (zero margin-top)
+> ### first heading in a blockquote (zero margin-top)
 >
-> ### second heading in a quotablock (normal margin-top and margin-bottom)
+> ### second heading in a blockquote (normal margin-top and margin-bottom)
 >
-> ### last heading in a quotablock (zero margin-bottom)
+> ### last heading in a blockquote (zero margin-bottom)
 
 ## nested list
 
@@ -38,23 +42,17 @@ A long long long long long long long long long long long long long long long lon
 
 `
 
-describe("macOS", () => {
+describe(`OS - ${process.platform}`, () => {
     test("wysiwyg mode", async () => {
-        if (process.platform !== "darwin") {
-            return
-        }
-
         await setupEditor(content)
         await page.focus(".blur-helper") // hide the cursor
-        await writeSnapshotImage("macOS.wysiwyg.png")
+        const screenshot = await page.screenshot({ type: "png", fullPage: true })
+        expect(screenshot).toMatchImageSnapshot()
     })
 
     test("source code mode", async () => {
-        if (process.platform !== "darwin") {
-            return
-        }
-
         await switchToSourceCodeMode()
-        await writeSnapshotImage("macOS.sourcecode.png")
+        const screenshot = await page.screenshot({ type: "png", fullPage: true })
+        expect(screenshot).toMatchImageSnapshot()
     })
 })
