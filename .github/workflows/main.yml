@@ -233,20 +233,26 @@ jobs:
           echo "Current app version is $RINO_APP_VERSION"
           echo "RINO_APP_VERSION=$RINO_APP_VERSION" >> $GITHUB_ENV
 
-      - name: Create GitHub release
-        uses: ncipollo/release-action@v1
-        if: ${{ github.ref == 'refs/heads/changeset-release/master' || github.ref == 'refs/heads/master' }}
-        continue-on-error: true
-        with:
-          allowUpdates: true
-          draft: true
-          omitBodyDuringUpdate: true
-          name: "${{ env.RINO_APP_VERSION }}"
-          tag: "${{ env.RINO_APP_VERSION }}"
-          body: |
+      - name: Prepare GitHub release note
+        run: |
+          echo "$RINO_RELEASE_NOTE" > /tmp/rino-release-notes.md
+        env:
+          RINO_RELEASE_NOTE: |
             This is a release for the desktop app.
 
             Please refer to [CHANGELOG.md](https://github.com/ocavue/rino/blob/${{ env.RINO_APP_VERSION }}/packages/electron/CHANGELOG.md) for details.
+
+      - name: Print GitHub release note
+        run: |
+          cat /tmp/rino-release-notes.md
+
+      - name: Create GitHub release
+        if: ${{ github.ref == 'refs/heads/changeset-release/master' || github.ref == 'refs/heads/master' }}
+        # Create a draft release if not exists
+        run: |
+          gh release view "${RINO_APP_VERSION}" || gh release create "${RINO_APP_VERSION}" --title "${RINO_APP_VERSION}" --draft --notes-file /tmp/rino-release-notes.md
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   release:
     runs-on: ubuntu-latest
