@@ -10,6 +10,10 @@ export const EDITOR_THEME_BASE = css`
     flex-direction: column;
     display: flex;
 
+    & li {
+        position: relative;
+    }
+
     /**
      * extend to full height
      */
