@@ -1,11 +1,5 @@
-import fs from "node:fs/promises"
-import { dirname, join } from "node:path"
-import { fileURLToPath } from "node:url"
 import os from "os"
 import { Dialog, ElementHandle } from "playwright-chromium"
-
-const __filename = fileURLToPath(import.meta.url)
-const __dirname = dirname(__filename)
 
 page.setDefaultTimeout(5000)
 
