@@ -6,7 +6,6 @@ describe("text", function () {
     test("normal", function () {
         expect(fromInlineMarkdown("text")).toStrictEqual([
             {
-                text: "text",
                 start: 0,
                 end: 4,
                 marks: ["mdText"],
@@ -18,7 +17,6 @@ describe("text", function () {
     test("with whitespace", function () {
         expect(fromInlineMarkdown(" abc  def ")).toStrictEqual([
             {
-                text: "abc  def",
                 start: 1,
                 end: 9,
                 marks: ["mdText"],
@@ -36,21 +34,18 @@ describe("strong + emphasis", function () {
     test("without spaces", function () {
         expect(fromInlineMarkdown("*word*")).toStrictEqual([
             {
-                text: "*",
                 marks: ["mdMark"],
                 attrs: { depth: 1, first: true },
                 start: 0,
                 end: 1,
             },
             {
-                text: "word",
                 marks: ["mdEm"],
                 attrs: { depth: 2, first: true, last: true },
                 start: 1,
                 end: 5,
             },
             {
-                text: "*",
                 marks: ["mdMark"],
                 attrs: { depth: 1, last: true },
                 start: 5,
@@ -59,21 +54,18 @@ describe("strong + emphasis", function () {
         ])
         expect(fromInlineMarkdown("**word**")).toStrictEqual([
             {
-                text: "**",
                 marks: ["mdMark"],
                 attrs: { depth: 1, first: true },
                 start: 0,
                 end: 2,
             },
             {
-                text: "word",
                 marks: ["mdStrong"],
                 attrs: { depth: 2, first: true, last: true },
                 start: 2,
                 end: 6,
             },
             {
-                text: "**",
                 marks: ["mdMark"],
                 attrs: { depth: 1, last: true },
                 start: 6,
@@ -82,35 +74,30 @@ describe("strong + emphasis", function () {
         ])
         expect(fromInlineMarkdown("***word***")).toStrictEqual([
             {
-                text: "*",
                 marks: ["mdMark"],
                 attrs: { depth: 1, first: true },
                 start: 0,
                 end: 1,
             },
             {
-                text: "**",
                 marks: ["mdMark"],
                 attrs: { depth: 2, first: true },
                 start: 1,
                 end: 3,
             },
             {
-                text: "word",
                 marks: ["mdStrong", "mdEm"],
                 attrs: { depth: 3, first: true, last: true },
                 start: 3,
                 end: 7,
             },
             {
-                text: "**",
                 marks: ["mdMark"],
                 attrs: { depth: 2, last: true },
                 start: 7,
                 end: 9,
             },
             {
-                text: "*",
                 marks: ["mdMark"],
                 attrs: { depth: 1, last: true },
                 start: 9,
@@ -121,7 +108,6 @@ describe("strong + emphasis", function () {
     test("with spaces", function () {
         expect(fromInlineMarkdown("* word *")).toStrictEqual([
             {
-                text: "* word *",
                 marks: ["mdText"],
                 attrs: { depth: 1, first: true, last: true },
                 start: 0,
@@ -130,7 +116,6 @@ describe("strong + emphasis", function () {
         ])
         expect(fromInlineMarkdown("** word **")).toStrictEqual([
             {
-                text: "** word **",
                 marks: ["mdText"],
                 attrs: { depth: 1, first: true, last: true },
                 start: 0,
@@ -139,7 +124,6 @@ describe("strong + emphasis", function () {
         ])
         expect(fromInlineMarkdown("*** word ***")).toStrictEqual([
             {
-                text: "*** word ***",
                 marks: ["mdText"],
                 attrs: { depth: 1, first: true, last: true },
                 start: 0,
@@ -150,49 +134,42 @@ describe("strong + emphasis", function () {
     test("mix", function () {
         expect(fromInlineMarkdown("*1234**1234**1234*")).toStrictEqual([
             {
-                text: "*",
                 marks: ["mdMark"],
                 attrs: { depth: 1, first: true },
                 start: 0,
                 end: 1,
             },
             {
-                text: "1234",
                 marks: ["mdEm"],
                 attrs: { depth: 2, first: true, last: true },
                 start: 1,
                 end: 5,
             },
             {
-                text: "**",
                 marks: ["mdMark"],
                 attrs: { depth: 2, first: true },
                 start: 5,
                 end: 7,
             },
             {
-                text: "1234",
                 marks: ["mdStrong", "mdEm"],
                 attrs: { depth: 3, first: true, last: true },
                 start: 7,
                 end: 11,
             },
             {
-                text: "**",
                 marks: ["mdMark"],
                 attrs: { depth: 2, last: true },
                 start: 11,
                 end: 13,
             },
             {
-                text: "1234",
                 marks: ["mdEm"],
                 attrs: { depth: 2, first: true, last: true },
                 start: 13,
                 end: 17,
             },
             {
-                text: "*",
                 marks: ["mdMark"],
                 attrs: { depth: 1, last: true },
                 start: 17,
@@ -201,49 +178,42 @@ describe("strong + emphasis", function () {
         ])
         expect(fromInlineMarkdown("**1234*1234*1234**")).toStrictEqual([
             {
-                text: "**",
                 marks: ["mdMark"],
                 attrs: { depth: 1, first: true },
                 start: 0,
                 end: 2,
             },
             {
-                text: "1234",
                 marks: ["mdStrong"],
                 attrs: { depth: 2, first: true, last: true },
                 start: 2,
                 end: 6,
             },
             {
-                text: "*",
                 marks: ["mdMark"],
                 attrs: { depth: 2, first: true },
                 start: 6,
                 end: 7,
             },
             {
-                text: "1234",
                 marks: ["mdEm", "mdStrong"],
                 attrs: { depth: 3, first: true, last: true },
                 start: 7,
                 end: 11,
             },
             {
-                text: "*",
                 marks: ["mdMark"],
                 attrs: { depth: 2, last: true },
                 start: 11,
                 end: 12,
             },
             {
-                text: "1234",
                 marks: ["mdStrong"],
                 attrs: { depth: 2, first: true, last: true },
                 start: 12,
                 end: 16,
             },
             {
-                text: "**",
                 marks: ["mdMark"],
                 attrs: { depth: 1, last: true },
                 start: 16,
@@ -257,21 +227,18 @@ describe("code", function () {
     test("without space", function () {
         expect(fromInlineMarkdown("`code`")).toStrictEqual([
             {
-                text: "`",
                 start: 0,
                 end: 1,
                 marks: ["mdMark"],
                 attrs: { depth: 1, first: true },
             },
             {
-                text: "code",
                 start: 1,
                 end: 5,
                 marks: ["mdCodeText"],
                 attrs: { depth: 1 },
             },
             {
-                text: "`",
                 start: 5,
                 end: 6,
                 marks: ["mdMark"],
@@ -282,21 +249,18 @@ describe("code", function () {
     test("with two trim spaces", function () {
         expect(fromInlineMarkdown("` code `")).toStrictEqual([
             {
-                text: "`",
                 start: 0,
                 end: 1,
                 marks: ["mdMark"],
                 attrs: { depth: 1, first: true },
             },
             {
-                text: " code ",
                 start: 1,
                 end: 7,
                 marks: ["mdCodeText"],
                 attrs: { depth: 1 },
             },
             {
-                text: "`",
                 start: 7,
                 end: 8,
                 marks: ["mdMark"],
@@ -307,21 +271,18 @@ describe("code", function () {
     test("with one trim space", function () {
         expect(fromInlineMarkdown("` code`")).toStrictEqual([
             {
-                text: "`",
                 start: 0,
                 end: 1,
                 marks: ["mdMark"],
                 attrs: { depth: 1, first: true },
             },
             {
-                text: " code",
                 start: 1,
                 end: 6,
                 marks: ["mdCodeText"],
                 attrs: { depth: 1 },
             },
             {
-                text: "`",
                 start: 6,
                 end: 7,
                 marks: ["mdMark"],
@@ -330,21 +291,18 @@ describe("code", function () {
         ])
         expect(fromInlineMarkdown("`code `")).toStrictEqual([
             {
-                text: "`",
                 start: 0,
                 end: 1,
                 marks: ["mdMark"],
                 attrs: { depth: 1, first: true },
             },
             {
-                text: "code ",
                 start: 1,
                 end: 6,
                 marks: ["mdCodeText"],
                 attrs: { depth: 1 },
             },
             {
-                text: "`",
                 start: 6,
                 end: 7,
                 marks: ["mdMark"],
@@ -358,21 +316,18 @@ describe("delete", function () {
     test("normal", function () {
         expect(fromInlineMarkdown("~~1234~~")).toStrictEqual([
             {
-                text: "~~",
                 start: 0,
                 end: 2,
                 marks: ["mdMark"],
                 attrs: { depth: 1, first: true },
             },
             {
-                text: "1234",
                 start: 2,
                 end: 6,
                 marks: ["mdDel"],
                 attrs: { depth: 2, first: true, last: true },
             },
             {
-                text: "~~",
                 start: 6,
                 end: 8,
                 marks: ["mdMark"],
@@ -383,21 +338,18 @@ describe("delete", function () {
     test("with inside tilde", function () {
         expect(fromInlineMarkdown("~~12~34~~")).toStrictEqual([
             {
-                text: "~~",
                 start: 0,
                 end: 2,
                 marks: ["mdMark"],
                 attrs: { depth: 1, first: true },
             },
             {
-                text: "12~34",
                 start: 2,
                 end: 7,
                 marks: ["mdDel"],
                 attrs: { depth: 2, first: true, last: true },
             },
             {
-                text: "~~",
                 start: 7,
                 end: 9,
                 marks: ["mdMark"],
@@ -408,7 +360,6 @@ describe("delete", function () {
     test("with space", function () {
         expect(fromInlineMarkdown("~~ 1234 ~~")).toStrictEqual([
             {
-                text: "~~ 1234 ~~",
                 start: 0,
                 end: 10,
                 marks: ["mdText"],
@@ -419,7 +370,6 @@ describe("delete", function () {
     test("do not support strikethrough with a single tilde", function () {
         expect(fromInlineMarkdown("~1234~")).toStrictEqual([
             {
-                text: "~1234~",
                 start: 0,
                 end: 6,
                 marks: ["mdText"],
@@ -433,35 +383,30 @@ describe("link", function () {
     test("normal", function () {
         expect(fromInlineMarkdown(`[foo](https://example.com)`)).toStrictEqual([
             {
-                text: "[",
                 marks: ["mdMark"],
                 attrs: { depth: 1, first: true },
                 start: 0,
                 end: 1,
             },
             {
-                text: "foo",
                 marks: ["mdLinkText"],
                 attrs: { depth: 2, first: true, last: true, href: "https://example.com" },
                 start: 1,
                 end: 4,
             },
             {
-                text: "](",
                 marks: ["mdMark"],
                 attrs: { depth: 1 },
                 start: 4,
                 end: 6,
             },
             {
-                text: `https://example.com`,
                 marks: ["mdLinkUri"],
                 attrs: { depth: 1 },
                 start: 6,
                 end: 25,
             },
             {
-                text: ")",
                 marks: ["mdMark"],
                 attrs: { depth: 1, last: true },
                 start: 25,
@@ -473,35 +418,30 @@ describe("link", function () {
     test("with label", function () {
         expect(fromInlineMarkdown(`[foo](https://example.com "bar")`)).toStrictEqual([
             {
-                text: "[",
                 marks: ["mdMark"],
                 attrs: { depth: 1, first: true },
                 start: 0,
                 end: 1,
             },
             {
-                text: "foo",
                 marks: ["mdLinkText"],
                 attrs: { depth: 2, first: true, last: true, href: "https://example.com" },
                 start: 1,
                 end: 4,
             },
             {
-                text: "](",
                 marks: ["mdMark"],
                 attrs: { depth: 1 },
                 start: 4,
                 end: 6,
             },
             {
-                text: `https://example.com "bar"`,
                 marks: ["mdLinkUri"],
                 attrs: { depth: 1 },
                 start: 6,
                 end: 31,
             },
             {
-                text: ")",
                 marks: ["mdMark"],
                 attrs: { depth: 1, last: true },
                 start: 31,
@@ -513,35 +453,30 @@ describe("link", function () {
     test("with space", function () {
         expect(fromInlineMarkdown('[ foo ]( https://example.com  " bar " )')).toStrictEqual([
             {
-                text: "[",
                 marks: ["mdMark"],
                 attrs: { depth: 1, first: true },
                 start: 0,
                 end: 1,
             },
             {
-                text: " foo ",
                 marks: ["mdLinkText"],
                 attrs: { depth: 2, first: true, last: true, href: "https://example.com" },
                 start: 1,
                 end: 6,
             },
             {
-                text: "](",
                 marks: ["mdMark"],
                 attrs: { depth: 1 },
                 start: 6,
                 end: 8,
             },
             {
-                text: ` https://example.com  " bar " `,
                 marks: ["mdLinkUri"],
                 attrs: { depth: 1 },
                 start: 8,
                 end: 38,
             },
             {
-                text: ")",
                 marks: ["mdMark"],
                 attrs: { depth: 1, last: true },
                 start: 38,
@@ -562,7 +497,6 @@ describe("image", function () {
                     last: true,
                 },
                 marks: ["mdImgUri"],
-                text: "![foo](/tmp/image.png)",
                 start: 0,
                 end: 22,
             },
@@ -579,7 +513,6 @@ describe("image", function () {
                     last: true,
                 },
                 marks: ["mdImgUri"],
-                text: "![foo](http://example.com/image.png)",
                 start: 0,
                 end: 36,
             },
@@ -596,7 +529,6 @@ describe("image", function () {
                     last: true,
                 },
                 marks: ["mdImgUri"],
-                text: "![foo](</tmp/file path/image v2.png>)",
                 start: 0,
                 end: 37,
             },
@@ -609,7 +541,6 @@ describe("image", function () {
                     last: true,
                 },
                 marks: ["mdText"],
-                text: "![foo](/tmp/file path/image v2.png)",
                 start: 0,
                 end: 35,
             },
@@ -621,21 +552,18 @@ describe("autolink", function () {
     test("normal", function () {
         expect(fromInlineMarkdown("<https://rino.app>")).toStrictEqual([
             {
-                text: "<",
                 marks: ["mdMark"],
                 attrs: { depth: 1, first: true },
                 start: 0,
                 end: 1,
             },
             {
-                text: "https://rino.app",
                 marks: ["mdLinkText"],
                 attrs: { depth: 2, first: true, last: true, href: "https://rino.app" },
                 start: 1,
                 end: 17,
             },
             {
-                text: ">",
                 marks: ["mdMark"],
                 attrs: { depth: 1, last: true },
                 start: 17,
@@ -646,35 +574,30 @@ describe("autolink", function () {
     test("wrap by text", function () {
         expect(fromInlineMarkdown("text<https://rino.app>text")).toStrictEqual([
             {
-                text: "text",
                 marks: ["mdText"],
                 attrs: { depth: 1, first: true, last: true },
                 start: 0,
                 end: 4,
             },
             {
-                text: "<",
                 marks: ["mdMark"],
                 attrs: { depth: 1, first: true },
                 start: 4,
                 end: 5,
             },
             {
-                text: "https://rino.app",
                 marks: ["mdLinkText"],
                 attrs: { depth: 2, first: true, last: true, href: "https://rino.app" },
                 start: 5,
                 end: 21,
             },
             {
-                text: ">",
                 marks: ["mdMark"],
                 attrs: { depth: 1, last: true },
                 start: 21,
                 end: 22,
             },
             {
-                text: "text",
                 marks: ["mdText"],
                 attrs: { depth: 1, first: true, last: true },
                 start: 22,
@@ -691,7 +614,6 @@ describe("hard break", function () {
                 start: 0,
                 end: 3,
                 marks: ["mdText"],
-                text: "abc",
                 attrs: {
                     depth: 1,
                     first: true,
@@ -707,7 +629,6 @@ describe("hard break", function () {
                 start: 0,
                 end: 4,
                 marks: ["mdText"],
-                text: "ab\nc",
                 attrs: {
                     depth: 1,
                     first: true,
@@ -723,7 +644,6 @@ describe("hard break", function () {
                 start: 1,
                 end: 4,
                 marks: ["mdText"],
-                text: "abc",
                 attrs: {
                     depth: 1,
                     first: true,
@@ -739,7 +659,6 @@ describe("hard break", function () {
                 start: 0,
                 end: 3,
                 marks: ["mdText"],
-                text: "abc",
                 attrs: {
                     depth: 1,
                     first: true,

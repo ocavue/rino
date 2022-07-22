@@ -24,7 +24,6 @@ function flatText(mdastToken: mdast.Text, depth: number): InlineToken[] {
             attrs: { depth, first: true, last: true },
             start: mdastToken.position!.start.offset!,
             end: mdastToken.position!.end.offset!,
-            text: "",
         },
     ]
 }
@@ -36,7 +35,6 @@ function flatStrong(mdastToken: mdast.Strong, depth: number): InlineToken[] {
             attrs: { depth, first: true },
             start: mdastToken.position!.start.offset!,
             end: mdastToken.position!.start.offset! + 2,
-            text: "",
         },
     ]
     for (const childMdastToken of mdastToken.children) {
@@ -50,7 +48,6 @@ function flatStrong(mdastToken: mdast.Strong, depth: number): InlineToken[] {
         attrs: { depth, last: true },
         start: mdastToken.position!.end.offset! - 2,
         end: mdastToken.position!.end.offset!,
-        text: "",
     })
     return inlineTokens
 }
@@ -62,7 +59,6 @@ function flatEmphasis(mdastToken: mdast.Emphasis, depth: number): InlineToken[] 
             attrs: { depth, first: true },
             start: mdastToken.position!.start.offset!,
             end: mdastToken.position!.start.offset! + 1,
-            text: "",
         },
     ]
     for (const childMdastToken of mdastToken.children) {
@@ -76,7 +72,6 @@ function flatEmphasis(mdastToken: mdast.Emphasis, depth: number): InlineToken[] 
         attrs: { depth, last: true },
         start: mdastToken.position!.end.offset! - 1,
         end: mdastToken.position!.end.offset!,
-        text: "",
     })
     return inlineTokens
 }
@@ -88,7 +83,6 @@ function flatDelete(mdastToken: mdast.Delete, depth: number): InlineToken[] {
             attrs: { depth, first: true },
             start: mdastToken.position!.start.offset!,
             end: mdastToken.position!.start.offset! + 2,
-            text: "",
         },
     ]
     for (const childMdastToken of mdastToken.children) {
@@ -102,7 +96,6 @@ function flatDelete(mdastToken: mdast.Delete, depth: number): InlineToken[] {
         attrs: { depth, last: true },
         start: mdastToken.position!.end.offset! - 2,
         end: mdastToken.position!.end.offset!,
-        text: "",
     })
     return inlineTokens
 }
@@ -114,21 +107,18 @@ function flatInlineCode(mdastToken: mdast.InlineCode, depth: number): InlineToke
             attrs: { depth, first: true },
             start: mdastToken.position!.start.offset!,
             end: mdastToken.position!.start.offset! + 1,
-            text: "",
         },
         {
             marks: ["mdCodeText"],
             attrs: { depth },
             start: mdastToken.position!.start.offset! + 1,
             end: mdastToken.position!.end.offset! - 1,
-            text: "",
         },
         {
             marks: ["mdMark"],
             attrs: { depth, last: true },
             start: mdastToken.position!.end.offset! - 1,
             end: mdastToken.position!.end.offset!,
-            text: "",
         },
     ]
 }
@@ -140,7 +130,6 @@ function flatImage(mdastToken: mdast.Image, depth: number): InlineToken[] {
             attrs: { depth, first: true, last: true, href: mdastToken.url },
             start: mdastToken.position!.start.offset!,
             end: mdastToken.position!.end.offset!,
-            text: "",
         },
     ]
 }
@@ -153,7 +142,6 @@ function flatLink(mdastToken: mdast.Link, depth: number): InlineToken[] {
             attrs: { depth, first: true },
             start: mdastToken.position!.start.offset!,
             end: mdastToken.position!.start.offset! + 1,
-            text: "",
         },
     ]
     for (const childMdastToken of mdastToken.children) {
@@ -174,7 +162,6 @@ function flatLink(mdastToken: mdast.Link, depth: number): InlineToken[] {
                 attrs: { depth },
                 start: childrenEndPos,
                 end: childrenEndPos + 2,
-                text: "",
             },
             // match the content between "(" and ")" for links
             {
@@ -182,7 +169,6 @@ function flatLink(mdastToken: mdast.Link, depth: number): InlineToken[] {
                 attrs: { depth },
                 start: childrenEndPos + 2,
                 end: parentEndPos - 1,
-                text: "",
             },
         )
     }
@@ -193,7 +179,6 @@ function flatLink(mdastToken: mdast.Link, depth: number): InlineToken[] {
         attrs: { depth, last: true },
         start: parentEndPos - 1,
         end: parentEndPos,
-        text: "",
     })
     return inlineTokens
 }
@@ -310,7 +295,8 @@ export function fromInlineMarkdown(text: string): InlineToken[] {
                 continue // Prosemirror doesn't allow empty text node
             }
             inlineToken.marks = fixMarkNames(inlineToken.marks)
-            inlineToken.text = text.slice(inlineToken.start, inlineToken.end)
+            // For debugging:
+            // inlineToken.text = text.slice(inlineToken.start, inlineToken.end)
             inlineTokens.push(inlineToken)
         }
     }
