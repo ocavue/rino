@@ -1,5 +1,11 @@
 # @rino.app/editor
 
+## 0.44.4
+
+### Patch Changes
+
+-   e9ce348: Fix an issue that causes the checkbox to disappear.
+
 ## 0.44.3
 
 ### Patch Changes
