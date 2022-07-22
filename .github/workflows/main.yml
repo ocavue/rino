@@ -238,7 +238,7 @@ jobs:
         if: ${{ github.ref == 'refs/heads/changeset-release/master' || github.ref == 'refs/heads/master' }}
         continue-on-error: true
         with:
-          allowUpdates: false
+          allowUpdates: true
           draft: true
           omitBodyDuringUpdate: true
           name: "${{ env.RINO_APP_VERSION }}"
