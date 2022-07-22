@@ -95,6 +95,27 @@ jobs:
           export NODE_OPTIONS="--max-old-space-size=7680"
           pnpm test:coverage
 
+      - name: Commit changed files
+        if: ${{ github.ref_name != 'master' && always() }}
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add .
+          git commit -m "chore: upload changed files during CI" || true
+
+      - name: Run visual tests
+        if: ${{ github.ref_name != 'master' && always() }}
+        run: |
+          cd packages/playground
+          pnpm test:vitest:visual
+
+      - name: Push changed files
+        if: ${{ github.ref_name != 'master' && always() }}
+        run: |
+          git add .
+          git commit -m "chore: upload changed files during CI" || true
+          git push || true
+
       - name: Upload coverage information to codecov
         uses: codecov/codecov-action@v3
         with:

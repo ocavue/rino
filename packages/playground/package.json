@@ -12,7 +12,8 @@
         "preview": "vite preview --port 3001",
         "build": "vite build",
         "test:vitest": "vitest --no-threads",
-        "test:vitest:coverage": "vitest run --no-threads --coverage"
+        "test:vitest:coverage": "vitest run --no-threads --coverage",
+        "test:vitest:visual": "vitest run --no-threads test/5.visual.spec.ts -u"
     },
     "devDependencies": {
         "@rino.app/editor": "workspace:*",
@@ -20,6 +21,7 @@
         "@types/react-dom": "^18.0.6",
         "@vitejs/plugin-react": "^2.0.0",
         "c8": "^7.12.0",
+        "jest-image-snapshot": "^5.1.0",
         "jest-remirror": "^2.0.0-beta.12",
         "jsdom": "^20.0.0",
         "lodash-es": "^4.17.21",

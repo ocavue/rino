@@ -1,11 +1,5 @@
-import fs from "node:fs/promises"
-import { dirname, join } from "node:path"
-import { fileURLToPath } from "node:url"
 import os from "os"
 import { Dialog, ElementHandle } from "playwright-chromium"
-
-const __filename = fileURLToPath(import.meta.url)
-const __dirname = dirname(__filename)
 
 page.setDefaultTimeout(5000)
 
@@ -300,11 +294,4 @@ export async function expectWysiwygMode() {
 export async function expectSourceCodeMode() {
     await wait("source_code_mode_textarea")
     await wait("wysiwyg_mode_textarea", { state: "hidden" })
-}
-
-export async function writeSnapshotImage(fileName: string) {
-    const filePath = join(__dirname, "__img_snapshots__", fileName)
-    await fs.mkdir(dirname(filePath), { recursive: true })
-    const screenshot = await page.screenshot({ type: "png", fullPage: true })
-    await fs.writeFile(filePath, screenshot)
 }
