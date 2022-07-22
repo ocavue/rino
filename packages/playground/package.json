@@ -12,7 +12,8 @@
         "preview": "vite preview --port 3001",
         "build": "vite build",
         "test:vitest": "vitest --no-threads",
-        "test:vitest:coverage": "vitest run --no-threads --coverage"
+        "test:vitest:coverage": "vitest run --no-threads --coverage",
+        "test:vitest:visual": "vitest run --no-threads test/5.visual.spec.ts -u"
     },
     "devDependencies": {
         "@rino.app/editor": "workspace:*",

@@ -98,7 +98,8 @@ jobs:
       - name: Run visual tests
         if: ${{ github.ref_name != 'master' && always() }}
         run: |
-          pnpm test packages/playground/test/5.visual.spec.ts -- -u
+          cd packages/playground
+          pnpm test:vitest:visual
 
       - name: Push changed files
         if: ${{ github.ref_name != 'master' && always() }}
