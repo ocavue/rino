@@ -378,7 +378,6 @@ importers:
   packages/playground:
     specifiers:
       '@rino.app/editor': workspace:*
-      '@types/jest-image-snapshot': ^5.1.0
       '@types/react': ^18.0.15
       '@types/react-dom': ^18.0.6
       '@vitejs/plugin-react': ^2.0.0
@@ -398,7 +397,6 @@ importers:
       vitest: ^0.18.1
     devDependencies:
       '@rino.app/editor': link:../editor
-      '@types/jest-image-snapshot': 5.1.0
       '@types/react': 18.0.15
       '@types/react-dom': 18.0.6
       '@vitejs/plugin-react': 2.0.0_vite@3.0.2
@@ -3155,14 +3153,6 @@ packages:
     resolution: {integrity: sha512-z/QT1XN4K4KYuslS23k62yDIDLwLFkzxOuMplDtObz0+y7VqJCaO2o+SPwHCvLFZh7xazvvoor2tA/hPz9ee7g==}
     dev: true
 
-  /@types/jest-image-snapshot/5.1.0:
-    resolution: {integrity: sha512-pfCz6dclA8mDxwXN/x/PuYBCPwzGuYcTfOVZvDAikC1GLXg/CwECF9UgtWse0tR42c6OaL7LPEnN7i/Dm86KkQ==}
-    dependencies:
-      '@types/jest': 28.1.6
-      '@types/pixelmatch': 5.2.4
-      ssim.js: 3.5.0
-    dev: true
-
   /@types/jest/28.1.6:
     resolution: {integrity: sha512-0RbGAFMfcBJKOmqRazM8L98uokwuwD5F8rHrv/ZMbrZBwVOWZUyPG6VFNscjYr/vjM3Vu4fRrCPbOs42AfemaQ==}
     dependencies:
@@ -3269,12 +3259,6 @@ packages:
 
   /@types/parse-json/4.0.0:
     resolution: {integrity: sha512-//oorEZjL6sbPcKUaCdIGlIUeH26mgzimjBB77G6XRgnDl/L5wOnpyBGRe/Mmf5CVW3PwEBE1NjiMZ/ssFh4wA==}
-
-  /@types/pixelmatch/5.2.4:
-    resolution: {integrity: sha512-HDaSHIAv9kwpMN7zlmwfTv6gax0PiporJOipcrGsVNF3Ba+kryOZc0Pio5pn6NhisgWr7TaajlPEKTbTAypIBQ==}
-    dependencies:
-      '@types/node': 18.0.6
-    dev: true
 
   /@types/plist/3.0.2:
     resolution: {integrity: sha512-ULqvZNGMv0zRFvqn8/4LSPtnmN4MfhlPNtJCTpKuIIxGVGZ2rYWzFXrvEBoh9CVyqSE7D6YFRJ1hydLHI6kbWw==}

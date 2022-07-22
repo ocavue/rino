@@ -1,9 +1,9 @@
-import { toMatchImageSnapshot } from "jest-image-snapshot"
+import "./setup-image-snapshot"
+
+import { describe, expect, test } from "vitest"
 
 import { switchToSourceCodeMode } from "./actions"
 import { setupEditor } from "./utils"
-
-expect.extend({ toMatchImageSnapshot })
 
 const content = `# first heading in the document (zero margin-top)
 
