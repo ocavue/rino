@@ -42,17 +42,26 @@ A long long long long long long long long long long long long long long long lon
 
 `
 
+async function expectMatchSnapshot() {
+    const screenshot = await page.screenshot({ type: "png", fullPage: true })
+    expect(screenshot).toMatchImageSnapshot({
+        customDiffConfig: {
+            threshold: 0.05,
+        },
+        // How many differing pixels is allowed.
+        failureThreshold: 15,
+    })
+}
+
 describe(`${process.platform}`, () => {
     test("wysiwyg mode", async () => {
         await setupEditor(content)
         await page.focus(".blur-helper") // hide the cursor
-        const screenshot = await page.screenshot({ type: "png", fullPage: true })
-        expect(screenshot).toMatchImageSnapshot()
+        await expectMatchSnapshot()
     })
 
     test("source code mode", async () => {
         await switchToSourceCodeMode()
-        const screenshot = await page.screenshot({ type: "png", fullPage: true })
-        expect(screenshot).toMatchImageSnapshot()
+        await expectMatchSnapshot()
     })
 })
