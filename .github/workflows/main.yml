@@ -95,6 +95,10 @@ jobs:
           export NODE_OPTIONS="--max-old-space-size=7680"
           pnpm test:coverage
 
+      - name: Run visual tests
+        run: |
+          pnpm test packages/playground/test/5.visual.spec.ts -- -u
+
       - name: Push changed files
         if: ${{ github.ref_name != 'master' && always() }}
         run: |

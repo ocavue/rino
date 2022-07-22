@@ -4,6 +4,7 @@
     "pipeline": {
         "build": {
             "dependsOn": ["build:api-extractor", "build:esbuild", "^build"],
+            "inputs": ["src/**"],
             "outputs": ["dist/**"],
             "outputMode": "new-only"
         },
@@ -14,11 +15,12 @@
         },
         "build:tsc": {
             "dependsOn": ["^build:tsc"],
-            "outputs": ["dist-types"],
+            "outputs": ["dist-types/**"],
             "outputMode": "new-only"
         },
         "build:api-extractor": {
             "dependsOn": ["build:tsc"],
+            "inputs": ["dist-types/**"],
             "outputs": ["dist/**/*.d.ts"],
             "outputMode": "new-only"
         },
