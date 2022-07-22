@@ -42,7 +42,7 @@ A long long long long long long long long long long long long long long long lon
 
 `
 
-describe(`OS - ${process.platform}`, () => {
+describe(`${process.platform}`, () => {
     test("wysiwyg mode", async () => {
         await setupEditor(content)
         await page.focus(".blur-helper") // hide the cursor

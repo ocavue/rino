@@ -9,7 +9,7 @@ async function setupBrowser() {
         headless: !!(process.env.CI || process.env.CODESPACES),
         executablePath: process.env.PLAYWRIGHT_CHROME_EXECUTABLE_PATH,
     })
-    const page = await browser.newPage()
+    const page = await browser.newPage({ viewport: { width: 800, height: 600 } })
 
     globalThis.browser = browser
     globalThis.page = page
