@@ -7,19 +7,17 @@ import { applySelectionMarks, updateRangeMarks } from "./inline-mark-helpers"
 function createInlineMarkPlugin(isUnitTest = false): PluginSpec<void> {
     let timeoutId: ReturnType<typeof setTimeout> | null = null
 
-    const debounceApplyMarks: (view: EditorView) => void = isUnitTest
-        ? applySelectionMarks
-        : (view: EditorView) => {
-              if (timeoutId) {
-                  clearTimeout(timeoutId)
-              }
-              timeoutId = setTimeout(() => {
-                  applySelectionMarks(view)
-                  timeoutId = null
-              }, 100)
-          }
+    const debounceApplyMarks = (view: EditorView): void => {
+        if (timeoutId) {
+            clearTimeout(timeoutId)
+        }
+        timeoutId = setTimeout(() => {
+            applySelectionMarks(view)
+            timeoutId = null
+        }, 100)
+    }
 
-    let globalView: EditorView | null = null
+    let view: EditorView | null = null
 
     const pluginSpec: PluginSpec<void> = {
         appendTransaction: (
@@ -41,13 +39,13 @@ function createInlineMarkPlugin(isUnitTest = false): PluginSpec<void> {
                 updateRangeMarks(tr)
                 return tr
             } else {
-                if (shouldUpdate && globalView) {
-                    debounceApplyMarks(globalView)
+                if (shouldUpdate && view && !view.isDestroyed) {
+                    debounceApplyMarks(view)
                 }
             }
         },
-        view: (view) => {
-            globalView = view
+        view: (editorView) => {
+            view = editorView
             return {}
         },
     }
