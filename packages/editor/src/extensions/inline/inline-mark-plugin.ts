@@ -68,12 +68,6 @@ export class RinoInlineMarkExtension extends PlainExtension {
         return "inlineMark" as const
     }
 
-    createKeymap() {
-        return {
-            // "Mod-b": toggleMark(type),
-        }
-    }
-
     createPlugin() {
         return createInlineMarkPlugin(this.isUnitTest)
     }
