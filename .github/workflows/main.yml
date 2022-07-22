@@ -96,6 +96,7 @@ jobs:
           pnpm test:coverage
 
       - name: Run visual tests
+        if: ${{ github.ref_name != 'master' && always() }}
         run: |
           pnpm test packages/playground/test/5.visual.spec.ts -- -u
 
