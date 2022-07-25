@@ -80,13 +80,6 @@ const Editor: React.ForwardRefRenderFunction<EditorHandle, EditorProps> = (
         return (params: RemirrorEventListenerProps<Extension>) => {
             const { tr, firstRender } = params
 
-            // if (tr && tr.docChanged && !tr.getMeta("RINO_APPLY_MARKS")) {
-            //     const prev = props.previousState.doc.toJSON()
-            //     const curr = props.state.doc.toJSON()
-            //     console.log("prev === curr:", prev === curr)
-            //     console.log("EDIT_CONTENT diff:", diffObject(curr, prev))
-            // }
-
             if (!firstRender && tr?.docChanged && !tr.getMeta("RINO_APPLY_MARKS")) {
                 editContent()
                 saveContentWithDelay()

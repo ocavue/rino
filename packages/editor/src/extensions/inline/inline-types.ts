@@ -7,7 +7,8 @@ export enum InlineDecorateType {
 export interface InlineToken {
     marks: RinoMarkName[]
 
-    text: string
+    // Only for debugging
+    text?: string
 
     // start position
     start: number

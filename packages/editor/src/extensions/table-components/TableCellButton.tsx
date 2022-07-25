@@ -1,4 +1,4 @@
-import { autoUpdate, useFloating, VirtualElement } from "@floating-ui/react-dom"
+import { autoUpdate, useFloating, VirtualElement } from "@floating-ui/react-dom-interactions"
 import { useCommands } from "@remirror/react"
 import { More2LineIcon } from "@remirror/react-components/all-icons"
 import React, { useCallback, useEffect } from "react"
