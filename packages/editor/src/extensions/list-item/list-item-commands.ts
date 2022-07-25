@@ -1,5 +1,5 @@
 import { CommandFunction, convertCommand, NodeType } from "@remirror/core"
-import { chainCommands as pmChainCommands, createParagraphNear, liftEmptyBlock, newlineInCode, splitBlock } from "@remirror/pm/commands"
+import { chainCommands as pmChainCommands, createParagraphNear, newlineInCode, splitBlock } from "@remirror/pm/commands"
 import { canSplit } from "@remirror/pm/transform"
 
 import { isBlockNodeSelection } from "./list-utils"
