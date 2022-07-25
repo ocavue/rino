@@ -5,8 +5,8 @@ import { createListItemKeymap } from "./list-item-keymap"
 
 const orderedListItem = css`
     border: 1px solid red;
-    padding: 4px;
-    margin: 4px;
+    padding: 0;
+    margin: 2px;
 
     display: flex;
 
@@ -57,13 +57,15 @@ export class OrderedListItemExtension extends NodeExtension {
             // TODO: If I change the content as follows, it breaks the `Enter` keybind because of `canSplit` return false.
             // content: "paragraph block*",
             defining: true,
-            toDOM(node) {
+            toDOM: (node) => {
+                const isNested = node.content.firstChild?.type === this.type
+
                 return [
                     "div",
                     { class: `${orderedListItem}` },
 
                     // the container for the list item markers
-                    ["div", { class: `list-mark-container` }],
+                    ["div", { class: `list-mark-container`, style: isNested ? "opacity: 0.2;" : undefined }],
 
                     // the container for the list item content
                     ["div", { class: `list-content-container` }, 0],
