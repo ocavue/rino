@@ -183,6 +183,25 @@ describe("Enter", () => {
         )
     })
 
+    it("can delete selected text", () => {
+        editor = add(
+            doc(
+                //
+                oli(p("<start>123<end>")),
+                oli(p("456")),
+            ),
+        )
+        editor.press("Enter")
+        expect(editor.state).toEqualRemirrorState(
+            doc(
+                //
+                oli(p("")),
+                oli(p("<cursor>")),
+                oli(p("456")),
+            ),
+        )
+    })
+
     it("escapes the item when the cursor is in the first paragraph of the item", () => {
         editor = add(
             doc(
