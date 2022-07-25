@@ -33,10 +33,16 @@ export function createSplitListCommand(itemType: NodeType): CommandFunction {
 
         // If the cursor is inside the list item, but not inside the first child
         // of the list item, then we don't want to split the list item and we
-        // also don't want to lift the block. So we use the original ProseMirror
-        // `Enter` keybinding but remove the `liftEmptyBlock` command from it.
+        // also don't want to lift the parent block. So we use the original
+        // ProseMirror `Enter` keybinding but remove the `liftEmptyBlock`
+        // command from it.
         if ($from.index(-1) !== 0) {
             return enterWithoutLift(props)
+        }
+
+        // If the parent block is empty, we lift this empty block.
+        if ($from.parent.content.size == 0) {
+            return false
         }
 
         // Split the list item

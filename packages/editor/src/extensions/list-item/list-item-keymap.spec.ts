@@ -178,8 +178,7 @@ describe("Enter", () => {
             expect(editor.state).toEqualRemirrorState(
                 doc(
                     //
-                    oli(p("123")),
-                    oli(p("<cursor>")),
+                    oli(p("123"), p("<cursor>")),
                 ),
             )
         })
@@ -256,9 +255,7 @@ describe("Enter", () => {
                     oli(
                         //
                         p("123"),
-                    ),
-                    oli(
-                        //
+                        p(),
                         p("<cursor>"),
                         p("789"),
                     ),
@@ -268,7 +265,7 @@ describe("Enter", () => {
     })
 
     describe("extra cases", () => {
-        it("won't break non-list document", () => {
+        it("won't effect non-list document", () => {
             editor = add(
                 doc(
                     //
