@@ -211,9 +211,77 @@ describe("Enter", () => {
                     ),
                 ),
             )
+
+            // Nested list item
+            editor = add(
+                doc(
+                    oli(
+                        p("0"),
+                        oli(
+                            //
+                            p("123<cursor>"),
+                            p("456"),
+                            p("789"),
+                        ),
+                    ),
+                ),
+            )
+            editor.press("Enter")
+            expect(editor.state).toEqualRemirrorState(
+                doc(
+                    oli(
+                        p("0"),
+                        oli(
+                            //
+                            p("123"),
+                        ),
+                        oli(
+                            //
+                            p("<cursor>"),
+                            p("456"),
+                            p("789"),
+                        ),
+                    ),
+                ),
+            )
         })
 
-        it("does not escapes the item when the cursor is in the non-first paragraph of the item", () => {
+        it("does not escapes the item when the cursor is not in the first paragraph of the item", () => {
+            // Cursor in the last paragraph of the item
+            editor = add(
+                doc(
+                    oli(
+                        //
+                        p("123"),
+                        p("456<cursor>"),
+                    ),
+                ),
+            )
+            editor.press("Enter")
+            expect(editor.state).toEqualRemirrorState(
+                doc(
+                    oli(
+                        //
+                        p("123"),
+                        p("456"),
+                        p("<cursor>"),
+                    ),
+                ),
+            )
+            editor.press("Enter")
+            expect(editor.state).toEqualRemirrorState(
+                doc(
+                    oli(
+                        //
+                        p("123"),
+                        p("456"),
+                        p(""),
+                        p("<cursor>"),
+                    ),
+                ),
+            )
+
+            // Cursor in the middle paragraph of the item
             editor = add(
                 doc(
                     oli(
@@ -236,16 +304,30 @@ describe("Enter", () => {
                     ),
                 ),
             )
-        })
-
-        it("escapes the item when the cursor is in an empty item", () => {
-            editor = add(
+            editor.press("Enter")
+            expect(editor.state).toEqualRemirrorState(
                 doc(
                     oli(
                         //
                         p("123"),
+                        p("456"),
+                        p(""),
                         p("<cursor>"),
                         p("789"),
+                    ),
+                ),
+            )
+
+            // Cursor in the last paragraph of the item (nested list item)
+            editor = add(
+                doc(
+                    oli(
+                        p(),
+                        oli(
+                            //
+                            p("123"),
+                            p("456<cursor>"),
+                        ),
                     ),
                 ),
             )
@@ -253,11 +335,74 @@ describe("Enter", () => {
             expect(editor.state).toEqualRemirrorState(
                 doc(
                     oli(
-                        //
-                        p("123"),
                         p(),
-                        p("<cursor>"),
-                        p("789"),
+                        oli(
+                            //
+                            p("123"),
+                            p("456"),
+                            p("<cursor>"),
+                        ),
+                    ),
+                ),
+            )
+            editor.press("Enter")
+            expect(editor.state).toEqualRemirrorState(
+                doc(
+                    oli(
+                        p(),
+                        oli(
+                            //
+                            p("123"),
+                            p("456"),
+                            p(""),
+                            p("<cursor>"),
+                        ),
+                    ),
+                ),
+            )
+
+            // Cursor in the middle paragraph of the item (nested list item)
+            editor = add(
+                doc(
+                    oli(
+                        p(),
+                        oli(
+                            //
+                            p("123"),
+                            p("456<cursor>"),
+                            p("789"),
+                        ),
+                    ),
+                ),
+            )
+            editor.press("Enter")
+            expect(editor.state).toEqualRemirrorState(
+                doc(
+                    oli(
+                        p(),
+                        oli(
+                            //
+                            p("123"),
+                            p("456"),
+                            p("<cursor>"),
+                            p("789"),
+                        ),
+                    ),
+                ),
+            )
+            editor.press("Enter")
+            expect(editor.state).toEqualRemirrorState(
+                doc(
+                    oli(
+                        p(),
+                        oli(
+                            //
+                            p("123"),
+                            p("456"),
+                            p(""),
+                            p("<cursor>"),
+                            p("789"),
+                        ),
                     ),
                 ),
             )
