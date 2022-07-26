@@ -1,5 +1,16 @@
 import { css } from "@emotion/css"
-import { ApplySchemaAttributes, ExtensionTag, KeyBindings, NodeExtension, NodeExtensionSpec, NodeSpecOverride } from "@remirror/core"
+import {
+    ApplySchemaAttributes,
+    EditorView,
+    ExtensionTag,
+    KeyBindings,
+    NodeExtension,
+    NodeExtensionSpec,
+    NodeSpecOverride,
+    NodeView,
+    NodeViewMethod,
+    ProsemirrorNode,
+} from "@remirror/core"
 
 import { createListItemKeymap } from "./list-item-keymap"
 
@@ -58,6 +69,7 @@ export class OrderedListItemExtension extends NodeExtension {
             // content: "paragraph block*",
             defining: true,
             toDOM: (node) => {
+                console.warn("toDOM:")
                 const isNested = node.content.firstChild?.type === this.type
 
                 return [
@@ -71,6 +83,49 @@ export class OrderedListItemExtension extends NodeExtension {
                     ["div", { class: `list-content-container` }, 0],
                 ]
             },
+        }
+    }
+
+    createNodeViews(): NodeViewMethod {
+        return (node: ProsemirrorNode, view: EditorView, getPos: (() => number) | boolean): NodeView => {
+            const outer = document.createElement("div")
+            outer.className = orderedListItem
+
+            const mark = document.createElement("div")
+            mark.className = `list-mark-container`
+
+            let isNested: boolean | null = null
+
+            const updateMark = (node: ProsemirrorNode) => {
+                const _isNested = node.content.firstChild?.type === this.type
+
+                if (_isNested !== isNested) {
+                    isNested = _isNested
+                    mark.style.opacity = _isNested ? "0.2" : ""
+                }
+            }
+
+            const container = document.createElement("div")
+            container.className = "list-content-container"
+
+            outer.appendChild(mark)
+            outer.appendChild(container)
+
+            updateMark(node)
+
+            return {
+                dom: outer,
+                contentDOM: container,
+                update: (node: ProsemirrorNode) => {
+                    if (node.type !== this.type) {
+                        return false
+                    }
+
+                    console.warn("update:")
+                    updateMark(node)
+                    return true
+                },
+            }
         }
     }
 
