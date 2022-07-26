@@ -73,12 +73,9 @@ export function createDedentListCommand(itemType: NodeType): CommandFunction {
         if (range.parent.type == itemType) {
             return liftToOuterList(tr, dispatch, itemType, range)
         } else {
-            console.debug("$from.node(range.depth - 1).type", $from.node(range.depth - 1).type.name)
+            // TODO:  lift out of list
+            return true
         }
-
-        console.debug("should lift out of list")
-
-        return true
     }
 }
 
@@ -106,4 +103,29 @@ function liftToOuterList(tr: Transaction, dispatch: DispatchFunction | undefined
     if (target == null) return false
     dispatch?.(tr.lift(range, target).scrollIntoView())
     return true
+}
+
+export function createIndentListCommand(itemType: NodeType): CommandFunction {
+    return (props): boolean => {
+        const { tr, dispatch } = props
+
+        const { $from, $to } = tr.selection
+        const range = findItemRange($from, $to, itemType)
+
+        if (!range) return false
+
+        const startIndex = range.startIndex
+        const parent = range.parent
+        const nodeBefore = startIndex > 0 ? parent.child(startIndex - 1) : null
+
+        if (dispatch) {
+            const nestedBefore = nodeBefore?.type === itemType
+            const slice = new Slice(Fragment.from(itemType.create(null)), nestedBefore ? 1 : 0, 0)
+            const before = range.start,
+                after = range.end
+            tr.step(new ReplaceAroundStep(before - (nestedBefore ? 1 : 0), after, before, after, slice, nestedBefore ? 0 : 1, true))
+            dispatch(tr.scrollIntoView())
+        }
+        return true
+    }
 }

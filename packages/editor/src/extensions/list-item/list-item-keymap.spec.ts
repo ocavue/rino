@@ -471,7 +471,7 @@ describe("Enter", () => {
 })
 
 describe("Shift-Tab", () => {
-    const { add, doc, p, oli, blockquote } = setup()
+    const { add, doc, p, oli } = setup()
 
     let editor: ReturnType<typeof add>
 
@@ -641,6 +641,182 @@ describe("Shift-Tab", () => {
             doc(
                 //
                 oli(p("123<cursor>")),
+            ),
+        )
+    })
+})
+
+describe("Tab", () => {
+    const { add, doc, p, oli } = setup()
+
+    let editor: ReturnType<typeof add>
+
+    it("can increate the indentation of a nested item", () => {
+        editor = add(
+            doc(
+                //
+                oli(p("123")),
+                oli(p("456<cursor>")),
+            ),
+        )
+        editor.press("Tab")
+        expect(editor.state).toEqualRemirrorState(
+            doc(
+                oli(
+                    //
+                    p("123"),
+                    oli(p("456<cursor>")),
+                ),
+            ),
+        )
+    })
+
+    it("can increate the indentation of multiple nested items", () => {
+        editor = add(
+            doc(
+                //
+                oli(p("123")),
+                oli(p("45<start>6")),
+                oli(p("7<end>89")),
+            ),
+        )
+        editor.press("Tab")
+        expect(editor.state).toEqualRemirrorState(
+            doc(
+                oli(
+                    //
+                    p("123"),
+                    oli(p("45<start>6")),
+                    oli(p("7<end>89")),
+                ),
+            ),
+        )
+
+        editor = add(
+            doc(
+                oli(
+                    //
+                    p("123"),
+                ),
+                oli(
+                    //
+                    p("45<start>6"),
+                    oli(
+                        //
+                        p("7<end>89"),
+                    ),
+                ),
+            ),
+        )
+        editor.press("Tab")
+        expect(editor.state).toEqualRemirrorState(
+            doc(
+                oli(
+                    //
+                    p("123"),
+                    oli(
+                        //
+                        p("45<start>6"),
+                        oli(
+                            //
+                            p("7<end>89"),
+                        ),
+                    ),
+                ),
+            ),
+        )
+    })
+
+    it.skip("can keep the indentation of siblings around the indented item", () => {
+        editor = add(
+            doc(
+                oli(p("123")),
+                oli(
+                    //
+                    p("456<cursor>"),
+                    oli(p("789")),
+                ),
+            ),
+        )
+        editor.press("Tab")
+        expect(editor.state).toEqualRemirrorState(
+            doc(
+                oli(
+                    //
+                    p("123"),
+                    oli(p("456<cursor>")),
+                    oli(p("789")),
+                ),
+            ),
+        )
+
+        editor = add(
+            doc(
+                oli(p("123")),
+                oli(
+                    //
+                    p("456<cursor>"),
+                    p("789"),
+                ),
+            ),
+        )
+        editor.press("Tab")
+        expect(editor.state).toEqualRemirrorState(
+            doc(
+                oli(
+                    //
+                    p("123"),
+                    oli(p("456<cursor>")),
+                    p("789"),
+                ),
+            ),
+        )
+
+        editor = add(
+            doc(
+                oli(
+                    //
+                    p("123"),
+                    p("123"),
+                ),
+                oli(
+                    //
+                    p("456<cursor>"),
+                ),
+            ),
+        )
+        editor.press("Shift-Tab")
+        expect(editor.state).toEqualRemirrorState(
+            doc(
+                oli(
+                    //
+                    p("123"),
+                    p("123"),
+                    oli(p("456<cursor>")),
+                ),
+            ),
+        )
+    })
+
+    it("can decreate the indentation of a multiple level nested item", () => {
+        editor = add(
+            doc(
+                //
+                oli(p("123<cursor>")),
+            ),
+        )
+        editor.press("Tab")
+        expect(editor.state).toEqualRemirrorState(
+            doc(
+                //
+                oli(oli(p("123<cursor>"))),
+            ),
+        )
+        editor.press("Tab")
+        expect(editor.state).toEqualRemirrorState(
+            doc(
+                //
+                oli(oli(oli(p("123<cursor>")))),
             ),
         )
     })

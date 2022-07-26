@@ -11,11 +11,9 @@ const defaultContent = [
     `
 
 - A
-  - A
-  - B
-  - C
+- B
+- C
 
-  D
 
 `.trim(),
 ].join("\n")
