@@ -1,8 +1,10 @@
-import { CommandFunction, convertCommand, NodeType } from "@remirror/core"
+import { CommandFunction, convertCommand, DispatchFunction } from "@remirror/pm"
 import { chainCommands as pmChainCommands, createParagraphNear, newlineInCode, splitBlock } from "@remirror/pm/commands"
-import { canSplit } from "@remirror/pm/transform"
+import { Fragment, NodeRange, NodeType, Slice } from "@remirror/pm/model"
+import { EditorState } from "@remirror/pm/state"
+import { canSplit, liftTarget, ReplaceAroundStep } from "@remirror/pm/transform"
 
-import { isBlockNodeSelection } from "./list-utils"
+import { findItemRange, isBlockNodeSelection } from "./list-utils"
 
 // This command has the same behavior as the `Enter` keybinding, but without the
 // `liftEmptyBlock` command.
@@ -55,4 +57,62 @@ export function createSplitListCommand(itemType: NodeType): CommandFunction {
         dispatch?.(tr.split($from.pos, 2, typesAfter).scrollIntoView())
         return true
     }
+}
+
+export function createDedentListCommand(itemType: NodeType): CommandFunction {
+    return (props): boolean => {
+        const { state, dispatch, tr } = props
+
+        const { $from, $to } = state.selection
+        const range = findItemRange($from, $to, itemType)
+
+        if (!range) {
+            return false
+        }
+
+        // const target = liftTarget(range)
+        // if (target == null) {
+        //     return false
+        // }
+
+        // dispatch?.(tr.lift(range, target).scrollIntoView())
+
+        if ($from.node(range.depth).type == itemType) {
+            return liftToOuterList(state, dispatch, itemType, range)
+        } else {
+            console.debug("$from.node(range.depth - 1).type", $from.node(range.depth - 1).type.name)
+        }
+
+        console.debug("should lift out of list")
+
+        return true
+    }
+}
+
+function liftToOuterList(state: EditorState, dispatch: DispatchFunction | undefined, itemType: NodeType, range: NodeRange) {
+    const tr = state.tr,
+        end = range.end,
+        endOfList = range.$to.end(range.depth)
+    if (end < endOfList) {
+        console.debug("siblings")
+
+        // There are siblings after the lifted items, which must become
+        // children of the last item
+        tr.step(
+            new ReplaceAroundStep(
+                end - 1,
+                endOfList,
+                end,
+                endOfList,
+                new Slice(Fragment.from(itemType.create(null, range.parent.copy())), 1, 0),
+                1,
+                true,
+            ),
+        )
+        range = new NodeRange(tr.doc.resolve(range.$from.pos), tr.doc.resolve(endOfList), range.depth)
+    }
+    const target = liftTarget(range)
+    if (target == null) return false
+    dispatch?.(tr.lift(range, target).scrollIntoView())
+    return true
 }
