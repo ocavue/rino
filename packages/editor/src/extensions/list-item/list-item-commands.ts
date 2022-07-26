@@ -1,7 +1,7 @@
 import { CommandFunction, convertCommand, DispatchFunction } from "@remirror/pm"
 import { chainCommands as pmChainCommands, createParagraphNear, newlineInCode, splitBlock } from "@remirror/pm/commands"
 import { Fragment, NodeRange, NodeType, Slice } from "@remirror/pm/model"
-import { EditorState } from "@remirror/pm/state"
+import { Transaction } from "@remirror/pm/state"
 import { canSplit, liftTarget, ReplaceAroundStep } from "@remirror/pm/transform"
 
 import { findItemRange, isBlockNodeSelection } from "./list-utils"
@@ -70,15 +70,8 @@ export function createDedentListCommand(itemType: NodeType): CommandFunction {
             return false
         }
 
-        // const target = liftTarget(range)
-        // if (target == null) {
-        //     return false
-        // }
-
-        // dispatch?.(tr.lift(range, target).scrollIntoView())
-
-        if ($from.node(range.depth).type == itemType) {
-            return liftToOuterList(state, dispatch, itemType, range)
+        if (range.parent.type == itemType) {
+            return liftToOuterList(tr, dispatch, itemType, range)
         } else {
             console.debug("$from.node(range.depth - 1).type", $from.node(range.depth - 1).type.name)
         }
@@ -89,27 +82,25 @@ export function createDedentListCommand(itemType: NodeType): CommandFunction {
     }
 }
 
-function liftToOuterList(state: EditorState, dispatch: DispatchFunction | undefined, itemType: NodeType, range: NodeRange) {
-    const tr = state.tr,
-        end = range.end,
-        endOfList = range.$to.end(range.depth)
-    if (end < endOfList) {
-        console.debug("siblings")
+function liftToOuterList(tr: Transaction, dispatch: DispatchFunction | undefined, itemType: NodeType, range: NodeRange) {
+    const endOfItem = range.end
+    const endOfSiblings = range.$to.end(range.depth)
 
+    if (endOfItem < endOfSiblings) {
         // There are siblings after the lifted items, which must become
         // children of the last item
         tr.step(
             new ReplaceAroundStep(
-                end - 1,
-                endOfList,
-                end,
-                endOfList,
-                new Slice(Fragment.from(itemType.create(null, range.parent.copy())), 1, 0),
-                1,
+                endOfItem - 1,
+                endOfSiblings,
+                endOfItem,
+                endOfSiblings,
+                new Slice(Fragment.from(itemType.create(null)), 1, 0),
+                0,
                 true,
             ),
         )
-        range = new NodeRange(tr.doc.resolve(range.$from.pos), tr.doc.resolve(endOfList), range.depth)
+        range = new NodeRange(tr.doc.resolve(range.$from.pos), tr.doc.resolve(endOfSiblings), range.depth)
     }
     const target = liftTarget(range)
     if (target == null) return false

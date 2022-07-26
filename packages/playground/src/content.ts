@@ -10,38 +10,12 @@ while True:
 const defaultContent = [
     `
 
-# Title
-
-Paragraph
-
-
-- - - A
-
-
 - A
-  - A A
-  - A B
-  - A C
-    - A C A
-    - A C B
-- B
-- C
+  - A
+  - B
+  - C
 
----
-
-- - - A
-- A
-- - BB
-- - - CC
-
-
-
-Table:
-
-| First Header  | Second Header |
-| ------------- | ------------- |
-| Content Cell  | Content Cell  |
-| **Strong**    | [Link](https://rino.app) |
+  D
 
 `.trim(),
 ].join("\n")

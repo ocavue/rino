@@ -551,6 +551,77 @@ describe("Shift-Tab", () => {
         )
     })
 
+    it("can keep the indentation of siblings around the dedented item", () => {
+        editor = add(
+            doc(
+                oli(
+                    //
+                    p("123"),
+                    oli(p("456<cursor>")),
+                    oli(p("789")),
+                ),
+            ),
+        )
+        editor.press("Shift-Tab")
+        expect(editor.state).toEqualRemirrorState(
+            doc(
+                oli(p("123")),
+                oli(
+                    //
+                    p("456<cursor>"),
+                    oli(p("789")),
+                ),
+            ),
+        )
+
+        editor = add(
+            doc(
+                oli(
+                    //
+                    p("123"),
+                    oli(p("456<cursor>")),
+                    p("789"),
+                ),
+            ),
+        )
+        editor.press("Shift-Tab")
+        expect(editor.state).toEqualRemirrorState(
+            doc(
+                oli(p("123")),
+                oli(
+                    //
+                    p("456<cursor>"),
+                    p("789"),
+                ),
+            ),
+        )
+
+        editor = add(
+            doc(
+                oli(
+                    //
+                    p("123"),
+                    p("123"),
+                    oli(p("456<cursor>")),
+                ),
+            ),
+        )
+        editor.press("Shift-Tab")
+        expect(editor.state).toEqualRemirrorState(
+            doc(
+                oli(
+                    //
+                    p("123"),
+                    p("123"),
+                ),
+                oli(
+                    //
+                    p("456<cursor>"),
+                ),
+            ),
+        )
+    })
+
     it("can decreate the indentation of a multiple level nested item", () => {
         editor = add(
             doc(
