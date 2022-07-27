@@ -79,6 +79,8 @@ export function findIndentationRange(
         return range
     }
 
+    // When indent, we want to only indent the first child inside that item, and keep the reset children (if any) stay at the same level.
+    // When dedent, we want to dedent the item itself, including all its children.
     if (isIndent === false) {
         if ($from.depth > range.depth && $from.index(range.depth + 1) === 0) {
             return range
