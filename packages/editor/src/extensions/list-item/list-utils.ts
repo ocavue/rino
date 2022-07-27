@@ -1,3 +1,4 @@
+import { ProsemirrorNode } from "@remirror/pm"
 import { NodeRange, NodeType, ResolvedPos } from "@remirror/pm/model"
 import { NodeSelection, Selection } from "@remirror/pm/state"
 
@@ -12,6 +13,13 @@ export function isLastChild($pos: ResolvedPos, depth: number): boolean {
 export function isListItemType(type: NodeType): boolean {
     // TODO: use remirror tag instead of node name
     return ["orderedListItem"].includes(type.name)
+}
+
+export function isListItemNode(node?: ProsemirrorNode | null): node is ProsemirrorNode {
+    if (node) {
+        return isListItemType(node.type)
+    }
+    return false
 }
 
 function isItemRange(range: NodeRange, itemType: NodeType): boolean {
