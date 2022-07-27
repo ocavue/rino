@@ -31,6 +31,11 @@ export class RinoOrderedListItemExtension extends OrderedListItemExtension imple
                     state.closeNode()
                 },
             },
+            {
+                type: ParserRuleType.context,
+                token: "bullet_list",
+                context: "bullet_list",
+            },
         ] as const
     }
 

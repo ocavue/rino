@@ -4,6 +4,7 @@ import {
     CreateExtensionPlugin,
     EditorView,
     ExtensionTag,
+    InputRule,
     KeyBindings,
     NodeExtension,
     NodeExtensionSpec,
@@ -12,6 +13,7 @@ import {
     NodeViewMethod,
     ProsemirrorNode,
 } from "@remirror/core"
+import { wrappingInputRule } from "@remirror/pm/inputrules"
 
 import { createAutoJoinListPlugin } from "./auto-join-list-plugin"
 import { createElement as h } from "./dom-utils"
@@ -58,7 +60,10 @@ const orderedListItem = css`
         content: "-";
     }
 
-    & > .list-task-mark:before {
+    & > .list-task-checked-mark:before {
+        content: "[x]";
+    }
+    & > .list-task-unchecked-mark:before {
         content: "[ ]";
     }
 
@@ -137,7 +142,7 @@ export class OrderedListItemExtension extends NodeExtension {
                             markClass += " list-bullet-mark"
                             break
                         case "task":
-                            markClass += " list-ordered-mark"
+                            markClass += attrs.checked ? " list-task-checked-mark" : " list-task-unchecked-mark"
                             break
                     }
                 }
@@ -168,5 +173,22 @@ export class OrderedListItemExtension extends NodeExtension {
 
     createPlugin(): CreateExtensionPlugin {
         return createAutoJoinListPlugin()
+    }
+
+    createInputRules(): InputRule[] {
+        const bulletRegexp = /^\s?([*+-])\s$/
+        const orderedRegexp = /^\s?(\d+)\.\s$/
+        const taskRegexp = /^\s?(\[[x\s]?\])\s$/
+
+        return [
+            wrappingInputRule(bulletRegexp, this.type, { kind: "bullet" }, () => false),
+            wrappingInputRule(orderedRegexp, this.type, { kind: "ordered" }, () => false),
+            wrappingInputRule(
+                taskRegexp,
+                this.type,
+                (match) => ({ kind: "task", checked: match[1] === "[x]" }),
+                () => false,
+            ),
+        ]
     }
 }
