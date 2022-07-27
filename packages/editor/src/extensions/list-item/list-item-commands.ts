@@ -4,7 +4,7 @@ import { Fragment, NodeRange, NodeType, Slice } from "@remirror/pm/model"
 import { Transaction } from "@remirror/pm/state"
 import { canSplit, liftTarget, ReplaceAroundStep } from "@remirror/pm/transform"
 
-import { findItemRange, isBlockNodeSelection, isItemRangeForIndentation } from "./list-utils"
+import { findIndentationRange, isBlockNodeSelection } from "./list-utils"
 
 // This command has the same behavior as the `Enter` keybinding, but without the
 // `liftEmptyBlock` command.
@@ -64,45 +64,15 @@ export function createDedentListCommand(itemType: NodeType): CommandFunction {
         const { state, dispatch, tr } = props
 
         const { $from, $to } = state.selection
-        const range = findItemRange($from, $to, itemType)
+        // const range = findItemRange($from, $to, itemType)
+        const range = findIndentationRange($from, $to, itemType)
 
         if (!range) {
             return false
         }
 
-        if (isItemRangeForIndentation(range) && range.parent.type === itemType) {
-            return liftToOuterList(tr, dispatch, itemType, range)
-        } else {
-            const range = $from.blockRange($to)
-            if (!range) {
-                return false
-            }
-            return liftBlockRange(tr, dispatch, range)
-        }
+        return liftBlockRange(tr, dispatch, range)
     }
-}
-
-function liftToOuterList(tr: Transaction, dispatch: DispatchFunction | undefined, itemType: NodeType, range: NodeRange) {
-    const endOfItem = range.end
-    const endOfSiblings = range.$to.end(range.depth)
-
-    if (endOfItem < endOfSiblings) {
-        // There are siblings after the lifted items, which must become
-        // children of the last item
-        tr.step(
-            new ReplaceAroundStep(
-                endOfItem - 1,
-                endOfSiblings,
-                endOfItem,
-                endOfSiblings,
-                new Slice(Fragment.from(itemType.create(null)), 1, 0),
-                0,
-                true,
-            ),
-        )
-        range = new NodeRange(tr.doc.resolve(range.$from.pos), tr.doc.resolve(endOfSiblings), range.depth)
-    }
-    return liftBlockRange(tr, dispatch, range)
 }
 
 function liftBlockRange(tr: Transaction, dispatch: DispatchFunction | undefined, range: NodeRange) {
@@ -117,26 +87,17 @@ export function createIndentListCommand(itemType: NodeType): CommandFunction {
         const { tr, dispatch } = props
 
         const { $from, $to } = tr.selection
-        const range = findItemRange($from, $to, itemType)
+        // const range = findItemRange($from, $to, itemType)
+        const range = findIndentationRange($from, $to, itemType)
 
         if (!range) return false
 
-        const { startIndex, endIndex, parent, depth } = range
+        const { startIndex, parent } = range
 
         const nodeBefore = startIndex > 0 ? parent.child(startIndex - 1) : null
         const itemBefore = nodeBefore?.type === itemType ? nodeBefore : null
 
         if (dispatch) {
-            const itemCount = endIndex - startIndex
-
-            // If only one item is in the range, and there is some content
-            if (itemCount === 1 && $from.depth > depth && $to.depth > depth) {
-                const blockRange = new NodeRange($from, $to, depth + 1)
-
-                if (blockRange.end + 1 < range.end) {
-                    tr.lift(new NodeRange(tr.doc.resolve(blockRange.end + 2), tr.doc.resolve(range.end - 1), depth + 1), depth)
-                }
-            }
             const slice = new Slice(Fragment.from(itemType.create()), itemBefore ? 1 : 0, 0)
             const before = range.start,
                 after = range.end

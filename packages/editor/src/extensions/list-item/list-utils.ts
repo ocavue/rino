@@ -35,8 +35,8 @@ function isItemRange(range: NodeRange, itemType: NodeType): boolean {
 }
 
 /**
- * Returns a minimal range that represents one or multiple sibling list items
- * and includes the given two positions.
+ * Returns a minimal block range that includes the given two positions and
+ * represents one or multiple sibling list items.
  */
 export function findItemRange($from: ResolvedPos, $to: ResolvedPos, itemType: NodeType): NodeRange | null {
     if ($to.pos < $from.pos) {
@@ -61,18 +61,20 @@ export function findItemRange($from: ResolvedPos, $to: ResolvedPos, itemType: No
 }
 
 export function findIndentationRange($from: ResolvedPos, $to: ResolvedPos, itemType: NodeType): NodeRange | null {
-    const itemRange = findItemRange($from, $to, itemType)
+    const range = findItemRange($from, $to, itemType)
 
-    // If mutiple items are selected, or the selection is inside the first child of the selected list item, then we
-    // lift the item range. Otherwise, we lift the parent block.
-    if (itemRange) {
-        const itemCount = itemRange.endIndex - itemRange.startIndex
-        if (itemCount > 1 || ($from.depth > itemRange.depth && $from.index(itemRange.depth + 1) === 0)) {
-            return itemRange
-        }
+    // If the range is not inside a list item, then we do nothing for its indentation.
+    if (!range) {
+        return null
     }
 
-    return $from.blockRange($to)
+    // If mutiple items are selected, then we lift/sink the item range.
+    if (range.endIndex - range.startIndex > 1) {
+        return range
+    }
+
+    // Otherwise, we only lift/sink the block range inside the item.
+    return new NodeRange($from, $to, range.depth + 1)
 }
 
 export function isItemRangeForIndentation(itemRange: NodeRange) {
