@@ -4,6 +4,7 @@ import {
     CreateExtensionPlugin,
     EditorView,
     ExtensionTag,
+    findParentNodeOfType,
     KeyBindings,
     NodeExtension,
     NodeExtensionSpec,
@@ -13,6 +14,7 @@ import {
     ProsemirrorNode,
     Transaction,
 } from "@remirror/core"
+import type { ClickHandlerState, CreateEventHandlers } from "@remirror/extension-events"
 import { NodeType } from "@remirror/pm/dist-types/model"
 import { InputRule } from "@remirror/pm/inputrules"
 import { findWrapping } from "@remirror/pm/transform"
@@ -36,21 +38,27 @@ const orderedListItem = css`
         /* border: 1px solid blue; */
     }
 
-    & > .list-mark-container:before {
-        content: "";
-        /* margin-bottom: 10px; */
-        min-width: 2rem;
-        box-sizing: border-box;
-        padding-right: 0.5rem;
-        /* height: 35px; */
-        display: inline-flex;
-        align-items: center;
-        justify-content: flex-end;
-        font-size: 16px;
-        /* overflow: visible; */
-        background-color: #ff89a5;
-        /* border-radius: 50%; */
-        /* color: #fff; */
+    & > .list-mark-container {
+        display: flex;
+        flex-direction: column;
+        cursor: pointer;
+
+        &:before {
+            content: "";
+            /* margin-bottom: 10px; */
+            min-width: 2rem;
+            box-sizing: border-box;
+            padding-right: 0.5rem;
+            /* height: 35px; */
+            display: inline-flex;
+            align-items: center;
+            justify-content: flex-end;
+            font-size: 16px;
+            /* overflow: visible; */
+            background-color: #ff89a5;
+            /* border-radius: 50%; */
+            /* color: #fff; */
+        }
     }
 
     & > .list-ordered-mark:before {
@@ -58,8 +66,31 @@ const orderedListItem = css`
         content: counter(remirror-list-number, decimal) ".";
     }
 
-    & > .list-bullet-mark:before {
-        content: "-";
+    & > .list-bullet-mark {
+        &:before {
+            content: "-";
+        }
+
+        &:after {
+            content: "";
+            display: block;
+            box-sizing: border-box;
+            border-left: 1px solid red;
+            padding-left: 0px;
+            padding-right: 0px;
+            position: relative;
+            right: 0px;
+            align-self: flex-end;
+            /* top: -6px; */
+            /* left: -6px; */
+            height: 100%;
+            width: 50%;
+            margin: 8px 0;
+        }
+
+        &:hover:after {
+            border-left-color: blue;
+        }
     }
 
     & > .list-task-checked-mark:before {
@@ -72,11 +103,22 @@ const orderedListItem = css`
     & > .list-content-container {
         flex: 1;
     }
+
+    &.collapsed > .list-mark-container {
+        &:before {
+            background-color: lightblue;
+        }
+    }
+
+    &.collapsed > .list-content-container > *:nth-child(n + 2) {
+        display: none;
+    }
 `
 
 export interface ItemAttributes {
     kind: "bullet" | "ordered" | "task"
     checked?: boolean
+    collapsed?: boolean
 }
 
 export class OrderedListItemExtension extends NodeExtension {
@@ -101,6 +143,9 @@ export class OrderedListItemExtension extends NodeExtension {
                     default: "bullet",
                 },
                 checked: {
+                    default: false,
+                },
+                collapsed: {
                     default: false,
                 },
             },
@@ -143,6 +188,25 @@ export class OrderedListItemExtension extends NodeExtension {
         }
     }
 
+    createEventHandlers(): CreateEventHandlers {
+        return {
+            click: (event: MouseEvent, state: ClickHandlerState): boolean => {
+                const { view, pos } = state
+                if ((event.target as HTMLElement).classList.contains("list-mark-container")) {
+                    const found = findParentNodeOfType({ selection: view.state.doc.resolve(pos), types: this.type })
+                    if (found) {
+                        if (found.node.childCount >= 2) {
+                            const attrs = found.node.attrs as ItemAttributes
+                            view.dispatch(view.state.tr.setNodeMarkup(found.pos, null, { ...attrs, collapsed: !attrs.collapsed }))
+                            return true
+                        }
+                    }
+                }
+                return false
+            },
+        }
+    }
+
     createNodeViews(): NodeViewMethod {
         return (node: ProsemirrorNode, view: EditorView, getPos: (() => number) | boolean): NodeView => {
             const mark = h("div", { class: "list-mark-container" })
@@ -174,7 +238,23 @@ export class OrderedListItemExtension extends NodeExtension {
                 mark.className = markClass
             }
 
+            const updateOuter = (node: ProsemirrorNode) => {
+                if (node.childCount >= 2) {
+                    outer.classList.add("collapsable")
+
+                    if (node.attrs.collapsed) {
+                        outer.classList.add("collapsed")
+                    } else {
+                        outer.classList.remove("collapsed")
+                    }
+                } else {
+                    outer.classList.remove("collapsable")
+                    outer.classList.remove("collapsed")
+                }
+            }
+
             updateMark(node)
+            updateOuter(node)
 
             return {
                 dom: outer,
@@ -185,6 +265,7 @@ export class OrderedListItemExtension extends NodeExtension {
                     }
 
                     updateMark(node)
+                    updateOuter(node)
                     return true
                 },
             }
@@ -250,4 +331,19 @@ function wrappingListInputRule(
             return tr
         }
     })
+}
+
+function countTextBlock(node: ProsemirrorNode): number {
+    if (node.isInline) {
+        return 0
+    }
+    if (node.isTextblock) {
+        return 1
+    }
+
+    let count = 0
+    for (let i = 0; i < node.childCount; i++) {
+        count += countTextBlock(node.child(i))
+    }
+    return count
 }

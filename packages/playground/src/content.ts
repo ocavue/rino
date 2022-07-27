@@ -11,6 +11,14 @@ const defaultContent = [
     `
 - A
 - B
+  - B1
+  - B2
+  - B3
+  - B4
+  - B5
+- C
+- D
+- E
 
   P
 1. A
