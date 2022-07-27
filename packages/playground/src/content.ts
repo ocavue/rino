@@ -9,10 +9,12 @@ while True:
 
 const defaultContent = [
     `
+- - - A
+- - - B
 
-- A
-- B
-- C
+>
+
+- - - C
 
 
 `.trim(),
