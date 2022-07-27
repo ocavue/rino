@@ -123,14 +123,8 @@ export function createIndentListCommand(itemType: NodeType): CommandFunction {
 
         const { startIndex, endIndex, parent, depth } = range
 
-        // If the previous sibling is not a list item, we can't indent
-        if (startIndex === 0) {
-            return false
-        }
-        const itemBefore = parent.child(startIndex - 1)
-        if (itemBefore.type !== itemType) {
-            return false
-        }
+        const nodeBefore = startIndex > 0 ? parent.child(startIndex - 1) : null
+        const itemBefore = nodeBefore?.type === itemType ? nodeBefore : null
 
         if (dispatch) {
             const itemCount = endIndex - startIndex
@@ -143,10 +137,10 @@ export function createIndentListCommand(itemType: NodeType): CommandFunction {
                     tr.lift(new NodeRange(tr.doc.resolve(blockRange.end + 2), tr.doc.resolve(range.end - 1), depth + 1), depth)
                 }
             }
-            const slice = new Slice(Fragment.from(itemBefore.copy()), 1, 0)
+            const slice = new Slice(Fragment.from(itemType.create()), itemBefore ? 1 : 0, 0)
             const before = range.start,
                 after = range.end
-            tr.step(new ReplaceAroundStep(before - 1, after, before, after, slice, 0, true))
+            tr.step(new ReplaceAroundStep(before - (itemBefore ? 1 : 0), after, before, after, slice, itemBefore ? 0 : 1, true))
             dispatch(tr.scrollIntoView())
         }
         return true
