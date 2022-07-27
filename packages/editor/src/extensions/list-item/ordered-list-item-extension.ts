@@ -109,7 +109,7 @@ export class OrderedListItemExtension extends NodeExtension {
 
                 return [
                     "div",
-                    { class: `${orderedListItem}` },
+                    { class: `${orderedListItem}`, ...extra.dom(node) },
 
                     // the container for the list item markers
                     ["div", { class: `list-mark-container`, style: isNested ? "opacity: 0.2;" : undefined }],
@@ -118,6 +118,28 @@ export class OrderedListItemExtension extends NodeExtension {
                     ["div", { class: `list-content-container` }, 0],
                 ]
             },
+
+            parseDOM: [
+                {
+                    tag: "ul > li",
+                    getAttrs: (element) => {
+                        return {
+                            kind: "bullet",
+                            ...extra.parse(element),
+                        }
+                    },
+                },
+                {
+                    tag: "ol > li",
+                    getAttrs: (element) => {
+                        return {
+                            kind: "ordered",
+                            ...extra.parse(element),
+                        }
+                    },
+                },
+                ...(override.parseDOM ?? []),
+            ],
         }
     }
 
