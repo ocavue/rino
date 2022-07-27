@@ -3,7 +3,7 @@ import type Token from "markdown-it/lib/token"
 import type { MarkdownParseState, NodeSerializerOptions } from "../../transform"
 import { ParserRuleType } from "../../transform"
 import type { MarkdownNodeExtension } from "../markdown-node/markdown-node-extension"
-import { OrderedListItemExtension } from "./ordered-list-item-extension"
+import { ItemAttributes, OrderedListItemExtension } from "./ordered-list-item-extension"
 
 export class RinoOrderedListItemExtension extends OrderedListItemExtension implements MarkdownNodeExtension {
     public fromMarkdown() {
@@ -45,6 +45,16 @@ export class RinoOrderedListItemExtension extends OrderedListItemExtension imple
     }
 
     public toMarkdown({ state, node }: NodeSerializerOptions) {
-        state.renderContent(node)
+        const attrs = node.attrs as ItemAttributes
+        let firstDelim = ""
+        if (attrs.kind === "ordered") {
+            firstDelim = "1. "
+        } else if (attrs.kind === "task") {
+            firstDelim = attrs.checked ? "- [x] " : "- [ ] "
+        } else if (attrs.kind === "bullet") {
+            firstDelim = "- "
+        }
+
+        state.wrapBlock(" ".repeat(firstDelim.length), firstDelim, node, () => state.renderContent(node))
     }
 }

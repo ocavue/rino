@@ -13,9 +13,12 @@ const defaultContent = [
 - B
 
   P
-
 1. A
+
+   A
 2. B
+   - C
+   - D
 
 `.trim(),
 ].join("\n")

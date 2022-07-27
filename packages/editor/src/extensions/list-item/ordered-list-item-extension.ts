@@ -74,7 +74,7 @@ const orderedListItem = css`
     }
 `
 
-interface ItemAttributes {
+export interface ItemAttributes {
     kind: "bullet" | "ordered" | "task"
     checked?: boolean
 }
