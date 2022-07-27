@@ -125,7 +125,8 @@ export function createIndentListCommand(itemType: NodeType): CommandFunction {
         const itemBefore = nodeBefore?.type === itemType ? nodeBefore : null
 
         if (dispatch) {
-            const slice = new Slice(Fragment.from(itemType.create()), itemBefore ? 1 : 0, 0)
+            const attrs = parent.type === itemType ? parent.attrs : null
+            const slice = new Slice(Fragment.from(itemType.create({ ...attrs })), itemBefore ? 1 : 0, 0)
             const before = range.start,
                 after = range.end
             tr.step(new ReplaceAroundStep(before - (itemBefore ? 1 : 0), after, before, after, slice, itemBefore ? 0 : 1, true))
