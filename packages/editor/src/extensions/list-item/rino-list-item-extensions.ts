@@ -14,7 +14,7 @@ export class RinoOrderedListItemExtension extends OrderedListItemExtension imple
                 handler: (state: MarkdownParseState, tok: Token): void => {
                     switch (state.topContext()) {
                         case "ordered_list":
-                            state.openNode(this.type)
+                            state.openNode(this.type, { kind: "ordered" })
                             break
                         case "bullet_list":
                             state.openNode(this.type) // TODO: I should use bullet list type instead of `this.type` here
@@ -35,6 +35,11 @@ export class RinoOrderedListItemExtension extends OrderedListItemExtension imple
                 type: ParserRuleType.context,
                 token: "bullet_list",
                 context: "bullet_list",
+            },
+            {
+                type: ParserRuleType.context,
+                token: "ordered_list",
+                context: "ordered_list",
             },
         ] as const
     }

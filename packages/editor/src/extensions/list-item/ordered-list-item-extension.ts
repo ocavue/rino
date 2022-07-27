@@ -4,7 +4,6 @@ import {
     CreateExtensionPlugin,
     EditorView,
     ExtensionTag,
-    InputRule,
     KeyBindings,
     NodeExtension,
     NodeExtensionSpec,
@@ -12,8 +11,11 @@ import {
     NodeView,
     NodeViewMethod,
     ProsemirrorNode,
+    Transaction,
 } from "@remirror/core"
-import { wrappingInputRule } from "@remirror/pm/inputrules"
+import { NodeType } from "@remirror/pm/dist-types/model"
+import { InputRule } from "@remirror/pm/inputrules"
+import { findWrapping } from "@remirror/pm/transform"
 
 import { createAutoJoinListPlugin } from "./auto-join-list-plugin"
 import { createElement as h } from "./dom-utils"
@@ -74,7 +76,7 @@ const orderedListItem = css`
 
 interface ItemAttributes {
     kind: "bullet" | "ordered" | "task"
-    checked: boolean
+    checked?: boolean
 }
 
 export class OrderedListItemExtension extends NodeExtension {
@@ -178,17 +180,52 @@ export class OrderedListItemExtension extends NodeExtension {
     createInputRules(): InputRule[] {
         const bulletRegexp = /^\s?([*+-])\s$/
         const orderedRegexp = /^\s?(\d+)\.\s$/
-        const taskRegexp = /^\s?(\[[x\s]?\])\s$/
+        const taskRegexp = /^\s?\[([Xx\s]?)\]\s$/
 
         return [
-            wrappingInputRule(bulletRegexp, this.type, { kind: "bullet" }, () => false),
-            wrappingInputRule(orderedRegexp, this.type, { kind: "ordered" }, () => false),
-            wrappingInputRule(
-                taskRegexp,
-                this.type,
-                (match) => ({ kind: "task", checked: match[1] === "[x]" }),
-                () => false,
-            ),
+            wrappingListInputRule(bulletRegexp, this.type, { kind: "bullet" }),
+            wrappingListInputRule(orderedRegexp, this.type, { kind: "ordered" }),
+            wrappingListInputRule(taskRegexp, this.type, (match) => ({ kind: "task", checked: ["x", "X"].includes(match[1]) })),
         ]
     }
+}
+
+function wrappingListInputRule(
+    regexp: RegExp,
+    listType: NodeType,
+    getAttrs: ItemAttributes | ((matches: RegExpMatchArray) => ItemAttributes),
+) {
+    return new InputRule(regexp, (state, match, start, end): Transaction | null => {
+        const tr = state.tr
+        tr.deleteRange(start, end)
+
+        const attrs = typeof getAttrs === "function" ? getAttrs(match) : getAttrs
+
+        const $pos = tr.selection.$from
+        if ($pos.depth >= 2 && $pos.node(-1).type === listType) {
+            const foundItem = $pos.node(-1)
+            let needUpdate = false
+            for (const [key, value] of Object.entries(attrs)) {
+                if (foundItem.attrs[key] !== value) {
+                    needUpdate = true
+                    break
+                }
+            }
+
+            if (needUpdate) {
+                tr.setNodeMarkup($pos.before(-1), undefined, { ...foundItem.attrs, ...attrs })
+                return tr
+            } else {
+                return null
+            }
+        } else {
+            const $start = tr.doc.resolve(start)
+            const range = $start.blockRange()
+            if (!range) return null
+            const wrapping = findWrapping(range, listType, attrs)
+            if (!wrapping) return null
+            tr.wrap(range, wrapping)
+            return tr
+        }
+    })
 }
