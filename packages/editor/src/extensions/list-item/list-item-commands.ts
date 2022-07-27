@@ -4,7 +4,7 @@ import { Fragment, NodeRange, NodeType, Slice } from "@remirror/pm/model"
 import { Transaction } from "@remirror/pm/state"
 import { canSplit, liftTarget, ReplaceAroundStep } from "@remirror/pm/transform"
 
-import { findIndentationRange, isBlockNodeSelection } from "./list-utils"
+import { findIndentationRange, isBlockNodeSelection, isItemRange } from "./list-utils"
 
 // This command has the same behavior as the `Enter` keybinding, but without the
 // `liftEmptyBlock` command.
@@ -65,14 +65,41 @@ export function createDedentListCommand(itemType: NodeType): CommandFunction {
 
         const { $from, $to } = state.selection
         // const range = findItemRange($from, $to, itemType)
-        const range = findIndentationRange($from, $to, itemType)
+        const range = findIndentationRange($from, $to, itemType, false)
 
         if (!range) {
             return false
         }
 
+        if (isItemRange(range, itemType)) {
+            return liftToOuterList(tr, dispatch, itemType, range)
+        }
+
         return liftBlockRange(tr, dispatch, range)
     }
+}
+
+function liftToOuterList(tr: Transaction, dispatch: DispatchFunction | undefined, itemType: NodeType, range: NodeRange) {
+    const endOfItem = range.end
+    const endOfSiblings = range.$to.end(range.depth)
+
+    if (endOfItem < endOfSiblings) {
+        // There are siblings after the lifted items, which must become
+        // children of the last item
+        tr.step(
+            new ReplaceAroundStep(
+                endOfItem - 1,
+                endOfSiblings,
+                endOfItem,
+                endOfSiblings,
+                new Slice(Fragment.from(itemType.create(null)), 1, 0),
+                0,
+                true,
+            ),
+        )
+        range = new NodeRange(tr.doc.resolve(range.$from.pos), tr.doc.resolve(endOfSiblings), range.depth)
+    }
+    return liftBlockRange(tr, dispatch, range)
 }
 
 function liftBlockRange(tr: Transaction, dispatch: DispatchFunction | undefined, range: NodeRange) {
@@ -88,7 +115,7 @@ export function createIndentListCommand(itemType: NodeType): CommandFunction {
 
         const { $from, $to } = tr.selection
         // const range = findItemRange($from, $to, itemType)
-        const range = findIndentationRange($from, $to, itemType)
+        const range = findIndentationRange($from, $to, itemType, true)
 
         if (!range) return false
 

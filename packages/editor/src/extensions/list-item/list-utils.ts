@@ -22,7 +22,7 @@ export function isListItemNode(node?: ProsemirrorNode | null): node is Prosemirr
     return false
 }
 
-function isItemRange(range: NodeRange, itemType: NodeType): boolean {
+export function isItemRange(range: NodeRange, itemType: NodeType): boolean {
     const { startIndex, endIndex, parent } = range
     let childrenAreItems = true
     for (let i = startIndex; i < endIndex; i++) {
@@ -60,7 +60,13 @@ export function findItemRange($from: ResolvedPos, $to: ResolvedPos, itemType: No
     return null
 }
 
-export function findIndentationRange($from: ResolvedPos, $to: ResolvedPos, itemType: NodeType): NodeRange | null {
+export function findIndentationRange(
+    $from: ResolvedPos,
+    $to: ResolvedPos,
+    itemType: NodeType,
+
+    isIndent: boolean,
+): NodeRange | null {
     const range = findItemRange($from, $to, itemType)
 
     // If the range is not inside a list item, then we do nothing for its indentation.
@@ -71,6 +77,12 @@ export function findIndentationRange($from: ResolvedPos, $to: ResolvedPos, itemT
     // If mutiple items are selected, then we lift/sink the item range.
     if (range.endIndex - range.startIndex > 1) {
         return range
+    }
+
+    if (isIndent === false) {
+        if ($from.depth > range.depth && $from.index(range.depth + 1) === 0) {
+            return range
+        }
     }
 
     // Otherwise, we only lift/sink the block range inside the item.
