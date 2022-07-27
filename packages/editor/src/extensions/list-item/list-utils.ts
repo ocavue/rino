@@ -49,3 +49,18 @@ export function findItemRange($from: ResolvedPos, $to: ResolvedPos, itemType: No
 
     return null
 }
+
+export function findIndentationRange($from: ResolvedPos, $to: ResolvedPos, itemType: NodeType): NodeRange | null {
+    const itemRange = findItemRange($from, $to, itemType)
+
+    // If mutiple items are selected, or the selection is inside the first child of the selected list item, then we
+    // lift the item range. Otherwise, we lift the parent block.
+    if (itemRange) {
+        const itemCount = itemRange.endIndex - itemRange.startIndex
+        if (itemCount > 1 || ($from.depth > itemRange.depth && $from.index(itemRange.depth + 1) === 0)) {
+            return itemRange
+        }
+    }
+
+    return $from.blockRange($to)
+}
