@@ -4,7 +4,7 @@ import { Fragment, NodeRange, NodeType, Slice } from "@remirror/pm/model"
 import { Transaction } from "@remirror/pm/state"
 import { canSplit, liftTarget, ReplaceAroundStep } from "@remirror/pm/transform"
 
-import { findIndentationRange, findItemRange, isBlockNodeSelection } from "./list-utils"
+import { findItemRange, isBlockNodeSelection, isItemRangeForIndentation } from "./list-utils"
 
 // This command has the same behavior as the `Enter` keybinding, but without the
 // `liftEmptyBlock` command.
@@ -64,17 +64,20 @@ export function createDedentListCommand(itemType: NodeType): CommandFunction {
         const { state, dispatch, tr } = props
 
         const { $from, $to } = state.selection
-        const range = findIndentationRange($from, $to, itemType)
+        const range = findItemRange($from, $to, itemType)
 
         if (!range) {
             return false
         }
 
-        if (range.parent.type == itemType) {
+        if (isItemRangeForIndentation(range) && range.parent.type === itemType) {
             return liftToOuterList(tr, dispatch, itemType, range)
         } else {
-            // TODO:  lift out of list
-            return true
+            const range = $from.blockRange($to)
+            if (!range) {
+                return false
+            }
+            return liftBlockRange(tr, dispatch, range)
         }
     }
 }
@@ -99,6 +102,10 @@ function liftToOuterList(tr: Transaction, dispatch: DispatchFunction | undefined
         )
         range = new NodeRange(tr.doc.resolve(range.$from.pos), tr.doc.resolve(endOfSiblings), range.depth)
     }
+    return liftBlockRange(tr, dispatch, range)
+}
+
+function liftBlockRange(tr: Transaction, dispatch: DispatchFunction | undefined, range: NodeRange) {
     const target = liftTarget(range)
     if (target == null) return false
     dispatch?.(tr.lift(range, target).scrollIntoView())

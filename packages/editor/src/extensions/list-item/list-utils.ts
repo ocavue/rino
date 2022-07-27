@@ -14,6 +14,18 @@ export function isListItemType(type: NodeType): boolean {
     return ["orderedListItem"].includes(type.name)
 }
 
+function isItemRange(range: NodeRange, itemType: NodeType): boolean {
+    const { startIndex, endIndex, parent } = range
+    let childrenAreItems = true
+    for (let i = startIndex; i < endIndex; i++) {
+        if (parent.child(i).type !== itemType) {
+            childrenAreItems = false
+            break
+        }
+    }
+    return childrenAreItems
+}
+
 /**
  * Returns a minimal range that represents one or multiple sibling list items
  * and includes the given two positions.
@@ -23,28 +35,18 @@ export function findItemRange($from: ResolvedPos, $to: ResolvedPos, itemType: No
         return findItemRange($to, $from, itemType)
     }
 
-    const depth = $from.sharedDepth($to.pos)
+    let range = $from.blockRange($to)
 
-    if (depth < $from.depth && depth < $to.depth) {
-        const parent = $from.node(depth)
-        let childrenAreItems = true
-
-        for (let i = $from.index(depth); i <= $to.index(depth); i++) {
-            if (parent.child(i).type !== itemType) {
-                childrenAreItems = false
-                break
-            }
+    while (range) {
+        if (isItemRange(range, itemType)) {
+            return range
         }
 
-        if (childrenAreItems) {
-            return new NodeRange($from, $to, depth)
+        if (range.depth <= 0) {
+            break
         }
-    }
 
-    for (let d = Math.min($from.depth, depth + 1); d >= 1; d--) {
-        if ($from.node(d).type === itemType) {
-            return new NodeRange($from, $to, d - 1)
-        }
+        range = new NodeRange($from, $to, range.depth - 1)
     }
 
     return null
@@ -63,4 +65,13 @@ export function findIndentationRange($from: ResolvedPos, $to: ResolvedPos, itemT
     }
 
     return $from.blockRange($to)
+}
+
+export function isItemRangeForIndentation(itemRange: NodeRange) {
+    const itemCount = itemRange.endIndex - itemRange.startIndex
+    if (itemCount > 1) return true
+
+    const { $from, depth } = itemRange
+
+    return $from.depth > depth && $from.index(depth + 1) === 0
 }
