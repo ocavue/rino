@@ -18,16 +18,18 @@ import { createElement as h } from "./dom-utils"
 import { createListItemKeymap } from "./list-item-keymap"
 
 const orderedListItem = css`
-    border: 1px solid red;
+    /* border: 1px solid red; */
     padding: 0;
-    margin: 2px;
+    /* margin: 2px; */
+
+    background-color: rgba(100, 100, 100, 0.1);
 
     display: flex;
 
     counter-reset: remirror-list-number;
     & + & {
         counter-reset: none;
-        border: 1px solid blue;
+        /* border: 1px solid blue; */
     }
 
     & > .list-mark-container:before {
