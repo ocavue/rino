@@ -14,10 +14,11 @@ import {
 } from "@remirror/core"
 
 import { createAutoJoinListPlugin } from "./auto-join-list-plugin"
+import { createElement as h } from "./dom-utils"
 import { createListItemKeymap } from "./list-item-keymap"
 
 const orderedListItem = css`
-    border: 1px solid red;
+    /* border: 1px solid red; */
     padding: 0;
     margin: 2px;
 
@@ -26,13 +27,11 @@ const orderedListItem = css`
     counter-reset: remirror-list-number;
     & + & {
         counter-reset: none;
-        border: 1px solid blue;
+        /* border: 1px solid blue; */
     }
 
     & > .list-mark-container:before {
-        counter-increment: remirror-list-number;
-        content: counter(remirror-list-number, decimal) ".";
-
+        content: "";
         /* margin-bottom: 10px; */
         min-width: 2rem;
         box-sizing: border-box;
@@ -48,10 +47,28 @@ const orderedListItem = css`
         /* color: #fff; */
     }
 
+    & > .list-ordered-mark:before {
+        counter-increment: remirror-list-number;
+        content: counter(remirror-list-number, decimal) ".";
+    }
+
+    & > .list-bullet-mark:before {
+        content: "-";
+    }
+
+    & > .list-task-mark:before {
+        content: "[ ]";
+    }
+
     & > .list-content-container {
         flex: 1;
     }
 `
+
+interface ItemAttributes {
+    kind: "bullet" | "ordered" | "task"
+    checked: boolean
+}
 
 export class OrderedListItemExtension extends NodeExtension {
     static disableExtraAttributes = true
@@ -70,6 +87,14 @@ export class OrderedListItemExtension extends NodeExtension {
             // TODO: If I change the content as follows, it breaks the `Enter` keybind because of `canSplit` return false.
             // content: "paragraph block*",
             defining: true,
+            attrs: {
+                kind: {
+                    default: "bullet",
+                },
+                checked: {
+                    default: false,
+                },
+            },
             toDOM: (node) => {
                 const isNested = node.content.firstChild?.type === this.type
 
@@ -89,11 +114,11 @@ export class OrderedListItemExtension extends NodeExtension {
 
     createNodeViews(): NodeViewMethod {
         return (node: ProsemirrorNode, view: EditorView, getPos: (() => number) | boolean): NodeView => {
-            const outer = document.createElement("div")
-            outer.className = orderedListItem
+            const mark = h("div", { class: "list-mark-container" })
 
-            const mark = document.createElement("div")
-            mark.className = `list-mark-container`
+            const container = h("div", { class: "list-content-container" })
+
+            const outer = h("div", { class: orderedListItem }, mark, container)
 
             let isNested: boolean | null = null
 
@@ -104,13 +129,26 @@ export class OrderedListItemExtension extends NodeExtension {
                     isNested = _isNested
                     mark.style.opacity = _isNested ? "0.2" : ""
                 }
+
+                const attrs = node.attrs as ItemAttributes
+
+                let markClass = "list-mark-container"
+                if (!isNested) {
+                    switch (attrs.kind) {
+                        case "ordered":
+                            markClass += " list-ordered-mark"
+                            break
+                        case "bullet":
+                            markClass += " list-bullet-mark"
+                            break
+                        case "task":
+                            markClass += " list-ordered-mark"
+                            break
+                    }
+                }
+
+                mark.className = markClass
             }
-
-            const container = document.createElement("div")
-            container.className = "list-content-container"
-
-            outer.appendChild(mark)
-            outer.appendChild(container)
 
             updateMark(node)
 
