@@ -727,7 +727,7 @@ describe("Tab", () => {
         )
     })
 
-    it.skip("can keep the indentation of siblings around the indented item", () => {
+    it("can keep the indentation of siblings around the indented item", () => {
         editor = add(
             doc(
                 oli(p("123")),
@@ -785,7 +785,7 @@ describe("Tab", () => {
                 ),
             ),
         )
-        editor.press("Shift-Tab")
+        editor.press("Tab")
         expect(editor.state).toEqualRemirrorState(
             doc(
                 oli(
@@ -794,29 +794,6 @@ describe("Tab", () => {
                     p("123"),
                     oli(p("456<cursor>")),
                 ),
-            ),
-        )
-    })
-
-    it("can decreate the indentation of a multiple level nested item", () => {
-        editor = add(
-            doc(
-                //
-                oli(p("123<cursor>")),
-            ),
-        )
-        editor.press("Tab")
-        expect(editor.state).toEqualRemirrorState(
-            doc(
-                //
-                oli(oli(p("123<cursor>"))),
-            ),
-        )
-        editor.press("Tab")
-        expect(editor.state).toEqualRemirrorState(
-            doc(
-                //
-                oli(oli(oli(p("123<cursor>")))),
             ),
         )
     })

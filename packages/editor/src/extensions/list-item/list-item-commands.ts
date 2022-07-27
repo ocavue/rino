@@ -4,7 +4,7 @@ import { Fragment, NodeRange, NodeType, Slice } from "@remirror/pm/model"
 import { Transaction } from "@remirror/pm/state"
 import { canSplit, liftTarget, ReplaceAroundStep } from "@remirror/pm/transform"
 
-import { findItemRange, isBlockNodeSelection } from "./list-utils"
+import { findIndentationRange, findItemRange, isBlockNodeSelection } from "./list-utils"
 
 // This command has the same behavior as the `Enter` keybinding, but without the
 // `liftEmptyBlock` command.
@@ -64,7 +64,7 @@ export function createDedentListCommand(itemType: NodeType): CommandFunction {
         const { state, dispatch, tr } = props
 
         const { $from, $to } = state.selection
-        const range = findItemRange($from, $to, itemType)
+        const range = findIndentationRange($from, $to, itemType)
 
         if (!range) {
             return false
@@ -114,16 +114,32 @@ export function createIndentListCommand(itemType: NodeType): CommandFunction {
 
         if (!range) return false
 
-        const startIndex = range.startIndex
-        const parent = range.parent
-        const nodeBefore = startIndex > 0 ? parent.child(startIndex - 1) : null
+        const { startIndex, endIndex, parent, depth } = range
+
+        // If the previous sibling is not a list item, we can't indent
+        if (startIndex === 0) {
+            return false
+        }
+        const itemBefore = parent.child(startIndex - 1)
+        if (itemBefore.type !== itemType) {
+            return false
+        }
 
         if (dispatch) {
-            const nestedBefore = nodeBefore?.type === itemType
-            const slice = new Slice(Fragment.from(itemType.create(null)), nestedBefore ? 1 : 0, 0)
+            const itemCount = endIndex - startIndex
+
+            // If only one item is in the range, and there is some content
+            if (itemCount === 1 && $from.depth > depth && $to.depth > depth) {
+                const blockRange = new NodeRange($from, $to, depth + 1)
+
+                if (blockRange.end + 1 < range.end) {
+                    tr.lift(new NodeRange(tr.doc.resolve(blockRange.end + 2), tr.doc.resolve(range.end - 1), depth + 1), depth)
+                }
+            }
+            const slice = new Slice(Fragment.from(itemBefore.copy()), 1, 0)
             const before = range.start,
                 after = range.end
-            tr.step(new ReplaceAroundStep(before - (nestedBefore ? 1 : 0), after, before, after, slice, nestedBefore ? 0 : 1, true))
+            tr.step(new ReplaceAroundStep(before - 1, after, before, after, slice, 0, true))
             dispatch(tr.scrollIntoView())
         }
         return true
