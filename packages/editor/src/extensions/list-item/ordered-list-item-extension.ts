@@ -18,7 +18,7 @@ import { createElement as h } from "./dom-utils"
 import { createListItemKeymap } from "./list-item-keymap"
 
 const orderedListItem = css`
-    /* border: 1px solid red; */
+    border: 1px solid red;
     padding: 0;
     margin: 2px;
 
@@ -27,7 +27,7 @@ const orderedListItem = css`
     counter-reset: remirror-list-number;
     & + & {
         counter-reset: none;
-        /* border: 1px solid blue; */
+        border: 1px solid blue;
     }
 
     & > .list-mark-container:before {
@@ -120,15 +120,8 @@ export class OrderedListItemExtension extends NodeExtension {
 
             const outer = h("div", { class: orderedListItem }, mark, container)
 
-            let isNested: boolean | null = null
-
             const updateMark = (node: ProsemirrorNode) => {
-                const _isNested = node.content.firstChild?.type === this.type
-
-                if (_isNested !== isNested) {
-                    isNested = _isNested
-                    mark.style.opacity = _isNested ? "0.2" : ""
-                }
+                const isNested = node.content.firstChild?.type === this.type
 
                 const attrs = node.attrs as ItemAttributes
 
