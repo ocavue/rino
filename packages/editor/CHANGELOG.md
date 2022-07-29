@@ -1,5 +1,11 @@
 # @rino.app/editor
 
+## 0.44.5
+
+### Patch Changes
+
+-   65884f4: Fix an issue that causes undo keyboard shortcut not to work.
+
 ## 0.44.4
 
 ### Patch Changes
