@@ -1,4 +1,4 @@
-import type { RinnMarkAttrs, RinoMarkName } from "./inline-mark-extensions"
+import type { RinoMarkAttrs, RinoMarkName } from "./inline-mark-extensions"
 
 export enum InlineDecorateType {
     Ignore = "IGNORE",
@@ -15,5 +15,5 @@ export interface InlineToken {
     // end position
     end: number
 
-    attrs: RinnMarkAttrs
+    attrs: RinoMarkAttrs
 }

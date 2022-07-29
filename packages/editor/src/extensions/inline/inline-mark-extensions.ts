@@ -92,7 +92,7 @@ class CodeText extends MarkExtension {
     }
 }
 
-class CodeSapce extends MarkExtension {
+class CodeSpace extends MarkExtension {
     static disableExtraAttributes = true
     get name() {
         return "mdCodeSpace" as const
@@ -226,7 +226,7 @@ export const rinoMarkExtensions = [
     new Emphasis(),
     new Strong(),
     new CodeText(),
-    new CodeSapce(),
+    new CodeSpace(),
     new Delete(),
     new LinkText(),
     new LinkUri(),
@@ -235,7 +235,7 @@ export const rinoMarkExtensions = [
 ]
 export type RinoMarkExtension = typeof rinoMarkExtensions[number]
 export type RinoMarkName = RinoMarkExtension["name"]
-export type RinnMarkAttrs = {
+export type RinoMarkAttrs = {
     depth: number
 
     /**
