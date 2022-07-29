@@ -83,6 +83,7 @@ export function applySelectionMarks(view: EditorView): void {
     if (view.isDestroyed) return
 
     const tr = view.state.tr
+    tr.setMeta("addToHistory", false)
     if (updateRangeMarks(tr)) {
         view.dispatch(tr)
     }

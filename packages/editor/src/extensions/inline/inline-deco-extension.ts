@@ -3,9 +3,9 @@ import { Node as ProsemirrorNode } from "@remirror/pm/model"
 import { EditorState } from "@remirror/pm/state"
 import { Decoration, DecorationSet } from "@remirror/pm/view"
 
-import { isAutoHideMark, RinnMarkAttrs } from "./inline-mark-extensions"
+import { isAutoHideMark, RinoMarkAttrs } from "./inline-mark-extensions"
 
-type TextAttrs = Partial<RinnMarkAttrs & { isAutoHideMark?: boolean }>
+type TextAttrs = Partial<RinoMarkAttrs & { isAutoHideMark?: boolean }>
 
 /**
  * Read a text node and return information from its mark
