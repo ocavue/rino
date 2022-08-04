@@ -30,7 +30,6 @@ jobs:
             echo "deduplicate lockfile"
             npm install -g pnpm-deduplicate
             pnpm-deduplicate --version
-            pnpm-deduplicate --list
             pnpm-deduplicate
           else
             echo "Skipping lockfile deduplication"
