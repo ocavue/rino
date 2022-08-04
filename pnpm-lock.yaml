@@ -216,7 +216,7 @@ importers:
       '@rino.app/electron-main': workspace:*
       '@rino.app/electron-preload': workspace:*
       '@rino.app/electron-renderer': workspace:*
-      electron: 19.0.11
+      electron: 20.0.1
       electron-builder: ^23.3.3
       electron-notarize: ^1.2.1
       wait-on: ^6.0.1
@@ -224,7 +224,7 @@ importers:
       '@rino.app/electron-main': link:../electron-main
       '@rino.app/electron-preload': link:../electron-preload
       '@rino.app/electron-renderer': link:../electron-renderer
-      electron: 19.0.11
+      electron: 20.0.1
       electron-builder: 23.3.3
       electron-notarize: 1.2.1
       wait-on: 6.0.1
@@ -234,7 +234,7 @@ importers:
       '@rino.app/common': workspace:*
       '@rino.app/electron-types': workspace:*
       '@types/lodash-es': ^4.17.6
-      electron: 19.0.11
+      electron: 20.0.1
       electron-context-menu: ^3.3.0
       electron-log: ^4.4.8
       electron-store: ^8.1.0
@@ -247,7 +247,7 @@ importers:
       '@rino.app/common': link:../common
       '@rino.app/electron-types': link:../electron-types
       '@types/lodash-es': 4.17.6
-      electron: 19.0.11
+      electron: 20.0.1
       electron-context-menu: 3.3.0
       electron-log: 4.4.8
       electron-store: 8.1.0
@@ -260,13 +260,13 @@ importers:
   packages/electron-preload:
     specifiers:
       '@rino.app/electron-types': workspace:*
-      electron: 19.0.11
+      electron: 20.0.1
       electron-log: ^4.4.8
       esbuild: ^0.14.53
       typescript: ^4.7.3
     devDependencies:
       '@rino.app/electron-types': link:../electron-types
-      electron: 19.0.11
+      electron: 20.0.1
       electron-log: 4.4.8
       esbuild: 0.14.53
       typescript: 4.7.4
@@ -279,7 +279,7 @@ importers:
       '@types/react': ^18.0.15
       '@types/react-dom': ^18.0.6
       '@vitejs/plugin-react': ^2.0.0
-      electron: 19.0.11
+      electron: 20.0.1
       electron-log: ^4.4.8
       immer: ^9.0.15
       is-promise: ^4.0.0
@@ -295,7 +295,7 @@ importers:
       '@types/react': 18.0.15
       '@types/react-dom': 18.0.6
       '@vitejs/plugin-react': 2.0.0_vite@3.0.4
-      electron: 19.0.11
+      electron: 20.0.1
       electron-log: 4.4.8
       immer: 9.0.15
       is-promise: 4.0.0
@@ -308,10 +308,10 @@ importers:
   packages/electron-types:
     specifiers:
       '@rino.app/editor': workspace:*
-      electron: 19.0.11
+      electron: 20.0.1
     devDependencies:
       '@rino.app/editor': link:../editor
-      electron: 19.0.11
+      electron: 20.0.1
 
   packages/home:
     specifiers:
@@ -3391,6 +3391,14 @@ packages:
       '@types/yargs-parser': 21.0.0
     dev: true
 
+  /@types/yauzl/2.10.0:
+    resolution: {integrity: sha512-Cn6WYCm0tXv8p6k+A8PvbDG763EDpBoTzHdA+Q/MF6H3sapGjCm9NzoaJncJS9tUKSuCoDs9XHxYYsQDgxR6kw==}
+    requiresBuild: true
+    dependencies:
+      '@types/node': 18.0.6
+    dev: true
+    optional: true
+
   /@typescript-eslint/eslint-plugin/5.32.0_iosr3hrei2tubxveewluhu5lhy:
     resolution: {integrity: sha512-CHLuz5Uz7bHP2WgVlvoZGhf0BvFakBJKAD/43Ty0emn4wXWv5k01ND0C0fHcl/Im8Td2y/7h44E9pca9qAu2ew==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
@@ -5217,15 +5225,15 @@ packages:
       - supports-color
     dev: true
 
-  /electron/19.0.11:
-    resolution: {integrity: sha512-GPM6C1Ze17/gR4koTE171MxrI5unYfFRgXQdkMdpWM2Cd55LMUrVa0QHCsfKpsaloufv9T65lsOn0uZuzCw5UA==}
-    engines: {node: '>= 8.6'}
+  /electron/20.0.1:
+    resolution: {integrity: sha512-5c7zr8oy1JsCV86BaoIPVLo4yevDfvPEsMQcGlgfJ5PS7ouAVvR1aHt0tjF65bL1vYdoQ1olvpextg2T8FyICA==}
+    engines: {node: '>= 10.17.0'}
     hasBin: true
     requiresBuild: true
     dependencies:
       '@electron/get': 1.14.1
       '@types/node': 16.11.47
-      extract-zip: 1.7.0
+      extract-zip: 2.0.1
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -5871,14 +5879,16 @@ packages:
       tmp: 0.0.33
     dev: true
 
-  /extract-zip/1.7.0:
-    resolution: {integrity: sha512-xoh5G1W/PB0/27lXgMQyIhP5DSY/LhoCsOyZgb+6iMmRtCwVBo55uKaMoEYrDCKQhWvqEip5ZPKAc6eFNyf/MA==}
+  /extract-zip/2.0.1:
+    resolution: {integrity: sha512-GDhU9ntwuKyGXdZBUgTIe+vXnWj0fppUEtMDL0+idd5Sta8TGpHssn/eusA9mrPr9qNDym6SxAYZjNvCn/9RBg==}
+    engines: {node: '>= 10.17.0'}
     hasBin: true
     dependencies:
-      concat-stream: 1.6.2
-      debug: 2.6.9
-      mkdirp: 0.5.6
+      debug: 4.3.4
+      get-stream: 5.2.0
       yauzl: 2.10.0
+    optionalDependencies:
+      '@types/yauzl': 2.10.0
     transitivePeerDependencies:
       - supports-color
     dev: true
