@@ -25,7 +25,7 @@ async function createServer(root = process.cwd()) {
      */
     const vite = await createViteServer({
         root,
-        plugins: [visitePlugin],
+        plugins: [visitePlugin()],
         server: {
             middlewareMode: "ssr",
             watch: {
