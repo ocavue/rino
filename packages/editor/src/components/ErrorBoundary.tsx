@@ -3,7 +3,7 @@ import type { ErrorInfo, PropsWithChildren } from "react"
 import React from "react"
 
 class ErrorBoundary<Props> extends React.Component<PropsWithChildren<Props>, { hasError: boolean }> {
-    constructor(props: Props) {
+    constructor(props: PropsWithChildren<Props>) {
         super(props)
         this.state = { hasError: false }
     }
