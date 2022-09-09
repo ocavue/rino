@@ -29,7 +29,7 @@
         "eslint-plugin-simple-import-sort": "^8.0.0",
         "prettier": "^2.7.1",
         "turbo": "^1.4.6",
-        "typescript": "^4.8.3"
+        "typescript": "^4.7.3"
     },
     "renovate": {
         "extends": [
@@ -50,13 +50,15 @@
                 "schedule": [
                     "before 3am on Friday"
                 ],
+                "excludePackageNames": [
+                    "typescript"
+                ],
                 "stabilityDays": 0
             }
         ],
         "ignoreDeps": [
             "@rino.app/common",
-            "@rino.app/editor",
-            "typescript"
+            "@rino.app/editor"
         ],
         "prConcurrentLimit": 1,
         "stabilityDays": 7,
