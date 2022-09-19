@@ -1,644 +1,460 @@
-lockfileVersion: 5.4-inlineSpecifiers
+lockfileVersion: 5.4
 
 importers:
 
   .:
+    specifiers:
+      '@changesets/cli': ^2.24.4
+      '@rino.app/cli': workspace:*
+      '@types/node': ^18.7.18
+      '@typescript-eslint/eslint-plugin': ^5.37.0
+      '@typescript-eslint/parser': ^5.37.0
+      eslint: ^8.23.1
+      eslint-config-prettier: ^8.5.0
+      eslint-plugin-prettier: ^4.2.1
+      eslint-plugin-react: ^7.31.8
+      eslint-plugin-react-hooks: ^4.6.0
+      eslint-plugin-simple-import-sort: ^8.0.0
+      prettier: ^2.7.1
+      turbo: ^1.4.7
+      typescript: ^4.8.3
     devDependencies:
-      '@changesets/cli':
-        specifier: ^2.24.4
-        version: 2.24.4
-      '@rino.app/cli':
-        specifier: workspace:*
-        version: link:packages/cli
-      '@types/node':
-        specifier: ^16.11.59
-        version: 16.11.59
-      '@typescript-eslint/eslint-plugin':
-        specifier: ^5.37.0
-        version: 5.37.0_22c5fnooleyfkzrkkgdmel5kmi
-      '@typescript-eslint/parser':
-        specifier: ^5.37.0
-        version: 5.37.0_irgkl5vooow2ydyo6aokmferha
-      eslint:
-        specifier: ^8.23.1
-        version: 8.23.1
-      eslint-config-prettier:
-        specifier: ^8.5.0
-        version: 8.5.0_eslint@8.23.1
-      eslint-plugin-prettier:
-        specifier: ^4.2.1
-        version: 4.2.1_cabrci5exjdaojcvd6xoxgeowu
-      eslint-plugin-react:
-        specifier: ^7.31.8
-        version: 7.31.8_eslint@8.23.1
-      eslint-plugin-react-hooks:
-        specifier: ^4.6.0
-        version: 4.6.0_eslint@8.23.1
-      eslint-plugin-simple-import-sort:
-        specifier: ^8.0.0
-        version: 8.0.0_eslint@8.23.1
-      prettier:
-        specifier: ^2.7.1
-        version: 2.7.1
-      turbo:
-        specifier: ^1.4.7
-        version: 1.4.7
-      typescript:
-        specifier: ^4.8.3
-        version: 4.8.3
+      '@changesets/cli': 2.24.4
+      '@rino.app/cli': link:packages/cli
+      '@types/node': 18.7.18
+      '@typescript-eslint/eslint-plugin': 5.37.0_22c5fnooleyfkzrkkgdmel5kmi
+      '@typescript-eslint/parser': 5.37.0_irgkl5vooow2ydyo6aokmferha
+      eslint: 8.23.1
+      eslint-config-prettier: 8.5.0_eslint@8.23.1
+      eslint-plugin-prettier: 4.2.1_cabrci5exjdaojcvd6xoxgeowu
+      eslint-plugin-react: 7.31.8_eslint@8.23.1
+      eslint-plugin-react-hooks: 4.6.0_eslint@8.23.1
+      eslint-plugin-simple-import-sort: 8.0.0_eslint@8.23.1
+      prettier: 2.7.1
+      turbo: 1.4.7
+      typescript: 4.8.3
 
   packages/cli:
+    specifiers:
+      '@types/lodash-es': ^4.17.6
+      commander: ^9.4.0
+      fast-glob: ^3.2.12
+      json5: ^2.2.1
+      lodash-es: ^4.17.21
+      merge-istanbul: ^1.1.4
+      monorepo-license-checker: ^0.3.0
+      nyc: ^15.1.0
     devDependencies:
-      '@types/lodash-es':
-        specifier: ^4.17.6
-        version: 4.17.6
-      commander:
-        specifier: ^9.4.0
-        version: 9.4.0
-      fast-glob:
-        specifier: ^3.2.12
-        version: 3.2.12
-      json5:
-        specifier: ^2.2.1
-        version: 2.2.1
-      lodash-es:
-        specifier: ^4.17.21
-        version: 4.17.21
-      merge-istanbul:
-        specifier: ^1.1.4
-        version: 1.1.4
-      monorepo-license-checker:
-        specifier: ^0.3.0
-        version: 0.3.0
-      nyc:
-        specifier: ^15.1.0
-        version: 15.1.0
+      '@types/lodash-es': 4.17.6
+      commander: 9.4.0
+      fast-glob: 3.2.12
+      json5: 2.2.1
+      lodash-es: 4.17.21
+      merge-istanbul: 1.1.4
+      monorepo-license-checker: 0.3.0
+      nyc: 15.1.0
 
   packages/common:
+    specifiers:
+      '@microsoft/api-extractor': ^7.31.1
+      esbuild: ^0.15.8
+      typescript: ^4.8.3
+      vitest: ^0.23.4
     devDependencies:
-      '@microsoft/api-extractor':
-        specifier: ^7.31.1
-        version: 7.31.1
-      esbuild:
-        specifier: ^0.15.8
-        version: 0.15.8
-      typescript:
-        specifier: ^4.8.3
-        version: 4.8.3
-      vitest:
-        specifier: ^0.23.4
-        version: 0.23.4
+      '@microsoft/api-extractor': 7.31.1
+      esbuild: 0.15.8
+      typescript: 4.8.3
+      vitest: 0.23.4
 
   packages/editor:
+    specifiers:
+      '@babel/core': ^7.19.1
+      '@codemirror/autocomplete': ^6.2.0
+      '@codemirror/commands': ^6.1.0
+      '@codemirror/lang-markdown': ^6.0.1
+      '@codemirror/language': ^6.2.1
+      '@codemirror/language-data': ^6.1.0
+      '@codemirror/lint': ^6.0.0
+      '@codemirror/search': ^6.2.0
+      '@codemirror/state': ^6.1.1
+      '@codemirror/theme-one-dark': ^6.1.0
+      '@codemirror/view': ^6.2.4
+      '@emotion/css': ^11.10.0
+      '@emotion/react': ^11.10.4
+      '@floating-ui/dom': ^1.0.1
+      '@floating-ui/react-dom-interactions': ^0.10.1
+      '@microsoft/api-extractor': ^7.31.1
+      '@mui/material': ^5.10.5
+      '@remirror/core': ^2.0.0
+      '@remirror/dev': ^2.0.0
+      '@remirror/extension-blockquote': ^2.0.0
+      '@remirror/extension-codemirror6': ^1.0.0
+      '@remirror/extension-doc': ^2.0.0
+      '@remirror/extension-drop-cursor': ^2.0.0
+      '@remirror/extension-events': ^2.0.0
+      '@remirror/extension-hard-break': ^2.0.0
+      '@remirror/extension-heading': ^2.0.0
+      '@remirror/extension-horizontal-rule': ^2.0.0
+      '@remirror/extension-list': ^2.0.0
+      '@remirror/extension-paragraph': ^2.0.0
+      '@remirror/extension-placeholder': ^2.0.0
+      '@remirror/extension-react-component': ^2.0.0
+      '@remirror/extension-tables': ^2.0.0
+      '@remirror/extension-text': ^2.0.0
+      '@remirror/pm': ^2.0.0
+      '@remirror/preset-core': ^2.0.0
+      '@remirror/react': ^2.0.0
+      '@remirror/react-components': ^2.0.0
+      '@remirror/react-core': ^2.0.0
+      '@remirror/styles': ^2.0.0
+      '@rino.app/common': ^0.44.0
+      '@types/jest': ^29.0.3
+      '@types/lodash-es': ^4.17.6
+      '@types/markdown-it': ^12.2.3
+      '@types/mdast': ^3.0.10
+      '@types/orderedmap': ^1.0.0
+      '@types/prettier': ^2.7.0
+      '@types/react': ^18.0.20
+      '@types/react-dom': ^18.0.6
+      '@vitest/coverage-c8': ^0.23.4
+      c8: ^7.12.0
+      clsx: ^1.2.1
+      commonmark-spec: ^0.30.0
+      esbuild: ^0.15.8
+      esbuild-node-externals: ^1.5.0
+      jest-remirror: ^2.0.0
+      jsdom: ^20.0.0
+      lodash-es: ^4.17.21
+      markdown-it: ^13.0.1
+      mdast-util-from-markdown: ^1.2.0
+      mdast-util-gfm-strikethrough: ^1.0.1
+      micromark-extension-gfm-strikethrough: ^1.0.4
+      npm-run-all: ^4.1.5
+      prettier: ^2.7.1
+      prosemirror-tables: ^1.2.5
+      prosemirror-view: ^1.28.0
+      react: ^18.2.0
+      react-dom: ^18.2.0
+      typescript: ^4.8.3
+      unstated-next: ^1.1.0
+      vite: ^3.1.2
+      vitest: ^0.23.4
     dependencies:
-      '@codemirror/autocomplete':
-        specifier: ^6.2.0
-        version: 6.2.0_lfna2s7olssa6wy4mdbsi4n2py
-      '@codemirror/commands':
-        specifier: ^6.1.0
-        version: 6.1.0
-      '@codemirror/lang-markdown':
-        specifier: ^6.0.1
-        version: 6.0.1
-      '@codemirror/language':
-        specifier: ^6.2.1
-        version: 6.2.1
-      '@codemirror/language-data':
-        specifier: ^6.1.0
-        version: 6.1.0_@codemirror+view@6.2.4
-      '@codemirror/lint':
-        specifier: ^6.0.0
-        version: 6.0.0
-      '@codemirror/search':
-        specifier: ^6.2.0
-        version: 6.2.0
-      '@codemirror/state':
-        specifier: ^6.1.1
-        version: 6.1.1
-      '@codemirror/theme-one-dark':
-        specifier: ^6.1.0
-        version: 6.1.0
-      '@codemirror/view':
-        specifier: ^6.2.4
-        version: 6.2.4
-      '@emotion/css':
-        specifier: ^11.10.0
-        version: 11.10.0_@babel+core@7.19.1
-      '@emotion/react':
-        specifier: ^11.10.4
-        version: 11.10.4_axxkdcpdr7up57umjkldobkynm
-      '@floating-ui/dom':
-        specifier: ^1.0.1
-        version: 1.0.1
-      '@floating-ui/react-dom-interactions':
-        specifier: ^0.10.1
-        version: 0.10.1_7ey2zzynotv32rpkwno45fsx4e
-      '@mui/material':
-        specifier: ^5.10.5
-        version: 5.10.5_5oq6cb37ypwn3xc33t7c3db3e4
-      '@remirror/core':
-        specifier: ^2.0.0
-        version: 2.0.0_dxe6nsofdqzdtctnltuy3bmwie
-      '@remirror/dev':
-        specifier: ^2.0.0
-        version: 2.0.0_zhk3tys7rbysulghug6afmp7xu
-      '@remirror/extension-blockquote':
-        specifier: ^2.0.0
-        version: 2.0.0_dxe6nsofdqzdtctnltuy3bmwie
-      '@remirror/extension-codemirror6':
-        specifier: ^1.0.0
-        version: 1.0.0_dxe6nsofdqzdtctnltuy3bmwie
-      '@remirror/extension-doc':
-        specifier: ^2.0.0
-        version: 2.0.0_dxe6nsofdqzdtctnltuy3bmwie
-      '@remirror/extension-drop-cursor':
-        specifier: ^2.0.0
-        version: 2.0.0_dxe6nsofdqzdtctnltuy3bmwie
-      '@remirror/extension-events':
-        specifier: ^2.0.0
-        version: 2.0.0_dxe6nsofdqzdtctnltuy3bmwie
-      '@remirror/extension-hard-break':
-        specifier: ^2.0.0
-        version: 2.0.0_dxe6nsofdqzdtctnltuy3bmwie
-      '@remirror/extension-heading':
-        specifier: ^2.0.0
-        version: 2.0.0_dxe6nsofdqzdtctnltuy3bmwie
-      '@remirror/extension-horizontal-rule':
-        specifier: ^2.0.0
-        version: 2.0.0_dxe6nsofdqzdtctnltuy3bmwie
-      '@remirror/extension-list':
-        specifier: ^2.0.0
-        version: 2.0.0_dxe6nsofdqzdtctnltuy3bmwie
-      '@remirror/extension-paragraph':
-        specifier: ^2.0.0
-        version: 2.0.0_dxe6nsofdqzdtctnltuy3bmwie
-      '@remirror/extension-placeholder':
-        specifier: ^2.0.0
-        version: 2.0.0_dxe6nsofdqzdtctnltuy3bmwie
-      '@remirror/extension-react-component':
-        specifier: ^2.0.0
-        version: 2.0.0_zhk3tys7rbysulghug6afmp7xu
-      '@remirror/extension-tables':
-        specifier: ^2.0.0
-        version: 2.0.0_dxe6nsofdqzdtctnltuy3bmwie
-      '@remirror/extension-text':
-        specifier: ^2.0.0
-        version: 2.0.0_dxe6nsofdqzdtctnltuy3bmwie
-      '@remirror/pm':
-        specifier: ^2.0.0
-        version: 2.0.0
-      '@remirror/preset-core':
-        specifier: ^2.0.0
-        version: 2.0.0_dxe6nsofdqzdtctnltuy3bmwie
-      '@remirror/react':
-        specifier: ^2.0.0
-        version: 2.0.0_zuce57adcvxhpdoe6mtjorpyiu
-      '@remirror/react-components':
-        specifier: ^2.0.0
-        version: 2.0.0_zuce57adcvxhpdoe6mtjorpyiu
-      '@remirror/react-core':
-        specifier: ^2.0.0
-        version: 2.0.0_zhk3tys7rbysulghug6afmp7xu
-      '@remirror/styles':
-        specifier: ^2.0.0
-        version: 2.0.0_wqtgssjioj7dwthbplhrduzoyq
-      '@rino.app/common':
-        specifier: ^0.44.0
-        version: link:../common
-      clsx:
-        specifier: ^1.2.1
-        version: 1.2.1
-      lodash-es:
-        specifier: ^4.17.21
-        version: 4.17.21
-      markdown-it:
-        specifier: ^13.0.1
-        version: 13.0.1
-      mdast-util-from-markdown:
-        specifier: ^1.2.0
-        version: 1.2.0
-      mdast-util-gfm-strikethrough:
-        specifier: ^1.0.1
-        version: 1.0.1
-      micromark-extension-gfm-strikethrough:
-        specifier: ^1.0.4
-        version: 1.0.4
-      prosemirror-tables:
-        specifier: ^1.2.5
-        version: 1.2.5
-      prosemirror-view:
-        specifier: ^1.28.0
-        version: 1.28.0
-      unstated-next:
-        specifier: ^1.1.0
-        version: 1.1.0
+      '@codemirror/autocomplete': 6.2.0_lfna2s7olssa6wy4mdbsi4n2py
+      '@codemirror/commands': 6.1.0
+      '@codemirror/lang-markdown': 6.0.1
+      '@codemirror/language': 6.2.1
+      '@codemirror/language-data': 6.1.0_@codemirror+view@6.2.4
+      '@codemirror/lint': 6.0.0
+      '@codemirror/search': 6.2.0
+      '@codemirror/state': 6.1.1
+      '@codemirror/theme-one-dark': 6.1.0
+      '@codemirror/view': 6.2.4
+      '@emotion/css': 11.10.0_@babel+core@7.19.1
+      '@emotion/react': 11.10.4_axxkdcpdr7up57umjkldobkynm
+      '@floating-ui/dom': 1.0.1
+      '@floating-ui/react-dom-interactions': 0.10.1_7ey2zzynotv32rpkwno45fsx4e
+      '@mui/material': 5.10.5_5oq6cb37ypwn3xc33t7c3db3e4
+      '@remirror/core': 2.0.0_dxe6nsofdqzdtctnltuy3bmwie
+      '@remirror/dev': 2.0.0_zhk3tys7rbysulghug6afmp7xu
+      '@remirror/extension-blockquote': 2.0.0_dxe6nsofdqzdtctnltuy3bmwie
+      '@remirror/extension-codemirror6': 1.0.0_dxe6nsofdqzdtctnltuy3bmwie
+      '@remirror/extension-doc': 2.0.0_dxe6nsofdqzdtctnltuy3bmwie
+      '@remirror/extension-drop-cursor': 2.0.0_dxe6nsofdqzdtctnltuy3bmwie
+      '@remirror/extension-events': 2.0.0_dxe6nsofdqzdtctnltuy3bmwie
+      '@remirror/extension-hard-break': 2.0.0_dxe6nsofdqzdtctnltuy3bmwie
+      '@remirror/extension-heading': 2.0.0_dxe6nsofdqzdtctnltuy3bmwie
+      '@remirror/extension-horizontal-rule': 2.0.0_dxe6nsofdqzdtctnltuy3bmwie
+      '@remirror/extension-list': 2.0.0_dxe6nsofdqzdtctnltuy3bmwie
+      '@remirror/extension-paragraph': 2.0.0_dxe6nsofdqzdtctnltuy3bmwie
+      '@remirror/extension-placeholder': 2.0.0_dxe6nsofdqzdtctnltuy3bmwie
+      '@remirror/extension-react-component': 2.0.0_zhk3tys7rbysulghug6afmp7xu
+      '@remirror/extension-tables': 2.0.0_dxe6nsofdqzdtctnltuy3bmwie
+      '@remirror/extension-text': 2.0.0_dxe6nsofdqzdtctnltuy3bmwie
+      '@remirror/pm': 2.0.0
+      '@remirror/preset-core': 2.0.0_dxe6nsofdqzdtctnltuy3bmwie
+      '@remirror/react': 2.0.0_zuce57adcvxhpdoe6mtjorpyiu
+      '@remirror/react-components': 2.0.0_zuce57adcvxhpdoe6mtjorpyiu
+      '@remirror/react-core': 2.0.0_zhk3tys7rbysulghug6afmp7xu
+      '@remirror/styles': 2.0.0_wqtgssjioj7dwthbplhrduzoyq
+      '@rino.app/common': link:../common
+      clsx: 1.2.1
+      lodash-es: 4.17.21
+      markdown-it: 13.0.1
+      mdast-util-from-markdown: 1.2.0
+      mdast-util-gfm-strikethrough: 1.0.1
+      micromark-extension-gfm-strikethrough: 1.0.4
+      prosemirror-tables: 1.2.5
+      prosemirror-view: 1.28.0
+      unstated-next: 1.1.0
     devDependencies:
-      '@babel/core':
-        specifier: ^7.19.1
-        version: 7.19.1
-      '@microsoft/api-extractor':
-        specifier: ^7.31.1
-        version: 7.31.1
-      '@types/jest':
-        specifier: ^29.0.3
-        version: 29.0.3
-      '@types/lodash-es':
-        specifier: ^4.17.6
-        version: 4.17.6
-      '@types/markdown-it':
-        specifier: ^12.2.3
-        version: 12.2.3
-      '@types/mdast':
-        specifier: ^3.0.10
-        version: 3.0.10
-      '@types/orderedmap':
-        specifier: ^1.0.0
-        version: 1.0.0
-      '@types/prettier':
-        specifier: ^2.7.0
-        version: 2.7.0
-      '@types/react':
-        specifier: ^18.0.20
-        version: 18.0.20
-      '@types/react-dom':
-        specifier: ^18.0.6
-        version: 18.0.6
-      '@vitest/coverage-c8':
-        specifier: ^0.23.4
-        version: 0.23.4_jsdom@20.0.0
-      c8:
-        specifier: ^7.12.0
-        version: 7.12.0
-      commonmark-spec:
-        specifier: ^0.30.0
-        version: 0.30.0
-      esbuild:
-        specifier: ^0.15.8
-        version: 0.15.8
-      esbuild-node-externals:
-        specifier: ^1.5.0
-        version: 1.5.0_esbuild@0.15.8
-      jest-remirror:
-        specifier: ^2.0.0
-        version: 2.0.0_jsdom@20.0.0
-      jsdom:
-        specifier: ^20.0.0
-        version: 20.0.0
-      npm-run-all:
-        specifier: ^4.1.5
-        version: 4.1.5
-      prettier:
-        specifier: ^2.7.1
-        version: 2.7.1
-      react:
-        specifier: ^18.2.0
-        version: 18.2.0
-      react-dom:
-        specifier: ^18.2.0
-        version: 18.2.0_react@18.2.0
-      typescript:
-        specifier: ^4.8.3
-        version: 4.8.3
-      vite:
-        specifier: ^3.1.2
-        version: 3.1.2
-      vitest:
-        specifier: ^0.23.4
-        version: 0.23.4_jsdom@20.0.0
+      '@babel/core': 7.19.1
+      '@microsoft/api-extractor': 7.31.1
+      '@types/jest': 29.0.3
+      '@types/lodash-es': 4.17.6
+      '@types/markdown-it': 12.2.3
+      '@types/mdast': 3.0.10
+      '@types/orderedmap': 1.0.0
+      '@types/prettier': 2.7.0
+      '@types/react': 18.0.20
+      '@types/react-dom': 18.0.6
+      '@vitest/coverage-c8': 0.23.4_jsdom@20.0.0
+      c8: 7.12.0
+      commonmark-spec: 0.30.0
+      esbuild: 0.15.8
+      esbuild-node-externals: 1.5.0_esbuild@0.15.8
+      jest-remirror: 2.0.0_jsdom@20.0.0
+      jsdom: 20.0.0
+      npm-run-all: 4.1.5
+      prettier: 2.7.1
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+      typescript: 4.8.3
+      vite: 3.1.2
+      vitest: 0.23.4_jsdom@20.0.0
 
   packages/electron:
+    specifiers:
+      '@rino.app/electron-main': workspace:*
+      '@rino.app/electron-preload': workspace:*
+      '@rino.app/electron-renderer': workspace:*
+      electron: 20.1.4
+      electron-builder: ^23.3.3
+      electron-notarize: ^1.2.1
+      wait-on: ^6.0.1
     devDependencies:
-      '@rino.app/electron-main':
-        specifier: workspace:*
-        version: link:../electron-main
-      '@rino.app/electron-preload':
-        specifier: workspace:*
-        version: link:../electron-preload
-      '@rino.app/electron-renderer':
-        specifier: workspace:*
-        version: link:../electron-renderer
-      electron:
-        specifier: 20.1.4
-        version: 20.1.4
-      electron-builder:
-        specifier: ^23.3.3
-        version: 23.3.3
-      electron-notarize:
-        specifier: ^1.2.1
-        version: 1.2.1
-      wait-on:
-        specifier: ^6.0.1
-        version: 6.0.1
+      '@rino.app/electron-main': link:../electron-main
+      '@rino.app/electron-preload': link:../electron-preload
+      '@rino.app/electron-renderer': link:../electron-renderer
+      electron: 20.1.4
+      electron-builder: 23.3.3
+      electron-notarize: 1.2.1
+      wait-on: 6.0.1
 
   packages/electron-main:
+    specifiers:
+      '@rino.app/common': workspace:*
+      '@rino.app/electron-types': workspace:*
+      '@types/lodash-es': ^4.17.6
+      electron: 20.1.4
+      electron-context-menu: ^3.5.0
+      electron-log: ^4.4.8
+      electron-store: ^8.1.0
+      electron-updater: ^5.2.1
+      esbuild: ^0.15.8
+      lodash-es: ^4.17.21
+      node-fetch: ^3.2.10
+      typescript: ^4.8.3
     devDependencies:
-      '@rino.app/common':
-        specifier: workspace:*
-        version: link:../common
-      '@rino.app/electron-types':
-        specifier: workspace:*
-        version: link:../electron-types
-      '@types/lodash-es':
-        specifier: ^4.17.6
-        version: 4.17.6
-      electron:
-        specifier: 20.1.4
-        version: 20.1.4
-      electron-context-menu:
-        specifier: ^3.5.0
-        version: 3.5.0
-      electron-log:
-        specifier: ^4.4.8
-        version: 4.4.8
-      electron-store:
-        specifier: ^8.1.0
-        version: 8.1.0
-      electron-updater:
-        specifier: ^5.2.1
-        version: 5.2.1
-      esbuild:
-        specifier: ^0.15.8
-        version: 0.15.8
-      lodash-es:
-        specifier: ^4.17.21
-        version: 4.17.21
-      node-fetch:
-        specifier: ^3.2.10
-        version: 3.2.10
-      typescript:
-        specifier: ^4.8.3
-        version: 4.8.3
+      '@rino.app/common': link:../common
+      '@rino.app/electron-types': link:../electron-types
+      '@types/lodash-es': 4.17.6
+      electron: 20.1.4
+      electron-context-menu: 3.5.0
+      electron-log: 4.4.8
+      electron-store: 8.1.0
+      electron-updater: 5.2.1
+      esbuild: 0.15.8
+      lodash-es: 4.17.21
+      node-fetch: 3.2.10
+      typescript: 4.8.3
 
   packages/electron-preload:
+    specifiers:
+      '@rino.app/electron-types': workspace:*
+      electron: 20.1.4
+      electron-log: ^4.4.8
+      esbuild: ^0.15.8
+      typescript: ^4.8.3
     devDependencies:
-      '@rino.app/electron-types':
-        specifier: workspace:*
-        version: link:../electron-types
-      electron:
-        specifier: 20.1.4
-        version: 20.1.4
-      electron-log:
-        specifier: ^4.4.8
-        version: 4.4.8
-      esbuild:
-        specifier: ^0.15.8
-        version: 0.15.8
-      typescript:
-        specifier: ^4.8.3
-        version: 4.8.3
+      '@rino.app/electron-types': link:../electron-types
+      electron: 20.1.4
+      electron-log: 4.4.8
+      esbuild: 0.15.8
+      typescript: 4.8.3
 
   packages/electron-renderer:
+    specifiers:
+      '@rino.app/common': workspace:*
+      '@rino.app/editor': workspace:*
+      '@rino.app/electron-types': workspace:*
+      '@types/react': ^18.0.20
+      '@types/react-dom': ^18.0.6
+      '@vitejs/plugin-react': ^2.1.0
+      electron: 20.1.4
+      electron-log: ^4.4.8
+      immer: ^9.0.15
+      is-promise: ^4.0.0
+      react: ^18.2.0
+      react-dom: ^18.2.0
+      typescript: ^4.8.3
+      unstated-next: ^1.1.0
+      vite: ^3.1.2
     devDependencies:
-      '@rino.app/common':
-        specifier: workspace:*
-        version: link:../common
-      '@rino.app/editor':
-        specifier: workspace:*
-        version: link:../editor
-      '@rino.app/electron-types':
-        specifier: workspace:*
-        version: link:../electron-types
-      '@types/react':
-        specifier: ^18.0.20
-        version: 18.0.20
-      '@types/react-dom':
-        specifier: ^18.0.6
-        version: 18.0.6
-      '@vitejs/plugin-react':
-        specifier: ^2.1.0
-        version: 2.1.0_vite@3.1.2
-      electron:
-        specifier: 20.1.4
-        version: 20.1.4
-      electron-log:
-        specifier: ^4.4.8
-        version: 4.4.8
-      immer:
-        specifier: ^9.0.15
-        version: 9.0.15
-      is-promise:
-        specifier: ^4.0.0
-        version: 4.0.0
-      react:
-        specifier: ^18.2.0
-        version: 18.2.0
-      react-dom:
-        specifier: ^18.2.0
-        version: 18.2.0_react@18.2.0
-      typescript:
-        specifier: ^4.8.3
-        version: 4.8.3
-      unstated-next:
-        specifier: ^1.1.0
-        version: 1.1.0
-      vite:
-        specifier: ^3.1.2
-        version: 3.1.2
+      '@rino.app/common': link:../common
+      '@rino.app/editor': link:../editor
+      '@rino.app/electron-types': link:../electron-types
+      '@types/react': 18.0.20
+      '@types/react-dom': 18.0.6
+      '@vitejs/plugin-react': 2.1.0_vite@3.1.2
+      electron: 20.1.4
+      electron-log: 4.4.8
+      immer: 9.0.15
+      is-promise: 4.0.0
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+      typescript: 4.8.3
+      unstated-next: 1.1.0
+      vite: 3.1.2
 
   packages/electron-types:
+    specifiers:
+      '@rino.app/editor': workspace:*
+      electron: 20.1.4
     devDependencies:
-      '@rino.app/editor':
-        specifier: workspace:*
-        version: link:../editor
-      electron:
-        specifier: 20.1.4
-        version: 20.1.4
+      '@rino.app/editor': link:../editor
+      electron: 20.1.4
 
   packages/home:
+    specifiers:
+      '@babel/core': ^7.19.1
+      '@emotion/cache': ^11.10.3
+      '@emotion/react': ^11.10.4
+      '@emotion/server': ^11.10.0
+      '@emotion/styled': ^11.10.4
+      '@mui/icons-material': ^5.10.3
+      '@mui/material': ^5.10.5
+      '@mui/system': ^5.10.5
+      '@next/bundle-analyzer': ^12.3.0
+      '@testing-library/react': ^13.4.0
+      '@types/react': ^18.0.20
+      '@types/react-dom': ^18.0.6
+      happy-dom: ^6.0.4
+      lodash-es: ^4.17.21
+      next: ^12.3.0
+      react: ^18.2.0
+      react-dom: ^18.2.0
+      responsive-loader: ^3.1.1
+      sharp: ^0.31.0
+      vitest: ^0.23.4
     devDependencies:
-      '@babel/core':
-        specifier: ^7.19.1
-        version: 7.19.1
-      '@emotion/cache':
-        specifier: ^11.10.3
-        version: 11.10.3
-      '@emotion/react':
-        specifier: ^11.10.4
-        version: 11.10.4_axxkdcpdr7up57umjkldobkynm
-      '@emotion/server':
-        specifier: ^11.10.0
-        version: 11.10.0
-      '@emotion/styled':
-        specifier: ^11.10.4
-        version: 11.10.4_sn4wuyy54zwps25tv4w7lbiz6i
-      '@mui/icons-material':
-        specifier: ^5.10.3
-        version: 5.10.3_5evnxlqsqnxmrwqqtdxt2buelq
-      '@mui/material':
-        specifier: ^5.10.5
-        version: 5.10.5_af5ln35zuaotaffazii6n6bke4
-      '@mui/system':
-        specifier: ^5.10.5
-        version: 5.10.5_4mv32nu4vciambuqqzuu4gtvj4
-      '@next/bundle-analyzer':
-        specifier: ^12.3.0
-        version: 12.3.0
-      '@testing-library/react':
-        specifier: ^13.4.0
-        version: 13.4.0_biqbaboplfbrettd7655fr4n2y
-      '@types/react':
-        specifier: ^18.0.20
-        version: 18.0.20
-      '@types/react-dom':
-        specifier: ^18.0.6
-        version: 18.0.6
-      happy-dom:
-        specifier: ^6.0.4
-        version: 6.0.4
-      lodash-es:
-        specifier: ^4.17.21
-        version: 4.17.21
-      next:
-        specifier: ^12.3.0
-        version: 12.3.0_ir3quccc6i62x6qn6jjhyjjiey
-      react:
-        specifier: ^18.2.0
-        version: 18.2.0
-      react-dom:
-        specifier: ^18.2.0
-        version: 18.2.0_react@18.2.0
-      responsive-loader:
-        specifier: ^3.1.1
-        version: 3.1.1_sharp@0.31.0
-      sharp:
-        specifier: ^0.31.0
-        version: 0.31.0
-      vitest:
-        specifier: ^0.23.4
-        version: 0.23.4_happy-dom@6.0.4
+      '@babel/core': 7.19.1
+      '@emotion/cache': 11.10.3
+      '@emotion/react': 11.10.4_axxkdcpdr7up57umjkldobkynm
+      '@emotion/server': 11.10.0
+      '@emotion/styled': 11.10.4_sn4wuyy54zwps25tv4w7lbiz6i
+      '@mui/icons-material': 5.10.3_5evnxlqsqnxmrwqqtdxt2buelq
+      '@mui/material': 5.10.5_af5ln35zuaotaffazii6n6bke4
+      '@mui/system': 5.10.5_4mv32nu4vciambuqqzuu4gtvj4
+      '@next/bundle-analyzer': 12.3.0
+      '@testing-library/react': 13.4.0_biqbaboplfbrettd7655fr4n2y
+      '@types/react': 18.0.20
+      '@types/react-dom': 18.0.6
+      happy-dom: 6.0.4
+      lodash-es: 4.17.21
+      next: 12.3.0_ir3quccc6i62x6qn6jjhyjjiey
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+      responsive-loader: 3.1.1_sharp@0.31.0
+      sharp: 0.31.0
+      vitest: 0.23.4_happy-dom@6.0.4
 
   packages/home2:
+    specifiers:
+      '@types/react': ^18.0.20
+      '@types/react-dom': ^18.0.6
+      '@vitejs/plugin-react': ^2.1.0
+      react: ^18.2.0
+      react-dom: ^18.2.0
+      react-router-dom: ^6.4.0
+      visite: workspace:*
+      vite: ^3.1.2
     devDependencies:
-      '@types/react':
-        specifier: ^18.0.20
-        version: 18.0.20
-      '@types/react-dom':
-        specifier: ^18.0.6
-        version: 18.0.6
-      '@vitejs/plugin-react':
-        specifier: ^2.1.0
-        version: 2.1.0_vite@3.1.2
-      react:
-        specifier: ^18.2.0
-        version: 18.2.0
-      react-dom:
-        specifier: ^18.2.0
-        version: 18.2.0_react@18.2.0
-      react-router-dom:
-        specifier: ^6.4.0
-        version: 6.4.0_biqbaboplfbrettd7655fr4n2y
-      visite:
-        specifier: workspace:*
-        version: link:../visite
-      vite:
-        specifier: ^3.1.2
-        version: 3.1.2
+      '@types/react': 18.0.20
+      '@types/react-dom': 18.0.6
+      '@vitejs/plugin-react': 2.1.0_vite@3.1.2
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+      react-router-dom: 6.4.0_biqbaboplfbrettd7655fr4n2y
+      visite: link:../visite
+      vite: 3.1.2
 
   packages/playground:
+    specifiers:
+      '@rino.app/editor': workspace:*
+      '@types/react': ^18.0.20
+      '@types/react-dom': ^18.0.6
+      '@vitejs/plugin-react': ^2.1.0
+      c8: ^7.12.0
+      jest-image-snapshot: ^5.2.0
+      jest-remirror: ^2.0.0
+      jsdom: ^20.0.0
+      lodash-es: ^4.17.21
+      npm-run-all: ^4.1.5
+      playwright-chromium: ^1.25.2
+      react: ^18.2.0
+      react-dom: ^18.2.0
+      rollup-plugin-sourcemaps: ^0.6.3
+      typescript: ^4.8.3
+      v8-to-istanbul: ^9.0.1
+      vite: ^3.1.2
+      vitest: ^0.23.4
     devDependencies:
-      '@rino.app/editor':
-        specifier: workspace:*
-        version: link:../editor
-      '@types/react':
-        specifier: ^18.0.20
-        version: 18.0.20
-      '@types/react-dom':
-        specifier: ^18.0.6
-        version: 18.0.6
-      '@vitejs/plugin-react':
-        specifier: ^2.1.0
-        version: 2.1.0_vite@3.1.2
-      c8:
-        specifier: ^7.12.0
-        version: 7.12.0
-      jest-image-snapshot:
-        specifier: ^5.2.0
-        version: 5.2.0
-      jest-remirror:
-        specifier: ^2.0.0
-        version: 2.0.0_jsdom@20.0.0
-      jsdom:
-        specifier: ^20.0.0
-        version: 20.0.0
-      lodash-es:
-        specifier: ^4.17.21
-        version: 4.17.21
-      npm-run-all:
-        specifier: ^4.1.5
-        version: 4.1.5
-      playwright-chromium:
-        specifier: ^1.25.2
-        version: 1.25.2
-      react:
-        specifier: ^18.2.0
-        version: 18.2.0
-      react-dom:
-        specifier: ^18.2.0
-        version: 18.2.0_react@18.2.0
-      rollup-plugin-sourcemaps:
-        specifier: ^0.6.3
-        version: 0.6.3
-      typescript:
-        specifier: ^4.8.3
-        version: 4.8.3
-      v8-to-istanbul:
-        specifier: ^9.0.1
-        version: 9.0.1
-      vite:
-        specifier: ^3.1.2
-        version: 3.1.2
-      vitest:
-        specifier: ^0.23.4
-        version: 0.23.4_jsdom@20.0.0
+      '@rino.app/editor': link:../editor
+      '@types/react': 18.0.20
+      '@types/react-dom': 18.0.6
+      '@vitejs/plugin-react': 2.1.0_vite@3.1.2
+      c8: 7.12.0
+      jest-image-snapshot: 5.2.0
+      jest-remirror: 2.0.0_jsdom@20.0.0
+      jsdom: 20.0.0
+      lodash-es: 4.17.21
+      npm-run-all: 4.1.5
+      playwright-chromium: 1.25.2
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+      rollup-plugin-sourcemaps: 0.6.3
+      typescript: 4.8.3
+      v8-to-istanbul: 9.0.1
+      vite: 3.1.2
+      vitest: 0.23.4_jsdom@20.0.0
 
   packages/rig:
+    specifiers:
+      '@lhci/cli': ^0.9.0
+      merge-istanbul: ^1.1.4
+      monorepo-license-checker: ^0.3.0
+      nyc: ^15.1.0
     devDependencies:
-      '@lhci/cli':
-        specifier: ^0.9.0
-        version: 0.9.0
-      merge-istanbul:
-        specifier: ^1.1.4
-        version: 1.1.4
-      monorepo-license-checker:
-        specifier: ^0.3.0
-        version: 0.3.0
-      nyc:
-        specifier: ^15.1.0
-        version: 15.1.0
+      '@lhci/cli': 0.9.0
+      merge-istanbul: 1.1.4
+      monorepo-license-checker: 0.3.0
+      nyc: 15.1.0
 
   packages/visite:
+    specifiers:
+      '@types/connect': ^3.4.35
+      connect: ^3.7.0
+      esbuild: ^0.15.8
+      npm-run-all: ^4.1.5
+      react: ^18.2.0
+      react-dom: ^18.2.0
+      react-helmet-async: ^1.3.0
+      react-router-dom: ^6.4.0
+      rimraf: ^3.0.2
+      vite: ^3.1.2
     dependencies:
-      connect:
-        specifier: ^3.7.0
-        version: 3.7.0
-      react-helmet-async:
-        specifier: ^1.3.0
-        version: 1.3.0_biqbaboplfbrettd7655fr4n2y
-      react-router-dom:
-        specifier: ^6.4.0
-        version: 6.4.0_biqbaboplfbrettd7655fr4n2y
-      vite:
-        specifier: ^3.1.2
-        version: 3.1.2
+      connect: 3.7.0
+      react-helmet-async: 1.3.0_biqbaboplfbrettd7655fr4n2y
+      react-router-dom: 6.4.0_biqbaboplfbrettd7655fr4n2y
+      vite: 3.1.2
     devDependencies:
-      '@types/connect':
-        specifier: ^3.4.35
-        version: 3.4.35
-      esbuild:
-        specifier: ^0.15.8
-        version: 0.15.8
-      npm-run-all:
-        specifier: ^4.1.5
-        version: 4.1.5
-      react:
-        specifier: ^18.2.0
-        version: 18.2.0
-      react-dom:
-        specifier: ^18.2.0
-        version: 18.2.0_react@18.2.0
-      rimraf:
-        specifier: ^3.0.2
-        version: 3.0.2
+      '@types/connect': 3.4.35
+      esbuild: 0.15.8
+      npm-run-all: 4.1.5
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+      rimraf: 3.0.2
 
 packages:
 
@@ -1646,7 +1462,7 @@ packages:
       '@jest/schemas': 29.0.0
       '@types/istanbul-lib-coverage': 2.0.4
       '@types/istanbul-reports': 3.0.1
-      '@types/node': 18.7.17
+      '@types/node': 18.7.18
       '@types/yargs': 17.0.12
       chalk: 4.1.2
     dev: true
@@ -3347,7 +3163,7 @@ packages:
   /@types/concat-stream/1.6.1:
     resolution: {integrity: sha512-eHE4cQPoj6ngxBZMvVf6Hw7Mh4jMW4U9lpGmS5GBPB9RYxlFg+CHaVN7ErNY4W9XfLIEn20b4VDYaIrbq0q4uA==}
     dependencies:
-      '@types/node': 18.7.17
+      '@types/node': 18.7.18
     dev: true
 
   /@types/connect/3.4.35:
@@ -3368,13 +3184,13 @@ packages:
   /@types/form-data/0.0.33:
     resolution: {integrity: sha512-8BSvG1kGm83cyJITQMZSulnl6QV8jqAGreJsc5tPu1Jq0vTSOiY/k24Wx82JRpWwZSqrala6sd5rWi6aNXvqcw==}
     dependencies:
-      '@types/node': 18.7.17
+      '@types/node': 18.7.18
     dev: true
 
   /@types/fs-extra/9.0.13:
     resolution: {integrity: sha512-nEnwB++1u5lVDM2UI4c1+5R+FYaKfaAzS4OococimjVm3nQw3TuzH5UNsocrcTBbhnerblyHj4A49qXbIiZdpA==}
     dependencies:
-      '@types/node': 18.7.17
+      '@types/node': 18.7.18
     dev: true
 
   /@types/glob/7.2.0:
@@ -3382,7 +3198,7 @@ packages:
     requiresBuild: true
     dependencies:
       '@types/minimatch': 5.1.2
-      '@types/node': 18.7.17
+      '@types/node': 18.7.18
     dev: true
     optional: true
 
@@ -3426,7 +3242,7 @@ packages:
   /@types/keyv/3.1.4:
     resolution: {integrity: sha512-BQ5aZNSCpj7D6K2ksrRCTmKRLEpnPvWDiLPfoGyhZ++8YtiK9d/3DBKPJgry359X/P1PfruyYwvnvwFjuEiEIg==}
     dependencies:
-      '@types/node': 18.7.17
+      '@types/node': 18.7.18
     dev: true
 
   /@types/linkify-it/3.0.2:
@@ -3494,6 +3310,10 @@ packages:
     resolution: {integrity: sha512-0UyfUnt02zIuqp7yC8RYtDkp/vo8bFaQ13KkSEvUAohPOAlnVNbj5Fi3fgPSuwzakS+EvvnnZ4x9y7i6ASaSPQ==}
     dev: true
 
+  /@types/node/18.7.18:
+    resolution: {integrity: sha512-m+6nTEOadJZuTPkKR/SYK3A2d7FZrgElol9UP1Kae90VVU4a6mxnPuLiIW1m4Cq4gZ/nWb9GrdVXJCoCazDAbg==}
+    dev: true
+
   /@types/node/8.10.66:
     resolution: {integrity: sha512-tktOkFUA4kXx2hhhrB8bIFb5TbwzS4uOhKEmwiD+NoiL0qtP2OQ9mFldbgD4dV1djrlBYP6eBuQZiWjuHUpqFw==}
     dev: true
@@ -3519,7 +3339,7 @@ packages:
     resolution: {integrity: sha512-ULqvZNGMv0zRFvqn8/4LSPtnmN4MfhlPNtJCTpKuIIxGVGZ2rYWzFXrvEBoh9CVyqSE7D6YFRJ1hydLHI6kbWw==}
     requiresBuild: true
     dependencies:
-      '@types/node': 18.7.17
+      '@types/node': 18.7.18
       xmlbuilder: 15.1.1
     dev: true
     optional: true
@@ -3573,7 +3393,7 @@ packages:
   /@types/responselike/1.0.0:
     resolution: {integrity: sha512-85Y2BjiufFzaMIlvJDvTTB8Fxl2xfLo4HgmHzVBz08w4wDePCTjYw66PdrolO0kzli3yam/YCgRufyo1DdQVTA==}
     dependencies:
-      '@types/node': 18.7.17
+      '@types/node': 18.7.18
     dev: true
 
   /@types/sanitize-html/2.6.2:
@@ -3627,7 +3447,7 @@ packages:
     resolution: {integrity: sha512-Cn6WYCm0tXv8p6k+A8PvbDG763EDpBoTzHdA+Q/MF6H3sapGjCm9NzoaJncJS9tUKSuCoDs9XHxYYsQDgxR6kw==}
     requiresBuild: true
     dependencies:
-      '@types/node': 18.7.17
+      '@types/node': 18.7.18
     dev: true
     optional: true
 
@@ -4533,7 +4353,7 @@ packages:
   /chrome-launcher/0.13.4:
     resolution: {integrity: sha512-nnzXiDbGKjDSK6t2I+35OAPBy5Pw/39bgkb/ZAFwMhwJbdYBp6aH+vW28ZgtjdU890Q7D+3wN/tB8N66q5Gi2A==}
     dependencies:
-      '@types/node': 18.7.17
+      '@types/node': 18.7.18
       escape-string-regexp: 1.0.5
       is-wsl: 2.2.0
       lighthouse-logger: 1.2.0
@@ -4548,7 +4368,7 @@ packages:
     engines: {node: '>=12.13.0'}
     hasBin: true
     dependencies:
-      '@types/node': 18.7.17
+      '@types/node': 18.7.18
       escape-string-regexp: 4.0.0
       is-wsl: 2.2.0
       lighthouse-logger: 1.3.0
@@ -7541,7 +7361,7 @@ packages:
     engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
     dependencies:
       '@jest/types': 29.0.3
-      '@types/node': 18.7.17
+      '@types/node': 18.7.18
       chalk: 4.1.2
       ci-info: 3.4.0
       graceful-fs: 4.2.10
@@ -10411,7 +10231,7 @@ packages:
     resolution: {integrity: sha512-DI7/OuAUD+GMpR6dmu8lliO2Wg5zfeh+/xsdyJZCzd8o5JgFUjCeLsBDuZjIQJdwXS3J0L/uZYrELKYqx+PXog==}
     engines: {node: '>=8.0'}
     dependencies:
-      '@types/node': 18.7.17
+      '@types/node': 18.7.18
       image-ssim: 0.2.0
       jpeg-js: 0.4.4
     dev: true
