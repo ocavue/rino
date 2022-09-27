@@ -1,5 +1,5 @@
 import { autoUpdate, flip, hide, offset, shift, useFloating, VirtualElement } from "@floating-ui/react-dom-interactions"
-import { More2LineIcon } from "@remirror/react-components/all-icons"
+import { MoreLineIcon } from "./icons/MoreLineIcon"
 import React, { useCallback, useEffect, useState } from "react"
 
 import { TableMenu } from "./TableMenu"
@@ -57,7 +57,7 @@ const TableMenuButton: React.FC<TableMenuButtonProps> = ({ handleClick, anchorCe
             }}
             onClick={handleClick}
         >
-            <More2LineIcon size="24px" />
+            <MoreLineIcon />
         </div>
     )
 }
