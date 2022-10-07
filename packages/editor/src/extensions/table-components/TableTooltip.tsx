@@ -1,7 +1,7 @@
 import { autoUpdate, flip, hide, offset, shift, useFloating, VirtualElement } from "@floating-ui/react-dom-interactions"
-import { MoreLineIcon } from "./icons/MoreLineIcon"
 import React, { useCallback, useEffect, useState } from "react"
 
+import { MoreLineIcon } from "./icons/MoreLineIcon"
 import { TableMenu } from "./TableMenu"
 import { useCellSelectionDom } from "./use-cell-selection-dom"
 
