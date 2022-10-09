@@ -148,6 +148,15 @@ function flatAutoLinkLiteral(mdastToken: mdast.Link, depth: number): InlineToken
 }
 
 function flatLink(mdastToken: mdast.Link, depth: number): InlineToken[] {
+    // TODO: when parsing `www.`, `mdastToken.position` is undefined.
+    if (!mdastToken.position) {
+        console.dir(mdastToken, { depth: null })
+    }
+
+    if (!mdastToken.position) {
+        return mdastToken.children.map((child) => flatPhrasingContent(child, depth)).flat()
+    }
+
     const parentStartPos = mdastToken.position!.start.offset!
     const parentEndPos = mdastToken.position!.end.offset!
 
