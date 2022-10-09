@@ -607,6 +607,67 @@ describe("autolink", function () {
     })
 })
 
+describe("autolink literal", function () {
+    test("http link", function () {
+        expect(fromInlineMarkdown("http://example.com/hello")).toMatchInlineSnapshot(`
+          [
+            {
+              "attrs": {
+                "depth": 1,
+                "first": true,
+                "href": "http://example.com/hello",
+                "last": true,
+              },
+              "end": 24,
+              "marks": [
+                "mdLinkText",
+              ],
+              "start": 0,
+            },
+          ]
+        `)
+    })
+
+    test("email", function () {
+        expect(fromInlineMarkdown("hello@example.com")).toMatchInlineSnapshot(`
+          [
+            {
+              "attrs": {
+                "depth": 1,
+                "first": true,
+                "href": "mailto:hello@example.com",
+                "last": true,
+              },
+              "end": 17,
+              "marks": [
+                "mdLinkText",
+              ],
+              "start": 0,
+            },
+          ]
+        `)
+    })
+
+    test("incomplete link", function () {
+        expect(fromInlineMarkdown("www.")).toMatchInlineSnapshot(`
+          [
+            {
+              "attrs": {
+                "depth": 1,
+                "first": true,
+                "last": true,
+              },
+              "end": 4,
+              "marks": [
+                "mdText",
+              ],
+              "start": 0,
+            },
+          ]
+        `)
+    })
+})
+
 describe("hard break", function () {
     test("no hard break", function () {
         expect(fromInlineMarkdown("abc")).toStrictEqual([
