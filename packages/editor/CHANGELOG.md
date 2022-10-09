@@ -1,5 +1,11 @@
 # @rino.app/editor
 
+## 0.45.0
+
+### Minor Changes
+
+-   0f7e5d8: Parse links automatically without requiring the use of `<` and `>` to delimit them.
+
 ## 0.44.5
 
 ### Patch Changes
