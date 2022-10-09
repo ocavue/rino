@@ -647,6 +647,26 @@ describe("autolink literal", function () {
           ]
         `)
     })
+
+    test("incomplete link", function () {
+        expect(fromInlineMarkdown("www.")).toMatchInlineSnapshot(`
+          [
+            {
+              "attrs": {
+                "depth": 1,
+                "first": true,
+                "href": "http://example.com/hello",
+                "last": true,
+              },
+              "end": 24,
+              "marks": [
+                "mdLinkText",
+              ],
+              "start": 0,
+            },
+          ]
+        `)
+    })
 })
 
 describe("hard break", function () {
