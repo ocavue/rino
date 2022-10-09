@@ -3,7 +3,9 @@
 import type mdast from "mdast"
 import type { Options as FromMarkdownOptions } from "mdast-util-from-markdown"
 import { fromMarkdown } from "mdast-util-from-markdown"
+import { gfmAutolinkLiteralFromMarkdown } from "mdast-util-gfm-autolink-literal"
 import { gfmStrikethroughFromMarkdown } from "mdast-util-gfm-strikethrough"
+import { gfmAutolinkLiteral } from "micromark-extension-gfm-autolink-literal"
 import { gfmStrikethrough } from "micromark-extension-gfm-strikethrough"
 
 import type { RinoMarkName } from "./inline-mark-extensions"
@@ -134,7 +136,28 @@ function flatImage(mdastToken: mdast.Image, depth: number): InlineToken[] {
     ]
 }
 
+function flatAutoLinkLiteral(mdastToken: mdast.Link, depth: number): InlineToken[] {
+    return [
+        {
+            marks: ["mdLinkText"],
+            attrs: { depth, first: true, last: true, href: mdastToken.url },
+            start: mdastToken.position!.start.offset!,
+            end: mdastToken.position!.end.offset!,
+        },
+    ]
+}
+
 function flatLink(mdastToken: mdast.Link, depth: number): InlineToken[] {
+    const parentStartPos = mdastToken.position!.start.offset!
+    const parentEndPos = mdastToken.position!.end.offset!
+
+    const childrenStartPos = mdastToken.children[0].position!.start.offset!
+    const childrenEndPos = mdastToken.children[mdastToken.children.length - 1].position!.end.offset!
+
+    if (parentStartPos === childrenStartPos && parentEndPos === childrenEndPos) {
+        return flatAutoLinkLiteral(mdastToken, depth)
+    }
+
     const inlineTokens: InlineToken[] = [
         // match "<" for autolinks or "[" for links
         {
@@ -151,8 +174,6 @@ function flatLink(mdastToken: mdast.Link, depth: number): InlineToken[] {
             inlineTokens.push(inlineToken)
         }
     }
-    const childrenEndPos = inlineTokens[inlineTokens.length - 1].end
-    const parentEndPos = mdastToken.position!.end.offset!
 
     if (childrenEndPos + 2 < parentEndPos) {
         inlineTokens.push(
@@ -257,8 +278,9 @@ const fromMarkdownOptions: FromMarkdownOptions = {
             },
         },
         gfmStrikethrough({ singleTilde: false }),
+        gfmAutolinkLiteral,
     ],
-    mdastExtensions: [gfmStrikethroughFromMarkdown],
+    mdastExtensions: [gfmStrikethroughFromMarkdown, gfmAutolinkLiteralFromMarkdown],
 }
 
 function parseInlineMarkdown(text: string): mdast.PhrasingContent[] {
