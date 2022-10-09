@@ -1,5 +1,11 @@
 # @rino.app/electron
 
+## 0.45.0
+
+### Minor Changes
+
+-   1db791f: Parse links automatically without requiring the use of `<` and `>` to delimit them.
+
 ## 0.44.6
 
 ### Patch Changes
