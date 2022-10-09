@@ -3,13 +3,13 @@
 import type mdast from "mdast"
 import type { Options as FromMarkdownOptions } from "mdast-util-from-markdown"
 import { fromMarkdown } from "mdast-util-from-markdown"
-import { gfmAutolinkLiteralFromMarkdown } from "mdast-util-gfm-autolink-literal"
 import { gfmStrikethroughFromMarkdown } from "mdast-util-gfm-strikethrough"
 import { gfmAutolinkLiteral } from "micromark-extension-gfm-autolink-literal"
 import { gfmStrikethrough } from "micromark-extension-gfm-strikethrough"
 
 import type { RinoMarkName } from "./inline-mark-extensions"
 import type { InlineToken } from "./inline-types"
+import { gfmAutolinkLiteralFromMarkdown } from "./mdast-util-gfm-autolink-literal.fork.mjs"
 
 function fixMarkNames(marks: RinoMarkName[]): RinoMarkName[] {
     if (marks.length <= 1) return marks
@@ -148,15 +148,6 @@ function flatAutoLinkLiteral(mdastToken: mdast.Link, depth: number): InlineToken
 }
 
 function flatLink(mdastToken: mdast.Link, depth: number): InlineToken[] {
-    // TODO: when parsing `www.`, `mdastToken.position` is undefined.
-    if (!mdastToken.position) {
-        console.dir(mdastToken, { depth: null })
-    }
-
-    if (!mdastToken.position) {
-        return mdastToken.children.map((child) => flatPhrasingContent(child, depth)).flat()
-    }
-
     const parentStartPos = mdastToken.position!.start.offset!
     const parentEndPos = mdastToken.position!.end.offset!
 

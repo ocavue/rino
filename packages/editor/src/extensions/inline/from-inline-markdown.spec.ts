@@ -655,12 +655,11 @@ describe("autolink literal", function () {
               "attrs": {
                 "depth": 1,
                 "first": true,
-                "href": "http://example.com/hello",
                 "last": true,
               },
-              "end": 24,
+              "end": 4,
               "marks": [
-                "mdLinkText",
+                "mdText",
               ],
               "start": 0,
             },
