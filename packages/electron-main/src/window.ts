@@ -41,6 +41,11 @@ export async function createWindow() {
             webPreferences: {
                 preload: preloadEntry,
 
+                // Disable sandbox until we `electron-log` can be used in the
+                // preload script when sandbox is enable. See also
+                // https://github.com/megahertz/electron-log/issues/267
+                sandbox: false,
+
                 // I need to disable web security in dev mode to load local image files
                 // https://stackoverflow.com/a/50319258/9426588
                 webSecurity: !env.IS_DEV,
