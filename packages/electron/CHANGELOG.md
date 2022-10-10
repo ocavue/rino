@@ -1,5 +1,11 @@
 # @rino.app/electron
 
+## 0.45.1
+
+### Patch Changes
+
+-   749560f: Fix a desktop app crash.
+
 ## 0.45.0
 
 ### Minor Changes
