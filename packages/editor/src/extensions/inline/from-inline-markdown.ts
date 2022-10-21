@@ -3,13 +3,18 @@
 import type mdast from "mdast"
 import type { Options as FromMarkdownOptions } from "mdast-util-from-markdown"
 import { fromMarkdown } from "mdast-util-from-markdown"
+import { gfmAutolinkLiteralFromMarkdown } from "mdast-util-gfm-autolink-literal"
 import { gfmStrikethroughFromMarkdown } from "mdast-util-gfm-strikethrough"
 import { gfmAutolinkLiteral } from "micromark-extension-gfm-autolink-literal"
 import { gfmStrikethrough } from "micromark-extension-gfm-strikethrough"
 
 import type { RinoMarkName } from "./inline-mark-extensions"
 import type { InlineToken } from "./inline-types"
-import { gfmAutolinkLiteralFromMarkdown } from "./mdast-util-gfm-autolink-literal.fork.mjs"
+
+// disable autolink transforms as a workaround for https://github.com/syntax-tree/mdast-util-gfm-autolink-literal/issues/6
+//
+// See also https://github.com/remarkjs/remark-gfm/issues/16#issuecomment-846357030
+gfmAutolinkLiteralFromMarkdown.transforms = []
 
 function fixMarkNames(marks: RinoMarkName[]): RinoMarkName[] {
     if (marks.length <= 1) return marks
