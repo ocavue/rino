@@ -1,4 +1,4 @@
-const { notarize } = require("electron-notarize")
+const { notarize } = require("@electron/notarize")
 
 function log(...args) {
     const date = new Date().toISOString()
