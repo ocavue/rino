@@ -27,9 +27,8 @@ function getNextConfig() {
         productionBrowserSourceMaps: true,
         trailingSlash: false,
         devIndicators: {
-            // Disable Next.js's prerender icon in the right bottom corner
-            // of the screen.
-            autoPrerender: false,
+            // https://nextjs.org/docs/api-reference/next.config.js/build-indicator
+            buildActivityPosition: "bottom-left",
         },
         webpack: (config, options) => {
             config.module.rules.push({
