@@ -1,5 +1,11 @@
 # @rino.app/electron
 
+## 0.45.2
+
+### Patch Changes
+
+-   dba78c0: Update dependencies.
+
 ## 0.45.1
 
 ### Patch Changes
