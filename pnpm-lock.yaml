@@ -92,6 +92,7 @@ importers:
       '@remirror/extension-doc': ^2.0.7
       '@remirror/extension-drop-cursor': ^2.0.7
       '@remirror/extension-events': ^2.1.7
+      '@remirror/extension-find': ^0.1.0
       '@remirror/extension-hard-break': ^2.0.7
       '@remirror/extension-heading': ^2.0.7
       '@remirror/extension-horizontal-rule': ^2.0.7
@@ -107,6 +108,7 @@ importers:
       '@remirror/react-core': ^2.0.8
       '@remirror/styles': ^2.0.1
       '@rino.app/common': ^0.44.0
+      '@types/is-hotkey': ^0.1.7
       '@types/jest': ^29.2.1
       '@types/lodash-es': ^4.17.6
       '@types/markdown-it': ^12.2.3
@@ -121,6 +123,7 @@ importers:
       commonmark-spec: ^0.30.0
       esbuild: ^0.15.13
       esbuild-node-externals: ^1.5.0
+      is-hotkey: ^0.2.0
       jest-remirror: ^2.0.8
       jsdom: ^20.0.2
       lodash-es: ^4.17.21
@@ -164,6 +167,7 @@ importers:
       '@remirror/extension-doc': 2.0.7_awjkvltppxwvfbm7zw46fo34la
       '@remirror/extension-drop-cursor': 2.0.7_awjkvltppxwvfbm7zw46fo34la
       '@remirror/extension-events': 2.1.7_awjkvltppxwvfbm7zw46fo34la
+      '@remirror/extension-find': 0.1.0_awjkvltppxwvfbm7zw46fo34la
       '@remirror/extension-hard-break': 2.0.7_awjkvltppxwvfbm7zw46fo34la
       '@remirror/extension-heading': 2.0.7_awjkvltppxwvfbm7zw46fo34la
       '@remirror/extension-horizontal-rule': 2.0.7_awjkvltppxwvfbm7zw46fo34la
@@ -179,7 +183,9 @@ importers:
       '@remirror/react-core': 2.0.8_hedelnrgzljm452chd5dhajahq
       '@remirror/styles': 2.0.1_ujxmlg74qtcvrqqanjicfmzb3e
       '@rino.app/common': link:../common
+      '@types/is-hotkey': 0.1.7
       clsx: 1.2.1
+      is-hotkey: 0.2.0
       lodash-es: 4.17.21
       markdown-it: 13.0.1
       mdast-util-from-markdown: 1.2.0
@@ -3799,6 +3805,10 @@ packages:
     dependencies:
       ci-info: 3.4.0
     dev: true
+
+  /@types/is-hotkey/0.1.7:
+    resolution: {integrity: sha512-yB5C7zcOM7idwYZZ1wKQ3pTfjA9BbvFqRWvKB46GFddxnJtHwi/b9y84ykQtxQPg5qhdpg4Q/kWU3EGoCTmLzQ==}
+    dev: false
 
   /@types/istanbul-lib-coverage/2.0.4:
     resolution: {integrity: sha512-z/QT1XN4K4KYuslS23k62yDIDLwLFkzxOuMplDtObz0+y7VqJCaO2o+SPwHCvLFZh7xazvvoor2tA/hPz9ee7g==}
@@ -7584,6 +7594,10 @@ packages:
 
   /is-hexadecimal/1.0.4:
     resolution: {integrity: sha512-gyPJuv83bHMpocVYoqof5VDiZveEoGoFL8m3BXNb2VW8Xs+rz9kqO8LOQ5DH6EsuvilT1ApazU0pyl+ytbPtlw==}
+    dev: false
+
+  /is-hotkey/0.2.0:
+    resolution: {integrity: sha512-UknnZK4RakDmTgz4PI1wIph5yxSs/mvChWs9ifnlXsKuXgWmOkY/hAE0H/k2MIqH0RlRye0i1oC07MCRSD28Mw==}
     dev: false
 
   /is-installed-globally/0.1.0:

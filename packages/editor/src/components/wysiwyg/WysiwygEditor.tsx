@@ -6,6 +6,7 @@ import ErrorBoundary from "../ErrorBoundary"
 import { ENABLE_REACT_CODE_LANGUAGE_SELECTOR } from "../flags"
 import LazyDevTools from "../LazyDevTools"
 import CodeLanguageSelect from "./CodeLanguageSelect"
+import { FindReplace } from "./FindReplace"
 import { WysiwygExtension } from "./wysiwyg-extension"
 
 type InnerEditorProps = { className: string; enableDevTools: boolean }
@@ -14,6 +15,7 @@ const InnerEditor: FC<InnerEditorProps> = ({ className, enableDevTools }) => {
     const { getRootProps } = useRemirrorContext<WysiwygExtension>()
     return (
         <>
+            <FindReplace />
             <TableTooltip />
             <TableCellButton />
             {ENABLE_REACT_CODE_LANGUAGE_SELECTOR ? <CodeLanguageSelect /> : null}
