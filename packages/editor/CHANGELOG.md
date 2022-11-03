@@ -1,5 +1,11 @@
 # @rino.app/editor
 
+## 0.46.0
+
+### Minor Changes
+
+-   80f82fd: Find and replace text by pressing `Ctrl+F` (or `Command+F` on macOS).
+
 ## 0.45.0
 
 ### Minor Changes
