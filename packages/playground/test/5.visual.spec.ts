@@ -43,7 +43,8 @@ A long long long long long long long long long long long long long long long lon
 `
 
 async function expectMatchSnapshot() {
-    const screenshot = await page.screenshot({ type: "png", fullPage: true })
+    await page.waitForTimeout(500)
+    const screenshot = await page.screenshot({ type: "png", fullPage: true, scale: "css" })
     expect(screenshot).toMatchImageSnapshot({
         customDiffConfig: {
             threshold: 0.05,
