@@ -72,7 +72,7 @@ export function registerIpcListeners(): void {
             closeWindow(win)
         },
 
-        stopQuitting: async (event) => {
+        stopQuitting: async (_event) => {
             state.isQuitting = false
         },
     }

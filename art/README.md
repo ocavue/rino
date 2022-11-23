@@ -4,7 +4,7 @@
 
 1. Open [figma](https://www.figma.com/).
 2. Export artboards as SVG and PNG formats into `rino/art/tmp/`.
-4. run `scripts/build_logo.py`.
+3. run `scripts/build_logo.py`.
 
 ```
 Install:
@@ -28,4 +28,4 @@ Build:
 
 # Figma Tips:
 
-- Press Command key to ajust the frame
+-   Press Command key to ajust the frame

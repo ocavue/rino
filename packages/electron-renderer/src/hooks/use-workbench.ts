@@ -42,7 +42,9 @@ const initialState = Object.freeze<WorkbenchState>({
 
     actionQueue: [],
     hasRunningAction: false,
-    dispatch: () => {},
+    dispatch: () => {
+        /* empty */
+    },
 })
 
 function calcCanCloseWindow(state: WorkbenchState): boolean {

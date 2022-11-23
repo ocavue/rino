@@ -168,8 +168,8 @@ jobs:
           vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
           vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID_HOME }}
           alias-domains: rino-home-${{ steps.step_branch.outputs.branch }}.ocavue.vercel.app
-          vercel-args: "--meta TYPE=PREVIEW"
-          working-directory: "./packages/home/dist/"
+          vercel-args: --meta TYPE=PREVIEW
+          working-directory: ./packages/home/dist/
 
       - id: step_vercel_playground
         name: Deploy @rino.app/playground to Vercel
@@ -183,8 +183,8 @@ jobs:
           vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
           vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID_EDITOR }}
           alias-domains: rino-editor-${{ steps.step_branch.outputs.branch }}.ocavue.vercel.app
-          vercel-args: "--meta TYPE=PREVIEW"
-          working-directory: "./packages/playground/dist/"
+          vercel-args: --meta TYPE=PREVIEW
+          working-directory: ./packages/playground/dist/
 
       - id: step_find_pr
         uses: jwalton/gh-find-current-pr@v1
@@ -319,8 +319,8 @@ jobs:
           vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
           vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID_HOME }}
           alias-domains: rino-home-master.ocavue.vercel.app
-          vercel-args: "--prod --meta TYPE=PRODUCTION"
-          working-directory: "./packages/home/dist/"
+          vercel-args: --prod --meta TYPE=PRODUCTION
+          working-directory: ./packages/home/dist/
 
       - id: step_vercel_playground
         name: Deploy @rino.app/playground to Vercel
@@ -333,5 +333,5 @@ jobs:
           vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
           vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID_EDITOR }}
           alias-domains: rino-editor-master.ocavue.vercel.app
-          vercel-args: "--prod --meta TYPE=PRODUCTION"
-          working-directory: "./packages/playground/dist/"
+          vercel-args: --prod --meta TYPE=PRODUCTION
+          working-directory: ./packages/playground/dist/

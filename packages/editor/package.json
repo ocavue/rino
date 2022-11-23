@@ -1,16 +1,15 @@
 {
     "name": "@rino.app/editor",
+    "type": "module",
     "version": "0.46.0",
     "private": false,
     "license": "GPL-3.0",
-    "type": "module",
     "main": "dist/rino-editor.mjs",
     "module": "dist/rino-editor.mjs",
     "types": "dist-types/index.d.ts",
-    "publishConfig": {
-        "types": "dist/rino-editor.d.ts",
-        "access": "public"
-    },
+    "files": [
+        "dist/**"
+    ],
     "scripts": {
         "dev": "node esbuild.mjs --watch",
         "test:vitest": "vitest",
@@ -73,6 +72,10 @@
         "remirror": "^2.0.16",
         "unstated-next": "^1.1.0"
     },
+    "peerDependencies": {
+        "react": "^18.2.0",
+        "react-dom": "^18.2.0"
+    },
     "devDependencies": {
         "@babel/core": "^7.20.2",
         "@microsoft/api-extractor": "^7.33.6",
@@ -99,16 +102,13 @@
         "vite": "^3.2.4",
         "vitest": "^0.25.2"
     },
-    "peerDependencies": {
-        "react": "^18.2.0",
-        "react-dom": "^18.2.0"
+    "publishConfig": {
+        "types": "dist/rino-editor.d.ts",
+        "access": "public"
     },
     "browserslist": [
         "> 1%",
         "not dead",
         "not op_mini all"
-    ],
-    "files": [
-        "dist/**"
     ]
 }

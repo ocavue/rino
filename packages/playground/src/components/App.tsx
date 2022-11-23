@@ -13,7 +13,7 @@ const DebugButton: FC<{ enableDevTools: boolean; toggleEnableDevTools: () => voi
     return (
         <button
             className={enableDevTools ? "playground-debug-button-enable" : "playground-debug-button-disable"}
-            onClick={(e) => toggleEnableDevTools()}
+            onClick={() => toggleEnableDevTools()}
             data-testid="playground_debug_button"
         >
             Debug

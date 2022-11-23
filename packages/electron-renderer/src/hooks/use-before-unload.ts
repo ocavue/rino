@@ -4,7 +4,7 @@ export function useBeforeUnload(beforeUnload: () => { canUnload: boolean }) {
     useEffect(() => {
         // Note: There is a subtle difference between the behaviors of `window.onbeforeunload = handler` and
         // `window.addEventListener('beforeunload', handler)`.
-        window.onbeforeunload = (e) => {
+        window.onbeforeunload = () => {
             const { canUnload } = beforeUnload()
             if (canUnload) {
                 return
