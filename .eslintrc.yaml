@@ -1,89 +1,15 @@
-root: true
-parser: "@typescript-eslint/parser"
-parserOptions:
-  parser: "@typescript-eslint/parser"
-  ecmaVersion: 2018 # Allows for the parsing of modern ECMAScript features
-  project:
-    - "./tsconfig.json"
-    - "./tsconfig.eslint.json"
-  ecmaFeatures:
-    jsx: true
-  extraFileExtensions:
-    - .mjs
-extends:
-  # https://github.com/typescript-eslint/typescript-eslint/tree/v4.1.1/packages/eslint-plugin#recommended-configs
-  - "eslint:recommended" # the set of rules which are recommended for all projects by the ESLint Team
-  - "plugin:@typescript-eslint/recommended" # recommended rules for typescript
-  # - "plugin:@typescript-eslint/recommended-requiring-type-checking" # provide lint rules with access to type information
-
-  # https://www.npmjs.com/package/eslint-plugin-react
-  - "plugin:react/recommended"
-
-  # https://www.npmjs.com/package/eslint-plugin-react-hooks
-  - "plugin:react-hooks/recommended"
-
-  # runs Prettier as an ESLint rule
-  # https://github.com/prettier/eslint-plugin-prettier
-  - "plugin:prettier/recommended"
-
-plugins:
-  - "simple-import-sort"
+extends: ["@ocavue/eslint-config-react"]
 settings:
   react:
     version: "18"
-env:
-  browser: true
-  node: true
 rules:
-  "no-useless-escape": "off"
-  "no-console": ["error", { allow: ["warn", "error", "log", "assert"] }]
+  no-useless-escape: off
+  no-console: [error, { allow: [warn, error, log, assert] }]
 
-  "react/prop-types": [1, { skipUndeclared: true }]
-  "react/no-unescaped-entities": "off"
-
-  "@typescript-eslint/no-unused-vars": [error, { args: "none" }]
-  "@typescript-eslint/explicit-module-boundary-types": off
-  "@typescript-eslint/no-empty-function": off
-  "@typescript-eslint/no-explicit-any": off
-
-  "react-hooks/exhaustive-deps":
-    - "warn"
+  react-hooks/exhaustive-deps:
+    - warn
     - enableDangerousAutofixThisMayCauseInfiniteLoops: true
 
-  # turn on the rules provided by `eslint-plugin-prettier` as `warn` instead of `error`
-  "prettier/prettier": warn
-
-  # use `simple-import-sort` to sort import
-  "sort-imports": "off"
-  "simple-import-sort/imports":
-    - "warn"
-    - groups: [
-      # Side effect imports.
-      ["^\\u0000"],
-      # Packages.
-      # Things that start with a letter (or digit or underscore), or `@` followed by a letter but not `@rino.app`.
-      ["^@(?!\\W|rino\\.app)","^\\w"],
-      # `@rino.app` packages.
-      ["^@rino\\.app"],
-      # Absolute imports and other imports such as Vue-style `@/foo`.
-      # Anything that does not start with a dot.
-      ["^[^.]"],
-      # Absolute imports based on tsconfig.json's `baseUrl`.
-      # Check https://github.com/lydell/eslint-plugin-simple-import-sort/issues/31 for more information.
-      # Anything that start with `src/`, `config/` or `tests/`
-      ["^(?:src|config|tests)\/"],
-      # Relative imports.
-      # Anything that starts with a dot.
-      ["^\\."],
-    ]
-overrides:
-  - files: ["*.js", "*.cjs"]
-    rules:
-      "@typescript-eslint/no-var-requires": off
-ignorePatterns:
-  - node_modules/
-  - .next/
-  - .dist/
-  - dist/
-  - out/
-
+  "@typescript-eslint/no-unused-vars": off
+  "@typescript-eslint/no-empty-function": off
+  "@typescript-eslint/no-empty-method": off

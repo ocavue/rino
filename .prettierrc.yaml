@@ -2,5 +2,9 @@
 # https://prettier.io/docs/en/options.html
 semi: false
 tabWidth: 4
-trailingComma: "all"
+trailingComma: all
 printWidth: 140
+overrides:
+  - files: ["*.yaml", "*.yml"]
+    options:
+      tabWidth: 2

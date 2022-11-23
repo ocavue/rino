@@ -3,8 +3,17 @@
     "version": "0.0.0",
     "private": true,
     "license": "GPL-3.0",
+    "homepage": "https://rino.app",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/ocavue/rino.git",
+        "directory": "packages/home"
+    },
     "main": "./dist/Homepage.js",
     "module": "./dist/Homepage.js",
+    "files": [
+        "this_file_dose_not_exist"
+    ],
     "scripts": {
         "dev": "next dev",
         "start": "next start",
@@ -40,15 +49,6 @@
         "not dead",
         "not op_mini all"
     ],
-    "files": [
-        "this_file_dose_not_exist"
-    ],
-    "homepage": "https://rino.app",
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/ocavue/rino.git",
-        "directory": "packages/home"
-    },
     "publishConfig": {
         "access": "public"
     }

@@ -1,14 +1,10 @@
 {
     "extends": "../../../tsconfig.base.json",
-    "include": [
-        "./"
-    ],
+    "include": ["./"],
     "compilerOptions": {
         "composite": true,
         "outDir": "./.cache/typescript/",
-        "types": [
-            "vitest/globals"
-        ]
+        "types": ["vitest/globals"]
     },
     "references": [
         {

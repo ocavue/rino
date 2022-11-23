@@ -78,7 +78,7 @@
          * DEFAULT VALUE: "<projectFolder>/tsconfig.json"
          */
         // "tsconfigFilePath": "<projectFolder>/tsconfig.json",
-        "tsconfigFilePath": "<projectFolder>/packages/<unscopedPackageName>/src/tsconfig.json",
+        "tsconfigFilePath": "<projectFolder>/packages/<unscopedPackageName>/src/tsconfig.json"
 
         /**
          * Provides a compiler configuration that will be used instead of reading the tsconfig.json file from disk.
@@ -197,7 +197,7 @@
          * SUPPORTED TOKENS: <projectFolder>, <packageName>, <unscopedPackageName>
          * DEFAULT VALUE: "<projectFolder>/dist/<unscopedPackageName>.d.ts"
          */
-        "untrimmedFilePath": "<projectFolder>/packages/<unscopedPackageName>/dist/rino-<unscopedPackageName>.d.ts",
+        "untrimmedFilePath": "<projectFolder>/packages/<unscopedPackageName>/dist/rino-<unscopedPackageName>.d.ts"
 
         /**
          * Specifies the output path for a .d.ts rollup file to be generated with trimming for an "alpha" release.
