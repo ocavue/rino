@@ -1,4 +1,4 @@
-set -ex 
+set -x 
 
 ROOT=$(dirname $0)
 cd $ROOT 
