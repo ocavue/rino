@@ -1,7 +1,7 @@
 /// <reference types="vitest" />
 // @ts-check
 
-import react from "@vitejs/plugin-react"
+import react from "@vitejs/plugin-react-swc"
 import sourcemaps from "rollup-plugin-sourcemaps"
 import { defineConfig } from "vite"
 
