@@ -1,4 +1,4 @@
-import react from "@vitejs/plugin-react"
+import react from "@vitejs/plugin-react-swc"
 
 console.log("loading packages/home2/vite.config.js")
 
