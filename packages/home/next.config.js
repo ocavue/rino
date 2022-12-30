@@ -22,13 +22,17 @@ function getEnvs() {
 }
 
 function getNextConfig() {
-    return {
+    /** @type {import('next').NextConfig} */
+    const config = {
         // Next config
         productionBrowserSourceMaps: true,
         trailingSlash: false,
         devIndicators: {
             // https://nextjs.org/docs/api-reference/next.config.js/build-indicator
             buildActivityPosition: "bottom-left",
+        },
+        experimental: {
+            appDir: true,
         },
         webpack: (config, _options) => {
             config.module.rules.push({
@@ -54,6 +58,7 @@ function getNextConfig() {
         },
         env: getEnvs(),
     }
+    return config
 }
 
 const baseConfig = withBundleAnalyzer(getNextConfig())
