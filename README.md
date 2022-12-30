@@ -24,6 +24,10 @@ Rino
 <br>
 <br>
 
+## Contribution 
+
+See [CONTRIBUTION.md](https://github.com/ocavue/rino/tree/CONTRIBUTION.md) for detailed instructions on how to get started with this project.
+
 ## Stay In Touch
 
 -   [Twitter](https://twitter.com/rino_editor)
