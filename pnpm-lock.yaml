@@ -219,7 +219,7 @@ importers:
       '@rino.app/electron-renderer': workspace:*
       electron: 22.0.0
       electron-builder: ^23.6.0
-      wait-on: ^6.0.1
+      wait-on: ^7.0.1
     devDependencies:
       '@electron/notarize': 1.2.3
       '@rino.app/electron-main': link:../electron-main
@@ -227,7 +227,7 @@ importers:
       '@rino.app/electron-renderer': link:../electron-renderer
       electron: 22.0.0
       electron-builder: 23.6.0
-      wait-on: 6.0.1
+      wait-on: 7.0.1
 
   packages/electron-main:
     specifiers:
@@ -4841,10 +4841,11 @@ packages:
     engines: {node: '>=4'}
     dev: true
 
-  /axios/0.25.0:
-    resolution: {integrity: sha512-cD8FOb0tRH3uuEe6+evtAbgJtfxr7ly3fQjYcMcuPlgkwVS9xboaVIpcDV+cYQe+yGykgwZCs1pzjntcGa6l5g==}
+  /axios/0.27.2:
+    resolution: {integrity: sha512-t+yRIyySRTp/wua5xEr+z1q60QmLq8ABsS5O9Me1AsE5dfKqgnCFzwiCZZ/cGNd1lq4/7akDWMxdhVlucjmnOQ==}
     dependencies:
       follow-redirects: 1.15.2
+      form-data: 4.0.0
     transitivePeerDependencies:
       - debug
     dev: true
@@ -12349,12 +12350,12 @@ packages:
     dependencies:
       xml-name-validator: 4.0.0
 
-  /wait-on/6.0.1:
-    resolution: {integrity: sha512-zht+KASY3usTY5u2LgaNqn/Cd8MukxLGjdcZxT2ns5QzDmTFc4XoWBgC+C/na+sMRZTuVygQoMYwdcVjHnYIVw==}
-    engines: {node: '>=10.0.0'}
+  /wait-on/7.0.1:
+    resolution: {integrity: sha512-9AnJE9qTjRQOlTZIldAaf/da2eW0eSRSgcqq85mXQja/DW3MriHxkpODDSUEg+Gri/rKEcXUZHe+cevvYItaog==}
+    engines: {node: '>=12.0.0'}
     hasBin: true
     dependencies:
-      axios: 0.25.0
+      axios: 0.27.2
       joi: 17.7.0
       lodash: 4.17.21
       minimist: 1.2.7
