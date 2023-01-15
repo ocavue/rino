@@ -28,9 +28,9 @@ main({
     target: "node16",
     external: ["electron"],
     sourcemap: true,
-    logLevel: "info",
+    logLevel: "debug",
+    minify: true,
     define: {
         "process.env.RINO_GIT_COMMIT_SHA": JSON.stringify(RINO_GIT_COMMIT_SHA),
     },
-    minify: true,
 })

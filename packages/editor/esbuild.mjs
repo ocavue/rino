@@ -27,4 +27,5 @@ main({
     bundle: true,
     format: "esm",
     sourcemap: true,
+    logLevel: "debug",
 })

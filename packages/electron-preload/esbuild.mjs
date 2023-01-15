@@ -25,5 +25,6 @@ main({
     target: "node16",
     external: ["electron"],
     sourcemap: true,
-    logLevel: "info",
+    logLevel: "debug",
+    minify: true,
 })
