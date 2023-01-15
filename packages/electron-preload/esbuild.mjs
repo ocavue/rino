@@ -1,8 +1,23 @@
 // @ts-check
 
-import { build } from "esbuild"
+import * as esbuild from "esbuild"
 
-build({
+/**
+ * @param {import('esbuild').BuildOptions} options
+ */
+async function main(options) {
+    const context = await esbuild.context(options)
+    const watch = process.argv.slice(2).includes("--watch")
+
+    if (watch) {
+        context.watch()
+    } else {
+        await context.rebuild()
+        await context.dispose()
+    }
+}
+
+main({
     entryPoints: ["./src/index.ts"],
     outfile: "./dist/electron-preload.js",
     bundle: true,
@@ -10,9 +25,5 @@ build({
     target: "node16",
     external: ["electron"],
     sourcemap: true,
-    watch: process.argv.slice(2).includes("--watch"),
     logLevel: "info",
-}).catch((err) => {
-    console.error(err)
-    process.exit(1)
 })
