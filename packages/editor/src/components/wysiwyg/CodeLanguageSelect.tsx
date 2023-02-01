@@ -1,4 +1,4 @@
-import { autoUpdate, flip, offset, useFloating } from "@floating-ui/react-dom-interactions"
+import { autoUpdate, flip, offset, useFloating } from "@floating-ui/react"
 import React, { useEffect, useLayoutEffect } from "react"
 
 import { useCodeBlock } from "../../hooks/use-code-block"

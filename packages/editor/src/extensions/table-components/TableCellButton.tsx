@@ -1,4 +1,4 @@
-import { autoUpdate, useFloating, VirtualElement } from "@floating-ui/react-dom-interactions"
+import { autoUpdate, useFloating, VirtualElement } from "@floating-ui/react"
 import { useCommands } from "@remirror/react"
 import React, { useCallback, useEffect } from "react"
 
