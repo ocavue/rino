@@ -1,4 +1,4 @@
-import { computePosition, flip, offset } from "@floating-ui/dom"
+import { computePosition, flip, offset } from "@floating-ui/react"
 import { EditorView, ProsemirrorNode } from "@remirror/core"
 
 import { fakeIndentedLanguage } from "./codemirror-const"

@@ -69,8 +69,7 @@ importers:
       '@codemirror/view': ^6.7.3
       '@emotion/css': ^11.10.5
       '@emotion/react': ^11.10.5
-      '@floating-ui/dom': ^1.1.1
-      '@floating-ui/react-dom-interactions': ^0.13.3
+      '@floating-ui/react': ^0.19.0
       '@microsoft/api-extractor': ^7.34.2
       '@mui/material': ^5.11.7
       '@remirror/core': ^2.0.11
@@ -145,8 +144,7 @@ importers:
       '@codemirror/view': 6.7.3
       '@emotion/css': 11.10.5_@babel+core@7.20.12
       '@emotion/react': 11.10.5_yxdp3dl3eazy3vwpbmv4fq727a
-      '@floating-ui/dom': 1.1.1
-      '@floating-ui/react-dom-interactions': 0.13.3_5ndqzdd6t4rivxsukjv3i3ak2q
+      '@floating-ui/react': 0.19.0_5ndqzdd6t4rivxsukjv3i3ak2q
       '@mui/material': 5.11.7_a3e44or6bupsbrlb2epm7rhj3a
       '@remirror/core': 2.0.11_xtksi2sqifvbknlipijxfmjusa
       '@remirror/dev': 2.0.15_vcrfrider7doe7jifzts7eq6ki
@@ -1658,9 +1656,19 @@ packages:
       '@floating-ui/core': 1.1.1
     dev: false
 
-  /@floating-ui/react-dom-interactions/0.13.3_5ndqzdd6t4rivxsukjv3i3ak2q:
-    resolution: {integrity: sha512-AnCW06eIZxzD/Hl1Qbi2JkQRU5KpY7Dn81k3xRfbvs+HylhB+t3x88/GNKLK39mMTlJ/ylxm5prUpiLrTWvifQ==}
-    deprecated: Package renamed to @floating-ui/react
+  /@floating-ui/react-dom/1.2.2_biqbaboplfbrettd7655fr4n2y:
+    resolution: {integrity: sha512-DbmFBLwFrZhtXgCI2ra7wXYT8L2BN4/4AMQKyu05qzsVji51tXOfF36VE2gpMB6nhJGHa85PdEg75FB4+vnLFQ==}
+    peerDependencies:
+      react: '>=16.8.0'
+      react-dom: '>=16.8.0'
+    dependencies:
+      '@floating-ui/dom': 1.1.1
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+    dev: false
+
+  /@floating-ui/react/0.19.0_5ndqzdd6t4rivxsukjv3i3ak2q:
+    resolution: {integrity: sha512-fgYvN4ksCi5OvmPXkyOT8o5a8PSKHMzPHt+9mR6KYWdF16IAjWRLZPAAziI2sznaWT23drRFrYw64wdvYqqaQw==}
     peerDependencies:
       react: '>=16.8.0'
       react-dom: '>=16.8.0'
@@ -1672,17 +1680,6 @@ packages:
       tabbable: 6.0.1
     transitivePeerDependencies:
       - '@types/react'
-    dev: false
-
-  /@floating-ui/react-dom/1.2.2_biqbaboplfbrettd7655fr4n2y:
-    resolution: {integrity: sha512-DbmFBLwFrZhtXgCI2ra7wXYT8L2BN4/4AMQKyu05qzsVji51tXOfF36VE2gpMB6nhJGHa85PdEg75FB4+vnLFQ==}
-    peerDependencies:
-      react: '>=16.8.0'
-      react-dom: '>=16.8.0'
-    dependencies:
-      '@floating-ui/dom': 1.1.1
-      react: 18.2.0
-      react-dom: 18.2.0_react@18.2.0
     dev: false
 
   /@hapi/hoek/9.3.0:
