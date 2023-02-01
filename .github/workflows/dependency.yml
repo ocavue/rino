@@ -24,13 +24,11 @@ jobs:
           corepack enable
           pnpm --version
 
-      - name: Run pnpm-deduplicate
+      - name: Run pnpm dedupe
         run: |
           if $(git log -1 --pretty=format:'%an' | egrep -q 'renovate'); then
             echo "deduplicate lockfile"
-            npm install -g pnpm-deduplicate
-            pnpm-deduplicate --version
-            pnpm-deduplicate
+            pnpm dedupe
           else
             echo "Skipping lockfile deduplication"
           fi

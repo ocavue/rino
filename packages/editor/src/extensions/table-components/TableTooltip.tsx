@@ -1,4 +1,4 @@
-import { autoUpdate, flip, hide, offset, shift, useFloating, VirtualElement } from "@floating-ui/react-dom-interactions"
+import { autoUpdate, flip, hide, offset, shift, useFloating, VirtualElement } from "@floating-ui/react"
 import React, { useCallback, useEffect, useState } from "react"
 
 import { MoreLineIcon } from "./icons/MoreLineIcon"

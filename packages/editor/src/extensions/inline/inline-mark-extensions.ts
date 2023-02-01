@@ -233,7 +233,7 @@ export const rinoMarkExtensions = [
     new ImgText(),
     new ImgUri(),
 ]
-export type RinoMarkExtension = typeof rinoMarkExtensions[number]
+export type RinoMarkExtension = (typeof rinoMarkExtensions)[number]
 export type RinoMarkName = RinoMarkExtension["name"]
 export type RinoMarkAttrs = {
     depth: number
