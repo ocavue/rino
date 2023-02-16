@@ -9,24 +9,32 @@ while True:
 
 const defaultContent = [
     `
-- A
-- B
-  - B1
-  - B2
-  - B3
-  - B4
-  - B5
-- C
-- D
-- E
 
-  P
-1. A
+# Title
 
-   A
-2. B
-   - C
-   - D
+hello world!
+
+`.trim(),
+    singleRow,
+    justCodeContent,
+    `
+
+- list item
+- list item
+  - [x] checked
+  - [ ] unchecked
+
+1. first
+1. second
+1. third
+
+
+Table:
+
+| First Header  | Second Header |
+| ------------- | ------------- |
+| Content Cell  | Content Cell  |
+| **Strong**    | [Link](https://rino.app) |
 
 `.trim(),
 ].join("\n")
@@ -52,27 +60,6 @@ const tableContent = `
 
 `
 
-const nestedList = `
-1. A1
-    1. B1
-
----
-
-1. 1. 1. 1. nested items
-
----
-
-1. ## H1
-1. ## H2
-
-`
-
-const simpleList = `
-1. A1
-1. A2
-1. A3
-`
-
 const headingContent = `
 # Heading Level 1
 
@@ -92,8 +79,6 @@ export const contentMap: { [key: string]: string } = {
     "just-code": justCodeContent,
     long: longContent,
     table: tableContent,
-    nestedList,
-    simpleList,
     heading: headingContent,
     customize: "",
 }
