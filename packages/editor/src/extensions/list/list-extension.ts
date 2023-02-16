@@ -40,14 +40,7 @@ export class RinoListItemExtension extends ListItemExtension implements Markdown
     }
 
     public fromMarkdown() {
-        return [
-            {
-                type: ParserRuleType.block,
-                token: "list_item",
-                node: this.name,
-                hasOpenClose: true,
-            },
-        ] as const
+        return []
     }
 
     public toMarkdown({ state, node }: NodeSerializerOptions) {
@@ -92,11 +85,9 @@ export class RinoOrderedListExtension extends OrderedListExtension implements Ma
     public fromMarkdown() {
         return [
             {
-                type: ParserRuleType.block,
+                type: ParserRuleType.context,
                 token: "ordered_list",
-                node: this.name,
-                hasOpenClose: true,
-                getAttrs: (tok: Token) => ({ order: +(tok.attrGet("order") || 1) }),
+                context: "ordered_list",
             },
         ] as const
     }
@@ -142,19 +133,15 @@ export class RinoBulletListExtension extends BulletListExtension implements Mark
     public fromMarkdown() {
         return [
             {
-                type: ParserRuleType.block,
+                type: ParserRuleType.context,
                 token: "bullet_list",
-                node: this.name,
-                hasOpenClose: true,
-                getAttrs: (token: Token) => {
-                    return { bullet: token.markup }
-                },
+                context: "bullet_list",
             },
         ] as const
     }
 
     public toMarkdown({ state, node }: NodeSerializerOptions) {
-        state.renderList(node, "  ", () => ((node.attrs.bullet as string) || "*") + " ")
+        state.renderList(node, "  ", () => ((node.attrs.bullet as string) || "-") + " ")
     }
 }
 
@@ -221,15 +208,4 @@ export class RinoTaskListItemExtension extends TaskListItemExtension implements 
         state.renderContent(node)
     }
 }
-
-export class RinoListItemSharedExtension extends ListItemSharedExtension {
-    createKeymap(): KeyBindings {
-        const extensions = this.store.extensions
-        return {
-            Tab: sharedSinkListItem(extensions),
-            "Shift-Tab": sharedLiftListItem(extensions),
-            "Mod-]": sharedSinkListItem(extensions),
-            "Mod-[": sharedLiftListItem(extensions),
-        }
-    }
-}
+ 

@@ -1,9 +1,8 @@
+import "prosemirror-flat-list/dist/style.css"
+
 import { css } from "@emotion/css"
-import { extensionListStyledCss } from "@remirror/styles/emotion"
 
 export const EDITOR_THEME_BASE = css`
-    ${extensionListStyledCss}
-
     /**
      * disable margin-collapsing https://stackoverflow.com/a/19719427
      */

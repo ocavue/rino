@@ -8,7 +8,6 @@ import {
     RinoBulletListExtension,
     RinoHardBreakExtension,
     RinoListItemExtension,
-    RinoListItemSharedExtension,
     RinoOrderedListExtension,
     RinoParagraphExtension,
     RinoTaskListExtension,
@@ -25,7 +24,6 @@ const setup = () => {
         new RinoParagraphExtension(),
         new RinoTextExtension({}),
         new RinoTaskListItemExtension(),
-        new RinoListItemSharedExtension(),
         new RinoTaskListExtension(),
     ]
     const editor = renderEditor(extensions, {

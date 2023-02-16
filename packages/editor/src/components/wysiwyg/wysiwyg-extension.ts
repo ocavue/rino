@@ -9,7 +9,6 @@ import {
     type MarkdownNodeExtension,
     buildCodeMirrorOptions,
     RinoBlockquoteExtension,
-    RinoBulletListExtension,
     RinoCodeMirrorExtension,
     RinoFileExtension,
     RinoHardBreakExtension,
@@ -17,18 +16,14 @@ import {
     RinoHorizontalRuleExtension,
     RinoInlineDecorationExtension,
     RinoInlineMarkExtension,
-    RinoListItemExtension,
-    RinoListItemSharedExtension,
+    RinoListExtension,
     RinoMarkExtension,
     rinoMarkExtensions,
-    RinoOrderedListExtension,
     RinoParagraphExtension,
     RinoTableCellExtension,
     RinoTableExtension,
     RinoTableHeaderCellExtension,
     RinoTableRowExtension,
-    RinoTaskListExtension,
-    RinoTaskListItemExtension,
     RinoTextExtension,
 } from "../../extensions"
 import { WysiwygOptions } from "../types"
@@ -51,11 +46,13 @@ function createRinoMarkdownNodeExtensions() {
         new RinoBlockquoteExtension(),
         new RinoHeadingExtension({}),
 
-        new RinoTaskListExtension(),
-        new RinoTaskListItemExtension(),
-        new RinoListItemExtension({}),
-        new RinoBulletListExtension({}),
-        new RinoOrderedListExtension(),
+        // new RinoTaskListExtension(),
+        // new RinoTaskListItemExtension(),
+        // new RinoListItemExtension({}),
+        // new RinoBulletListExtension({}),
+        // new RinoOrderedListExtension(),
+
+        new RinoListExtension(),
 
         new RinoTableExtension(),
         new RinoTableRowExtension(),
@@ -76,7 +73,6 @@ export type WysiwygExtension =
     | FindExtension
     | RinoInlineMarkExtension
     | RinoInlineDecorationExtension
-    | RinoListItemSharedExtension
     | RinoFileExtension
 
 export function createWysiwygExtension({ imageFileHandler }: WysiwygOptions): Array<WysiwygExtension> {
@@ -103,7 +99,6 @@ export function createWysiwygExtension({ imageFileHandler }: WysiwygOptions): Ar
         new FindExtension(),
         new RinoInlineMarkExtension(),
         new RinoInlineDecorationExtension(),
-        new RinoListItemSharedExtension(),
         new RinoFileExtension({ imageFileHandler }),
     ]
 }
