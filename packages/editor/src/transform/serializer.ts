@@ -1,10 +1,12 @@
 import { Node } from "@remirror/pm/model"
+import { isOrderedListNode } from "../extensions"
 
 export type NodeSerializerOptions = {
     state: MarkdownSerializerState
     node: Node
     parent: Node
     index: number
+    counter: number
 }
 export type NodeSerializerSpec = (options: NodeSerializerOptions) => void
 export type NodeSerializerSpecs = Record<string, NodeSerializerSpec>
@@ -89,15 +91,24 @@ export class MarkdownSerializerState {
     }
 
     // Render the given node as a block.
-    public render(node: Node, parent: Node, index: number) {
+    public render(node: Node, parent: Node, index: number, counter = 0) {
         const spec = this.nodes[node.type.name]
         if (!spec) throw new Error(`Can't find node spec for type '${node.type.name}'`)
-        spec({ state: this, node, parent, index })
+        spec({ state: this, node, parent, index, counter })
     }
 
     // Render the contents of `parent` as block nodes.
     public renderContent(parent: Node) {
-        parent.forEach((node, offset, index) => this.render(node, parent, index))
+        let counter = 0
+        parent.forEach((node, offset, index) => {
+            if (isOrderedListNode(node)) {
+                counter += 1
+            } else {
+                counter = 0
+            }
+
+            this.render(node, parent, index, counter)
+        })
     }
 
     // Render the contents of `parent` as inline content.

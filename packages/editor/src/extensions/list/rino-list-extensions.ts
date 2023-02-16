@@ -1,4 +1,4 @@
-import { isString } from "@remirror/core"
+import { isString, ProsemirrorNode } from "@remirror/core"
 import type Token from "markdown-it/lib/token"
 import { ListAttributes, ListExtension } from "remirror-extension-flat-list"
 import type { MarkdownParseState, NodeSerializerOptions } from "../../transform"
@@ -58,11 +58,11 @@ export class RinoListExtension extends ListExtension implements MarkdownNodeExte
         ] as const
     }
 
-    public toMarkdown({ state, node }: NodeSerializerOptions) {
+    public toMarkdown({ state, node, counter }: NodeSerializerOptions) {
         const attrs = node.attrs as ListAttributes
         let firstDelim = ""
         if (attrs.type === "ordered") {
-            firstDelim = "1. "
+            firstDelim = `${counter}. `
         } else if (attrs.type === "task") {
             firstDelim = attrs.checked ? "- [x] " : "- [ ] "
         } else if (attrs.type === "bullet") {
@@ -71,4 +71,8 @@ export class RinoListExtension extends ListExtension implements MarkdownNodeExte
 
         state.wrapBlock(" ".repeat(firstDelim.length), firstDelim, node, () => state.renderContent(node))
     }
+}
+
+export function isOrderedListNode(node: ProsemirrorNode): boolean {
+    return node.type.name === "list" && (node.attrs as ListAttributes).type === "ordered"
 }
