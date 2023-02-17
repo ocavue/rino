@@ -1,5 +1,11 @@
 # @rino.app/electron
 
+## 0.47.0
+
+### Minor Changes
+
+-   5d8646d: Rewrite list
+
 ## 0.46.0
 
 ### Minor Changes
