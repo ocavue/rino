@@ -120,7 +120,7 @@ jobs:
         uses: codecov/codecov-action@v3
         with:
           file: ./coverage/coverage-final.json
-          fail_ci_if_error: true # Specify if CI pipeline should fail when Codecov runs into errors during upload. Defaults to false
+          fail_ci_if_error: false # Specify if CI pipeline should fail when Codecov runs into errors during upload. Defaults to false
 
   lint:
     runs-on: ubuntu-latest
