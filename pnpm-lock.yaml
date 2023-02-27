@@ -374,7 +374,7 @@ importers:
       react-dom: ^18.2.0
       rollup-plugin-sourcemaps: ^0.6.3
       typescript: ^4.9.5
-      v8-to-istanbul: ^9.0.1
+      v8-to-istanbul: ^9.1.0
       vite: ^4.1.4
       vitest: ^0.29.1
     devDependencies:
@@ -393,7 +393,7 @@ importers:
       react-dom: 18.2.0_react@18.2.0
       rollup-plugin-sourcemaps: 0.6.3
       typescript: 4.9.5
-      v8-to-istanbul: 9.0.1
+      v8-to-istanbul: 9.1.0
       vite: 4.1.4
       vitest: 0.29.1_jsdom@21.1.0
 
@@ -12496,6 +12496,15 @@ packages:
 
   /v8-to-istanbul/9.0.1:
     resolution: {integrity: sha512-74Y4LqY74kLE6IFyIjPtkSTWzUZmj8tdHT9Ii/26dvQ6K9Dl2NbEfj0XgU2sHCtKgt5VupqhlO/5aWuqS+IY1w==}
+    engines: {node: '>=10.12.0'}
+    dependencies:
+      '@jridgewell/trace-mapping': 0.3.17
+      '@types/istanbul-lib-coverage': 2.0.4
+      convert-source-map: 1.9.0
+    dev: true
+
+  /v8-to-istanbul/9.1.0:
+    resolution: {integrity: sha512-6z3GW9x8G1gd+JIIgQQQxXuiJtCXeAjp6RaPEPLv62mH3iPHPxV6W3robxtCzNErRo6ZwTmzWhsbNvjyEBKzKA==}
     engines: {node: '>=10.12.0'}
     dependencies:
       '@jridgewell/trace-mapping': 0.3.17
