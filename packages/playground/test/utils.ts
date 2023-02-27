@@ -136,15 +136,9 @@ export async function getTextAreaValue(testid: string): Promise<string> {
 export const wysiwygEditorSelector = testidSelector("wysiwyg_mode_textarea")
 export const sourceCodeEditorSelector = testidSelector("source_code_mode_textarea")
 
-export async function getSourceCodeModeText() {
-    const cmContentHandle = await page.$(testidSelector("source_code_mode_textarea") + " .cm-content")
-    if (!cmContentHandle) {
-        throw new Error("failed to find .cm-content element")
-    }
-    return await cmContentHandle.evaluate((cmContent) => {
-        return Array.from(cmContent.querySelectorAll(".cm-line"))
-            .map((e) => e.textContent)
-            .join("\n")
+export async function getSourceCodeModeText(): Promise<string> {
+    return await page.$eval("html", () => {
+        return (window as any)._RINO_EDITOR_VIEW.state.doc.textContent as string
     })
 }
 
