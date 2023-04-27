@@ -1,0 +1,19 @@
+diff --git a/dist/remirror-core.d.ts b/dist/remirror-core.d.ts
+index d48341f738357eddafef56b4f6119bd24a814e8b..576a6bed1b7217c5221ea97d3268a4bec68728bb 100644
+--- a/dist/remirror-core.d.ts
++++ b/dist/remirror-core.d.ts
+@@ -1,4 +1,4 @@
+-import { ClassName } from '@linaria/core/cx';
++
+ import { ValidOptions, GetDynamic, AnyConstructor, GetPartialDynamic, CommandFunction, AnyFunction, EditorStateProps, Transaction, EditorState, GetFixedDynamic, RemoveAnnotations, PrimitiveSelection, GetCustomHandler, Dispose, GetHandler, LiteralUnion, Primitive, EmptyShape, Shape, GetFixed, IfNoRequiredProperties, GetStatic, GetConstructorProps, MakeUndefined, UndefinedFlipPartialAndRequired, StringKey, GetAcceptUndefined, EditorView, MarkType, ApplySchemaAttributes, MarkSpecOverride, MarkExtensionSpec, NodeType, NodeSpecOverride, NodeExtensionSpec, Replace, IfHasRequiredProperties, IfEmpty, StaticKeyList, HandlerKeyList, CustomHandlerKeyList, NonChainableCommandFunction, UnionToIntersection, ConditionalPick, Flavoring, ConditionalReturnPick, ProsemirrorAttributes, KeyBindingCommandFunction, Listable, CommandFunctionProps, MarkTypeProps, AttributesProps, FromToProps, Static, RemirrorContentType, ProsemirrorNode, Fragment, AcceptUndefined, Handler, MakeRequired, StateJSON, RemirrorJSON, ProsemirrorPlugin, CustomHandler, KeyBindingProps, KeyBindings, NodeViewMethod, SchemaAttributes, EditorSchema, UseDefault, GetStaticAndDynamic, ValueOf, Simplify, TransactionTransformer, EditorViewProps, TextProps, TransactionProps } from '@remirror/core-types';
+ export * from '@remirror/core-types';
+ import { ExtensionPriority, __INTERNAL_REMIRROR_IDENTIFIER_KEY__, RemirrorIdentifier, NamedShortcut, ExtensionTagType, ManagerPhase } from '@remirror/core-constants';
+@@ -18,6 +18,8 @@ import { ProsemirrorPlugin as ProsemirrorPlugin$1 } from '@remirror/pm';
+ import { Unsubscribe } from 'nanoevents';
+ export * from '@remirror/core-helpers';
+ 
++type ClassName<T = string> = T | false | void | null | 0 | '';
++
+ type Changes<Type> = {
+     /**
+      * Whether or not the value has changed.
