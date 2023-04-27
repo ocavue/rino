@@ -34,6 +34,10 @@
     },
     "pnpm": {
         "overrides": {},
-        "peerDependencyRules": {}
+        "peerDependencyRules": {},
+        "patchedDependencies": {
+            "@remirror/core@2.0.14": "patches/@remirror__core@2.0.14.patch",
+            "@remirror/core-helpers@2.0.2": "patches/@remirror__core-helpers@2.0.2.patch"
+        }
     }
 }

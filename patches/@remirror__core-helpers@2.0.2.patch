@@ -1,0 +1,19 @@
+diff --git a/dist/remirror-core-helpers.d.ts b/dist/remirror-core-helpers.d.ts
+index f8efd128214f38e746cf139846430fa06aef07c5..c57d78660315e2011f4d4ce4bbc4c0650b0bb73b 100644
+--- a/dist/remirror-core-helpers.d.ts
++++ b/dist/remirror-core-helpers.d.ts
+@@ -1,12 +1,12 @@
+ import { BaseError } from 'make-error';
+ import { ErrorConstant } from '@remirror/core-constants';
+-import { ClassName } from '@linaria/core/cx';
++
+ import { AnyConstructor, AnyFunction, UnknownShape, Primitive, JsonPrimitive, Shape, Nullable, ConditionalExcept } from '@remirror/types';
+ export { camelCase, capitalCase, constantCase, kebabCase, pascalCase, pathCase, snakeCase, spaceCase } from 'case-anything';
+ export { debounce as DebouncedFunction, throttle as ThrottledFunction, debounce, throttle } from 'throttle-debounce';
+ export { default as omit } from 'object.omit';
+ export { default as pick } from 'object.pick';
+-
++type ClassName<T = string> = T | false | void | null | 0 | '';
+ /**
+  * This marks the error as a remirror specific error, with enhanced stack
+  * tracing capabilities.
