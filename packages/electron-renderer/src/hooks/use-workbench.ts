@@ -1,4 +1,4 @@
-import produce from "immer"
+import { produce } from "immer"
 import isPromise from "is-promise"
 import { Dispatch, useCallback, useEffect, useReducer } from "react"
 
