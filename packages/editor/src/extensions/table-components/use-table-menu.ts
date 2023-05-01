@@ -21,7 +21,7 @@ export function useTableMenu({ handleClose, coords }: UseTableMenuProps): UseFlo
         ],
     })
 
-    const { reference, refs } = useFloatingReturn
+    const { refs } = useFloatingReturn
 
     useOnClickOutside(refs.floating, handleClose)
 
@@ -42,8 +42,8 @@ export function useTableMenu({ handleClose, coords }: UseTableMenuProps): UseFlo
                 }
             },
         }
-        reference(virtualEl)
-    }, [coords, reference])
+        refs.setReference(virtualEl)
+    }, [coords, refs])
 
     return useFloatingReturn
 }

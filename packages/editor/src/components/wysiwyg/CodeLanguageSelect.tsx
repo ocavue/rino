@@ -5,7 +5,7 @@ import { useCodeBlock } from "../../hooks/use-code-block"
 
 const CodeLanguageInput: React.FC = () => {
     const { dom: codeBlock, language, setLanguage } = useCodeBlock()
-    const { x, y, reference, floating, strategy, update, refs } = useFloating({
+    const { x, y, strategy, update, refs } = useFloating({
         placement: "top-end",
         middleware: [flip({ padding: 8 }), offset(4)],
     })
@@ -16,17 +16,17 @@ const CodeLanguageInput: React.FC = () => {
         }
         // Only call this when the floating element is rendered
         return autoUpdate(codeBlock, refs.floating.current, update)
-    }, [refs.floating, update, reference, codeBlock])
+    }, [refs.floating, update, codeBlock])
 
     useLayoutEffect(() => {
-        reference(codeBlock)
-    }, [reference, codeBlock])
+        refs.setReference(codeBlock)
+    }, [refs, codeBlock])
 
     return (
         <>
             {codeBlock ? (
                 <input
-                    ref={floating}
+                    ref={refs.setFloating}
                     style={{
                         position: strategy,
                         zIndex: 1000,
