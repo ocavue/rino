@@ -137,10 +137,9 @@ export const wysiwygEditorSelector = testidSelector("wysiwyg_mode_textarea")
 export const sourceCodeEditorSelector = testidSelector("source_code_mode_textarea")
 
 export async function getSourceCodeModeText(): Promise<string> {
-    const text = await page.$eval("html", () => {
+    return await page.$eval("html", () => {
         return (window as any)._RINO_EDITOR_VIEW.state.doc.textContent as string
     })
-    return text.replace(/\<\!-\-\s*\-\-\>$/, "").trim()
 }
 
 export async function waitAnimation<T>(promise: Promise<T>, ms = 500): Promise<T> {
