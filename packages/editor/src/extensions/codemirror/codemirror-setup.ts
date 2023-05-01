@@ -71,7 +71,10 @@ export const basicSetup: Extension = [
     highlightSelectionMatches(),
     keymap.of([
         ...closeBracketsKeymap,
-        ...defaultKeymap,
+        ...defaultKeymap.filter(
+            // Remove the conflicted key binding
+            (keyBinding) => keyBinding.key?.toLowerCase() !== "mod-/",
+        ),
         ...searchKeymap,
         // ...historyKeymap,
         // ...foldKeymap,
