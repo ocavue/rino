@@ -32,12 +32,12 @@ type TableMenuButtonProps = {
 }
 
 const TableMenuButton: React.FC<TableMenuButtonProps> = ({ handleClick, anchorCellEl, headCellEl }) => {
-    const { x, y, floating, strategy, middlewareData } = useFloatingMenuFloating({ anchorCellEl, headCellEl })
+    const { x, y, strategy, middlewareData, refs } = useFloatingMenuFloating({ anchorCellEl, headCellEl })
     const referenceHidden = middlewareData.hide?.referenceHidden
 
     return (
         <div
-            ref={floating}
+            ref={refs.setFloating}
             style={{
                 position: strategy,
                 top: y ?? "",
@@ -68,7 +68,7 @@ function useFloatingMenuFloating({ anchorCellEl: cellA, headCellEl: cellB }: { a
         middleware: [offset(20), shift(), flip(), hide()],
     })
 
-    const { reference, refs, update } = useFloatingReturn
+    const { refs, update } = useFloatingReturn
 
     const updateFloating = useCallback(() => {
         const { top, bottom, left, right } = calcCellSelectionBoundingClientRect(cellA, cellB)
@@ -88,9 +88,9 @@ function useFloatingMenuFloating({ anchorCellEl: cellA, headCellEl: cellB }: { a
             },
         }
 
-        reference(virtualEl)
+        refs.setReference(virtualEl)
         update()
-    }, [cellA, cellB, reference, update])
+    }, [cellA, cellB, refs, update])
 
     useEffect(() => {
         updateFloating()

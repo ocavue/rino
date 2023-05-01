@@ -16,7 +16,7 @@ function useButtonFloating(cellEl: Element | null) {
         middleware: [],
     })
 
-    const { reference, refs, update } = floating
+    const { refs, update } = floating
 
     const updateFloating = useCallback(() => {
         if (!cellEl) return
@@ -38,9 +38,9 @@ function useButtonFloating(cellEl: Element | null) {
             },
             contextElement: cellEl,
         }
-        reference(virtualEl)
+        refs.setReference(virtualEl)
         update()
-    }, [cellEl, reference, update])
+    }, [cellEl, refs, update])
 
     useEffect(() => {
         if (!cellEl || !refs.floating.current) {
@@ -59,12 +59,12 @@ type TableCellButtonComponentProps = {
 }
 
 const TableCellButtonComponent: React.FC<TableCellButtonComponentProps> = ({ cellEl, handleClick }) => {
-    const { x, y, floating, strategy } = useButtonFloating(cellEl)
+    const { x, y, refs, strategy } = useButtonFloating(cellEl)
     const show = Boolean(cellEl)
 
     return show ? (
         <div
-            ref={floating}
+            ref={refs.setFloating}
             style={{
                 position: strategy,
                 top: y ?? "",

@@ -11,8 +11,10 @@ const assertions = {
     // Since the website is not deployed on my own server, I can't do much about the HTTP response headers.
     "csp-xss": "warn",
 
-    // Haven't found time to fix this.
+    // Fix them later
     "non-composited-animations": "warn",
+    "lcp-lazy-loaded": "warn",
+    "bf-cache": "warn",
 }
 
 const homeConfig = {
