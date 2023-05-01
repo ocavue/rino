@@ -24,22 +24,7 @@ describe("ProsemirrorView constructor error", () => {
         await switchToSourceCodeMode()
 
         const text = await getSourceCodeModeText()
-
-        const actual = text.trim()
-        const expected = "HOOK:FAILED_TO_INIT_PROSEMIRROR_VIEW"
-
-        if (actual !== expected) {
-            console.log("actual:", actual.length, JSON.stringify(actual))
-            console.log("expected:", expected.length, JSON.stringify(expected))
-
-            for (let i = 0; i < Math.max(actual.length, expected.length); i++) {
-                if (actual[i] !== expected[i]) {
-                    console.log("diff:", i, actual.charCodeAt(i), expected.charCodeAt(i))
-                }
-            }
-        }
-
-        expect(actual).toEqual(expected)
+        expect(text.trim()).toEqual("HOOK:FAILED_TO_INIT_PROSEMIRROR_VIEW")
     })
 
     test("Fix text in source code mode", async () => {
