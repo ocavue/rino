@@ -68,7 +68,7 @@ function useFloatingMenuFloating({ anchorCellEl: cellA, headCellEl: cellB }: { a
         middleware: [offset(20), shift(), flip(), hide()],
     })
 
-    const {  refs, update } = useFloatingReturn
+    const { refs, update } = useFloatingReturn
 
     const updateFloating = useCallback(() => {
         const { top, bottom, left, right } = calcCellSelectionBoundingClientRect(cellA, cellB)
@@ -90,7 +90,7 @@ function useFloatingMenuFloating({ anchorCellEl: cellA, headCellEl: cellB }: { a
 
         refs.setReference(virtualEl)
         update()
-    }, [cellA, cellB,   update])
+    }, [cellA, cellB, refs, update])
 
     useEffect(() => {
         updateFloating()
