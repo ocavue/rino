@@ -325,8 +325,8 @@ importers:
         specifier: workspace:*
         version: link:../electron-renderer
       electron:
-        specifier: 24.4.0
-        version: 24.4.0
+        specifier: 24.7.1
+        version: 24.7.1
       electron-builder:
         specifier: ^23.6.0
         version: 23.6.0
@@ -346,8 +346,8 @@ importers:
         specifier: ^4.17.7
         version: 4.17.7
       electron:
-        specifier: 24.4.0
-        version: 24.4.0
+        specifier: 24.7.1
+        version: 24.7.1
       electron-context-menu:
         specifier: ^3.6.1
         version: 3.6.1
@@ -379,8 +379,8 @@ importers:
         specifier: workspace:*
         version: link:../electron-types
       electron:
-        specifier: 24.4.0
-        version: 24.4.0
+        specifier: 24.7.1
+        version: 24.7.1
       electron-log:
         specifier: ^4.4.8
         version: 4.4.8
@@ -412,8 +412,8 @@ importers:
         specifier: ^3.3.1
         version: 3.3.1(vite@4.3.9)
       electron:
-        specifier: 24.4.0
-        version: 24.4.0
+        specifier: 24.7.1
+        version: 24.7.1
       electron-log:
         specifier: ^4.4.8
         version: 4.4.8
@@ -445,8 +445,8 @@ importers:
         specifier: workspace:*
         version: link:../editor
       electron:
-        specifier: 24.4.0
-        version: 24.4.0
+        specifier: 24.7.1
+        version: 24.7.1
 
   packages/home:
     devDependencies:
@@ -7169,8 +7169,8 @@ packages:
       - supports-color
     dev: true
 
-  /electron@24.4.0:
-    resolution: {integrity: sha512-A9YzLHRUA+HfYVf2daNv0jPXNCWShgcgcTaGntrZRGynQLEhDTbti9Lfmq2tjRKoEgXZ7qj+aJFw+tJZsT/Cfw==}
+  /electron@24.7.1:
+    resolution: {integrity: sha512-v7nMXqTl5e1sudOMe5P77ofb6WOKCCTOqBrxVwwBRvShm5udFa2EkNrzYpO53w2fdIVlKbfLhD5DdlmYAROGvQ==}
     engines: {node: '>= 12.20.55'}
     hasBin: true
     requiresBuild: true
@@ -7189,6 +7189,7 @@ packages:
 
   /emoji-regex@8.0.0:
     resolution: {integrity: sha512-MSjYzcWNOA0ewAHpz0MxpYFvwg6yjy1NG3xteoqz644VCo/RPgnr1/GGt+ic3iJTzQ8Eu3TdM14SawnVUmGE6A==}
+    requiresBuild: true
     dev: true
 
   /emojibase-data@6.2.0(emojibase@6.1.0):
@@ -8830,6 +8831,7 @@ packages:
   /is-fullwidth-code-point@3.0.0:
     resolution: {integrity: sha512-zymm5+u+sCsSWyD9qNaejV3DFvhCKclKdizYaJUuHA83RLjb7nSuGnddCHGv0hk+KY7BMAlsWeK4Ueg6EV6XQg==}
     engines: {node: '>=8'}
+    requiresBuild: true
     dev: true
 
   /is-generator-fn@2.1.0:
@@ -9742,6 +9744,7 @@ packages:
 
   /json-schema-traverse@0.4.1:
     resolution: {integrity: sha512-xbbCH5dCYU5T8LcEhhuh7HJ88HXuW3qsI3Y0zOZFKfZEHcpWiHU/Jxzk629Brsab/mMiHQti9wMP+845RPe3Vg==}
+    requiresBuild: true
     dev: true
 
   /json-schema-traverse@1.0.0:
