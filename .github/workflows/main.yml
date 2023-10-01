@@ -12,7 +12,7 @@ jobs:
   build_website:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - uses: ./.github/actions/dependencies
 
@@ -39,7 +39,7 @@ jobs:
   build_package:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - uses: ./.github/actions/dependencies
 
@@ -59,7 +59,7 @@ jobs:
           - mac
           - linux
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - uses: ./.github/actions/dependencies
 
@@ -85,7 +85,7 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - uses: ./.github/actions/dependencies
 
@@ -125,7 +125,7 @@ jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - uses: ./.github/actions/dependencies
 
@@ -138,7 +138,7 @@ jobs:
   preview: # Preview deployment
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - uses: ./.github/actions/dependencies
 
@@ -225,7 +225,7 @@ jobs:
     needs:
       - test
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Get current electron app version
         run: |
@@ -266,7 +266,7 @@ jobs:
       - preview
     if: github.ref == 'refs/heads/master'
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           token: ${{ secrets.RELEASE_PLEASE_GITHUB_TOKEN }}
 
@@ -294,7 +294,7 @@ jobs:
       # make sure that `deploy` only depends on `release` because we don't want `deploy` to skip if `release` succeeded.
       - release
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Download dist (home)
         uses: actions/download-artifact@v3
