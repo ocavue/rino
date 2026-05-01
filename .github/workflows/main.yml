@@ -160,7 +160,7 @@ jobs:
         # Vercel only allows a free account to deploy 100 times every day so this step could fail
         continue-on-error: true
         timeout-minutes: 10
-        uses: amondnet/vercel-action@v25
+        uses: amondnet/vercel-action@v42
         with:
           github-comment: false
           vercel-token: ${{ secrets.VERCEL_TOKEN }}
@@ -175,7 +175,7 @@ jobs:
         name: Deploy @rino.app/playground to Vercel
         continue-on-error: true
         timeout-minutes: 10
-        uses: amondnet/vercel-action@v25
+        uses: amondnet/vercel-action@v42
         with:
           github-comment: false
           vercel-token: ${{ secrets.VERCEL_TOKEN }}
@@ -311,7 +311,7 @@ jobs:
       - id: step_vercel_home
         name: Deploy @rino.app/home to Vercel
         timeout-minutes: 10
-        uses: amondnet/vercel-action@v25
+        uses: amondnet/vercel-action@v42
         with:
           github-comment: false
           vercel-token: ${{ secrets.VERCEL_TOKEN }}
@@ -325,7 +325,7 @@ jobs:
       - id: step_vercel_playground
         name: Deploy @rino.app/playground to Vercel
         timeout-minutes: 10
-        uses: amondnet/vercel-action@v25
+        uses: amondnet/vercel-action@v42
         with:
           github-comment: false
           vercel-token: ${{ secrets.VERCEL_TOKEN }}
