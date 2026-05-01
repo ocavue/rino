@@ -117,7 +117,7 @@ jobs:
           git push || true
 
       - name: Upload coverage information to codecov
-        uses: codecov/codecov-action@v3
+        uses: codecov/codecov-action@v6
         with:
           file: ./coverage/coverage-final.json
           fail_ci_if_error: false # Specify if CI pipeline should fail when Codecov runs into errors during upload. Defaults to false
