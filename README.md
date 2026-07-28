@@ -1,3 +1,5 @@
+Archived: please check out https://github.com/prosekit/meowdown
+
 <p align="center">
 <img src="https://raw.githubusercontent.com/ocavue/rino/d97fbe26dc79764802e68b045e3a6648faa35228/assets/share/img/icons/android-chrome-512x512.png" alt="Logo" height="192" width="192">
 </p>
