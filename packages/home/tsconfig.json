@@ -2,7 +2,11 @@
 {
     "compilerOptions": {
         "target": "es6",
-        "lib": ["dom", "dom.iterable", "esnext"],
+        "lib": [
+            "dom",
+            "dom.iterable",
+            "esnext"
+        ],
         "allowJs": true,
         "skipLibCheck": true,
         "strict": true,
@@ -14,10 +18,20 @@
         "resolveJsonModule": true,
         "isolatedModules": true,
         "jsx": "preserve",
-        "incremental": true
+        "incremental": true,
+        "plugins": [
+            {
+                "name": "next"
+            }
+        ]
     },
     "include": [
-        "./*.d.ts" // We don't actually use this tsconfig.json. It's just for Next.js
+        // We don't actually use this tsconfig.json. It's just for Next.js
+        "./*.d.ts",
+        "./src/global.d.ts",
+        ".next/types/**/*.ts"
     ],
-    "exclude": ["node_modules"]
+    "exclude": [
+        "node_modules"
+    ]
 }
