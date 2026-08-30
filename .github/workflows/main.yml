@@ -25,13 +25,13 @@ jobs:
           pnpm build playground
 
       - name: Upload dist (home)
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v7
         with:
           name: home_dist
           path: ./packages/home/dist
 
       - name: Upload dist (editor playground)
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v7
         with:
           name: editor_playground_dist
           path: ./packages/playground/dist
